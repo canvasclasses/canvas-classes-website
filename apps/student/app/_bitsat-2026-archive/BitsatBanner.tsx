@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowRight, Sparkles, BookOpen } from 'lucide-react';
-import { usePlanProgress } from '@/app/bitsat-chemistry-revision/usePlanProgress';
-import { dayByNumber } from '@/app/bitsat-chemistry-revision/plan/planData';
+// Imports are RELATIVE so the banner stays self-contained inside the archive.
+// When reviving for BITSAT 2027 (see _README.md), rename the parent folder
+// back to `bitsat-chemistry-revision` and these imports will still resolve.
+import { usePlanProgress } from './usePlanProgress';
+import { dayByNumber } from './plan/planData';
 
 const ALLOWED_PATHS = new Set<string>(['/', '/bitsat-chemistry-revision']);
 

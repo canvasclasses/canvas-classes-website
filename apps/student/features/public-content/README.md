@@ -10,7 +10,7 @@ with feature-local data files.
 |---|---|
 | `/2-minute-chemistry` | `data/twoMinData.ts` |
 | `/assertion-reason` | `data/assertionReasonData.ts` |
-| `/bitsat-chemistry-revision` | (inline) |
+| ~~`/bitsat-chemistry-revision`~~ | archived 2026-06 — see `app/_bitsat-2026-archive/` |
 | `/chemistry-questions` | (inline) |
 | `/detailed-lectures` | `data/lecturesData.ts` |
 | `/download-ncert-books` | (uses `@/features/books/data/ncertBooksData`) |

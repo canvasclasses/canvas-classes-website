@@ -15,7 +15,6 @@ Canvas Classes (https://www.canvasclasses.in) is an Indian online Chemistry coac
 
 - [Detailed Chemistry Lectures (full-chapter coverage)](https://www.canvasclasses.in/detailed-lectures): Complete Class 11 & 12 video course covering NCERT for JEE & NEET.
 - [NEET Crash Course](https://www.canvasclasses.in/neet-crash-course): Compressed Chemistry coverage tuned for NEET aspirants.
-- [BITSAT Chemistry Revision](https://www.canvasclasses.in/bitsat-chemistry-revision): 30-day BITSAT-focused Chemistry revision plan.
 - [Quick Recap](https://www.canvasclasses.in/quick-recap): Short-form chapter summaries for last-minute revision.
 - [2-Minute Chemistry](https://www.canvasclasses.in/2-minute-chemistry): Bite-sized concept explainers.
 

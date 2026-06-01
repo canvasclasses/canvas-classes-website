@@ -106,8 +106,6 @@ Topic-organized landing pages that funnel into the relevant tools, lectures, and
 ## 8. Exam-Specific Courses
 
 - [NEET Crash Course](https://www.canvasclasses.in/neet-crash-course) — Compressed NEET-Chemistry curriculum.
-- [BITSAT Chemistry Revision](https://www.canvasclasses.in/bitsat-chemistry-revision) — 30-day BITSAT Chemistry revision plan.
-- [BITSAT Plan](https://www.canvasclasses.in/bitsat-chemistry-revision/plan) — Day-by-day study plan for BITSAT Chemistry.
 
 ## 9. Class & Board Hubs
 

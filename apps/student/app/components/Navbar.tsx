@@ -221,7 +221,8 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
 
   if (pathname?.startsWith('/the-crucible')) return null;
   if (pathname?.startsWith('/books')) return null;
-  if (pathname?.startsWith('/bitsat-chemistry-revision/plan')) return null;
+  // BITSAT 2026 plan hide-rule removed 2026-06 — route archived under
+  // app/_bitsat-2026-archive. Restore when reviving for BITSAT 2027.
   if (pathname?.startsWith('/crucible/preview')) return null;
 
   // Hide navbar inside book reader pages (class-X/bookSlug/pageSlug)

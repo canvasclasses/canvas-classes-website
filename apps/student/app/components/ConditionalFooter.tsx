@@ -8,7 +8,8 @@ export function ConditionalFooter() {
   
   const hideFooter =
     pathname?.startsWith('/physical-chemistry-hub') ||
-    pathname?.startsWith('/bitsat-chemistry-revision/plan') ||
+    // BITSAT 2026 plan hide-rule removed 2026-06 — route archived under
+    // app/_bitsat-2026-archive. Restore when reviving for BITSAT 2027.
     pathname?.startsWith('/crucible/preview') ||
     pathname?.startsWith('/class-9') ||
     pathname?.startsWith('/class-10') ||
