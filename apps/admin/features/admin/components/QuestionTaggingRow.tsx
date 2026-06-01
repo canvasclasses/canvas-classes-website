@@ -316,13 +316,14 @@ export default function QuestionTaggingRow(props: QuestionTaggingRowProps) {
               className={`p-1.5 rounded transition ${selectedQuestion.flags?.some(f => !f.resolved) ? 'bg-red-500/20 text-red-500' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'}`} title="Flag">
               <AlertTriangle size={14} />
             </button>
-            <button
-              onClick={() => onDelete(selectedQuestion._id)}
-              disabled={!canDelete}
-              title={!canDelete ? 'Only super admins can delete questions' : 'Delete question'}
-              className={`p-1.5 rounded transition ${deletingId === selectedQuestion._id ? 'bg-red-500 text-white' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'} ${!canDelete ? 'opacity-30 cursor-not-allowed' : ''}`}>
-              <Trash2 size={14} />
-            </button>
+            {canDelete && (
+              <button
+                onClick={() => onDelete(selectedQuestion._id)}
+                title="Delete question"
+                className={`p-1.5 rounded transition ${deletingId === selectedQuestion._id ? 'bg-red-500 text-white' : 'bg-gray-800/50 text-gray-500 hover:text-red-400'}`}>
+                <Trash2 size={14} />
+              </button>
+            )}
           </div>
         </div>
 

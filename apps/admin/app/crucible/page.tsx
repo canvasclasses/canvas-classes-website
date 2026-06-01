@@ -91,7 +91,7 @@ function AdminPageContent() {
     const [showExport, setShowExport] = useState(false);
 
     // Permissions
-    const { loading: permissionsLoading, canEdit, canView, isSuperAdmin } = usePermissions();
+    const { loading: permissionsLoading, canEdit, canView, isSuperAdmin, grants } = usePermissions();
 
     // Bulk import
     const [showBulkImport, setShowBulkImport] = useState(false);
@@ -570,6 +570,14 @@ function AdminPageContent() {
 
     const selectedQuestion = questions.find(q => q._id === selectedQuestionId);
 
+    // RBAC gates for the UI surface. Backend already 403s on writes a staff
+    // user isn't allowed to make; these mirror those checks so the buttons
+    // never render in the first place. See _agents/adr/010-rbac-grant-redesign.md.
+    //   canEditCurrent — can the user edit the currently selected question's chapter?
+    //   canEditAny     — does the user have edit grants anywhere? Drives top-bar.
+    const canEditCurrent = selectedQuestion ? canEdit(selectedQuestion.metadata.chapter_id) : true;
+    const canEditAny = isSuperAdmin || grants.some(g => g.level === 'edit');
+
     const filteredQuestions = questions.filter(q => {
         // Tag status (client-side — fast on loaded batch)
         if (selectedTagStatusFilter === 'untagged' && q.metadata.chapter_id && isTagValid(q.metadata.tags)) return false;
@@ -654,16 +662,20 @@ function AdminPageContent() {
                     {adminSection === 'practice' && (<>
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
-                    {/* Icon-only action buttons */}
-                    <button onClick={handleAddQuestion} title="Add Question"
-                        className="flex items-center justify-center w-7 h-7 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-500 hover:to-purple-500 transition shrink-0">
-                        <Plus size={13} />
-                    </button>
-                    <button onClick={() => setBulkMode(!bulkMode)} title="Bulk Mode"
-                        className={`flex items-center justify-center w-7 h-7 rounded-lg transition shrink-0 ${bulkMode ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
-                            }`}>
-                        {bulkMode ? <CheckSquare size={13} /> : <Square size={13} />}
-                    </button>
+                    {/* Icon-only action buttons. Write actions hidden for view-only staff. */}
+                    {canEditAny && (
+                        <button onClick={handleAddQuestion} title="Add Question"
+                            className="flex items-center justify-center w-7 h-7 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-500 hover:to-purple-500 transition shrink-0">
+                            <Plus size={13} />
+                        </button>
+                    )}
+                    {canEditAny && (
+                        <button onClick={() => setBulkMode(!bulkMode)} title="Bulk Mode"
+                            className={`flex items-center justify-center w-7 h-7 rounded-lg transition shrink-0 ${bulkMode ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
+                                }`}>
+                            {bulkMode ? <CheckSquare size={13} /> : <Square size={13} />}
+                        </button>
+                    )}
                     <button onClick={() => setShowAnalytics(!showAnalytics)} title="Analytics"
                         className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 rounded-lg transition shrink-0">
                         <BarChart3 size={13} />
@@ -672,10 +684,12 @@ function AdminPageContent() {
                         className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-violet-700/60 rounded-lg transition shrink-0">
                         <FileDown size={13} />
                     </button>
-                    <button onClick={() => setShowBulkImport(true)} title="Bulk JSON Import"
-                        className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-blue-600/60 rounded-lg transition shrink-0">
-                        <FileJson size={13} />
-                    </button>
+                    {canEditAny && (
+                        <button onClick={() => setShowBulkImport(true)} title="Bulk JSON Import"
+                            className="flex items-center justify-center w-7 h-7 bg-gray-800/50 text-gray-300 hover:bg-blue-600/60 rounded-lg transition shrink-0">
+                            <FileJson size={13} />
+                        </button>
+                    )}
                     <div className="w-px h-4 bg-gray-700/50 shrink-0" />
 
                     {/* Search — press Enter to apply, Escape to clear */}
@@ -949,6 +963,7 @@ function AdminPageContent() {
                         };
                         const isPYQ = selectedQuestion.metadata.sourceType === 'PYQ';
                         return (
+                            <fieldset disabled={!canEditCurrent} className="contents">
                             <div className="flex items-center gap-1.5 shrink-0 pl-2 ml-1 border-l border-gray-700/60">
                                 {/* Source Type */}
                                 <Select
@@ -1053,6 +1068,7 @@ function AdminPageContent() {
                                     )}
                                 </>)}
                             </div>
+                            </fieldset>
                         );
                     })()}
 
@@ -1112,6 +1128,16 @@ function AdminPageContent() {
                     </div>
                 ) : selectedQuestion ? (
                     <>
+                    {!canEditCurrent && (
+                        <div className="shrink-0 mx-3 mt-2 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-amber-300 flex items-center gap-2">
+                            <AlertTriangle size={14} />
+                            <span><strong>View only</strong> — your access for this chapter is read-only. Save actions are disabled.</span>
+                        </div>
+                    )}
+                    {/* `<fieldset disabled className="contents">` disables every form control inside
+                        without affecting layout. Super admins always pass canEdit, so this fieldset
+                        only ever triggers for staff with view-only grants on this chapter. */}
+                    <fieldset disabled={!canEditCurrent} className="contents">
                     {/* TOP: Full-width metadata & tagging — 2 compact rows */}
                     <QuestionTaggingRow
                         selectedQuestion={selectedQuestion}
@@ -1576,6 +1602,7 @@ function AdminPageContent() {
                             getSvgScale={getSvgScale}
                         />
                     </div>
+                    </fieldset>
                     </>
                 ) : (
                     <div className="flex-1 flex items-center justify-center text-gray-600">
