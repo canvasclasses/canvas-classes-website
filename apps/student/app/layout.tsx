@@ -7,9 +7,10 @@ import { ClarityScript } from '@/components/analytics/ClarityScript';
 import { ConsentGate } from '@/features/legal/components/ConsentGate';
 import "./globals.css";
 import Navbar from "./components/Navbar";
-// BitsatBanner removed 2026-06: BITSAT 2026 exam window ended; the 30-day
-// plan + banner are archived under app/_bitsat-2026-archive/. To revive for
-// BITSAT 2027, follow the checklist in that folder's _README.md.
+import CollegePredictorBanner from "@/features/landing/components/CollegePredictorBanner";
+// BitsatBanner archived 2026-06 — see app/_bitsat-2026-archive/_README.md.
+// The College Predictor banner above replaced it as the evergreen homepage
+// promo (predictor works year-round, unlike the exam-window-specific plan).
 import Footer from "./components/Footer";
 import { CommandPalette } from "./components/CommandPalette";
 import { getSearchItems } from "@/features/landing/lib/searchIndices";
@@ -225,6 +226,7 @@ export default function RootLayout({
         <MixpanelProvider>
           <CommandPalette itemsPromise={getSearchItems()} />
           <Navbar authButton={<AuthButton />} />
+          <CollegePredictorBanner />
           {children}
           <ConditionalFooter />
         </MixpanelProvider>

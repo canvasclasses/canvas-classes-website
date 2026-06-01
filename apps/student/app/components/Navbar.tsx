@@ -251,6 +251,13 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-0.5">
+          {/* Flagship — direct link, no dropdown. Orange accent matches the
+              Crucible brand (per the megamenu featured-card treatment). */}
+          <NavLink
+            href="/the-crucible"
+            label="The Crucible"
+            className="!text-orange-400 hover:!text-orange-300"
+          />
           {allMenus.map((menu) => (
             <MegaMenuDropdown
               key={menu.id}
@@ -291,6 +298,14 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
               transition={{ duration: 0.2 }}
               className="absolute top-full left-0 right-0 mt-2 p-4 bg-[#0a0a0a]/95 backdrop-blur-2xl rounded-3xl border border-white/[0.08] shadow-xl flex flex-col gap-2 max-h-[82vh] overflow-y-auto"
             >
+              {/* Flagship — mirrors the desktop top-level Crucible link. */}
+              <Link
+                href="/the-crucible"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-xl transition-colors"
+              >
+                The Crucible
+              </Link>
               {allMenus.map((menu) => (
                 <MobileMegaMenu
                   key={menu.id}

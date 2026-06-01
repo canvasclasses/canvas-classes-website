@@ -27,6 +27,7 @@ features/landing/
 │   ├── QuickRevisionCard.tsx
 │   ├── StudentTestimonialCards.tsx
 │   ├── WhyChooseUsSection.tsx
+│   ├── CollegePredictorBanner.tsx ← rendered globally from app/layout.tsx (homepage-only)
 │   ├── ComingSoonTemplate.tsx ← used by cbse-class-* placeholder pages
 │   └── DnsBlockedBanner.tsx
 ├── lib/
@@ -38,9 +39,11 @@ features/landing/
 
 ## Cross-feature consumers
 
-- `app/layout.tsx` imports `searchIndices` (for `CommandPalette`).
+- `app/layout.tsx` imports `CollegePredictorBanner` (global homepage banner)
+  and `searchIndices` (for `CommandPalette`).
   (`BitsatBanner` was previously rendered here too — it was archived in
-  2026-06 alongside the BITSAT 2026 plan; see `app/_bitsat-2026-archive/`.)
+  2026-06 alongside the BITSAT 2026 plan; see `app/_bitsat-2026-archive/`.
+  The `CollegePredictorBanner` replaced it as the evergreen homepage promo.)
 - `app/login/page.tsx` imports `DnsBlockedBanner`.
 - `app/cbse-class-{10,11,12}/page.tsx` import `ComingSoonTemplate`.
 - `app/chemistry-questions/*` pages import `seoData`.
