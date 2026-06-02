@@ -32,6 +32,7 @@ const PredictRequestSchema = z.object({
   college_types: z.array(z.enum(['NIT', 'IIIT', 'GFTI'])).optional(),
   dream_branch: z.string().max(80).optional(),   // e.g. "CSE", "ECE", "ME"
   dream_college: z.string().max(80).optional(),  // slug OR short_name (partial match OK)
+  tier_only: z.boolean().optional(),             // restrict to NIRF top-25 (Tier-1) institutes
 }).refine((d) => d.rank !== undefined || d.percentile !== undefined, {
   message: 'Provide either rank or percentile',
 });
@@ -389,6 +390,15 @@ export async function POST(request: NextRequest) {
           branchMatches(b.branch_short_name, b.branch_name, input.dream_branch as string),
         ),
       );
+    }
+
+    // Tier-1 restriction (NIRF engineering top-25). Done server-side so the
+    // bucket counts, total_colleges, and pagination all reflect the filtered
+    // set — and so the filter sees the full result list, not just the top-10
+    // page the client happens to have loaded. Mirrors the threshold the client
+    // previously applied to its loaded slice.
+    if (input.tier_only) {
+      groups = groups.filter((g) => (g.nirf_rank_engineering ?? 9999) <= 25);
     }
 
     // Per-bucket counts — based on each college's best bucket, not per-branch.

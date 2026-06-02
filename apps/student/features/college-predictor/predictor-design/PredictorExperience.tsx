@@ -360,6 +360,22 @@ interface SensRow {
   newly_safe?: { title: string; subtitle: string; nirf?: number }[];
 }
 
+// Maps each BITSAT branch chip label to its canonical programme code (the join
+// key the BITSAT predict route filters on — see packages/data/bitsat/programmes.ts).
+// JEE matches branches by free-text alias, but BITSAT filters by exact code, so
+// the chips must resolve to a code before we can send the `programmes` filter.
+// Keep the keys in sync with the BITSAT chip list in the branch panel below.
+const BITSAT_BRANCH_TO_CODE: Record<string, string> = {
+  CSE: 'BE-CSE',
+  ECE: 'BE-ECE',
+  EEE: 'BE-EEE',
+  Mechanical: 'BE-MECH',
+  Chemical: 'BE-CHE',
+  Biological: 'MSC-BIO',
+  Pharmacy: 'BPHARM',
+  Manufacturing: 'BE-MANF',
+};
+
 export default function PredictorExperience() {
   const router = useRouter();
   const pathname = usePathname();
@@ -528,6 +544,7 @@ export default function PredictorExperience() {
         gender: effectiveGender,
         home_state: homeState,
         ...(pickedBranches[0] ? { dream_branch: pickedBranches[0] } : {}),
+        ...(tierOnly ? { tier_only: true } : {}),
         extended: true,
       };
       const predictRes = await fetch('/api/v2/college-predictor/predict', {
@@ -536,10 +553,7 @@ export default function PredictorExperience() {
         body: JSON.stringify(body),
       }).then((r) => r.json());
       if (predictRes?.success) {
-        let groups: JoSAACollegeGroup[] = predictRes.colleges ?? [];
-        if (tierOnly) {
-          groups = groups.filter((g) => (g.nirf_rank_engineering ?? 9999) <= 25);
-        }
+        const groups: JoSAACollegeGroup[] = predictRes.colleges ?? [];
         setJeeGroups(groups);
         setTotalCount(predictRes.total_colleges ?? groups.length);
         setExtended(true);
@@ -569,9 +583,11 @@ export default function PredictorExperience() {
         category: effectiveCategory,
         gender: effectiveGender,
         home_state: homeState,
-        // Branch filter (best-effort): pass first picked branch as dream_branch
-        // since the API accepts only one. Tier-only is enforced client-side.
+        // Branch filter: the UI is single-select, so one branch maps cleanly to
+        // the API's single dream_branch param. Tier-1 is also enforced
+        // server-side so counts/total/pagination stay consistent with the rows.
         ...(pickedBranches[0] ? { dream_branch: pickedBranches[0] } : {}),
+        ...(tierOnly ? { tier_only: true } : {}),
         extended: false,
       };
       const [predictRes, rangeRes] = await Promise.all([
@@ -598,10 +614,7 @@ export default function PredictorExperience() {
         setTotalCount(0);
         setCounts({ safe: 0, target: 0, reach: 0 });
       } else {
-        let groups: JoSAACollegeGroup[] = predictRes.colleges ?? [];
-        if (tierOnly) {
-          groups = groups.filter((g) => (g.nirf_rank_engineering ?? 9999) <= 25);
-        }
+        const groups: JoSAACollegeGroup[] = predictRes.colleges ?? [];
         setJeeGroups(groups);
         setBitsatRows(null);
         setTotalCount(predictRes.total_colleges ?? groups.length);
@@ -660,7 +673,17 @@ export default function PredictorExperience() {
     setExtended(false);
     setFilter('all');
     try {
-      const body = { score, regime: paper, extended: false };
+      // Branch filter: the chips are single-select and BITSAT filters by exact
+      // programme code, so resolve the picked label to a code. tier_only does
+      // not apply to BITSAT (every result is a BITS campus), so the tier
+      // checkbox is hidden on this tab and not sent.
+      const programmeCode = pickedBranches[0] ? BITSAT_BRANCH_TO_CODE[pickedBranches[0]] : undefined;
+      const body: Record<string, unknown> = {
+        score,
+        regime: paper,
+        ...(programmeCode ? { programmes: [programmeCode] } : {}),
+        extended: false,
+      };
       const [predictRes, rangeRes] = await Promise.all([
         fetch('/api/v2/college-predictor/bitsat/predict', {
           method: 'POST',
@@ -937,9 +960,9 @@ export default function PredictorExperience() {
             MOST USED
           </span>
           <span style={{ color: '#9a9aa6', fontSize: 12.5 }}>
-            {pickedBranches.length > 0
-              ? `${pickedBranches.length} branch${pickedBranches.length === 1 ? '' : 'es'} selected`
-              : 'pick CSE, ECE, Mechanical or any branch you want'}
+            {pickedBranches[0]
+              ? `${pickedBranches[0]} only`
+              : 'pick one — CSE, ECE, Mechanical or any branch you want'}
           </span>
         </div>
         <span
@@ -967,7 +990,7 @@ export default function PredictorExperience() {
                 marginBottom: 10,
               }}
             >
-              BRANCHES — pick any
+              BRANCHES — pick one
             </div>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {(exam === 'jee'
@@ -980,9 +1003,11 @@ export default function PredictorExperience() {
                     key={b}
                     type="button"
                     onClick={() =>
-                      setPickedBranches((arr) =>
-                        arr.includes(b) ? arr.filter((x) => x !== b) : [...arr, b],
-                      )
+                      // Single-select: the predictor matches one branch at a
+                      // time (API accepts a single dream_branch), so picking a
+                      // chip replaces the selection; clicking the active one
+                      // clears it.
+                      setPickedBranches((arr) => (arr[0] === b ? [] : [b]))
                     }
                     style={{
                       padding: '7px 12px',
@@ -1003,6 +1028,10 @@ export default function PredictorExperience() {
               })}
             </div>
           </div>
+          {/* Tier-1 restriction only applies to JEE — NIT/IIIT/GFTI carry an
+              NIRF ranking to filter on. Every BITSAT result is a BITS campus,
+              so the toggle is hidden on that tab rather than left as a no-op. */}
+          {exam === 'jee' && (
           <label
             style={{
               display: 'inline-flex',
@@ -1046,6 +1075,7 @@ export default function PredictorExperience() {
             </span>
             Only show Tier-1 colleges (top NITs · IIITs · BITS)
           </label>
+          )}
         </div>
       )}
     </div>
@@ -1109,7 +1139,16 @@ export default function PredictorExperience() {
               <button
                 key={t.id}
                 type="button"
-                onClick={() => setExam(t.id)}
+                onClick={() => {
+                  // Clear the branch selection on a real tab switch — the JEE
+                  // and BITSAT chip sets differ, so a branch picked on one tab
+                  // would be stale on the other (no highlighted chip, and on
+                  // JEE an unmatchable dream_branch returns zero results).
+                  // Guarded by the id check so hydration's setExam doesn't wipe
+                  // a restored selection.
+                  if (t.id !== exam) setPickedBranches([]);
+                  setExam(t.id);
+                }}
                 aria-pressed={active}
                 style={{
                   position: 'relative',
