@@ -4,11 +4,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   ChevronLeft, ChevronRight, BookOpen, Trophy, ArrowRight, Bookmark,
-  CheckCircle2, Brain, Gamepad2, X,
+  CheckCircle2, Brain, Gamepad2, X, Library,
 } from 'lucide-react';
 import Link from 'next/link';
 import PageRenderer from '@canvas/book-renderer/PageRenderer';
 import { ExtraSimulatorsProvider } from '@canvas/book-renderer/simulators-context';
+import { VaultProvider } from '@canvas/book-renderer/vault-context';
+import { BookProvider } from '@canvas/book-renderer/book-context';
 import dynamic from 'next/dynamic';
 
 // `atomic-models` is the one book simulator that lives outside the renderer
@@ -28,8 +30,16 @@ import { Book, BookPage, BlockType, ContentBlock } from '@canvas/data/types/book
 import { useBookProgress } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
 import { useBookUserState } from '@/features/books/hooks/useBookUserState';
+import { useVaultProgress } from '@/features/books/hooks/useVaultProgress';
 import { isReaderLoggedIn } from '@/features/books/lib/readerAuth';
+import type { VaultWord } from '@canvas/data/books/vocabulary';
 import FreeGate from './FreeGate';
+
+// The Word Vault is only meaningful for English (Kaveri) books — that's where
+// the tappable glosses + vocabulary_lab cards live. Other books simply don't
+// surface the save action (the provider is still mounted but no English block
+// ever calls onSaveWord).
+const VAULT_ENABLED_SUBJECTS = new Set(['english']);
 
 function hasBlockType(blocks: ContentBlock[], type: BlockType): boolean {
   return blocks.some(b => {
@@ -72,6 +82,19 @@ export default function BookReader({
   const { completedSlugs, markComplete } = useBookProgress(bookSlug);
   const { bookmarkedSlugs, toggleBookmark } = useBookBookmarks(bookSlug);
 
+  // Word Vault — saved-word state + a transient "saved" toast.
+  const vaultEnabled = VAULT_ENABLED_SUBJECTS.has(book.subject);
+  const vault = useVaultProgress(bookSlug);
+  const [savedToast, setSavedToast] = useState<string | null>(null);
+  const handleSaveWord = useCallback((word: VaultWord) => {
+    if (vault.saveWord(word)) setSavedToast(word.word);
+  }, [vault]);
+  useEffect(() => {
+    if (!savedToast) return;
+    const t = setTimeout(() => setSavedToast(null), 2200);
+    return () => clearTimeout(t);
+  }, [savedToast]);
+
   const [quizPassed, setQuizPassed] = useState(false);
   const [showMilestone, setShowMilestone] = useState(false);
   const [milestoneScore, setMilestoneScore] = useState(0);
@@ -81,7 +104,11 @@ export default function BookReader({
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
 
-  const hasQuiz = hasBlockType(page.blocks, 'inline_quiz');
+  // A page is "gated" if it has a closing quiz OR an adaptive practice block —
+  // either way the reader must finish it before the page counts as complete.
+  const hasQuiz = hasBlockType(page.blocks, 'inline_quiz')
+    || hasBlockType(page.blocks, 'chapter_practice')
+    || hasBlockType(page.blocks, 'apply_express');
 
   useEffect(() => {
     let cancelled = false;
@@ -171,6 +198,17 @@ export default function BookReader({
           >
             <Bookmark size={14} className={bookmarkedSlugs.has(page.slug) ? 'fill-amber-400' : ''} />
           </button>
+          {vaultEnabled && (
+            <Link
+              href={`${bp}/vault`}
+              title="Open your Word Vault"
+              className="shrink-0 flex items-center gap-1 pl-1.5 pr-2 py-1 rounded-lg text-sky-300/80
+                bg-sky-500/10 hover:bg-sky-500/20 transition-colors"
+            >
+              <Library size={14} />
+              <span className="text-[11px] font-semibold tabular-nums">{vault.savedCount}</span>
+            </Link>
+          )}
         </div>
 
         {/* Chapter progress bar */}
@@ -293,10 +331,16 @@ export default function BookReader({
         {/* ── Page content ──────────────────────────────────────────────── */}
         <main className="flex-1 min-w-0">
           <ExtraSimulatorsProvider value={EXTRA_SIMULATORS}>
-            <PageRenderer
-              page={page}
-              onQuizPass={handleQuizPass}
-            />
+            <BookProvider value={{ bookSlug }}>
+              <VaultProvider
+                value={vaultEnabled ? { onSaveWord: handleSaveWord, isWordSaved: vault.hasWord } : {}}
+              >
+                <PageRenderer
+                  page={page}
+                  onQuizPass={handleQuizPass}
+                />
+              </VaultProvider>
+            </BookProvider>
           </ExtraSimulatorsProvider>
         </main>
       </div>
@@ -347,6 +391,19 @@ export default function BookReader({
           )}
         </div>
       </nav>
+
+      {/* ── Word Vault save toast ──────────────────────────────────────── */}
+      {savedToast && (
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2
+          px-4 py-2.5 rounded-full bg-[#0B0F15] border border-sky-500/30 shadow-2xl
+          text-sm text-white/85">
+          <Library size={15} className="text-sky-400" />
+          <span>Saved <span className="font-semibold text-sky-300">“{savedToast}”</span> to your Word Vault</span>
+          <Link href={`${bp}/vault`} className="ml-1 text-sky-400 hover:text-sky-300 font-semibold text-[13px]">
+            Review →
+          </Link>
+        </div>
+      )}
 
       {/* ── Metered free gate ──────────────────────────────────────────── */}
       <FreeGate bookSlug={bookSlug} pageSlug={page.slug} basePath={bp} />

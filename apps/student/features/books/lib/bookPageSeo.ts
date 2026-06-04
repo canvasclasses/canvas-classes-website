@@ -40,6 +40,8 @@ const SUBJECT_LABELS: Record<string, string> = {
   mathematics: 'Mathematics',
   science: 'Science',
   social_science: 'Social Science',
+  english: 'English',
+  ict: 'ICT',
 };
 
 // ── Utility: turn a markdown block into a clean excerpt ───────────────────

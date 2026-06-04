@@ -52,7 +52,7 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   reasoning_prompt: 'Reasoning Prompt',
   curiosity_prompt: 'Curiosity Prompt',
   classify_exercise: 'Classify Exercise',
-  // English blocks (Class 9 Kaveri)
+  // English blocks (Class 9 Kaveri) — script-authored, shown read-only in editor
   narrated_passage: 'Narrated Passage',
   vocabulary_lab: 'Vocabulary Lab',
   literary_devices_highlighter: 'Literary Devices',
@@ -64,6 +64,8 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   writing_scaffold: 'Writing Scaffold',
   dialogue_role_play: 'Dialogue / Role-play',
   pronunciation_drill: 'Pronunciation Drill',
+  chapter_practice: 'Chapter Practice',
+  apply_express: 'Apply & Express',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -101,6 +103,8 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   writing_scaffold: '✍️',
   dialogue_role_play: '💬',
   pronunciation_drill: '🗣️',
+  chapter_practice: '◎',
+  apply_express: '🎮',
 };
 
 function blockPreview(block: ContentBlock): string {

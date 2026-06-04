@@ -47,6 +47,8 @@ const ComprehensionCheckpointRenderer    = dynamicBlock(() => import('./blocks/e
 const WritingScaffoldRenderer            = dynamicBlock(() => import('./blocks/english/WritingScaffoldRenderer'));
 const DialogueRolePlayRenderer           = dynamicBlock(() => import('./blocks/english/DialogueRolePlayRenderer'));
 const PronunciationDrillRenderer         = dynamicBlock(() => import('./blocks/english/PronunciationDrillRenderer'));
+const ChapterPracticeRenderer            = dynamicBlock(() => import('./blocks/english/ChapterPracticeRenderer'));
+const ApplyExpressRenderer               = dynamicBlock(() => import('./blocks/english/ApplyExpressRenderer'));
 
 export default function BlockRenderer({
   block,
@@ -90,6 +92,8 @@ export default function BlockRenderer({
     case 'writing_scaffold':              return <WritingScaffoldRenderer block={block} />;
     case 'dialogue_role_play':            return <DialogueRolePlayRenderer block={block} />;
     case 'pronunciation_drill':           return <PronunciationDrillRenderer block={block} />;
+    case 'chapter_practice':              return <ChapterPracticeRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
+    case 'apply_express':                 return <ApplyExpressRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
     default:                   return null;
   }
 }

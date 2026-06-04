@@ -385,6 +385,43 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/MendeleevGapPredictorSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // ── Class 9 ICT — interactive labs ───────────────────────────────────────
+  'code-the-bot': dynamic(
+    () => import('./simulations/CodeTheBotSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'logic-gate-lab': dynamic(
+    () => import('./simulations/LogicGateLabSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'debug-it': dynamic(
+    () => import('./simulations/DebugItSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'phishing-detective': dynamic(
+    () => import('./simulations/PhishingDetectiveSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'password-forge': dynamic(
+    () => import('./simulations/PasswordForgeSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'pixel-layers-studio': dynamic(
+    () => import('./simulations/PixelLayersStudioSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'how-the-web-works': dynamic(
+    () => import('./simulations/HowTheWebWorksSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'search-query-builder': dynamic(
+    () => import('./simulations/SearchQueryBuilderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'sound-wave-studio': dynamic(
+    () => import('./simulations/SoundWaveStudioSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
 };
 
 function SimulationSkeleton() {

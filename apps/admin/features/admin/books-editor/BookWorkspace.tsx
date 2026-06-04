@@ -37,9 +37,10 @@ export function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'reasoning_prompt':  return { ...base, type, reasoning_type: 'logical', prompt: '', reveal: '', difficulty_level: 2 };
     case 'curiosity_prompt':  return { ...base, type, prompt: '' };
     case 'classify_exercise': return { ...base, type, question: 'Which of these are…?', rows: [{ substance: '', is_solution: true, explanation: '' }] };
-    // English blocks (narrated_passage, vocabulary_lab, …) are authored via the
-    // English book pipeline, not this editor's Add-block menu, so they never
-    // reach here. The default keeps the switch exhaustive over BlockType.
+    // English / practice blocks (narrated_passage, vocabulary_lab,
+    // chapter_practice, apply_express, …) are authored via scripts / the English
+    // book pipeline, not this editor's Add-block menu, so they never reach here.
+    // The default keeps the switch exhaustive over BlockType.
     default:
       throw new Error(`defaultBlock: no default constructor for block type "${type}"`);
   }

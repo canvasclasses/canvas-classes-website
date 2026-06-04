@@ -34,7 +34,9 @@ export type BlockType =
   | 'comprehension_checkpoint'
   | 'writing_scaffold'
   | 'dialogue_role_play'
-  | 'pronunciation_drill';
+  | 'pronunciation_drill'
+  | 'chapter_practice'
+  | 'apply_express';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -511,6 +513,106 @@ export interface PronunciationDrillBlock extends BaseBlock {
   words: PronunciationWord[];  // 4–8 per drill
 }
 
+// E12. CHAPTER PRACTICE — adaptive, exam-like end-of-chapter practice.
+//      Unlike inline_quiz (a fixed 3-question page closure), this is a graded
+//      bank the reader works through; the selector (packages/data/books/
+//      practiceSelector.ts) sequences questions by difficulty + concept using
+//      the student's cumulative attempt history. Persists to BookPracticeAttempt.
+export type PracticeConceptTag =
+  | 'comprehension'
+  | 'vocab_in_context'
+  | 'grammar'
+  | 'interpretation'
+  | 'inference';
+export interface PracticeQuestion {
+  id: string;                  // stable within the book, e.g. 'ch1-pr-01'
+  question: string;
+  options: string[];
+  correct_index: number;
+  explanation?: string;
+  concept_tag: PracticeConceptTag;
+  difficulty: 1 | 2 | 3 | 4 | 5;
+}
+export interface ChapterPracticeBlock extends BaseBlock {
+  type: 'chapter_practice';
+  title?: string;
+  intro?: string;
+  chapter_number: number;      // for attribution + cumulative-history scoping
+  session_size?: number;       // questions served per session (default 8)
+  pass_threshold?: number;     // 0–1, default 0.7
+  questions: PracticeQuestion[];
+}
+
+// E13. APPLY & EXPRESS — the *productive* tier. Where `chapter_practice` (MCQ)
+//      tests recognition, this tier makes students PRODUCE language — NCERT's
+//      actual emphasis (CG-1 communication, CG-3 employ-in-writing): fill the
+//      blank, predict the next word, build a word from affixes, compose your
+//      own sentence, unscramble a line. Gamified (XP / streak / stars). Each
+//      challenge is auto-checkable (sentence_compose uses a deterministic gate
+//      + rubric self-check). Attempts persist to BookPracticeAttempt like MCQs.
+export type ApplyExpressKind =
+  | 'fill_blank'        // type the missing word(s); supports past-perfect drills
+  | 'predict_word'      // guess the next word of a real line from the text
+  | 'word_builder'      // pick the affix tile that forms the target word
+  | 'sentence_compose'  // write your own sentence using a target word/phrase
+  | 'unscramble';       // reorder shuffled tokens into the correct sentence
+
+interface ApplyChallengeBase {
+  id: string;
+  kind: ApplyExpressKind;
+  concept_tag: PracticeConceptTag;
+  difficulty: 1 | 2 | 3 | 4 | 5;
+  explanation?: string;
+}
+export interface FillBlankChallenge extends ApplyChallengeBase {
+  kind: 'fill_blank';
+  prompt: string;         // blanks marked with '____' (4+ underscores), in order
+  answers: string[][];    // accepted answers per blank, positional
+  hint?: string;
+}
+export interface PredictWordChallenge extends ApplyChallengeBase {
+  kind: 'predict_word';
+  lead: string;           // the line up to the missing final word
+  answers: string[];      // accepted next word(s)
+  full_line?: string;     // the complete line, revealed after answering
+}
+export interface WordBuilderChallenge extends ApplyChallengeBase {
+  kind: 'word_builder';
+  base: string;           // e.g. 'respect'
+  affixes: string[];      // tiles to choose from, e.g. ['un','dis','mis','im']
+  correct: string;        // the affix that fits, e.g. 'dis'
+  target: string;         // the formed word, e.g. 'disrespect'
+  position?: 'prefix' | 'suffix';   // default 'prefix'
+  meaning_hint?: string;
+}
+export interface SentenceComposeChallenge extends ApplyChallengeBase {
+  kind: 'sentence_compose';
+  word: string;           // the word/phrase to use, e.g. 'part and parcel'
+  instruction: string;
+  rubric: string[];       // self-check items shown with the model answer
+  model_answer: string;
+  min_words?: number;     // default 6
+}
+export interface UnscrambleChallenge extends ApplyChallengeBase {
+  kind: 'unscramble';
+  tokens: string[];       // shuffled words
+  answer: string;         // the correct sentence
+}
+export type ApplyChallenge =
+  | FillBlankChallenge
+  | PredictWordChallenge
+  | WordBuilderChallenge
+  | SentenceComposeChallenge
+  | UnscrambleChallenge;
+
+export interface ApplyExpressBlock extends BaseBlock {
+  type: 'apply_express';
+  title?: string;
+  intro?: string;
+  chapter_number: number;
+  challenges: ApplyChallenge[];
+}
+
 // ─── Union type ───────────────────────────────────────────────────────────────
 export type ContentBlock =
   | TextBlock
@@ -546,7 +648,9 @@ export type ContentBlock =
   | ComprehensionCheckpointBlock
   | WritingScaffoldBlock
   | DialogueRolePlayBlock
-  | PronunciationDrillBlock;
+  | PronunciationDrillBlock
+  | ChapterPracticeBlock
+  | ApplyExpressBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
@@ -591,7 +695,7 @@ export interface Book {
   _id: string;
   slug: string;          // e.g. "ncert-chemistry-class-11"
   title: string;
-  subject: 'chemistry' | 'biology' | 'physics' | 'mathematics' | 'english';
+  subject: 'chemistry' | 'biology' | 'physics' | 'mathematics' | 'science' | 'social_science' | 'english' | 'ict';
   /**
    * How the renderer behaves when an audio_url is empty on blocks that support audio
    * (narrated_passage, vocabulary_lab, dialogue_role_play, pronunciation_drill).

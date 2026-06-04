@@ -105,6 +105,16 @@ export const SUBJECT_THEME: Record<string, SubjectTheme> = {
     gradient: 'from-fuchsia-500/[0.08] via-transparent to-transparent',
     ring: 'ring-fuchsia-500/30',
   },
+  ict: {
+    icon: Cpu,
+    accent: 'text-indigo-400',
+    bg: 'bg-indigo-500/10',
+    border: 'border-indigo-500/20',
+    bar: 'from-indigo-500 to-blue-400',
+    badge: 'bg-indigo-500/15 text-indigo-400',
+    gradient: 'from-indigo-500/[0.08] via-transparent to-transparent',
+    ring: 'ring-indigo-500/30',
+  },
 };
 
 export function getTheme(subject: string): SubjectTheme {
@@ -164,6 +174,11 @@ export const SUBJECT_DECOR: Record<string, DecorIcon[]> = {
     { Icon: Brain,       top: '-10%', left: '60%', size: 88, rotate: 10,  opacity: 0.08 },
     { Icon: Cpu,         top: '55%',  left: '88%', size: 44, rotate: -10, opacity: 0.1  },
     { Icon: Sparkles,    top: '22%',  left: '82%', size: 36, rotate: 18,  opacity: 0.1  },
+  ],
+  ict: [
+    { Icon: Cpu,         top: '-10%', left: '60%', size: 92, rotate: 10,  opacity: 0.08 },
+    { Icon: Globe,       top: '55%',  left: '88%', size: 46, rotate: -12, opacity: 0.1  },
+    { Icon: Zap,         top: '22%',  left: '82%', size: 38, rotate: 18,  opacity: 0.09 },
   ],
 };
 

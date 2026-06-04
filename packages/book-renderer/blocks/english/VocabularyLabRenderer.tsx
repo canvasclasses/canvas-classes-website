@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { VocabularyLabBlock, VocabCard } from '@canvas/data/types/books';
+import { wordIdFor } from '@canvas/data/books/vocabulary';
+import { VaultContext } from '../../vault-context';
 import InlineMarkdown from '../InlineMarkdown';
 import InlineQuizRenderer from '../InlineQuizRenderer';
 
@@ -14,6 +16,8 @@ const MODE_LABEL: Record<VocabularyLabBlock['mode'], string> = {
 
 function Card({ card }: { card: VocabCard }) {
   const [flipped, setFlipped] = useState(false);
+  const { onSaveWord, isWordSaved } = useContext(VaultContext);
+  const saved = isWordSaved?.(wordIdFor(card.word)) ?? false;
 
   function speak() {
     if (card.audio_url) {
@@ -102,6 +106,36 @@ function Card({ card }: { card: VocabCard }) {
             >
               💡 {card.memory_hook}
             </div>
+          )}
+          {onSaveWord && (
+            <span
+              role="button"
+              tabIndex={0}
+              aria-disabled={saved}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (saved) return;
+                onSaveWord({
+                  wordId: wordIdFor(card.word),
+                  word: card.word,
+                  meaning: card.meaning,
+                  pos: card.pos,
+                  hindi: card.hindi,
+                  example: card.example,
+                  pronunciation: card.pronunciation,
+                  source: 'vocabulary_lab',
+                });
+              }}
+              className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold transition-colors"
+              style={{
+                background: saved ? 'rgba(16,185,129,0.12)' : 'rgba(14,165,233,0.14)',
+                border: `1px solid ${saved ? 'rgba(16,185,129,0.4)' : 'rgba(14,165,233,0.4)'}`,
+                color: saved ? '#34d399' : '#7dd3fc',
+                cursor: saved ? 'default' : 'pointer',
+              }}
+            >
+              {saved ? '✓ In your Word Vault' : '+ Save to Word Vault'}
+            </span>
           )}
         </div>
       )}

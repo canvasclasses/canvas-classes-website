@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useContext } from 'react';
 import { NarratedPassageBlock, NarratedSentence, WordGloss } from '@canvas/data/types/books';
+import { wordIdFor } from '@canvas/data/books/vocabulary';
+import { VaultContext } from '../../vault-context';
 import InlineMarkdown from '../InlineMarkdown';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -77,6 +79,7 @@ function Sentence({
 }) {
   const [openGloss, setOpenGloss] = useState<WordGloss | null>(null);
   const wrapperRef = useRef<HTMLSpanElement>(null);
+  const { onSaveWord, isWordSaved } = useContext(VaultContext);
 
   // Close gloss popover on click-outside.
   useEffect(() => {
@@ -196,6 +199,36 @@ function Sentence({
               “{openGloss.example}”
             </span>
           )}
+          {onSaveWord && (() => {
+            const saved = isWordSaved?.(wordIdFor(openGloss.word)) ?? false;
+            return (
+              <button
+                type="button"
+                disabled={saved}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSaveWord({
+                    wordId: wordIdFor(openGloss.word),
+                    word: openGloss.word,
+                    meaning: openGloss.meaning,
+                    pos: openGloss.pos,
+                    hindi: openGloss.hindi,
+                    example: openGloss.example,
+                    source: 'gloss',
+                  });
+                }}
+                className="mt-2.5 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold transition-colors"
+                style={{
+                  background: saved ? 'rgba(16,185,129,0.12)' : 'rgba(251,191,36,0.14)',
+                  border: `1px solid ${saved ? 'rgba(16,185,129,0.4)' : 'rgba(251,191,36,0.4)'}`,
+                  color: saved ? '#34d399' : '#fbbf24',
+                  cursor: saved ? 'default' : 'pointer',
+                }}
+              >
+                {saved ? '✓ In your Word Vault' : '+ Save to Word Vault'}
+              </button>
+            );
+          })()}
         </span>
       )}
     </span>

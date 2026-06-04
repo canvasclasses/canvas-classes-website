@@ -27,7 +27,7 @@ const BookSchema = new Schema<IBook>(
     subject: {
       type: String,
       required: true,
-      enum: ['chemistry', 'biology', 'physics', 'mathematics', 'science', 'social_science', 'english'],
+      enum: ['chemistry', 'biology', 'physics', 'mathematics', 'science', 'social_science', 'english', 'ict'],
     },
     grade: { type: Number, required: true, min: 6, max: 12 },
     board: {

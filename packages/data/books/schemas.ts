@@ -448,6 +448,58 @@ const PronunciationDrillBlockSchema = BaseBlockSchema.extend({
   words: z.array(PronunciationWordSchema).min(1).max(12),
 });
 
+const PracticeQuestionSchema = z.object({
+  id: z.string().min(1),
+  question: z.string().min(1),
+  options: z.array(z.string()).min(2, 'practice question must have at least 2 options'),
+  correct_index: z.number().int().nonnegative(),
+  explanation: z.string().optional(),
+  concept_tag: z.enum(['comprehension', 'vocab_in_context', 'grammar', 'interpretation', 'inference']),
+  difficulty: z.number().int().min(1).max(5),
+});
+
+const ChapterPracticeBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('chapter_practice'),
+  title: z.string().optional(),
+  intro: z.string().optional(),
+  chapter_number: z.number().int().positive(),
+  session_size: z.number().int().min(1).max(50).optional(),
+  pass_threshold: z.number().min(0).max(1).optional(),
+  questions: z.array(PracticeQuestionSchema).min(1).max(100),
+});
+
+const PRACTICE_CONCEPT = z.enum(['comprehension', 'vocab_in_context', 'grammar', 'interpretation', 'inference']);
+const ChallengeBase = {
+  id: z.string().min(1),
+  concept_tag: PRACTICE_CONCEPT,
+  difficulty: z.number().int().min(1).max(5),
+  explanation: z.string().optional(),
+};
+const ApplyChallengeSchema = z.discriminatedUnion('kind', [
+  z.object({ ...ChallengeBase, kind: z.literal('fill_blank'),
+    prompt: z.string().min(1), answers: z.array(z.array(z.string().min(1)).min(1)).min(1), hint: z.string().optional() }),
+  z.object({ ...ChallengeBase, kind: z.literal('predict_word'),
+    lead: z.string().min(1), answers: z.array(z.string().min(1)).min(1), full_line: z.string().optional() }),
+  z.object({ ...ChallengeBase, kind: z.literal('word_builder'),
+    base: z.string().min(1), affixes: z.array(z.string().min(1)).min(2).max(8),
+    correct: z.string().min(1), target: z.string().min(1),
+    position: z.enum(['prefix', 'suffix']).optional(), meaning_hint: z.string().optional() }),
+  z.object({ ...ChallengeBase, kind: z.literal('sentence_compose'),
+    word: z.string().min(1), instruction: z.string().min(1),
+    rubric: z.array(z.string().min(1)).min(1).max(5), model_answer: z.string().min(1),
+    min_words: z.number().int().min(1).max(40).optional() }),
+  z.object({ ...ChallengeBase, kind: z.literal('unscramble'),
+    tokens: z.array(z.string().min(1)).min(3).max(20), answer: z.string().min(1) }),
+]);
+
+const ApplyExpressBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('apply_express'),
+  title: z.string().optional(),
+  intro: z.string().optional(),
+  chapter_number: z.number().int().positive(),
+  challenges: z.array(ApplyChallengeSchema).min(1).max(50),
+});
+
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
 
 const ChildContentBlockSchema = z.discriminatedUnion('type', [
@@ -484,6 +536,8 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   WritingScaffoldBlockSchema,
   DialogueRolePlayBlockSchema,
   PronunciationDrillBlockSchema,
+  ChapterPracticeBlockSchema,
+  ApplyExpressBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -530,6 +584,8 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   WritingScaffoldBlockSchema,
   DialogueRolePlayBlockSchema,
   PronunciationDrillBlockSchema,
+  ChapterPracticeBlockSchema,
+  ApplyExpressBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

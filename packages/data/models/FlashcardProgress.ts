@@ -53,6 +53,13 @@ export interface IFlashcardProgress extends Document {
     user_id: string;          // Supabase auth user.id (uuid)
     user_email?: string;
     cards: Map<string, IFlashcardSRS>;
+    /**
+     * Word Vault SRS state — Live Books vocabulary, keyed by `vault:<word-slug>`.
+     * Stored alongside (not mixed into) `cards` so the chemistry flashcard deck's
+     * stats, heatmap, and daily caps stay independent of book-vocabulary review.
+     * Same FSRS sub-schema as `cards`.
+     */
+    vaultCards: Map<string, IFlashcardSRS>;
     metadata: Map<string, IFlashcardMetadata>;
     streak: {
         currentStreak: number;
@@ -136,6 +143,11 @@ const FlashcardProgressSchema = new Schema<IFlashcardProgress>(
         user_id: { type: String, required: true, unique: true, index: true },
         user_email: { type: String, default: '' },
         cards: {
+            type: Map,
+            of: FlashcardSRSSchema,
+            default: () => new Map()
+        },
+        vaultCards: {
             type: Map,
             of: FlashcardSRSSchema,
             default: () => new Map()

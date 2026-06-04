@@ -4,6 +4,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
 import BookReader from '@/features/books/components/reader/BookReader';
+import PracticeHub from '@/features/books/components/practice/PracticeHub';
 import type { Book, BookPage } from '@canvas/data/types/books';
 import { buildBookPageMetadata, buildBookPageJsonLd } from '@/features/books/lib/bookPageSeo';
 
@@ -86,6 +87,13 @@ export default async function Class9PageRoute({ params }: Props) {
 
   // basePath = /class-9/class9-science → back button + nav links stay under /class-9/
   const basePath = `/class-9/${bookSlug}`;
+
+  // The end-of-chapter "Practice & Mastery" page is a full-screen gamified hub
+  // (its own design + chrome), not a normal reader page. It launches the
+  // chapter_practice + apply_express flows from within.
+  if (page.tags?.includes('kaveri_section:practice')) {
+    return <PracticeHub book={book} page={page} bookSlug={bookSlug} basePath={basePath} />;
+  }
 
   // Schema.org LearningResource graph — lets Google understand this as a
   // Class 9 NCERT lesson (not just a generic article) so it can surface

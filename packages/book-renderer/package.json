@@ -9,7 +9,9 @@
     "./PageRenderer": "./PageRenderer.tsx",
     "./BlockRenderer": "./BlockRenderer.tsx",
     "./simulators-context": "./simulators-context.tsx",
-    "./simulations/vector-lab": "./blocks/simulations/vector-lab/VectorLabSim.tsx"
+    "./simulations/vector-lab": "./blocks/simulations/vector-lab/VectorLabSim.tsx",
+    "./vault-context": "./vault-context.tsx",
+    "./book-context": "./book-context.tsx"
   },
   "dependencies": {
     "@canvas/data": "*",
