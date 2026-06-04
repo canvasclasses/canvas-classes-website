@@ -8,7 +8,10 @@
     ".": "./index.ts",
     "./MathRenderer": "./MathRenderer.tsx",
     "./MoleculeViewer": "./MoleculeViewer.tsx",
-    "./flashcardMarkdown": "./flashcardMarkdown.tsx"
+    "./flashcardMarkdown": "./flashcardMarkdown.tsx",
+    "./AudioRecorder": "./AudioRecorder.tsx",
+    "./SVGDropZone": "./SVGDropZone.tsx",
+    "./VideoDropZone": "./VideoDropZone.tsx"
   },
   "dependencies": {
     "dompurify": "^3.4.5",
@@ -18,6 +21,7 @@
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-markdown": "*"
+    "react-markdown": "*",
+    "lucide-react": "*"
   }
 }

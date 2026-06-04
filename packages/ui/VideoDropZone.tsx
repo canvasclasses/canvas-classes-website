@@ -44,7 +44,7 @@ export default function VideoDropZone({ questionId, onUploaded, context }: Video
         try {
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('question_id', questionId);
+            formData.append('questionId', questionId);
             formData.append('field_type', 'solution');
             if (context) formData.append('context', context);
 

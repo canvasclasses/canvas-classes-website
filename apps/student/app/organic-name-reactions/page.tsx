@@ -5,7 +5,7 @@ import { fetchOrganicReactions } from '@/features/simulations/data/organicReacti
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-    title: 'All Organic Name Reactions for JEE, NEET & CBSE - Mechanisms & Notes | Canvas Classes',
+    title: 'All Organic Name Reactions for JEE, NEET & CBSE - Mechanisms & Notes',
     description: 'Complete list of all organic name reactions from NCERT Class 11 & 12 with mechanisms, reagents, and handwritten notes. Master Aldol, Cannizzaro, Friedel-Crafts for JEE, NEET & CBSE Boards.',
     keywords: [
         'Organic name reactions JEE',

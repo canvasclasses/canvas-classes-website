@@ -895,6 +895,48 @@ When in doubt, reuse — and lean on the page's text and worked examples to carr
 
 ---
 
+### 5.X — Sounds Like a Teacher, Not Like ChatGPT
+
+Real student feedback on early Class 11 pages flagged passages that "felt written by AI". The patterns below are the named tells reviewers spotted. **Every text block must pass these checks before publish.**
+
+#### Banned patterns
+
+| Pattern | Example caught | Why it's banned | Fix |
+|---|---|---|---|
+| **"Not X. It was Y." emphasis pair** | "This wasn't early curiosity. It was already chemistry." | Parallel construction for forced drama. The previous paragraph already made the point — the pair is editorial padding. | Delete the pair. If sentence N+1 is genuinely needed for clarity, fold it into sentence N. |
+| **Intensifier adverbs** | "by chemistry alone", "fully and literally", "in any dismissive sense", "purely chemistry", "exactly the same" | Adverb-stacking to defend a claim against a strawman objection nobody raised. | Delete the adverb. The verb already carries the meaning. |
+| **Triple repetition for rhythm** | "*specific* molecules released in *specific* amounts by *specific* organs" / "the things you can touch / things you can't" | Three uses of the same word for drama. Sounds rehearsed. | Pick one use. Vary the others or cut them. |
+| **"The secret / the truth is" reveal framing** | "This is the secret chemistry tells you when you open a textbook for the first time" | TED-talk reveal voice. A teacher states facts; they don't unveil them. | Drop the reveal phrasing. State the fact directly. |
+| **Internal contradiction within the same callout / paragraph** | "India was doing chemistry before there was a word for it" → next sentence cites the Sanskrit word *Rasāyana* | Each sentence written in isolation; nobody reread N+1 against N. | Read your paragraph end-to-end before committing. If sentence N+1 contradicts N, one of them is wrong. |
+| **Universal "you" / "every" assumption** | "The blanket you pushed off this morning — a synthetic polymer engineered to…" (half the readers have wool/cotton) | Treats one possibility as universal; readers who don't fit silently disengage. | Hedge: "If your blanket's synthetic…" / "Many of the things around you…" / "Some of you…" |
+| **Example that doesn't demonstrate the claim** | Claim: "chemistry is a layer of reality you don't notice." Example: alarm-clock sound (acoustics, not chemistry — the LCD glow IS the visible chemistry but got skipped) | AI pattern-matches on theme keywords ("alarm clock = morning routine") rather than on the actual concept lock. | Re-read the claim. Pick the example that demonstrates *that exact* concept, not a tangentially related one. |
+| **Em-dash rhythm — heavy use of em-dashes — for dramatic pauses — overused throughout** | "every one of them traces back to specific molecules — released in specific amounts — by specific organs — in your body" | AI overuses em-dashes. A teacher uses periods. | **Cap at one em-dash per paragraph.** If you've got two, the second is rephrasable as a comma, a period, or a parenthetical. |
+
+#### Friendly-teacher tone — what TO do
+
+- **Say it once.** If you've made the point clearly, stop. Trust the reader.
+- **Concrete > abstract.** "Serotonin, dopamine, cortisol" beats "specific molecules". Naming things beats describing categories of things.
+- **Plain construction.** Subject-verb-object. Lists with commas. Stop trying to land emotional beats.
+- **The teacher's "you" is permissive, not declarative.** "If you've ever…" instead of "you've all…". "Some of you may have…" instead of "every one of you has…".
+- **A line that sounds beautiful out loud is suspect.** AI writes for ear-rhythm. Re-read silently for *meaning*. If the line is mostly cadence, cut it.
+
+#### Voice-audit checklist — run before every page publish
+
+Read each text block aloud and tick:
+
+- [ ] No "not X. It is Y." parallel pairs
+- [ ] No intensifier adverbs (alone, fully, literally, exactly, purely, completely)
+- [ ] No word repeated 3× in 2 sentences
+- [ ] No "the secret is / the truth is / what most people don't realise" reveal phrasing
+- [ ] Sentence N+1 doesn't contradict sentence N (re-read paragraph end-to-end)
+- [ ] No universal "you" / "every" / "the X you used" that won't apply to ~half the readers
+- [ ] Every illustrative example demonstrates the *exact* claim it's attached to
+- [ ] ≤ 1 em-dash per paragraph
+- [ ] Specific nouns (serotonin, dopamine) beat category-words (molecules, neurotransmitters)
+- [ ] Out loud, the prose sounds like a teacher explaining, not a TED talk performing
+
+---
+
 ## 6. LaTeX Rules (Book Page Context)
 
 The renderer uses **KaTeX** with **mhchem** extension loaded. Both `$...$` (inline) and `$$...$$` (display/block) are supported. `\ce{}` works for chemical formulas.

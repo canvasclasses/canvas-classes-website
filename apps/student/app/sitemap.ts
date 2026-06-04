@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // /bitsat-chemistry-revision removed from sitemap 2026-05-25 — BITSAT
         // 2026 exam window ended; page is noindex'd until refreshed for 2027.
         { path: '/college-predictor', priority: 1.0, changeFrequency: 'daily' as const },
+        { path: '/college-predictor/compare', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/career-guide', priority: 0.95, changeFrequency: 'weekly' as const },
         { path: '/career-planning', priority: 0.9, changeFrequency: 'weekly' as const },
         // /jee-pyqs removed from sitemap 2026-05-25 — route deleted, the
@@ -44,6 +45,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/physical-chemistry-hub', priority: 0.85, changeFrequency: 'weekly' as const },
         { path: '/inorganic-chemistry-hub/vsepr', priority: 0.7, changeFrequency: 'monthly' as const },
         { path: '/inorganic-chemistry-hub/bond-angles', priority: 0.7, changeFrequency: 'monthly' as const },
+        // Mechanics Hub — vectors is the flagship simulator
+        { path: '/mechanics-hub', priority: 0.85, changeFrequency: 'weekly' as const },
+        { path: '/mechanics-hub/vectors', priority: 0.85, changeFrequency: 'weekly' as const },
         { path: '/chemihex', priority: 0.75, changeFrequency: 'monthly' as const },
         // Live Books landing pages (grade hubs)
         { path: '/class-9', priority: 1.0, changeFrequency: 'daily' as const },

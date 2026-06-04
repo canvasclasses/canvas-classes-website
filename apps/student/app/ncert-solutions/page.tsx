@@ -3,7 +3,7 @@ import NCERTSolutionsClient from './NCERTSolutionsClient';
 import { getChapterGroups, getNCERTStats } from '@/features/books/data/ncertData';
 
 export const metadata: Metadata = {
-    title: 'NCERT Solutions for Class 11 & 12 Chemistry - Free PDF | Canvas Classes',
+    title: 'NCERT Solutions for Class 11 & 12 Chemistry - Free PDF',
     description: 'Free NCERT Chemistry solutions for Class 11 & 12 with step-by-step explanations. All chapters covered including Solutions, Electrochemistry, Organic Chemistry. Updated for 2025-26 CBSE, JEE & NEET.',
     keywords: [
         'NCERT Solutions Class 12 Chemistry',

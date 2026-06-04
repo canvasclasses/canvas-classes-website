@@ -30,14 +30,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const data = await loadCollegeDeepDive(slug).catch(() => null);
-  if (!data) return { title: 'College not found · Canvas Classes' };
+  if (!data) return { title: 'College not found' };
 
   const { college, latest_year, branches } = data;
   const yearTag = latest_year ? ` ${latest_year}` : '';
   const topBranch = branches[0];
   const topRank = topBranch?.latest_closing_rank;
 
-  const title = `${college.short_name} Cutoff${yearTag} — Branch-wise Closing Ranks | Canvas Classes`;
+  const title = `${college.short_name} Cutoff${yearTag} — Branch-wise Closing Ranks`;
   const description = topBranch && topRank
     ? `${college.short_name} JoSAA cutoffs${yearTag}: ${topBranch.branch_short_name} closed at rank ${topRank.toLocaleString('en-IN')}. See 5-year trends, round-by-round progression, and branch comparison for all branches at ${college.name}.`
     : `${college.short_name} JoSAA cutoffs, 5-year rank trends, and branch comparison. Get data-backed closing ranks for every branch at ${college.name}.`;

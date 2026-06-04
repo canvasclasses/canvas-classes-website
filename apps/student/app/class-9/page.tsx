@@ -21,7 +21,7 @@ const CANONICAL = `${SITE_URL}/class-9`;
 // Metadata is tuned to rank against those queries.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Class 9 NCERT — New Syllabus Live Books (Science, Maths, Physics) | Canvas Classes',
+  title: 'Class 9 NCERT — New Syllabus Live Books (Science, Maths, Physics)',
   description:
     'Read the new NCERT Class 9 syllabus as interactive live books — Science, Mathematics, Physics. Chapter-wise lessons with simulations, worked examples, quizzes, and Hinglish mode. Free on Canvas Classes.',
   keywords: [

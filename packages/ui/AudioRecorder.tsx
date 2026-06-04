@@ -18,7 +18,7 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
   const [audioUrl, setAudioUrl] = useState<string | null>(existingAudioUrl || null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
-  
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -50,12 +50,12 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
       }
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      
+
       // Check for supported mime types
-      const mimeType = MediaRecorder.isTypeSupported('audio/webm') 
-        ? 'audio/webm' 
-        : MediaRecorder.isTypeSupported('audio/mp4') 
-          ? 'audio/mp4' 
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm')
+        ? 'audio/webm'
+        : MediaRecorder.isTypeSupported('audio/mp4')
+          ? 'audio/mp4'
           : '';
 
       const mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
@@ -80,7 +80,7 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
       mediaRecorder.start();
       setIsRecording(true);
       setRecordingTime(0);
-      
+
       timerRef.current = setInterval(() => {
         setRecordingTime(prev => prev + 1);
       }, 1000);
@@ -123,7 +123,7 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
     try {
       const formData = new FormData();
       formData.append('file', audioBlob, `solution_${questionId}.webm`);
-      formData.append('question_id', questionId);
+      formData.append('questionId', questionId);
       formData.append('field_type', 'solution');
       if (context) formData.append('context', context);
 
@@ -133,7 +133,7 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         const cdnUrl = result.data?.file?.cdn_url || result.data?.url || '';
         onAudioSaved(cdnUrl);
@@ -150,7 +150,7 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
 
   const deleteAudio = async () => {
     if (!confirm('Delete this audio recording? This will remove it from Cloudflare R2 storage.')) return;
-    
+
     try {
       // If it's an existing audio (uploaded to R2), delete from R2
       if (existingAudioUrl) {
@@ -160,18 +160,18 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
           const res = await fetch(`/api/v2/assets?question_id=${questionId}&type=audio`);
           const data = await res.json() as { data?: Array<{ _id: string; file: { cdn_url: string } }> };
           const asset = data.data?.find((a) => a.file.cdn_url === existingAudioUrl);
-          
+
           if (asset) {
             await fetch(`/api/v2/assets/${asset._id}`, { method: 'DELETE' });
           }
         }
-        
+
         // Call the callback to update the question
         if (onAudioDeleted) {
           onAudioDeleted();
         }
       }
-      
+
       // Clear local state
       setAudioBlob(null);
       if (audioUrl && !existingAudioUrl) URL.revokeObjectURL(audioUrl);
@@ -185,7 +185,7 @@ export default function AudioRecorder({ questionId, onAudioSaved, onAudioDeleted
 
   const togglePlayback = () => {
     if (!audioRef.current) return;
-    
+
     if (isPlaying) {
       audioRef.current.pause();
     } else {

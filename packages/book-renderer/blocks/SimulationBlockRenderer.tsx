@@ -112,6 +112,11 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/InclinedPlaneSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // ── Class 11 Physics — Mechanics foundation: vectors ─────────────────────
+  'vector-lab': dynamic(
+    () => import('./simulations/vector-lab/VectorLabSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   // ── Class 9 Physics — Chapter 10: Force and Laws of Motion ───────────────
   'force-balance': dynamic(
     () => import('./simulations/ForceBalanceSim'),

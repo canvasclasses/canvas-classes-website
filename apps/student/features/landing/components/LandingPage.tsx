@@ -7,7 +7,7 @@ import PaarasSirSection from "./PaarasSirSection";
 import FinalCTASection from "./FinalCTASection";
 
 export const metadata: Metadata = {
-    title: "Academics, Mindset & Life — under one Canvas | Canvas Classes",
+    title: "Academics, Mindset & Life — under one Canvas",
     description: "From Class 9 to JEE. Interactive tools, adaptive practice, and lessons that go beyond textbooks — built by Paaras Sir.",
 };
 

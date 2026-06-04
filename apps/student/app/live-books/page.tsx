@@ -5,7 +5,7 @@ const SITE_URL = 'https://www.canvasclasses.in';
 const CANONICAL = `${SITE_URL}/live-books`;
 
 export const metadata: Metadata = {
-  title: 'Live Books — Interactive NCERT Lessons | Canvas Classes',
+  title: 'Live Books — Interactive NCERT Lessons',
   description:
     'Canvas Live Books turn every NCERT chapter into an interactive lesson — simulations, worked examples, quizzes, and Hinglish mode. Coming soon across grades.',
   alternates: { canonical: CANONICAL },

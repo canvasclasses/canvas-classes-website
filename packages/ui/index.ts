@@ -10,4 +10,7 @@
 
 export { default as MathRenderer } from './MathRenderer';
 export { default as MoleculeViewer } from './MoleculeViewer';
+export { default as AudioRecorder } from './AudioRecorder';
+export { default as SVGDropZone } from './SVGDropZone';
+export { default as VideoDropZone } from './VideoDropZone';
 export * from './flashcardMarkdown';

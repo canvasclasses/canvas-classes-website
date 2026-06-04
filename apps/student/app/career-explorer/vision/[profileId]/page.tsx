@@ -9,7 +9,7 @@ import type { ICareerPath } from '@canvas/data/models/CareerPath';
 import VisionClient, { type VisionSeed } from '@/features/career-explorer/components/VisionClient';
 
 export const metadata: Metadata = {
-  title: 'Your Vision of the Future — Career Explorer | Canvas Classes',
+  title: 'Your Vision of the Future — Career Explorer',
   description:
     'A one-page personal vision built from your Career Explorer results. Edit it, print it, share it with someone who knows you.',
 };

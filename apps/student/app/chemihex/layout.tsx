@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 const BASE_URL = 'https://www.canvasclasses.in';
 
 export const metadata: Metadata = {
-    title: 'Chemihex — Hexagonal Reaction Game for Organic Chemistry | Canvas Classes',
+    title: 'Chemihex — Hexagonal Reaction Game for Organic Chemistry',
     description: 'Learn organic chemistry reactions through play. Chemihex is an interactive hexagonal puzzle that lets you experiment with reagents and watch products form in real time. Built for JEE, NEET, and CBSE students by Paaras Sir.',
     keywords: [
         'organic chemistry game',

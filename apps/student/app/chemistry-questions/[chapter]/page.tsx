@@ -28,7 +28,7 @@ export async function generateMetadata(props: { params: Promise<{ chapter: strin
     if (!data) return {};
 
     return {
-        title: `${data.chapterName} Questions & Answers - Class 12 Chemistry | Canvas Classes`,
+        title: `${data.chapterName} Questions & Answers - Class 12 Chemistry`,
         description: `Practice ${data.chapterName} questions for JEE, NEET and CBSE Class 12. Detailed answers and explanations for all top concepts.`,
     };
 }

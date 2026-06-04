@@ -7,7 +7,7 @@ import BrowseClient from '@/features/career-explorer/components/BrowseClient';
 import type { BrowseCareer } from '@/features/career-explorer/types';
 
 export const metadata: Metadata = {
-  title: 'Browse All Careers — Career Explorer | Canvas Classes',
+  title: 'Browse All Careers — Career Explorer',
   description:
     'Browse careers by family, by the school subjects you enjoy, or by the evergreen human needs they serve. No quiz required.',
   alternates: { canonical: 'https://canvasclasses.com/career-explorer/browse' },

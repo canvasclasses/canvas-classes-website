@@ -22,11 +22,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const chapter = await getChapterBySlug(slug);
 
     if (!chapter) {
-        return { title: 'Chapter Not Found | Canvas Classes' };
+        return { title: 'Chapter Not Found' };
     }
 
     const url = `${BASE_URL}/detailed-lectures/${slug}`;
-    const title = `${chapter.name} — Class ${chapter.class} Chemistry Video Lectures | Canvas Classes`;
+    const title = `${chapter.name} — Class ${chapter.class} Chemistry Video Lectures`;
     const description = `${chapter.videoCount} free video lectures on ${chapter.name} (Class ${chapter.class}, ${chapter.classification} Chemistry) — total ${chapter.totalDuration} of complete chapter coverage by Paaras Sir for JEE Main, JEE Advanced, NEET & CBSE.${chapter.keyTopics?.length ? ` Topics: ${chapter.keyTopics.slice(0, 5).join(', ')}.` : ''}`;
 
     return {

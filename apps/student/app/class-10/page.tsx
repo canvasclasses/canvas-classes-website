@@ -11,7 +11,7 @@ import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: 'Class 10 Live Books — NCERT Interactive Lessons | Canvas Classes',
+  title: 'Class 10 Live Books — NCERT Interactive Lessons',
   description:
     'Class 10 NCERT live books with interactive lessons, simulations, quizzes, and Hinglish mode. Coming soon on Canvas Classes.',
 };

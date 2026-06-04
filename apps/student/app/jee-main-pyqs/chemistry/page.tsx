@@ -9,7 +9,7 @@ const HUB_URL = `${BASE_URL}/jee-main-pyqs/chemistry`;
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-    title: 'JEE Main Chemistry PYQs — Chapter-wise (Class 11 + 12) | Canvas Classes',
+    title: 'JEE Main Chemistry PYQs — Chapter-wise (Class 11 + 12)',
     description:
         'Browse JEE Main chemistry previous year questions chapter-wise. Class 11 and Class 12 chemistry across all 25 NCERT chapters — physical, organic, inorganic, practical. Free with detailed solutions by Paaras Sir.',
     keywords: [

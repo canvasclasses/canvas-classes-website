@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ chapterId
     if (!chapter) return { title: 'Not Found' };
 
     return {
-        title: `${chapter.name} PYQ Practice | The Crucible — Canvas Classes`,
+        title: `${chapter.name} PYQ Practice | The Crucible`,
         description: `Practice ${chapter.name} questions from JEE Main, JEE Advanced and NEET. Curated PYQs with full solutions by Paaras Sir.`,
         keywords: [
             `${chapter.name} JEE questions`,

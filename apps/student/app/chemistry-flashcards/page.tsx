@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const totalChapters = summaries.length;
 
     return {
-        title: `Chemistry Flashcards – ${totalCards}+ Cards, ${totalChapters} Chapters | Canvas Classes`,
+        title: `Chemistry Flashcards – ${totalCards}+ Cards, ${totalChapters} Chapters`,
         description: `Master Class 12 Chemistry with ${totalCards}+ flashcards across ${totalChapters} chapters — Physical, Organic & Inorganic. Spaced repetition algorithm built for JEE Main, JEE Advanced, NEET & BITSAT. Made by Paaras Sir at Canvas Classes.`,
         keywords: [
             'chemistry flashcards class 12',

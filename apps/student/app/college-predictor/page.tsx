@@ -9,7 +9,7 @@ import TrustStrip from '@/features/college-predictor/components/TrustStrip';
 import { TOP_COLLEGES } from '@/features/college-predictor/data/topCollegesData';
 
 export const metadata: Metadata = {
-  title: 'JEE Main & BITSAT College Predictor 2026 — NIT, IIIT, GFTI, BITS Rank Predictor | Canvas Classes',
+  title: 'JEE Main & BITSAT College Predictor 2026 — NIT, IIIT, GFTI, BITS Rank Predictor',
   description:
     'Free JEE Main + BITSAT college predictor. Enter your JEE Main rank/percentile for Safe / Target / Reach NITs, IIITs and GFTIs, or your BITSAT score for BITS Pilani / Goa / Hyderabad. Built on 5 years of JoSAA cutoff data and 9 years of official BITSAT closing scores.',
   keywords: [
@@ -325,6 +325,29 @@ export default function CollegePredictorPage() {
       </Suspense>
 
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-20">
+
+        <section className="mt-12">
+          <Link
+            href="/college-predictor/compare"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-5 rounded-2xl border transition-colors"
+            style={{ background: '#f59e0b10', borderColor: '#f59e0b40' }}
+          >
+            <div>
+              <div className="text-base md:text-lg font-semibold text-white">
+                Stuck between two or three colleges? Compare them side-by-side →
+              </div>
+              <div className="text-sm text-zinc-400 mt-1">
+                Branch heritage, fit (research / startups / core industry / govt-PSU / abroad), NIRF, fees &amp; cutoff trend — not just packages.
+              </div>
+            </div>
+            <span
+              className="self-start sm:self-auto whitespace-nowrap px-4 py-2.5 rounded-full text-sm font-bold"
+              style={{ background: 'linear-gradient(to right, #f97316, #f59e0b)', color: '#000' }}
+            >
+              Compare colleges
+            </span>
+          </Link>
+        </section>
 
         <section className="mt-16">
           <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">

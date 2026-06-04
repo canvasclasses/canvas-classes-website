@@ -16,10 +16,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { n } = await params;
     const day = dayByNumber(Number(n));
-    if (!day) return { title: 'BITSAT Chemistry · Day Not Found | Canvas Classes' };
+    if (!day) return { title: 'BITSAT Chemistry · Day Not Found' };
     const cleanTitle = day.title.split('—')[0].trim();
     return {
-        title: `Day ${day.day}: ${cleanTitle} · BITSAT Chemistry 30-Day Plan | Canvas Classes`,
+        title: `Day ${day.day}: ${cleanTitle} · BITSAT Chemistry 30-Day Plan`,
         description: day.focus.slice(0, 160),
         alternates: { canonical: `/bitsat-chemistry-revision/plan/day/${day.day}` },
     };

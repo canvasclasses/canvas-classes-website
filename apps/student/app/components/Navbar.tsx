@@ -181,6 +181,7 @@ const planYourCareerMenu: MegaMenuDef = {
     {
       heading: '',
       links: [
+        { label: 'Branch Finder', href: '/college-predictor/branch-finder', badge: 'new' },
         { label: 'Career Guide', href: '/career-guide' },
         { label: 'Career Planning hub', href: '/career-planning' },
       ],

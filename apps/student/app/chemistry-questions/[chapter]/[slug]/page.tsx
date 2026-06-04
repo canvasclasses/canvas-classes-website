@@ -31,7 +31,7 @@ export async function generateMetadata(props: { params: Promise<{ chapter: strin
     if (!question) return {};
 
     return {
-        title: `${question.question.substring(0, 50)}... - Class 12 Chemistry | Canvas Classes`,
+        title: `${question.question.substring(0, 50)}... - Class 12 Chemistry`,
         description: `Detailed answer for: ${question.question.substring(0, 120)}... Chapter: ${question.chapterName}.`,
         alternates: {
             canonical: `https://www.canvasclasses.in/chemistry-questions/${params.chapter}/${params.slug}`,
