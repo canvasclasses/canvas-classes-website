@@ -111,7 +111,13 @@ function relevantQuotas(
     }
     return isHome ? ['HS', 'OS'] : ['OS'];
   }
-  return ['AI'];
+  // IIITs and most GFTIs admit through the All-India (AI) pool — but several
+  // state-affiliated GFTIs (e.g. IIEST Shibpur, PEC Chandigarh, GKCIET Malda)
+  // store their JoSAA cutoffs under HS/OS instead of AI. Returning only ['AI']
+  // silently dropped those colleges from EVERY prediction. Try AI first (the
+  // common case), then fall back to the state quotas so state-GFTIs are
+  // included — home-state seat first when the student is local.
+  return isHome ? ['AI', 'HS', 'OS'] : ['AI', 'OS', 'HS'];
 }
 
 // ── Projection model ───────────────────────────────────────────────────────────
@@ -122,13 +128,21 @@ interface Projection {
   confidence_reason: string;
 }
 
+// The max JEE Main CRL is bounded by the candidate pool (~1.5M). A projected
+// closing rank can never legitimately exceed that — clamp so a noisy/near-open
+// home-state seat (or any stray bad data) can't surface an impossible number
+// like "24,14,727". Tiny-state HS quotas genuinely close very late, but the
+// displayed projection stays within the realm of real ranks.
+const MAX_REALISTIC_RANK = 1_500_000;
+const clampRank = (r: number): number => Math.min(Math.max(Math.round(r), 1), MAX_REALISTIC_RANK);
+
 function project(historical: { year: number; closing_rank: number }[]): Projection {
   const sorted = [...historical].sort((a, b) => b.year - a.year); // newest first
 
   if (sorted.length === 1) {
     const r = sorted[0].closing_rank;
     return {
-      projected: r,
+      projected: clampRank(r),
       sigma: Math.max(r * 0.15, 50),
       confidence: 'low',
       confidence_reason: 'Only 1 year of data',
@@ -152,7 +166,7 @@ function project(historical: { year: number; closing_rank: number }[]): Projecti
   const oldest = sorted[sorted.length - 1];
   const span = newest.year - oldest.year;
   const slope = span > 0 ? (newest.closing_rank - oldest.closing_rank) / span : 0;
-  const projected = weightedMean + slope;
+  const projected = clampRank(weightedMean + slope);
 
   const cv = sigma / Math.max(weightedMean, 1);
   let confidence: Confidence;

@@ -22,6 +22,7 @@ import {
 } from './primitives';
 import ShareCardButton from '../components/ShareCardButton';
 import ChoiceListBuilder from '../components/ChoiceListBuilder';
+import { BRANCH_BUCKETS, BUCKET_DRILLDOWN } from '../lib/branchBuckets';
 
 // ============================================================================
 // PredictorExperience — the unified form + results surface that implements
@@ -375,6 +376,31 @@ const BITSAT_BRANCH_TO_CODE: Record<string, string> = {
   Manufacturing: 'BE-MANF',
 };
 
+// Shared styles for the branch-filter chips (bucket chips, drill-down chips,
+// and the BITSAT programme chips all use the same look).
+const BRANCH_LABEL_STYLE: React.CSSProperties = {
+  color: '#cfcfd6',
+  fontSize: 11,
+  fontWeight: 700,
+  letterSpacing: '0.16em',
+  fontFamily: "'JetBrains Mono', monospace",
+  marginBottom: 10,
+};
+function branchChipStyle(active: boolean): React.CSSProperties {
+  return {
+    padding: '7px 12px',
+    borderRadius: 8,
+    border: active ? `1px solid ${ACCENT}80` : '1px solid rgba(255,255,255,0.08)',
+    background: active ? `${ACCENT}15` : 'rgba(255,255,255,0.02)',
+    color: active ? ACCENT : '#cfcfd6',
+    fontSize: 12.5,
+    fontWeight: active ? 600 : 500,
+    cursor: 'pointer',
+    transition: 'all 0.15s',
+    fontFamily: 'inherit',
+  };
+}
+
 export default function PredictorExperience() {
   const router = useRouter();
   const pathname = usePathname();
@@ -418,9 +444,15 @@ export default function PredictorExperience() {
   // analytics showed users were missing the collapsed section entirely and
   // asking us to add a branch filter that was already there.
   const [narrowOpen, setNarrowOpen] = useState(true);
+  // BITSAT branch filter still uses single-select programme chips (its ~19
+  // programmes don't need bucketing).
   const [pickedBranches, setPickedBranches] = useState<string[]>(
     initialBranch ? [initialBranch] : [],
   );
+  // JEE branch filter uses BUCKETS (consolidated branch groups) + an optional
+  // drill-down to a specific branch within the chosen bucket.
+  const [pickedBucket, setPickedBucket] = useState<string | null>(null);
+  const [pickedSpecific, setPickedSpecific] = useState<string | null>(null);
   const [tierOnly, setTierOnly] = useState(false);
 
   // Submission + results state
@@ -484,6 +516,8 @@ export default function PredictorExperience() {
         // A ?dream_branch= handoff from the Branch Finder takes precedence over
         // the saved selection, so the predictor opens scoped to that branch.
         if (!initialBranch && Array.isArray(s.pickedBranches)) setPickedBranches(s.pickedBranches as string[]);
+        if (typeof s.pickedBucket === 'string' || s.pickedBucket === null) setPickedBucket(s.pickedBucket as string | null);
+        if (typeof s.pickedSpecific === 'string' || s.pickedSpecific === null) setPickedSpecific(s.pickedSpecific as string | null);
         if (typeof s.tierOnly === 'boolean') setTierOnly(s.tierOnly);
         if (Array.isArray(s.jeeGroups)) setJeeGroups(s.jeeGroups as JoSAACollegeGroup[]);
         if (Array.isArray(s.bitsatRows)) setBitsatRows(s.bitsatRows as BitsatProgrammeResult[]);
@@ -510,7 +544,7 @@ export default function PredictorExperience() {
         STORAGE_KEY,
         JSON.stringify({
           exam, rank, rankType, category, quota, homeState, isFemale, isPwD,
-          score, paper, pickedBranches, tierOnly,
+          score, paper, pickedBranches, pickedBucket, pickedSpecific, tierOnly,
           jeeGroups, bitsatRows, sens, totalCount, counts, rankConversion,
           audience, filter, extended,
         }),
@@ -519,7 +553,7 @@ export default function PredictorExperience() {
       // sessionStorage quota / disabled — silent fail; UI still works.
     }
   }, [hydrated, exam, rank, rankType, category, quota, homeState, isFemale, isPwD,
-      score, paper, pickedBranches, tierOnly,
+      score, paper, pickedBranches, pickedBucket, pickedSpecific, tierOnly,
       jeeGroups, bitsatRows, sens, totalCount, counts, rankConversion,
       audience, filter, extended]);
 
@@ -551,7 +585,8 @@ export default function PredictorExperience() {
         category: effectiveCategory,
         gender: effectiveGender,
         home_state: homeState,
-        ...(pickedBranches[0] ? { dream_branch: pickedBranches[0] } : {}),
+        ...(pickedBucket ? { branch_bucket: pickedBucket } : {}),
+        ...(pickedSpecific ? { dream_branch: pickedSpecific } : {}),
         ...(tierOnly ? { tier_only: true } : {}),
         extended: true,
       };
@@ -594,7 +629,8 @@ export default function PredictorExperience() {
         // Branch filter: the UI is single-select, so one branch maps cleanly to
         // the API's single dream_branch param. Tier-1 is also enforced
         // server-side so counts/total/pagination stay consistent with the rows.
-        ...(pickedBranches[0] ? { dream_branch: pickedBranches[0] } : {}),
+        ...(pickedBucket ? { branch_bucket: pickedBucket } : {}),
+        ...(pickedSpecific ? { dream_branch: pickedSpecific } : {}),
         ...(tierOnly ? { tier_only: true } : {}),
         extended: false,
       };
@@ -968,9 +1004,13 @@ export default function PredictorExperience() {
             MOST USED
           </span>
           <span style={{ color: '#9a9aa6', fontSize: 12.5 }}>
-            {pickedBranches[0]
-              ? `${pickedBranches[0]} only`
-              : 'pick one — CSE, ECE, Mechanical or any branch you want'}
+            {exam === 'jee'
+              ? (pickedBucket
+                  ? `${BRANCH_BUCKETS.find((b) => b.id === pickedBucket)?.short ?? ''}${pickedSpecific ? ` · ${pickedSpecific}` : ''}`
+                  : 'pick a branch group — CS, Electronics, Mechanical …')
+              : (pickedBranches[0]
+                  ? `${pickedBranches[0]} only`
+                  : 'pick one — CSE, ECE, Mechanical or any programme')}
           </span>
         </div>
         <span
@@ -987,55 +1027,75 @@ export default function PredictorExperience() {
       </button>
       {narrowOpen && (
         <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div>
-            <div
-              style={{
-                color: '#cfcfd6',
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.16em',
-                fontFamily: "'JetBrains Mono', monospace",
-                marginBottom: 10,
-              }}
-            >
-              BRANCHES — pick one
+          {exam === 'jee' ? (
+            <>
+              {/* JEE: branch BUCKETS (consolidate all naming variants into a few
+                  groups so the long tail of branches is reachable without 150+
+                  chips). Single-select; clears any drill-down on change. */}
+              <div>
+                <div style={BRANCH_LABEL_STYLE}>BRANCH GROUP — pick one</div>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {BRANCH_BUCKETS.map((bk) => {
+                    const active = pickedBucket === bk.id;
+                    return (
+                      <button
+                        key={bk.id}
+                        type="button"
+                        title={bk.title}
+                        onClick={() => {
+                          setPickedBucket((cur) => (cur === bk.id ? null : bk.id));
+                          setPickedSpecific(null);
+                        }}
+                        style={branchChipStyle(active)}
+                      >
+                        {bk.short}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* Optional drill-down to a specific branch within the chosen bucket. */}
+              {pickedBucket && (BUCKET_DRILLDOWN[pickedBucket]?.length ?? 0) > 0 && (
+                <div>
+                  <div style={BRANCH_LABEL_STYLE}>NARROW DOWN — optional</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                    {BUCKET_DRILLDOWN[pickedBucket].map((d) => {
+                      const active = pickedSpecific === d.match;
+                      return (
+                        <button
+                          key={d.match}
+                          type="button"
+                          onClick={() => setPickedSpecific((cur) => (cur === d.match ? null : d.match))}
+                          style={branchChipStyle(active)}
+                        >
+                          {d.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div>
+              <div style={BRANCH_LABEL_STYLE}>BRANCHES — pick one</div>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {['CSE', 'ECE', 'EEE', 'Mechanical', 'Chemical', 'Biological', 'Pharmacy', 'Manufacturing'].map((b) => {
+                  const active = pickedBranches.includes(b);
+                  return (
+                    <button
+                      key={b}
+                      type="button"
+                      onClick={() => setPickedBranches((arr) => (arr[0] === b ? [] : [b]))}
+                      style={branchChipStyle(active)}
+                    >
+                      {b}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-              {(exam === 'jee'
-                ? ['CSE', 'ECE', 'IT', 'EE', 'Mechanical', 'Civil', 'Chemical', 'Materials']
-                : ['CSE', 'ECE', 'EEE', 'Mechanical', 'Chemical', 'Biological', 'Pharmacy', 'Manufacturing']
-              ).map((b) => {
-                const active = pickedBranches.includes(b);
-                return (
-                  <button
-                    key={b}
-                    type="button"
-                    onClick={() =>
-                      // Single-select: the predictor matches one branch at a
-                      // time (API accepts a single dream_branch), so picking a
-                      // chip replaces the selection; clicking the active one
-                      // clears it.
-                      setPickedBranches((arr) => (arr[0] === b ? [] : [b]))
-                    }
-                    style={{
-                      padding: '7px 12px',
-                      borderRadius: 8,
-                      border: active ? `1px solid ${ACCENT}80` : '1px solid rgba(255,255,255,0.08)',
-                      background: active ? `${ACCENT}15` : 'rgba(255,255,255,0.02)',
-                      color: active ? ACCENT : '#cfcfd6',
-                      fontSize: 12.5,
-                      fontWeight: active ? 600 : 500,
-                      cursor: 'pointer',
-                      transition: 'all 0.15s',
-                      fontFamily: 'inherit',
-                    }}
-                  >
-                    {b}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          )}
           {/* Tier-1 restriction only applies to JEE — NIT/IIIT/GFTI carry an
               NIRF ranking to filter on. Every BITSAT result is a BITS campus,
               so the toggle is hidden on that tab rather than left as a no-op. */}
@@ -1158,6 +1218,8 @@ export default function PredictorExperience() {
                   // doesn't wipe a restored selection/results.
                   if (t.id !== exam) {
                     setPickedBranches([]);
+                    setPickedBucket(null);
+                    setPickedSpecific(null);
                     setJeeGroups(null);
                     setBitsatRows(null);
                     setSens(null);

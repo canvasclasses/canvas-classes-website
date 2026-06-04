@@ -14,6 +14,7 @@ import {
   type AspirationKey,
 } from '@/features/college-predictor/data/instituteProfiles';
 import type { CompareCollege, Momentum } from '@/features/college-predictor/lib/compareData';
+import { bucketForBranch, BRANCH_BUCKETS } from '@/features/college-predictor/lib/branchBuckets';
 
 const ACCENT = '#f59e0b';
 const MAX_ITEMS = 3;
@@ -647,11 +648,26 @@ function ComparisonGrid({
                     fontFamily: 'inherit',
                   }}
                 >
-                  {c.availableBranches.map((b) => (
-                    <option key={b.short_name} value={b.short_name} style={{ background: '#10141d' }}>
-                      {b.short_name}
-                    </option>
-                  ))}
+                  {/* Options grouped by branch bucket so a college's long
+                      branch list is organised (CS / Electronics / …) instead of
+                      a flat 15-item dropdown. */}
+                  {(() => {
+                    const groups = new Map<string, { short_name: string; name: string }[]>();
+                    for (const b of c.availableBranches) {
+                      const bk = bucketForBranch(b.name, b.short_name);
+                      if (!groups.has(bk)) groups.set(bk, []);
+                      groups.get(bk)!.push(b);
+                    }
+                    return BRANCH_BUCKETS.filter((bk) => groups.has(bk.id)).map((bk) => (
+                      <optgroup key={bk.id} label={bk.short} style={{ background: '#10141d' }}>
+                        {groups.get(bk.id)!.map((b) => (
+                          <option key={b.short_name} value={b.short_name} style={{ background: '#10141d' }}>
+                            {b.short_name}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ));
+                  })()}
                 </select>
               )}
             </div>
