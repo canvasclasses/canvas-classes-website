@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { predictColleges, type PredictorResult, type Bucket } from '@/features/college-predictor/lib/predictor';
 import { resolveEffectiveRank } from '@/features/college-predictor/lib/percentileToRank';
+import { bucketForBranch, BRANCH_BUCKET_BY_ID } from '@/features/college-predictor/lib/branchBuckets';
 import { createRateLimiter, getClientIp } from '@canvas/core/rate-limit';
 
 const PredictRequestSchema = z.object({
@@ -30,7 +31,8 @@ const PredictRequestSchema = z.object({
   // ── Optional refinement filters ────────────────────────────────────────────
   regions: z.array(z.enum(['North', 'South', 'East', 'West', 'Central', 'Northeast'])).optional(),
   college_types: z.array(z.enum(['NIT', 'IIIT', 'GFTI'])).optional(),
-  dream_branch: z.string().max(80).optional(),   // e.g. "CSE", "ECE", "ME"
+  dream_branch: z.string().max(80).optional(),   // e.g. "CSE", "ECE", "ME" — drill-down within a bucket
+  branch_bucket: z.string().max(20).optional(),  // bucket id (see branchBuckets.ts) — primary branch filter
   dream_college: z.string().max(80).optional(),  // slug OR short_name (partial match OK)
   tier_only: z.boolean().optional(),             // restrict to NIRF top-25 (Tier-1) institutes
 }).refine((d) => d.rank !== undefined || d.percentile !== undefined, {
@@ -248,6 +250,7 @@ function groupByCollege(
   results: PredictorResult[],
   dreamBranch?: string,
   dreamCollege?: string,
+  bucket?: string,
 ): CollegeGroup[] {
   const map = new Map<string, CollegeGroup>();
   for (const r of results) {
@@ -285,6 +288,13 @@ function groupByCollege(
         const aDream = branchMatches(a.branch_short_name, a.branch_name, dreamBranch) ? 0 : 1;
         const bDream = branchMatches(b.branch_short_name, b.branch_name, dreamBranch) ? 0 : 1;
         if (aDream !== bDream) return aDream - bDream;
+      }
+      // When a bucket is active, surface its branches first so the headline
+      // branch shown per college belongs to the selected group.
+      if (bucket) {
+        const aBk = bucketForBranch(a.branch_name, a.branch_short_name) === bucket ? 0 : 1;
+        const bBk = bucketForBranch(b.branch_name, b.branch_short_name) === bucket ? 0 : 1;
+        if (aBk !== bBk) return aBk - bBk;
       }
       const d = BUCKET_RANK[a.bucket] - BUCKET_RANK[b.bucket];
       if (d !== 0) return d;
@@ -378,12 +388,23 @@ export async function POST(request: NextRequest) {
       return true;
     });
 
-    let groups = groupByCollege(filtered, input.dream_branch, input.dream_college);
+    const activeBucket = input.branch_bucket && BRANCH_BUCKET_BY_ID[input.branch_bucket]
+      ? input.branch_bucket
+      : undefined;
 
-    // If the user named a dream branch, the list should only show colleges
-    // where that branch actually appears. Otherwise the top card ends up
-    // displaying an unrelated program (Civil at a college with no Mechanical),
-    // which is misleading.
+    let groups = groupByCollege(filtered, input.dream_branch, input.dream_college, activeBucket);
+
+    // Branch-bucket filter (primary): keep only colleges that offer at least one
+    // branch in the selected bucket. This consolidates all naming variants
+    // (e.g. every CS/AI/DS/IT label) under one choice.
+    if (activeBucket) {
+      groups = groups.filter((g) =>
+        g.branches.some((b) => bucketForBranch(b.branch_name, b.branch_short_name) === activeBucket),
+      );
+    }
+
+    // Dream-branch filter (optional drill-down within the bucket): if the user
+    // also named a specific branch, narrow to colleges where it appears.
     if (input.dream_branch && input.dream_branch.trim()) {
       groups = groups.filter((g) =>
         g.branches.some((b) =>
