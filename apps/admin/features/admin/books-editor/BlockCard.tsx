@@ -52,6 +52,18 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   reasoning_prompt: 'Reasoning Prompt',
   curiosity_prompt: 'Curiosity Prompt',
   classify_exercise: 'Classify Exercise',
+  // English blocks (Class 9 Kaveri)
+  narrated_passage: 'Narrated Passage',
+  vocabulary_lab: 'Vocabulary Lab',
+  literary_devices_highlighter: 'Literary Devices',
+  character_map: 'Character Map',
+  theme_explorer: 'Theme Explorer',
+  tone_meter: 'Tone Meter',
+  cultural_context_card: 'Cultural Context',
+  comprehension_checkpoint: 'Comprehension Check',
+  writing_scaffold: 'Writing Scaffold',
+  dialogue_role_play: 'Dialogue / Role-play',
+  pronunciation_drill: 'Pronunciation Drill',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -77,6 +89,18 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   reasoning_prompt: '🧩',
   curiosity_prompt: '✦',
   classify_exercise: '⊡',
+  // English blocks (Class 9 Kaveri)
+  narrated_passage: '🔊',
+  vocabulary_lab: '📖',
+  literary_devices_highlighter: '🖋️',
+  character_map: '🧑‍🤝‍🧑',
+  theme_explorer: '🎭',
+  tone_meter: '🎚️',
+  cultural_context_card: '🏛️',
+  comprehension_checkpoint: '✅',
+  writing_scaffold: '✍️',
+  dialogue_role_play: '💬',
+  pronunciation_drill: '🗣️',
 };
 
 function blockPreview(block: ContentBlock): string {
