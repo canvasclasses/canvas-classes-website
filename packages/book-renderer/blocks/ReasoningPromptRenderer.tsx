@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ReasoningPromptBlock, ReasoningType } from '@canvas/data/types/books';
+import InlineMarkdown from './InlineMarkdown';
 
 // ── Type config ───────────────────────────────────────────────────────────────
 
@@ -49,9 +50,11 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
       </div>
 
       {/* Prompt */}
-      <p className="text-[15px] leading-relaxed text-white/90 mb-4 font-medium">
-        {block.prompt}
-      </p>
+      <div className="mb-4">
+        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/90 font-medium">
+          {block.prompt}
+        </InlineMarkdown>
+      </div>
 
       {/* MCQ options */}
       {hasOptions && !committed && (
@@ -72,7 +75,7 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
               <span className="mr-2" style={{ color: selected === i ? color : 'rgba(255,255,255,0.2)' }}>
                 {String.fromCharCode(65 + i)}.
               </span>
-              {opt}
+              <InlineMarkdown>{opt}</InlineMarkdown>
             </button>
           ))}
         </div>
@@ -112,7 +115,7 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
                 className="text-xs font-semibold px-2.5 py-1 rounded-lg"
                 style={{ background: dimColor, color }}
               >
-                {String.fromCharCode(65 + selected)}. {block.options![selected]}
+                {String.fromCharCode(65 + selected)}. <InlineMarkdown>{block.options![selected]}</InlineMarkdown>
               </span>
             </div>
           )}
@@ -125,7 +128,7 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
               <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color }}>
                 What to notice
               </p>
-              {block.reveal}
+              <InlineMarkdown paragraphClassName="leading-relaxed mb-2 last:mb-0">{block.reveal}</InlineMarkdown>
             </div>
           )}
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { CuriosityPromptBlock } from '@canvas/data/types/books';
+import InlineMarkdown from './InlineMarkdown';
 
 export default function CuriosityPromptRenderer({ block }: { block: CuriosityPromptBlock }) {
   const [revealed, setRevealed] = useState(false);
@@ -15,12 +16,16 @@ export default function CuriosityPromptRenderer({ block }: { block: CuriosityPro
         </span>
       </div>
 
-      <p className="text-[16px] leading-relaxed text-white/85 font-medium mb-3">
-        {block.prompt}
-      </p>
+      <div className="mb-3">
+        <InlineMarkdown paragraphClassName="text-[16px] leading-relaxed text-white/85 font-medium">
+          {block.prompt}
+        </InlineMarkdown>
+      </div>
 
       {block.hint && !revealed && (
-        <p className="text-[13px] text-white/35 italic mb-3">{block.hint}</p>
+        <div className="mb-3">
+          <InlineMarkdown paragraphClassName="text-[13px] text-white/35 italic">{block.hint}</InlineMarkdown>
+        </div>
       )}
 
       {!revealed && (
@@ -37,7 +42,7 @@ export default function CuriosityPromptRenderer({ block }: { block: CuriosityPro
           <p className="text-[10px] font-bold uppercase tracking-widest text-teal-400/60 mb-1.5">
             Here&apos;s what&apos;s interesting
           </p>
-          <p className="text-[14px] text-white/60 leading-relaxed">{block.reveal}</p>
+          <InlineMarkdown paragraphClassName="text-[14px] text-white/60 leading-relaxed">{block.reveal}</InlineMarkdown>
         </div>
       )}
 

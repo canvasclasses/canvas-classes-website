@@ -13,6 +13,7 @@
     "./flashcards/*": "./flashcards/*.ts",
     "./books/*": "./books/*.ts",
     "./bitsat/*": "./bitsat/*.ts",
+    "./periodic/*": "./periodic/*.ts",
     "./id-generator": "./id-generator/index.ts",
     "./difficulty": "./difficulty.ts",
     "./rbac": "./rbac.ts",

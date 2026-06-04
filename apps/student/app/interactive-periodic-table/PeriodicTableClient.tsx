@@ -31,7 +31,7 @@ import {
     getColorForValue,
     type Element,
     type CategoryType,
-} from '@/features/simulations/data/elementsData';
+} from '@canvas/data/periodic/elementsData';
 import PeriodicTableQuiz from './PeriodicTableQuiz';
 import OxidesReferenceSection from './OxidesReferenceSection';
 import PeriodicTableMCQQuiz from './PeriodicTableMCQQuiz';

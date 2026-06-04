@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   ChevronLeft, ChevronRight, BookOpen, Trophy, ArrowRight, Bookmark,
-  CheckCircle2,
+  CheckCircle2, Brain, Gamepad2, X,
 } from 'lucide-react';
 import Link from 'next/link';
 import PageRenderer from '@canvas/book-renderer/PageRenderer';
@@ -19,11 +19,16 @@ const AtomicModels = dynamic(
   () => import('@/app/physical-chemistry-hub/AtomicModels'),
   { ssr: false }
 );
+// Chapter 3 (Periodicity) simulators now live IN the shared renderer package
+// (packages/book-renderer/blocks/simulations/), registered directly in
+// SimulationBlockRenderer.tsx, so they resolve in both the student reader and
+// the admin editor preview. Only atomic-models stays app-local.
 const EXTRA_SIMULATORS = { 'atomic-models': AtomicModels };
 import { Book, BookPage, BlockType, ContentBlock } from '@canvas/data/types/books';
 import { useBookProgress } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
 import { useBookUserState } from '@/features/books/hooks/useBookUserState';
+import { isReaderLoggedIn } from '@/features/books/lib/readerAuth';
 import FreeGate from './FreeGate';
 
 function hasBlockType(blocks: ContentBlock[], type: BlockType): boolean {
@@ -71,8 +76,18 @@ export default function BookReader({
   const [showMilestone, setShowMilestone] = useState(false);
   const [milestoneScore, setMilestoneScore] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  // null = unknown (auth check still in flight). We only gate once we know the
+  // visitor is definitively logged out, so a slow check never blocks a member.
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+  const [showSignInPrompt, setShowSignInPrompt] = useState(false);
 
   const hasQuiz = hasBlockType(page.blocks, 'inline_quiz');
+
+  useEffect(() => {
+    let cancelled = false;
+    isReaderLoggedIn().then(v => { if (!cancelled) setLoggedIn(v); });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     if (completedSlugs.has(page.slug)) {
@@ -100,16 +115,26 @@ export default function BookReader({
 
   function handleQuizPass(_blockId: string, score: number) {
     setQuizPassed(true);
+    // Logged-out readers can't have progress saved — the POST would 401 and the
+    // optimistic insert would roll back, flipping `quizPassed` (and the Next
+    // button) back off with no explanation. Skip the save and nudge them to
+    // sign in instead.
+    if (loggedIn === false) {
+      setShowSignInPrompt(true);
+      return;
+    }
     completePage(score, true);
   }
 
-  // Pages with no quiz complete silently on load — no popup
+  // Pages with no quiz complete silently on load — no popup. Only attempt the
+  // save once we know the reader is logged in; for anonymous visitors it would
+  // just 401 and roll back.
   useEffect(() => {
-    if (!hasQuiz && !completedSlugs.has(page.slug)) {
+    if (loggedIn === true && !hasQuiz && !completedSlugs.has(page.slug)) {
       completePage(100, false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasQuiz, page.slug]);
+  }, [hasQuiz, page.slug, loggedIn]);
 
   const completedInChapter = chapterPages.filter(p => completedSlugs.has(p.slug)).length;
   const progressPct = chapterPages.length > 0
@@ -298,8 +323,13 @@ export default function BookReader({
           {/* Next */}
           {nextPageSlug ? (
             <Link
-              href={canGoNext ? `${bp}/${nextPageSlug}` : '#'}
-              onClick={e => { if (!canGoNext) e.preventDefault(); }}
+              href={canGoNext && loggedIn !== false ? `${bp}/${nextPageSlug}` : '#'}
+              onClick={e => {
+                // Anonymous readers get one free page — intercept and prompt
+                // sign-in instead of silently advancing or silently blocking.
+                if (loggedIn === false) { e.preventDefault(); setShowSignInPrompt(true); return; }
+                if (!canGoNext) e.preventDefault();
+              }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors
                 ${canGoNext
                   ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold hover:opacity-90'
@@ -362,6 +392,73 @@ export default function BookReader({
                 </button>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Sign-in nudge (logged-out readers) ──────────────────────────── */}
+      {showSignInPrompt && (
+        <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center"
+          onClick={() => setShowSignInPrompt(false)}>
+          <div className="absolute inset-0 bg-[#050505]/80 backdrop-blur-md" />
+
+          <div className="relative w-full max-w-md mx-4 bg-[#0B0F15] border border-white/10
+            rounded-t-3xl sm:rounded-3xl p-8 shadow-2xl"
+            onClick={e => e.stopPropagation()}>
+
+            {/* Dismiss */}
+            <button
+              onClick={() => setShowSignInPrompt(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-white/30
+                hover:text-white/70 hover:bg-white/5 transition-colors"
+              title="Close"
+            >
+              <X size={16} />
+            </button>
+
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500
+              flex items-center justify-center mx-auto mb-5">
+              <BookOpen size={24} className="text-black" />
+            </div>
+
+            <h2 className="text-xl font-bold text-white text-center mb-2">
+              Sign in to keep reading
+            </h2>
+            <p className="text-sm text-white/50 text-center mb-6">
+              You can read the first page for free. Create a free account to continue to
+              the next page — and so your progress is saved as you go.
+            </p>
+
+            <div className="space-y-3 mb-8">
+              <div className="flex items-center gap-3 text-sm text-white/60">
+                <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                <span>Track your progress across all chapters</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-white/60">
+                <Brain size={16} className="text-violet-400 shrink-0" />
+                <span>Adaptive quizzes that learn your weak spots</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-white/60">
+                <Gamepad2 size={16} className="text-sky-400 shrink-0" />
+                <span>Interactive simulations and 3D molecules</span>
+              </div>
+            </div>
+
+            <Link
+              href={`/login?next=${encodeURIComponent(`${bp}/${page.slug}`)}`}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl
+                bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-sm
+                hover:opacity-90 transition-opacity mb-3"
+            >
+              Sign in to continue <ArrowRight size={15} />
+            </Link>
+
+            <button
+              onClick={() => setShowSignInPrompt(false)}
+              className="w-full py-2 text-[13px] text-white/40 hover:text-white/70 transition-colors"
+            >
+              Maybe later
+            </button>
           </div>
         </div>
       )}

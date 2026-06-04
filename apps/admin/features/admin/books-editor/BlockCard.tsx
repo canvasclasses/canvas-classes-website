@@ -178,6 +178,22 @@ export default function BlockCard({
 
         {/* Actions */}
         <div className="flex items-center gap-1 shrink-0">
+          {/* Audience tier tag — Core (default) vs Competitive (NEET/JEE).
+              Phase 0: stored only; gated to paid plans in a later phase. */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onChange({ tier: block.tier === 'competitive' ? 'core' : 'competitive' } as Partial<ContentBlock>);
+            }}
+            title="Audience tier — tap to toggle. Core = CBSE / all students. Competitive = NEET / JEE depth (will be gated to paid plans later)."
+            className={
+              block.tier === 'competitive'
+                ? 'px-1.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wide bg-violet-500/20 text-violet-300 border border-violet-400/30 hover:bg-violet-500/30 transition-colors'
+                : 'px-1.5 py-0.5 rounded-md text-[10px] font-medium uppercase tracking-wide bg-white/5 text-white/30 border border-white/10 hover:text-white/55 hover:border-white/20 transition-colors'
+            }
+          >
+            {block.tier === 'competitive' ? 'Comp' : 'Core'}
+          </button>
           <AddBlockMenu onAdd={onAddAfter} afterId={block.id} compact />
           <button
             onClick={onDelete}

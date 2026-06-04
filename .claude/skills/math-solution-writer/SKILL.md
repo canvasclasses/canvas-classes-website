@@ -108,3 +108,15 @@ A solution is bad when:
 3. **Verify the answer BEFORE writing the solution.** If you write first and verify second, you'll be tempted to fudge the derivation to match the stored answer.
 4. **For coord-geometry problems, ALWAYS include a 🖼️ Visual Sketch.** Skip only for pure algebra (Vieta, AP/GP, identities).
 5. **The 🧠 section is the most important.** Spend the most thought on it. Name the problem category, quote the visible clue from the question, state the first concrete move. Zero computation in this section.
+
+---
+
+## State file (MANDATORY — update after every batch)
+
+After a batch of solutions is applied (or any solution is updated/flagged), refresh the Crucible state inventory and log it:
+
+```bash
+node scripts/crucible-state.js
+```
+
+Then add ONE dated line to the Changelog at the bottom of `_agents/state/CRUCIBLE_STATE.md` (e.g. `— Maths / Straight Lines: wrote 10 solutions`). The script rewrites only the AUTO inventory region; the Changelog line is added by hand. Read this state file at the start of a solution task too — it shows per-chapter question counts and flag counts without re-querying Mongo.

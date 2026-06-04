@@ -6,6 +6,11 @@
 // every valid expression including aligned, cases, array, etc.
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+// Load mhchem so \ce{} works in display equations, exactly as the inline
+// renderers (TextBlockRenderer etc.) do. Without this, \ce was faked with a
+// `\text{#1}` macro that throws on any chem containing ^, ->, _ — so every
+// multi-line \ce equation fell back to showing raw LaTeX source.
+import 'katex/contrib/mhchem';
 import { useMemo } from 'react';
 import { LatexBlock } from '@canvas/data/types/books';
 
@@ -52,7 +57,8 @@ function renderLatexCached(source: string): RenderResult {
         // kept for parity with the inline renderers so authors can rely on a
         // single consistent rule platform-wide.
         macros: {
-          '\\ce': '\\text{#1}', // fallback if mhchem not loaded
+          // \ce is provided by the mhchem extension imported above.
+          // Parity with the inline renderers: force \frac to display style.
           '\\frac': '\\dfrac{#1}{#2}',
         },
       }),

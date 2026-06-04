@@ -2,6 +2,7 @@
 
 import { SectionBlock, SectionLayout } from '@canvas/data/types/books';
 import BlockRenderer from '../BlockRenderer';
+import InlineMarkdown from './InlineMarkdown';
 
 const LAYOUT_CLASSES: Record<SectionLayout, string> = {
   'single-column': '',
@@ -31,7 +32,7 @@ export default function SectionBlockRenderer({ block, onQuizPass }: Props) {
     >
       {block.title && (
         <h2 className="text-[22px] font-semibold text-white/90 mb-4 tracking-tight">
-          {block.title}
+          <InlineMarkdown>{block.title}</InlineMarkdown>
         </h2>
       )}
 

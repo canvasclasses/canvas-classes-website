@@ -52,15 +52,19 @@ const sideImageWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
 };
 
 // ── Markdown renderer overrides for the side_text (match TextBlockRenderer) ──
+// Font sizes are intentionally identical to TextBlockRenderer so body text,
+// list items and headings look the same whether the text is standalone or
+// sitting beside an image.  Only vertical margins are tightened slightly
+// (my-2.5 / my-3 instead of my-3 / my-5) to suit the side-by-side column.
 const sideTextComponents: Components = {
   h2: ({ children }) => (
-    <h2 className="text-[19px] font-bold text-sky-300 mt-2 mb-2 tracking-tight leading-tight">{children}</h2>
+    <h2 className="text-[22px] font-bold text-sky-300 mt-2 mb-2 tracking-tight leading-tight">{children}</h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-[16px] font-semibold text-sky-300/80 mt-3 mb-1.5 tracking-tight">{children}</h3>
+    <h3 className="text-[17px] font-semibold text-sky-300/80 mt-3 mb-1.5 tracking-tight">{children}</h3>
   ),
   p: ({ children }) => (
-    <p className="text-[16px] leading-[1.65] text-white/82 my-2.5 first:mt-0 last:mb-0">{children}</p>
+    <p className="text-[17px] leading-[1.65] text-white/82 my-2.5 first:mt-0 last:mb-0">{children}</p>
   ),
   strong: ({ children }) => (
     <strong className="font-semibold text-amber-200">{children}</strong>
@@ -69,13 +73,13 @@ const sideTextComponents: Components = {
     <em className="italic text-white/75">{children}</em>
   ),
   ul: ({ children }) => (
-    <ul className="my-3 pl-5 space-y-2 list-disc marker:text-white/30 text-[15px]">{children}</ul>
+    <ul className="my-3 pl-5 space-y-2 list-disc marker:text-white/30">{children}</ul>
   ),
   ol: ({ children }) => (
-    <ol className="my-3 pl-5 space-y-2 list-decimal marker:text-white/40 text-[15px]">{children}</ol>
+    <ol className="my-3 pl-5 space-y-2 list-decimal marker:text-white/40">{children}</ol>
   ),
   li: ({ children }) => (
-    <li className="text-[15px] leading-[1.6] text-white/78">{children}</li>
+    <li className="text-[17px] leading-[1.75] text-white/78">{children}</li>
   ),
   a: ({ href, children }) => (
     <a href={href} className="text-orange-400 no-underline hover:underline">{children}</a>

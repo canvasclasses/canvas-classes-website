@@ -3,6 +3,14 @@
 > Single source of truth for building digital book pages in the NCERT Simplified platform.
 > **When building any book page, follow this document exactly.**
 
+> **Project state lives in [`_agents/state/LIVE_BOOKS_STATE.md`](../state/LIVE_BOOKS_STATE.md).**
+> Read it at the START of any Live Books task to see what content already exists
+> (books, chapters, page counts, publish status, Hinglish coverage) without
+> re-querying Mongo. After ANY content change — new page, `hinglish_blocks`,
+> publish toggle, chapter restructure — run `node scripts/livebooks-state.js` to
+> refresh that file's inventory, then add one dated line to its Changelog. This is
+> a required final step, not optional housekeeping.
+
 ---
 
 ## 1. What You Are Building
@@ -1011,9 +1019,18 @@ For pages covering carbon/hydrogen/nitrogen/halogen estimation:
 
 ---
 
-## 12. Hinglish Authoring — Class 9 Pages
+## 12. Hinglish Authoring — All Live Books (Class 9–12)
 
-Class 9 pages ship with a parallel `hinglish_blocks` array so the student can toggle between English and Hinglish. The target reader is a North Indian 9th grader (Himachal / Uttarakhand / Punjab belt) in an English-medium school who doesn't fully follow academic English and otherwise defaults to rote learning.
+**Every Live Book page — across Class 9, 10, 11 and 12 — ships with a parallel `hinglish_blocks` array** so the student can toggle between English and Hinglish. The shared goal is the same in every class: a North Indian student (Himachal / Uttarakhand / Punjab belt) in an English-medium school who doesn't fully follow academic English should be able to flip the page into the way a teacher would actually explain it out loud, and grasp it fast.
+
+The **voice is the same across all classes** — a friendly North-Indian classroom teacher, casual (never formal/literary Hindi), explaining to students in front of them. What changes between tracks is only the imagined teacher's level and the source material:
+
+| Track | Classes | Reader | Imagined teacher |
+|---|---|---|---|
+| **NCERT "Exploration" — Vedic Fusion** | 9 & 10 | First time meeting secondary science; easily lost in academic English | A Class 9 Science teacher (e.g. Sharma sir, Dehradun) — scene-building, wonder-first |
+| **JEE/NEET Prep** | 11 & 12 | Preparing for JEE/NEET; smart, busy, slightly intimidated | A JEE/NEET coaching teacher — warm but efficient, gets to the point, still talks like a person |
+
+Both use the **same register** (§12.2): second-person *tum*, technical/common words stay English, Hindi carries the rhythm and emotional connective tissue. Class 11–12 pages do **not** carry Vedic verse openers, so §12.8 (Gita shlok) applies only to the Class 9 & 10 Vedic-Fusion track — everything else in this section applies to all classes.
 
 **What gets a Hinglish version:** only `text`-type blocks. Everything else (`heading`, `callout`, `image`, `worked_example`, `inline_quiz`, `timeline`, `table`, `comparison_card`, `simulation`, `reasoning_prompt`) renders in English in both modes.
 
@@ -1039,7 +1056,11 @@ Signs you're re-explaining:
 
 ### 12.2 Voice — Pick One Teacher and Stay There
 
-Imagine a single specific teacher — e.g. a Sharma sir, 40, teaches Science to a Class 9 section in Dehradun, explains things with scene-building and the occasional *zara socho*. Every Hinglish block on a page comes from that one voice.
+Imagine a single specific teacher and let every Hinglish block on a page come from that one voice. Match the teacher to the track:
+- **Class 9 & 10:** a Sharma sir, 40, teaches Science to a Class 9 section in Dehradun, explains things with scene-building and the occasional *zara socho*.
+- **Class 11 & 12 (JEE/NEET):** a coaching teacher who's seen a thousand students panic before mains — warm, efficient, cuts to the insight, but still talks like a person in the room, not a textbook. Less scene-building, more "*dekho, yeh cheez actually simple hai*" and "*yahaan students phaste hain*".
+
+Either way, it is one consistent voice across the whole page.
 
 **Do not oscillate** between:
 - Formal literary Hindi (*vigyan ek prakriya hai*) and casual chat (*science basically ek process hai*) within the same page
@@ -1048,8 +1069,8 @@ Imagine a single specific teacher — e.g. a Sharma sir, 40, teaches Science to 
 
 Pick the register and hold it across the whole page. The default register for this book:
 - Second person **tum** (never aap, never tu)
-- Common English words stay English: *scientist, theory, experiment, atom, hypothesis, result, strategy, question, course, skill, level*
-- Hindi carries emotional weight and action verbs: *ruk ke poochha, baith gaya, haath kaanp gaye, samajh aa gayi, chhod diya*
+- **Keep in English every word the student already understands — not just technical terms, but everyday words too.** This covers (a) all scientific/technical vocabulary (*scientist, theory, experiment, atom, electron, reaction, battery, hypothesis, result*) **and** (b) ordinary content words a tier-2/3 English-medium student knows at a glance: **metal & material names** (*iron, copper, zinc* — never *loha / taamba*), **everyday objects** (*phone, car, aeroplane, window* — never *hawai jahaz / khidki*), **plain adjectives** (*slow, fast, cheap, clean, quiet, dirty, thin, tiny* — never *dheema*), **common places/nouns** (*city, street, road, sky, air, smoke*), and **simple numbers, fractions & ordinals** (*one-fourth, half, double, third* — never *chauthai / aadha / dugna / teesra*). Swapping these into Hindi makes the page read like a translation, not a teacher talking. The per-word test: *would the student already understand this English word at a glance?* If yes, leave it in English.
+- **Hindi does exactly three jobs — never swapping an easy word:** (1) the **connective glue and teacher rhythm** (*dekho, yani, zara, iska hal hai, jaan lo, matlab, chupke-chupke*); (2) **action & feeling verbs and idioms** (*badal deti hai, khaa jaati hai, ruk ke poochha, baith gaya, samajh aa gayi*, plus the §12.4 idioms); and (3) **re-saying a genuinely hard or abstract *non-scientific* English word** in simpler terms (*harnessed, restless, pitched as, one-stop, routinely*). If a word fails the test above, simplify it — otherwise keep it English.
 - Sanskrit-origin Hindi only when the concept demands it: *dharma, gyaan-parampara, prakriti, parmanu* — and only with a short gloss if it's technical
 
 ### 12.3 Subheadings Stay in English
@@ -1086,7 +1107,7 @@ Use these instead of their direct translations. They land as "the way a teacher 
 | A quick easy answer | **jhatpat-sa jawaab** | turant uttar |
 | Nothing special about it | **isme kya baat hai** | koi baat nahi |
 
-Add to this list as patterns repeat. Don't force an idiom where it doesn't fit — but when a concept has one of these natural Hinglish forms, use it.
+Add to this list as patterns repeat. Don't force an idiom where it doesn't fit — but when a concept has one of these natural Hinglish forms, use it. **These idioms are *connective* phrasing — they carry rhythm, not content. Use them to glue and pace sentences, never as an excuse to translate an everyday English content word that the student already knows (see §12.2).**
 
 ### 12.5 Preserve the Conceptually Important Phrases
 
@@ -1122,7 +1143,9 @@ A good closing line test: read your closing Hinglish sentence aloud. If it sound
 - **Vary openers.** If the English paragraph opens with a noun phrase, try opening the Hinglish with a verb or a scene-set: *"Zara scene dekho..."*, *"Duniya ke jitne bhi bade thinkers..."*, *"Arjuna ko ladna aata tha."*
 - **Preserve italic emphasis** — when English uses `*italic*` for a quoted thought or question, keep it italic in the Hinglish too.
 
-### 12.8 Gita Shlok — Three-Part Format
+### 12.8 Gita Shlok — Three-Part Format (Class 9 & 10 Vedic-Fusion track only)
+
+> Applies only to the Class 9 & 10 Vedic-Fusion track. Class 11–12 JEE/NEET pages do not open with verse callouts, so skip this subsection for them.
 
 When a page opens with a `fun_fact` callout containing a Gita verse (or any verse from Indian knowledge tradition), the markdown must have **three parts in this order**:
 
@@ -1156,14 +1179,18 @@ Before committing a Hinglish block, check every item:
 - [ ] Italic quotes (`*...*`) preserved where they appear in English
 - [ ] I closed the English mentally and re-explained, not substituted words
 - [ ] Voice is one consistent teacher across the whole page
-- [ ] At least one cultural idiom from §12.4 appears naturally in each paragraph
+- [ ] **Every everyday word the student already knows is in English** — metal/material names, everyday objects, plain adjectives, common places — Hindi is only glue, verbs/idioms, and genuinely hard non-scientific words (§12.2)
+- [ ] Cultural idioms from §12.4 appear where they land **naturally** — not forced into every paragraph
 - [ ] The conceptually important phrase (§12.5) is still explicit, not compressed away
 - [ ] Closing line is engineered, not translated
 - [ ] Read aloud — sounds like a teacher, not a translated textbook
 
-### 12.10 Reference Implementation
+### 12.10 Reference Implementations
 
-The authoritative example is page 1 of Chapter 0 of NCERT Class 9 Science — `what-is-science`. Both text blocks (`0e4f59ae-…` and `22fd127d-…`) are the proof-of-concept. When in doubt, open that page and read the Hinglish alongside the English to calibrate.
+Open the page that matches your track and read the Hinglish alongside the English to calibrate:
+
+- **Class 9 & 10 (Vedic-Fusion voice):** page 1 of Chapter 0 of Class 9 Science — `what-is-science`. Both text blocks (`0e4f59ae-…` and `22fd127d-…`) are the proof-of-concept.
+- **Class 11 & 12 (JEE/NEET voice):** Class 11 Chemistry, Ch.1 — `how-chemistry-began` (4 blocks) and `importance-of-chemistry` (6 blocks). These are the calibration set for the coaching-teacher register: *tum*, technical words in English, `**Title.**` openers kept in English.
 
 ---
 
@@ -1253,3 +1280,24 @@ The `what_if` callout is the best place for an ethical dimension when the scienc
 - [ ] If an Indian scientist directly contributed, they appear in the body text or `india_science` callout
 - [ ] No moral value is stated explicitly — it emerges from the story
 - [ ] The page does not feel like a religion class — it feels like science with roots
+
+---
+
+## 14. Audience Tier Tagging (`tier` field) — Phase 0
+
+Every block carries an optional `tier` field on `BaseBlock`: `'core' | 'competitive'` (absent = `core`). It marks who the content is for, so the platform can later offer **Core (CBSE/all)** and **Competitive (NEET/JEE)** plans from one book without authoring separate versions. Full rationale: GBrain decision `2026-05-30-livebooks-leveling-and-pricing`.
+
+**Phase 0 = tag only.** The tag is stored and editable in the admin editor (the Core/Comp pill on each block's header), but the reader does **not** filter or lock anything yet. Enforcement (paywall + the Crucible gate) is a later phase that needs the payments system, which does not exist yet.
+
+### Rules for assigning `tier`
+- **Default is `core` — leave it off.** ~85–90% of every page is core (the concept, explanations, diagrams, the basic worked examples). Untagged = core = visible to everyone. **Tag only the exceptions.**
+- **Set `tier: 'competitive'` on** blocks that only a NEET/JEE aspirant needs and a board student can skip — typically:
+  - Harder `worked_example` blocks (multi-concept, exam-trap numericals).
+  - A `text`/`heading` pair that forms a competitive-only sub-section (tag the heading **and** its body together so they stay a unit).
+  - `exam_tip` callouts that are purely competitive.
+  - Whole competitive-only topics (e.g. oleum %-labelling, volume strength) — tag their content blocks competitive.
+- **Do NOT tag** the hero image, the opening hook, core definitions, or anything a CBSE student needs for basic understanding.
+- **No "advanced" tier.** There are only two values. Genuinely JEE-Advanced-only material is not authored into these books at all (it's pruned in review).
+- **Batch scripts** that write directly to Mongo can set `tier` on the block object like any other field (it bypasses the Zod route but the field is in `BaseBlockSchema`, so the admin editor and API both preserve it).
+
+When building a new page, assign `tier` as you write — it is near-zero cost at authoring time and saves a large retroactive pass once the paywall ships.

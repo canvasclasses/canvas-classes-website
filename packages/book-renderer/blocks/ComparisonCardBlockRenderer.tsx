@@ -1,5 +1,6 @@
 import React from 'react';
 import { ComparisonCardBlock } from '@canvas/data/types/books';
+import InlineMarkdown from './InlineMarkdown';
 
 const COLUMN_COLORS: Record<string, { border: string; heading: string; dot: string }> = {
   blue:  { border: 'border-blue-500/30',    heading: 'text-blue-400',    dot: 'bg-blue-500'    },
@@ -36,12 +37,12 @@ export default function ComparisonCardBlockRenderer({ block }: { block: Comparis
                 </div>
               )}
               <div className={`p-3 bg-[#0B0F15] border rounded-xl ${colors.border}`}>
-                <p className={`text-[14px] font-bold mb-2 ${colors.heading}`}>{col.heading}</p>
+                <p className={`text-[14px] font-bold mb-2 ${colors.heading}`}><InlineMarkdown>{col.heading}</InlineMarkdown></p>
                 <ul className="flex flex-col gap-1.5">
                   {col.points.map((point, pi) => (
                     <li key={pi} className="flex items-start gap-2 text-[14px] text-white/75 leading-snug">
                       <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${colors.dot}`} />
-                      {point}
+                      <span><InlineMarkdown>{point}</InlineMarkdown></span>
                     </li>
                   ))}
                 </ul>
@@ -58,12 +59,12 @@ export default function ComparisonCardBlockRenderer({ block }: { block: Comparis
           const colors = COLUMN_COLORS[colorKey] ?? COLUMN_COLORS.blue;
           return (
             <div key={idx} className={`p-4 bg-[#0B0F15] border rounded-xl ${colors.border}`}>
-              <p className={`text-[15px] font-bold mb-3 ${colors.heading}`}>{col.heading}</p>
+              <p className={`text-[15px] font-bold mb-3 ${colors.heading}`}><InlineMarkdown>{col.heading}</InlineMarkdown></p>
               <ul className="flex flex-col gap-2">
                 {col.points.map((point, pi) => (
                   <li key={pi} className="flex items-start gap-2 text-[15px] text-white/75">
                     <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${colors.dot}`} />
-                    {point}
+                    <span><InlineMarkdown>{point}</InlineMarkdown></span>
                   </li>
                 ))}
               </ul>

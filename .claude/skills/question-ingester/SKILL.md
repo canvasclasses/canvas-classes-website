@@ -325,3 +325,16 @@ After each batch, report:
 - One-line "next step" hint (e.g. "send next batch" or "ready for answer key")
 
 Keep the report short — the user wants progress, not narration.
+
+---
+
+## STATE FILE (MANDATORY — read first, update after)
+
+`_agents/state/CRUCIBLE_STATE.md` is the single source of truth for what exists in the question bank (per-chapter counts of questions, published, PYQ, unresolved flags, questions missing a primary/topic tag, questions missing micro tags, and which chapters have no micro_topics in the taxonomy).
+
+- **At the START of any ingestion task**, read `_agents/state/CRUCIBLE_STATE.md` to see current per-chapter state instead of re-querying Mongo.
+- **After ANY insertion or update of questions** (and after applying an answer key), run:
+  ```bash
+  node scripts/crucible-state.js
+  ```
+  then add ONE dated line to the Changelog at the bottom of that file describing what changed (subject / chapter / how many questions). The script only rewrites the AUTO inventory region; the Changelog line must be added by hand. This is a required final step, not optional.
