@@ -1,0 +1,137 @@
+[
+  {
+    "pn": 1,
+    "slug": "why-classify-elements",
+    "page": "799e8b2a-1834-4663-b31a-fed80b9fb91c",
+    "block": "ad01d6a8-f39f-4092-907f-3fc0dc006437",
+    "kind": "image",
+    "field": "src",
+    "filled": true
+  },
+  {
+    "pn": 2,
+    "slug": "genesis-periodic-classification",
+    "page": "434cf3d0-b53e-40c1-90d7-303905432dce",
+    "block": "d8a501b5-31ff-4696-b7dc-25b076e3e6c1",
+    "kind": "image",
+    "field": "src",
+    "filled": true
+  },
+  {
+    "pn": 3,
+    "slug": "mendeleevs-periodic-table",
+    "page": "3489da6f-ac0e-4acd-8956-bf08205b17f6",
+    "block": "8cbc8959-f399-4924-8998-a5d6330efdd3",
+    "kind": "image",
+    "field": "src",
+    "filled": true
+  },
+  {
+    "pn": 4,
+    "slug": "modern-periodic-law",
+    "page": "94da81ee-8980-4eda-9669-e9198d1aca04",
+    "block": "ff8feb73-38e8-4260-a2ca-eb8dd7845101",
+    "kind": "image",
+    "field": "src",
+    "filled": true
+  },
+  {
+    "pn": 5,
+    "slug": "nomenclature-elements-z-100",
+    "page": "04398e1b-988d-4ef3-a579-62aafd88dc30",
+    "block": "21bc785b-69c9-4372-909c-ab45a5a8fa85",
+    "kind": "image",
+    "field": "src",
+    "filled": true
+  },
+  {
+    "pn": 6,
+    "slug": "electronic-config-periodic-table",
+    "page": "fe8a08ed-cf97-4a1d-a323-2f6bcfaf50fb",
+    "block": "55119b29-a2cd-4b8d-a96a-f2df848dd0ce",
+    "kind": "image",
+    "field": "src",
+    "filled": true
+  },
+  {
+    "pn": 7,
+    "slug": "s-p-d-f-blocks",
+    "page": "cff039a0-99dc-4dd5-a993-1613b0736c38",
+    "block": "98b3c0df-a933-4901-9d48-89933e92156d",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 8,
+    "slug": "effective-nuclear-charge-slater",
+    "page": "443f75b5-b8e2-40a9-bcec-fc6020499907",
+    "block": "98989ae0-f4d2-4099-8036-a429e7682eb5",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 8,
+    "slug": "effective-nuclear-charge-slater",
+    "page": "443f75b5-b8e2-40a9-bcec-fc6020499907",
+    "block": "94ac9326-d3a3-438e-9219-f2eabe25624f",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 9,
+    "slug": "atomic-ionic-radius",
+    "page": "3e4e53a1-ab19-4c41-9bb5-a3d779d5a520",
+    "block": "06b0547f-d1e9-4ae7-9d2d-2339c22070a2",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 10,
+    "slug": "ionization-enthalpy",
+    "page": "61068e52-ffee-4bd6-bee0-6c72690de636",
+    "block": "f0177eea-8fc5-4214-86ca-5d3c89f21ae8",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 11,
+    "slug": "electron-gain-enthalpy",
+    "page": "5b12e49c-8fbd-4aed-bcad-b95e46d196f0",
+    "block": "0f4f2d7e-a543-4fb5-ac69-01fd0b399503",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 12,
+    "slug": "electronegativity",
+    "page": "e3328f65-d745-4ef5-955a-885a70efb506",
+    "block": "8c92fd36-abc1-4c2d-a306-cfcebccb3a74",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 13,
+    "slug": "valence-oxidation-reactivity",
+    "page": "81a7741f-1e9f-4a4c-b305-df9f7d4bc9cf",
+    "block": "3889cc24-4af3-4577-9f5b-ce118152f7d6",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  },
+  {
+    "pn": 14,
+    "slug": "periodicity-oxides-hydroxides",
+    "page": "79492469-fb80-412a-a322-34a4542d4ee0",
+    "block": "6885e07c-88df-417f-8ebe-d0e2d5b0c82c",
+    "kind": "image",
+    "field": "src",
+    "filled": false
+  }
+]

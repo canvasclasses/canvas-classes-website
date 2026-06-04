@@ -1,0 +1,4 @@
+# Runtime artifacts of the Livebook image pipeline — never commit these.
+_queue.json
+_journal.jsonl
+_downloads/

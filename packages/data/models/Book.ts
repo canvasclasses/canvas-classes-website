@@ -27,7 +27,7 @@ const BookSchema = new Schema<IBook>(
     subject: {
       type: String,
       required: true,
-      enum: ['chemistry', 'biology', 'physics', 'mathematics', 'science', 'social_science'],
+      enum: ['chemistry', 'biology', 'physics', 'mathematics', 'science', 'social_science', 'english'],
     },
     grade: { type: Number, required: true, min: 6, max: 12 },
     board: {
@@ -38,6 +38,13 @@ const BookSchema = new Schema<IBook>(
     cover_image: String,
     chapters: { type: [ChapterSchema], default: [] },
     is_published: { type: Boolean, default: false },
+    // English-track only — how renderer behaves when a block's audio_url is empty.
+    // See ENGLISH_BOOK_PAGE_WORKFLOW.md §8.4.
+    audio_fallback: {
+      type: String,
+      enum: ['tts', 'silent', 'hide'],
+      required: false,
+    },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

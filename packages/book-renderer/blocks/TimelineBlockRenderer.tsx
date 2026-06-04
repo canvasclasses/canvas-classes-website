@@ -1,4 +1,5 @@
 import { TimelineBlock } from '@canvas/data/types/books';
+import InlineMarkdown from './InlineMarkdown';
 
 export default function TimelineBlockRenderer({ block }: { block: TimelineBlock }) {
   const isVertical = block.orientation === 'vertical';
@@ -22,9 +23,9 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
                   <span className="text-base shrink-0 mt-0.5">{event.icon}</span>
                 )}
                 <div>
-                  <p className="text-sm font-semibold text-white/90">{event.label}</p>
+                  <p className="text-sm font-semibold text-white/90"><InlineMarkdown>{event.label}</InlineMarkdown></p>
                   {event.detail && (
-                    <p className="text-xs text-white/55 mt-0.5 leading-relaxed">{event.detail}</p>
+                    <p className="text-xs text-white/55 mt-0.5 leading-relaxed"><InlineMarkdown>{event.detail}</InlineMarkdown></p>
                   )}
                 </div>
               </div>
@@ -61,9 +62,9 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
               )}
               <div className="ml-2 mr-20 max-w-[120px]">
                 {event.icon && <span className="text-sm">{event.icon} </span>}
-                <p className="text-xs font-semibold text-white/90">{event.label}</p>
+                <p className="text-xs font-semibold text-white/90"><InlineMarkdown>{event.label}</InlineMarkdown></p>
                 {event.detail && (
-                  <p className="text-xs text-white/50 mt-0.5">{event.detail}</p>
+                  <p className="text-xs text-white/50 mt-0.5"><InlineMarkdown>{event.detail}</InlineMarkdown></p>
                 )}
               </div>
             </div>

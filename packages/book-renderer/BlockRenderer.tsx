@@ -35,6 +35,19 @@ const ReasoningPromptRenderer        = dynamicBlock(() => import('./blocks/Reaso
 const CuriosityPromptRenderer        = dynamicBlock(() => import('./blocks/CuriosityPromptRenderer'));
 const ClassifyExerciseRenderer      = dynamicBlock(() => import('./blocks/ClassifyExerciseRenderer'));
 
+// English blocks — Class 9 Kaveri. Spec: _agents/workflows/ENGLISH_BOOK_PAGE_WORKFLOW.md
+const NarratedPassageRenderer            = dynamicBlock(() => import('./blocks/english/NarratedPassageRenderer'));
+const VocabularyLabRenderer              = dynamicBlock(() => import('./blocks/english/VocabularyLabRenderer'));
+const LiteraryDevicesHighlighterRenderer = dynamicBlock(() => import('./blocks/english/LiteraryDevicesHighlighterRenderer'));
+const CharacterMapRenderer               = dynamicBlock(() => import('./blocks/english/CharacterMapRenderer'));
+const ThemeExplorerRenderer              = dynamicBlock(() => import('./blocks/english/ThemeExplorerRenderer'));
+const ToneMeterRenderer                  = dynamicBlock(() => import('./blocks/english/ToneMeterRenderer'));
+const CulturalContextCardRenderer        = dynamicBlock(() => import('./blocks/english/CulturalContextCardRenderer'));
+const ComprehensionCheckpointRenderer    = dynamicBlock(() => import('./blocks/english/ComprehensionCheckpointRenderer'));
+const WritingScaffoldRenderer            = dynamicBlock(() => import('./blocks/english/WritingScaffoldRenderer'));
+const DialogueRolePlayRenderer           = dynamicBlock(() => import('./blocks/english/DialogueRolePlayRenderer'));
+const PronunciationDrillRenderer         = dynamicBlock(() => import('./blocks/english/PronunciationDrillRenderer'));
+
 export default function BlockRenderer({
   block,
   onQuizPass,
@@ -65,6 +78,18 @@ export default function BlockRenderer({
     case 'reasoning_prompt':   return <ReasoningPromptRenderer block={block} />;
     case 'curiosity_prompt':   return <CuriosityPromptRenderer block={block} />;
     case 'classify_exercise':  return <ClassifyExerciseRenderer block={block} />;
+    // English blocks (Class 9 Kaveri)
+    case 'narrated_passage':              return <NarratedPassageRenderer block={block} />;
+    case 'vocabulary_lab':                return <VocabularyLabRenderer block={block} />;
+    case 'literary_devices_highlighter':  return <LiteraryDevicesHighlighterRenderer block={block} />;
+    case 'character_map':                 return <CharacterMapRenderer block={block} />;
+    case 'theme_explorer':                return <ThemeExplorerRenderer block={block} />;
+    case 'tone_meter':                    return <ToneMeterRenderer block={block} />;
+    case 'cultural_context_card':         return <CulturalContextCardRenderer block={block} />;
+    case 'comprehension_checkpoint':      return <ComprehensionCheckpointRenderer block={block} />;
+    case 'writing_scaffold':              return <WritingScaffoldRenderer block={block} />;
+    case 'dialogue_role_play':            return <DialogueRolePlayRenderer block={block} />;
+    case 'pronunciation_drill':           return <PronunciationDrillRenderer block={block} />;
     default:                   return null;
   }
 }

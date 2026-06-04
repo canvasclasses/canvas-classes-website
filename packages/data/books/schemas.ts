@@ -22,6 +22,9 @@ import { z } from 'zod';
 const BaseBlockSchema = z.object({
   id: z.string().min(1, 'block id is required'),
   order: z.number().int().nonnegative(),
+  // Audience tier for tiered access (Phase 0 — stored, not yet enforced).
+  // Must live here so it survives the page route's Zod .strip() on every save.
+  tier: z.enum(['core', 'competitive']).optional(),
 });
 
 const HotspotSchema = z.object({
@@ -142,6 +145,8 @@ const CalloutBlockSchema = BaseBlockSchema.extend({
     'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
     'threads_of_curiosity', 'bridging_science', 'india_science',
     'what_if', 'quest_continues', 'ready_to_go_beyond',
+    // English-track variants — see ENGLISH_BOOK_PAGE_WORKFLOW.md §3.1
+    'india_voice', 'literature_in_life',
   ]),
   title: z.string().optional(),
   markdown: z.string(),
@@ -237,6 +242,212 @@ const CuriosityPromptBlockSchema = BaseBlockSchema.extend({
   reveal: z.string().optional(),
 });
 
+// ═════════════════════════════════════════════════════════════════════════════
+// ENGLISH BLOCK SCHEMAS — Class 9 Kaveri
+// Spec: _agents/workflows/ENGLISH_BOOK_PAGE_WORKFLOW.md §4
+// ═════════════════════════════════════════════════════════════════════════════
+
+const WordGlossSchema = z.object({
+  word: z.string().min(1),
+  occurrence: z.number().int().positive().optional(),
+  meaning: z.string().min(1),
+  pos: z.string().optional(),
+  hindi: z.string().optional(),
+  example: z.string().optional(),
+});
+
+const NarratedSentenceSchema = z.object({
+  id: z.string().min(1),
+  text: z.string().min(1),
+  audio_url: z.string().optional(),
+  glosses: z.array(WordGlossSchema).optional(),
+});
+
+const NarratedParagraphSchema = z.object({
+  id: z.string().min(1),
+  sentences: z.array(NarratedSentenceSchema).min(1),
+  hinglish_commentary: z.string().optional(),
+});
+
+const NarratedPassageBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('narrated_passage'),
+  source_label: z.string().optional(),
+  paragraphs: z.array(NarratedParagraphSchema).min(1),
+});
+
+const VocabCardSchema = z.object({
+  id: z.string().min(1),
+  word: z.string().min(1),
+  pronunciation: z.string().optional(),
+  audio_url: z.string().optional(),
+  pos: z.string(),
+  meaning: z.string().min(1),
+  hindi: z.string().optional(),
+  example: z.string().min(1),
+  memory_hook: z.string().optional(),
+});
+
+const VocabularyLabBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('vocabulary_lab'),
+  mode: z.enum(['flashcards', 'binomials', 'affixes', 'idioms']),
+  intro: z.string().optional(),
+  cards: z.array(VocabCardSchema).min(1),
+  self_check: z.array(InlineQuizQuestionSchema).max(3).optional(),
+});
+
+const DeviceMatchSchema = z.object({
+  text: z.string().min(1),
+  explanation: z.string().min(1),
+});
+
+const DeviceHighlightSchema = z.object({
+  id: z.string().min(1),
+  device: z.enum([
+    'simile', 'metaphor', 'personification', 'imagery',
+    'alliteration', 'rhyme', 'symbolism', 'hyperbole', 'onomatopoeia',
+  ]),
+  matches: z.array(DeviceMatchSchema).min(1),
+});
+
+const LiteraryDevicesHighlighterBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('literary_devices_highlighter'),
+  passage: z.string().min(1),
+  devices: z.array(DeviceHighlightSchema).min(1),
+});
+
+const CharacterSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  role: z.string().optional(),
+  bio: z.string().min(1),
+  traits: z.array(z.string()).optional(),
+  portrait_url: z.string().optional(),
+  portrait_prompt: z.string().optional(),
+});
+
+const RelationshipSchema = z.object({
+  from: z.string().min(1),
+  to: z.string().min(1),
+  label: z.string().min(1),
+});
+
+const CharacterMapBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('character_map'),
+  title: z.string().optional(),
+  characters: z.array(CharacterSchema).min(2).max(6),
+  relationships: z.array(RelationshipSchema),
+});
+
+const ThemeCardSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  evidence: z.array(z.string()).min(1).max(3),
+  reflection_prompt: z.string().min(1),
+});
+
+const ThemeExplorerBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('theme_explorer'),
+  intro: z.string().optional(),
+  themes: z.array(ThemeCardSchema).min(1).max(4),
+});
+
+const ToneSegmentSchema = z.object({
+  id: z.string().min(1),
+  excerpt: z.string().min(1),
+  emotion: z.string().min(1),
+  intensity: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+  note: z.string().min(1),
+});
+
+const ToneMeterBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('tone_meter'),
+  segments: z.array(ToneSegmentSchema).min(2).max(10),
+});
+
+const CulturalContextCardBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('cultural_context_card'),
+  reference: z.string().min(1),
+  category: z.enum(['place', 'person', 'event', 'concept', 'tradition']),
+  short_desc: z.string().min(1),
+  detail: z.string().min(1),
+  image_url: z.string().optional(),
+  image_prompt: z.string().optional(),
+});
+
+const ComprehensionQuestionSchema = z.object({
+  id: z.string().min(1),
+  question: z.string().min(1),
+  options: z.array(z.string()).min(2).optional(),
+  correct_index: z.number().int().nonnegative().optional(),
+  explanation: z.string().min(1),
+});
+
+const ComprehensionCheckpointBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('comprehension_checkpoint'),
+  intro: z.string().optional(),
+  questions: z.array(ComprehensionQuestionSchema).min(1).max(3),
+});
+
+const ScaffoldPartSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  text: z.string().min(1),
+  annotation: z.string().min(1),
+});
+
+const WritingScaffoldBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('writing_scaffold'),
+  task: z.string().min(1),
+  format: z.enum(['letter', 'paragraph', 'essay', 'dialogue', 'diary_entry', 'speech', 'notice']),
+  model_parts: z.array(ScaffoldPartSchema).min(1),
+  tips: z.array(z.string()).optional(),
+});
+
+const DialogueCharacterSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  color: z.string().optional(),
+});
+
+const DialogueLineSchema = z.object({
+  id: z.string().min(1),
+  character_id: z.string().min(1),
+  text: z.string().min(1),
+  audio_url: z.string().optional(),
+  stage_direction: z.string().nullable().optional(),
+});
+
+const DebateFramesSchema = z.object({
+  for: z.array(z.string()).min(1),
+  against: z.array(z.string()).min(1),
+});
+
+const DialogueRolePlayBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('dialogue_role_play'),
+  mode: z.enum(['dialogue', 'debate']),
+  scene_description: z.string().optional(),
+  characters: z.array(DialogueCharacterSchema).min(2),
+  lines: z.array(DialogueLineSchema),
+  debate_frames: DebateFramesSchema.nullable().optional(),
+});
+
+const PronunciationWordSchema = z.object({
+  id: z.string().min(1),
+  word: z.string().min(1),
+  syllables: z.string().optional(),
+  ipa: z.string().optional(),
+  audio_url: z.string().optional(),
+  context_sentence: z.string().optional(),
+  common_mistake: z.string().optional(),
+});
+
+const PronunciationDrillBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('pronunciation_drill'),
+  intro: z.string().optional(),
+  words: z.array(PronunciationWordSchema).min(1).max(12),
+});
+
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
 
 const ChildContentBlockSchema = z.discriminatedUnion('type', [
@@ -261,6 +472,18 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   SimulationBlockSchema,
   ReasoningPromptBlockSchema,
   CuriosityPromptBlockSchema,
+  // English blocks (Class 9 Kaveri)
+  NarratedPassageBlockSchema,
+  VocabularyLabBlockSchema,
+  LiteraryDevicesHighlighterBlockSchema,
+  CharacterMapBlockSchema,
+  ThemeExplorerBlockSchema,
+  ToneMeterBlockSchema,
+  CulturalContextCardBlockSchema,
+  ComprehensionCheckpointBlockSchema,
+  WritingScaffoldBlockSchema,
+  DialogueRolePlayBlockSchema,
+  PronunciationDrillBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -295,6 +518,18 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   SectionBlockSchema,
   ReasoningPromptBlockSchema,
   CuriosityPromptBlockSchema,
+  // English blocks (Class 9 Kaveri)
+  NarratedPassageBlockSchema,
+  VocabularyLabBlockSchema,
+  LiteraryDevicesHighlighterBlockSchema,
+  CharacterMapBlockSchema,
+  ThemeExplorerBlockSchema,
+  ToneMeterBlockSchema,
+  CulturalContextCardBlockSchema,
+  ComprehensionCheckpointBlockSchema,
+  WritingScaffoldBlockSchema,
+  DialogueRolePlayBlockSchema,
+  PronunciationDrillBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

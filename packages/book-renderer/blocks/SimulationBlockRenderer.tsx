@@ -323,6 +323,68 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/GrowthDecayVisualizerSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // ── Class 12 Chemistry — Chapter 2: Electrochemistry ─────────────────────
+  'electrode-potential-builder': dynamic(
+    () => import('./simulations/ElectrodePotentialSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'daniell-cell-builder': dynamic(
+    () => import('./simulations/DaniellCellSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'eext-mode-flipper': dynamic(
+    () => import('./simulations/EextModeSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'electrochemical-series-practice': dynamic(
+    () => import('./simulations/ElectrochemSeriesPracticeSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'she-reference-electrode': dynamic(
+    () => import('./simulations/StandardHydrogenElectrodeSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'nernst-explorer': dynamic(
+    () => import('./simulations/NernstExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'corrosion-cell': dynamic(
+    () => import('./simulations/CorrosionCellSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'electrolysis-product-predictor': dynamic(
+    () => import('./simulations/ElectrolysisPredictorSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'molar-conductivity-curve': dynamic(
+    () => import('./simulations/MolarConductivityCurveSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // ── Class 11 Chemistry — Chapter 3: Classification & Periodicity ──────────
+  'periodic-table-builder': dynamic(
+    () => import('./simulations/PeriodicTableBuilderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'shielding-slater-explorer': dynamic(
+    () => import('./simulations/ShieldingSlaterSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'periodic-trends-explorer': dynamic(
+    () => import('./simulations/PeriodicTrendsExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'ionic-radius-comparator': dynamic(
+    () => import('./simulations/IonicRadiusComparatorSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'ionization-staircase': dynamic(
+    () => import('./simulations/IonizationStaircaseSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'mendeleev-gap-predictor': dynamic(
+    () => import('./simulations/MendeleevGapPredictorSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
 };
 
 function SimulationSkeleton() {

@@ -84,6 +84,8 @@ SUPER_ADMIN_EMAILS=...
 
 ## 3. QUESTION INGESTION — READ THIS FIRST
 
+> **Project state lives in [`_agents/state/CRUCIBLE_STATE.md`](_agents/state/CRUCIBLE_STATE.md).** Read it at the START of any Crucible task (ingestion, solutions, tagging, flag triage) to see per-chapter counts — questions, published, PYQ, unresolved flags, questions missing a primary/topic tag, questions missing micro tags, and which chapters have no micro_topics in the taxonomy — without re-querying Mongo. After ANY change to the question bank (questions/solutions added or updated, flags resolved, tags or taxonomy changed), run `node scripts/crucible-state.js` to refresh that file's inventory, then add one dated line to its Changelog. Required final step, not optional.
+
 ### Single Source of Truth
 
 **All question ingestion must follow the canonical workflow doc for the subject:**
@@ -816,3 +818,72 @@ Before merging any new page under `apps/student/app/`:
 6. **Did you add `force-dynamic` to "fix" a Next.js error?** Don't ship it. The error is usually solvable by moving the offending read into a Client Component. `force-dynamic` is a silent-cost shortcut that the bill catches months later.
 
 If you genuinely need `force-dynamic` (per-user dashboard, auth flow, admin tool), **add a comment explaining why** so the next agent doesn't strip it as cleanup.
+
+---
+
+## 11. GBRAIN LOGGING PROTOCOL
+
+At the end of any conversation where ANY of these occur:
+- A non-trivial decision is made
+- A new architectural insight surfaces
+- A bug's root cause is diagnosed
+- A new business/strategy thread emerges
+
+…proactively offer: "Want me to log this to GBrain?" Then write to `~/brain/<appropriate-folder>/<descriptive-slug>.md` with: date, 2-3 paragraph summary, key decisions, open questions. Commit via `brain-sync`.
+
+### Folder routing
+
+| Conversation type | Target folder |
+|---|---|
+| A decision made (with reasoning) | `~/brain/decisions/` |
+| Architectural insight or how-to knowledge | `~/brain/reference/` |
+| Bug diagnosis (root cause + fix) | `~/brain/reference/` (subfolder `bugs/` if it grows) |
+| Strategy / business thread | `~/brain/ideas/` or `~/brain/companies/<company>.md` |
+| Meeting / discussion summary | `~/brain/meetings/` |
+| Person / contact context | `~/brain/people/` |
+
+### File naming
+
+Format: `YYYY-MM-DD-short-descriptive-slug.md`
+Example: `2026-05-28-mcp-bash-lc-env-fix.md`
+
+### Page structure
+
+Each new page starts with frontmatter and a date heading, then a brief body:
+
+```markdown
+---
+type: <decision|reference|idea|meeting|person>
+date: YYYY-MM-DD
+---
+
+# <Title in human prose>
+
+## Context
+1 short paragraph — what was the situation that produced this entry.
+
+## What was decided / discovered
+2-3 short paragraphs — the actual content. Be specific. Reference file paths, function names, commands.
+
+## Open questions
+- Bulleted list of things still unresolved (or "None" if everything is settled).
+```
+
+### Commit & sync
+
+After writing, run:
+
+```bash
+brain-sync "log: <short description>"
+```
+
+This commits + pushes to the GitHub `gBrain` repo so the office Mac mini picks it up via launchd within 5 minutes. If `brain-sync` reports "Nothing to commit," the file wasn't saved correctly — re-check the write.
+
+### When NOT to log
+
+Skip the offer if the conversation was purely:
+- A small bug fix with no broader insight (e.g., fixed a typo, renamed a variable)
+- Exploration / research that didn't conclude anything
+- Setup or installation steps with no judgement call
+
+The bar is "future me would benefit from finding this six weeks from now." If unsure, ask the user rather than logging by default.

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { ArrowRight, Play, FileText, Volume2, Clock, BookOpen, Image as LucideImage, Atom, HelpCircle, TrendingUp, BarChart3, Trophy, AlertTriangle } from 'lucide-react';
-import { ELEMENTS, CATEGORY_COLORS } from '@/features/simulations/data/elementsData';
+import { ELEMENTS, CATEGORY_COLORS } from '@canvas/data/periodic/elementsData';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CARD SHELL

@@ -20,7 +20,7 @@ export { useSaltQuizProgress } from './hooks/useSaltQuizProgress';
 // so the admin app can use it without depending on apps/student.
 export { default as MoleculeViewer } from '@canvas/ui/MoleculeViewer';
 export { default as OrganicWizardGame } from './components/organic-wizard/ConversionGame';
-export * as elementsData from './data/elementsData';
+export * as elementsData from '@canvas/data/periodic/elementsData';
 export * as kspData from './data/kspData';
 export * as saltAnalysisData from './data/saltAnalysisData';
 export * as organicReactionsData from './data/organicReactionsData';

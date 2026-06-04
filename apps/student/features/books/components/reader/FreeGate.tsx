@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import { BookOpen, CheckCircle2, Brain, Gamepad2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { createClient } from '@/app/utils/supabase/client';
+import { isReaderLoggedIn } from '@/features/books/lib/readerAuth';
 
 const COOKIE_NAME = 'books_viewed';
-const FREE_PAGE_LIMIT = 2;
+const FREE_PAGE_LIMIT = 1;
 
 /**
  * Reads the per-book page view counts from a JSON cookie.
@@ -52,46 +52,15 @@ interface Props {
   basePath?: string;
 }
 
-// Per-tab memoisation for the Supabase auth check. The first reader mount in
-// a session does the network round-trip; subsequent page navigations read
-// the result synchronously. The gate runs on every page change, but a logged-in
-// user should never pay the auth-check latency twice per tab.
-type AuthCache = { loggedIn: boolean; checkedAt: number } | null;
-let authCache: AuthCache = null;
-let authInflight: Promise<boolean> | null = null;
-// Re-check at most once every 5 minutes in case the session flips (logout in
-// another tab won't reach us; stale cache just means the gate still shows to
-// anonymous users, which is the safe default).
-const AUTH_TTL_MS = 5 * 60 * 1000;
-
-async function isLoggedIn(): Promise<boolean> {
-  const now = Date.now();
-  if (authCache && now - authCache.checkedAt < AUTH_TTL_MS) return authCache.loggedIn;
-  if (authInflight) return authInflight;
-
-  authInflight = (async () => {
-    try {
-      const supabase = createClient();
-      if (!supabase) return false;
-      const { data } = await supabase.auth.getUser();
-      const loggedIn = !!data.user;
-      authCache = { loggedIn, checkedAt: Date.now() };
-      return loggedIn;
-    } catch {
-      authCache = { loggedIn: false, checkedAt: Date.now() };
-      return false;
-    } finally {
-      authInflight = null;
-    }
-  })();
-  return authInflight;
-}
-
 /**
  * Metered access gate for live books.
- * - First 2 pages per book: free, no login required
- * - Page 3+: frosted overlay asking to sign in
+ * - First page per book: free, no login required
+ * - Page 2+: frosted overlay asking to sign in
  * - Authenticated users never see the gate
+ *
+ * This is the hard backstop for visitors who jump past the free page via the
+ * chapter sidebar or a direct URL. The friendlier, dismissible nudge shown
+ * when a logged-out reader simply clicks "Next" lives in BookReader.
  */
 export default function FreeGate({ bookSlug, pageSlug, basePath }: Props) {
   const [showGate, setShowGate] = useState(false);
@@ -105,7 +74,7 @@ export default function FreeGate({ bookSlug, pageSlug, basePath }: Props) {
 
       // Authenticated users never see the gate — memoised per-tab so this
       // only hits the network on the first reader mount.
-      const loggedIn = await isLoggedIn();
+      const loggedIn = await isReaderLoggedIn();
       if (cancelled || loggedIn) return;
 
       // Count page views per book

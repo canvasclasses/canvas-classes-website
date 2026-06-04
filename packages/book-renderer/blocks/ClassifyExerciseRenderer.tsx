@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { ClassifyExerciseBlock } from '@canvas/data/types/books';
+import InlineMarkdown from './InlineMarkdown';
 
 interface RowState {
   answered: boolean;
@@ -38,7 +39,7 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
           From your teacher&rsquo;s quick question
         </p>
         <p className="text-[17px] font-semibold text-white/90 leading-snug">
-          {block.question}
+          <InlineMarkdown>{block.question}</InlineMarkdown>
         </p>
       </div>
 
@@ -78,7 +79,7 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
                       ? state.wasCorrect ? 'text-white/88' : 'text-white/65'
                       : 'text-white/80'
                     }`}>
-                    {row.substance}
+                    <InlineMarkdown>{row.substance}</InlineMarkdown>
                   </span>
                 </div>
 
@@ -127,7 +128,7 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
                       </span>
                     )}
                     <p className="text-[13px] leading-[1.65] text-white/52">
-                      {row.explanation}
+                      <InlineMarkdown>{row.explanation}</InlineMarkdown>
                     </p>
                   </div>
                 </div>
