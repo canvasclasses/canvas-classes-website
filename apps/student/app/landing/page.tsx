@@ -10,7 +10,7 @@ import PaarasSirSection from "@/features/landing/components/PaarasSirSection";
 import FinalCTASection from "@/features/landing/components/FinalCTASection";
 
 export const metadata: Metadata = {
-    title: "Join the Revolution in Chemistry Education | Canvas Classes",
+    title: "Join the Revolution in Chemistry Education",
     description: "Experience a new way of learning Chemistry with Paaras Sir. From foundation to advanced JEE/NEET concepts, explore our comprehensive free resources.",
 };
 

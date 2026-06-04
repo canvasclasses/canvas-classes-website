@@ -93,9 +93,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     .select('display_name one_line')
     .lean<{ display_name?: string; one_line?: string } | null>();
 
-  if (!spec) return { title: 'Career not found · Canvas Classes' };
+  if (!spec) return { title: 'Career not found' };
 
-  const title = `${spec.display_name} — Career brief 2026 | Canvas Classes`;
+  const title = `${spec.display_name} — Career brief 2026`;
   const description = spec.one_line ?? '';
   const canonical = `${SITE_ORIGIN}/career-guide/${slug}`;
   const ogImage = `${SITE_ORIGIN}/api/v2/career-guide/${slug}/brief`;

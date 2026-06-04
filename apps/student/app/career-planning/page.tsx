@@ -19,7 +19,7 @@ import { ArrowRight } from 'lucide-react';
 const SITE_ORIGIN = 'https://canvasclasses.in';
 
 export const metadata: Metadata = {
-  title: 'Career planning for JEE / NEET aspirants — Canvas Classes',
+  title: 'Career planning for JEE / NEET aspirants',
   description:
     'How to think about your career around JEE / NEET. Combine rank-to-college predictions with honest career briefs to make decisions you can defend in five years.',
   alternates: { canonical: `${SITE_ORIGIN}/career-planning` },

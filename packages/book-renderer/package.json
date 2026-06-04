@@ -8,13 +8,15 @@
     ".": "./index.ts",
     "./PageRenderer": "./PageRenderer.tsx",
     "./BlockRenderer": "./BlockRenderer.tsx",
-    "./simulators-context": "./simulators-context.tsx"
+    "./simulators-context": "./simulators-context.tsx",
+    "./simulations/vector-lab": "./blocks/simulations/vector-lab/VectorLabSim.tsx"
   },
   "dependencies": {
     "@canvas/data": "*",
     "@canvas/ui": "*",
     "katex": "^0.16.28",
     "lottie-react": "^2.4.1",
+    "planck": "^1.5.0",
     "rehype-katex": "^7.0.1",
     "rehype-raw": "^7.0.0",
     "remark-breaks": "^4.0.0",

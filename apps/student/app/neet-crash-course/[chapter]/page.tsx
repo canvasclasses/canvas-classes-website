@@ -23,7 +23,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     if (!chapter) return {};
     
     return {
-        title: `${chapter.title} - NEET Crash Course 2025 | Canvas Classes`,
+        title: `${chapter.title} - NEET Crash Course 2025`,
         description: chapter.description || `Complete revision for ${chapter.title}`,
     };
 }

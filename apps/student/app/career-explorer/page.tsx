@@ -3,7 +3,7 @@ import Link from 'next/link';
 import LandingClient from '@/features/career-explorer/components/LandingClient';
 
 export const metadata: Metadata = {
-  title: 'Career Explorer — Find Careers That Actually Fit You | Canvas Classes',
+  title: 'Career Explorer — Find Careers That Actually Fit You',
   description:
     'A structured self-discovery tool for Indian students (Class 9 onwards). Maps your aptitude, interests, values, and constraints to careers across mainstream and emerging paths — honestly, without clinical framing.',
   keywords: [

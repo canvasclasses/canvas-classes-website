@@ -50,7 +50,7 @@ export async function generateMetadata({
     question.metadata.exam_source
   ) ?? 'JEE PYQ';
 
-  const title = `${question.display_id}: ${rawText.substring(0, 55)}... | ${examLabel} | Canvas Classes`;
+  const title = `${question.display_id}: ${rawText.substring(0, 55)}... | ${examLabel}`;
   const description = `${examLabel} question on ${chapterName}. ${rawText.substring(0, 120)}. Full solution${question.solution.video_url ? ' with video explanation' : ''} by Paaras Sir.`;
 
   return {

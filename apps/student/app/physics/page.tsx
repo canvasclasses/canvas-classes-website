@@ -5,7 +5,7 @@ const SITE_URL = 'https://www.canvasclasses.in';
 const CANONICAL = `${SITE_URL}/physics`;
 
 export const metadata: Metadata = {
-  title: 'Physics Simulations — Conservation of Energy, Motion, Forces | Canvas Classes',
+  title: 'Physics Simulations — Conservation of Energy, Motion, Forces',
   description:
     'Interactive Physics simulations from Canvas Classes. Pendulum, projectile motion, conservation of energy, optics and more — built to make concepts visible. Coming soon.',
   alternates: { canonical: CANONICAL },

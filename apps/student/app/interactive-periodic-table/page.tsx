@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PeriodicTableClient from './PeriodicTableClient';
 
 export const metadata: Metadata = {
-    title: 'Interactive Periodic Table | Canvas Classes',
+    title: 'Interactive Periodic Table',
     description: 'Explore the periodic table with dynamic heatmaps, property comparison, and exception highlighting. Based on NCERT data, ideal for JEE, NEET & CBSE exams.',
     keywords: ['periodic table', 'chemistry', 'elements', 'atomic radius', 'ionization energy', 'electronegativity', 'NCERT', 'CBSE', 'JEE'],
     openGraph: {

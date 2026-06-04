@@ -11,7 +11,7 @@ import BitsatLandingClient from './BitsatLandingClient';
 //   3. Add /bitsat-chemistry-revision back to sitemap.ts + URL_GROUPS,
 //   4. Re-feature in the Navbar's Study Lab dropdown (see Navbar.tsx).
 export const metadata: Metadata = {
-    title: 'BITSAT 2026 Chemistry Revision (archive) | Canvas Classes',
+    title: 'BITSAT 2026 Chemistry Revision (archive)',
     description:
         'Archive: the 30-day BITSAT 2026 Session 2 Chemistry plan. The 2026 exam window has ended; a refreshed BITSAT 2027 plan will return next year.',
     robots: { index: false, follow: true },

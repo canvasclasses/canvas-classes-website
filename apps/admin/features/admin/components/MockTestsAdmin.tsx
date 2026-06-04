@@ -7,10 +7,10 @@ import {
   Wand2, Filter, MonitorPlay,
 } from 'lucide-react';
 import MathRenderer from '@canvas/ui/MathRenderer';
-import SVGDropZone from './SVGDropZone';
+import SVGDropZone from '@canvas/ui/SVGDropZone';
 import SVGScaleControls from './SVGScaleControls';
-import VideoDropZone from './VideoDropZone';
-import AudioRecorder from './AudioRecorder';
+import VideoDropZone from '@canvas/ui/VideoDropZone';
+import AudioRecorder from '@canvas/ui/AudioRecorder';
 import AudioPlayer from './AudioPlayer';
 import { Select } from './Select';
 import { validateLaTeX, autoFixLatex, type LaTeXValidationResult } from '@canvas/core/latex-validator';

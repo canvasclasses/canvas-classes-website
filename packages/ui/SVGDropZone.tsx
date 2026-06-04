@@ -39,7 +39,7 @@ export default function SVGDropZone({ questionId, fieldType, onUploaded, compact
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('question_id', questionId);
+      formData.append('questionId', questionId);
       formData.append('field_type', fieldType);
       if (context) formData.append('context', context);
 

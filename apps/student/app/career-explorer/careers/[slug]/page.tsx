@@ -16,13 +16,13 @@ export async function generateMetadata({
   try {
     await connectToDatabase();
     const career = await CareerPath.findById(slug).lean<CareerDoc | null>();
-    if (!career) return { title: 'Career — Canvas Classes' };
+    if (!career) return { title: 'Career' };
     return {
-      title: `${career.name} — Career Deep Dive | Canvas Classes`,
+      title: `${career.name} — Career Deep Dive`,
       description: career.one_liner,
     };
   } catch {
-    return { title: 'Career — Canvas Classes' };
+    return { title: 'Career' };
   }
 }
 

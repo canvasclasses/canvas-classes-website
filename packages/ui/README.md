@@ -10,9 +10,17 @@ app's `components/` folder.
 | File | What lives here |
 |---|---|
 | `MathRenderer.tsx` | KaTeX + DOMPurify LaTeX renderer (12 importers across student questions + admin question editor) |
+| `MoleculeViewer.tsx` | 2D molecule renderer (openchemlib) — organic-wizard + Live Books |
+| `flashcardMarkdown.tsx` | Flashcard markdown component dictionary + image helpers |
+| `AudioRecorder.tsx` | Mic-capture + R2-upload widget for question audio solutions (admin Crucible editor, mock-tests admin, organic-chemistry-hub admin) |
+| `SVGDropZone.tsx` | Drag-drop image/SVG → R2 upload, inserts a markdown link (same three admin surfaces) |
+| `VideoDropZone.tsx` | Drag-drop MP4/WebM → R2 upload for solution videos (admin Crucible editor, mock-tests admin) |
 
-That's it for now. The package will grow as Phase 5 reveals additional shared
-primitives.
+The three upload widgets are app-agnostic: they only use `react` +
+`lucide-react` and POST to the same-origin `/api/v2/assets/upload` route, which
+both apps host. They send the question id under the canonical `questionId` form
+field (the upload service reads camelCase — see CLAUDE.md §4.5 / the assets
+service). Don't reintroduce a `question_id` (snake_case) form field.
 
 ## What's intentionally NOT here
 

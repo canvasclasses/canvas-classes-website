@@ -11,11 +11,11 @@ import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxo
 import { validateLaTeX, autoFixLatex, getLatexSuggestions, type LaTeXValidationResult } from '@canvas/core/latex-validator';
 import BulkImportModal from '@/features/admin/components/BulkImportModal';
 import MathRenderer from '@canvas/ui/MathRenderer';
-import AudioRecorder from '@/features/admin/components/AudioRecorder';
+import AudioRecorder from '@canvas/ui/AudioRecorder';
 import AudioPlayer from '@/features/admin/components/AudioPlayer';
 import SVGScaleControls from '@/features/admin/components/SVGScaleControls';
-import SVGDropZone from '@/features/admin/components/SVGDropZone';
-import VideoDropZone from '@/features/admin/components/VideoDropZone';
+import SVGDropZone from '@canvas/ui/SVGDropZone';
+import VideoDropZone from '@canvas/ui/VideoDropZone';
 import MockTestsAdmin from '@/features/admin/components/MockTestsAdmin';
 import FlagsDashboard from '@/features/admin/components/FlagsDashboard';
 import FlagModal, { type FlagSubmission } from '@/features/admin/components/FlagModal';

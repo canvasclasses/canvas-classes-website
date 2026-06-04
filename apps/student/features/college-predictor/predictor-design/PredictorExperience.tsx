@@ -14,7 +14,6 @@ import {
   type Feature,
   Icons,
   NumberWithSlider,
-  ReturnsCard,
   SectionHead,
   Seg,
   Sparkline,
@@ -385,6 +384,11 @@ export default function PredictorExperience() {
   const initialExam: Exam = searchParams.get('tool') === 'bitsat' ? 'bitsat' : 'jee';
   const [exam, setExam] = useState<Exam>(initialExam);
 
+  // Branch Finder hands off here with ?dream_branch=<value> — pre-select that
+  // branch so the predictor opens already scoped to it. The param wins over any
+  // saved session (see the restore effect below).
+  const initialBranch = searchParams.get('dream_branch');
+
   // JEE form state
   const [category, setCategory] = useState<'OPEN' | 'EWS' | 'OBC-NCL' | 'SC' | 'ST'>('OPEN');
   const [quota, setQuota] = useState<'HS' | 'OS' | 'AI'>('HS');
@@ -414,7 +418,9 @@ export default function PredictorExperience() {
   // analytics showed users were missing the collapsed section entirely and
   // asking us to add a branch filter that was already there.
   const [narrowOpen, setNarrowOpen] = useState(true);
-  const [pickedBranches, setPickedBranches] = useState<string[]>([]);
+  const [pickedBranches, setPickedBranches] = useState<string[]>(
+    initialBranch ? [initialBranch] : [],
+  );
   const [tierOnly, setTierOnly] = useState(false);
 
   // Submission + results state
@@ -475,7 +481,9 @@ export default function PredictorExperience() {
         if (typeof s.isPwD === 'boolean') setIsPwD(s.isPwD);
         if (typeof s.score === 'number') setScore(s.score);
         if (s.paper === 'modern' || s.paper === 'legacy') setPaper(s.paper);
-        if (Array.isArray(s.pickedBranches)) setPickedBranches(s.pickedBranches as string[]);
+        // A ?dream_branch= handoff from the Branch Finder takes precedence over
+        // the saved selection, so the predictor opens scoped to that branch.
+        if (!initialBranch && Array.isArray(s.pickedBranches)) setPickedBranches(s.pickedBranches as string[]);
         if (typeof s.tierOnly === 'boolean') setTierOnly(s.tierOnly);
         if (Array.isArray(s.jeeGroups)) setJeeGroups(s.jeeGroups as JoSAACollegeGroup[]);
         if (Array.isArray(s.bitsatRows)) setBitsatRows(s.bitsatRows as BitsatProgrammeResult[]);
@@ -1140,13 +1148,24 @@ export default function PredictorExperience() {
                 key={t.id}
                 type="button"
                 onClick={() => {
-                  // Clear the branch selection on a real tab switch — the JEE
-                  // and BITSAT chip sets differ, so a branch picked on one tab
-                  // would be stale on the other (no highlighted chip, and on
-                  // JEE an unmatchable dream_branch returns zero results).
-                  // Guarded by the id check so hydration's setExam doesn't wipe
-                  // a restored selection.
-                  if (t.id !== exam) setPickedBranches([]);
+                  // On a REAL tab switch, clear both the branch selection AND
+                  // the previous exam's results. The chip sets differ between
+                  // exams, and — more importantly — leaving the other exam's
+                  // results/counts/sensitivity mounted under the new exam's
+                  // labels renders a broken stale view ("top 0 programmes",
+                  // "undefined/390" in the sensitivity chart) until a fresh
+                  // predict runs. Guarded by the id check so hydration's setExam
+                  // doesn't wipe a restored selection/results.
+                  if (t.id !== exam) {
+                    setPickedBranches([]);
+                    setJeeGroups(null);
+                    setBitsatRows(null);
+                    setSens(null);
+                    setCounts(null);
+                    setTotalCount(null);
+                    setRankConversion(null);
+                    setExtended(false);
+                  }
                   setExam(t.id);
                 }}
                 aria-pressed={active}
@@ -1356,70 +1375,6 @@ export default function PredictorExperience() {
                 ]}
               />
 
-              {/* Affirmative-action toggles — Girls Quota + PwD Quota.
-                  Both default off (Gender-Neutral, non-PwD). The chosen
-                  combination maps directly to JoSAA's cutoff matrix:
-                    - Girls ON  → gender = 'Female-only (incl. Supernumerary)'
-                    - PwD ON    → category = '<base> (PwD)'
-                  Both can be on simultaneously (Female + PwD seats exist). */}
-              <div>
-                <div
-                  style={{
-                    color: '#9a9aa6',
-                    fontSize: 11,
-                    fontWeight: 700,
-                    letterSpacing: '0.16em',
-                    fontFamily: "'JetBrains Mono', monospace",
-                    marginBottom: 10,
-                  }}
-                >
-                  ADDITIONAL QUOTAS · OPTIONAL
-                </div>
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                  <QuotaToggle
-                    label="Girls Quota"
-                    sublabel="Female-only + Supernumerary seats"
-                    active={isFemale}
-                    onToggle={() => setIsFemale((v) => !v)}
-                  />
-                  <QuotaToggle
-                    label="PwD Quota"
-                    sublabel="Persons-with-Disability cutoffs"
-                    active={isPwD}
-                    onToggle={() => setIsPwD((v) => !v)}
-                  />
-                </div>
-
-                {/* PwD merit-list hint. JoSAA runs a separate ~10K-candidate
-                    merit list for PwD aspirants, so a "PwD rank" lives on a
-                    different scale from CRL. Without this note, a student
-                    with CRL ~15K who toggles PwD on sees "0 colleges" and
-                    assumes the tool is broken. Surface only when PwD is on
-                    AND the entered rank is past the realistic PwD range. */}
-                {isPwD && (
-                  <div
-                    role="note"
-                    style={{
-                      marginTop: 10,
-                      padding: '10px 14px',
-                      borderRadius: 10,
-                      border: '1px solid rgba(125,211,252,0.25)',
-                      background: 'rgba(125,211,252,0.06)',
-                      color: '#a7d4f0',
-                      fontSize: 12.5,
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    <strong style={{ color: '#bce0f5' }}>PwD uses a separate merit list.</strong>{' '}
-                    JoSAA&apos;s PwD pool is roughly 10,000 candidates, so PwD ranks are
-                    on a different scale from CRL — typical PwD ranks are{' '}
-                    <strong style={{ color: '#bce0f5' }}>under 5,000</strong>. If you
-                    entered your CRL above, the predictor may return zero matches
-                    because no PwD seat closes that high.
-                  </div>
-                )}
-              </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-[18px]">
                 <Seg
                   label="QUOTA"
@@ -1439,16 +1394,72 @@ export default function PredictorExperience() {
                 />
               </div>
             </div>
-            {/* DOM order is form → filter → ReturnsCard so mobile stacks the
-                filter directly under the form fields (per UX feedback — it's
-                part of the filters, not a result). On desktop we override with
-                explicit grid placement: filter spans row 2 full-width, the
-                ReturnsCard jumps to row 1 col 2. */}
-            <div className="lg:row-start-2 lg:col-span-2">
+            {/* Right column: branch filter, with the additional quotas stacked
+                directly beneath it (one flex column, so the quotas sit flush
+                under the filter regardless of the left form column's height).
+                Frees the space the Safe/Target/Reach card used to take (those
+                meanings now live in hover tooltips on the result chips). Stacks
+                last on mobile. Quotas are JEE-only — BITS has no category quotas.
+                  - Girls ON → gender = 'Female-only (incl. Supernumerary)'
+                  - PwD ON   → category = '<base> (PwD)' */}
+            <div
+              className="lg:col-start-2 lg:row-start-1"
+              style={{ display: 'flex', flexDirection: 'column', gap: 18 }}
+            >
               {narrowDownPanel}
-            </div>
-            <div className="lg:row-start-1 lg:col-start-2">
-              <ReturnsCard exam="jee" />
+              <div>
+                <div
+                style={{
+                  color: '#9a9aa6',
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: '0.16em',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  marginBottom: 10,
+                }}
+              >
+                ADDITIONAL QUOTAS · OPTIONAL
+              </div>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <QuotaToggle
+                  label="Girls Quota"
+                  sublabel="Female-only + Supernumerary seats"
+                  active={isFemale}
+                  onToggle={() => setIsFemale((v) => !v)}
+                />
+                <QuotaToggle
+                  label="PwD Quota"
+                  sublabel="Persons-with-Disability cutoffs"
+                  active={isPwD}
+                  onToggle={() => setIsPwD((v) => !v)}
+                />
+              </div>
+
+              {/* PwD merit-list hint — JoSAA runs a separate ~10K-candidate PwD
+                  merit list, so a CRL entered above can read as "0 colleges". */}
+              {isPwD && (
+                <div
+                  role="note"
+                  style={{
+                    marginTop: 10,
+                    padding: '10px 14px',
+                    borderRadius: 10,
+                    border: '1px solid rgba(125,211,252,0.25)',
+                    background: 'rgba(125,211,252,0.06)',
+                    color: '#a7d4f0',
+                    fontSize: 12.5,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  <strong style={{ color: '#bce0f5' }}>PwD uses a separate merit list.</strong>{' '}
+                  JoSAA&apos;s PwD pool is roughly 10,000 candidates, so PwD ranks are
+                  on a different scale from CRL — typical PwD ranks are{' '}
+                  <strong style={{ color: '#bce0f5' }}>under 5,000</strong>. If you
+                  entered your CRL above, the predictor may return zero matches
+                  because no PwD seat closes that high.
+                </div>
+              )}
+              </div>
             </div>
           </div>
         ) : (
@@ -1508,12 +1519,9 @@ export default function PredictorExperience() {
                 ]}
               />
             </div>
-            {/* Same DOM-order trick as the JEE grid above — see comment there. */}
-            <div className="lg:row-start-2 lg:col-span-2">
-              {narrowDownPanel}
-            </div>
+            {/* Branch filter in the right column — see JEE grid comment above. */}
             <div className="lg:row-start-1 lg:col-start-2">
-              <ReturnsCard exam="bitsat" />
+              {narrowDownPanel}
             </div>
           </div>
         )}

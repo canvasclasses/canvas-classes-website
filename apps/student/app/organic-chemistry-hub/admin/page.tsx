@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import SVGDropZone from './_components/SVGDropZone';
-import AudioRecorder from './_components/AudioRecorder';
+import SVGDropZone from '@canvas/ui/SVGDropZone';
+import AudioRecorder from '@canvas/ui/AudioRecorder';
 import type { Reaction, Priority, Exam, Difficulty } from '../types';
 import { Save, Plus, AlertTriangle, Loader2, RefreshCw } from 'lucide-react';
 import { TYPE_COLOR } from '../data';

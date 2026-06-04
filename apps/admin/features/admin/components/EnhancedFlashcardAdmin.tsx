@@ -12,7 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
-import SVGDropZone from './SVGDropZone';
+import SVGDropZone from '@canvas/ui/SVGDropZone';
 import FlashcardImageScaleControls from './FlashcardImageScaleControls';
 import { flashcardMarkdownComponents } from '@canvas/ui/flashcardMarkdown';
 import { getCategoryNames, getFlashcardChaptersByCategory } from '@canvas/data/flashcards/flashcardTaxonomy';

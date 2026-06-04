@@ -11,7 +11,7 @@ import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Class 12 Chemistry — NCERT Simplified | Canvas Classes',
+  title: 'Class 12 Chemistry — NCERT Simplified',
   description:
     'Master Class 12 Chemistry with NCERT Simplified — interactive lessons, inline quizzes, simulations, and worked examples for JEE & NEET.',
 };

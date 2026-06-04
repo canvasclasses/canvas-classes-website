@@ -33,7 +33,7 @@ export const revalidate = 86400;
 const SITE_ORIGIN = 'https://canvasclasses.in';
 
 export const metadata: Metadata = {
-  title: 'Career Guide 2026 — Honest career briefs for JEE / NEET aspirants | Canvas Classes',
+  title: 'Career Guide 2026 — Honest career briefs for JEE / NEET aspirants',
   description:
     'Editorial career briefs for JEE / NEET students. What each career actually is in 2026 — income distributions, AI exposure, the path in, and the cons nobody else mentions. Refreshed quarterly.',
   alternates: { canonical: `${SITE_ORIGIN}/career-guide` },

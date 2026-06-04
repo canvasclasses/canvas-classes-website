@@ -11,7 +11,7 @@ import BookTableOfContents, {
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Class 11 Chemistry — NCERT Simplified | Canvas Classes',
+  title: 'Class 11 Chemistry — NCERT Simplified',
   description:
     'Master Class 11 Chemistry with NCERT Simplified — interactive lessons, inline quizzes, simulations, and worked examples for JEE & NEET.',
 };

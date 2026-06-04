@@ -2,7 +2,7 @@ import OrganicWizardGame from '@/features/simulations/components/organic-wizard/
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Organic Wizard - Canvas Classes',
+    title: 'Organic Wizard',
     description: 'Master organic chemistry conversions in this interactive game.',
 };
 

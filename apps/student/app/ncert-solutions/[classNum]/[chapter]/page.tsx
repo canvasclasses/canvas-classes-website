@@ -77,11 +77,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const data = await getChapterData(classNumParam, chapterSlug);
 
     if (!data) {
-        return { title: 'Chapter Not Found | NCERT Solutions | Canvas Classes' };
+        return { title: 'Chapter Not Found | NCERT Solutions' };
     }
 
     const url = `${BASE_URL}/ncert-solutions/class-${data.classNum}/${chapterSlug}`;
-    const title = `NCERT Solutions for Class ${data.classNum} Chemistry — ${data.chapterName} | Canvas Classes`;
+    const title = `NCERT Solutions for Class ${data.classNum} Chemistry — ${data.chapterName}`;
     const description = `Free NCERT solutions for Class ${data.classNum} Chemistry chapter "${data.chapterName}" — ${data.questions.length} step-by-step solutions with detailed explanations and video walkthroughs by Paaras Sir. Updated for 2025-26 CBSE, JEE & NEET.`;
 
     return {

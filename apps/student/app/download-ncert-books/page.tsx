@@ -6,7 +6,7 @@ import { getAllNcertBooks } from '@/features/books/data/ncertBooksData';
 const BASE_URL = 'https://www.canvasclasses.in';
 
 export const metadata: Metadata = {
-    title: 'NCERT Books PDF Download — Class 8, 9, 10, 11 & 12 (2025-26) | Canvas Classes',
+    title: 'NCERT Books PDF Download — Class 8, 9, 10, 11 & 12 (2025-26)',
     description:
         'Free PDF download of every NCERT textbook for Class 8 to 12 — Physics, Chemistry, Biology, Mathematics, Science, English & Social Science. Latest CBSE 2025-26 syllabus including the new NEP 2020 books for Class 9 (Kaveri, Science, Mathematics). Read online or download instantly. No login.',
     keywords: [
