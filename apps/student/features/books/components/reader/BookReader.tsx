@@ -34,6 +34,7 @@ import { useVaultProgress } from '@/features/books/hooks/useVaultProgress';
 import { isReaderLoggedIn } from '@/features/books/lib/readerAuth';
 import type { VaultWord } from '@canvas/data/books/vocabulary';
 import FreeGate from './FreeGate';
+import ReaderThemeControl from './ReaderThemeControl';
 
 // The Word Vault is only meaningful for English (Kaveri) books — that's where
 // the tappable glosses + vocabulary_lab cards live. Other books simply don't
@@ -172,10 +173,10 @@ export default function BookReader({
   const canGoNext = !hasQuiz || quizPassed;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+    <div className="min-h-screen bg-[var(--book-bg)] text-white flex flex-col">
 
       {/* ── Top nav ─────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 bg-[#0B0F15]/95 backdrop-blur border-b border-white/8">
+      <header className="sticky top-0 z-40 bg-[var(--book-surface)] backdrop-blur border-b border-white/8">
         <div className="max-w-[1060px] mx-auto px-4 h-12 flex items-center gap-3">
           <Link href={bp}
             className="text-white/40 hover:text-white/70 transition-colors shrink-0">
@@ -209,6 +210,7 @@ export default function BookReader({
               <span className="text-[11px] font-semibold tabular-nums">{vault.savedCount}</span>
             </Link>
           )}
+          <ReaderThemeControl />
         </div>
 
         {/* Chapter progress bar */}
@@ -233,7 +235,7 @@ export default function BookReader({
           {/* Sidebar panel */}
           {sidebarOpen && (
             <aside className="w-[260px] flex flex-col overflow-y-auto
-              border-r border-white/5 bg-[#0B0F15]/50
+              border-r border-white/5 bg-[var(--book-surface)]
               sticky top-[50px] h-[calc(100vh-50px-56px)]">
               <div className="p-4">
                 {/* Chapter heading */}
@@ -318,7 +320,7 @@ export default function BookReader({
               title={sidebarOpen ? 'Hide chapter list' : 'Show chapter list'}
               className="flex items-center justify-center
                 w-5 h-12 rounded-r-lg -ml-px
-                bg-[#0B0F15] border border-l-0 border-white/10
+                bg-[var(--book-surface)] border border-l-0 border-white/10
                 text-white/30 hover:text-white/70 hover:bg-[#151E32]
                 transition-colors"
             >
@@ -346,7 +348,7 @@ export default function BookReader({
       </div>
 
       {/* ── Bottom nav ──────────────────────────────────────────────────── */}
-      <nav className="sticky bottom-0 z-40 bg-[#0B0F15]/95 backdrop-blur border-t border-white/8">
+      <nav className="sticky bottom-0 z-40 bg-[var(--book-surface)] backdrop-blur border-t border-white/8">
         <div className="max-w-[1060px] mx-auto px-4 h-14 flex items-center justify-between gap-3">
           {/* Previous */}
           {prevPageSlug ? (
@@ -395,7 +397,7 @@ export default function BookReader({
       {/* ── Word Vault save toast ──────────────────────────────────────── */}
       {savedToast && (
         <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2
-          px-4 py-2.5 rounded-full bg-[#0B0F15] border border-sky-500/30 shadow-2xl
+          px-4 py-2.5 rounded-full bg-[var(--book-surface)] border border-sky-500/30 shadow-2xl
           text-sm text-white/85">
           <Library size={15} className="text-sky-400" />
           <span>Saved <span className="font-semibold text-sky-300">“{savedToast}”</span> to your Word Vault</span>
@@ -412,7 +414,7 @@ export default function BookReader({
       {showMilestone && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm"
           onClick={() => setShowMilestone(false)}>
-          <div className="bg-[#0B0F15] border border-emerald-500/30 rounded-3xl p-8 max-w-sm w-full
+          <div className="bg-[var(--book-surface)] border border-emerald-500/30 rounded-3xl p-8 max-w-sm w-full
             text-center shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="text-6xl mb-4">🎉</div>
             <h2 className="text-2xl font-bold text-white mb-1">Milestone Unlocked!</h2>
@@ -459,7 +461,7 @@ export default function BookReader({
           onClick={() => setShowSignInPrompt(false)}>
           <div className="absolute inset-0 bg-[#050505]/80 backdrop-blur-md" />
 
-          <div className="relative w-full max-w-md mx-4 bg-[#0B0F15] border border-white/10
+          <div className="relative w-full max-w-md mx-4 bg-[var(--book-surface)] border border-white/10
             rounded-t-3xl sm:rounded-3xl p-8 shadow-2xl"
             onClick={e => e.stopPropagation()}>
 

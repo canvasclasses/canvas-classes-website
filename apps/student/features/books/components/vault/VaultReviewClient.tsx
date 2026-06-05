@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, Library, Volume2, Check } from 'lucide-react';
 import { useVaultProgress } from '@/features/books/hooks/useVaultProgress';
+import { useBookTheme } from '@/features/books/hooks/useBookTheme';
 import { getMasteryLevel, type QualityRating } from '@/lib/spacedRepetition';
 import type { VaultWord } from '@canvas/data/books/vocabulary';
 
@@ -34,6 +35,7 @@ function speak(word: string, audioUrl?: string) {
 }
 
 export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Props) {
+  useBookTheme(); // apply the reader's saved brightness on this surface too
   const vault = useVaultProgress(bookSlug);
   const [deck, setDeck] = useState<VaultWord[]>([]);
   const [deckLoaded, setDeckLoaded] = useState(false);
@@ -94,7 +96,7 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
   if (session && session.length > 0) {
     const word = session[idx];
     return (
-      <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center px-4 py-6">
+      <div className="min-h-screen bg-[var(--book-bg)] text-white flex flex-col items-center px-4 py-6">
         <div className="w-full max-w-lg flex items-center justify-between mb-8">
           <button onClick={() => setSession(null)} className="text-white/40 hover:text-white/70 flex items-center gap-1 text-sm">
             <ChevronLeft size={16} /> End session
@@ -152,8 +154,8 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
 
   // ── Hub view (stats + browse + start) ──────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <header className="sticky top-0 z-30 bg-[#0B0F15]/95 backdrop-blur border-b border-white/8">
+    <div className="min-h-screen bg-[var(--book-bg)] text-white">
+      <header className="sticky top-0 z-30 bg-[var(--book-surface)]/95 backdrop-blur border-b border-white/8">
         <div className="max-w-2xl mx-auto px-4 h-12 flex items-center gap-3">
           <Link href={basePath} className="text-white/40 hover:text-white/70"><ChevronLeft size={18} /></Link>
           <Library size={15} className="text-sky-400" />

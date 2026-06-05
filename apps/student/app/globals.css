@@ -544,6 +544,11 @@ select {
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Live Books reading theme — default "Charcoal". The useBookTheme hook
+     overrides these on <html> per the reader's saved choice (Midnight/Charcoal/
+     Slate). Defined here so SSR / first paint shows Charcoal with no flash. */
+  --book-bg: #121316;
+  --book-surface: #181A21;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -98,7 +98,7 @@ export default function FreeGate({ bookSlug, pageSlug, basePath }: Props) {
       <div className="absolute inset-0 bg-[#050505]/80 backdrop-blur-md" />
 
       {/* Gate card */}
-      <div className="relative w-full max-w-md mx-4 mb-0 sm:mb-0 bg-[#0B0F15] border border-white/10
+      <div className="relative w-full max-w-md mx-4 mb-0 sm:mb-0 bg-[var(--book-surface)] border border-white/10
         rounded-t-3xl sm:rounded-3xl p-8 shadow-2xl">
 
         {/* Icon */}

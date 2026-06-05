@@ -494,6 +494,16 @@ Routes hosted by both apps (wrapper → service):
 - Ghost button: `bg-white/5 border border-white/10 hover:bg-white/10`
 - Card: `bg-[#151E32] border border-white/5 rounded-xl`
 
+> **Exception — Live Books reading surfaces use a *lifted* palette (project decision 2026-06-04).**
+> The deepest `#050505` (near-black) causes halation/eye-strain on long reads (worse for the ~30–50% of people with astigmatism) and runs at ~21:1 contrast — well past WCAG AAA's 7:1. So **reading surfaces** (the book reader, library/grade landing, table of contents, Word Vault, practice hub, loading skeletons, and the admin books-editor **preview pane**) lift to:
+> - reading page background: **`#121316`** (was `#050505`)
+> - reading chrome / cards: **`#181A21`** (was `#0B0F15`)
+> - modal backdrop scrims stay `#050505` (they should dim the page).
+>
+> This is **scoped to Live Books reading surfaces only** — the global `#050505`/`#0B0F15` tokens above are unchanged for Crucible, the admin shell, and every non-reading surface. New Live Books reading UI must drive its background from the CSS variables (below), never a hardcoded hex.
+>
+> **Reading-mode toggle (shipped 2026-06-04).** Reading surfaces now read `bg-[var(--book-bg)]` / `bg-[var(--book-surface)]`. A control in the reader header (`ReaderThemeControl`) lets a student pick one of **three dark variants** — **Midnight `#0B0C0F`**, **Charcoal `#121316`** (default), **Slate `#1A1C22`** — persisted per-device via the `useBookTheme` hook, which writes the pair onto `<html>`. Defaults live in `apps/student/app/globals.css` `:root` (Charcoal) so SSR never flashes. **Light/sepia are intentionally NOT offered:** the platform is dark-native (every generated image has a dark background + light content; all body text is white), so only *how dark* varies — text and images are untouched, which keeps the switch safe. Content-block card internals + simulation canvases still use the old `#0B0F15` (acceptable inset; folding them into the variables is the remaining follow-up). Full reference: `_agents/workflows/BOOK_PAGE_WORKFLOW.md` §1.5.
+
 ---
 
 ## 8. SECURITY RULES — MANDATORY FOR EVERY CHANGE

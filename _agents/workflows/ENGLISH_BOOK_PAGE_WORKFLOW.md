@@ -55,6 +55,7 @@ If uncertain about scope, stop and ask. Do not pick silently.
 |---|---|
 | API endpoint, request body, page reorder | `BOOK_PAGE_WORKFLOW.md` §2 — unchanged |
 | Slug rules | `BOOK_PAGE_WORKFLOW.md` §2 — unchanged |
+| Reading-surface palette (eye-comfort: `#121316` page / `#181A21` chrome, NOT pure black) | `BOOK_PAGE_WORKFLOW.md` §1.5 — inherited; applies to every Kaveri reading surface |
 | Hero banner aesthetic (16:5, dark background, no caption) | `BOOK_PAGE_WORKFLOW.md` §3.4.1 — unchanged; English uses **watercolour painting** style (see §7 below) |
 | Generic image-generation prompt template | `BOOK_PAGE_WORKFLOW.md` §3.4.2 — inherited; English overrides label colour and style (see §7 below) |
 | Hinglish authoring philosophy (teacher voice, *tum* register, English-stays-English for technical words) | `BOOK_PAGE_WORKFLOW.md` §12 — inherited with one critical override (see §9 below) |

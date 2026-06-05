@@ -597,11 +597,11 @@ export default function BookWorkspace() {
               {/* Preview pane — hidden in edit-only mode */}
               {viewMode !== 'edit' && (
                 <div
-                  className="overflow-y-auto bg-[#050505]"
+                  className="overflow-y-auto bg-[#121316]"
                   style={viewMode === 'split' ? { flex: 1 } : { flex: 1 }}
                 >
                   {viewMode === 'split' && (
-                    <div className="sticky top-0 z-10 px-4 py-1.5 bg-[#0B0F15] border-b border-white/8
+                    <div className="sticky top-0 z-10 px-4 py-1.5 bg-[#181A21] border-b border-white/8
                       flex items-center justify-between gap-4">
                       <div className="flex items-center gap-1.5">
                         <Eye size={11} className="text-orange-400" />

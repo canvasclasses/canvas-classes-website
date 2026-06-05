@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowLeft, Bell, Sparkles, Gamepad2, ClipboardCheck, Languages, Zap } from 'lucide-react';
 import { LiveBooksLogo } from './bookDesign';
+import { useBookTheme } from '@/features/books/hooks/useBookTheme';
 
 interface Props {
   grade?: number;
@@ -10,8 +11,9 @@ interface Props {
 }
 
 export default function LiveBooksComingSoon({ grade, expectedSubjects = [] }: Props) {
+  useBookTheme();
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white flex flex-col pt-[72px]">
+    <div className="relative min-h-screen bg-[var(--book-bg)] text-white flex flex-col pt-[72px]">
 
       {/* Ambient background */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">

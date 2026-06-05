@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useBookProgress, BookProgressRecord } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
+import { useBookTheme } from '@/features/books/hooks/useBookTheme';
 import { BlockType } from '@canvas/data/types/books';
 import {
   type SubjectTheme, getTheme, getDecor, LiveBooksLogo,
@@ -691,7 +692,7 @@ function SubjectNav({
   onSelect: (slug: string) => void;
 }) {
   return (
-    <div className="sticky top-[72px] z-30 border-b border-white/[0.06] bg-[#050505]/90 backdrop-blur-md shrink-0">
+    <div className="sticky top-[72px] z-30 border-b border-white/[0.06] bg-[var(--book-bg)] backdrop-blur-md shrink-0">
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-2.5 flex gap-2 overflow-x-auto scrollbar-hide">
         {books.map(book => {
           const theme = getTheme(book.subject);
@@ -723,6 +724,7 @@ function SubjectNav({
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function GradeLandingPage({ grade, books, pages, basePath }: Props) {
+  useBookTheme(); // apply the reader's saved brightness on the library too
   const [searchQuery,  setSearchQuery]  = useState('');
   const [openChapter,  setOpenChapter]  = useState<{ bookSlug: string; chapterNum: number } | null>(null);
   const [activeSubject, setActiveSubject] = useState<string | null>(books[0]?.slug ?? null);
@@ -807,7 +809,7 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
   /* ── Render ───────────────────────────────────────────────────────── */
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white flex flex-col pt-[72px]">
+    <div className="relative min-h-screen bg-[var(--book-bg)] text-white flex flex-col pt-[72px]">
 
       {/* ── Ambient background — fixed glows + faint dot grid ────────── */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -959,7 +961,7 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
           </div>
 
           {searchResults && searchResults.length > 0 && (
-            <div className="mt-2 border border-white/[0.08] rounded-xl bg-[#0B0F15] overflow-hidden
+            <div className="mt-2 border border-white/[0.08] rounded-xl bg-[var(--book-surface)] overflow-hidden
               max-h-72 overflow-y-auto">
               {searchResults.map(pg => {
                 const theme = getTheme(books.find(b => b.slug === pg.bookSlug)?.subject ?? '');

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useBookProgress, BookProgressRecord } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
+import { useBookTheme } from '@/features/books/hooks/useBookTheme';
 import { useBookStats } from '@/features/books/hooks/useBookStats';
 import { BlockType } from '@canvas/data/types/books';
 import { getTheme, getDecor, LiveBooksLogo } from './bookDesign';
@@ -64,6 +65,7 @@ const CONTENT_ICONS: Partial<Record<BlockType, { icon: typeof FlaskConical; labe
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function BookTableOfContents({ book, chapters, firstPageSlug, basePath }: Props) {
+  useBookTheme(); // apply the reader's saved brightness on this surface too
   const bp = basePath ?? `/books/${book.slug}`;
   const theme = getTheme(book.subject);
   const decor = getDecor(book.subject);
@@ -160,7 +162,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
   }, [toggleBookmark]);
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white flex flex-col pt-[72px]">
+    <div className="relative min-h-screen bg-[var(--book-bg)] text-white flex flex-col pt-[72px]">
 
       {/* ── Ambient background — fixed glows + faint dot grid ─────────────── */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -397,7 +399,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
             </div>
 
             {searchResults && searchResults.length > 0 && (
-              <div className="mt-2 border border-white/[0.08] rounded-xl bg-[#0B0F15] overflow-hidden
+              <div className="mt-2 border border-white/[0.08] rounded-xl bg-[var(--book-surface)] overflow-hidden
                 max-h-72 overflow-y-auto">
                 {searchResults.map((pg) => {
                   const done = completedSlugs.has(pg.slug);

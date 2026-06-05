@@ -30,6 +30,34 @@ A **BookPage** is a focused, self-contained lesson page inside a digital textboo
 
 ---
 
+## 1.5 Reading-Surface Palette (eye-comfort standard — project decision 2026-06-04)
+
+Live Books are **read for long stretches**, so the reading surface is NOT the platform's deepest near-black. Pure black (`#050505`) + white text causes *halation* (text smears for the ~30–50% of readers with astigmatism) and runs ~21:1 contrast — far past WCAG AAA's 7:1, which fatigues the eye. Following Google Material's "don't use pure black; elevate surfaces lighter" guidance, reading surfaces use a **lifted** palette:
+
+| Surface | Value | Notes |
+|---|---|---|
+| Reading page background | **`#121316`** | the dominant surface behind page content (was `#050505`) |
+| Reading chrome / cards | **`#181A21`** | header, sidebar, footer, dropdowns, modal cards (was `#0B0F15`) — *lighter* than the page = Material-style elevation |
+| Body text | off-white (e.g. `rgba(255,255,255,0.88)`) | not pure white; narrated-passage text already uses this |
+| Modal backdrop scrims | keep `#050505/80` | scrims *should* dim the page behind a popup |
+
+**Rules for any new reading UI:**
+- Never use `bg-[#050505]` or pure black for a reading surface, and don't hardcode the lifted hexes either — drive the background from the theme variables: **`bg-[var(--book-bg)]`** for the page, **`bg-[var(--book-surface)]`** for chrome/cards. These resolve to whichever dark variant the reader picked (see the toggle below). Avoid Tailwind opacity modifiers on these vars (`/95` etc.) — convert to solid + `backdrop-blur` instead.
+- This palette is applied in the reader shell (`apps/student/features/books/components/**`, the two `loading.tsx` skeletons) and the admin **books-editor preview pane** (`apps/admin/.../books-editor/BookWorkspace.tsx`) so the preview matches the student reader. The global `#050505`/`#0B0F15` tokens in `CLAUDE.md` §7 are unchanged for Crucible/admin shell — this is reading-surface-only.
+**Reading-mode toggle (shipped 2026-06-04).** A `ReaderThemeControl` in the reader header lets the student pick one of **three dark variants** — the choice persists per-device and applies to every reading surface:
+
+| Variant | `--book-bg` | `--book-surface` |
+|---|---|---|
+| **Midnight** | `#0B0C0F` | `#141620` |
+| **Charcoal** (default) | `#121316` | `#181A21` |
+| **Slate** | `#1A1C22` | `#22242E` |
+
+How it works: `useBookTheme` (`apps/student/features/books/hooks/useBookTheme.ts`) reads `localStorage[canvas_book_theme]` and writes the two vars onto `<html>`; every reading surface uses `bg-[var(--book-bg)]`. Defaults live in `apps/student/app/globals.css` `:root` (Charcoal → no SSR flash). Each client reading surface calls `useBookTheme()` to apply the saved choice; the control is mounted only in the reader header. **Light/sepia are intentionally NOT offered** — the platform is dark-native (all generated images have dark backgrounds + light content), so only *how dark* varies; text and images are untouched.
+
+- **Not yet migrated:** content-block card internals (callout, comparison, narrated-passage popover, code blocks) and simulation canvases still use a hardcoded `#0B0F15` — fine on Midnight/Charcoal, a touch dark on Slate (acceptable inset). Folding them into `var(--book-surface)` is the remaining follow-up. The admin books-editor **preview pane** stays hardcoded at Charcoal (it shows the default reader; the toggle is a per-student preference, not an admin one).
+
+---
+
 ## 2. API — How to Create a Page
 
 ```

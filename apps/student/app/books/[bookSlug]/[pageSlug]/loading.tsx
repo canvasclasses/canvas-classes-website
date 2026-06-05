@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
-      <header className="sticky top-0 z-40 bg-[#0B0F15]/95 backdrop-blur border-b border-white/8">
+    <div className="min-h-screen bg-[var(--book-bg)] text-white flex flex-col">
+      <header className="sticky top-0 z-40 bg-[var(--book-surface)]/95 backdrop-blur border-b border-white/8">
         <div className="max-w-[1060px] mx-auto px-4 h-12 flex items-center gap-3">
           <div className="w-4 h-4 rounded bg-white/10 animate-pulse" />
           <div className="w-4 h-4 rounded bg-white/10 animate-pulse" />
@@ -13,7 +13,7 @@ export default function Loading() {
       </header>
 
       <div className="flex flex-1 min-h-0">
-        <aside className="hidden lg:flex w-[260px] shrink-0 flex-col border-r border-white/5 bg-[#0B0F15]/50 p-4 gap-2">
+        <aside className="hidden lg:flex w-[260px] shrink-0 flex-col border-r border-white/5 bg-[var(--book-surface)]/50 p-4 gap-2">
           <div className="h-2 w-20 rounded bg-orange-500/20 animate-pulse mb-1" />
           <div className="h-4 w-5/6 rounded bg-white/10 animate-pulse mb-4" />
           <div className="h-[3px] w-full rounded bg-white/8 animate-pulse mb-4" />
