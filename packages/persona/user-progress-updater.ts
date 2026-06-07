@@ -34,7 +34,11 @@ import { getTagName } from '@canvas/data/taxonomy/lookup';
 import {
   RECENT_ATTEMPTS_CAP,
   computeChapterMasteryLevel,
+  updateMasteryProb,
+  nextReview,
 } from './contract';
+
+const DAY_MS = 86_400_000;
 
 /**
  * Value-shaped snapshot of the fields `applyAttemptToProgress` reads from a
@@ -170,21 +174,35 @@ export function computeUserProgressUpdate(
         next.accuracy_percentage = next.times_attempted > 0
           ? Math.round((next.times_correct / next.times_attempted) * 100)
           : 0;
+        // Phase 1: persistent mastery estimate + spaced-repetition schedule.
+        next.mastery_prob = updateMasteryProb(existing.mastery_prob, attempt.is_correct);
+        const sr = nextReview(existing.streak_correct ?? 0, attempt.is_correct);
+        next.streak_correct = sr.streakCorrect;
+        next.review_interval_days = sr.intervalDays;
+        next.next_due_at = new Date(attempt.attempted_at.getTime() + sr.intervalDays * DAY_MS);
+        if (attempt.is_correct) next.last_correct_at = attempt.attempted_at;
       }
       concept_mastery.push({ tag_id: tagId, value: next });
     } else {
-      concept_mastery.push({
+      const freshValue: IConceptMastery = {
         tag_id: tagId,
-        value: {
-          tag_id: tagId,
-          tag_name: getTagName(tagId),
-          times_attempted: counts_for_mastery ? 1 : 0,
-          times_correct: counts_for_mastery && attempt.is_correct ? 1 : 0,
-          accuracy_percentage: counts_for_mastery ? (attempt.is_correct ? 100 : 0) : 0,
-          exposure_count: counts_for_exposure ? 1 : 0,
-          last_attempted_at: attempt.attempted_at,
-        },
-      });
+        tag_name: getTagName(tagId),
+        times_attempted: counts_for_mastery ? 1 : 0,
+        times_correct: counts_for_mastery && attempt.is_correct ? 1 : 0,
+        accuracy_percentage: counts_for_mastery ? (attempt.is_correct ? 100 : 0) : 0,
+        exposure_count: counts_for_exposure ? 1 : 0,
+        last_attempted_at: attempt.attempted_at,
+      };
+      if (counts_for_mastery) {
+        // Phase 1: seed the mastery estimate + first review interval.
+        freshValue.mastery_prob = updateMasteryProb(undefined, attempt.is_correct);
+        const sr = nextReview(0, attempt.is_correct);
+        freshValue.streak_correct = sr.streakCorrect;
+        freshValue.review_interval_days = sr.intervalDays;
+        freshValue.next_due_at = new Date(attempt.attempted_at.getTime() + sr.intervalDays * DAY_MS);
+        if (attempt.is_correct) freshValue.last_correct_at = attempt.attempted_at;
+      }
+      concept_mastery.push({ tag_id: tagId, value: freshValue });
     }
   }
 

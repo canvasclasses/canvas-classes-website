@@ -109,7 +109,7 @@ export default function PracticeHub({ book, page, bookSlug, basePath }: Props) {
         <div className="flowwrap fade-in">
           <button className="flowback" onClick={backToLanding}><Icon.arrowleft /> Back to chapter hub</button>
           {block ? (
-            <BookProvider value={{ bookSlug }}>
+            <BookProvider value={{ bookSlug, onExit: backToLanding }}>
               <BlockRenderer block={block} onQuizPass={(_id, score) => onFlowComplete(score)} />
             </BookProvider>
           ) : (

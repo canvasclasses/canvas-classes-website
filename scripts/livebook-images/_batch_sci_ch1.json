@@ -1,0 +1,30 @@
+[
+  {
+    "order": 1,
+    "pageId": "837d411f-00f4-463e-8b31-638dd4009a14",
+    "slug": "cellular-factory-floor",
+    "bookId": "69fbc73e-8f2c-4cf2-a678-c9fd41a1e706",
+    "chapterNumber": 1,
+    "pageNumber": 13,
+    "lang": "en",
+    "blockId": "9336af85-9aed-48e3-bd5f-ee046ac13e3d",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Ultra-wide cinematic banner (16:5 ratio). The interior of a cell rendered as a vast bustling production facility at golden hour. On the left side: a network of corridors and elevated platforms covered with tiny rounded production points (ribosomes embedded on rough endoplasmic reticulum) — proteins being assembled here. In the centre: a series of stacked, flattened sac-like platforms with small bubbles (vesicles) drifting away from them like packages on a conveyor (Golgi apparatus). On the right: small enclosed compartments glowing slightly with internal activity (lysosomes), with old debris being broken down into reusable components. Throughout: the feeling of coordination, purpose, gentle movement. Warm amber industrial lighting, painterly cinematic illustration. Dark background. No text overlay, no labels.",
+    "alt": "A wide cinematic interior of a bustling factory at golden hour, but rendered as the inside of a cell — production lines (rough ER), packaging stations (Golgi apparatus), and recycling units (lysosomes) all working in coordinated rhythm"
+  },
+  {
+    "order": 2,
+    "pageId": "837d411f-00f4-463e-8b31-638dd4009a14",
+    "slug": "cellular-factory-floor",
+    "bookId": "69fbc73e-8f2c-4cf2-a678-c9fd41a1e706",
+    "chapterNumber": 1,
+    "pageNumber": 13,
+    "lang": "en",
+    "blockId": "fc6c3a53-b9a0-48d4-8edd-6ea3cd480be2",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Educational illustration showing the rough endoplasmic reticulum and Golgi apparatus side by side, viewed in cross-section. On the left: a folded network of rough ER membranes with small spherical ribosomes scattered across the surface. Smooth ER (without ribosomes) shown as a separate continuous region above. Tiny vesicles (small spheres) budding off the ER and travelling rightward toward the Golgi. In the centre: the Golgi apparatus depicted as a stack of about 5–6 flattened, gently curved sac-like structures (cisternae). Tiny vesicles budding off the right edge of the Golgi and travelling further right toward the cell's plasma membrane (visible at the right edge of the frame). Clean orange thin label lines: Smooth endoplasmic reticulum, Rough endoplasmic reticulum, Ribosome, Golgi apparatus, Vesicles, Plasma membrane. Dark background, soft pastel cell-interior colours, clean technical illustration style.",
+    "alt": "Cross-section illustration showing the rough endoplasmic reticulum (with attached ribosomes) and the Golgi apparatus (stacked flat sacs) beside it, with vesicles budding off and travelling to the cell membrane"
+  }
+]

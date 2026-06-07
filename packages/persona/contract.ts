@@ -211,3 +211,57 @@ export function computeDominantWeakness(
   }
   return null;
 }
+
+// ============================================
+// SECTION 6 — Mastery probability (BKT-lite) — Phase 1
+// ============================================
+// A persistent per-skill estimate of P(student knows this skill), updated one
+// attempt at a time via a lightweight Bayesian Knowledge Tracing step. Sharper
+// than raw accuracy_percentage because it weights recent evidence and a single
+// model handles slip/guess. Only HIGH-confidence attempts update it (same rule
+// as the mastery counters). Stored on IConceptMastery.mastery_prob.
+
+export const BKT = {
+  pL0: 0.3,   // prior P(known) before any evidence
+  pT: 0.15,   // P(learn) transition per practised attempt
+  pS: 0.1,    // P(slip): knew it but answered wrong
+  pG: 0.2,    // P(guess): didn't know but answered right
+} as const;
+
+/** One BKT update. `prior` undefined → start from pL0. Returns clamped [0,1]. */
+export function updateMasteryProb(prior: number | undefined, correct: boolean): number {
+  const p = typeof prior === 'number' && prior >= 0 && prior <= 1 ? prior : BKT.pL0;
+  // Bayes: posterior given the observation.
+  const posterior = correct
+    ? (p * (1 - BKT.pS)) / (p * (1 - BKT.pS) + (1 - p) * BKT.pG)
+    : (p * BKT.pS) / (p * BKT.pS + (1 - p) * (1 - BKT.pG));
+  // Learning transition: practising itself nudges knowledge up.
+  const next = posterior + (1 - posterior) * BKT.pT;
+  return Math.min(1, Math.max(0, next));
+}
+
+// ============================================
+// SECTION 7 — Spaced repetition (SM-2-lite) — Phase 1
+// ============================================
+// A simple expanding-interval scheduler. Consecutive correct answers grow the
+// review interval along a fixed ladder; any wrong answer resets it. The
+// recommendation engine surfaces a skill for review once `next_due_at` passes.
+
+/** Days until the next review, indexed by consecutive-correct streak (capped). */
+export const REVIEW_LADDER_DAYS = [1, 3, 7, 16, 35, 75] as const;
+
+/**
+ * Given the PRIOR consecutive-correct streak and this attempt's result, return
+ * the new streak + the days until the skill is next due for review.
+ *   wrong → streak resets to 0, due again tomorrow (interval 1).
+ *   right → streak grows, interval climbs the ladder.
+ */
+export function nextReview(
+  priorStreakCorrect: number,
+  correct: boolean,
+): { streakCorrect: number; intervalDays: number } {
+  if (!correct) return { streakCorrect: 0, intervalDays: REVIEW_LADDER_DAYS[0] };
+  const streakCorrect = Math.max(0, priorStreakCorrect) + 1;
+  const idx = Math.min(streakCorrect - 1, REVIEW_LADDER_DAYS.length - 1);
+  return { streakCorrect, intervalDays: REVIEW_LADDER_DAYS[idx] };
+}

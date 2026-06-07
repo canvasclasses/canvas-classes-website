@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { ThemeExplorerBlock, ThemeCard } from '@canvas/data/types/books';
 import InlineMarkdown from '../InlineMarkdown';
 
-function ThemePanel({ theme }: { theme: ThemeCard }) {
+function ThemePanel({ theme, hinglish }: { theme: ThemeCard; hinglish?: boolean }) {
   const [showReflection, setShowReflection] = useState(false);
+  const description = hinglish && theme.description_hinglish ? theme.description_hinglish : theme.description;
+  const reflection = hinglish && theme.reflection_prompt_hinglish ? theme.reflection_prompt_hinglish : theme.reflection_prompt;
   return (
     <div
       className="rounded-2xl p-4"
@@ -18,7 +20,7 @@ function ThemePanel({ theme }: { theme: ThemeCard }) {
         {theme.title}
       </div>
       <p className="text-[14px] leading-relaxed mb-3" style={{ color: 'rgba(255,255,255,0.75)' }}>
-        {theme.description}
+        {description}
       </p>
       {theme.evidence.length > 0 && (
         <div className="mb-3 space-y-1.5">
@@ -53,7 +55,7 @@ function ThemePanel({ theme }: { theme: ThemeCard }) {
             For You
           </div>
           <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/75">
-            {theme.reflection_prompt}
+            {reflection}
           </InlineMarkdown>
         </div>
       )}
@@ -61,7 +63,7 @@ function ThemePanel({ theme }: { theme: ThemeCard }) {
   );
 }
 
-export default function ThemeExplorerRenderer({ block }: { block: ThemeExplorerBlock }) {
+export default function ThemeExplorerRenderer({ block, hinglish }: { block: ThemeExplorerBlock; hinglish?: boolean }) {
   return (
     <div className="my-8 rounded-2xl border border-amber-500/15 bg-amber-500/[0.02] px-5 py-5">
       <div className="flex items-center gap-2 mb-4">
@@ -81,7 +83,7 @@ export default function ThemeExplorerRenderer({ block }: { block: ThemeExplorerB
 
       <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
         {block.themes.map((t) => (
-          <ThemePanel key={t.id} theme={t} />
+          <ThemePanel key={t.id} theme={t} hinglish={hinglish} />
         ))}
       </div>
     </div>

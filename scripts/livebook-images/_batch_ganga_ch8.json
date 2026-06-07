@@ -1,0 +1,93 @@
+[
+  {
+    "pageId": "30f0e60c-018a-45be-b6a8-ac13f3dbb0b0",
+    "slug": "ch8-parichay",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 8,
+    "pageNumber": 1,
+    "lang": "en",
+    "blockId": "ce714128-f1ff-4768-a7e1-8072161178f6",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour bust-portrait of the medieval saint-poet Raidas (Ravidas) with a serene devotional expression, simple robes, a soft glowing halo of lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text.",
+    "alt": "संत रैदास"
+  },
+  {
+    "pageId": "ad2da056-1f82-46db-9313-9436ee7e655d",
+    "slug": "ch8-pad-1",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 8,
+    "pageNumber": 2,
+    "lang": "en",
+    "blockId": "d30b444b-a426-452d-b635-597e0c5fa406",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — devotional motifs of a peacock dancing before a rain-cloud, a lamp with a steady flame, a thread through a pearl, glowing softly on a dark ground. Loose washes, paper grain. No text.",
+    "alt": "भक्त और प्रभु का अटूट नाता"
+  },
+  {
+    "pageId": "a6841fb8-8195-4e7b-9a11-4c5debf424a5",
+    "slug": "ch8-pad-2",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 8,
+    "pageNumber": 3,
+    "lang": "en",
+    "blockId": "dea57556-131a-4ca4-926e-92d58210f443",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — devotional lotus-feet glowing above a calm devotee, a single steady flame, soft golden light on a dark ground. Loose washes, paper grain. No text.",
+    "alt": "अडिग निष्ठा"
+  },
+  {
+    "pageId": "6f52ec1c-7214-4b69-8c3d-9e9add1348af",
+    "slug": "ch8-shabd-sampada",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 8,
+    "pageNumber": 4,
+    "lang": "en",
+    "blockId": "b9a61d1d-05b0-47db-a267-69d3f1a31a0c",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a small lamp-and-lotus motif, dark ground, Madhubani accents. Loose washes, paper grain. No text.",
+    "alt": "शब्दों का ख़ज़ाना"
+  },
+  {
+    "pageId": "f6c45a4c-e280-46b6-8ca0-8e21faba078a",
+    "slug": "ch8-kavita-saundarya",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 8,
+    "pageNumber": 5,
+    "lang": "en",
+    "blockId": "ea6793af-f697-4822-b832-91017171a154",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — flowing Devanagari verse turning into images of sandalwood, a peacock and a lamp, glowing on a dark ground with folk accents. Loose washes, paper grain. No text.",
+    "alt": "कविता का सौंदर्य"
+  },
+  {
+    "pageId": "0f9bbf62-9e11-480e-b29e-fcf31a3483a8",
+    "slug": "ch8-vishay-vyakaran",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 8,
+    "pageNumber": 6,
+    "lang": "en",
+    "blockId": "7ddc68d7-c942-4321-80da-ba01d95cefc6",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — diverse people of all kinds joined in a circle of devotion under one glowing lamp, suggesting equality and love. Dark warm ground. Loose washes, paper grain. No text.",
+    "alt": "समता और भक्ति"
+  },
+  {
+    "pageId": "234474ab-d9e0-4e60-9a67-fb26588b8935",
+    "slug": "ch8-abhyas",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 8,
+    "pageNumber": 7,
+    "lang": "en",
+    "blockId": "12030005-cd94-44fe-9423-f3d6d68a9dec",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi poetry book, a quill and lamp, a faint lotus-and-flame motif. Dark ground, folk accents. Loose washes, paper grain. No text.",
+    "alt": "अभ्यास"
+  }
+]

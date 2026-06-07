@@ -39,13 +39,13 @@ export const metadata: Metadata = {
     'NIT Surathkal cutoff',
   ],
   alternates: {
-    canonical: 'https://canvasclasses.com/college-predictor',
+    canonical: 'https://www.canvasclasses.in/college-predictor',
   },
   openGraph: {
     title: 'JEE Main + BITSAT College Predictor — Free, Accurate, Ad-Free',
     description:
       'See which NITs, IIITs, GFTIs or BITS campuses you can get with your JEE Main rank or BITSAT score. Built on official JoSAA + BITS admission data.',
-    url: 'https://canvasclasses.com/college-predictor',
+    url: 'https://www.canvasclasses.in/college-predictor',
     type: 'website',
   },
 };
@@ -56,8 +56,8 @@ const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Canvas Classes', item: 'https://canvasclasses.com' },
-    { '@type': 'ListItem', position: 2, name: 'College Predictor', item: 'https://canvasclasses.com/college-predictor' },
+    { '@type': 'ListItem', position: 1, name: 'Canvas Classes', item: 'https://www.canvasclasses.in' },
+    { '@type': 'ListItem', position: 2, name: 'College Predictor', item: 'https://www.canvasclasses.in/college-predictor' },
   ],
 };
 

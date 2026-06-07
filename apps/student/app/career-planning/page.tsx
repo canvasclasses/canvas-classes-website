@@ -16,7 +16,7 @@ import { ArrowRight } from 'lucide-react';
  * Static server component. No DB calls. Pure SEO + navigation surface.
  */
 
-const SITE_ORIGIN = 'https://canvasclasses.in';
+const SITE_ORIGIN = 'https://www.canvasclasses.in';
 
 export const metadata: Metadata = {
   title: 'Career planning for JEE / NEET aspirants',

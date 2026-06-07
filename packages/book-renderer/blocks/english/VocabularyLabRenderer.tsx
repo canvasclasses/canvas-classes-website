@@ -14,10 +14,19 @@ const MODE_LABEL: Record<VocabularyLabBlock['mode'], string> = {
   idioms: 'Idiom Cards',
 };
 
-function Card({ card }: { card: VocabCard }) {
+// Hindi track ('गंगा') — swapped labels when block.lang === 'hindi'.
+const MODE_LABEL_HI: Record<VocabularyLabBlock['mode'], string> = {
+  flashcards: 'शब्द-संपदा',
+  binomials: 'शब्द-युग्म',
+  affixes: 'उपसर्ग-प्रत्यय कार्यशाला',
+  idioms: 'मुहावरे',
+};
+
+function Card({ card, lang }: { card: VocabCard; lang: 'english' | 'hindi' }) {
   const [flipped, setFlipped] = useState(false);
   const { onSaveWord, isWordSaved } = useContext(VaultContext);
   const saved = isWordSaved?.(wordIdFor(card.word)) ?? false;
+  const isHindi = lang === 'hindi';
 
   function speak() {
     if (card.audio_url) {
@@ -25,6 +34,7 @@ function Card({ card }: { card: VocabCard }) {
     } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       const u = new SpeechSynthesisUtterance(card.word);
       u.rate = 0.85;
+      if (isHindi) u.lang = 'hi-IN';
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     }
@@ -77,7 +87,7 @@ function Card({ card }: { card: VocabCard }) {
             </div>
           )}
           <p className="text-[13px] mt-3" style={{ color: 'rgba(255,255,255,0.4)' }}>
-            Tap to flip →
+            {isHindi ? 'पलटने के लिए टैप करें →' : 'Tap to flip →'}
           </p>
         </div>
       ) : (
@@ -85,11 +95,17 @@ function Card({ card }: { card: VocabCard }) {
           <span className="text-[15px] font-semibold block mb-2" style={{ color: 'rgba(255,255,255,0.9)' }}>
             {card.meaning}
           </span>
-          {card.hindi && (
-            <div className="text-[14px] mb-2" style={{ color: 'rgba(125,211,252,0.85)' }}>
-              हिंदी: <span className="font-medium">{card.hindi}</span>
-            </div>
-          )}
+          {isHindi
+            ? card.english && (
+                <div className="text-[14px] mb-2" style={{ color: 'rgba(125,211,252,0.85)' }}>
+                  English: <span className="font-medium">{card.english}</span>
+                </div>
+              )
+            : card.hindi && (
+                <div className="text-[14px] mb-2" style={{ color: 'rgba(125,211,252,0.85)' }}>
+                  हिंदी: <span className="font-medium">{card.hindi}</span>
+                </div>
+              )}
           <div
             className="text-[13px] italic mt-2 pt-2"
             style={{ color: 'rgba(255,255,255,0.55)', borderTop: '1px solid rgba(255,255,255,0.06)' }}
@@ -134,7 +150,9 @@ function Card({ card }: { card: VocabCard }) {
                 cursor: saved ? 'default' : 'pointer',
               }}
             >
-              {saved ? '✓ In your Word Vault' : '+ Save to Word Vault'}
+              {saved
+                ? (isHindi ? '✓ शब्दकोश में जुड़ा' : '✓ In your Word Vault')
+                : (isHindi ? '+ शब्दकोश में जोड़ें' : '+ Save to Word Vault')}
             </span>
           )}
         </div>
@@ -144,12 +162,14 @@ function Card({ card }: { card: VocabCard }) {
 }
 
 export default function VocabularyLabRenderer({ block }: { block: VocabularyLabBlock }) {
+  const lang = block.lang ?? 'english';
+  const modeLabel = lang === 'hindi' ? MODE_LABEL_HI[block.mode] : MODE_LABEL[block.mode];
   return (
     <div className="my-8 rounded-2xl border border-sky-500/15 bg-sky-500/[0.02] px-5 py-5">
       <div className="flex items-center gap-2 mb-4">
         <span className="text-sky-400 font-bold">⚙</span>
         <span className="text-[10px] font-bold uppercase tracking-widest text-sky-400/70">
-          {MODE_LABEL[block.mode]}
+          {modeLabel}
         </span>
       </div>
 
@@ -163,14 +183,14 @@ export default function VocabularyLabRenderer({ block }: { block: VocabularyLabB
 
       <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
         {block.cards.map((c) => (
-          <Card key={c.id} card={c} />
+          <Card key={c.id} card={c} lang={lang} />
         ))}
       </div>
 
       {block.self_check && block.self_check.length > 0 && (
         <div className="mt-6 pt-5 border-t border-white/5">
           <div className="text-[10px] font-bold uppercase tracking-widest text-sky-400/50 mb-2">
-            Did you get them?
+            {lang === 'hindi' ? 'क्या आपने पहचाना?' : 'Did you get them?'}
           </div>
           <InlineQuizRenderer
             block={{

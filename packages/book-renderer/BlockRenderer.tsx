@@ -34,6 +34,7 @@ const SimulationBlockRenderer        = dynamicBlock(() => import('./blocks/Simul
 const ReasoningPromptRenderer        = dynamicBlock(() => import('./blocks/ReasoningPromptRenderer'));
 const CuriosityPromptRenderer        = dynamicBlock(() => import('./blocks/CuriosityPromptRenderer'));
 const ClassifyExerciseRenderer      = dynamicBlock(() => import('./blocks/ClassifyExerciseRenderer'));
+const MeetAScientistRenderer        = dynamicBlock(() => import('./blocks/MeetAScientistRenderer'));
 
 // English blocks — Class 9 Kaveri. Spec: _agents/workflows/ENGLISH_BOOK_PAGE_WORKFLOW.md
 const NarratedPassageRenderer            = dynamicBlock(() => import('./blocks/english/NarratedPassageRenderer'));
@@ -49,13 +50,16 @@ const DialogueRolePlayRenderer           = dynamicBlock(() => import('./blocks/e
 const PronunciationDrillRenderer         = dynamicBlock(() => import('./blocks/english/PronunciationDrillRenderer'));
 const ChapterPracticeRenderer            = dynamicBlock(() => import('./blocks/english/ChapterPracticeRenderer'));
 const ApplyExpressRenderer               = dynamicBlock(() => import('./blocks/english/ApplyExpressRenderer'));
+const ReadingComprehensionRenderer       = dynamicBlock(() => import('./blocks/english/ReadingComprehensionRenderer'));
 
 export default function BlockRenderer({
   block,
   onQuizPass,
+  hinglish,
 }: {
   block: ContentBlock;
   onQuizPass?: (blockId: string, score: number) => void;
+  hinglish?: boolean;  // HI mode — analytical renderers show their Hinglish twin
 }) {
   switch (block.type) {
     case 'text':              return <TextBlockRenderer block={block} />;
@@ -68,7 +72,7 @@ export default function BlockRenderer({
     case 'molecule_3d':       return <Molecule3DBlockRenderer block={block} />;
     case 'latex_block':       return <LatexBlockRenderer block={block} />;
     case 'practice_link':     return <PracticeLinkBlockRenderer block={block} />;
-    case 'callout':           return <CalloutBlockRenderer block={block} />;
+    case 'callout':           return <CalloutBlockRenderer block={block} hinglish={hinglish} />;
     case 'table':             return <TableBlockRenderer block={block} />;
     case 'timeline':          return <TimelineBlockRenderer block={block} />;
     case 'comparison_card':   return <ComparisonCardBlockRenderer block={block} />;
@@ -80,20 +84,22 @@ export default function BlockRenderer({
     case 'reasoning_prompt':   return <ReasoningPromptRenderer block={block} />;
     case 'curiosity_prompt':   return <CuriosityPromptRenderer block={block} />;
     case 'classify_exercise':  return <ClassifyExerciseRenderer block={block} />;
+    case 'meet_a_scientist':   return <MeetAScientistRenderer block={block} />;
     // English blocks (Class 9 Kaveri)
     case 'narrated_passage':              return <NarratedPassageRenderer block={block} />;
     case 'vocabulary_lab':                return <VocabularyLabRenderer block={block} />;
-    case 'literary_devices_highlighter':  return <LiteraryDevicesHighlighterRenderer block={block} />;
+    case 'literary_devices_highlighter':  return <LiteraryDevicesHighlighterRenderer block={block} hinglish={hinglish} />;
     case 'character_map':                 return <CharacterMapRenderer block={block} />;
-    case 'theme_explorer':                return <ThemeExplorerRenderer block={block} />;
-    case 'tone_meter':                    return <ToneMeterRenderer block={block} />;
-    case 'cultural_context_card':         return <CulturalContextCardRenderer block={block} />;
+    case 'theme_explorer':                return <ThemeExplorerRenderer block={block} hinglish={hinglish} />;
+    case 'tone_meter':                    return <ToneMeterRenderer block={block} hinglish={hinglish} />;
+    case 'cultural_context_card':         return <CulturalContextCardRenderer block={block} hinglish={hinglish} />;
     case 'comprehension_checkpoint':      return <ComprehensionCheckpointRenderer block={block} />;
     case 'writing_scaffold':              return <WritingScaffoldRenderer block={block} />;
     case 'dialogue_role_play':            return <DialogueRolePlayRenderer block={block} />;
     case 'pronunciation_drill':           return <PronunciationDrillRenderer block={block} />;
     case 'chapter_practice':              return <ChapterPracticeRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
     case 'apply_express':                 return <ApplyExpressRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
+    case 'reading_comprehension':         return <ReadingComprehensionRenderer block={block} />;
     default:                   return null;
   }
 }

@@ -34,9 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // /bitsat-chemistry-revision removed from sitemap 2026-05-25 — BITSAT
         // 2026 exam window ended; page is noindex'd until refreshed for 2027.
         { path: '/college-predictor', priority: 1.0, changeFrequency: 'daily' as const },
+        { path: '/college-predictor/branch-finder', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/college-predictor/compare', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/career-guide', priority: 0.95, changeFrequency: 'weekly' as const },
         { path: '/career-planning', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/career-explorer', priority: 0.9, changeFrequency: 'weekly' as const },
+        { path: '/career-explorer/browse', priority: 0.8, changeFrequency: 'weekly' as const },
         // /jee-pyqs removed from sitemap 2026-05-25 — route deleted, the
         // question bank lives in /the-crucible. 301 redirect in next.config.ts.
         // Subject hubs
@@ -470,6 +473,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching career spec slugs for sitemap:', error);
     }
 
+    // ── Career Explorer: per-career deep-dive pages ──────────────────────────
+    // /career-explorer/careers/[id] — one indexable page per active CareerPath.
+    // These are data-rich pages ("<career> salary, training, day in the life")
+    // that were previously absent from the sitemap, so Google never discovered
+    // them. ID-based URLs (Mongo _id), matching the route's findById lookup.
+    let careerExplorerEntries: MetadataRoute.Sitemap = [];
+    try {
+        const connectToDatabase = (await import('@canvas/data/db/mongodb')).default;
+        const { CareerPath } = await import('@canvas/data/models/CareerPath');
+        await connectToDatabase();
+        const careers = await CareerPath
+            .find({ is_active: true })
+            .select('_id updated_at')
+            .limit(1000)
+            .lean<Array<{ _id: unknown; updated_at?: Date }>>();
+        careerExplorerEntries = careers.map((c) => ({
+            url: `${BASE_URL}/career-explorer/careers/${String(c._id)}`,
+            lastModified: c.updated_at instanceof Date ? c.updated_at : new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        }));
+    } catch (error) {
+        console.error('Error fetching career-explorer careers for sitemap:', error);
+    }
+
     return [
         ...staticEntries,
         ...collegePredictorLandingEntries,
@@ -488,6 +516,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...jeeMainPyqEntries,
         ...careerTopicEntries,
         ...careerSpecEntries,
+        ...careerExplorerEntries,
     ];
 }
 

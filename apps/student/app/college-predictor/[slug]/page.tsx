@@ -17,11 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: cfg.metaTitle,
     description: cfg.metaDescription,
-    alternates: { canonical: `https://canvasclasses.com/college-predictor/${cfg.slug}` },
+    alternates: { canonical: `https://www.canvasclasses.in/college-predictor/${cfg.slug}` },
     openGraph: {
       title: cfg.metaTitle,
       description: cfg.metaDescription,
-      url: `https://canvasclasses.com/college-predictor/${cfg.slug}`,
+      url: `https://www.canvasclasses.in/college-predictor/${cfg.slug}`,
       type: 'website',
     },
   };

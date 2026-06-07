@@ -672,6 +672,102 @@ A focused workshop on words where Hindi-English speakers commonly mispronounce a
 - 4–8 words per drill. More than 8 fatigues the student.
 - One pronunciation drill per chapter, on the "Listening and Speaking" page or its own page.
 
+### 4.12 Grammar Gym — `apply_express` with `variant: 'grammar'` (added 2026-06-06)
+
+The grammar pages (`vocabulary_structures`) must not only *explain* grammar — they must make the student *apply* it. The competency-deepening pass added a **Grammar Gym**: an `apply_express` block with `variant: 'grammar'` (renders in an emerald "🏋️ Grammar Gym" skin instead of the fuchsia "🎮 Apply & Express") and three new grammar-native challenge kinds, on top of the existing `fill_blank` / `unscramble` / `sentence_compose`:
+
+| Kind | What it does | Fields |
+|---|---|---|
+| `transform` | rewrite a whole sentence (direct→reported, active↔passive, tense shift) | `source`, `instruction`, `answers[]` (accepted rewrites; `[0]` = model), `hint?`, `rule?` |
+| `spot_error` | tap the wrong word in a token list, then pick the fix | `tokens[]`, `error_index`, `fix`, `fix_options[]?`, `rule?` |
+| `form_select` | choose the correct form from options, each with reasoning | `prompt` (with `____`), `options[]`, `correct_index`, `option_reasons[]?` |
+
+All grammar challenges use `concept_tag: 'grammar'`. One gym per chapter on the grammar page, drilling that chapter's actual focus (reported speech, modals, conditionals, active/passive, present perfect, clauses, etc.). Build via `scripts/kaveri-fix/grammar_build.js` (content in `_grammar_gyms.json`).
+
+### 4.13 Analytical Hinglish twins + the page-level EN/HI toggle (added 2026-06-06)
+
+For the Hindi-medium reader, the *analysis* (not just the story) must be supported. These analytical blocks now carry an optional Hinglish twin field, shown when the reader's **EN/HI toggle** is on `HI`:
+
+| Block | Hinglish field |
+|---|---|
+| `literary_devices_highlighter` → each `devices[].matches[]` | `explanation_hinglish` |
+| `tone_meter` → each `segments[]` | `note_hinglish` |
+| `theme_explorer` → each `themes[]` | `description_hinglish`, `reflection_prompt_hinglish` |
+| `cultural_context_card` | `detail_hinglish` |
+| `callout` (esp. `literature_in_life`) | `markdown_hinglish` |
+
+The page-level EN/HI toggle in `PageRenderer` (previously only swapped `text` blocks via `hinglish_blocks`) now **also appears when any analytical block has a Hinglish twin**, and threads a `hinglish` flag through `BlockRenderer` to these renderers. Register = roman Hinglish teacher-voice (per §9.2); technical literary terms (metaphor, simile, personification…) stay in English.
+
+### 4.14 NCF-SE competency tagging (added 2026-06-06)
+
+Every page carries a `competency: { code, label }` field + a `competency:<code>` tag, surfaced as a "Builds: …" chip in the reader header. Codes: **C1** Read & Comprehend · **C2** Interpret & Infer · **C3** Speak & Write for Real Purposes · **C4** Appreciate Literary Craft · **C5** Vocabulary & Grammar in Use · **C6** Appreciate Writers & Diversity · **C7** Consolidate & Apply. Mapped from the `kaveri_section` taxonomy by `scripts/kaveri-fix/competency_tag.js`. Set this on every new page.
+
+### 4.15 Extensive end-of-chapter practice (`chapter_practice` + `apply_express`)
+
+Each chapter ends with a **Practice & Mastery** page (tag `kaveri_section:practice`, rendered by `PracticeHub`): a `chapter_practice` adaptive bank (~26 questions spanning all 5 `concept_tag`s and both prose + poem halves) plus a productive `apply_express` set (~14–18 challenges). Build via `scripts/kaveri-fix/practice_build.js`; source of truth is `scripts/kaveri-fix/_ch<N>_practice.json`.
+
+> **This page is the graded "make it stick" surface a parent or top-school teacher will judge the product by. It must be genuinely hard to game and impossible to pass without having read the chapter. The rules below are mandatory, not aspirational.** (Added 2026-06-06 after Ch1/Ch2 audits found that "always pick B" beat most banks ~80%.)
+
+#### 4.15.1 The Practice & Mastery quality rubric
+
+**A. Mechanical rules — enforced by `scripts/kaveri-fix/practice_validate.js`. A chapter is NOT done until it PASSES.**
+
+| # | Rule | Threshold |
+|---|---|---|
+| 1 | **Bank size** | ≥ 24 questions (target 26–28) |
+| 2 | **Concept coverage** | all 5 `concept_tag`s present; each ≥ 2 (target ≥ 4) |
+| 3 | **Difficulty spread** | levels 1–5 all present; no single level > 50% of the bank |
+| 4 | **Answer-position balance** | correct answer spread across A/B/C/D; **no position > 40%** of questions and **none ever 0%**. ("Always pick B" must score no better than chance.) |
+| 5 | **Length tell** | a "tell" = the correct option is the **unique longest AND ≥15% longer** than the next-longest distractor (only then does it visibly stand out; ties and sub-15% edges don't count). Tells must be ≤ 40% of the bank, **and** ZERO questions may have the correct option > 1.3× the next-longest distractor (the hard giveaway rule). |
+| 6 | **Option hygiene** | exactly **4 options** per question; no duplicate option texts; `correct_index` in range |
+
+**B. Qualitative rules — the machine can't judge these; the authoring agent must, every question.**
+
+1. **Every distractor is a real, defensible mistake.** No throwaway/joke options ("she forgot the word", "the editors missed it"), no "all/none of the above". A wrong option should be something a student who half-read the chapter could actually pick. Aim for at least one *near-miss* distractor per vocab/inference question (a meaning that's close but subtly wrong).
+2. **Test thinking, not memory (the most important rule).** The bank must measure *reasoning and understanding*, not recall of trivia. Favour **why / how / what does this reveal / what can you infer / what is the effect of** over **who / what / when / where / how many**. Concretely:
+   - **≥ 60% of the "content" questions** (i.e. excluding the vocab and grammar questions) must be genuine higher-order questions — interpretation, inference, or a "why/how" that requires the student to *explain* something, not retrieve it.
+   - **Pure fact-recall ≤ ~15%** of the bank, and only for *genuinely foundational* facts a student must have straight to reason at all (e.g. "Who is the central character?"). Never test arbitrary trivia — exact distances, dates, counts, prices, job titles — as an end in itself.
+   - **Turn facts into reasoning.** If a detail matters, don't ask *what* it is — ask *why the writer included it* or *what it shows*. "Arenla says the clay lies sixteen kilometres away down a sheer drop — why does the writer stress this?" beats "How far is the clay?" Both are un-guessable; only the first tests thought.
+3. **Guess-resistance — achieved through reasoning, not trivia.** A bright student must not be able to ace the bank from common sense alone. The right way to guarantee this is depth (the question demands you understood the chapter), NOT obscure detail. A bank full of un-guessable trivia fails rule 2 even though it's "guess-resistant."
+4. **Factual grounding (anti-hallucination).** Every question, correct answer, and the *premise* of every question must trace to the actual chapter text (story + poem). Never harden a shaky claim into a question — if unsure a detail is in the text, cut the question. Don't invent character actions, numbers, or quotes.
+5. **Tone / voice.** Plain English aimed at tier-2/3 town students (the same voice as the math-solution workflow). Warm, clear, no literary jargon in the stem unless the chapter taught it. Explanations teach in one or two sentences — they don't just restate the answer.
+6. **Coverage of both halves.** If the chapter has a poem as well as prose, the bank must test both.
+
+**C. Apply & Express (`apply_express`) requirements.**
+
+- Mix of kinds (don't stack one type). Across the set include, at minimum: **one `word_match`** (tap-a-word → tap-its-meaning game) and **at least two tap-to-choose `fill_blank`s** (add a `choices: [...]` array — the reader taps a chip instead of typing, which removes spelling/typo false-negatives and is mobile-friendly). Grammar-heavy chapters may also use the Grammar Gym kinds (`transform`, `spot_error`, `form_select`).
+- `word_match`: 4–5 pairs, each `{ left: <word/phrase>, right: <meaning> }`, grounded in the chapter's vocabulary.
+- Any `fill_blank` with a `choices` array must be single-blank, and the correct text must be one of the chips.
+
+#### 4.15.2 The build → balance → validate toolchain
+
+Author/edit `_ch<N>_practice.json`, then run **in this order**:
+
+```bash
+# 1. Spread the correct answer across A/B/C/D (fixes "always pick B").
+#    Reorders options only — never changes option text. Dry-run first.
+node scripts/kaveri-fix/balance_positions.js <N>            # preview
+node scripts/kaveri-fix/balance_positions.js <N> --write    # apply to the JSON
+
+# 2. Build the page from the JSON (idempotent; 1 book_pages doc).
+node scripts/kaveri-fix/practice_build.js <N>
+
+# 3. Quality gate — MUST print "PASS" for the chapter before it ships.
+node scripts/kaveri-fix/practice_validate.js <N>           # or `all`
+```
+
+- `balance_positions.js` is deterministic (fixed non-obvious pattern, not a plain A-B-C-D cycle) and idempotent, so re-running is safe. **Before running it, confirm the chapter's explanations reference option *content*, not a letter/position** ("option B", "the first choice") — reordering would break those.
+- Ch1 is built by the standalone `scripts/kaveri_ch1_practice_page.js` (not the JSON pipeline); it bakes the same `balancePositions()` step in, so its source stays balanced on re-run.
+- `practice_validate.js` is the floor (mechanical rules only). Passing it does **not** excuse the qualitative rules in §4.15.1 B — those are the author's job.
+
+#### 4.15.3 The same gate applies to inline quizzes (§3.5 `inline_quiz` blocks)
+
+The 3-question `inline_quiz` blocks scattered through the reading pages had the **same "always pick B" position bias** (72% of 393 questions were option B before the fix). They are now held to the same standard:
+
+- **Balance positions** across a chapter's inline questions with `node scripts/kaveri-fix/inline_balance.js [all|<ch>] --write` (reorders options only; writes a reversible backup; `--rollback` restores).
+- **Gate** with `node scripts/kaveri-fix/quiz_validate.js [ch]` — now checks answer-position balance (no position >40% or unused, per chapter) **and** the length tell (correct ≤45% longest, zero questions >1.3× the next distractor), and exits non-zero on failure.
+- When authoring NEW inline quizzes, vary `correct_index` across A/B/C/D as you write — don't default to B — and run the gate before shipping.
+
 ---
 
 ## 5. Page Templates — One Per Kaveri Section

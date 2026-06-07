@@ -22,7 +22,7 @@ export default function ChapterPracticeRenderer({
   block: ChapterPracticeBlock;
   onComplete?: (score: number) => void;
 }) {
-  const { bookSlug } = useContext(BookContext);
+  const { bookSlug, onExit } = useContext(BookContext);
   const sessionSize = block.session_size ?? 8;
   const passThreshold = block.pass_threshold ?? 0.7;
 
@@ -171,15 +171,25 @@ export default function ChapterPracticeRenderer({
       <div className="my-8 rounded-2xl border border-violet-500/20 bg-violet-500/[0.03] px-5 py-8 text-center">
         <div className="text-5xl mb-3">{passed ? '🎯' : '📚'}</div>
         <h3 className="text-xl font-bold mb-1">{passed ? 'Practice complete!' : 'Keep going'}</h3>
-        <p className="text-white/50 text-sm mb-4">
+        <p className="text-white/50 text-sm mb-5">
           You got {correctCount} of {served} right ({score}%).
         </p>
-        <button
-          onClick={start}
-          className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70"
-        >
-          Practice again
-        </button>
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          <button
+            onClick={start}
+            className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70"
+          >
+            Practice again
+          </button>
+          {onExit && (
+            <button
+              onClick={onExit}
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-black font-bold text-sm"
+            >
+              Back to chapter hub
+            </button>
+          )}
+        </div>
       </div>
     );
   }

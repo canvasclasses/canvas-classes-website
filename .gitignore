@@ -83,6 +83,23 @@ _source_pdfs/
 /scripts/update_carbonyl_chapter_ids.js
 /scripts/final_merge_verification.js
 
+# one-time book-build scratch — diagnostics, dumps, backups (keep toolkit .js, drop scratch data)
+/scripts/_diag_*.js
+/scripts/_bias_detail.mjs
+/scripts/_validate_ch.mjs
+/scripts/_ext_*.json
+/scripts/_kaveri_full.json
+/scripts/_kaveri_summary.txt
+/scripts/_kaveri_backups/
+# per-batch intermediate data inside book-fix toolchains (regenerable; mirrors scripts/math-solutions convention)
+/scripts/kaveri-fix/_*.json
+/scripts/kaveri-fix/_ch1_devanagari_trial.js
+/scripts/kaveri-fix/_verify_phase1.ts
+/scripts/kaveri-fix/_verify_recommender.ts
+/scripts/hindi-fix/_*.json
+/scripts/science-quiz/_*.json
+/scripts/science-practice/_*.json
+
 # automation pipeline output
 /automation/output/
 /automation/logs/

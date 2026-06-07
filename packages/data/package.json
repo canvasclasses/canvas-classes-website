@@ -15,6 +15,7 @@
     "./bitsat/*": "./bitsat/*.ts",
     "./periodic/*": "./periodic/*.ts",
     "./id-generator": "./id-generator/index.ts",
+    "./skills": "./skills/index.ts",
     "./difficulty": "./difficulty.ts",
     "./rbac": "./rbac.ts",
     "./types/*": "./types/*.ts"

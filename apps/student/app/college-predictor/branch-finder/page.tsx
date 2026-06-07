@@ -22,13 +22,13 @@ export const metadata: Metadata = {
     'engineering branches list',
   ],
   alternates: {
-    canonical: 'https://canvasclasses.com/college-predictor/branch-finder',
+    canonical: 'https://www.canvasclasses.in/college-predictor/branch-finder',
   },
   openGraph: {
     title: 'Branch Finder — Find the Engineering Branch That Fits',
     description:
       'A grid of every engineering branch that clears itself down to your best matches as you tell us what your child enjoys and dreams of. Free, no sign-up.',
-    url: 'https://canvasclasses.com/college-predictor/branch-finder',
+    url: 'https://www.canvasclasses.in/college-predictor/branch-finder',
     type: 'website',
   },
 };

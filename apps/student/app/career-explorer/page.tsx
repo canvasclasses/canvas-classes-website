@@ -10,11 +10,18 @@ export const metadata: Metadata = {
     'career explorer India', 'career guidance class 10', 'career counselling free',
     'careers after 12th', 'RIASEC India', 'career aptitude test', 'hidden career India',
   ],
-  alternates: { canonical: 'https://canvasclasses.com/career-explorer' },
+  alternates: { canonical: 'https://www.canvasclasses.in/career-explorer' },
   openGraph: {
     title: 'Career Explorer — Canvas Classes',
     description: 'Map your aptitude, interests and constraints to careers that actually fit. Free, honest, Indian.',
+    url: 'https://www.canvasclasses.in/career-explorer',
+    siteName: 'Canvas Classes',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Career Explorer — Find Careers That Actually Fit You',
+    description: 'Map your aptitude, interests and constraints to careers that actually fit. Free, honest, Indian.',
   },
 };
 

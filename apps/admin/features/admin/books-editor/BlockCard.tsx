@@ -52,6 +52,7 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   reasoning_prompt: 'Reasoning Prompt',
   curiosity_prompt: 'Curiosity Prompt',
   classify_exercise: 'Classify Exercise',
+  meet_a_scientist: 'Meet a Scientist',
   // English blocks (Class 9 Kaveri) — script-authored, shown read-only in editor
   narrated_passage: 'Narrated Passage',
   vocabulary_lab: 'Vocabulary Lab',
@@ -91,6 +92,7 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   reasoning_prompt: '🧩',
   curiosity_prompt: '✦',
   classify_exercise: '⊡',
+  meet_a_scientist: '🎓',
   // English blocks (Class 9 Kaveri)
   narrated_passage: '🔊',
   vocabulary_lab: '📖',
@@ -132,6 +134,7 @@ function blockPreview(block: ContentBlock): string {
       case 'reasoning_prompt':   return `${block.reasoning_type} · Level ${block.difficulty_level} · ${(block.prompt || '').slice(0, 60)}`;
       case 'curiosity_prompt':   return (block.prompt || '').slice(0, 80) || '(empty)';
       case 'classify_exercise':  return `${(block.rows || []).length} rows · ${(block.question || '').slice(0, 50)}`;
+      case 'meet_a_scientist':   return `${block.name}${block.years ? ` (${block.years})` : ''}`;
       default:                   return `(${(block as ContentBlock).type})`;
     }
   } catch {

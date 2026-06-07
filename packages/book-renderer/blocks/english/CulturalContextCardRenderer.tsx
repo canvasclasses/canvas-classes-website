@@ -13,8 +13,9 @@ const CATEGORY_ICON: Record<CulturalContextCategory, string> = {
   tradition: '✦',
 };
 
-export default function CulturalContextCardRenderer({ block }: { block: CulturalContextCardBlock }) {
+export default function CulturalContextCardRenderer({ block, hinglish }: { block: CulturalContextCardBlock; hinglish?: boolean }) {
   const [expanded, setExpanded] = useState(false);
+  const detail = hinglish && block.detail_hinglish ? block.detail_hinglish : block.detail;
 
   return (
     <div
@@ -67,7 +68,7 @@ export default function CulturalContextCardRenderer({ block }: { block: Cultural
                 </div>
               )}
               <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/70">
-                {block.detail}
+                {detail}
               </InlineMarkdown>
             </div>
           )}

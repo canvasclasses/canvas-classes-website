@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import BookPracticeAttempt from '@canvas/data/models/BookPracticeAttempt';
+import { recordBookAttempt } from '@canvas/persona/book-attempt';
 import { getUserIdFromRequest } from '@/lib/auth';
 
 // Per-user data — never cache on shared caches.
@@ -84,6 +85,28 @@ export async function POST(req: NextRequest) {
       correct,
       time_ms,
     });
+
+    // ── Unified persona (ADR-011 / Phase 0b) ──────────────────────────────
+    // Dual-write the same attempt into the ONE skill-keyed persona
+    // (UserProgress.concept_mastery) via the canonical writer, so Live Books
+    // signal joins Crucible's. Wrapped so it can NEVER fail the student's
+    // practice response; the in-book adaptive selector still uses the
+    // book_practice_attempts write above.
+    try {
+      await recordBookAttempt({
+        userId,
+        bookSlug: book_slug,
+        chapter: chapter_number,
+        conceptTag: concept_tag,
+        questionId: question_id,
+        isCorrect: correct,
+        difficulty,
+        timeMs: time_ms,
+      });
+    } catch (personaErr) {
+      console.error('unified persona dual-write failed (non-fatal):', personaErr);
+    }
+
     return NextResponse.json({ success: true }, { headers: PRIVATE_NO_STORE });
   } catch (err) {
     console.error('POST /api/v2/books/practice error:', err);

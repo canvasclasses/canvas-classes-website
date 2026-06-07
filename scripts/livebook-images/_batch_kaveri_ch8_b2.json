@@ -1,0 +1,80 @@
+[
+  {
+    "pageId": "66e8bf8f-f986-4dc7-bd49-b2642484b17a",
+    "slug": "unit-8-poem-believe-in-yourself",
+    "bookId": "51aa3d19-aa4f-48d7-be58-494065eeaef8",
+    "chapterNumber": 8,
+    "pageNumber": 11,
+    "lang": "en",
+    "blockId": "86ae6c7f-a8b8-40fc-855a-f2f20e89f971",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A single fresh footprint at the very start of a path that winds upward into a glowing golden dawn, empty and full of promise. Quiet, courageous, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+    "alt": "A single footprint at the start of a path that climbs into a glowing dawn"
+  },
+  {
+    "pageId": "37af1410-da2a-4205-9d53-2178f76f5d3e",
+    "slug": "unit-8-poem-devices-antithesis",
+    "bookId": "51aa3d19-aa4f-48d7-be58-494065eeaef8",
+    "chapterNumber": 8,
+    "pageNumber": 12,
+    "lang": "en",
+    "blockId": "3a579c71-d81b-4745-b9ae-dfa05e5842fe",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). One image split into two contrasting halves — on the left, a cosy, still, comfortable room in soft shadow; on the right, an open path climbing into bright growing light — the contrast of comfort versus growth. Glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+    "alt": "Two contrasting halves of one image — a cosy still room on one side, an open growing path on the other"
+  },
+  {
+    "pageId": "a2100e81-bf04-45bd-ba11-aeae0e1ed42d",
+    "slug": "unit-8-poem-themes-believe-in-yourself",
+    "bookId": "51aa3d19-aa4f-48d7-be58-494065eeaef8",
+    "chapterNumber": 8,
+    "pageNumber": 13,
+    "lang": "en",
+    "blockId": "da8639b7-ac9b-4d55-a029-26b5ee715ea6",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A single small green seedling pushing up bravely through a crack in hard ground toward a warm beam of light — the courage of a first step toward growth. Hopeful and tender, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+    "alt": "A small seedling pushing up through a crack toward the light, against the odds"
+  },
+  {
+    "pageId": "4ee493f0-5f0d-4d9d-9f8b-c71ab40dd58e",
+    "slug": "unit-8-poem-vocabulary-status-quo",
+    "bookId": "51aa3d19-aa4f-48d7-be58-494065eeaef8",
+    "chapterNumber": 8,
+    "pageNumber": 14,
+    "lang": "en",
+    "blockId": "6a142d80-a85d-4c8b-b26f-29478966db68",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). One scene holding two states of water — a still, calm pond on one side (stagnation) and a flowing, sparkling river on the other (movement and growth) — joined where they meet. Calm yet dynamic, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+    "alt": "A still pond on one side and a flowing river on the other, joined in one scene"
+  },
+  {
+    "pageId": "b197c007-145b-4796-bbb8-4b690eec524b",
+    "slug": "unit-8-poem-speaking-and-writing-speech",
+    "bookId": "51aa3d19-aa4f-48d7-be58-494065eeaef8",
+    "chapterNumber": 8,
+    "pageNumber": 15,
+    "lang": "en",
+    "blockId": "fb9e4947-b24c-4e31-8ec5-66adad6b5cef",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A confident student at a podium during a school morning assembly, delivering a speech, rows of attentive students' faces turned up toward them in warm light. Inspiring, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+    "alt": "A student at a podium delivering a speech to a school assembly, faces turned attentively upward"
+  },
+  {
+    "pageId": "0385a234-41ea-4428-96d4-68bd06086fc9",
+    "slug": "unit-8-believe-in-yourself-and-the-end-of-kaveri",
+    "bookId": "51aa3d19-aa4f-48d7-be58-494065eeaef8",
+    "chapterNumber": 8,
+    "pageNumber": 16,
+    "lang": "en",
+    "blockId": "5edbac5c-b851-4dfd-a65d-f30088a7d15b",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A great river (suggesting the Kaveri) formed from many small joining streams, flowing toward a bright open sea at dawn; a small figure walks along its bank toward the glowing horizon. A sense of a long journey completed and a new one beginning. Luminous and hopeful, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+    "alt": "A river (the Kaveri) flowing from many small streams into one bright sea at dawn, a figure walking the bank toward the light"
+  }
+]

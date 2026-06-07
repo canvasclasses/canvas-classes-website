@@ -402,8 +402,64 @@ accent labels, clean technical illustration style.
 - `pass_threshold`: 1.0 for 1 question; 0.67 for 2–3 questions; 0.6 for 4–5 questions
 - `correct_index` is 0-based
 - Explanation must be educational — explain the concept, not just "C is correct because C"
-- Options: always exactly 4, make distractors plausible
+- Options: always exactly 4, and **every option must obey §3.6.1**
 - Questions should test understanding, not just memorisation
+- Tag each question with `difficulty_level` (1 = recall, 2 = application, 3 = reasoning) — the actual schema field (the older `reasoning_level` name is deprecated; write `difficulty_level`)
+
+### 3.6.1 Option-Design Rules — every distractor must be a real trap
+
+> Added 2026-06-06. Applies to **every** multiple-choice block: `inline_quiz`, `chapter_practice`, `reasoning_prompt`, and `comprehension_checkpoint`. The single most common quality failure in auto-generated quizzes is the *giveaway*: three throwaway options and one obviously-correct one, so a student who never read the page still scores by elimination. These rules exist to kill that.
+
+**The four-intelligent-options rule (non-negotiable).** Every one of the four options must be something a *half-prepared* student could genuinely pick. Each wrong option is a specific, nameable mistake — a real misconception, a believable misreading, or a realistic calculation slip — **never filler**. Test: if you can tell which option is correct *without knowing the topic* (because it's the longest, the most detailed, the only specific one, or the only grammatical fit), the question has failed — rewrite the distractors, not the key.
+
+Banned option patterns:
+
+| Pattern | Why it leaks the answer | Fix |
+|---|---|---|
+| **Length / detail tell** — the key is the long, careful, qualified option; the other three are short and blunt | Students learn "pick the wordy one". | Match all four in length and grammatical shape. If the key needs a clause, give the distractors clauses too. |
+| **Near-duplicate of the key** — a distractor that is the correct answer with one word softened (`always`→`usually`), sitting beside two absurd options | Signals the two "serious" options; flags the rest as filler. | Make all four mutually exclusive and individually defensible. Never pad with a reworded twin of the key. |
+| **Joke / odd-one-out option** — "the teacher made a mistake", "magic", "none of the above" | Eliminated instantly, raising the guess rate to 1-in-3. | Replace with a real misconception. No "all/none of the above". |
+| **Grammatical mismatch** — only the key fits the stem (a/an, singular/plural, tense) | Grammar, not physics, reveals the answer. | Make every option a clean grammatical fit for the stem. |
+| **Giveaway specificity** — only the key carries a number/unit/name; distractors are vague | The specific option obviously *is* the real answer. | Give distractors equally specific — but wrong — numbers/units/names. |
+
+**Physics distractor sources — build wrong options from the misconceptions the chapter is actually fighting:**
+- "A moving object needs a continuous force to keep moving" (pre-Galilean intuition).
+- "Heavier objects fall faster" / "g depends on mass".
+- "Action and reaction cancel out, so nothing moves" (forgetting they act on *different* objects).
+- "Net force is the larger force" (instead of the *difference* of two opposing forces).
+- "Friction always opposes motion" (forgetting friction is what lets you walk and drives the wheel forward).
+- "Force points the same way as velocity" (instead of force → *acceleration*).
+- Quantity confusion: weight vs mass, newton vs kilogram, speed vs velocity.
+
+**Numerical distractor sources — for any calculated key, build the three wrong options from the actual paths a student takes to a wrong number, each landing on a clean value:**
+- Used the applied force instead of the *net* force (forgot to subtract friction).
+- Used mass where weight (`mg`) was needed, or vice versa.
+- Sign / direction error (treated a deceleration as positive).
+- Used `g = 10` where the key uses `9.8` (or vice versa) — only when the gap is pedagogically meaningful, never as the *only* difference between two options.
+- Off-by-unit (cm vs m, g vs kg, km/h vs m/s).
+- Never invent round-number decoys that match no real error path — they read as filler.
+
+**Mechanical floor (enforced by validators for *both* `chapter_practice` and `inline_quiz` — see the toolchains below; do not eyeball it):**
+- Exactly **4 options**; no duplicate or near-duplicate option texts; `correct_index` in range.
+- The key is *uniquely the longest* in **≤ 40%** of a bank, and **never** more than **1.3×** the next-longest option.
+- Across a bank, the key is spread over A/B/C/D: **no position > 40%**, and **none ever 0%**. Author with explanations that reference option *content* (never "option B"), then run the balancer.
+- Every question carries a `difficulty_level` (`inline_quiz`: 1/2/3) or `difficulty` (`chapter_practice`: 1–5).
+
+**Explanation rule.** The `explanation` teaches: state why the key is right **and name why the most tempting distractor is wrong**, in one or two plain sentences. Never "Option C is correct because it is C."
+
+#### 3.6.1.1 Toolchains — run these, don't hand-check
+
+Two scripted pipelines enforce the rules above. Both match questions by `(page_slug, block_id, q_id)` so re-running is exact and idempotent.
+
+- **Page `inline_quiz`s — including fixing existing/published quizzes — `scripts/science-quiz/`:**
+  1. `node scripts/science-quiz/quiz_extract.js <ch>` → dumps the chapter's quizzes to `_ch<N>_quiz.json`.
+  2. Rewrite the options/explanations in that file (length-parity, real misconceptions, **de-reference any "option B"-style letters** from explanations or the next step will skip the question).
+  3. `node scripts/science-quiz/quiz_balance.js <ch> --write` → spreads the key across A/B/C/D deterministically.
+  4. `node scripts/science-quiz/quiz_apply.js <ch>` → writes the questions back into `book_pages`.
+  5. `node scripts/science-quiz/quiz_validate.js <ch|all>` → the gate (4 options · no dupes · length-tell ≤ 40% · no position > 40% / none 0% · every question difficulty-tagged). Must print PASS.
+- **Chapter-end `chapter_practice` banks — `scripts/science-practice/`:** see §4F.3 (`balance_positions.js` → `practice_build.js` → `practice_validate.js`).
+
+> **Why this exists (finding, 2026-06-06):** a book-wide audit of the live Class 9 Science quizzes found them highly guessable — 290 questions with a **58% length tell** and the **correct answer = "B" 57% of the time**, only 10% difficulty-tagged. Running the `science-quiz` pipeline across all five live chapters (232 questions) cut the length tell to **7%**, the most-common answer position to **24%**, and difficulty-tagging to **90%**. When you build or touch a chapter, run `quiz_validate.js all` before considering it done.
 
 ### 3.7 `simulation`
 ```json
@@ -780,10 +836,12 @@ The final quiz on every Class 9 page must have exactly 3 questions in this order
 2. **Application** (Level 2) — applies the concept to a new scenario
 3. **Reasoning** (Level 3) — requires the student to think, not remember
 
-Tag each question with `reasoning_level` for analytics:
+Tag each question with `difficulty_level` (1 = recall, 2 = application, 3 = reasoning) — this is the real schema field; the older `reasoning_level` name is deprecated, do not write it:
 ```json
-{ "id": "uuid", "question": "...", "options": [...], "correct_index": 0, "explanation": "...", "reasoning_level": 1 }
+{ "id": "uuid", "question": "...", "options": [...], "correct_index": 0, "explanation": "...", "difficulty_level": 1 }
 ```
+
+**Every one of the 3 questions must obey the option-design rules in §3.6.1** — all four options a real trap, no length/specificity/grammar tell, no near-duplicate-of-key padding. A 3-question page quiz where "the long one is always right" is a failed quiz even if the content is correct.
 
 #### simulation prediction — when to use
 
@@ -892,6 +950,65 @@ Building a new simulation component is expensive and adds maintenance surface. *
 4. **A page does not need a simulation** if no existing sim fits and a new one is not strictly necessary. A strong worked example + reasoning prompt + quiz is sufficient.
 
 When in doubt, reuse — and lean on the page's text and worked examples to carry the conceptual load.
+
+### Science simulation catalogue — built, registered, mostly UNUSED (finding 2026-06-06)
+
+A book-wide scan found a large library of physics/chemistry sims already registered in `packages/book-renderer/blocks/SimulationBlockRenderer.tsx` (and built in `…/blocks/simulations/`) that are placed on **zero** pages. **Before building anything, check the registry and wire an existing one in.** Physics components seen unused include: `ForceBalanceSim` (`force-balance`), `FrictionExplorerSim` (`friction-explorer`), `FreeFallSim`, `CircularMotionSim` (`circular-motion`), `GravitationalForceSim`, `EnergyConservationSim`, `EquationsOfMotionSim`, `DistanceDisplacementSim`. The renderer is the source of truth for each `simulation_id` — confirm there before placing a `simulation` block.
+
+**New 2026-06-06: `free-body-diagram` (`FreeBodyDiagramGame.tsx`)** — a level-based "Free-Body Challenge" game (size a force arrow to hit each level's goal: balance → accelerate → constant velocity → lift off, with live net-force readout and pass/fail feedback). Placed on Ch6 `balanced-and-unbalanced-forces`. Reuse it on any balanced/unbalanced-forces or Newton's-laws page.
+
+### Gamification patterns for science (prefer these to plain text)
+
+Three engagement patterns need **no new components** — only authoring:
+1. **`simulation` + `prediction`** — make a sim pose a predict-then-reveal question first (see §4B "simulation prediction"). Turns a passive widget into a problem.
+2. **`classify_exercise` (sorting game)** — drag/label items into categories. Unused in science but ideal for: contact vs non-contact forces, balanced vs unbalanced, physical vs chemical change, element / compound / mixture, conductor vs insulator.
+3. **`apply_express`** on the Practice & Mastery page — `fill_blank` (with tap-to-choose `choices`), `unscramble` (order a law/derivation), `sentence_compose`. See §4F.2.
+
+---
+
+## 4F. Chapter-End Practice & Mastery (Science) — the graded question bank
+
+> Added 2026-06-06. Science chapters had **no** end-of-chapter bank before this; §4F is the science counterpart of the English workflow's §4.15. Every Class 9 & 10 science chapter ends with a **Practice & Mastery** page (tag `science_section:practice`), rendered by the shared `PracticeHub`: a `chapter_practice` adaptive bank plus an optional `apply_express` set. The `chapter_practice` / `apply_express` blocks and the adaptive selector are book-agnostic — the same infrastructure English uses.
+
+**This page is the surface a parent or a top-school teacher judges the book by.** It must be impossible to pass without having read the chapter, and impossible to game by option-elimination (§3.6.1). The rules below are mandatory, not aspirational.
+
+### 4F.1 The bank — `chapter_practice`
+
+| # | Rule | Threshold |
+|---|---|---|
+| 1 | **Bank size** | 24–28 questions (target 26) |
+| 2 | **Concept coverage** | use the science `concept_tag`s — `recall`, `concept`, `application`, `numerical`, `reasoning`. All five present; each ≥ 4. A low-maths chapter may shift weight off `numerical`, but `numerical` ≥ 2. |
+| 3 | **Difficulty spread** | levels 1–5 all present; no single level > 50% of the bank |
+| 4 | **Answer-position balance** | key spread across A/B/C/D; **no position > 40%**, none ever 0% |
+| 5 | **Length tell** | key uniquely longest in ≤ 40%; **zero** questions where the key > 1.3× the next-longest option |
+| 6 | **Option hygiene** | exactly 4 options; no duplicate/near-duplicate texts; `correct_index` in range |
+| 7 | **Option design** | every question obeys **§3.6.1** (qualitative — the author's job, not the validator's) |
+| 8 | **Guess-resistance** | ≥ 40% of questions need a specific fact / number / law / worked result from *this* chapter, not general common sense |
+| 9 | **Grounding** | every question, key, and premise traces to the actual chapter text — definitions, activities, worked Examples, and the end-of-chapter exercises. Never invent a number or scenario the chapter doesn't support. |
+
+**Mining order:** the end-of-chapter exercises (e.g. "Revise, Reflect, Refine"), the worked **Examples**, and the **Pause and Ponder** items are the richest, already-curriculum-aligned source — adapt those first, then fill gaps from the section text. **id convention:** `ch<N>-pr-01`, `ch<N>-pr-02`, …
+
+### 4F.2 Productive practice — `apply_express` (optional but encouraged)
+
+A small set (~8–12) of non-MCQ challenges for active recall. The useful kinds from the shared engine for science:
+- `fill_blank` — a law statement or formula with one blank; add a `choices: [...]` chip array so the reader **taps** instead of typing (kills spelling false-negatives, mobile-friendly).
+- `unscramble` — reorder tokens into a correct statement (e.g. Newton's first law) or the ordered steps of a short derivation.
+- `sentence_compose` — "In one line, explain why a rocket lifts off" with a `rubric` + `model_answer`.
+
+Use `variant: 'apply'`. The grammar kinds (`transform` / `spot_error` / `form_select`) are English-only.
+
+### 4F.3 Build → balance → validate
+
+Author `scripts/science-practice/_ch<N>_practice.json`, then run **in this order**:
+
+```bash
+node scripts/science-practice/balance_positions.js <N> --write   # spread the key across A/B/C/D
+node scripts/science-practice/practice_build.js <N>              # build the Practice page (idempotent, 1 doc)
+node scripts/science-practice/practice_validate.js <N>          # MUST print PASS before the chapter ships
+```
+
+- `balance_positions.js` reorders options only (never changes text) and is deterministic + idempotent. **Before running it, confirm explanations reference option *content*, not a letter** — reordering would break "option B" references.
+- `practice_validate.js` is the **mechanical floor** (rules 1–6 above). Passing it does **not** excuse the qualitative rules (7–9) — those are the author's responsibility, every question.
 
 ---
 

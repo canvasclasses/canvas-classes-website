@@ -10,16 +10,20 @@
  */
 
 import { TAXONOMY_FROM_CSV, TaxonomyNode } from './taxonomyData_from_csv';
+import { getSkillName } from '../skills';
 
 const idToNode = new Map<string, TaxonomyNode>();
 for (const node of TAXONOMY_FROM_CSV) {
   if (node.id) idToNode.set(node.id, node);
 }
 
-/** Returns the human-readable name for a taxonomy id (chapter or topic), or
- *  the id itself as a fallback if the id isn't in the canonical taxonomy. */
+/** Returns the human-readable name for a skill id. Resolution order:
+ *  Crucible taxonomy (chem/phys/math `tag_*`) → unified Skill Graph
+ *  (Live Books `bk:*` / NCF `comp:*` skills) → the id itself as a last resort.
+ *  This is what lets a globally skill-keyed concept_mastery render real names
+ *  for every surface. See _agents/plans/UNIFIED_LEARNER_PERSONA.md (Layer 2). */
 export function getTagName(id: string): string {
-  return idToNode.get(id)?.name ?? id;
+  return idToNode.get(id)?.name ?? getSkillName(id) ?? id;
 }
 
 /** Returns the parent chapter id for a topic tag, or null if the id is itself

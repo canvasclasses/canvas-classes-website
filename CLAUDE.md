@@ -14,6 +14,24 @@ If uncertain about scope, stop and ask. Do not pick silently.
 
 ---
 
+## 0.5 PROJECT LEDGER PROTOCOL — KEEPS WORK FROM GETTING LOST ACROSS CONTEXT-SWITCHES
+
+The founder runs many initiatives in parallel and loses context when switching between them. [`_agents/PROJECTS.md`](_agents/PROJECTS.md) is the **single cockpit** — every active initiative, its status, next action, and what it's **blocked on**. This protocol is what keeps it true. It is **agent-maintained, not human-maintained** (humans forget — that's the whole problem this solves).
+
+**CHECK-IN — at the start of any session that touches a project:**
+1. Read `_agents/PROJECTS.md` first (a SessionStart hook also injects it into context).
+2. Before doing the work, **tell the user where that project stands**: its status, what's done, what's pending, what it's **blocked on**, and the **next action** — pulled from the cockpit row + the project's detail doc. Never let the user cold-start.
+3. If a project the user is touching isn't in the cockpit yet, add a row.
+
+**CHECK-OUT — at the end of any session that advanced a project (REQUIRED, not optional):**
+1. Update that project's row in `_agents/PROJECTS.md` — status, last-touched date, **next action**, and **blocked-on** (especially: if you just made something depend on content/another tool, record the dependency in the "Waiting-on-a-dependency" section so it can't be forgotten).
+2. Update the project's detail doc header (the standardised status block — see PROJECTS.md "Standardised status header").
+3. Log to GBrain per §11 if it meets that bar. The cockpit update and the GBrain log are **one ritual** — do them together.
+
+**Why this is mandatory:** the entire point is that the founder never has to remember "where was I?" If the ledger is stale, the system has failed. Treat updating it exactly like the §3 rule to refresh state files after content changes — a required final step.
+
+---
+
 > **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `apps/admin/app/admin/`, `apps/admin/app/api/v2/`, `apps/admin/features/admin/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `packages/persona/`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
 
 ---
@@ -443,6 +461,7 @@ Staff are managed in the admin app at `/staff`. See `docs/superpowers/specs/2026
 | Student server actions | `apps/student/features/crucible/server-actions/the-crucible.ts` |
 | Student auth helpers | `apps/student/lib/auth.ts` (route handlers), `apps/student/lib/bookAuth.ts` (server components) |
 | Student landing | `apps/student/app/the-crucible/page.tsx` (renders `apps/student/features/crucible/` components) |
+| **SEO & GEO record (whole project)** | [`_agents/SEO_PLAYBOOK.md`](_agents/SEO_PLAYBOOK.md) — **the single record of all SEO/GEO work. Read before changing any public page's metadata, caching, structured data, sitemap, robots, or redirects, or adding public/programmatic pages.** Site-wide conventions + surface inventory + do-not-revert decisions + the career segment detail + how to extend (so work isn't reverted or duplicated). Caching/rendering rules themselves live in §10. |
 
 > **Import direction rules** (post-monorepo migration):
 > - `apps/admin/` MUST NOT import from `apps/student/` and vice versa. Workspace tsc enforces this. Anything shared between the two apps must go through `packages/*/`.

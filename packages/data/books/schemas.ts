@@ -55,6 +55,9 @@ const InlineQuizQuestionSchema = z.object({
   options: z.array(z.string()).min(2, 'quiz question must have at least 2 options'),
   correct_index: z.number().int().nonnegative(),
   explanation: z.string().optional(),
+  // Bloom tier of the item (1=recall, 2=comprehension, 3=interpretation) — drives
+  // the L1→L2→L3 ladder and the no-length-tell guard. Optional for legacy data.
+  difficulty_level: z.union([z.literal(1), z.literal(2), z.literal(3)]).optional(),
 });
 
 // ─── Concrete block schemas ───────────────────────────────────────────────────
@@ -147,9 +150,11 @@ const CalloutBlockSchema = BaseBlockSchema.extend({
     'what_if', 'quest_continues', 'ready_to_go_beyond',
     // English-track variants — see ENGLISH_BOOK_PAGE_WORKFLOW.md §3.1
     'india_voice', 'literature_in_life',
+    'voices_that_inspire',
   ]),
   title: z.string().optional(),
   markdown: z.string(),
+  markdown_hinglish: z.string().optional(), // Hinglish twin shown in HI mode (e.g. literature_in_life)
   image_src: z.string().optional(),    // thumbnail — empty string = not yet uploaded
   image_prompt: z.string().optional(), // AI generation spec for the thumbnail
 });
@@ -283,6 +288,7 @@ const VocabCardSchema = z.object({
   pos: z.string(),
   meaning: z.string().min(1),
   hindi: z.string().optional(),
+  english: z.string().optional(),
   example: z.string().min(1),
   memory_hook: z.string().optional(),
 });
@@ -290,6 +296,7 @@ const VocabCardSchema = z.object({
 const VocabularyLabBlockSchema = BaseBlockSchema.extend({
   type: z.literal('vocabulary_lab'),
   mode: z.enum(['flashcards', 'binomials', 'affixes', 'idioms']),
+  lang: z.enum(['english', 'hindi']).optional(),
   intro: z.string().optional(),
   cards: z.array(VocabCardSchema).min(1),
   self_check: z.array(InlineQuizQuestionSchema).max(3).optional(),
@@ -298,6 +305,7 @@ const VocabularyLabBlockSchema = BaseBlockSchema.extend({
 const DeviceMatchSchema = z.object({
   text: z.string().min(1),
   explanation: z.string().min(1),
+  explanation_hinglish: z.string().optional(),
 });
 
 const DeviceHighlightSchema = z.object({
@@ -305,12 +313,14 @@ const DeviceHighlightSchema = z.object({
   device: z.enum([
     'simile', 'metaphor', 'personification', 'imagery',
     'alliteration', 'rhyme', 'symbolism', 'hyperbole', 'onomatopoeia',
+    'vyangya', 'virodhabhas', 'samvadatmakta', 'sandeh',
   ]),
   matches: z.array(DeviceMatchSchema).min(1),
 });
 
 const LiteraryDevicesHighlighterBlockSchema = BaseBlockSchema.extend({
   type: z.literal('literary_devices_highlighter'),
+  lang: z.enum(['english', 'hindi']).optional(),
   passage: z.string().min(1),
   devices: z.array(DeviceHighlightSchema).min(1),
 });
@@ -342,8 +352,10 @@ const ThemeCardSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+  description_hinglish: z.string().optional(),
   evidence: z.array(z.string()).min(1).max(3),
   reflection_prompt: z.string().min(1),
+  reflection_prompt_hinglish: z.string().optional(),
 });
 
 const ThemeExplorerBlockSchema = BaseBlockSchema.extend({
@@ -358,6 +370,7 @@ const ToneSegmentSchema = z.object({
   emotion: z.string().min(1),
   intensity: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
   note: z.string().min(1),
+  note_hinglish: z.string().optional(),
 });
 
 const ToneMeterBlockSchema = BaseBlockSchema.extend({
@@ -371,6 +384,7 @@ const CulturalContextCardBlockSchema = BaseBlockSchema.extend({
   category: z.enum(['place', 'person', 'event', 'concept', 'tradition']),
   short_desc: z.string().min(1),
   detail: z.string().min(1),
+  detail_hinglish: z.string().optional(),
   image_url: z.string().optional(),
   image_prompt: z.string().optional(),
 });
@@ -448,13 +462,20 @@ const PronunciationDrillBlockSchema = BaseBlockSchema.extend({
   words: z.array(PronunciationWordSchema).min(1).max(12),
 });
 
+const PRACTICE_CONCEPT = z.enum([
+  // English (Kaveri)
+  'comprehension', 'vocab_in_context', 'grammar', 'interpretation', 'inference',
+  // Science / Math (chapter-end practice banks) — see PracticeConceptTag in types/books.ts
+  'concept', 'application', 'numerical', 'reasoning', 'recall',
+]);
+
 const PracticeQuestionSchema = z.object({
   id: z.string().min(1),
   question: z.string().min(1),
   options: z.array(z.string()).min(2, 'practice question must have at least 2 options'),
   correct_index: z.number().int().nonnegative(),
   explanation: z.string().optional(),
-  concept_tag: z.enum(['comprehension', 'vocab_in_context', 'grammar', 'interpretation', 'inference']),
+  concept_tag: PRACTICE_CONCEPT,
   difficulty: z.number().int().min(1).max(5),
 });
 
@@ -468,7 +489,6 @@ const ChapterPracticeBlockSchema = BaseBlockSchema.extend({
   questions: z.array(PracticeQuestionSchema).min(1).max(100),
 });
 
-const PRACTICE_CONCEPT = z.enum(['comprehension', 'vocab_in_context', 'grammar', 'interpretation', 'inference']);
 const ChallengeBase = {
   id: z.string().min(1),
   concept_tag: PRACTICE_CONCEPT,
@@ -490,6 +510,18 @@ const ApplyChallengeSchema = z.discriminatedUnion('kind', [
     min_words: z.number().int().min(1).max(40).optional() }),
   z.object({ ...ChallengeBase, kind: z.literal('unscramble'),
     tokens: z.array(z.string().min(1)).min(3).max(20), answer: z.string().min(1) }),
+  // ─── Grammar Gym kinds ───
+  z.object({ ...ChallengeBase, kind: z.literal('transform'),
+    source: z.string().min(1), instruction: z.string().min(1),
+    answers: z.array(z.string().min(1)).min(1), hint: z.string().optional(), rule: z.string().optional() }),
+  z.object({ ...ChallengeBase, kind: z.literal('spot_error'),
+    tokens: z.array(z.string().min(1)).min(3).max(40), error_index: z.number().int().nonnegative(),
+    fix: z.string().min(1), fix_options: z.array(z.string().min(1)).min(2).max(5).optional(),
+    rule: z.string().optional() }),
+  z.object({ ...ChallengeBase, kind: z.literal('form_select'),
+    prompt: z.string().min(1), options: z.array(z.string().min(1)).min(2).max(5),
+    correct_index: z.number().int().nonnegative(),
+    option_reasons: z.array(z.string()).optional() }),
 ]);
 
 const ApplyExpressBlockSchema = BaseBlockSchema.extend({
@@ -497,7 +529,49 @@ const ApplyExpressBlockSchema = BaseBlockSchema.extend({
   title: z.string().optional(),
   intro: z.string().optional(),
   chapter_number: z.number().int().positive(),
+  variant: z.enum(['apply', 'grammar']).optional(),
   challenges: z.array(ApplyChallengeSchema).min(1).max(50),
+});
+
+// Reading Comprehension — CBSE "Reading Skills" unseen-passage block.
+const ReadingQuestionSchema = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('mcq'), id: z.string().min(1), question: z.string().min(1),
+    options: z.array(z.string().min(1)).min(2).max(5), correct_index: z.number().int().nonnegative(),
+    explanation: z.string().optional() }),
+  z.object({ kind: z.literal('assertion_reason'), id: z.string().min(1),
+    assertion: z.string().min(1), reason: z.string().min(1),
+    correct_index: z.number().int().min(0).max(3), explanation: z.string().optional() }),
+  z.object({ kind: z.literal('short_answer'), id: z.string().min(1), question: z.string().min(1),
+    model_answer: z.string().min(1), hint: z.string().optional() }),
+]);
+const ReadingComprehensionBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('reading_comprehension'),
+  passage_type: z.enum(['discursive', 'factual', 'case_based', 'literary']),
+  lang: z.enum(['english', 'hindi']).optional(),
+  title: z.string().optional(),
+  intro: z.string().optional(),
+  passage: z.string().min(1),
+  numbered: z.boolean().optional(),
+  word_count: z.number().int().positive().optional(),
+  source_note: z.string().optional(),
+  questions: z.array(ReadingQuestionSchema).min(1).max(20),
+});
+
+// Meet a Scientist / Meet the Author — biographical card (science, math, English
+// author pages). Read-only in the editor; authored by book-build scripts. Every
+// field is listed so the page route's Zod .strip() does not drop it on save —
+// especially `portrait_prompt`, which is needed to generate the portrait later.
+const MeetAScientistBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('meet_a_scientist'),
+  name: z.string().min(1),
+  years: z.string().min(1),
+  nationality: z.string().min(1),
+  portrait_src: z.string().optional(),
+  portrait_prompt: z.string().optional(),
+  contribution: z.string().min(1),
+  connection: z.string().min(1),
+  fun_detail: z.string().min(1),
+  learn_more: z.string().min(1),
 });
 
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
@@ -524,6 +598,7 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   SimulationBlockSchema,
   ReasoningPromptBlockSchema,
   CuriosityPromptBlockSchema,
+  MeetAScientistBlockSchema,
   // English blocks (Class 9 Kaveri)
   NarratedPassageBlockSchema,
   VocabularyLabBlockSchema,
@@ -538,6 +613,7 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   PronunciationDrillBlockSchema,
   ChapterPracticeBlockSchema,
   ApplyExpressBlockSchema,
+  ReadingComprehensionBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -572,6 +648,7 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   SectionBlockSchema,
   ReasoningPromptBlockSchema,
   CuriosityPromptBlockSchema,
+  MeetAScientistBlockSchema,
   // English blocks (Class 9 Kaveri)
   NarratedPassageBlockSchema,
   VocabularyLabBlockSchema,
@@ -586,6 +663,7 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   PronunciationDrillBlockSchema,
   ChapterPracticeBlockSchema,
   ApplyExpressBlockSchema,
+  ReadingComprehensionBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

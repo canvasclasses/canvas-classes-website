@@ -1,0 +1,28 @@
+[
+  {
+    "pageId": "55c35090-5b24-4183-990e-9c71bca45ee8",
+    "slug": "ch3-srijan-vyakaran",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 3,
+    "pageNumber": 9,
+    "lang": "en",
+    "blockId": "0d54b333-10b2-4366-b346-3f39ebfbddc6",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — a \"lost parrot\" poster pinned to a tree, a quill and notebook nearby, glowing on a dark ground with folk accents. Loose washes, paper grain. No text.",
+    "alt": "रचना और वाक्य-रचना"
+  },
+  {
+    "pageId": "3eca80e7-33da-480f-b3fa-a77f7fbaeb45",
+    "slug": "ch3-abhyas",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 3,
+    "pageNumber": 10,
+    "lang": "en",
+    "blockId": "4830491a-bd86-48c2-bb6f-0702313fe50b",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi story book, a quill and lamp, a faint parrot-cage motif. Dark ground, folk accents. Loose washes, paper grain. No text.",
+    "alt": "अभ्यास"
+  }
+]

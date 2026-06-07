@@ -27,7 +27,7 @@ export interface IQuestionAttempt {
   // legacy schema; the schema below accepts both via Mixed.
   difficulty: number | 'Easy' | 'Medium' | 'Hard';
   concept_tags: string[];
-  source?: 'browse' | 'test' | 'guided'; // where the attempt came from
+  source?: 'browse' | 'test' | 'guided' | 'book_practice'; // where the attempt came from ('book_practice' = Live Books, unified persona — see ADR-011)
   selected_option?: string | string[] | number | null; // what the user chose
   // Tiered confidence — see AttemptConfidence above.
   confidence?: AttemptConfidence;
@@ -104,6 +104,17 @@ export interface IConceptMastery {
   // Exposure counter — HIGH + MEDIUM.
   exposure_count: number;
   last_attempted_at?: Date;
+  // ── Phase 1 persona-deepening fields (HIGH-confidence only, all optional
+  //    for backward-compat with pre-Phase-1 docs). See ADR-011 + persona/contract.ts. ──
+  // BKT-lite posterior P(skill known) in [0,1] — the persistent mastery estimate
+  // the AI snapshot + recommender ranking read (sharper than accuracy_percentage).
+  mastery_prob?: number;
+  // Spaced repetition (SM-2-lite): consecutive-correct streak drives the interval;
+  // next_due_at is when this skill should resurface for review.
+  streak_correct?: number;
+  review_interval_days?: number;
+  last_correct_at?: Date;
+  next_due_at?: Date;
 }
 
 export interface IUserStats {
@@ -166,7 +177,7 @@ const QuestionAttemptSchema = new Schema<IQuestionAttempt>({
   // should cope with both forms; long-term we standardise on numeric.
   difficulty: { type: Schema.Types.Mixed, required: true },
   concept_tags: [{ type: String }],
-  source: { type: String, enum: ['browse', 'test', 'guided'], default: 'browse' },
+  source: { type: String, enum: ['browse', 'test', 'guided', 'book_practice'], default: 'browse' },
   selected_option: { type: Schema.Types.Mixed, default: null },
   // See AttemptConfidence in IQuestionAttempt above. Default 'medium' is the
   // browse-mode default; route handlers override per source.
@@ -224,6 +235,12 @@ const ConceptMasterySchema = new Schema<IConceptMastery>({
   // Exposure counter — HIGH + MEDIUM.
   exposure_count: { type: Number, default: 0 },
   last_attempted_at: { type: Date },
+  // Phase 1 persona-deepening (optional; HIGH-confidence only) — see ADR-011.
+  mastery_prob: { type: Number },
+  streak_correct: { type: Number },
+  review_interval_days: { type: Number },
+  last_correct_at: { type: Date },
+  next_due_at: { type: Date },
 }, { _id: false });
 
 const UserStatsSchema = new Schema<IUserStats>({

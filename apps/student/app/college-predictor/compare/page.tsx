@@ -27,13 +27,13 @@ export const metadata: Metadata = {
     'college comparison tool JEE',
   ],
   alternates: {
-    canonical: 'https://canvasclasses.com/college-predictor/compare',
+    canonical: 'https://www.canvasclasses.in/college-predictor/compare',
   },
   openGraph: {
     title: 'Compare Colleges Side-by-Side — choose with data, not a coin flip',
     description:
       'Compare NITs, IIITs, GFTIs and BITS on branch heritage, fit (research / startups / core industry / govt-PSU / abroad), NIRF, fees and cutoff trend.',
-    url: 'https://canvasclasses.com/college-predictor/compare',
+    url: 'https://www.canvasclasses.in/college-predictor/compare',
     type: 'website',
   },
 };

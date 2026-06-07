@@ -13,10 +13,24 @@ function isSidebarBlock(block: ContentBlock): boolean {
   return block.type === 'callout' && SIDEBAR_CALLOUT_VARIANTS.has(block.variant);
 }
 
+// True if any analytical block carries a Hinglish twin — so the EN/HI toggle
+// appears even on pages with no text-block hinglish_blocks (the analytical
+// surfaces are where the Hindi-medium reader most needs the thinking supported).
+function hasAnalyticalHinglish(blocks: ContentBlock[]): boolean {
+  return blocks.some((b) => {
+    if (b.type === 'callout') return !!b.markdown_hinglish;
+    if (b.type === 'tone_meter') return b.segments?.some((s) => !!s.note_hinglish);
+    if (b.type === 'literary_devices_highlighter') return b.devices?.some((d) => d.matches?.some((m) => !!m.explanation_hinglish));
+    if (b.type === 'cultural_context_card') return !!b.detail_hinglish;
+    if (b.type === 'theme_explorer') return b.themes?.some((t) => !!t.description_hinglish || !!t.reflection_prompt_hinglish);
+    return false;
+  });
+}
+
 const HINGLISH_PREF_KEY = 'canvas_hinglish_mode';
 
 interface PageRendererProps {
-  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min' | 'hinglish_blocks'>;
+  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min' | 'hinglish_blocks' | 'competency'>;
   onQuizPass?: (blockId: string, score: number) => void;
   /**
    * When provided (admin preview), PageRenderer uses this value instead of its
@@ -27,7 +41,9 @@ interface PageRendererProps {
 }
 
 function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererProps) {
-  const hasHinglish = Boolean(page.hinglish_blocks && page.hinglish_blocks.length > 0);
+  const hasHinglish = Boolean(
+    (page.hinglish_blocks && page.hinglish_blocks.length > 0) || hasAnalyticalHinglish(page.blocks)
+  );
   // In controlled mode (admin), the parent drives the value — no internal state needed.
   const isControlled = hinglishOverride !== undefined;
 
@@ -87,6 +103,14 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
       <header className="mb-5 max-w-[1127px]">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
+            {page.competency && (
+              <div className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.07] px-2.5 py-1">
+                <span className="text-emerald-300/90 text-[10px]">◆</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-200/80">
+                  Builds: {page.competency.label}
+                </span>
+              </div>
+            )}
             <h1 className="text-[32px] sm:text-[38px] font-bold text-white leading-[1.15] tracking-tight">
               {page.title}
             </h1>
@@ -139,7 +163,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
           <div className="xl:hidden flex flex-col gap-1">
             {sorted.map(block => (
               <div key={block.id}>
-                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} />
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} />
               </div>
             ))}
           </div>
@@ -148,7 +172,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
           <div className="hidden xl:flex xl:flex-col xl:gap-1">
             {mainBlocks.map(block => (
               <div key={block.id}>
-                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} />
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} />
               </div>
             ))}
           </div>

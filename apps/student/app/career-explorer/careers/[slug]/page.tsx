@@ -4,8 +4,15 @@ import Link from 'next/link';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { CareerPath } from '@canvas/data/models/CareerPath';
 import type { ICareerPath } from '@canvas/data/models/CareerPath';
+import BreadcrumbSchema from '@/app/components/BreadcrumbSchema';
 
 type CareerDoc = ICareerPath & { is_active?: boolean };
+
+const SITE_ORIGIN = 'https://www.canvasclasses.in';
+
+// ISR — career data changes rarely. Cache 24h instead of hitting Mongo on
+// every request (per CLAUDE.md §10 caching rules).
+export const revalidate = 86400;
 
 export async function generateMetadata({
   params,
@@ -17,9 +24,32 @@ export async function generateMetadata({
     await connectToDatabase();
     const career = await CareerPath.findById(slug).lean<CareerDoc | null>();
     if (!career) return { title: 'Career' };
+    const title = `${career.name} — Salary, Training & Day in the Life`;
+    const canonical = `${SITE_ORIGIN}/career-explorer/careers/${slug}`;
     return {
-      title: `${career.name} — Career Deep Dive`,
+      title,
       description: career.one_liner,
+      alternates: { canonical },
+      keywords: [
+        career.name,
+        `${career.name} career`,
+        `${career.name} salary India`,
+        `how to become ${career.name}`,
+        `${career.name} scope`,
+        career.family,
+      ],
+      openGraph: {
+        title,
+        description: career.one_liner,
+        url: canonical,
+        type: 'article',
+        siteName: 'Canvas Classes',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description: career.one_liner,
+      },
     };
   } catch {
     return { title: 'Career' };
@@ -38,8 +68,38 @@ export default async function CareerDeepDivePage({
 
   const money = (r?: [number, number]) => (r ? `₹${r[0]}–${r[1]} LPA` : '—');
 
+  const canonical = `${SITE_ORIGIN}/career-explorer/careers/${slug}`;
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${career.name} — Salary, Training & Day in the Life`,
+    description: career.one_liner,
+    author: { '@type': 'Organization', name: 'Canvas Classes', url: SITE_ORIGIN },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Canvas Classes',
+      url: SITE_ORIGIN,
+      logo: { '@type': 'ImageObject', url: `${SITE_ORIGIN}/icon.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    about: { '@type': 'Occupation', name: career.name },
+  };
+  const articleJson = JSON.stringify(articleJsonLd)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/'/g, '\\u0027');
+
   return (
     <main className="min-h-screen bg-[#050505] text-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleJson }} />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Canvas Classes', url: SITE_ORIGIN },
+          { name: 'Career Explorer', url: `${SITE_ORIGIN}/career-explorer` },
+          { name: career.name, url: canonical },
+        ]}
+      />
       <section className="mx-auto max-w-4xl px-6 py-12">
         <Link href="/career-explorer" className="text-xs text-white/50 hover:text-white/80">
           ← Career Explorer

@@ -366,14 +366,108 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
   );
 }
 
+// ─── Voices That Inspire ─────────────────────────────────────────────────────
+// "One Page from My Bookshelf" — a teacher pulling a book off the shelf to share
+// a line that connects to the chapter. Warm rose/sepia palette (evening-lamp
+// feeling), distinct from FunFact's amber-Sanskrit hook.
+//
+// Markdown convention:
+//   - regular paragraphs → teacher's framing prose
+//   - `> the borrowed line` → pulled-out italic blockquote (large, the gem itself)
+//   - `*— Author, Book*` → small italic attribution row
+//   - `?? Where in your own life have you felt this?` → soft reflection prompt
+function VoicesThatInspireCallout({ block }: { block: CalloutBlock }) {
+  // Split out a trailing "?? prompt" line so it can render distinctly.
+  const promptMatch = block.markdown.match(/\n\?\?\s+(.+?)\s*$/);
+  const body = promptMatch ? block.markdown.slice(0, promptMatch.index ?? 0).trimEnd() : block.markdown;
+  const prompt = promptMatch?.[1];
+
+  return (
+    <div className="my-8 rounded-2xl border border-rose-400/20 bg-gradient-to-br from-rose-400/[0.05] to-amber-400/[0.03] overflow-hidden">
+      {/* Banner — the teacher reaching for the shelf */}
+      <div className="px-5 py-3 border-b border-rose-400/12 flex items-center gap-2.5">
+        <span className="text-rose-300 text-[15px] leading-none">📖</span>
+        <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-rose-300/85 leading-none flex-1">
+          {block.title ? 'Voices that Inspire' : 'One Page from My Bookshelf'}
+        </span>
+        <span className="text-[9px] font-semibold tracking-[0.14em] uppercase text-rose-300/55">
+          from another book
+        </span>
+      </div>
+
+      {/* Source line (the title field carries "Book — Author, Year") */}
+      {block.title && (
+        <div className="px-5 pt-4">
+          <p className="text-[13px] italic text-rose-200/75 leading-snug">
+            {block.title}
+          </p>
+        </div>
+      )}
+
+      {/* Body — framing prose + the pulled-out quote + attribution */}
+      <div className="px-5 py-4">
+        <ReactMarkdown
+          remarkPlugins={[remarkMath]}
+          rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
+          components={{
+            // Teacher's framing — warm, readable body
+            p: ({ children }) => (
+              <p className="text-[15.5px] leading-[1.85] text-white/75 my-3 first:mt-0 last:mb-0">
+                {children}
+              </p>
+            ),
+            // The borrowed gem — pulled out, large, italic, rose-tinted
+            blockquote: ({ children }) => (
+              <blockquote className="my-5 border-l-[3px] border-rose-300/40 pl-5 italic text-rose-100/90 text-[17px] leading-[1.7]">
+                {children}
+              </blockquote>
+            ),
+            // Attribution lines (*— Tagore, Gitanjali, 1910*) — small, italic, soft
+            em: ({ children }) => (
+              <em className="italic text-rose-200/70 text-[13.5px]">
+                {children}
+              </em>
+            ),
+            // Bold — warm highlight, not jarring
+            strong: ({ children }) => (
+              <strong className="font-semibold text-rose-100 not-italic">
+                {children}
+              </strong>
+            ),
+            hr: () => <div className="my-5 h-px bg-rose-400/15" />,
+          }}
+        >
+          {body}
+        </ReactMarkdown>
+
+        {/* Reflection prompt — soft, at the bottom */}
+        {prompt && (
+          <div className="mt-5 pt-4 border-t border-rose-400/12 flex gap-2.5 items-start">
+            <span className="text-rose-300/70 text-[15px] leading-none mt-[2px] select-none">🤔</span>
+            <p className="text-[14px] leading-[1.7] italic text-rose-200/80">
+              {prompt}
+            </p>
+          </div>
+        )}
+
+        <CalloutImage block={block} />
+      </div>
+    </div>
+  );
+}
+
 // ─── Router ───────────────────────────────────────────────────────────────────
-export default function CalloutBlockRenderer({ block }: { block: CalloutBlock }) {
-  switch (block.variant) {
-    case 'exam_tip':  return <ExamTipCallout block={block} />;
-    case 'fun_fact':  return <FunFactCallout block={block} />;
-    case 'remember':  return <RememberCallout block={block} />;
-    case 'warning':   return <WarningCallout block={block} />;
+export default function CalloutBlockRenderer({ block, hinglish }: { block: CalloutBlock; hinglish?: boolean }) {
+  // In HI mode, swap the body to the Hinglish twin so the sub-renderers
+  // (which read block.markdown) display it without further changes.
+  const b = hinglish && block.markdown_hinglish ? { ...block, markdown: block.markdown_hinglish } : block;
+  switch (b.variant) {
+    case 'exam_tip':            return <ExamTipCallout block={b} />;
+    case 'fun_fact':            return <FunFactCallout block={b} />;
+    case 'remember':            return <RememberCallout block={b} />;
+    case 'warning':             return <WarningCallout block={b} />;
+    case 'voices_that_inspire': return <VoicesThatInspireCallout block={b} />;
     case 'note':
-    default:          return <NoteCallout block={block} />;
+    default:                    return <NoteCallout block={b} />;
   }
 }

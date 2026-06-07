@@ -6,6 +6,7 @@ import { Visuals } from '@/features/career-guide/components/visuals';
 import { CARD_META } from '@/features/career-guide/components/cardMeta';
 import YearStrip from '@/features/career-guide/components/YearStrip';
 import HeroLead from '@/features/career-guide/components/HeroLead';
+import { TOPICS } from '@/features/career-guide/data/topics';
 import './career-guide.css';
 
 /*
@@ -30,7 +31,7 @@ import './career-guide.css';
 // class hubs) → 86400".
 export const revalidate = 86400;
 
-const SITE_ORIGIN = 'https://canvasclasses.in';
+const SITE_ORIGIN = 'https://www.canvasclasses.in';
 
 export const metadata: Metadata = {
   title: 'Career Guide 2026 — Honest career briefs for JEE / NEET aspirants',
@@ -203,6 +204,40 @@ export default async function CareerGuideIndex() {
             ),
           )
         )}
+
+        {/* ─── RANKED GUIDES ─────────────────────────────────────────────── */}
+        {(() => {
+          const rankedTopics = TOPICS.filter((t) => t.ranked);
+          if (rankedTopics.length === 0) return null;
+          return (
+            <section className="mt-[72px]">
+              <div className="flex items-baseline justify-between border-b border-white/[0.08] pb-4 mb-7">
+                <h2 className="text-[26px] font-semibold tracking-[-0.01em] m-0 text-white">
+                  Ranked guides
+                </h2>
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/[0.22]">
+                  Best · Highest-paying · Next decade
+                </span>
+              </div>
+              <div className="grid gap-4 md:grid-cols-3">
+                {rankedTopics.map((t) => (
+                  <Link
+                    key={t.slug}
+                    href={`/career-guide/topics/${t.slug}`}
+                    className="group p-6 rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:border-orange-400/30 transition-colors"
+                  >
+                    <div className="text-[11px] font-mono uppercase tracking-[0.08em] text-white/45 mb-3">
+                      {t.intro.eyebrow}
+                    </div>
+                    <div className="text-[16px] font-semibold text-white leading-snug group-hover:text-orange-200 transition-colors">
+                      {t.intro.headline}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
 
         {/* ─── EDITORIAL FOOTER ──────────────────────────────────────────── */}
         <section className="mt-[88px] px-10 py-9 rounded-2xl border border-white/10" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.003))' }}>

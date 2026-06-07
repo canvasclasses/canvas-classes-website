@@ -150,7 +150,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://canvasclasses.com';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.canvasclasses.in';
 
     return new ImageResponse(
       (

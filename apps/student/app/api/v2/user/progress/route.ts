@@ -5,6 +5,7 @@ import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/mode
 import { updateProfileFromAttempt, createEmptyProfile } from '@canvas/persona/profile-engine';
 import { getUserIdFromRequest } from '@/lib/auth';
 import { applyAttemptToProgress, resolveConfidenceTier } from '@canvas/persona/writer';
+import { emitLearningEvent } from '@canvas/persona/learning-event';
 
 // ─── GET /api/v2/user/progress?chapterId=xxx ──────────────────────────────────
 // Returns: starred_ids for this chapter, all_attempted_ids for this chapter,
@@ -198,6 +199,18 @@ export async function POST(req: NextRequest) {
                 console.error('[POST /api/v2/user/progress] persona update failed (non-fatal)', profileErr);
             }
         }
+
+        // Emit to the unified immutable spine (ADR-011, Phase 1) — fire-and-forget.
+        void emitLearningEvent({
+            user_id: userId, surface: 'crucible', verb: 'answered',
+            item_id: question_id, skill_ids: Array.isArray(concept_tags) ? concept_tags : [],
+            correct: !!is_correct,
+            difficulty: typeof difficulty === 'number' ? difficulty : undefined,
+            duration_ms: typeof time_spent_seconds === 'number' ? time_spent_seconds * 1000 : undefined,
+            confidence: confidenceTier,
+            chapter_id,
+            session_id: typeof session_id === 'string' ? session_id : undefined,
+        });
 
         return NextResponse.json({ success: true });
     } catch (err) {

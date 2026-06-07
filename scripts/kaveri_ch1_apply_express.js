@@ -50,6 +50,7 @@ const CHALLENGES = [
   { id: 'ch1-ae-06', kind: 'fill_blank', concept_tag: 'vocab_in_context', difficulty: 3,
     prompt: '“We are well-off, but what use is money when I cannot be ________?” The grandmother longed to read on her own.',
     answers: [['independent']],
+    choices: ['independent', 'wealthy', 'patient', 'content'],
     hint: 'The word means doing things for yourself, needing no one else.',
     explanation: "Independence — being able to read for herself — is exactly what she is reaching for." },
 
@@ -92,6 +93,26 @@ const CHALLENGES = [
     tokens: ['respected', 'A', 'age', 'should', 'teacher', 'of', 'be', 'irrespective'],
     answer: 'A teacher should be respected irrespective of age',
     explanation: "The grandmother uses tradition's own rule — respect the teacher — to justify touching her granddaughter's feet." },
+
+  // ── Match the meaning — tap a phrase, then its meaning (no typing) ─────────
+  { id: 'ch1-ae-14', kind: 'word_match', concept_tag: 'vocab_in_context', difficulty: 3,
+    instruction: 'Match each expression from the chapter to its meaning.',
+    pairs: [
+      { left: 'part and parcel', right: 'an essential, inseparable part of something' },
+      { left: 'sink or swim', right: 'succeed or fail entirely on your own' },
+      { left: 'by leaps and bounds', right: 'very rapidly, in big jumps' },
+      { left: 'with flying colours', right: 'with great or complete success' },
+      { left: 'no age bar', right: 'no limit set by how old you are' },
+    ],
+    explanation: 'These are the idioms and binomials the chapter asks you to recognise and use.' },
+
+  // ── Tap-to-choose fill (word bank — no typing, no spelling traps) ──────────
+  { id: 'ch1-ae-15', kind: 'fill_blank', concept_tag: 'vocab_in_context', difficulty: 3,
+    prompt: 'Reading the new instalment each week was ________ of the grandmother’s routine — she could not imagine a week without it.',
+    answers: [['part and parcel']],
+    choices: ['part and parcel', 'sink or swim', 'with flying colours', 'by leaps and bounds'],
+    hint: 'Which idiom means “an essential, inseparable part”?',
+    explanation: "'Part and parcel' = a basic, inseparable part of something." },
 ];
 
 (async () => {

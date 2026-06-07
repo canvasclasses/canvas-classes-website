@@ -4,11 +4,11 @@ import { notFound } from 'next/navigation';
 import { loadCollegeDeepDive } from '@/features/college-predictor/lib/deepDive';
 import CutoffTrendChart from '@/features/college-predictor/components/CutoffTrendChart';
 
-// Canonical host — matches the sibling /[slug]/page.tsx + /college-predictor/page.tsx
-// convention. The broader site uses canvasclasses.in in robots + sitemap, but
-// the existing college-predictor pages canonicalise to .com; we stay consistent
-// within the feature to avoid two hostnames in the same sitemap section.
-const SITE_ORIGIN = 'https://canvasclasses.com';
+// Canonical host — must match the sitemap, robots.txt and root metadataBase,
+// all of which use https://www.canvasclasses.in. (This feature previously
+// canonicalised to a stray canvasclasses.com domain that doesn't serve the
+// site — corrected 2026-06-06 so Google credits the real .in pages.)
+const SITE_ORIGIN = 'https://www.canvasclasses.in';
 
 // ISR — cutoffs change at most once a year. 24h cache is plenty.
 export const revalidate = 86400;

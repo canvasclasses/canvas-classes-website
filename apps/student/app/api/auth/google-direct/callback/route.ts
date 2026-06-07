@@ -134,6 +134,9 @@ export async function GET(request: NextRequest) {
             }
         }
 
+        if (process.env.NODE_ENV === 'development') {
+            console.log('🔁 [Google Direct] redirecting after sign-in to next =', next);
+        }
         return NextResponse.redirect(new URL(next, request.url));
     } catch (error: unknown) {
         console.error('❌ [Google Direct] Unexpected error:', error);

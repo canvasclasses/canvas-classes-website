@@ -1,0 +1,93 @@
+[
+  {
+    "pageId": "b0a2f6e6-a9a1-4207-8a2a-6df37252441f",
+    "slug": "ch10-parichay",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 10,
+    "pageNumber": 1,
+    "lang": "en",
+    "blockId": "33e6489b-2a10-4443-8a43-0e9992a4a446",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour bust-portrait of poet Suryakant Tripathi Nirala, a strong bearded face with intense eyes, warm lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text.",
+    "alt": "सूर्यकांत त्रिपाठी निराला"
+  },
+  {
+    "pageId": "2fd310dc-2850-4c10-a406-15f231d5929a",
+    "slug": "ch10-kavita",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 10,
+    "pageNumber": 2,
+    "lang": "en",
+    "blockId": "c2437a17-9aa5-4085-9c48-cc7a094e9d72",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — India personified as a serene goddess whose crown is the snowy Himalayas, necklace the white Ganga, robe the forests, while the sea washes her feet, golden crop-fields and lotuses around. Dark warm luminous ground. Loose washes, paper grain. No text.",
+    "alt": "प्रकृति की देवी भारत"
+  },
+  {
+    "pageId": "dba87be1-2c46-4cc3-9c02-f2ab79e22e3d",
+    "slug": "ch10-shabd-sampada",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 10,
+    "pageNumber": 3,
+    "lang": "en",
+    "blockId": "5dc31c26-7c2a-4c1d-9a6c-6a99759d4b4a",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a lotus-and-mountain motif, dark ground, Madhubani accents. Loose washes, paper grain. No text.",
+    "alt": "शब्दों का ख़ज़ाना"
+  },
+  {
+    "pageId": "cad58943-b493-4ed6-82c4-e3faa5cb3782",
+    "slug": "ch10-kavita-saundarya",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 10,
+    "pageNumber": 4,
+    "lang": "en",
+    "blockId": "e08dea73-781d-4e1a-b704-b58d25ac5f93",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — Devanagari verse turning into images of a crown, a necklace and a robe made of mountains, river and forests, glowing on a dark ground. Loose washes, paper grain. No text.",
+    "alt": "काव्य का सौंदर्य"
+  },
+  {
+    "pageId": "f384c74d-1b6d-44fa-9121-9482df9db704",
+    "slug": "ch10-vishayon-se-samvad",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 10,
+    "pageNumber": 5,
+    "lang": "en",
+    "blockId": "f68c57e0-c336-4640-8832-ff226d4c2206",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — a tapestry of Indian landscapes — Himalayas, Ganga, forests, fields — united under one warm dawn, suggesting unity in diversity. Dark warm ground. Loose washes, paper grain. No text.",
+    "alt": "एक भारत, श्रेष्ठ भारत"
+  },
+  {
+    "pageId": "1b766b3b-d1a9-4c78-be31-a5c86171af25",
+    "slug": "ch10-vyakaran",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 10,
+    "pageNumber": 6,
+    "lang": "en",
+    "blockId": "dc54825b-cee8-4ca3-b8c8-646cb761072a",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — two words merging into one glowing compound word, with verse motifs, on a dark ground with folk accents. Loose washes, paper grain. No text.",
+    "alt": "समास — शब्दों का मेल"
+  },
+  {
+    "pageId": "1b50d90a-cc72-4d2e-9891-b1628918a79e",
+    "slug": "ch10-abhyas",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 10,
+    "pageNumber": 7,
+    "lang": "en",
+    "blockId": "4ef94dc7-5a36-464d-8ee1-a3573c5ff910",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi poetry book, a quill and lamp, a faint mountain-and-river motif. Dark ground, folk accents. Loose washes, paper grain. No text.",
+    "alt": "अभ्यास"
+  }
+]

@@ -8,6 +8,11 @@ import { createContext } from 'react';
 // read-only "preview" mode (admin editor), persisting nothing.
 export interface BookContextValue {
   bookSlug?: string;
+  // Optional "leave this activity" handler injected by the practice hub. When
+  // present, the chapter_practice / apply_express completion screens show a
+  // "Back to chapter hub" button alongside "Practice again". Absent in the admin
+  // preview, where there is nowhere to go back to.
+  onExit?: () => void;
 }
 
 export const BookContext = createContext<BookContextValue>({});

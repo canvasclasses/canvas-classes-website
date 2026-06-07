@@ -6,11 +6,37 @@ import type { ICareerPath } from '@canvas/data/models/CareerPath';
 import BrowseClient from '@/features/career-explorer/components/BrowseClient';
 import type { BrowseCareer } from '@/features/career-explorer/types';
 
+const SITE_ORIGIN = 'https://www.canvasclasses.in';
+
+// ISR — the career library changes rarely. Cache 24h instead of querying
+// Mongo on every visit (per CLAUDE.md §10 caching rules).
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: 'Browse All Careers — Career Explorer',
   description:
     'Browse careers by family, by the school subjects you enjoy, or by the evergreen human needs they serve. No quiz required.',
-  alternates: { canonical: 'https://canvasclasses.com/career-explorer/browse' },
+  keywords: [
+    'list of careers India',
+    'careers after 12th',
+    'careers by subject',
+    'career options list',
+    'browse careers',
+  ],
+  alternates: { canonical: `${SITE_ORIGIN}/career-explorer/browse` },
+  openGraph: {
+    title: 'Browse Every Career in Our Library — Career Explorer',
+    description:
+      'Browse careers by family, by the school subjects you enjoy, or by the evergreen human needs they serve. No quiz required.',
+    url: `${SITE_ORIGIN}/career-explorer/browse`,
+    siteName: 'Canvas Classes',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Browse Every Career in Our Library',
+    description: 'Browse careers by family, by subject, or by the human need they serve. No quiz required.',
+  },
 };
 
 type Lean = Pick<
@@ -44,8 +70,34 @@ export default async function BrowsePage() {
     demand_trajectory: r.demand_trajectory,
   }));
 
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Browse Every Career in Our Library',
+    description:
+      'Browse careers by family, by the school subjects you enjoy, or by the evergreen human needs they serve.',
+    url: `${SITE_ORIGIN}/career-explorer/browse`,
+    isPartOf: { '@type': 'WebSite', name: 'Canvas Classes', url: SITE_ORIGIN },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: careers.length,
+      itemListElement: careers.map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${SITE_ORIGIN}/career-explorer/careers/${String(c._id)}`,
+        name: c.name,
+      })),
+    },
+  };
+  const itemListJson = JSON.stringify(itemListJsonLd)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/'/g, '\\u0027');
+
   return (
     <main className="min-h-screen bg-[#050505] text-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: itemListJson }} />
       <section className="mx-auto max-w-5xl px-6 py-12">
         <Link href="/career-explorer" className="text-xs text-white/50 hover:text-white/80">
           ← Career Explorer

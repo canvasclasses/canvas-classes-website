@@ -5,9 +5,10 @@ import { ToneMeterBlock } from '@canvas/data/types/books';
 
 const INTENSITY_COLOR = ['#94a3b8', '#a78bfa', '#60a5fa', '#fb923c', '#f87171'];
 
-export default function ToneMeterRenderer({ block }: { block: ToneMeterBlock }) {
+export default function ToneMeterRenderer({ block, hinglish }: { block: ToneMeterBlock; hinglish?: boolean }) {
   const [active, setActive] = useState<number>(0);
   const seg = block.segments[active];
+  const note = hinglish && seg.note_hinglish ? seg.note_hinglish : seg.note;
 
   return (
     <div className="my-8 rounded-2xl border border-rose-400/15 bg-rose-400/[0.02] px-5 py-5">
@@ -35,7 +36,7 @@ export default function ToneMeterRenderer({ block }: { block: ToneMeterBlock }) 
           “{seg.excerpt}”
         </div>
         <div className="text-[13px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
-          {seg.note}
+          {note}
         </div>
       </div>
 

@@ -504,7 +504,7 @@ export default function BookReader({
             </div>
 
             <Link
-              href={`/login?next=${encodeURIComponent(`${bp}/${page.slug}`)}`}
+              href={`/login?next=${encodeURIComponent(nextPageSlug ? `${bp}/${nextPageSlug}` : `${bp}/${page.slug}`)}`}
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl
                 bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-sm
                 hover:opacity-90 transition-opacity mb-3"

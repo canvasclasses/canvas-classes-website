@@ -1,0 +1,54 @@
+[
+  {
+    "pageId": "ce5a1a38-7dd0-4954-9c65-f571cf274fad",
+    "slug": "kahani-ka-saundarya",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 1,
+    "pageNumber": 8,
+    "lang": "en",
+    "blockId": "71cc1e56-787b-4037-b08a-826a7cfeadd6",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — abstract evocative composition suggesting storytelling craft: a quill, flowing Devanagari strokes turning into images of oxen and a village, glowing on a dark ground with folk-art accents. Loose washes, paper grain. No text.",
+    "alt": "कहानी की भाषा का सौंदर्य"
+  },
+  {
+    "pageId": "6394a6e7-bbcf-4ac2-abf4-2d3f9c6fb1b0",
+    "slug": "vishayon-se-samvad",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 1,
+    "pageNumber": 9,
+    "lang": "en",
+    "blockId": "1c11028f-a639-4dd7-b266-62db90478c40",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — a freedom-era Indian village scene subtly merging with the bars of a pound/cage, symbolic of the स्वतंत्रता संग्राम. Dark ground, subtle tricolour-tinted dawn light. Loose washes, paper grain. No text.",
+    "alt": "आज़ादी की कहानी"
+  },
+  {
+    "pageId": "1c336f47-223c-4d3a-991e-f693513e889b",
+    "slug": "srijan-gatividhiyan",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 1,
+    "pageNumber": 10,
+    "lang": "en",
+    "blockId": "cb8a0bac-f47e-4e7c-8029-b38f3a363576",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — an open diary and a quill beside a small lamp, faint images of two oxen rising from the page, on a dark ground with folk accents. Loose washes, paper grain. No text.",
+    "alt": "अपनी कलम से"
+  },
+  {
+    "pageId": "70a03137-6d44-4031-9498-615b2ce07886",
+    "slug": "abhyas",
+    "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+    "chapterNumber": 1,
+    "pageNumber": 11,
+    "lang": "en",
+    "blockId": "730d79d9-77a7-435d-afab-91799b8396fd",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi book, a lamp, and faint oxen motifs, inviting practice. Dark ground, folk accents. Loose washes, paper grain. No text.",
+    "alt": "अभ्यास"
+  }
+]

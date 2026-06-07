@@ -64,7 +64,7 @@ export const revalidate = 86400;
 
 type SpecLean = Omit<ICareerSpec, 'deleted_at' | 'deleted_by' | 'created_by' | 'updated_by'>;
 
-const SITE_ORIGIN = 'https://canvasclasses.in';
+const SITE_ORIGIN = 'https://www.canvasclasses.in';
 
 const CATEGORY_LABEL: Record<SpecLean['category'], string> = {
   engineering: 'Engineering track',
