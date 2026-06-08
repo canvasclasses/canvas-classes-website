@@ -98,6 +98,22 @@ is the right size to be drowning, not yet at the size to be enforcing.
 
 ### 8. AdminPanel abstraction for repeated dashboards
 
+**Partially addressed (2026-06-08) — re-scoped to the auth gate only.** When the
+7th dashboard (`junior-bank`) triggered this item, a read of all seven dashboards
+found the only genuinely-uniform duplication was the server auth gate, not the
+header/loading/empty chrome (those are functionally divergent — subject tabs,
+view-mode toggle, page-title input, tab nav, stats grids — and unifying them
+would change rendered output). So **Option B** shipped: a gate-only
+`apps/admin/features/admin/components/AdminPanel.tsx` server component that
+collapses the `requireSuperAdmin/requireAdmin → redirect → render` preamble
+across the six server pages (flashcards, blog, books, taxonomy, career-explorer,
+junior-bank). The full `<AdminPanel title columns actions/>` chrome shell sketched
+below was **deliberately declined** as premature — the per-dashboard chromes are
+not stable enough to merge without behavior change. Rationale + the three options
+considered: `_agents/decisions/2026-06-08-adminpanel-consolidation-memo.md`.
+The remaining chrome-consolidation idea below stays open for if/when the headers
+converge.
+
 **Files**: `apps/admin/features/admin/components/{FlagsDashboard, UserDashboard, RoleManagement, MockTestsAdmin, BlogAdminClient, ExportDashboard}.tsx`.
 
 **Problem**: six components, 300–1,243 lines each, all implementing the
