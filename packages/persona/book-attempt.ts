@@ -2,11 +2,19 @@ import 'server-only';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress, type IQuestionAttempt } from '@canvas/data/models/UserProgress';
 import { resolveBookSkill } from '@canvas/data/skills';
+import { resolveTenantId } from '@canvas/data/tenancy';
 import { applyAttemptToProgress } from './writer';
 import { emitLearningEvent } from './learning-event';
 
 /**
  * Phase 0b — route a Live Books practice attempt into the ONE unified persona.
+ *
+ * ADR-012 (2026-06-07) note: Live Books are decoupled from Crucible at the
+ * RECOMMENDATION layer (the persona no longer drives traffic back to Books).
+ * This book→persona FEED is deliberately KEPT, not parked — it is cheap,
+ * fire-and-forget, and gives a holistic cross-surface view of the learner that
+ * B2B teacher dashboards will use. It is non-load-bearing: removing it would
+ * only cost the holistic signal, and it never triggers a cross-surface redirect.
  *
  * This is the seam that makes UserProgress.concept_mastery cross-surface. It
  * constructs a valid IQuestionAttempt tagged with the attempt's *global skill
@@ -68,12 +76,15 @@ export async function recordBookAttempt(input: BookAttemptInput): Promise<void> 
   };
 
   await connectToDatabase();
+  // Resolve once — used to stamp a new persona doc and the learning event.
+  const tenantId = await resolveTenantId(input.userId);
   for (let i = 0; i <= MAX_RETRIES; i++) {
     try {
       let progress = await UserProgress.findById(input.userId);
       if (!progress) {
         progress = new UserProgress({
           _id: input.userId,
+          tenant_id: tenantId,
           // user_email is `required` (non-empty) on the schema. A first-ever
           // book-practice user may have no UserProgress yet, so use a valid
           // placeholder; the writer never overwrites email on existing docs.
@@ -92,7 +103,7 @@ export async function recordBookAttempt(input: BookAttemptInput): Promise<void> 
       await progress.save();
       // Emit to the immutable spine (Phase 1) — fire-and-forget.
       void emitLearningEvent({
-        user_id: input.userId, surface: 'book', verb: 'answered',
+        user_id: input.userId, tenant_id: tenantId, surface: 'book', verb: 'answered',
         item_id: input.questionId, skill_ids: [skillId],
         correct: input.isCorrect, difficulty: input.difficulty,
         duration_ms: input.timeMs, confidence: 'high',

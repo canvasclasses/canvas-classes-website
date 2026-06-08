@@ -216,10 +216,15 @@ export function createEmptyMicroConceptProfile(microConcept: string): IMicroConc
   };
 }
 
-export function createEmptyProfile(studentId: string, chapterId: string): IStudentChapterProfile {
+export function createEmptyProfile(
+  studentId: string,
+  chapterId: string,
+  tenantId?: string,
+): IStudentChapterProfile {
   return {
     studentId,
     chapterId,
+    ...(tenantId ? { tenant_id: tenantId } : {}),
     microConceptProfiles: [],
     overallAccuracy: 0,
     totalAttempts: 0,

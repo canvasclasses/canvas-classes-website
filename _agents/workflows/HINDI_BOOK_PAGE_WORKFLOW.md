@@ -122,7 +122,7 @@ Same blocks as the science/English workflows. Hindi-specific notes:
 | `inline_quiz` | Closes every page. 3 questions: स्मरण (recall) → समझ (comprehension) → व्याख्या (interpretation). |
 | `worked_example` | For the "कहानी की रचना" / model-answer items. `variant: 'ncert_intext'`, `reveal: 'tap_to_reveal'` — student attempts before revealing. |
 | `comparison_card` | हीरा vs मोती; कहानी के आरंभ vs अंत में पात्र का भाव; दो कविताओं की तुलना. Max 3 columns. |
-| `table` | Reused for the भाषा संगम word-across-languages list and as the fallback for the गद्य "कहानी का सौंदर्य" device table (see §5.3). |
+| `table` | Reused for the भाषा संगम word-across-languages list and as the fallback for the गद्य "कहानी का सौंदर्य" device table (see §5.3). **Body cells render at body-paragraph size (`text-[17px]`) — never author or introduce a smaller-print table. See BOOK_PAGE_WORKFLOW §3.8.** |
 | `callout` | Variants below. |
 
 **Callout variants for Hindi** (on top of the science set):

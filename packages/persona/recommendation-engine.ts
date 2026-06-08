@@ -1,5 +1,13 @@
 /**
- * RECOMMENDATION ENGINE — bridge in place, gates closed.
+ * RECOMMENDATION ENGINE.
+ *
+ * ⚠️ PARKED per ADR-012 (2026-06-07): Live Books are DECOUPLED from Crucible at
+ * the recommendation layer. The cross-surface "read/watch this ResourceLink"
+ * path below is **intentionally dormant, not dead code — do not delete it.**
+ * It is gated off by `CROSS_SURFACE_RESOURCES_ENABLED` (false). With the flag
+ * off, the engine returns practice-only recommendations (weak-skill + review-due
+ * inside Crucible), which is the current product direction. Flip the flag back
+ * on only if cross-surface recommendation is deliberately revived.
  *
  * Today this module returns an empty array. The shape, types, callers, and
  * data contract are all wired so we can swap the stub for the real algorithm
@@ -46,6 +54,15 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress, type IConceptMastery } from '@canvas/data/models/UserProgress';
 import { ResourceLink, type ResourceType } from '@canvas/data/models/ResourceLink';
 import { getTagName } from '@canvas/data/taxonomy/lookup';
+
+/**
+ * Master switch for the cross-surface (Crucible → Live Books) recommendation
+ * path. OFF since ADR-012 (2026-06-07): the engine recommends in-Crucible
+ * practice only and never resolves a `ResourceLink` "read/watch this" target.
+ * The `ResourceLink` lookups below are short-circuited when this is false.
+ * Set to `true` ONLY to deliberately revive cross-surface recommendation.
+ */
+export const CROSS_SURFACE_RESOURCES_ENABLED = false;
 
 // ── Public types — these are the API contract the UI depends on. ─────────
 
@@ -169,12 +186,16 @@ export async function getRecommendations(
   const items: RecommendationItem[] = [];
   for (const { tagId, m, reason, score } of candidates) {
     if (items.length >= limit) break;
-    const link = await ResourceLink.findOne({ topic_tag_id: tagId })
-      .sort({ is_primary: -1 })
-      .lean() as {
-        resource_type: ResourceType; resource_title: string; resource_url: string;
-        duration_minutes?: number; chapter_id?: string;
-      } | null;
+    // Cross-surface ResourceLink path PARKED per ADR-012 — when disabled, every
+    // candidate falls through to the in-Crucible "practice" recommendation.
+    const link = CROSS_SURFACE_RESOURCES_ENABLED
+      ? (await ResourceLink.findOne({ topic_tag_id: tagId })
+          .sort({ is_primary: -1 })
+          .lean() as {
+            resource_type: ResourceType; resource_title: string; resource_url: string;
+            duration_minutes?: number; chapter_id?: string;
+          } | null)
+      : null;
 
     const name = getTagName(tagId);
     const acc = Math.round(m.accuracy_percentage);
@@ -226,6 +247,9 @@ export async function getResourceForConcept(
   topicTagId: string,
   preferredType?: ResourceType,
 ): Promise<RecommendationItem['resource'] | null> {
+  // Cross-surface path PARKED per ADR-012 — no ResourceLink is resolved while
+  // Live Books are decoupled. Returns null (caller shows practice instead).
+  if (!CROSS_SURFACE_RESOURCES_ENABLED) return null;
   await connectToDatabase();
   const query: Record<string, unknown> = { topic_tag_id: topicTagId };
   if (preferredType) query.resource_type = preferredType;

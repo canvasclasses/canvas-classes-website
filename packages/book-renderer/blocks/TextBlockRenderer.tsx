@@ -69,7 +69,7 @@ const components: Components = {
   table: ({ children }) => (
     <div className="my-6 rounded-xl overflow-hidden border border-white/10 bg-[#0d1320]">
       <div className="overflow-x-auto">
-        <table className="w-full text-[14px] border-collapse">{children}</table>
+        <table className="w-full text-[17px] border-collapse">{children}</table>
       </div>
     </div>
   ),
@@ -88,7 +88,7 @@ const components: Components = {
     </th>
   ),
   td: ({ children }) => (
-    <td className="px-5 py-3.5 text-[14px] text-white/75 align-middle leading-[1.55] first:font-semibold first:text-white/90">
+    <td className="px-5 py-3.5 text-[17px] text-white/75 align-middle leading-[1.55] first:font-semibold first:text-white/90">
       {children}
     </td>
   ),

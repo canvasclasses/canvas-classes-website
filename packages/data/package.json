@@ -18,6 +18,7 @@
     "./skills": "./skills/index.ts",
     "./difficulty": "./difficulty.ts",
     "./rbac": "./rbac.ts",
+    "./tenancy": "./tenancy.ts",
     "./types/*": "./types/*.ts"
   },
   "peerDependencies": {

@@ -3,6 +3,7 @@ import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress } from '@canvas/data/models/UserProgress';
 import { trackServer } from '@canvas/core/analytics/mixpanel.server';
+import { resolveTenantId } from '@canvas/data/tenancy';
 
 // ─── POST /api/v2/user/test-session ──────────────────────────────────────────
 // Body: { chapter_id, question_ids: string[], config: { count, mix } }
@@ -19,11 +20,13 @@ export async function POST(req: NextRequest) {
         }
 
         await connectToDatabase();
+        const tenantId = await resolveTenantId(userId); // Phase 3 — stamp new persona docs
 
         let progress = await UserProgress.findById(userId);
         if (!progress) {
             progress = new UserProgress({
                 _id: userId,
+                tenant_id: tenantId,
                 user_email: '',
                 recent_attempts: [],
                 all_attempted_ids: [],

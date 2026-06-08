@@ -3,6 +3,7 @@ import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress } from '@canvas/data/models/UserProgress';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
+import { resolveTenantId } from '@canvas/data/tenancy';
 
 interface StarredEntry {
     question_id: string;
@@ -79,11 +80,13 @@ export async function POST(req: NextRequest) {
         }
 
         await connectToDatabase();
+        const tenantId = await resolveTenantId(userId); // Phase 3 — stamp new persona docs
 
         let progress = await UserProgress.findById(userId);
         if (!progress) {
             progress = new UserProgress({
                 _id: userId,
+                tenant_id: tenantId,
                 user_email: '',
                 recent_attempts: [],
                 all_attempted_ids: [],

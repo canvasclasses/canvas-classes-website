@@ -122,8 +122,8 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/ForceBalanceSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
-  'free-body-diagram': dynamic(
-    () => import('./simulations/FreeBodyDiagramGame'),
+  'newtons-motion-lab': dynamic(
+    () => import('./simulations/NewtonsMotionLab'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   'friction-explorer': dynamic(

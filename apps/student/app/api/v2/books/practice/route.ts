@@ -86,12 +86,15 @@ export async function POST(req: NextRequest) {
       time_ms,
     });
 
-    // ── Unified persona (ADR-011 / Phase 0b) ──────────────────────────────
+    // ── Unified persona (ADR-011 / Phase 0b; KEPT under ADR-012) ──────────
     // Dual-write the same attempt into the ONE skill-keyed persona
     // (UserProgress.concept_mastery) via the canonical writer, so Live Books
     // signal joins Crucible's. Wrapped so it can NEVER fail the student's
     // practice response; the in-book adaptive selector still uses the
     // book_practice_attempts write above.
+    // ADR-012 (2026-06-07): Books are decoupled from Crucible *recommendation*,
+    // but this feed is intentionally KEPT (non-load-bearing) for a holistic
+    // cross-surface persona — it does NOT drive any cross-surface redirect.
     try {
       await recordBookAttempt({
         userId,

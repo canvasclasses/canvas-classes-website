@@ -13,6 +13,8 @@
     "./user-progress-updater": "./user-progress-updater.ts",
     "./profile-engine": "./profile-engine.ts",
     "./recommendation-engine": "./recommendation-engine.ts",
+    "./persona-snapshot": "./persona-snapshot.ts",
+    "./tutor": "./tutor.ts",
     "./scoring": "./scoring.ts"
   },
   "dependencies": {

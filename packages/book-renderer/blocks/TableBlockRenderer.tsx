@@ -46,7 +46,7 @@ export default function TableBlockRenderer({ block }: { block: TableBlock }) {
       {/* Outer wrapper — rounded card with subtle border */}
       <div className="rounded-xl overflow-hidden border border-white/10 bg-[#0d1320]">
         <div className="overflow-x-auto">
-          <table className="w-full text-[14px] border-collapse">
+          <table className="w-full text-[17px] border-collapse">
 
             {/* Header */}
             <thead>

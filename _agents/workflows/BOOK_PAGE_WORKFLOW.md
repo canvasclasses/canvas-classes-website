@@ -500,6 +500,7 @@ Use `simulation` in biology only when the topic is genuinely physics-flavoured (
 ```
 - Use for comparison data — reaction products, test results, properties side by side
 - Keep tables narrow (2–4 columns)
+- **Font-size rule (do not break):** table **body cells must render at the same size as body paragraph text — `text-[17px]`** so a table doesn't read as "smaller print" next to the prose above it. This is already baked into the shared renderers (`packages/book-renderer/blocks/TableBlockRenderer.tsx` and the markdown-table override in `TextBlockRenderer.tsx`) — you author `headers`/`rows` as plain content and never set sizes, so just **don't introduce a new table component or a `text-[14px]`/`text-sm` table** anywhere in book-renderer. Header eyebrow labels stay deliberately small (uppercase 11px); only the body content matches the paragraph.
 
 ### 3.9 `comparison_card`
 ```json
@@ -955,7 +956,32 @@ When in doubt, reuse — and lean on the page's text and worked examples to carr
 
 A book-wide scan found a large library of physics/chemistry sims already registered in `packages/book-renderer/blocks/SimulationBlockRenderer.tsx` (and built in `…/blocks/simulations/`) that are placed on **zero** pages. **Before building anything, check the registry and wire an existing one in.** Physics components seen unused include: `ForceBalanceSim` (`force-balance`), `FrictionExplorerSim` (`friction-explorer`), `FreeFallSim`, `CircularMotionSim` (`circular-motion`), `GravitationalForceSim`, `EnergyConservationSim`, `EquationsOfMotionSim`, `DistanceDisplacementSim`. The renderer is the source of truth for each `simulation_id` — confirm there before placing a `simulation` block.
 
-**New 2026-06-06: `free-body-diagram` (`FreeBodyDiagramGame.tsx`)** — a level-based "Free-Body Challenge" game (size a force arrow to hit each level's goal: balance → accelerate → constant velocity → lift off, with live net-force readout and pass/fail feedback). Placed on Ch6 `balanced-and-unbalanced-forces`. Reuse it on any balanced/unbalanced-forces or Newton's-laws page.
+**New 2026-06-07: `newtons-motion-lab` (`NewtonsMotionLab.tsx`)** — a real-time motion lab on Ch6 `balanced-and-unbalanced-forces`. Set a net force + mass, press Play, and *watch* the object accelerate: the cart moves on a scrolling track while a live **velocity–time graph** draws itself and a state-aware insight line explains what's happening. It targets the deepest misconception a static figure cannot fix — that a force gives *speed* (it gives *acceleration*) — plus the counterintuitive Newton's-first-law "coast forever" case (force off + friction off → constant velocity). Presets: Steady push · Let go (coast) · Friction stop · Heavy load. **This is the standard a science sim should meet** (see below); it replaced an earlier slider-only "free-body" game that the founder flagged as too basic/common-sense.
+
+> **Sim design lesson (2026-06-07):** don't build "common sense in action" (e.g. "push harder than friction → it moves"). Build sims that show what a textbook image *can't* — change over **time**, an emergent graph, or a counterintuitive outcome. Use the `dynamic(..., { ssr:false })` registration; drive animation with `setInterval` + real-elapsed `dt` (not bare `requestAnimationFrame`) so the physics is time-correct and keeps advancing if the tab is briefly backgrounded. **Verify in the preview before reporting done** — note that the preview tab is `visibilityState:hidden`, which *pauses* `requestAnimationFrame` entirely (0 frames) and throttles `setInterval`, so confirm motion via DOM polling of the live readouts and a deterministic Node test of the physics, not just a screenshot.
+>
+> **🚨 LABEL OVERLAP RULE — mandatory, founder-flagged recurring issue.** Physics sims keep shipping with text labels overlapping each other, the moving object, or arrows. **Default rule: put NO text labels on the SVG animation canvas at all** — except a single short label on the central object (e.g. `4 kg`). Force arrows draw from the **object's edge** outward in their colour, and every name + numeric value lives in a **colour-keyed legend BELOW the canvas**. This way arrows can shrink to 0 px (small force) or grow off-screen (clamped) without any label ever colliding.
+>
+> **Mandatory pre-ship check — run in the preview and report the result:**
+>
+> ```js
+> // Programmatic overlap test — paste into preview_eval.
+> (() => {
+>   const svg = [...document.querySelectorAll('svg')].find(s => /\bkg\b/.test(s.textContent || ''));
+>   if (!svg) return { ok: false, reason: 'sim canvas not found' };
+>   const texts = [...svg.querySelectorAll('text')];
+>   const cart = texts.find(t => /kg$/.test(t.textContent || ''));
+>   const others = texts.filter(t => t !== cart);
+>   const overlap = (a, b) => !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
+>   const collisions = others.flatMap((t, i) =>
+>     others.slice(i + 1).filter(u => overlap(t.getBoundingClientRect(), u.getBoundingClientRect())).map(u => `${t.textContent} / ${u.textContent}`)
+>   );
+>   const cartCollisions = cart ? others.filter(t => overlap(cart.getBoundingClientRect(), t.getBoundingClientRect())).map(t => t.textContent) : [];
+>   return { ok: collisions.length === 0 && cartCollisions.length === 0, canvasTextCount: texts.length, collisions, cartCollisions };
+> })()
+> ```
+>
+> Run this at **rest state, mid-animation, and small/extreme parameter values** (where arrows shrink or grow). The expected pass is `{ ok: true, canvasTextCount: 1, ... }` — exactly one text label (the object's mass/name), zero collisions. **Do not report a sim "done" until this prints `ok: true` and a screenshot confirms it.**
 
 ### Gamification patterns for science (prefer these to plain text)
 

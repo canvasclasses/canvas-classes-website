@@ -3,6 +3,7 @@
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress, IQuestionAttempt } from '@canvas/data/models/UserProgress';
 import { applyAttemptToProgress } from '@canvas/persona/writer';
+import { resolveTenantId } from '@canvas/data/tenancy';
 import { revalidatePath } from 'next/cache';
 
 // ============================================
@@ -75,6 +76,7 @@ export async function recordQuestionAttempt(
     if (!progress) {
       progress = new UserProgress({
         _id: userId,
+        tenant_id: await resolveTenantId(userId), // Phase 3 — stamp new persona docs
         user_email: userEmail,
         recent_attempts: [],
         chapter_progress: new Map(),

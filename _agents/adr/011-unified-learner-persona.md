@@ -1,7 +1,9 @@
 # ADR-011: Unified Learner Persona across Crucible and Live Books
 
+> **⚠️ AMENDED by [ADR-012](012-decouple-livebooks-from-crucible.md) (2026-06-07):** the cross-*surface* recommendation bridge described here ("weak in Crucible → go consume a Live Book resource") is **dropped**. Live Books and Crucible are decoupled at the recommendation layer; the engine is re-centred on in-Crucible adaptive practice. The cross-*subject* persona, the writer/tier invariants, and the no-fork rule below all still stand. Read this ADR through ADR-012.
+
 **Date:** 2026-06-06
-**Status:** Accepted
+**Status:** Accepted (recommendation-bridge portion amended by ADR-012)
 **Full design:** [`_agents/plans/UNIFIED_LEARNER_PERSONA.md`](../plans/UNIFIED_LEARNER_PERSONA.md)
 **Touches Crucible-protected paths** — see [`_agents/CRUCIBLE_ARCHITECTURE.md`](../CRUCIBLE_ARCHITECTURE.md) §3.2, §4, §6, §9.
 

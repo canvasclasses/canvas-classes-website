@@ -6,6 +6,7 @@ import { updateProfileFromAttempt, createEmptyProfile } from '@canvas/persona/pr
 import { getUserIdFromRequest } from '@/lib/auth';
 import { applyAttemptToProgress, resolveConfidenceTier } from '@canvas/persona/writer';
 import { emitLearningEvent } from '@canvas/persona/learning-event';
+import { resolveTenantId } from '@canvas/data/tenancy';
 
 // ─── GET /api/v2/user/progress?chapterId=xxx ──────────────────────────────────
 // Returns: starred_ids for this chapter, all_attempted_ids for this chapter,
@@ -110,6 +111,9 @@ export async function POST(req: NextRequest) {
         const confidenceTier = resolveConfidenceTier(confidence, source);
 
         await connectToDatabase();
+        // Resolve the user's tenant once (Phase 3) — stamps a new persona doc,
+        // the chapter profile, and the learning event. Fail-safe to 'public'.
+        const tenantId = await resolveTenantId(userId);
 
         const attempt: IQuestionAttempt = {
             question_id,
@@ -136,6 +140,7 @@ export async function POST(req: NextRequest) {
                 if (!progress) {
                     progress = new UserProgress({
                         _id: userId,
+                        tenant_id: tenantId,
                         user_email: '',
                         recent_attempts: [],
                         all_attempted_ids: [],
@@ -175,7 +180,7 @@ export async function POST(req: NextRequest) {
                             chapterId: chapter_id,
                         }) as (IStudentChapterProfile & { save: () => Promise<unknown> }) | null;
                         if (!profile) {
-                            profile = new StudentChapterProfile(createEmptyProfile(userId, chapter_id)) as unknown as typeof profile;
+                            profile = new StudentChapterProfile(createEmptyProfile(userId, chapter_id, tenantId)) as unknown as typeof profile;
                         }
                         const updated = updateProfileFromAttempt(profile as unknown as IStudentChapterProfile, {
                             questionId: question_id,
@@ -202,7 +207,7 @@ export async function POST(req: NextRequest) {
 
         // Emit to the unified immutable spine (ADR-011, Phase 1) — fire-and-forget.
         void emitLearningEvent({
-            user_id: userId, surface: 'crucible', verb: 'answered',
+            user_id: userId, tenant_id: tenantId, surface: 'crucible', verb: 'answered',
             item_id: question_id, skill_ids: Array.isArray(concept_tags) ? concept_tags : [],
             correct: !!is_correct,
             difficulty: typeof difficulty === 'number' ? difficulty : undefined,

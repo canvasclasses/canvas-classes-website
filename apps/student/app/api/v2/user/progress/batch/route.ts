@@ -5,6 +5,8 @@ import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/mode
 import { updateProfileFromAttempt, createEmptyProfile } from '@canvas/persona/profile-engine';
 import { getUserIdFromRequest } from '@/lib/auth';
 import { applyAttemptToProgress, resolveConfidenceTier } from '@canvas/persona/writer';
+import { emitLearningEvent } from '@canvas/persona/learning-event';
+import { resolveTenantId } from '@canvas/data/tenancy';
 
 // ─── POST /api/v2/user/progress/batch ────────────────────────────────────────
 // Body: { attempts: Array<{ question_id, display_id, chapter_id, difficulty,
@@ -27,6 +29,9 @@ export async function POST(req: NextRequest) {
         }
 
         await connectToDatabase();
+        // Resolve tenant once (Phase 3) — stamps a new persona doc, profiles,
+        // and every learning event for this batch. Fail-safe to 'public'.
+        const tenantId = await resolveTenantId(userId);
 
         const now = new Date();
         // Retry loop: optimistic concurrency (via __v) detects concurrent
@@ -40,6 +45,7 @@ export async function POST(req: NextRequest) {
             if (!progress) {
                 progress = new UserProgress({
                     _id: userId,
+                    tenant_id: tenantId,
                     user_email: '',
                     recent_attempts: [],
                     all_attempted_ids: [],
@@ -154,7 +160,7 @@ export async function POST(req: NextRequest) {
                             studentId: userId,
                             chapterId,
                         }).lean<IStudentChapterProfile | null>();
-                        if (!profile) profile = createEmptyProfile(userId, chapterId);
+                        if (!profile) profile = createEmptyProfile(userId, chapterId, tenantId);
                         let working = profile as IStudentChapterProfile;
                         for (const lite of lites) {
                             working = updateProfileFromAttempt(working, { ...lite, confidence: 'high' });
@@ -173,6 +179,32 @@ export async function POST(req: NextRequest) {
             }
         } catch (profileErr) {
             console.error('[POST /api/v2/user/progress/batch] persona update failed (non-fatal)', profileErr);
+        }
+
+        // ── Unified event spine (ADR-011, Phase 1). Emit one immutable
+        // learning_event per recorded attempt so a test sitting is visible to
+        // the replay spine — the single-attempt + book routes already do this.
+        // Fire-and-forget: emitLearningEvent never throws, but we also skip the
+        // same invalid attempts the UserProgress loop above skipped, so the
+        // event log matches what was actually recorded.
+        for (const raw of attempts) {
+            const {
+                question_id, chapter_id, difficulty, concept_tags = [],
+                is_correct, source = 'test', time_spent_seconds = 0,
+                confidence, session_id,
+            } = raw;
+            if (!question_id || !chapter_id || is_correct === undefined) continue;
+            void emitLearningEvent({
+                user_id: userId, tenant_id: tenantId, surface: 'crucible', verb: 'answered',
+                item_id: question_id,
+                skill_ids: Array.isArray(concept_tags) ? concept_tags : [],
+                correct: !!is_correct,
+                difficulty: typeof difficulty === 'number' ? difficulty : undefined,
+                duration_ms: typeof time_spent_seconds === 'number' ? time_spent_seconds * 1000 : undefined,
+                confidence: resolveConfidenceTier(confidence, typeof source === 'string' ? source : undefined),
+                chapter_id,
+                session_id: typeof session_id === 'string' ? session_id : undefined,
+            });
         }
 
         return NextResponse.json({

@@ -44,6 +44,9 @@ export interface IMicroConceptProfile {
 export interface IStudentChapterProfile {
   studentId: string;
   chapterId: string;
+  // B2B multi-tenancy (Phase 3, ADR-011). Stamped at profile creation; absent ⇒
+  // default 'public' tenant. Never mutated by the profile engine's counters.
+  tenant_id?: string;
 
   // One entry per micro concept
   microConceptProfiles: IMicroConceptProfile[];
@@ -109,6 +112,8 @@ const MicroConceptProfileSchema = new Schema<IMicroConceptProfile>({
 const StudentChapterProfileSchema = new Schema<IStudentChapterProfile>({
   studentId: { type: String, required: true },
   chapterId: { type: String, required: true },
+  // Phase 3 tenancy — see IStudentChapterProfile.tenant_id.
+  tenant_id: { type: String },
 
   microConceptProfiles: {
     type: [MicroConceptProfileSchema],
@@ -137,6 +142,8 @@ const StudentChapterProfileSchema = new Schema<IStudentChapterProfile>({
 // Unique compound index: one profile per student per chapter
 StudentChapterProfileSchema.index({ studentId: 1, chapterId: 1 }, { unique: true });
 StudentChapterProfileSchema.index({ studentId: 1, overallProficiency: 1 });
+// Phase 3 — teacher dashboards roll up by tenant + chapter.
+StudentChapterProfileSchema.index({ tenant_id: 1, chapterId: 1 });
 
 export const StudentChapterProfile =
   mongoose.models.StudentChapterProfile ||

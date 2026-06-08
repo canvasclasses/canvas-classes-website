@@ -4,6 +4,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import { StudentResponse } from '@canvas/data/models/StudentResponse';
 import { updateProfileFromResponse, createEmptyProfile } from '@canvas/persona/profile-engine';
+import { resolveTenantId } from '@canvas/data/tenancy';
 
 // ─── GET /api/v2/user/chapter-profile?chapterId=xxx ──────────────────────────
 // Returns the student's multi-dimensional profile for a chapter.
@@ -22,7 +23,7 @@ export async function GET(req: NextRequest) {
     const profile = await StudentChapterProfile.findOne({ studentId: userId, chapterId }).lean();
 
     if (!profile) {
-      return NextResponse.json({ profile: createEmptyProfile(userId, chapterId) });
+      return NextResponse.json({ profile: createEmptyProfile(userId, chapterId, await resolveTenantId(userId)) });
     }
 
     return NextResponse.json({ profile });
@@ -60,7 +61,7 @@ export async function POST(req: NextRequest) {
     if (profileDoc) {
       profileData = profileDoc.toObject();
     } else {
-      profileData = createEmptyProfile(userId, chapterId);
+      profileData = createEmptyProfile(userId, chapterId, await resolveTenantId(userId));
     }
 
     // Run pure-function update

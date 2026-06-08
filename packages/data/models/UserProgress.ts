@@ -130,6 +130,10 @@ export interface IUserStats {
 export interface IUserProgress {
   _id: string; // Supabase user ID
   user_email: string;
+  // B2B multi-tenancy (Phase 3, ADR-011). Identity field stamped ONCE at doc
+  // creation by the route (like user_email) — never mutated by writer.ts.
+  // Absent ⇒ the default 'public' tenant (existing B2C students).
+  tenant_id?: string;
   created_at: Date;
   updated_at: Date;
 
@@ -271,6 +275,8 @@ const UserProgressSchema = new Schema<IUserProgress>({
     // This is the Supabase user ID
   },
   user_email: { type: String, required: true },
+  // Phase 3 tenancy — see IUserProgress.tenant_id. Indexed for tenant rollups.
+  tenant_id: { type: String, index: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
 
