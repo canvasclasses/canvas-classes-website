@@ -95,8 +95,8 @@ const jsonLd = {
 // English. If you edit a question/answer, you edit it once here.
 const faqs: { q: string; a: string }[] = [
     {
-        q: 'Is the Canvas Classes study planner free?',
-        a: 'Yes — completely free. No sign-up wall, no payment, no trial that runs out. Open it and start planning your JEE or NEET preparation today.',
+        q: 'Is sign in required?',
+        a: 'Yes — sign in so your progress actually saves. Without an account your plan lives only in this browser, and clearing your history or moving to a new phone wipes it out. Sign in once and your chapters, streak and revision schedule are saved for good and follow you on every device.',
     },
     {
         q: 'Who is this study planner for?',
@@ -113,10 +113,6 @@ const faqs: { q: string; a: string }[] = [
     {
         q: 'Will it help me with revision?',
         a: 'That is its biggest strength. It uses a 5-stage spaced-revision system that tells you exactly which chapter to revise and when — so old topics stay sharp while you learn new ones.',
-    },
-    {
-        q: 'Do I need to create an account?',
-        a: 'No account is needed to start — your progress saves on your device. Log in only when you want to sync your plan across your phone and laptop.',
     },
     {
         q: 'When is the best time to start?',
