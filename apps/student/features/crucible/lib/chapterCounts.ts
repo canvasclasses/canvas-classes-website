@@ -38,61 +38,13 @@ export const getExamBoardChapterCounts = unstable_cache(
     { revalidate: 3600, tags: ['questions'] }
 );
 
-// Capitalize a category string from the taxonomy data into the canonical UI
-// type. Matches the helper that previously lived inline in /the-crucible/page.tsx.
-export function capitalizeCategory(cat?: string): 'Physical' | 'Inorganic' | 'Organic' | 'Practical' {
-    if (!cat) return 'Physical';
-    const lower = cat.toLowerCase();
-    if (lower === 'physical') return 'Physical';
-    if (lower === 'inorganic') return 'Inorganic';
-    if (lower === 'organic') return 'Organic';
-    if (lower === 'practical') return 'Practical';
-    return 'Physical';
-}
-
-export type CrucibleSubject = 'Chemistry' | 'Physics' | 'Maths';
-
-// Subject is derived purely from the chapter-id prefix (ch11_/ch12_ → Chemistry,
-// ph11_/ph12_ → Physics, ma_ → Maths). Pure function — safe to call anywhere.
-export function subjectForChapterId(id: string): CrucibleSubject {
-    if (id.startsWith('ph11_') || id.startsWith('ph12_')) return 'Physics';
-    if (id.startsWith('ma_')) return 'Maths';
-    return 'Chemistry';
-}
-
-const MATH_GROUP_LABEL: Record<string, string> = {
-    algebra: 'Algebra',
-    calculus: 'Calculus',
-    coordinate_geometry: 'Coordinate Geometry',
-    trigonometry: 'Trigonometry',
-    vector_algebra: 'Vector Algebra',
-};
-
-// Physics modules — the taxonomy now stores the module in `chapterType`
-// (migrated 2026-06-09 from the flat 'physics'), mirroring how Maths stores its
-// section. Order here is informational; the Crucible list derives display order
-// from class level + syllabus sequence.
-const PHYSICS_GROUP_LABEL: Record<string, string> = {
-    mechanics_1: 'Mechanics 1',
-    mechanics_2: 'Mechanics 2',
-    thermo_waves: 'Thermodynamics & Waves',
-    electromagnetism: 'Electromagnetism',
-    optics: 'Optics',
-    modern_physics: 'Modern Physics',
-    experimental_physics: 'Experimental Physics',
-};
-
-// The display bucket the Crucible chapter list groups under, per subject:
-//  - Chemistry → its category (Physical / Inorganic / Organic / Practical).
-//  - Physics   → its chapterType MODULE (mechanics_1 / electromagnetism / …).
-//  - Maths     → its chapterType section (algebra / calculus / …).
-// `chapterType` may be undefined on the DB-down fallback path — the class-level
-// fallback keeps it sensible there.
-export function groupForChapter(id: string, chapterType: string | undefined, classLevel: number): string {
-    if (id.startsWith('ma_')) return MATH_GROUP_LABEL[chapterType ?? ''] ?? 'Mathematics';
-    if (id.startsWith('ph11_') || id.startsWith('ph12_')) return PHYSICS_GROUP_LABEL[chapterType ?? ''] ?? `Class ${classLevel}`;
-    return capitalizeCategory(chapterType);
-}
+// Subject/group helpers now live in the client-safe `./subjects` module so
+// client components (BrowseView, CrucibleWizard) can share them without pulling
+// in this file's server-only `next/cache` dependency. Imported for internal use
+// here AND re-exported so existing importers of these symbols from chapterCounts
+// keep working.
+import { capitalizeCategory, subjectForChapterId, groupForChapter, SUBJECT_PREFIXES, CRUCIBLE_ALL_SUBJECTS, type CrucibleSubject } from './subjects';
+export { capitalizeCategory, subjectForChapterId, groupForChapter, CRUCIBLE_ALL_SUBJECTS, type CrucibleSubject };
 
 // Shared shape returned to CrucibleWizard. Both routes must produce identical
 // objects so the wizard sees the same counts no matter how the user arrived.
@@ -117,16 +69,16 @@ export interface ChapterWithCounts {
 // Build the chapters-with-counts array used by both /the-crucible/page.tsx and
 // /the-crucible/[chapterId]/page.tsx. Centralised so the two pages can never
 // drift out of agreement.
-export async function buildChaptersWithCounts(): Promise<ChapterWithCounts[]> {
-    const { TAXONOMY_FROM_CSV } = await import('@canvas/data/taxonomy/taxonomyData_from_csv');
-
-    const baseChapters = TAXONOMY_FROM_CSV.filter(
-        (node) => node.type === 'chapter' &&
-        node.id !== 'ch_unsorted' &&
-        (node.id.startsWith('ch11_') || node.id.startsWith('ch12_') ||
-         node.id.startsWith('ph11_') || node.id.startsWith('ph12_') ||
-         node.id.startsWith('ma_'))
-    );
+//
+// `subjects` defaults to Chemistry-only — the historical, safe behaviour. The
+// Crucible passes CRUCIBLE_ALL_SUBJECTS to opt into Physics/Maths; every other
+// caller (e.g. the study planner) gets Chemistry without having to remember to
+// filter, so a forgotten filter can never flood chemistry surfaces.
+export async function buildChaptersWithCounts(
+    opts?: { subjects?: CrucibleSubject[] }
+): Promise<ChapterWithCounts[]> {
+    const subjects = opts?.subjects ?? ['Chemistry'];
+    const base = await chaptersBaseFromTaxonomy(subjects);
 
     const { jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts } = await getExamBoardChapterCounts();
 
@@ -135,20 +87,41 @@ export async function buildChaptersWithCounts(): Promise<ChapterWithCounts[]> {
     const neetStarMap  = new Map(neetStarCounts.map((item: { _id: string; count: number }) => [item._id, item.count]));
     const neetCountMap = new Map(neetAllCounts.map( (item: { _id: string; count: number }) => [item._id, item.count]));
 
-    return baseChapters.map((node) => {
-        const class_level = node.class_level ?? 11;
-        return {
-            id: node.id,
-            name: node.name,
-            class_level,
-            display_order: node.sequence_order ?? 0,
-            category: capitalizeCategory(node.chapterType),
-            subject: subjectForChapterId(node.id),
-            group: groupForChapter(node.id, node.chapterType, class_level),
-            question_count: jeeCountMap.get(node.id) ?? 0,
-            star_question_count: jeeStarMap.get(node.id) ?? 0,
-            neet_question_count: neetCountMap.get(node.id) ?? 0,
-            neet_star_question_count: neetStarMap.get(node.id) ?? 0,
-        };
-    });
+    return base.map((ch) => ({
+        ...ch,
+        question_count: jeeCountMap.get(ch.id) ?? 0,
+        star_question_count: jeeStarMap.get(ch.id) ?? 0,
+        neet_question_count: neetCountMap.get(ch.id) ?? 0,
+        neet_star_question_count: neetStarMap.get(ch.id) ?? 0,
+    }));
+}
+
+// Chapters straight from the static taxonomy with ZERO counts — no DB. Used by
+// buildChaptersWithCounts (which overlays counts) AND by the route pages' DB-down
+// fallback, so a Mongo blip degrades to "real chapter, no counts" instead of a
+// 404. `subjects` defaults to Chemistry-only to match buildChaptersWithCounts.
+export async function chaptersBaseFromTaxonomy(
+    subjects: CrucibleSubject[] = ['Chemistry']
+): Promise<ChapterWithCounts[]> {
+    const allowedPrefixes = subjects.flatMap((s) => SUBJECT_PREFIXES[s]);
+    const { TAXONOMY_FROM_CSV } = await import('@canvas/data/taxonomy/taxonomyData_from_csv');
+    return TAXONOMY_FROM_CSV
+        .filter((node) => node.type === 'chapter' && node.id !== 'ch_unsorted' &&
+            allowedPrefixes.some((p) => node.id.startsWith(p)))
+        .map((node) => {
+            const class_level = node.class_level ?? 11;
+            return {
+                id: node.id,
+                name: node.name,
+                class_level,
+                display_order: node.sequence_order ?? 0,
+                category: capitalizeCategory(node.chapterType),
+                subject: subjectForChapterId(node.id),
+                group: groupForChapter(node.id, node.chapterType, class_level),
+                question_count: 0,
+                star_question_count: 0,
+                neet_question_count: 0,
+                neet_star_question_count: 0,
+            };
+        });
 }

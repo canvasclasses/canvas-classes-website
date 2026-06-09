@@ -11,6 +11,7 @@
 // into shared use so nothing server-only leaks into the client bundle.
 
 import type { ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
+import { PHYSICS_GROUP_LABEL, MATH_GROUP_LABEL } from '@/features/crucible/lib/subjects';
 
 // The three subjects the planner can show. Chemistry is fully curated
 // (weightage / difficulty / one-shot / prereqs); physics + math are catalog +
@@ -353,39 +354,14 @@ export function filterCatalog(catalog: ChapterPlanItem[], mode: PlannerMode, sub
     return catalog.filter((c) => c.subject === subject);
 }
 
-// Pretty-print a physics module chapterType into a sidebar/dimension label.
-// Modules now live in the taxonomy's `chapterType` (migrated 2026-06-09 from the
-// flat 'physics' — see scripts/migrate_physics_chaptertype_to_modules.js), so
-// this reads the same single source of truth the Crucible chapter list uses.
-function prettyPhysicsGroup(chapterType?: string): string {
-    switch (chapterType) {
-        case 'mechanics_1': return 'Mechanics 1';
-        case 'mechanics_2': return 'Mechanics 2';
-        case 'thermo_waves': return 'Thermodynamics & Waves';
-        case 'electromagnetism': return 'Electromagnetism';
-        case 'optics': return 'Optics';
-        case 'modern_physics': return 'Modern Physics';
-        case 'experimental_physics': return 'Experimental Physics';
-        default: return 'Physics';
-    }
-}
-
-// Pretty-print a math taxonomy chapterType into a sidebar/dimension label.
-function prettyMathGroup(chapterType?: string): string {
-    switch (chapterType) {
-        case 'algebra': return 'Algebra';
-        case 'calculus': return 'Calculus';
-        case 'coordinate_geometry': return 'Coordinate Geometry';
-        case 'trigonometry': return 'Trigonometry';
-        case 'vector_algebra': return 'Vector Algebra';
-        default: return 'Mathematics';
-    }
-}
-
-// Resolve the sidebar/dimension grouping label for a chapter.
-function groupFor(subject: Subject, chapterId: string, category: ChapterPlanItem['category'], chapterType?: string): string {
-    if (subject === 'physics') return prettyPhysicsGroup(chapterType);
-    if (subject === 'math') return prettyMathGroup(chapterType);
+// Resolve the sidebar/dimension grouping label for a chapter. Physics/Maths read
+// the shared chapterType→label maps (single source of truth, also used by the
+// Crucible chapter list). Chemistry keeps its own `category` (the planner's
+// chemistry rows come from buildChaptersWithCounts, which carries `category` but
+// no `chapterType`).
+function groupFor(subject: Subject, category: ChapterPlanItem['category'], chapterType?: string): string {
+    if (subject === 'physics') return PHYSICS_GROUP_LABEL[chapterType ?? ''] ?? 'Physics';
+    if (subject === 'math') return MATH_GROUP_LABEL[chapterType ?? ''] ?? 'Mathematics';
     return category;  // chemistry → Physical / Inorganic / Organic / Practical
 }
 
@@ -511,7 +487,7 @@ export function buildSubjectCatalog(
                 name: ch.name,
                 subject,
                 category: ch.category,
-                group: groupFor(subject, ch.id, ch.category, ch.chapterType),
+                group: groupFor(subject, ch.category, ch.chapterType),
                 classLevel: (ch.class_level === 12 ? 12 : 11) as 11 | 12,
                 sequence: ch.display_order,
                 weight,

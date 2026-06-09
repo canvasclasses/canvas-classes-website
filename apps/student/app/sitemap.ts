@@ -151,16 +151,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Per-chapter Crucible pages — individual URLs for each of the 28 chapters
     let crucibleChapterEntries: MetadataRoute.Sitemap = [];
     try {
-        // getTaxonomy() is Chemistry-scoped; Physics/Maths chapters (ph11_/ph12_/ma_)
-        // are now public on Crucible too, so list them here directly from the
-        // taxonomy (id prefix) rather than broadening the Chemistry-only helper.
+        // Chemistry: every chapter (getTaxonomy is Chemistry-scoped, always populated).
+        // Physics/Maths are now public too, but only list chapters that actually have
+        // questions — don't advertise empty/thin chapter pages to crawlers.
         const { getTaxonomy } = await import('@/features/crucible/server-actions/the-crucible');
-        const { TAXONOMY_FROM_CSV } = await import('@canvas/data/taxonomy/taxonomyData_from_csv');
+        const { buildChaptersWithCounts } = await import('@/features/crucible/lib/chapterCounts');
         const chemChapterIds = (await getTaxonomy()).map(ch => ch.id);
-        const physMathChapterIds = TAXONOMY_FROM_CSV
-            .filter(n => n.type === 'chapter' &&
-                (n.id.startsWith('ph11_') || n.id.startsWith('ph12_') || n.id.startsWith('ma_')))
-            .map(n => n.id);
+        const physMathChapterIds = (await buildChaptersWithCounts({ subjects: ['Physics', 'Maths'] }))
+            .filter(c => (c.question_count ?? 0) > 0 || (c.neet_question_count ?? 0) > 0)
+            .map(c => c.id);
         crucibleChapterEntries = [...chemChapterIds, ...physMathChapterIds].map(id => ({
             url: `${BASE_URL}/the-crucible/${id}`,
             lastModified: new Date(),
