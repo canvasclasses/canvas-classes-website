@@ -186,9 +186,11 @@ export default async function StudyPlannerPage() {
                 See CLAUDE.md §10 + _agents/SEO_PLAYBOOK.md.
                 ───────────────────────────────────────────────────────────────── */}
             <section className="bg-[#050505] text-white border-t border-white/5 py-14 sm:py-16">
-                {/* max-w + padding match the planner's .dyp-wrap (1180px / 40px) so
-                    this SEO block lines up with the dashboard above it. */}
-                <div className="mx-auto max-w-[1180px] px-5 sm:px-10">
+                {/* Centred at the planner's .dyp-wrap width (1180px / 40px gutters)
+                    so this SEO block lines up with the centred dashboard above it.
+                    maxWidth is inline (not a Tailwind arbitrary class) so the
+                    alignment can't break if the JIT hasn't generated that class. */}
+                <div className="mx-auto px-5 sm:px-10" style={{ maxWidth: '1180px' }}>
                     <h1 className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
                         A Free Study Planner for JEE &amp; NEET — Class 11, 12 &amp; Droppers
                     </h1>
