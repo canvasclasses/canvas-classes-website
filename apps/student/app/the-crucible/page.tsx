@@ -3,7 +3,7 @@ import CrucibleWizard from '@/features/crucible/components/CrucibleWizard';
 import { Metadata } from 'next';
 import { createClient } from '../utils/supabase/server';
 import { isLocalhostDev } from '@/lib/bookAuth';
-import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
+import { buildChaptersWithCounts, subjectForChapterId, groupForChapter, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 
 export const revalidate = 3600; // Revalidate every hour — question counts don't change per-request
 
@@ -62,6 +62,8 @@ export default async function Page() {
             class_level: ch.class_level ?? 11,
             display_order: ch.display_order ?? 0,
             category: 'Physical' as const,
+            subject: subjectForChapterId(ch.id),
+            group: groupForChapter(ch.id, undefined, ch.class_level ?? 11),
             question_count: 0,
             star_question_count: 0,
             neet_question_count: 0,

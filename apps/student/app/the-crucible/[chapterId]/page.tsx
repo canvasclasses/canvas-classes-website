@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { getTaxonomy } from '@/features/crucible/server-actions/the-crucible';
-import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
+import { buildChaptersWithCounts, subjectForChapterId, groupForChapter, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 import CrucibleChapterClient from './CrucibleChapterClient';
 
 // ISR — 1-hour edge cache. The underlying chapter counts come from
@@ -21,7 +21,15 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ chapterId: string }> }): Promise<Metadata> {
     const { chapterId } = await params;
-    const chapters = await getTaxonomy();
+    // Use the same source as the page body (all subjects) so Physics/Maths
+    // chapters get a real title, not "Not Found". Falls back to the
+    // Chemistry-only taxonomy helper if the counts build fails.
+    let chapters: { id: string; name: string }[];
+    try {
+        chapters = await buildChaptersWithCounts();
+    } catch {
+        chapters = await getTaxonomy();
+    }
     const chapter = chapters.find(ch => ch.id === chapterId);
     if (!chapter) return { title: 'Not Found' };
 
@@ -65,6 +73,8 @@ export default async function Page({ params }: { params: Promise<{ chapterId: st
             class_level: ch.class_level ?? 11,
             display_order: ch.display_order ?? 0,
             category: 'Physical' as const,
+            subject: subjectForChapterId(ch.id),
+            group: groupForChapter(ch.id, undefined, ch.class_level ?? 11),
             question_count: 0,
             star_question_count: 0,
             neet_question_count: 0,

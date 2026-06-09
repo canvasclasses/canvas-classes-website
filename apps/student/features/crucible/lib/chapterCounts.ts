@@ -50,6 +50,37 @@ export function capitalizeCategory(cat?: string): 'Physical' | 'Inorganic' | 'Or
     return 'Physical';
 }
 
+export type CrucibleSubject = 'Chemistry' | 'Physics' | 'Maths';
+
+// Subject is derived purely from the chapter-id prefix (ch11_/ch12_ → Chemistry,
+// ph11_/ph12_ → Physics, ma_ → Maths). Pure function — safe to call anywhere.
+export function subjectForChapterId(id: string): CrucibleSubject {
+    if (id.startsWith('ph11_') || id.startsWith('ph12_')) return 'Physics';
+    if (id.startsWith('ma_')) return 'Maths';
+    return 'Chemistry';
+}
+
+const MATH_GROUP_LABEL: Record<string, string> = {
+    algebra: 'Algebra',
+    calculus: 'Calculus',
+    coordinate_geometry: 'Coordinate Geometry',
+    trigonometry: 'Trigonometry',
+    vector_algebra: 'Vector Algebra',
+};
+
+// The display bucket the Crucible chapter list groups under, per subject:
+//  - Chemistry → its category (Physical / Inorganic / Organic / Practical).
+//  - Physics   → class level. Its taxonomy chapterType is a flat 'physics', so
+//                class level is the only meaningful built-in split.
+//  - Maths     → its chapterType (algebra / calculus / …), prettified.
+// `chapterType` may be undefined on the DB-down fallback path — the defaults
+// keep it sensible there.
+export function groupForChapter(id: string, chapterType: string | undefined, classLevel: number): string {
+    if (id.startsWith('ma_')) return MATH_GROUP_LABEL[chapterType ?? ''] ?? 'Mathematics';
+    if (id.startsWith('ph11_') || id.startsWith('ph12_')) return `Class ${classLevel}`;
+    return capitalizeCategory(chapterType);
+}
+
 // Shared shape returned to CrucibleWizard. Both routes must produce identical
 // objects so the wizard sees the same counts no matter how the user arrived.
 export interface ChapterWithCounts {
@@ -58,6 +89,12 @@ export interface ChapterWithCounts {
     class_level: number;
     display_order: number;
     category: 'Physical' | 'Inorganic' | 'Organic' | 'Practical';
+    // Optional: buildChaptersWithCounts() always populates these; the planner's
+    // catalog.server.ts produces ChapterWithCounts-shaped rows without them (it
+    // computes its own subject/group), and the Crucible wizard reads them
+    // defensively (`?? 'Chemistry'`).
+    subject?: CrucibleSubject;       // Chemistry | Physics | Maths (id-derived)
+    group?: string;                  // display bucket the Crucible list groups under
     question_count: number;          // JEE all
     star_question_count: number;     // JEE star
     neet_question_count: number;     // NEET all
@@ -73,7 +110,9 @@ export async function buildChaptersWithCounts(): Promise<ChapterWithCounts[]> {
     const baseChapters = TAXONOMY_FROM_CSV.filter(
         (node) => node.type === 'chapter' &&
         node.id !== 'ch_unsorted' &&
-        (node.id.startsWith('ch11_') || node.id.startsWith('ch12_'))
+        (node.id.startsWith('ch11_') || node.id.startsWith('ch12_') ||
+         node.id.startsWith('ph11_') || node.id.startsWith('ph12_') ||
+         node.id.startsWith('ma_'))
     );
 
     const { jeeStarCounts, jeeAllCounts, neetStarCounts, neetAllCounts } = await getExamBoardChapterCounts();
@@ -83,15 +122,20 @@ export async function buildChaptersWithCounts(): Promise<ChapterWithCounts[]> {
     const neetStarMap  = new Map(neetStarCounts.map((item: { _id: string; count: number }) => [item._id, item.count]));
     const neetCountMap = new Map(neetAllCounts.map( (item: { _id: string; count: number }) => [item._id, item.count]));
 
-    return baseChapters.map((node) => ({
-        id: node.id,
-        name: node.name,
-        class_level: node.class_level ?? 11,
-        display_order: node.sequence_order ?? 0,
-        category: capitalizeCategory(node.chapterType),
-        question_count: jeeCountMap.get(node.id) ?? 0,
-        star_question_count: jeeStarMap.get(node.id) ?? 0,
-        neet_question_count: neetCountMap.get(node.id) ?? 0,
-        neet_star_question_count: neetStarMap.get(node.id) ?? 0,
-    }));
+    return baseChapters.map((node) => {
+        const class_level = node.class_level ?? 11;
+        return {
+            id: node.id,
+            name: node.name,
+            class_level,
+            display_order: node.sequence_order ?? 0,
+            category: capitalizeCategory(node.chapterType),
+            subject: subjectForChapterId(node.id),
+            group: groupForChapter(node.id, node.chapterType, class_level),
+            question_count: jeeCountMap.get(node.id) ?? 0,
+            star_question_count: jeeStarMap.get(node.id) ?? 0,
+            neet_question_count: neetCountMap.get(node.id) ?? 0,
+            neet_star_question_count: neetStarMap.get(node.id) ?? 0,
+        };
+    });
 }
