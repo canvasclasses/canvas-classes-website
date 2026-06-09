@@ -465,7 +465,7 @@ button.dyp-rchip:hover, a.dyp-rchip:hover { background: color-mix(in srgb, var(-
 .dyp-resrow:hover { border-color: var(--border-2); }
 .dyp-res-ic { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--surface-3); color: var(--accent); flex: 0 0 auto; }
 .dyp-res-main { flex: 1; min-width: 0; }
-.dyp-res-title { font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 8px; color: var(--text); }
+.dyp-res-title { font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 8px; color: var(--text); }
 .dyp-res-own { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 2px 7px; border-radius: 20px; }
 .dyp-res-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
 
@@ -502,7 +502,7 @@ button.dyp-res-ic, a.dyp-res-ic { border: 0; cursor: pointer; }
 .dyp-res-ic.dyp-ic-tool:hover       { background: color-mix(in srgb, var(--accent) 30%, var(--surface-3)); }
 
 /* Clickable resource title (link or inline-play button). */
-.dyp-res-titlebtn { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: var(--text); cursor: pointer; text-align: left; text-decoration: none; }
+.dyp-res-titlebtn { background: none; border: 0; padding: 0; margin: 0; font-family: inherit; font-size: 11px; font-weight: 600; color: var(--text); cursor: pointer; text-align: left; text-decoration: none; }
 .dyp-res-titlebtn:hover { color: var(--accent); }
 .dyp-res-inline { color: var(--accent); font-weight: 600; }
 
