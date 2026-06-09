@@ -156,7 +156,11 @@ export default async function StudyPlannerPage() {
     // prereq without leaving Class 12 mode. getExamBoardChapterCounts is shared
     // and cached, so the three builders don't triple the DB work.
     const [chemChapters, physicsChapters, mathChapters, detailedMap] = await Promise.all([
-        buildChaptersWithCounts(),
+        // buildChaptersWithCounts() now returns ALL subjects (Crucible needs that);
+        // the planner sources physics/math separately via buildPhysics/MathChapters,
+        // so keep ONLY chemistry here — otherwise physics/math get duplicated and
+        // mislabelled 'chemistry' (they'd flood the Chemistry sidebar).
+        buildChaptersWithCounts().then((all) => all.filter((c) => c.subject === 'Chemistry')),
         buildPhysicsChapters(),
         buildMathChapters(),
         buildDetailedLecturesMap(),

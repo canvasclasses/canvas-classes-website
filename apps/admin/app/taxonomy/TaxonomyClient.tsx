@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
-type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';
+type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'mechanics_1' | 'mechanics_2' | 'thermo_waves' | 'electromagnetism' | 'optics' | 'modern_physics' | 'experimental_physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';
 type SubjectTab = 'chemistry' | 'physics' | 'mathematics' | 'biology' | 'school';
 
 const CHEM_BRANCHES = [

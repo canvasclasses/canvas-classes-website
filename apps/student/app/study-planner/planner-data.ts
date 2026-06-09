@@ -353,51 +353,22 @@ export function filterCatalog(catalog: ChapterPlanItem[], mode: PlannerMode, sub
     return catalog.filter((c) => c.subject === subject);
 }
 
-// Physics area grouping — how popular JEE platforms (PW, Allen, etc.) bucket the
-// syllabus into modules. Each area is class-homogeneous so the sidebar never
-// splits one area across two class levels. Anything unmapped falls back to
-// 'Physics'.
-export const PHYSICS_GROUP_MAP: Record<string, string> = {
-    // Mechanics 1 — Class 11
-    ph11_math_phy: 'Mechanics 1',
-    ph11_units: 'Mechanics 1',
-    ph11_kinematics1d: 'Mechanics 1',
-    ph11_kinematics2d: 'Mechanics 1',
-    ph11_nlm: 'Mechanics 1',
-    ph11_wep: 'Mechanics 1',
-    // Mechanics 2 — Class 11
-    ph11_com_mom: 'Mechanics 2',
-    ph11_rotation: 'Mechanics 2',
-    ph11_gravitation: 'Mechanics 2',
-    ph11_solids: 'Mechanics 2',
-    ph11_fluids: 'Mechanics 2',
-    // Thermodynamics & Waves — Class 11
-    ph11_shm: 'Thermodynamics & Waves',
-    ph11_waves: 'Thermodynamics & Waves',
-    ph11_thermal_props: 'Thermodynamics & Waves',
-    ph11_thermo: 'Thermodynamics & Waves',
-    ph11_ktg: 'Thermodynamics & Waves',
-    // Electromagnetism — Class 12
-    ph12_electrostatics: 'Electromagnetism',
-    ph12_capacitance: 'Electromagnetism',
-    ph12_current: 'Electromagnetism',
-    ph12_mag_matter: 'Electromagnetism',
-    ph12_moving_charges: 'Electromagnetism',
-    ph12_emi: 'Electromagnetism',
-    ph12_ac: 'Electromagnetism',
-    ph12_em_waves: 'Electromagnetism',
-    // Optics — Class 12
-    ph12_ray_optics: 'Optics',
-    ph12_wave_optics: 'Optics',
-    // Modern Physics — Class 12
-    ph12_dual_nature: 'Modern Physics',
-    ph12_atoms: 'Modern Physics',
-    ph12_nuclei: 'Modern Physics',
-    ph12_semiconductors: 'Modern Physics',
-    ph12_communication: 'Modern Physics',
-    // Experimental Physics — Class 12
-    ph12_exp_phy: 'Experimental Physics',
-};
+// Pretty-print a physics module chapterType into a sidebar/dimension label.
+// Modules now live in the taxonomy's `chapterType` (migrated 2026-06-09 from the
+// flat 'physics' — see scripts/migrate_physics_chaptertype_to_modules.js), so
+// this reads the same single source of truth the Crucible chapter list uses.
+function prettyPhysicsGroup(chapterType?: string): string {
+    switch (chapterType) {
+        case 'mechanics_1': return 'Mechanics 1';
+        case 'mechanics_2': return 'Mechanics 2';
+        case 'thermo_waves': return 'Thermodynamics & Waves';
+        case 'electromagnetism': return 'Electromagnetism';
+        case 'optics': return 'Optics';
+        case 'modern_physics': return 'Modern Physics';
+        case 'experimental_physics': return 'Experimental Physics';
+        default: return 'Physics';
+    }
+}
 
 // Pretty-print a math taxonomy chapterType into a sidebar/dimension label.
 function prettyMathGroup(chapterType?: string): string {
@@ -413,7 +384,7 @@ function prettyMathGroup(chapterType?: string): string {
 
 // Resolve the sidebar/dimension grouping label for a chapter.
 function groupFor(subject: Subject, chapterId: string, category: ChapterPlanItem['category'], chapterType?: string): string {
-    if (subject === 'physics') return PHYSICS_GROUP_MAP[chapterId] ?? 'Physics';
+    if (subject === 'physics') return prettyPhysicsGroup(chapterType);
     if (subject === 'math') return prettyMathGroup(chapterType);
     return category;  // chemistry → Physical / Inorganic / Organic / Practical
 }

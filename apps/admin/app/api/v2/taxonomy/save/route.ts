@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       "    type: 'chapter' | 'topic' | 'micro_topic';",
       "    sequence_order?: number;",
       "    class_level?: 8 | 9 | 10 | 11 | 12;",
-      "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';",
+      "    chapterType?: 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'mechanics_1' | 'mechanics_2' | 'thermo_waves' | 'electromagnetism' | 'optics' | 'modern_physics' | 'experimental_physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';",
       '}',
       '',
       'export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [',

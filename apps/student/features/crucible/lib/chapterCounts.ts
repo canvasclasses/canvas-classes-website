@@ -68,16 +68,29 @@ const MATH_GROUP_LABEL: Record<string, string> = {
     vector_algebra: 'Vector Algebra',
 };
 
+// Physics modules — the taxonomy now stores the module in `chapterType`
+// (migrated 2026-06-09 from the flat 'physics'), mirroring how Maths stores its
+// section. Order here is informational; the Crucible list derives display order
+// from class level + syllabus sequence.
+const PHYSICS_GROUP_LABEL: Record<string, string> = {
+    mechanics_1: 'Mechanics 1',
+    mechanics_2: 'Mechanics 2',
+    thermo_waves: 'Thermodynamics & Waves',
+    electromagnetism: 'Electromagnetism',
+    optics: 'Optics',
+    modern_physics: 'Modern Physics',
+    experimental_physics: 'Experimental Physics',
+};
+
 // The display bucket the Crucible chapter list groups under, per subject:
 //  - Chemistry → its category (Physical / Inorganic / Organic / Practical).
-//  - Physics   → class level. Its taxonomy chapterType is a flat 'physics', so
-//                class level is the only meaningful built-in split.
-//  - Maths     → its chapterType (algebra / calculus / …), prettified.
-// `chapterType` may be undefined on the DB-down fallback path — the defaults
-// keep it sensible there.
+//  - Physics   → its chapterType MODULE (mechanics_1 / electromagnetism / …).
+//  - Maths     → its chapterType section (algebra / calculus / …).
+// `chapterType` may be undefined on the DB-down fallback path — the class-level
+// fallback keeps it sensible there.
 export function groupForChapter(id: string, chapterType: string | undefined, classLevel: number): string {
     if (id.startsWith('ma_')) return MATH_GROUP_LABEL[chapterType ?? ''] ?? 'Mathematics';
-    if (id.startsWith('ph11_') || id.startsWith('ph12_')) return `Class ${classLevel}`;
+    if (id.startsWith('ph11_') || id.startsWith('ph12_')) return PHYSICS_GROUP_LABEL[chapterType ?? ''] ?? `Class ${classLevel}`;
     return capitalizeCategory(chapterType);
 }
 
