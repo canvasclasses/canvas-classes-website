@@ -48,6 +48,7 @@ const BLOCK_GROUPS: { label: string; blocks: { type: BlockType; icon: string; la
       { type: 'classify_exercise', icon: '⊡', label: 'Classify Exercise' },
       { type: 'worked_example',  icon: '📘', label: 'Worked Example' },
       { type: 'simulation',      icon: '⚗️', label: 'Simulation' },
+      { type: 'junior_practice', icon: '🎓', label: 'Junior Practice (bank)' },
     ],
   },
   {

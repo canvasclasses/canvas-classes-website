@@ -38,7 +38,8 @@ export type BlockType =
   | 'pronunciation_drill'
   | 'chapter_practice'
   | 'apply_express'
-  | 'reading_comprehension';
+  | 'reading_comprehension'
+  | 'junior_practice';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -578,6 +579,22 @@ export interface ChapterPracticeBlock extends BaseBlock {
   questions: PracticeQuestion[];
 }
 
+// JUNIOR PRACTICE — bank-backed chapter practice for grades 6–10. Unlike
+// `chapter_practice` (English; questions embedded in the block), this block
+// embeds NO questions — the renderer fetches them from the junior_questions
+// bank by book_slug + chapter_number at runtime. Authoring happens in the
+// admin Junior Question Bank panel, not in the book editor.
+export interface JuniorPracticeBlock extends BaseBlock {
+  type: 'junior_practice';
+  title?: string;
+  intro?: string;
+  book_slug: string;           // bank source (usually the page's own book)
+  chapter_number: number;      // which chapter's questions to serve
+  session_size?: number;       // default 10
+  pass_threshold?: number;     // 0–1, default 0.7
+  mode?: 'practice' | 'test';  // 'test' = timed, no per-question feedback
+}
+
 // E13. APPLY & EXPRESS — the *productive* tier. Where `chapter_practice` (MCQ)
 //      tests recognition, this tier makes students PRODUCE language — NCERT's
 //      actual emphasis (CG-1 communication, CG-3 employ-in-writing): fill the
@@ -801,7 +818,8 @@ export type ContentBlock =
   | PronunciationDrillBlock
   | ChapterPracticeBlock
   | ApplyExpressBlock
-  | ReadingComprehensionBlock;
+  | ReadingComprehensionBlock
+  | JuniorPracticeBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────

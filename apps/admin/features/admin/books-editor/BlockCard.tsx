@@ -28,6 +28,7 @@ import SectionBlockEditor from './blocks/SectionBlockEditor';
 import ClassifyExerciseEditor from './blocks/ClassifyExerciseEditor';
 import CuriosityPromptBlockEditor from './blocks/CuriosityPromptBlockEditor';
 import SimulationBlockEditor from './blocks/SimulationBlockEditor';
+import JuniorPracticeEditor from './blocks/JuniorPracticeEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -68,6 +69,7 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   pronunciation_drill: 'Pronunciation Drill',
   chapter_practice: 'Chapter Practice',
   apply_express: 'Apply & Express',
+  junior_practice: 'Junior Practice (bank)',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -109,6 +111,7 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   pronunciation_drill: '🗣️',
   chapter_practice: '◎',
   apply_express: '🎮',
+  junior_practice: '🎓',
 };
 
 function blockPreview(block: ContentBlock): string {
@@ -137,6 +140,7 @@ function blockPreview(block: ContentBlock): string {
       case 'curiosity_prompt':   return (block.prompt || '').slice(0, 80) || '(empty)';
       case 'classify_exercise':  return `${(block.rows || []).length} rows · ${(block.question || '').slice(0, 50)}`;
       case 'meet_a_scientist':   return `${block.name}${block.years ? ` (${block.years})` : ''}`;
+      case 'junior_practice':    return `Ch ${block.chapter_number} · ${block.mode === 'test' ? 'test' : 'practice'} · ${block.session_size ?? 10} Qs`;
       default:                   return `(${(block as ContentBlock).type})`;
     }
   } catch {
@@ -181,6 +185,7 @@ export default function BlockCard({
       case 'classify_exercise': return <ClassifyExerciseEditor block={block} onChange={onChange} />;
       case 'curiosity_prompt':  return <CuriosityPromptBlockEditor block={block} onChange={onChange} />;
       case 'simulation':        return <SimulationBlockEditor block={block} onChange={onChange} />;
+      case 'junior_practice':   return <JuniorPracticeEditor block={block} onChange={onChange} />;
       default:                  return null;
     }
   }
