@@ -15,6 +15,7 @@ type NavLinkItem = {
   label: string;
   href: string;
   badge?: 'soon' | 'new';
+  accent?: 'orange';
 };
 
 type MegaMenuColumn = {
@@ -42,102 +43,47 @@ type MegaMenuDef = {
 // NAV DATA
 // =====================================================================
 
-const class9to10Menu: MegaMenuDef = {
-  id: 'class-9-10',
-  label: 'Class 9–10',
+// Live Books: unified entry point for every grade-level book grid. Replaces
+// the old Class 9-10 and Class 11-12 dropdowns since both were really
+// "where the live books for this grade live." NCERT downloads land here
+// too — they're book-adjacent and the only other "downloadable book" slot.
+const liveBooksMenu: MegaMenuDef = {
+  id: 'live-books',
+  label: 'Live Books',
   anchor: 'left',
-  width: 'w-52',
+  width: 'w-60',
   columns: [
     {
       heading: '',
       links: [
         { label: 'Class 9', href: '/class-9' },
         { label: 'Class 10', href: '/class-10' },
-        { label: 'NCERT Book PDFs', href: '/download-ncert-books' },
-      ],
-    },
-  ],
-};
-
-const class11to12Menu: MegaMenuDef = {
-  id: 'class-11-12',
-  label: 'Class 11–12',
-  anchor: 'left',
-  columns: [
-    {
-      heading: 'Chemistry',
-      links: [
         { label: 'Class 11 Chemistry', href: '/class-11/chemistry', badge: 'new' },
         { label: 'Class 12 Chemistry', href: '/class-12/chemistry' },
-        { label: 'NCERT Solutions', href: '/ncert-solutions' },
-      ],
-    },
-    {
-      heading: 'Resources',
-      links: [
-        { label: 'Handwritten Notes', href: '/handwritten-notes' },
         { label: 'NCERT Book PDFs', href: '/download-ncert-books' },
-      ],
-    },
-  ],
-};
-
-// JEE/NEET: the Study Planner gets the featured hero panel — first thing seen on
-// hover. (The Crucible keeps its dedicated top-level link in the navbar.)
-const jeeNeetMenu: MegaMenuDef = {
-  id: 'jee-neet',
-  label: 'JEE/NEET',
-  anchor: 'center',
-  featured: {
-    label: 'Study Planner',
-    tagline: 'A custom study planner for Class 11, 12, and the drop year.',
-    href: '/study-planner',
-    cta: 'Open the planner',
-  },
-  columns: [
-    {
-      heading: 'Learn',
-      links: [
-        { label: 'Chemistry Lectures', href: '/detailed-lectures' },
-        { label: 'One Shot Lectures', href: '/one-shot-lectures' },
-        { label: 'NEET Crash Course', href: '/neet-crash-course' },
-        // /jee-pyqs removed 2026-05-25 — question bank lives in The Crucible
-        // (featured panel) now; the standalone route was redundant. A 301
-        // redirect in next.config.ts forwards any deep links to /the-crucible.
-      ],
-    },
-    {
-      heading: 'Revise',
-      links: [
-        { label: 'Top 50 Concepts', href: '/top-50-concepts' },
-        { label: '2 Minute Chemistry', href: '/2-minute-chemistry' },
       ],
     },
   ],
 };
 
 // Study Lab: all interactive tools, visualizers, and reference hubs.
+// The JEE/NEET dropdown (Chemistry Lectures, One-Shot, NEET Crash Course,
+// Top 50 Concepts, 2-Minute Chemistry) was retired 2026-06 — Study Planner
+// is now the canonical entry point for exam-prep resources. Those five
+// pages still exist as routes for SEO/deep-links; they just lose the nav
+// surface since the Study Planner aggregates them in context.
 const studyLabMenu: MegaMenuDef = {
   id: 'study-lab',
   label: 'Study Lab',
   anchor: 'center',
-  width: 'w-[860px]',
-  // Featured slot 2026-05-25: BITSAT 2026 Master Plan replaced with the
-  // Interactive Periodic Table. The BITSAT plan is exam-cycle-specific and
-  // its 2026 window ended; the periodic table is evergreen and one of our
-  // highest-traffic interactive tools. Swap back to BITSAT 2027 when the
-  // refreshed plan ships next year.
-  featured: {
-    label: 'Interactive Periodic Table',
-    tagline: 'Every trend, exception, and property on one interactive table — atomic radius, IE, electronegativity, oxidation states, with JEE/NEET-tagged exam relevance.',
-    href: '/interactive-periodic-table',
-    cta: 'Open the Table',
-  },
+  // Featured panel retired 2026-06 — the Interactive Periodic Table now sits
+  // at the top of the Explore column with an orange accent instead, which
+  // keeps it visually prominent without inflating the menu width.
   columns: [
     {
       heading: 'Explore',
       links: [
-        { label: 'Interactive Periodic Table', href: '/interactive-periodic-table' },
+        { label: 'Interactive Periodic Table', href: '/interactive-periodic-table', accent: 'orange' },
         { label: 'Periodic Trends', href: '/periodic-trends' },
         { label: 'Salt Analysis Simulator', href: '/salt-analysis' },
       ],
@@ -147,14 +93,13 @@ const studyLabMenu: MegaMenuDef = {
       links: [
         { label: 'Chemistry Flashcards', href: '/chemistry-flashcards' },
         { label: 'Assertion & Reason', href: '/assertion-reason' },
-        { label: 'Organic Wizard', href: '/organic-wizard' },
         { label: 'Ksp Calculator', href: '/solubility-product-ksp-calculator' },
       ],
     },
     {
       heading: 'Reference',
       links: [
-        { label: 'Organic Name Reactions', href: '/organic-name-reactions' },
+        { label: 'NCERT Solutions', href: '/ncert-solutions' },
         { label: 'Organic Hub', href: '/organic-chemistry-hub' },
         { label: 'Physical Chemistry Hub', href: '/physical-chemistry-hub' },
         { label: 'Inorganic Hub', href: '/inorganic-chemistry-hub' },
@@ -184,16 +129,15 @@ const planYourCareerMenu: MegaMenuDef = {
       links: [
         { label: 'Branch Finder', href: '/college-predictor/branch-finder', badge: 'new' },
         { label: 'Career Guide', href: '/career-guide' },
-        { label: 'Career Planning hub', href: '/career-planning' },
+        // Career Planning hub (/career-planning) removed from nav 2026-06 —
+        // route kept live for SEO/deep-links only.
       ],
     },
   ],
 };
 
 const allMenus: MegaMenuDef[] = [
-  class9to10Menu,
-  class11to12Menu,
-  jeeNeetMenu,
+  liveBooksMenu,
   studyLabMenu,
   planYourCareerMenu,
 ];
@@ -253,13 +197,17 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-0.5">
-          {/* Flagship — direct link, no dropdown. Orange accent matches the
-              Crucible brand (per the megamenu featured-card treatment). */}
+          {/* The Crucible is the only colored flagship — orange accent matches
+              its brand. Study Planner and the dropdowns ride the default
+              zinc/white treatment so the eye lands on Crucible first.
+              Handwritten Notes sits at the far right (just before auth) and
+              uses Kalam to evoke the handwritten-marker feel of the page. */}
           <NavLink
             href="/the-crucible"
             label="The Crucible"
             className="!text-orange-400 hover:!text-orange-300"
           />
+          <NavLink href="/study-planner" label="Study Planner" />
           {allMenus.map((menu) => (
             <MegaMenuDropdown
               key={menu.id}
@@ -270,9 +218,10 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
             />
           ))}
           <NavLink
-            href="/blog"
-            label="Blog"
-            className="!text-purple-400 hover:!text-purple-300"
+            href="/handwritten-notes"
+            label="Handwritten Notes"
+            className="!text-amber-300 hover:!text-amber-200 text-[15px]"
+            style={{ fontFamily: 'var(--font-kalam), cursive' }}
           />
         </div>
 
@@ -300,13 +249,22 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
               transition={{ duration: 0.2 }}
               className="absolute top-full left-0 right-0 mt-2 p-4 bg-[#0a0a0a]/95 backdrop-blur-2xl rounded-3xl border border-white/[0.08] shadow-xl flex flex-col gap-2 max-h-[82vh] overflow-y-auto"
             >
-              {/* Flagship — mirrors the desktop top-level Crucible link. */}
+              {/* Mirrors the desktop ordering — Crucible is the only colored
+                  flagship; Study Planner rides the default treatment;
+                  Handwritten Notes sits at the bottom with its Kalam accent. */}
               <Link
                 href="/the-crucible"
                 onClick={() => setMobileMenuOpen(false)}
                 className="px-4 py-3 text-sm font-medium text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-xl transition-colors"
               >
                 The Crucible
+              </Link>
+              <Link
+                href="/study-planner"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/[0.04] rounded-xl transition-colors"
+              >
+                Study Planner
               </Link>
               {allMenus.map((menu) => (
                 <MobileMegaMenu
@@ -316,11 +274,12 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
                 />
               ))}
               <Link
-                href="/blog"
+                href="/handwritten-notes"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-3 text-sm font-medium text-purple-400 hover:text-purple-300 hover:bg-purple-500/10 rounded-xl transition-colors"
+                className="px-4 py-3 text-base text-amber-300 hover:text-amber-200 hover:bg-amber-500/10 rounded-xl transition-colors"
+                style={{ fontFamily: 'var(--font-kalam), cursive' }}
               >
-                Blog
+                Handwritten Notes
               </Link>
               <div className="pt-2 border-t border-white/[0.08]">{authButton}</div>
             </motion.div>
@@ -421,7 +380,11 @@ function MegaMenuDropdown({
                       <Link
                         key={link.href}
                         href={link.href}
-                        className="group flex items-center justify-between gap-2 px-2 py-2 text-sm rounded-lg text-zinc-300 hover:text-white hover:bg-white/[0.08] transition-colors"
+                        className={`group flex items-center justify-between gap-2 px-2 py-2 text-sm rounded-lg transition-colors ${
+                          link.accent === 'orange'
+                            ? 'text-orange-400 hover:text-orange-300 hover:bg-orange-500/10'
+                            : 'text-zinc-300 hover:text-white hover:bg-white/[0.08]'
+                        }`}
                       >
                         <span className="truncate">{link.label}</span>
                         {link.badge === 'soon' && (
@@ -455,15 +418,18 @@ function NavLink({
   href,
   label,
   className = '',
+  style,
 }: {
   href: string;
   label: string;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <Link
       href={href}
       className={`px-3.5 py-2 text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.04] rounded-full transition-all ${className}`}
+      style={style}
     >
       {label}
     </Link>
@@ -538,7 +504,11 @@ function MobileMegaMenu({
                         key={link.href}
                         href={link.href}
                         onClick={onLinkClick}
-                        className="flex items-center justify-between px-3 py-2 text-sm rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                        className={`flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors ${
+                          link.accent === 'orange'
+                            ? 'text-orange-400 hover:text-orange-300 hover:bg-orange-500/10'
+                            : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                        }`}
                       >
                         <span>{link.label}</span>
                         {link.badge === 'soon' && (
