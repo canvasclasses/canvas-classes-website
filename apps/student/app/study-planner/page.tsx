@@ -6,6 +6,7 @@ import { CHAPTER_META_LIST } from '@/features/notes/data/chapterMetadata';
 import { buildSubjectCatalog } from './planner-data';
 import { buildPhysicsChapters, buildMathChapters } from './catalog.server';
 import { buildDetailedLecturesMap } from './lectures.server';
+import { buildFlashcardSlugMap } from './flashcards.server';
 import { PlannerClient } from './PlannerClient';
 import './planner.css';
 
@@ -47,7 +48,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
     title: 'Free Study Planner — JEE & NEET Chapter-wise Tracker (Class 11, 12 & Droppers)',
     description:
-        'A free chapter-wise study planner for JEE & NEET — Class 11, Class 12, and Droppers. Set your target date, follow the Learn → Solve → PYQ → Re-test loop, and track progress and spaced revision across Physics, Chemistry and Maths in one place.',
+        'A free chapter-wise study planner for JEE & NEET — Class 11, Class 12, and Droppers. Set your target date, follow the Learn → Apply → Practice → Revise loop, and track progress and spaced revision across Physics, Chemistry and Maths in one place.',
     keywords: [
         'study planner',
         'free study planner',
@@ -85,7 +86,7 @@ const jsonLd = {
     url: 'https://www.canvasclasses.in/study-planner',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
     description:
-        'Free chapter-wise study planner for JEE & NEET aspirants (Class 11, Class 12 and Droppers), with target-date planning, the Learn → Solve → PYQ → Re-test loop, 5-stage spaced revision, and per-chapter resource aggregation across Physics, Chemistry and Maths.',
+        'Free chapter-wise study planner for JEE & NEET aspirants (Class 11, Class 12 and Droppers), with target-date planning, the Learn → Apply → Practice → Revise loop, 5-stage spaced revision, and per-chapter resource aggregation across Physics, Chemistry and Maths.',
     publisher: { '@type': 'Organization', name: 'Canvas Classes', url: 'https://www.canvasclasses.in' },
 };
 
@@ -104,7 +105,7 @@ const faqs: { q: string; a: string }[] = [
     },
     {
         q: 'How does the study planner work?',
-        a: 'Set your target exam date. The planner breaks the full syllabus into chapters, and for each chapter you follow one simple loop — Learn, Solve, PYQ, Re-test. It then schedules spaced revision so the chapters you finish do not slip out of your memory.',
+        a: 'Set your target date. The planner breaks the full syllabus into chapters, and for each chapter you follow one simple loop — Learn the concept, Apply it on worked DPPs, Practice on Crucible, then Revise with flashcards and a mock test. It schedules spaced revision so the chapters you finish do not slip out of your memory.',
     },
     {
         q: 'Does it cover Physics, Chemistry and Maths?',
@@ -130,7 +131,7 @@ const faqJsonLd = {
     })),
 };
 
-// The Learn -> Solve -> PYQ -> Re-test loop, rendered server-side as crawlable copy.
+// The Learn -> Apply -> Practice -> Revise loop, rendered server-side as crawlable copy.
 // Icons are inline SVG (no lucide import) so this stays a clean Server Component.
 const LOOP_STEPS: { n: string; title: string; body: string; icon: ReactNode }[] = [
     {
@@ -138,15 +139,15 @@ const LOOP_STEPS: { n: string; title: string; body: string; icon: ReactNode }[] 
         icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></svg>),
     },
     {
-        n: '02', title: 'Solve', body: 'Practice questions until the steps live in your hand, not just your head.',
+        n: '02', title: 'Apply', body: 'Learn how to solve — work through DPPs where the method is shown step by step.',
         icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.4 2.6a2 2 0 0 1 3 3L12 15l-4 1 1-4z" /></svg>),
     },
     {
-        n: '03', title: 'PYQ', body: 'Hit the real past-year questions. This is what the exam actually asks you.',
+        n: '03', title: 'Practice', body: 'Now solve on your own in Crucible — chapter questions and real PYQs.',
         icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M16 13H8" /><path d="M16 17H8" /><path d="M10 9H8" /></svg>),
     },
     {
-        n: '04', title: 'Re-test', body: 'Come back later and test yourself. Prove the chapter is still yours.',
+        n: '04', title: 'Revise', body: 'Come back later — flashcards and a mock test to prove the chapter is still yours.',
         icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>),
     },
 ];
@@ -164,7 +165,7 @@ export default async function StudyPlannerPage() {
     // when opening a chapter — so a Class 12 student can dive into a Class 11
     // prereq without leaving Class 12 mode. getExamBoardChapterCounts is shared
     // and cached, so the three builders don't triple the DB work.
-    const [chemChapters, physicsChapters, mathChapters, detailedMap] = await Promise.all([
+    const [chemChapters, physicsChapters, mathChapters, detailedMap, flashcardSlugMap] = await Promise.all([
         // buildChaptersWithCounts() defaults to Chemistry-only; the planner sources
         // physics/math separately via buildPhysics/MathChapters, so this is exactly
         // the chemistry set we want (no over-fetch, no narrowing to remember).
@@ -172,9 +173,10 @@ export default async function StudyPlannerPage() {
         buildPhysicsChapters(),
         buildMathChapters(),
         buildDetailedLecturesMap(),
+        buildFlashcardSlugMap(),
     ]);
     const fullCatalog = [
-        ...buildSubjectCatalog(chemChapters, 'chemistry', NOTES_SLUG_BY_CHAPTER, detailedMap),
+        ...buildSubjectCatalog(chemChapters, 'chemistry', NOTES_SLUG_BY_CHAPTER, detailedMap, flashcardSlugMap),
         ...buildSubjectCatalog(physicsChapters, 'physics'),
         ...buildSubjectCatalog(mathChapters, 'math'),
     ];

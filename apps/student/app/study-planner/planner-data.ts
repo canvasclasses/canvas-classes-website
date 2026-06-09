@@ -27,13 +27,15 @@ export const SUBJECT_META: Record<Subject, { label: string }> = {
 
 export type ResourceKind = 'lecture' | 'notes' | 'questions' | 'flashcards' | 'tool';
 
-export type LoopStep = 'learn' | 'solve' | 'pyq' | 'retest';
+// The chapter loop: Learn (theory) → Apply (learn the method on worked DPPs) →
+// Practice (solve yourself on Crucible) → Revise (flashcards + mock test, spaced).
+export type LoopStep = 'learn' | 'apply' | 'practice' | 'revise';
 
 export const LOOP_STEPS: { id: LoopStep; label: string; blurb: string }[] = [
-    { id: 'learn',  label: 'Learn',   blurb: 'Watch / read the concept once.' },
-    { id: 'solve',  label: 'Solve',   blurb: 'Work a fixed problem set.' },
-    { id: 'pyq',    label: 'PYQ',     blurb: "Do this chapter's past questions." },
-    { id: 'retest', label: 'Re-test', blurb: 'Solve it cold a week later.' },
+    { id: 'learn',    label: 'Learn',    blurb: 'Watch / read the concept once.' },
+    { id: 'apply',    label: 'Apply',    blurb: 'Learn how to solve — worked DPPs & methodology.' },
+    { id: 'practice', label: 'Practice', blurb: 'Solve questions yourself on Crucible.' },
+    { id: 'revise',   label: 'Revise',   blurb: 'Flashcards + a mock test, a few days later.' },
 ];
 
 export type PlannerResource = {
@@ -141,8 +143,8 @@ type ResourceSeed = Omit<PlannerResource, 'steps'> & { steps?: LoopStep[] };
 
 // A YouTube video resource that PLAYS INLINE (embedUrl) inside the planner;
 // `href` is the watch URL so the "Open" affordance still works. `steps` controls
-// which loop step it sits under (default Learn; pass ['solve'] for DPP/practice
-// videos). All video kind = 'lecture' so it shows the play icon and plays inline.
+// which loop step it sits under (default Learn; pass ['apply'] for DPP videos).
+// All video kind = 'lecture' so it shows the play icon and plays inline.
 const ytVideo = (label: string, videoId: string, steps: LoopStep[] = ['learn']): ResourceSeed => ({
     label,
     kind: 'lecture',
@@ -160,9 +162,9 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
     ch11_mole: [
         ytVideo('Mole Concept — Crash Course L1', 'tvp-RDY_FM0'),
         ytVideo('Mole Concept — Crash Course L2', '8c8ayHmxzlA'),
-        ytVideo('Mole Concept — DPP 1', 'rOjFuHsVQu4', ['solve']),
-        ytVideo('Mole Concept — DPP 2', 'dPx9bNzgsNw', ['solve']),
-        ytVideo('Mole Concept — DPP 3', 'Wf5lLogiAnQ', ['solve']),
+        ytVideo('Mole Concept — DPP 1', 'rOjFuHsVQu4', ['apply']),
+        ytVideo('Mole Concept — DPP 2', 'dPx9bNzgsNw', ['apply']),
+        ytVideo('Mole Concept — DPP 3', 'Wf5lLogiAnQ', ['apply']),
         // Brief revision summary — placed last so it's used after the detailed
         // lectures. Flagged one-shot so it shows in Class 11 / 12 / Dropper.
         oneShotLecture('Mole Concept — Revise in 15 Minutes', '9yga2IAEm3g'),
@@ -171,9 +173,9 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
         ytVideo('Atomic Structure — Crash Course L1', 'Fg02K1UGJaw'),
         ytVideo('Atomic Structure — Crash Course L2', 'RTqS9uDUwWw'),
         ytVideo('Atomic Structure — Crash Course L3', 'QY6sSpKt0N8'),
-        ytVideo('Atomic Structure — DPP 1', 'O7-lnMBnifc', ['solve']),
-        ytVideo('Atomic Structure — DPP 2', 'pXAmCr4Y0vs', ['solve']),
-        ytVideo('Atomic Structure — DPP 3', 'Bae5-F1AXWQ', ['solve']),
+        ytVideo('Atomic Structure — DPP 1', 'O7-lnMBnifc', ['apply']),
+        ytVideo('Atomic Structure — DPP 2', 'pXAmCr4Y0vs', ['apply']),
+        ytVideo('Atomic Structure — DPP 3', 'Bae5-F1AXWQ', ['apply']),
         // One-shot last — quick revision after the detailed work. Shows in every batch.
         oneShotLecture('Atomic Structure — One Shot', '_fOi9q31vHQ'),
     ],
@@ -208,15 +210,15 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
         ytVideo('Ionic Equilibrium — Crash Course L1', 'SrHK0T8-YEo'),
         ytVideo('Ionic Equilibrium — Crash Course L2', 'C-CjfepOz6k'),
         ytVideo('Ionic Equilibrium — Crash Course L3', 'jTKFF-LGN1k'),
-        ytVideo('Ionic Equilibrium — DPP 1', 'ZdDQ_lXFhkU', ['solve']),
-        ytVideo('Ionic Equilibrium — DPP 2', 'ggC5pmkOPw8', ['solve']),
-        ytVideo('Ionic Equilibrium — DPP 3', 'v9ejpnHwPR8', ['solve']),
+        ytVideo('Ionic Equilibrium — DPP 1', 'ZdDQ_lXFhkU', ['apply']),
+        ytVideo('Ionic Equilibrium — DPP 2', 'ggC5pmkOPw8', ['apply']),
+        ytVideo('Ionic Equilibrium — DPP 3', 'v9ejpnHwPR8', ['apply']),
     ],
     ch11_redox: [
         ytVideo('Redox Reactions — Crash Course L1', 'U-66N5u5Wbw'),
         ytVideo('Redox Reactions — Crash Course L2', 'y9K0PxbnEzA'),
-        ytVideo('Redox Reactions — DPP 1', 'Dc5eSTfkclI', ['solve']),
-        ytVideo('Redox Reactions — DPP 2', 'nPjM6SCJYAo', ['solve']),
+        ytVideo('Redox Reactions — DPP 1', 'Dc5eSTfkclI', ['apply']),
+        ytVideo('Redox Reactions — DPP 2', 'nPjM6SCJYAo', ['apply']),
         oneShotLecture('Redox Reactions — One Shot', 'g5EwjAaNhqs'),
         ytVideo('Equivalent Concept & N-factor', 'DJuPWr2X7_k'),
         ytVideo('Titration & Primary Standard Solution', 'QhgfhqPPbOw'),
@@ -231,20 +233,20 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
         ytVideo('GOC — Crash Course L3', 'KmNGhqk4ew4'),
         ytVideo('GOC — Drawing Resonating Structures', 'dG3wjRQeuYw'),
         ytVideo('GOC — Rearrangement in Carbocations', 'O8nET7unnWM'),
-        ytVideo('GOC — DPP 1', '7rnNFgtijiw', ['solve']),
-        ytVideo('GOC — DPP 2', 'eEjQvsw-4tg', ['solve']),
-        ytVideo('GOC — DPP 3', 'okfrmz5xpGs', ['solve']),
-        ytVideo('GOC — DPP 4', 'OeKWfd1v0jQ', ['solve']),
-        ytVideo('GOC — DPP 5', 'clI0KeT_h0c', ['solve']),
+        ytVideo('GOC — DPP 1', '7rnNFgtijiw', ['apply']),
+        ytVideo('GOC — DPP 2', 'eEjQvsw-4tg', ['apply']),
+        ytVideo('GOC — DPP 3', 'okfrmz5xpGs', ['apply']),
+        ytVideo('GOC — DPP 4', 'OeKWfd1v0jQ', ['apply']),
+        ytVideo('GOC — DPP 5', 'clI0KeT_h0c', ['apply']),
         oneShotLecture('GOC — One Shot', 'yg_xIkyGtxg'),
     ],
     ch11_hydrocarbon: [
         ytVideo('Hydrocarbons — Crash Course L1', 'izezV1oOg88'),
         ytVideo('Hydrocarbons — Crash Course L2', 'xU_IfAL0x14'),
-        ytVideo('Hydrocarbons — DPP 1', 'PCNI19FUG5w', ['solve']),
-        ytVideo('Hydrocarbons — DPP 2', 'yCgvotvl7GE', ['solve']),
-        ytVideo('Hydrocarbons — DPP 3', '3EcsAlTtUIU', ['solve']),
-        ytVideo('Hydrocarbons — DPP 4', 'BvyMbE1zshg', ['solve']),
+        ytVideo('Hydrocarbons — DPP 1', 'PCNI19FUG5w', ['apply']),
+        ytVideo('Hydrocarbons — DPP 2', 'yCgvotvl7GE', ['apply']),
+        ytVideo('Hydrocarbons — DPP 3', '3EcsAlTtUIU', ['apply']),
+        ytVideo('Hydrocarbons — DPP 4', 'BvyMbE1zshg', ['apply']),
     ],
     ch11_prac_org: [
         ytVideo('POC — Crash Course L1', '4Dj-XRvdcAk'),
@@ -464,7 +466,8 @@ export function buildSubjectCatalog(
     chapters: PlannerSourceChapter[],
     subject: Subject,
     notesSlugMap: Record<string, string> = {},
-    detailedMap: Record<string, DetailedLectureRef[]> = {}
+    detailedMap: Record<string, DetailedLectureRef[]> = {},
+    flashcardSlugMap: Record<string, string> = {}
 ): ChapterPlanItem[] {
     const isChem = subject === 'chemistry';
     return [...chapters]
@@ -473,11 +476,22 @@ export function buildSubjectCatalog(
         )
         .map((ch) => {
             // --- shared building blocks ---------------------------------------
-            // Crucible practice — opens the chapter's topic-wise problem browser.
+            // Practice step — solve questions yourself on Crucible (topic-wise
+            // browser; PYQ + non-PYQ).
             const crucible: PlannerResource = {
                 label: 'Practice Questions on Crucible', kind: 'questions',
-                href: `/the-crucible/${ch.id}?mode=browse`, steps: ['solve', 'pyq'],
+                href: `/the-crucible/${ch.id}?mode=browse`, steps: ['practice'],
             };
+            // Revise step — flashcards (active recall) + a timed mock test.
+            const mockTest: PlannerResource = {
+                label: 'Mock Test on Crucible', kind: 'questions',
+                href: `/the-crucible/${ch.id}?mode=test`, steps: ['revise'],
+            };
+            const flashcards: PlannerResource | null = isChem ? {
+                label: 'Flashcards', kind: 'flashcards',
+                href: flashcardSlugMap[ch.id] ? `/chemistry-flashcards/${flashcardSlugMap[ch.id]}` : '/chemistry-flashcards',
+                steps: ['revise'],
+            } : null;
             // Handwritten Notes — deep-linked per chapter (chemistry only).
             const handwritten: PlannerResource | null = isChem ? {
                 label: 'Handwritten Notes', kind: 'notes',
@@ -533,14 +547,18 @@ export function buildSubjectCatalog(
                 // notes + practice when those videos aren't uploaded yet).
                 dropper.push(...concise);
                 for (const list of [class11, class12, dropper]) {
-                    if (handwritten) list.push(handwritten);
-                    list.push(crucible);
+                    if (handwritten) list.push(handwritten);     // Learn
+                    list.push(crucible);                          // Practice
+                    if (flashcards) list.push(flashcards);        // Revise
+                    list.push(mockTest);                          // Revise
                 }
             } else {
-                // Physics/Math (Dropper only) — Crucible + student-added resources.
-                class11.push(crucible);
-                class12.push(crucible);
-                dropper.push(crucible);
+                // Physics/Math (Dropper only) — Crucible practice + mock test
+                // (+ student-added resources).
+                for (const list of [class11, class12, dropper]) {
+                    list.push(crucible);
+                    list.push(mockTest);
+                }
             }
             const resourcesByMode: Record<PlannerMode, PlannerResource[]> = { class11, class12, dropper };
 
@@ -589,9 +607,9 @@ function defaultStepsForKind(kind: ResourceKind): LoopStep[] {
         case 'notes':
             return ['learn'];
         case 'questions':
-            return ['solve', 'pyq'];
+            return ['practice'];
         case 'flashcards':
-            return ['retest'];
+            return ['revise'];
         case 'tool':
             return ['learn'];
     }

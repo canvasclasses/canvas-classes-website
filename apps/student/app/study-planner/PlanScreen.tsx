@@ -18,10 +18,10 @@ import { LOOP_STEPS, CHAPTER_DAYS_MIN, CHAPTER_DAYS_MAX } from './planner-data';
 import { TelegramCTA } from './TelegramCTA';
 import {
     addDaysISO, computeRoadmapLayout, daysBetween, isBufferId, isChapterDone,
-    orderedCatalog, priorityIncomplete, type PlannerState, type RoadmapItem,
+    orderedCatalog, priorityIncomplete, roadmapOrderFor, type PlannerState, type RoadmapItem,
 } from './lib/state';
 
-const STEP_LABEL: Record<LoopStep, string> = { learn: 'Learn', solve: 'Solve', pyq: 'PYQ', retest: 'Re-test' };
+const STEP_LABEL: Record<LoopStep, string> = { learn: 'Learn', apply: 'Apply', practice: 'Practice', revise: 'Revise' };
 
 // Deterministic 3-char month abbreviation — `toLocaleDateString` returns "Sept"
 // (4 chars) in en-GB which overflows the side pill. Hand-rolled gives consistent
@@ -103,7 +103,7 @@ export function PlanScreen({
         [catalog, state, completed, today, targetISO]
     );
     const incomplete = useMemo(() => priorityIncomplete(catalog, state, completed), [catalog, state, completed]);
-    const hasCustomOrder = state.roadmapOrder.length > 0;
+    const hasCustomOrder = roadmapOrderFor(state, catalog).length > 0;
 
     // This-week daily grid (Mon..Sun, starting Monday of the current week).
     // Pulls steps from the next 1–2 chapters that fit in 7 days.

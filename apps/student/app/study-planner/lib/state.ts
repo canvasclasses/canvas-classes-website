@@ -96,16 +96,15 @@ export type ModeState = {
     customResources: Record<string, UserResource[]>;
     revisionStages: Record<string, RevisionEntry>;
     weekActivity: string[];                       // last N ISO dates the student was active (capped 30)
-    // Student-customized order for the Smart Plan roadmap. Items can be
-    // chapter IDs (e.g. 'ch11_mole') OR buffer block IDs (prefixed 'buf_').
-    // When the list contains no chapter IDs, the default chapter sort applies
-    // (Class 11 → 12, NCERT syllabus order). When it contains buffer IDs,
-    // those blocks render between chapters at the listed positions.
-    roadmapOrder: string[];
-    // Pool of buffer blocks the student created (sick days, breaks, prep
-    // cushion). A block exists only while present in roadmapOrder; orphans
-    // are cleaned on next save.
-    bufferBlocks: Record<string, { days: number }>;
+    // Student-customized roadmap order + buffer blocks, kept PER SUBJECT. Items
+    // can be chapter IDs ('ch11_mole') or buffer IDs ('buf_…'). Buffer IDs are
+    // NOT subject-unique, so a shared list leaked every buffer into every
+    // subject (and dragging in one subject wiped another's order) — see the
+    // 2026-06-09 bug fix. Scoping by subject isolates each subject's plan.
+    roadmapOrder: Record<Subject, string[]>;
+    // Buffer blocks per subject. A block exists only while present in that
+    // subject's roadmapOrder; orphans are cleaned on next save.
+    bufferBlocks: Record<Subject, Record<string, { days: number }>>;
     // The last chapter the student opened — drives the "Continue · X" CTA on
     // the dashboard. null when they've never opened a chapter (we fall back
     // to the next incomplete by roadmap order).
@@ -137,8 +136,8 @@ export function emptyModeState(): ModeState {
         customResources: {},
         revisionStages: {},
         weekActivity: [],
-        roadmapOrder: [],
-        bufferBlocks: {},
+        roadmapOrder: { chemistry: [], physics: [], math: [] },
+        bufferBlocks: { chemistry: {}, physics: {}, math: {} },
         lastAccessedChapter: null,
         settings: {},
         streak: { count: 0, lastActiveDate: '' },
@@ -198,7 +197,7 @@ export function isChapterDone(chapterId: string, completed: Set<string>): boolea
 }
 
 export function nextStepLabel(chapterId: string, completed: Set<string>): string {
-    const labels: Record<LoopStep, string> = { learn: 'Learn', solve: 'Solve', pyq: 'PYQ', retest: 'Re-test' };
+    const labels: Record<LoopStep, string> = { learn: 'Learn', apply: 'Apply', practice: 'Practice', revise: 'Revise' };
     for (const s of LOOP_STEPS) {
         if (!completed.has(stepId(chapterId, s.id))) return labels[s.id];
     }
@@ -260,6 +259,18 @@ export function defaultRoadmapSort(a: ChapterPlanItem, b: ChapterPlanItem): numb
     return a.sequence - b.sequence;
 }
 
+// roadmapOrder + bufferBlocks are per-subject. A subject-filtered catalog tells
+// us which slice to read (all items in a filtered catalog share a subject).
+export function subjectOf(catalog: ChapterPlanItem[]): Subject {
+    return catalog[0]?.subject ?? 'chemistry';
+}
+export function roadmapOrderFor(state: PlannerState, catalog: ChapterPlanItem[]): string[] {
+    return state.roadmapOrder?.[subjectOf(catalog)] ?? [];
+}
+export function bufferBlocksFor(state: PlannerState, catalog: ChapterPlanItem[]): Record<string, { days: number }> {
+    return state.bufferBlocks?.[subjectOf(catalog)] ?? {};
+}
+
 // Authoritative chapter ordering for everywhere we show a priority sequence:
 //  - Anything the student has manually placed in `roadmapOrder` keeps that
 //    position (in that order).
@@ -270,7 +281,7 @@ export function orderedCatalog(catalog: ChapterPlanItem[], state: PlannerState):
     const byId = new Map(catalog.map((c) => [c.chapterId, c]));
     const seen = new Set<string>();
     const ordered: ChapterPlanItem[] = [];
-    for (const id of state.roadmapOrder ?? []) {
+    for (const id of roadmapOrderFor(state, catalog)) {
         const c = byId.get(id);
         if (c && !seen.has(id)) {
             ordered.push(c);
@@ -461,13 +472,15 @@ export function computeRoadmapLayout(
     // in roadmapOrder get appended at the end via the default sort. This
     // guarantees that adding a buffer at position 0 doesn't make chapters
     // disappear from the roadmap.
+    const subjectOrder = roadmapOrderFor(state, catalog);
+    const subjectBuffers = bufferBlocksFor(state, catalog);
     const byChapterId = new Map(catalog.map((c) => [c.chapterId, c]));
-    const seen = new Set(state.roadmapOrder);
+    const seen = new Set(subjectOrder);
     const tail = catalog
         .filter((c) => !seen.has(c.chapterId))
         .sort(defaultRoadmapSort)
         .map((c) => c.chapterId);
-    const order = [...state.roadmapOrder, ...tail];
+    const order = [...subjectOrder, ...tail];
 
     const incompleteChapterIds = new Set(
         catalog.filter((c) => !isChapterDone(c.chapterId, completed)).map((c) => c.chapterId)
@@ -486,7 +499,7 @@ export function computeRoadmapLayout(
 
     for (const id of order) {
         if (isBufferId(id)) {
-            const cfg = state.bufferBlocks[id];
+            const cfg = subjectBuffers[id];
             if (!cfg) continue;
             push({ kind: 'buffer', id, days: cfg.days, startDate: cursor, endDate: rangeEnd(cfg.days) });
             continue;
@@ -546,6 +559,6 @@ export function computeRoadmapLayout(
 // --- diagnostic-driven mode (unchanged from prior) ------------------------
 export function stepsForChapter(chapterId: string, state: PlannerState): { primary: LoopStep[]; reviseOnly: boolean } {
     const d = state.diagnostic[chapterId];
-    if (d === 'strong') return { primary: ['retest'], reviseOnly: true };
-    return { primary: ['learn', 'solve', 'pyq', 'retest'], reviseOnly: false };
+    if (d === 'strong') return { primary: ['revise'], reviseOnly: true };
+    return { primary: ['learn', 'apply', 'practice', 'revise'], reviseOnly: false };
 }

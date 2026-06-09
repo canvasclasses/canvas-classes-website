@@ -14,9 +14,9 @@ import type { PlannerStateApi } from './usePlannerState';
 
 const STEP_META: Record<LoopStep, { n: number; title: string; desc: string; Icon: typeof Book }> = {
     learn: { n: 1, title: 'Learn', desc: 'Watch / read the concept once.', Icon: Book },
-    solve: { n: 2, title: 'Solve', desc: 'Work a fixed problem set.', Icon: Edit3 },
-    pyq: { n: 3, title: 'PYQ', desc: "Do this chapter's past questions.", Icon: List },
-    retest: { n: 4, title: 'Re-test', desc: 'Solve it cold a week later.', Icon: RotateCw },
+    apply: { n: 2, title: 'Apply', desc: 'Learn how to solve — worked DPPs & the right method.', Icon: Edit3 },
+    practice: { n: 3, title: 'Practice', desc: 'Solve questions yourself on Crucible.', Icon: List },
+    revise: { n: 4, title: 'Revise', desc: 'Flashcards + a mock test, a few days later.', Icon: RotateCw },
 };
 
 const KIND_ICON: Record<ResourceKind, typeof Play> = {
@@ -71,6 +71,12 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
         () => state.customResources[chapter.chapterId] ?? [],
         [state.customResources, chapter.chapterId]
     );
+    // Curated resources the student has starred — the only curated items shown
+    // in the "Your Resources" shortlist (the loop above holds the full set).
+    const starredResources = useMemo(
+        () => resources.map((r, idx) => ({ r, idx })).filter(({ idx }) => isStarred(chapter.chapterId, `r${idx}`)),
+        [resources, isStarred, chapter.chapterId]
+    );
     const allResources = useMemo(
         () => [
             ...resources.map((r, idx) => ({ kind: 'curated' as const, r, idx })),
@@ -81,9 +87,9 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
 
     const stepRes: Record<LoopStep, typeof allResources> = {
         learn: allResources.filter((x) => (x.kind === 'curated' ? x.r.steps?.includes('learn') : x.r.kind === 'lecture' || x.r.kind === 'notes')),
-        solve: allResources.filter((x) => (x.kind === 'curated' ? x.r.steps?.includes('solve') : x.r.kind === 'questions')),
-        pyq: allResources.filter((x) => (x.kind === 'curated' ? x.r.steps?.includes('pyq') : x.r.kind === 'questions')),
-        retest: allResources.filter((x) => (x.kind === 'curated' ? x.r.steps?.includes('retest') : x.r.kind === 'flashcards')),
+        apply: allResources.filter((x) => (x.kind === 'curated' ? x.r.steps?.includes('apply') : false)),
+        practice: allResources.filter((x) => (x.kind === 'curated' ? x.r.steps?.includes('practice') : x.r.kind === 'questions')),
+        revise: allResources.filter((x) => (x.kind === 'curated' ? x.r.steps?.includes('revise') : x.r.kind === 'flashcards')),
     };
 
     const pct = chapterPct(chapter.chapterId, completed);
@@ -91,7 +97,7 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
     const rating = state.diagnostic[chapter.chapterId];
     const note = state.notes[chapter.chapterId] ?? '';
     const dueDate = state.deadlines[chapter.chapterId] ?? '';
-    const retestDone = isStepDone(chapter.chapterId, 'retest');
+    const reviseDone = isStepDone(chapter.chapterId, 'revise');
 
     const [adding, setAdding] = useState(false);
     // Inline video/PDF player. Set when an embeddable resource is clicked; the
@@ -180,7 +186,7 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
             <section className="dyp-ch-sec">
                 <div className="dyp-sec-head">
                     <h2 className="dyp-sec-title">The chapter loop</h2>
-                    <span className="dyp-sec-sub">Learn → Solve → PYQ → Re-test. Tick each as you go.</span>
+                    <span className="dyp-sec-sub">Learn → Apply → Practice → Revise. Tick each as you go.</span>
                     <span className="dyp-loop-count">{done}/4</span>
                 </div>
                 <div className="dyp-loop-grid">
@@ -233,18 +239,18 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
                         );
                     })}
                 </div>
-                {retestDone && (
+                {reviseDone && (
                     <div className="dyp-retest-sched">
                         <RotateCw size={15} style={{ color: 'var(--c-new)' }} />
-                        Re-test done — scheduled for spaced revision in <b>{REV_INTERVALS[0]} day</b>, then <b>{REV_INTERVALS[1]}</b>, then <b>{REV_INTERVALS[2]}</b>, then <b>{REV_INTERVALS[3]}</b>, then <b>{REV_INTERVALS[4]}</b>. See the <b>Revision</b> queue.
+                        Revise done — scheduled for spaced revision in <b>{REV_INTERVALS[0]} day</b>, then <b>{REV_INTERVALS[1]}</b>, then <b>{REV_INTERVALS[2]}</b>, then <b>{REV_INTERVALS[3]}</b>, then <b>{REV_INTERVALS[4]}</b>. See the <b>Revision</b> queue.
                     </div>
                 )}
             </section>
 
             <section className="dyp-ch-sec">
                 <div className="dyp-sec-head">
-                    <h2 className="dyp-sec-title">Resources</h2>
-                    <span className="dyp-sec-sub">Curated videos &amp; notes — or bring your own.</span>
+                    <h2 className="dyp-sec-title">Your Resources</h2>
+                    <span className="dyp-sec-sub">Starred from the loop above + anything you add.</span>
                 </div>
                 {adding && (
                     <AddResource
@@ -253,11 +259,17 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
                     />
                 )}
                 <div className="dyp-res-list">
-                    {resources.map((r, idx) => (
+                    {/* Model A: the loop above is the home for all curated resources.
+                        Here we keep only the student's shortlist — starred curated
+                        + their own additions — so it isn't a duplicate of the loop. */}
+                    {starredResources.length === 0 && customs.length === 0 && !adding && (
+                        <div className="dyp-empty">Tap the ☆ on any resource in the loop above to pin it here.</div>
+                    )}
+                    {starredResources.map(({ r, idx }) => (
                         <CuratedResourceRow
                             key={`r${idx}`}
                             resource={r}
-                            starred={isStarred(chapter.chapterId, `r${idx}`)}
+                            starred
                             onStar={() => toggleStar(chapter.chapterId, `r${idx}`)}
                             onPlay={openPlayer}
                         />

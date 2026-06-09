@@ -40,6 +40,44 @@ function newId(): string {
 }
 
 // Coerce one mode slice. Every field defensively defaulted.
+// roadmapOrder / bufferBlocks became per-subject on 2026-06-09. Coerce the
+// legacy shapes (flat array / flat buffer record) into the per-subject record,
+// dropping the old data under 'chemistry' (the original single-subject scope).
+function coerceRoadmapOrder(v: unknown): Record<Subject, string[]> {
+    const out: Record<Subject, string[]> = { chemistry: [], physics: [], math: [] };
+    if (Array.isArray(v)) { out.chemistry = v.filter((x): x is string => typeof x === 'string'); return out; }
+    if (v && typeof v === 'object') {
+        for (const s of PLANNER_SUBJECTS) {
+            const arr = (v as Record<string, unknown>)[s];
+            if (Array.isArray(arr)) out[s] = arr.filter((x): x is string => typeof x === 'string');
+        }
+    }
+    return out;
+}
+function coerceBufferBlocks(v: unknown): Record<Subject, Record<string, { days: number }>> {
+    const out: Record<Subject, Record<string, { days: number }>> = { chemistry: {}, physics: {}, math: {} };
+    if (!v || typeof v !== 'object') return out;
+    const obj = v as Record<string, unknown>;
+    // Legacy flat shape: values are { days } blocks keyed by buf_… ids.
+    const vals = Object.values(obj);
+    const isLegacyFlat = vals.length > 0 && vals.every((x) => !!x && typeof x === 'object' && typeof (x as { days?: unknown }).days === 'number');
+    if (isLegacyFlat) { out.chemistry = obj as Record<string, { days: number }>; return out; }
+    for (const s of PLANNER_SUBJECTS) {
+        const rec = obj[s];
+        if (rec && typeof rec === 'object') out[s] = rec as Record<string, { days: number }>;
+    }
+    return out;
+}
+
+// Remap a legacy completion id (chapterId:step) after the 2026-06-09 loop
+// rename. Custom-module ids (chapterId#custom:…) and already-new ids pass through.
+function migrateStepId(id: string): string {
+    if (id.endsWith(':solve')) return id.slice(0, -6) + ':apply';
+    if (id.endsWith(':pyq')) return id.slice(0, -4) + ':practice';
+    if (id.endsWith(':retest')) return id.slice(0, -7) + ':revise';
+    return id;
+}
+
 function migrateModeState(s: Partial<ModeState> | null | undefined): ModeState {
     const base = emptyModeState();
     if (!s || typeof s !== 'object') return base;
@@ -47,7 +85,9 @@ function migrateModeState(s: Partial<ModeState> | null | undefined): ModeState {
         ...base,
         ...s,
         currentSubject: (PLANNER_SUBJECTS as string[]).includes(s.currentSubject as string) ? (s.currentSubject as Subject) : 'chemistry',
-        completed: Array.isArray(s.completed) ? s.completed : [],
+        // Loop step ids were renamed 2026-06-09 (solve→apply, pyq→practice,
+        // retest→revise). Remap saved completion ticks so progress isn't lost.
+        completed: Array.isArray(s.completed) ? s.completed.map(migrateStepId) : [],
         deadlines: (s.deadlines && typeof s.deadlines === 'object') ? (s.deadlines as Record<string, string>) : {},
         chapterDays: (s.chapterDays && typeof s.chapterDays === 'object') ? (s.chapterDays as Record<string, number>) : {},
         diagnostic: (s.diagnostic && typeof s.diagnostic === 'object') ? (s.diagnostic as Record<string, Diagnostic>) : {},
@@ -56,8 +96,8 @@ function migrateModeState(s: Partial<ModeState> | null | undefined): ModeState {
         customResources: (s.customResources && typeof s.customResources === 'object') ? (s.customResources as ModeState['customResources']) : {},
         revisionStages: (s.revisionStages && typeof s.revisionStages === 'object') ? (s.revisionStages as ModeState['revisionStages']) : {},
         weekActivity: Array.isArray(s.weekActivity) ? (s.weekActivity as string[]) : [],
-        roadmapOrder: Array.isArray(s.roadmapOrder) ? (s.roadmapOrder as string[]) : [],
-        bufferBlocks: (s.bufferBlocks && typeof s.bufferBlocks === 'object') ? (s.bufferBlocks as ModeState['bufferBlocks']) : {},
+        roadmapOrder: coerceRoadmapOrder(s.roadmapOrder),
+        bufferBlocks: coerceBufferBlocks(s.bufferBlocks),
         lastAccessedChapter: typeof s.lastAccessedChapter === 'string' ? s.lastAccessedChapter : null,
         settings: (s.settings && typeof s.settings === 'object') ? (s.settings as ModeState['settings']) : {},
         streak: (s.streak && typeof s.streak === 'object') ? (s.streak as ModeState['streak']) : { count: 0, lastActiveDate: '' },
@@ -135,8 +175,8 @@ function isModeEmpty(s: ModeState): boolean {
         Object.keys(s.stars).length === 0 &&
         Object.keys(s.customResources).length === 0 &&
         Object.keys(s.revisionStages).length === 0 &&
-        s.roadmapOrder.length === 0 &&
-        Object.keys(s.bufferBlocks).length === 0 &&
+        PLANNER_SUBJECTS.every((sub) => (s.roadmapOrder[sub]?.length ?? 0) === 0) &&
+        PLANNER_SUBJECTS.every((sub) => Object.keys(s.bufferBlocks[sub] ?? {}).length === 0) &&
         s.lastAccessedChapter === null &&
         s.streak.count === 0 &&
         !s.settings.targetDate
@@ -160,8 +200,16 @@ function mergeModeStates(local: ModeState, server: ModeState): ModeState {
         stars[ch] = Array.from(new Set([...(stars[ch] ?? []), ...list]));
     }
     const weekActivity = Array.from(new Set([...(server.weekActivity ?? []), ...local.weekActivity])).sort().slice(-WEEK_HISTORY);
-    const roadmapOrder = local.roadmapOrder.length > 0 ? local.roadmapOrder : server.roadmapOrder;
-    const bufferBlocks = { ...server.bufferBlocks, ...local.bufferBlocks };
+    // Per-subject: local order wins when the student has customized that subject;
+    // buffers union per subject (local entries override on id collision).
+    const roadmapOrder = {} as Record<Subject, string[]>;
+    const bufferBlocks = {} as Record<Subject, Record<string, { days: number }>>;
+    for (const sub of PLANNER_SUBJECTS) {
+        const lo = local.roadmapOrder[sub] ?? [];
+        const so = server.roadmapOrder[sub] ?? [];
+        roadmapOrder[sub] = lo.length > 0 ? lo : so;
+        bufferBlocks[sub] = { ...(server.bufferBlocks[sub] ?? {}), ...(local.bufferBlocks[sub] ?? {}) };
+    }
     return {
         // local wins — the student's most recent subject choice on this device
         // beats the server snapshot (same pattern as lastAccessedChapter).
@@ -556,19 +604,28 @@ export function usePlannerState() {
     // bufferBlocks entry whose ID is no longer in roadmapOrder is dropped.
     const setRoadmapOrder = useCallback((fullOrder: string[]) => {
         updateModeState((prev) => {
+            const sub = prev.currentSubject;
             const stillInUse = new Set(fullOrder.filter(isBufferId));
-            const bufferBlocks: ModeState['bufferBlocks'] = {};
-            for (const [id, cfg] of Object.entries(prev.bufferBlocks)) {
-                if (stillInUse.has(id)) bufferBlocks[id] = cfg;
+            const nextBuffers: Record<string, { days: number }> = {};
+            for (const [id, cfg] of Object.entries(prev.bufferBlocks[sub] ?? {})) {
+                if (stillInUse.has(id)) nextBuffers[id] = cfg;
             }
-            return { ...prev, roadmapOrder: fullOrder, bufferBlocks };
+            return {
+                ...prev,
+                roadmapOrder: { ...prev.roadmapOrder, [sub]: fullOrder },
+                bufferBlocks: { ...prev.bufferBlocks, [sub]: nextBuffers },
+            };
         });
     }, [updateModeState]);
 
-    // Reset clears chapter customization AND user buffer blocks — single clean
-    // slate. (The auto-revision breaks recompute from the default order.)
+    // Reset clears chapter customization AND user buffer blocks for the active
+    // subject only. (The auto-revision breaks recompute from the default order.)
     const resetRoadmapOrder = useCallback(() => {
-        updateModeState((prev) => ({ ...prev, roadmapOrder: [], bufferBlocks: {} }));
+        updateModeState((prev) => ({
+            ...prev,
+            roadmapOrder: { ...prev.roadmapOrder, [prev.currentSubject]: [] },
+            bufferBlocks: { ...prev.bufferBlocks, [prev.currentSubject]: {} },
+        }));
     }, [updateModeState]);
 
     // Buffer block lifecycle. Each block lives in `bufferBlocks` (config) and
@@ -585,17 +642,18 @@ export function usePlannerState() {
             const clampedDays = Math.max(BUFFER_BLOCK_MIN_DAYS, Math.min(BUFFER_BLOCK_MAX_DAYS, days));
             const id = `buf_${Math.random().toString(36).slice(2, 9)}${Date.now().toString(36).slice(-4)}`;
             updateModeState((prev) => {
+                const sub = prev.currentSubject;
+                const prevOrder = prev.roadmapOrder[sub] ?? [];
                 // Materialize the full ordered list first so existing chapters
-                // don't fall out — if the student has never customized the
-                // order, `prev.roadmapOrder` is empty. We seed it with the
-                // default sort so the new buffer sits at the top of a
-                // recognizable roadmap.
-                const existing = new Set(prev.roadmapOrder);
+                // don't fall out — if the student has never customized this
+                // subject's order, it's empty. Seed it with the default sort so
+                // the new buffer sits in a recognizable roadmap.
+                const existing = new Set(prevOrder);
                 const tail = catalog
                     .filter((c) => !existing.has(c.chapterId))
                     .sort(defaultRoadmapSort)
                     .map((c) => c.chapterId);
-                const order = [...prev.roadmapOrder, ...tail];
+                const order = [...prevOrder, ...tail];
                 let pos = 0; // default: top of list
                 if (insertAfter) {
                     const i = order.indexOf(insertAfter);
@@ -604,8 +662,8 @@ export function usePlannerState() {
                 order.splice(pos, 0, id);
                 return {
                     ...prev,
-                    roadmapOrder: order,
-                    bufferBlocks: { ...prev.bufferBlocks, [id]: { days: clampedDays } },
+                    roadmapOrder: { ...prev.roadmapOrder, [sub]: order },
+                    bufferBlocks: { ...prev.bufferBlocks, [sub]: { ...(prev.bufferBlocks[sub] ?? {}), [id]: { days: clampedDays } } },
                 };
             });
             return id;
@@ -615,18 +673,25 @@ export function usePlannerState() {
 
     const removeBufferBlock = useCallback((id: string) => {
         updateModeState((prev) => {
-            const order = prev.roadmapOrder.filter((x) => x !== id);
-            const bufferBlocks = { ...prev.bufferBlocks };
-            delete bufferBlocks[id];
-            return { ...prev, roadmapOrder: order, bufferBlocks };
+            const sub = prev.currentSubject;
+            const order = (prev.roadmapOrder[sub] ?? []).filter((x) => x !== id);
+            const nextBuffers = { ...(prev.bufferBlocks[sub] ?? {}) };
+            delete nextBuffers[id];
+            return {
+                ...prev,
+                roadmapOrder: { ...prev.roadmapOrder, [sub]: order },
+                bufferBlocks: { ...prev.bufferBlocks, [sub]: nextBuffers },
+            };
         });
     }, [updateModeState]);
 
     const setBufferBlockDays = useCallback((id: string, days: number) => {
         const clamped = Math.max(BUFFER_BLOCK_MIN_DAYS, Math.min(BUFFER_BLOCK_MAX_DAYS, days));
         updateModeState((prev) => {
-            if (!prev.bufferBlocks[id]) return prev;
-            return { ...prev, bufferBlocks: { ...prev.bufferBlocks, [id]: { days: clamped } } };
+            const sub = prev.currentSubject;
+            const subBuffers = prev.bufferBlocks[sub] ?? {};
+            if (!subBuffers[id]) return prev;
+            return { ...prev, bufferBlocks: { ...prev.bufferBlocks, [sub]: { ...subBuffers, [id]: { days: clamped } } } };
         });
     }, [updateModeState]);
 

@@ -60,8 +60,16 @@ const ModeStateSchema = z.object({
     stars: cappedRecord(z.array(z.string().max(64)).max(40)).default({}),
     revisionStages: cappedRecord(RevisionEntry).default({}),
     weekActivity: z.array(z.string().regex(ISO_DATE)).max(MAX_REVISION).default([]),
-    roadmapOrder: z.array(z.string().max(80)).max(MAX_KEYS).default([]),
-    bufferBlocks: cappedRecord(z.object({ days: z.number().int().min(1).max(14) })).default({}),
+    // roadmapOrder / bufferBlocks are per-subject (Record<subject, …>). Accept
+    // the legacy flat shapes too (older clients) — the client migrates on read.
+    roadmapOrder: z.union([
+        z.array(z.string().max(80)).max(MAX_KEYS),
+        z.record(z.string().max(20), z.array(z.string().max(80)).max(MAX_KEYS)),
+    ]).default({}),
+    bufferBlocks: z.union([
+        z.record(z.string().max(20), cappedRecord(z.object({ days: z.number().int().min(1).max(14) }))),
+        cappedRecord(z.object({ days: z.number().int().min(1).max(14) })),
+    ]).default({}),
     lastAccessedChapter: z.string().max(80).nullable().default(null),
     customResources: cappedRecord(z.array(UserResource).max(MAX_CUSTOM_PER_CHAPTER)).default({}),
     settings: z
