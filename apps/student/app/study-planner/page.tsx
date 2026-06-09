@@ -185,8 +185,10 @@ export default async function StudyPlannerPage() {
                 warm + punchy, a teacher talking to a tier-2/3 JEE/NEET student.
                 See CLAUDE.md §10 + _agents/SEO_PLAYBOOK.md.
                 ───────────────────────────────────────────────────────────────── */}
-            <section className="bg-[#050505] text-white border-t border-white/5 px-5 sm:px-6 py-16 sm:py-20">
-                <div className="mx-auto max-w-3xl">
+            <section className="bg-[#050505] text-white border-t border-white/5 py-14 sm:py-16">
+                {/* max-w + padding match the planner's .dyp-wrap (1180px / 40px) so
+                    this SEO block lines up with the dashboard above it. */}
+                <div className="mx-auto max-w-[1180px] px-5 sm:px-10">
                     <h1 className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
                         A Free Study Planner for JEE &amp; NEET — Class 11, 12 &amp; Droppers
                     </h1>
@@ -237,14 +239,23 @@ export default async function StudyPlannerPage() {
                         Start today. Not Monday, not next month — today. One chapter is all it takes to begin.
                     </p>
 
-                    {/* FAQ — visible copy mirrors faqJsonLd above */}
+                    {/* FAQ — collapsed <details> accordion to save space. Native
+                        <details> keeps every answer in the HTML (just visually
+                        hidden), so Google + AI answer engines still read it; the
+                        FAQPage JSON-LD above carries the same Q&A. */}
                     <h2 className="mt-14 text-2xl font-bold">Quick questions, honest answers</h2>
-                    <div className="mt-6 space-y-4">
+                    <div className="mt-6 space-y-2.5">
                         {faqs.map((f) => (
-                            <div key={f.q} className="rounded-xl border border-white/5 bg-[#0B0F15] p-5">
-                                <h3 className="text-base font-bold sm:text-lg">{f.q}</h3>
-                                <p className="mt-2 text-sm leading-relaxed text-white/60 sm:text-base">{f.a}</p>
-                            </div>
+                            <details
+                                key={f.q}
+                                className="group rounded-xl border border-white/5 bg-[#0B0F15] px-5 [&_summary::-webkit-details-marker]:hidden"
+                            >
+                                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-4 text-base font-bold sm:text-lg">
+                                    {f.q}
+                                    <svg className="h-4 w-4 shrink-0 text-white/40 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                                </summary>
+                                <p className="-mt-1 pb-4 text-sm leading-relaxed text-white/60 sm:text-base">{f.a}</p>
+                            </details>
                         ))}
                     </div>
                 </div>
