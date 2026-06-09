@@ -31,6 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/salt-analysis', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/solubility-product-ksp-calculator', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/the-crucible', priority: 1.0, changeFrequency: 'daily' as const },
+        { path: '/study-planner', priority: 0.95, changeFrequency: 'weekly' as const },
         // /bitsat-chemistry-revision removed from sitemap 2026-05-25 — BITSAT
         // 2026 exam window ended; page is noindex'd until refreshed for 2027.
         { path: '/college-predictor', priority: 1.0, changeFrequency: 'daily' as const },
