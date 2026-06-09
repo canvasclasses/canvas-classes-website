@@ -52,6 +52,9 @@ export function PlannerClient({ fullCatalog }: Props) {
 
     const [screen, setScreen] = useState<ScreenName>('dashboard');
     const [activeId, setActiveId] = useState<string | null>(null);
+    // Mobile only: the sidebar is an off-canvas drawer below 768px. Desktop
+    // ignores this (CSS keeps the sidebar in-flow), so it's a no-op there.
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // modeCatalog drives sidebar + roadmap + dashboard (the chapters this
     // (mode, subject) "owns"). fullCatalog stays available for chapter lookups
@@ -74,6 +77,7 @@ export function PlannerClient({ fullCatalog }: Props) {
     const activeChapter = activeId ? fullCatalog.find((c) => c.chapterId === activeId) ?? null : null;
 
     const navTo = (s: ScreenName) => {
+        setSidebarOpen(false); // close the mobile drawer after a nav tap
         setScreen(s);
         if (s !== 'chapter') setActiveId(null);
         const main = document.querySelector('.dyp-main') as HTMLElement | null;
@@ -85,6 +89,7 @@ export function PlannerClient({ fullCatalog }: Props) {
     // (toggleStep, setNote, setRating, …) so the dashboard's "Pick up" CTA
     // only ever points to a chapter the student actually worked in.
     const openChapter = (id: string) => {
+        setSidebarOpen(false); // close the mobile drawer after picking a chapter
         setActiveId(id);
         setScreen('chapter');
         const main = document.querySelector('.dyp-main') as HTMLElement | null;
@@ -116,8 +121,15 @@ export function PlannerClient({ fullCatalog }: Props) {
                 isAuthed={isAuthed}
                 mode={mode}
                 onChangeMode={setMode}
+                onMenu={() => setSidebarOpen((o) => !o)}
             />
-            <div className="dyp-body">
+            <div className={`dyp-body${sidebarOpen ? ' dyp-sb-open' : ''}`}>
+                <button
+                    type="button"
+                    className="dyp-sb-backdrop"
+                    aria-label="Close menu"
+                    onClick={() => setSidebarOpen(false)}
+                />
                 <Sidebar
                     catalog={catalog}
                     completed={completedSet}

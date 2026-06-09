@@ -489,6 +489,19 @@ const ChapterPracticeBlockSchema = BaseBlockSchema.extend({
   questions: z.array(PracticeQuestionSchema).min(1).max(100),
 });
 
+// Junior practice — bank-backed; embeds NO questions (fetched at runtime from
+// the junior_questions bank). See JuniorPracticeBlock in types/books.ts.
+const JuniorPracticeBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('junior_practice'),
+  title: z.string().optional(),
+  intro: z.string().optional(),
+  book_slug: z.string().min(1),
+  chapter_number: z.number().int().positive(),
+  session_size: z.number().int().min(1).max(50).optional(),
+  pass_threshold: z.number().min(0).max(1).optional(),
+  mode: z.enum(['practice', 'test']).optional(),
+});
+
 const ChallengeBase = {
   id: z.string().min(1),
   concept_tag: PRACTICE_CONCEPT,
@@ -614,6 +627,7 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   ChapterPracticeBlockSchema,
   ApplyExpressBlockSchema,
   ReadingComprehensionBlockSchema,
+  JuniorPracticeBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -664,6 +678,7 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   ChapterPracticeBlockSchema,
   ApplyExpressBlockSchema,
   ReadingComprehensionBlockSchema,
+  JuniorPracticeBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

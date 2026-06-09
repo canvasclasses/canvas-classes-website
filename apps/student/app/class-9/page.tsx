@@ -10,7 +10,11 @@ import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon
 
 const EXPECTED_SUBJECTS = ['Science', 'Mathematics', 'Social Science'];
 
-export const revalidate = 60;
+// CLAUDE.md §10.5: class hubs are effectively static → 24h. `revalidate = 60`
+// is forbidden by §10.2 (drove the 2026-06 ISR/origin-transfer spike). For
+// instant turnaround on a Class 9 book edit, the admin save flow should call
+// revalidatePath('/class-9') rather than shortening this window.
+export const revalidate = 86400;
 
 const SITE_URL = 'https://www.canvasclasses.in';
 const CANONICAL = `${SITE_URL}/class-9`;

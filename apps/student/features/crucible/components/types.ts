@@ -6,6 +6,8 @@ export interface Chapter {
   class_level: number;
   display_order?: number;
   category?: 'Physical' | 'Inorganic' | 'Organic' | 'Practical';
+  subject?: 'Chemistry' | 'Physics' | 'Maths';
+  group?: string;
   // JEE question counts
   question_count?: number;
   star_question_count?: number;

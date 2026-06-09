@@ -11,6 +11,7 @@
 // into shared use so nothing server-only leaks into the client bundle.
 
 import type { ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
+import { PHYSICS_GROUP_LABEL, MATH_GROUP_LABEL } from '@/features/crucible/lib/subjects';
 
 // The three subjects the planner can show. Chemistry is fully curated
 // (weightage / difficulty / one-shot / prereqs); physics + math are catalog +
@@ -176,21 +177,93 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
         // One-shot last — quick revision after the detailed work. Shows in every batch.
         oneShotLecture('Atomic Structure — One Shot', '_fOi9q31vHQ'),
     ],
-    ch11_periodic: [oneShotLecture('Periodicity — One Shot', 'p-NdkOfm0tQ')],
-    ch11_bonding: [oneShotLecture('Chemical Bonding — One Shot', 'yMpD6PEFjmw')],
-    ch11_thermo: [oneShotLecture('Thermodynamics — One Shot', '437RxJzwOhk')],
-    ch11_chem_eq: [oneShotLecture('Chemical Equilibrium — One Shot', 'pcokrXtUnGo')],
+    ch11_periodic: [
+        ytVideo('Periodicity — Crash Course L1', 'C6bHDPJfvwk'),
+        ytVideo('Periodicity — Crash Course L2', 'T368-IpfD7U'),
+        oneShotLecture('Periodicity — One Shot', 'p-NdkOfm0tQ'),
+    ],
+    ch11_bonding: [
+        ytVideo('Chemical Bonding — Crash Course L1', '_RLPotf0NSA'),
+        ytVideo('Chemical Bonding — Crash Course L2', 'jyzzVa2Dgj0'),
+        ytVideo('Chemical Bonding — Crash Course L3', 'ENICF20VTuM'),
+        ytVideo('Chemical Bonding — Crash Course L4', 'xhYjvroxVF4'),
+        oneShotLecture('Chemical Bonding — One Shot', 'yMpD6PEFjmw'),
+    ],
+    ch11_thermo: [
+        ytVideo('Thermodynamics — Pre-Requisite', 'TADFKhfM1tE'),
+        ytVideo('Thermodynamics — Crash Course L1', 'V7uChUeuSzc'),
+        ytVideo('Thermodynamics — Crash Course L2', 'AnnJaLUlnMk'),
+        ytVideo('Thermodynamics — Crash Course L3', 'hQDUFSHokTQ'),
+        ytVideo('Thermodynamics — Crash Course L4', '6dxB49anz8o'),
+        ytVideo('Isothermal & Adiabatic Work — Derivation & Comparison', 'OdjaGJca4A0'),
+        ytVideo('Fundamentals of Entropy & Gibbs Energy', 'HTqpDc-nWB8'),
+        oneShotLecture('Thermodynamics — One Shot', '437RxJzwOhk'),
+    ],
+    ch11_chem_eq: [
+        ytVideo('Chemical Equilibrium — Crash Course L1', 'ugcCAg8WzdE'),
+        ytVideo('Chemical Equilibrium — Crash Course L2', '3PpmAFLQscw'),
+        oneShotLecture('Chemical Equilibrium — One Shot', 'pcokrXtUnGo'),
+    ],
+    ch11_ionic_eq: [
+        ytVideo('Ionic Equilibrium — Crash Course L1', 'SrHK0T8-YEo'),
+        ytVideo('Ionic Equilibrium — Crash Course L2', 'C-CjfepOz6k'),
+        ytVideo('Ionic Equilibrium — Crash Course L3', 'jTKFF-LGN1k'),
+        ytVideo('Ionic Equilibrium — DPP 1', 'ZdDQ_lXFhkU', ['solve']),
+        ytVideo('Ionic Equilibrium — DPP 2', 'ggC5pmkOPw8', ['solve']),
+        ytVideo('Ionic Equilibrium — DPP 3', 'v9ejpnHwPR8', ['solve']),
+    ],
     ch11_redox: [
+        ytVideo('Redox Reactions — Crash Course L1', 'U-66N5u5Wbw'),
+        ytVideo('Redox Reactions — Crash Course L2', 'y9K0PxbnEzA'),
+        ytVideo('Redox Reactions — DPP 1', 'Dc5eSTfkclI', ['solve']),
+        ytVideo('Redox Reactions — DPP 2', 'nPjM6SCJYAo', ['solve']),
         oneShotLecture('Redox Reactions — One Shot', 'g5EwjAaNhqs'),
         ytVideo('Equivalent Concept & N-factor', 'DJuPWr2X7_k'),
         ytVideo('Titration & Primary Standard Solution', 'QhgfhqPPbOw'),
     ],
     ch11_pblock: [oneShotLecture('p-Block (11) — One Shot', '8zT9gXplLBQ')],
-    ch11_goc: [oneShotLecture('GOC — One Shot', 'yg_xIkyGtxg')],
-    ch11_prac_org: [oneShotLecture('Practical Organic — One Shot', '6_HOV4tkxwk')],
+    ch11_goc: [
+        ytVideo('GOC — Basics of Organic (before GOC)', '-Y2tMcrhDxU'),
+        ytVideo('GOC — IUPAC Naming', 'juJkhCprxy0'),
+        ytVideo('GOC — Crash Course L1', 'RThlnLU2zMA'),
+        ytVideo('GOC — Crash Course 2.1', 'g15a2bGGx10'),
+        ytVideo('GOC — Crash Course 2.2', '_CsdX3HByew'),
+        ytVideo('GOC — Crash Course L3', 'KmNGhqk4ew4'),
+        ytVideo('GOC — Drawing Resonating Structures', 'dG3wjRQeuYw'),
+        ytVideo('GOC — Rearrangement in Carbocations', 'O8nET7unnWM'),
+        ytVideo('GOC — DPP 1', '7rnNFgtijiw', ['solve']),
+        ytVideo('GOC — DPP 2', 'eEjQvsw-4tg', ['solve']),
+        ytVideo('GOC — DPP 3', 'okfrmz5xpGs', ['solve']),
+        ytVideo('GOC — DPP 4', 'OeKWfd1v0jQ', ['solve']),
+        ytVideo('GOC — DPP 5', 'clI0KeT_h0c', ['solve']),
+        oneShotLecture('GOC — One Shot', 'yg_xIkyGtxg'),
+    ],
+    ch11_hydrocarbon: [
+        ytVideo('Hydrocarbons — Crash Course L1', 'izezV1oOg88'),
+        ytVideo('Hydrocarbons — Crash Course L2', 'xU_IfAL0x14'),
+        ytVideo('Hydrocarbons — DPP 1', 'PCNI19FUG5w', ['solve']),
+        ytVideo('Hydrocarbons — DPP 2', 'yCgvotvl7GE', ['solve']),
+        ytVideo('Hydrocarbons — DPP 3', '3EcsAlTtUIU', ['solve']),
+        ytVideo('Hydrocarbons — DPP 4', 'BvyMbE1zshg', ['solve']),
+    ],
+    ch11_prac_org: [
+        ytVideo('POC — Crash Course L1', '4Dj-XRvdcAk'),
+        ytVideo('POC — Crash Course L2 (Part 1)', 'AWbrOiDFZ4E'),
+        ytVideo('POC — Crash Course L2 (Part 2)', 'jm2yvtavhQ4'),
+        oneShotLecture('Practical Organic — One Shot', '6_HOV4tkxwk'),
+    ],
     // --- Class 12 ---
-    ch12_solutions: [oneShotLecture('Solutions — One Shot', 'Vb_6VKw7Yrw')],
-    ch12_electrochem: [oneShotLecture('Electrochemistry — One Shot', 'MiIJwC0LpaE')],
+    ch12_solutions: [
+        ytVideo('Solutions — Crash Course L1', 'QffwSl90ax8'),
+        ytVideo('Solutions — Crash Course L2', 'tcHediJk-Ek'),
+        oneShotLecture('Solutions — One Shot', 'Vb_6VKw7Yrw'),
+    ],
+    ch12_electrochem: [
+        ytVideo('Electrochemistry — Crash Course L1', 'JELPbgL0va4'),
+        ytVideo('Electrochemistry — Crash Course L2', '6v-VdC0QBUM'),
+        ytVideo('Electrochemistry — Crash Course L3', 'u60yZjm8c5A'),
+        oneShotLecture('Electrochemistry — One Shot', 'MiIJwC0LpaE'),
+    ],
     ch12_kinetics: [oneShotLecture('Chemical Kinetics — One Shot', 'sYXMqIHGew8')],
     ch12_pblock: [
         oneShotLecture('p-Block (12) · N & O Family — One Shot', 'gpuuH89ZyGo'),
@@ -202,9 +275,9 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
     ch12_carbonyl: [oneShotLecture('Aldehydes, Ketones & Acids — One Shot', '4NqlPuJHves')],
     ch12_amines: [oneShotLecture('Amines — Key NCERT Reactions', 'eyWYnda7DL8')],
     ch12_biomolecules: [oneShotLecture('Biomolecules — One Shot', 'PnwNgp7HUeg')],
-    // Chapters without a clean full one-shot (ionic equilibrium, hydrocarbons,
-    // d & f block, salt analysis, practical physical) fall through to the auto
-    // class-hub lecture + NCERT notes + Crucible practice links.
+    // Chapters with no curated videos yet (d & f block, salt analysis, practical
+    // physical) fall through to the auto class-hub lecture + NCERT notes +
+    // Crucible practice links.
 };
 
 // --- research-backed weightage map ----------------------------------------
@@ -353,68 +426,14 @@ export function filterCatalog(catalog: ChapterPlanItem[], mode: PlannerMode, sub
     return catalog.filter((c) => c.subject === subject);
 }
 
-// Physics area grouping — how popular JEE platforms (PW, Allen, etc.) bucket the
-// syllabus into modules. Each area is class-homogeneous so the sidebar never
-// splits one area across two class levels. Anything unmapped falls back to
-// 'Physics'.
-export const PHYSICS_GROUP_MAP: Record<string, string> = {
-    // Mechanics 1 — Class 11
-    ph11_math_phy: 'Mechanics 1',
-    ph11_units: 'Mechanics 1',
-    ph11_kinematics1d: 'Mechanics 1',
-    ph11_kinematics2d: 'Mechanics 1',
-    ph11_nlm: 'Mechanics 1',
-    ph11_wep: 'Mechanics 1',
-    // Mechanics 2 — Class 11
-    ph11_com_mom: 'Mechanics 2',
-    ph11_rotation: 'Mechanics 2',
-    ph11_gravitation: 'Mechanics 2',
-    ph11_solids: 'Mechanics 2',
-    ph11_fluids: 'Mechanics 2',
-    // Thermodynamics & Waves — Class 11
-    ph11_shm: 'Thermodynamics & Waves',
-    ph11_waves: 'Thermodynamics & Waves',
-    ph11_thermal_props: 'Thermodynamics & Waves',
-    ph11_thermo: 'Thermodynamics & Waves',
-    ph11_ktg: 'Thermodynamics & Waves',
-    // Electromagnetism — Class 12
-    ph12_electrostatics: 'Electromagnetism',
-    ph12_capacitance: 'Electromagnetism',
-    ph12_current: 'Electromagnetism',
-    ph12_mag_matter: 'Electromagnetism',
-    ph12_moving_charges: 'Electromagnetism',
-    ph12_emi: 'Electromagnetism',
-    ph12_ac: 'Electromagnetism',
-    ph12_em_waves: 'Electromagnetism',
-    // Optics — Class 12
-    ph12_ray_optics: 'Optics',
-    ph12_wave_optics: 'Optics',
-    // Modern Physics — Class 12
-    ph12_dual_nature: 'Modern Physics',
-    ph12_atoms: 'Modern Physics',
-    ph12_nuclei: 'Modern Physics',
-    ph12_semiconductors: 'Modern Physics',
-    ph12_communication: 'Modern Physics',
-    // Experimental Physics — Class 12
-    ph12_exp_phy: 'Experimental Physics',
-};
-
-// Pretty-print a math taxonomy chapterType into a sidebar/dimension label.
-function prettyMathGroup(chapterType?: string): string {
-    switch (chapterType) {
-        case 'algebra': return 'Algebra';
-        case 'calculus': return 'Calculus';
-        case 'coordinate_geometry': return 'Coordinate Geometry';
-        case 'trigonometry': return 'Trigonometry';
-        case 'vector_algebra': return 'Vector Algebra';
-        default: return 'Mathematics';
-    }
-}
-
-// Resolve the sidebar/dimension grouping label for a chapter.
-function groupFor(subject: Subject, chapterId: string, category: ChapterPlanItem['category'], chapterType?: string): string {
-    if (subject === 'physics') return PHYSICS_GROUP_MAP[chapterId] ?? 'Physics';
-    if (subject === 'math') return prettyMathGroup(chapterType);
+// Resolve the sidebar/dimension grouping label for a chapter. Physics/Maths read
+// the shared chapterType→label maps (single source of truth, also used by the
+// Crucible chapter list). Chemistry keeps its own `category` (the planner's
+// chemistry rows come from buildChaptersWithCounts, which carries `category` but
+// no `chapterType`).
+function groupFor(subject: Subject, category: ChapterPlanItem['category'], chapterType?: string): string {
+    if (subject === 'physics') return PHYSICS_GROUP_LABEL[chapterType ?? ''] ?? 'Physics';
+    if (subject === 'math') return MATH_GROUP_LABEL[chapterType ?? ''] ?? 'Mathematics';
     return category;  // chemistry → Physical / Inorganic / Organic / Practical
 }
 
@@ -540,7 +559,7 @@ export function buildSubjectCatalog(
                 name: ch.name,
                 subject,
                 category: ch.category,
-                group: groupFor(subject, ch.id, ch.category, ch.chapterType),
+                group: groupFor(subject, ch.category, ch.chapterType),
                 classLevel: (ch.class_level === 12 ? 12 : 11) as 11 | 12,
                 sequence: ch.display_order,
                 weight,

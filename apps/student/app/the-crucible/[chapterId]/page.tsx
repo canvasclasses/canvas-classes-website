@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getTaxonomy } from '@/features/crucible/server-actions/the-crucible';
-import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
+import { buildChaptersWithCounts, chaptersBaseFromTaxonomy, CRUCIBLE_ALL_SUBJECTS, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 import CrucibleChapterClient from './CrucibleChapterClient';
 
 // ISR — 1-hour edge cache. The underlying chapter counts come from
@@ -21,7 +20,15 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ chapterId: string }> }): Promise<Metadata> {
     const { chapterId } = await params;
-    const chapters = await getTaxonomy();
+    // Use the same all-subjects source as the page body so Physics/Maths chapters
+    // get a real title, not "Not Found". On a DB blip, fall back to the static
+    // taxonomy (all subjects, zero counts) — still resolves the chapter name.
+    let chapters: { id: string; name: string }[];
+    try {
+        chapters = await buildChaptersWithCounts({ subjects: CRUCIBLE_ALL_SUBJECTS });
+    } catch {
+        chapters = await chaptersBaseFromTaxonomy(CRUCIBLE_ALL_SUBJECTS);
+    }
     const chapter = chapters.find(ch => ch.id === chapterId);
     if (!chapter) return { title: 'Not Found' };
 
@@ -55,21 +62,11 @@ export default async function Page({ params }: { params: Promise<{ chapterId: st
     // whether they navigated from the landing or hit the chapter URL directly.
     let chaptersWithCounts: ChapterWithCounts[] = [];
     try {
-        chaptersWithCounts = await buildChaptersWithCounts();
+        chaptersWithCounts = await buildChaptersWithCounts({ subjects: CRUCIBLE_ALL_SUBJECTS });
     } catch (error) {
         console.error(`Failed to build chapters for /the-crucible/${chapterId}:`, error);
-        const chapters = await getTaxonomy();
-        chaptersWithCounts = chapters.map(ch => ({
-            id: ch.id,
-            name: ch.name,
-            class_level: ch.class_level ?? 11,
-            display_order: ch.display_order ?? 0,
-            category: 'Physical' as const,
-            question_count: 0,
-            star_question_count: 0,
-            neet_question_count: 0,
-            neet_star_question_count: 0,
-        }));
+        // DB-down fallback: real chapters (all subjects) with zero counts.
+        chaptersWithCounts = await chaptersBaseFromTaxonomy(CRUCIBLE_ALL_SUBJECTS);
     }
 
     const chapter = chaptersWithCounts.find(ch => ch.id === chapterId);

@@ -11,6 +11,7 @@ import {
   Beaker,
   ExternalLink,
   Users,
+  GraduationCap,
 } from 'lucide-react';
 import { createClient } from '@/app/utils/supabase/server';
 import { SignoutButton } from '@/features/admin/components/SignoutButton';
@@ -96,6 +97,12 @@ export default async function AdminHome() {
                 icon={<BookOpen />}
                 title="Books"
                 hint="Author Live Books — chapters, pages, blocks, and per-page publish. Split-pane preview reuses the student renderer."
+              />
+              <PanelCard
+                href="/junior-bank"
+                icon={<GraduationCap />}
+                title="Junior Question Bank"
+                hint="Author grades 6–10 practice questions — MCQ + Assertion-Reason, diagram-capable. Powers livebook chapter practice + tests. Separate from Crucible."
               />
               <PanelCard
                 href="/blog"

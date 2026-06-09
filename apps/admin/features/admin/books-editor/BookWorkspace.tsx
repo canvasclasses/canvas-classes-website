@@ -37,6 +37,7 @@ export function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'reasoning_prompt':  return { ...base, type, reasoning_type: 'logical', prompt: '', reveal: '', difficulty_level: 2 };
     case 'curiosity_prompt':  return { ...base, type, prompt: '' };
     case 'classify_exercise': return { ...base, type, question: 'Which of these are…?', rows: [{ substance: '', is_solution: true, explanation: '' }] };
+    case 'junior_practice':   return { ...base, type, book_slug: '', chapter_number: 1, session_size: 10, pass_threshold: 0.7, mode: 'practice', title: '', intro: '' };
     // English / practice blocks (narrated_passage, vocabulary_lab,
     // chapter_practice, apply_express, …) are authored via scripts / the English
     // book pipeline, not this editor's Add-block menu, so they never reach here.

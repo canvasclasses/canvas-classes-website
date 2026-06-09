@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Layers, Sparkles, Cloud, CloudOff, Loader2, Check } from 'lucide-react';
+import { ArrowLeft, Layers, Menu, Sparkles, Cloud, CloudOff, Loader2, Check } from 'lucide-react';
 import type { ScreenName } from './PlannerClient';
 import type { SyncStatus } from './usePlannerState';
 import { MODE_META, PLANNER_MODES, type PlannerMode } from './lib/state';
@@ -17,6 +17,7 @@ type Props = {
     isAuthed: boolean;
     mode: PlannerMode;
     onChangeMode: (m: PlannerMode) => void;
+    onMenu: () => void;
 };
 
 function fmtAgo(ms: number): string {
@@ -111,16 +112,20 @@ function SyncPill({ status, lastSyncedAt, isAuthed }: { status: SyncStatus; last
     );
 }
 
-export function TopBar({ screen, activeChapterName, overall, onNavDashboard, syncStatus, lastSyncedAt, isAuthed, mode, onChangeMode }: Props) {
+export function TopBar({ screen, activeChapterName, overall, onNavDashboard, syncStatus, lastSyncedAt, isAuthed, mode, onChangeMode, onMenu }: Props) {
     const inChapter = screen === 'chapter';
     const modeTitle = mode === 'class11' ? 'Class 11 Planner' : mode === 'class12' ? 'Class 12 Planner' : 'Dropper Planner';
     return (
         <div className="dyp-topbar">
+            {/* Mobile-only: opens the sidebar drawer. Hidden on desktop via CSS. */}
+            <button type="button" className="dyp-tb-menu" onClick={onMenu} aria-label="Open chapters menu">
+                <Menu size={18} />
+            </button>
             <div className="dyp-tb-brand">
                 <Link href="/" className="dyp-tb-logo" aria-label="Canvas Classes home">
                     <Layers size={17} strokeWidth={2} color="#1a0f05" />
                 </Link>
-                <div>
+                <div className="dyp-hide-mobile">
                     <div className="dyp-tb-title">{modeTitle}</div>
                 </div>
             </div>
@@ -138,11 +143,11 @@ export function TopBar({ screen, activeChapterName, overall, onNavDashboard, syn
             )}
             <div className="dyp-tb-spacer" />
             <SyncPill status={syncStatus} lastSyncedAt={lastSyncedAt} isAuthed={isAuthed} />
-            <button type="button" className="dyp-tb-pill" title="Self-rating happens per chapter — open any chapter and use the Strong / Weak / New pills">
+            <button type="button" className="dyp-tb-pill dyp-hide-mobile" title="Self-rating happens per chapter — open any chapter and use the Strong / Weak / New pills">
                 <Sparkles size={15} style={{ color: 'var(--accent)' }} />
                 Quick rate
             </button>
-            <div className="dyp-tb-pill dyp-tb-count">
+            <div className="dyp-tb-pill dyp-tb-count dyp-hide-mobile">
                 <span style={{ color: 'var(--accent)', fontWeight: 700 }}>{overall.done}</span>
                 <span style={{ color: 'var(--text-4)' }}>/ {overall.total}</span>
                 <span style={{ color: 'var(--text-3)' }}>· {overall.pct}%</span>

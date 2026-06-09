@@ -1,9 +1,8 @@
-import { getTaxonomy } from '@/features/crucible/server-actions/the-crucible';
 import CrucibleWizard from '@/features/crucible/components/CrucibleWizard';
 import { Metadata } from 'next';
 import { createClient } from '../utils/supabase/server';
 import { isLocalhostDev } from '@/lib/bookAuth';
-import { buildChaptersWithCounts, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
+import { buildChaptersWithCounts, chaptersBaseFromTaxonomy, CRUCIBLE_ALL_SUBJECTS, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 
 export const revalidate = 3600; // Revalidate every hour — question counts don't change per-request
 
@@ -51,22 +50,11 @@ export default async function Page() {
 
     let chaptersWithCounts: ChapterWithCounts[] = [];
     try {
-        chaptersWithCounts = await buildChaptersWithCounts();
+        chaptersWithCounts = await buildChaptersWithCounts({ subjects: CRUCIBLE_ALL_SUBJECTS });
     } catch (error) {
         console.error('Failed to fetch chapters:', error);
-        // Fallback: serve a minimal taxonomy with zero counts rather than 500ing.
-        const chapters = await getTaxonomy();
-        chaptersWithCounts = chapters.map(ch => ({
-            id: ch.id,
-            name: ch.name,
-            class_level: ch.class_level ?? 11,
-            display_order: ch.display_order ?? 0,
-            category: 'Physical' as const,
-            question_count: 0,
-            star_question_count: 0,
-            neet_question_count: 0,
-            neet_star_question_count: 0,
-        }));
+        // DB-down fallback: real chapters (all subjects) with zero counts.
+        chaptersWithCounts = await chaptersBaseFromTaxonomy(CRUCIBLE_ALL_SUBJECTS);
     }
 
     return (

@@ -5,7 +5,9 @@ import { uploadToR2, getExtensionFromMimeType, type AssetType } from '@canvas/co
 import { isAdminRequest } from '@/lib/adminAuth';
 
 export const runtime = 'nodejs';
-export const maxDuration = 60;
+// Videos can take a while to stream-upload to R2 — was 60s, bumped to 120s
+// so a 100-200 MB MP4 on a slow connection doesn't get cut off mid-flight.
+export const maxDuration = 120;
 
 const ALLOWED_TYPES: Record<string, AssetType> = {
   // ── Images ──────────────────────────────────────────────────────────────
@@ -31,6 +33,12 @@ const ALLOWED_TYPES: Record<string, AssetType> = {
   // ── Video ────────────────────────────────────────────────────────────────
   'video/mp4': 'video',
   'video/webm': 'video',
+  // Mac / iPhone QuickTime exports + .m4v / 3GPP — browsers play these natively
+  // when served from R2, no transcode needed
+  'video/quicktime': 'video',
+  'video/x-m4v':     'video',
+  'video/3gpp':      'video',
+  'video/3gpp2':     'video',
   // ── Lottie animations (JSON) ─────────────────────────────────────────────
   'application/json': 'image', // stored as-is, no R2 type restriction needed
 };
@@ -39,7 +47,9 @@ const MAX_SIZE: Record<AssetType, number> = {
   image: 10 * 1024 * 1024,   // 10 MB
   svg: 5 * 1024 * 1024,       // 5 MB
   audio: 50 * 1024 * 1024,    // 50 MB
-  video: 100 * 1024 * 1024,   // 100 MB
+  // Bumped 100 MB → 200 MB so screen-recording-length MP4s clear the cap
+  // before the author has to manually compress.
+  video: 200 * 1024 * 1024,   // 200 MB
 };
 
 // POST /api/v2/books/assets/upload
@@ -118,7 +128,15 @@ export async function POST(request: NextRequest) {
       key: storagePath,
     }, { status: 201 });
   } catch (error) {
+    // Surface the real error message back to the editor UI so we don't lose
+    // the diagnostic (e.g. R2 credential problem, network timeout, AWS SDK
+    // exception). The old behaviour collapsed everything to "Upload failed"
+    // which left the author with no idea why it failed. We still log full
+    // detail server-side for stack traces.
     console.error('Books asset upload error:', error);
-    return NextResponse.json({ success: false, error: 'Upload failed' }, { status: 500 });
+    const message = error instanceof Error
+      ? `Upload failed: ${error.message}`
+      : 'Upload failed (unknown error)';
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { TAXONOMY_FROM_CSV, type TaxonomyNode } from '@canvas/data/taxonomy/taxonomyData_from_csv';
 
-type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';
+type ChapterType = 'physical' | 'inorganic' | 'organic' | 'practical' | 'physics' | 'mechanics_1' | 'mechanics_2' | 'thermo_waves' | 'electromagnetism' | 'optics' | 'modern_physics' | 'experimental_physics' | 'algebra' | 'calculus' | 'coordinate_geometry' | 'trigonometry' | 'vector_algebra' | 'biology';
 type SubjectTab = 'chemistry' | 'physics' | 'mathematics' | 'biology' | 'school';
 
 const CHEM_BRANCHES = [
@@ -19,8 +19,16 @@ const CHEM_BRANCHES = [
     { id: 'practical', name: 'Practical Chemistry', icon: FlaskConical, color: '#F59E0B' },
 ];
 
+// Physics modules — must match the chapterType values in subjects.ts /
+// taxonomyData_from_csv.ts. (Chapters migrated 2026-06-09 off the flat 'physics'.)
 const PHYSICS_BRANCHES = [
-    { id: 'physics', name: 'Physics', icon: Atom, color: '#06B6D4' },
+    { id: 'mechanics_1', name: 'Mechanics 1', icon: Atom, color: '#06B6D4' },
+    { id: 'mechanics_2', name: 'Mechanics 2', icon: Atom, color: '#0EA5E9' },
+    { id: 'thermo_waves', name: 'Thermodynamics & Waves', icon: FlaskConical, color: '#F97316' },
+    { id: 'electromagnetism', name: 'Electromagnetism', icon: Tag, color: '#A855F7' },
+    { id: 'optics', name: 'Optics', icon: Beaker, color: '#EAB308' },
+    { id: 'modern_physics', name: 'Modern Physics', icon: Atom, color: '#EC4899' },
+    { id: 'experimental_physics', name: 'Experimental Physics', icon: FlaskConical, color: '#14B8A6' },
 ];
 
 const MATH_BRANCHES = [
@@ -305,10 +313,11 @@ export default function TaxonomyClient() {
                                 onChange={(e) => setEditingNode({ ...editingNode, chapterType: e.target.value as ChapterType })}
                                 className="px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                             >
-                                <option value="physical">Physical</option>
-                                <option value="inorganic">Inorganic</option>
-                                <option value="organic">Organic</option>
-                                <option value="practical">Practical</option>
+                                {/* All subjects' branches so editing a physics/maths chapter
+                                    keeps its module/section type instead of silently resetting. */}
+                                {ALL_BRANCHES.map(b => (
+                                    <option key={b.id} value={b.id}>{b.name}</option>
+                                ))}
                             </select>
                         </div>
                     ) : (

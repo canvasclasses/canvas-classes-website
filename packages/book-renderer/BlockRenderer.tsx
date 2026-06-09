@@ -51,6 +51,7 @@ const PronunciationDrillRenderer         = dynamicBlock(() => import('./blocks/e
 const ChapterPracticeRenderer            = dynamicBlock(() => import('./blocks/english/ChapterPracticeRenderer'));
 const ApplyExpressRenderer               = dynamicBlock(() => import('./blocks/english/ApplyExpressRenderer'));
 const ReadingComprehensionRenderer       = dynamicBlock(() => import('./blocks/english/ReadingComprehensionRenderer'));
+const JuniorPracticeRenderer             = dynamicBlock(() => import('./blocks/JuniorPracticeRenderer'));
 
 export default function BlockRenderer({
   block,
@@ -100,6 +101,7 @@ export default function BlockRenderer({
     case 'chapter_practice':              return <ChapterPracticeRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
     case 'apply_express':                 return <ApplyExpressRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
     case 'reading_comprehension':         return <ReadingComprehensionRenderer block={block} />;
+    case 'junior_practice':               return <JuniorPracticeRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
     default:                   return null;
   }
 }

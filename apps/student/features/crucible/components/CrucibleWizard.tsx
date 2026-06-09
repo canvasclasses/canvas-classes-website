@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronDown, ChevronRight, Check, BarChart2, UserCircle, BookOpen, LayoutGrid, Clock, Lock, Sparkles, Star, LogOut, ClipboardList, Search, X } from 'lucide-react';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from './types';
+import { subjectForChapterId } from '../lib/subjects';
 
 // API response types
 interface ApiQuestion {
@@ -428,7 +429,13 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
   // Exam + subject — default to JEE/Chemistry so the page shows content immediately.
   // initialExam/initialChapterId seed from the [chapterId] route on direct URL load.
   const [selectedExam, setSelectedExam] = useState<ExamType | null>(initialExam ?? 'JEE');
-  const [selectedSubject, setSelectedSubject] = useState<SubjectType | null>('Chemistry');
+  // Seed the subject from the deep-linked chapter (e.g. /the-crucible/ph12_optics
+  // is a Physics chapter) so the wizard's subject tab matches the selected chapter
+  // on direct load / back-navigation — otherwise it'd default to Chemistry and the
+  // chapter would be filtered out of the visible list.
+  const [selectedSubject, setSelectedSubject] = useState<SubjectType | null>(
+    initialChapterId ? subjectForChapterId(initialChapterId) : 'Chemistry'
+  );
 
   const [selectedChapterId, setSelectedChapterId] = useState<string | null>(initialChapterId ?? null);
   const [classTab, setClassTab] = useState<'all' | 11 | 12>('all');
@@ -1175,12 +1182,21 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
     </>
   );
   if (activeView === 'test') return <TestView questions={testQuestions} onBack={handleBackToWizard} />;
-  if (activeView === 'guided') return <GuidedPracticeWizard chapters={chapters} onBack={handleBackToWizard} preSelectedChapterId={selectedChapterId ?? undefined} preSelectedDifficulty={guidedDifficulty} preSelectedSessionLength={sessionLength} />;
+  // Guided practice is Chemistry-only (its chapter picker groups by chemistry
+  // category); pass only chemistry chapters so physics/maths don't leak into it.
+  if (activeView === 'guided') return <GuidedPracticeWizard chapters={chapters.filter(c => (c.subject ?? 'Chemistry') === 'Chemistry')} onBack={handleBackToWizard} preSelectedChapterId={selectedChapterId ?? undefined} preSelectedDifficulty={guidedDifficulty} preSelectedSessionLength={sessionLength} />;
 
-  // Chapter list data (kept for any legacy references)
-  const classChapters = chapters.filter(ch => ch.class_level === (classTab === 'all' ? ch.class_level : classTab));
-  const grouped: Record<string, Chapter[]> = {};
-  classChapters.forEach(ch => { const cat = ch.category ?? 'Physical'; (grouped[cat] = grouped[cat] || []).push(ch); });
+  // Subject-aware grouping for the chapter list. Chemistry keeps its fixed
+  // category order (Physical → Inorganic → Organic → Practical); Physics/Maths
+  // use their taxonomy `group`, ordered by class level then syllabus sequence.
+  const visibleChapters = chapters.filter(ch => (ch.subject ?? 'Chemistry') === selectedSubject);
+  const groupOrder = selectedSubject === 'Chemistry'
+    ? CAT_ORDER
+    : Array.from(new Set(
+        [...visibleChapters]
+          .sort((a, b) => a.class_level - b.class_level || (a.display_order ?? 0) - (b.display_order ?? 0))
+          .map(ch => ch.group ?? ch.category ?? 'Other')
+      ));
 
   // Meta line for guided practice
   const metaLine = `${chapterQCount} questions · ${selectedChapter?.name ?? '—'} · ${guidedDifficulty} · ${sessionLength}Q`;
@@ -1189,10 +1205,12 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
   const subjectList = selectedExam === 'JEE'
     ? [
         { id: 'Chemistry' as SubjectType, emoji: '⚗️', color: '#38bdf8', available: true },
-        { id: 'Physics' as SubjectType, emoji: '⚡', color: '#a78bfa', available: false },
-        { id: 'Maths' as SubjectType, emoji: '∑', color: '#f97316', available: false },
+        { id: 'Physics' as SubjectType, emoji: '⚡', color: '#a78bfa', available: true },
+        { id: 'Maths' as SubjectType, emoji: '∑', color: '#f97316', available: true },
       ]
     : [
+        // NEET: Physics stays locked until NEET-tagged physics questions exist —
+        // the bank currently has 0 NEET physics questions (all 3.7k are JEE).
         { id: 'Chemistry' as SubjectType, emoji: '⚗️', color: '#38bdf8', available: true },
         { id: 'Biology' as SubjectType, emoji: '🧬', color: '#34d399', available: false },
         { id: 'Physics' as SubjectType, emoji: '⚡', color: '#a78bfa', available: false },
@@ -1399,27 +1417,37 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
 
             <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.08)' }} />
 
-            {/* Subject tiles */}
+            {/* Subject tiles — click an available one to switch the chapter list */}
             <div style={{ display: 'flex', gap: 7 }}>
-              {subjectList.map(subj => (
+              {subjectList.map(subj => {
+                const isSel = selectedSubject === subj.id;
+                return (
                 <div
                   key={subj.id}
+                  role={subj.available ? 'button' : undefined}
+                  tabIndex={subj.available ? 0 : undefined}
+                  aria-pressed={subj.available ? isSel : undefined}
+                  onClick={() => { if (!subj.available) return; setSelectedSubject(subj.id); setSelectedChapterId(null); setChapterStats(null); }}
+                  onKeyDown={(e) => { if (subj.available && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setSelectedSubject(subj.id); setSelectedChapterId(null); setChapterStats(null); } }}
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
                     padding: '6px 13px 6px 10px',
                     borderRadius: 6,
-                    borderTop: `1px solid ${subj.available ? `${subj.color}38` : 'rgba(255,255,255,0.06)'}`,
-                    borderRight: `1px solid ${subj.available ? `${subj.color}38` : 'rgba(255,255,255,0.06)'}`,
-                    borderBottom: `1px solid ${subj.available ? `${subj.color}38` : 'rgba(255,255,255,0.06)'}`,
+                    cursor: subj.available ? 'pointer' : 'default',
+                    borderTop: `1px solid ${subj.available ? `${subj.color}${isSel ? '70' : '38'}` : 'rgba(255,255,255,0.06)'}`,
+                    borderRight: `1px solid ${subj.available ? `${subj.color}${isSel ? '70' : '38'}` : 'rgba(255,255,255,0.06)'}`,
+                    borderBottom: `1px solid ${subj.available ? `${subj.color}${isSel ? '70' : '38'}` : 'rgba(255,255,255,0.06)'}`,
                     borderLeft: `3px solid ${subj.available ? subj.color : 'rgba(255,255,255,0.12)'}`,
-                    background: subj.available ? `${subj.color}10` : 'rgba(255,255,255,0.02)',
+                    background: subj.available ? (isSel ? `${subj.color}24` : `${subj.color}10`) : 'rgba(255,255,255,0.02)',
                     opacity: subj.available ? 1 : 0.42,
+                    transition: 'background 0.15s, border-color 0.15s',
                   }}
                 >
                   <span style={{ fontSize: 13, fontWeight: 600, letterSpacing: '0.01em', color: subj.available ? subj.color : 'rgba(255,255,255,0.35)' }}>{subj.id}</span>
                   {!subj.available && <Lock style={{ width: 10, height: 10, color: 'rgba(255,255,255,0.2)' }} />}
                 </div>
-              ))}
+                );
+              })}
             </div>
 
           </div>
@@ -1452,18 +1480,18 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                 </div>
               </div>
 
-              {/* Chapter rows grouped by category */}
+              {/* Chapter rows grouped by category (Chemistry) or class/topic (Physics/Maths) */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20, animation: 'fadeUp 0.4s ease-out 0.05s backwards' }}>
-                {CAT_ORDER.map(cat => {
-                  const list = chapters.filter(ch => {
-                    if ((ch.category ?? 'Physical') !== cat) return false;
+                {groupOrder.map(cat => {
+                  const list = visibleChapters.filter(ch => {
+                    if ((ch.group ?? ch.category ?? 'Other') !== cat) return false;
                     if (classTab !== 'all' && ch.class_level !== classTab) return false;
                     if (chapterSearch && !ch.name.toLowerCase().includes(chapterSearch.toLowerCase())) return false;
                     return true;
                   });
                   if (list.length === 0) return null;
                   const totalQs = list.reduce((s, c) => s + ((selectedExam === 'NEET' ? c.neet_question_count : c.question_count) ?? 0), 0);
-                  const accent = CAT_COLOR[cat];
+                  const accent = CAT_COLOR[cat] ?? '#fb923c';
                   return (
                     <div key={cat} style={{ minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2px' }}>
@@ -1526,7 +1554,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
                     </div>
                   );
                 })}
-                {chapters.filter(ch => {
+                {visibleChapters.filter(ch => {
                   if (classTab !== 'all' && ch.class_level !== classTab) return false;
                   if (chapterSearch && !ch.name.toLowerCase().includes(chapterSearch.toLowerCase())) return false;
                   return true;
