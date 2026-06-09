@@ -16,6 +16,7 @@ import {
     priorityIncomplete,
     revisionDue,
     type PlannerState,
+    type PlannerMode,
 } from './lib/state';
 import { Ring } from './Ring';
 import { TelegramCTA } from './TelegramCTA';
@@ -39,6 +40,26 @@ function greeting(): string {
     return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
 }
 
+// Batch-specific motivational message — speaks to each batch's real failure mode
+// (droppers: time mismanagement; Class 11: late start + the Class-10→11 jump +
+// backlog; Class 12: balancing the new syllabus with Class 11 revision).
+function HeroPitch({ mode, pace }: { mode: PlannerMode; pace: number }) {
+    const perWeek = <b>{pace} chapter{pace > 1 ? 's' : ''} a week</b>;
+    if (mode === 'class11') {
+        return (
+            <>Class 11 is a real step up from Class 10 — and the students who fall behind are usually the ones who start late and let a backlog pile up before they feel the jump in difficulty. Begin now, keep it steady at around {perWeek}, and the climb stays manageable. One chapter at a time — let&apos;s begin.</>
+        );
+    }
+    if (mode === 'class12') {
+        return (
+            <>Class 12 is a balancing act — you have to finish the new syllabus on time and keep revising Class 11, or the backlog quietly snowballs. So plan both: about {perWeek} for Class 12, with your Class 11 chapters revised alongside. Stay steady and nothing gets left behind — let&apos;s begin.</>
+        );
+    }
+    return (
+        <>Most droppers don&apos;t fall short on ability — they fall short on time, spending weeks on a few chapters while the rest of the syllabus slips by. Keep it balanced — around {perWeek} — and we&apos;ll finish one chapter at a time.</>
+    );
+}
+
 type Props = {
     catalog: ChapterPlanItem[];
     state: PlannerState;
@@ -46,6 +67,7 @@ type Props = {
     today: string;
     defaultTargetISO: string;
     eyebrow: string;
+    mode: PlannerMode;
     onChapter: (id: string) => void;
     onNavPlan: () => void;
     onNavRevision: () => void;
@@ -53,7 +75,7 @@ type Props = {
 };
 
 export function DashboardScreen({
-    catalog, state, completed, today, defaultTargetISO, eyebrow, onChapter, onNavPlan, onNavRevision, onSetTarget,
+    catalog, state, completed, today, defaultTargetISO, eyebrow, mode, onChapter, onNavPlan, onNavRevision, onSetTarget,
 }: Props) {
     const overall = overallProgress(catalog, completed);
     const dims = dimensionStats(catalog, completed);
@@ -83,6 +105,7 @@ export function DashboardScreen({
                 <div className="dyp-hero-glow" />
                 <HeroCountdown
                     eyebrow={eyebrow}
+                    mode={mode}
                     daysLeft={daysLeft}
                     targetISO={targetISO}
                     weeksLeft={weeks}
@@ -120,9 +143,10 @@ export function DashboardScreen({
 
 // ---------------- HERO ----------------
 function HeroCountdown({
-    eyebrow, daysLeft, targetISO, weeksLeft, pace, onTrack, streak, nextChapter, nextStep, isResuming, targetSet, onSetTarget, onContinue, onPlan,
+    eyebrow, mode, daysLeft, targetISO, weeksLeft, pace, onTrack, streak, nextChapter, nextStep, isResuming, targetSet, onSetTarget, onContinue, onPlan,
 }: {
     eyebrow: string;
+    mode: PlannerMode;
     daysLeft: number;
     targetISO: string;
     weeksLeft: number;
@@ -146,7 +170,7 @@ function HeroCountdown({
                 <span className="dyp-unit">days to go</span>
             </h1>
             <p className="dyp-hero-desc">
-                Most droppers don&apos;t fall short on ability — they fall short on time, spending weeks on a few chapters while the rest of the syllabus slips by. Keep it balanced — around <b>{pace} chapter{pace > 1 ? 's' : ''} a week</b> — and we&apos;ll finish one chapter at a time.{' '}
+                <HeroPitch mode={mode} pace={pace} />{' '}
                 {!targetSet && <span style={{ color: 'var(--text-4)' }}>(Set your finish-by date below.)</span>}
             </p>
             <div className="dyp-momentum">

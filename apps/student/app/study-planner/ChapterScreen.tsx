@@ -206,12 +206,25 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
                                 {stepRes[s.id].length > 0 && (
                                     <div className="dyp-step-res">
                                         {stepRes[s.id].map((x) => {
-                                            const label = x.kind === 'curated' ? x.r.label : x.r.label;
+                                            const label = x.r.label;
+                                            const key = `${s.id}-${x.kind === 'curated' ? `r${x.idx}` : x.r.id}`;
+                                            const embedUrl = x.kind === 'curated'
+                                                ? x.r.embedUrl
+                                                : (x.r.embeddable ? parseResourceUrl(x.r.url).embedUrl : undefined);
+                                            const href = x.kind === 'curated' ? x.r.href : x.r.url;
+                                            if (embedUrl) {
+                                                return (
+                                                    <button key={key} type="button" className="dyp-rchip" onClick={() => openPlayer(embedUrl, label)}>
+                                                        <Play size={14} className="dyp-ico" />
+                                                        {label}
+                                                    </button>
+                                                );
+                                            }
                                             return (
-                                                <span key={`${s.id}-${x.kind === 'curated' ? `r${x.idx}` : x.r.id}`} className="dyp-rchip">
-                                                    <Play size={14} className="dyp-ico" />
+                                                <a key={key} className="dyp-rchip" href={href} target="_blank" rel="noreferrer">
+                                                    <ExternalLink size={13} className="dyp-ico" />
                                                     {label}
-                                                </span>
+                                                </a>
                                             );
                                         })}
                                     </div>
@@ -231,13 +244,7 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
             <section className="dyp-ch-sec">
                 <div className="dyp-sec-head">
                     <h2 className="dyp-sec-title">Resources</h2>
-                    <span className="dyp-sec-sub">Curated + your own.</span>
-                    {!adding && (
-                        <button type="button" className="dyp-sec-link" onClick={() => setAdding(true)}>
-                            <Plus size={14} strokeWidth={2.2} />
-                            Add your own
-                        </button>
-                    )}
+                    <span className="dyp-sec-sub">Curated videos &amp; notes — or bring your own.</span>
                 </div>
                 {adding && (
                     <AddResource
@@ -246,9 +253,6 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
                     />
                 )}
                 <div className="dyp-res-list">
-                    {resources.length === 0 && customs.length === 0 && !adding && (
-                        <div className="dyp-empty">No resources yet — add your favourite video or notes.</div>
-                    )}
                     {resources.map((r, idx) => (
                         <CuratedResourceRow
                             key={`r${idx}`}
@@ -270,6 +274,15 @@ export function ChapterScreen({ chapter, state, completed, api, fullCatalog, mod
                             onPlay={openPlayer}
                         />
                     ))}
+                    {!adding && (
+                        <button type="button" className="dyp-res-add" onClick={() => setAdding(true)}>
+                            <span className="dyp-res-add-ic"><Plus size={16} strokeWidth={2.4} /></span>
+                            <span className="dyp-res-add-main">
+                                <span className="dyp-res-add-title">Add your own YouTube lecture or notes</span>
+                                <span className="dyp-res-add-sub">Paste any YouTube, Drive or Vimeo link — it plays right here.</span>
+                            </span>
+                        </button>
+                    )}
                 </div>
             </section>
 
