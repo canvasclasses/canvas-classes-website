@@ -764,9 +764,12 @@ button.dyp-res-ic, a.dyp-res-ic { border: 0; cursor: pointer; }
 .dyp-sb-backdrop { display: none; }   /* drawer scrim: mobile only */
 
 @media (max-width: 768px) {
-  .dyp-topbar { padding: 0 12px; gap: 9px; }
+  .dyp-topbar { padding: 0 10px; gap: 6px; }
   .dyp-tb-brand { min-width: 0; }                 /* was min-width: var(--sidebar-w) (286px) */
   .dyp-hide-mobile { display: none !important; }  /* drop non-essential topbar bits */
+  /* Compact the mode switch + status pill so the whole bar fits a ~360px phone. */
+  .dyp-modeseg { padding: 5px 9px; font-size: 11.5px; }
+  .dyp-tb-pill { height: 30px; padding: 0 8px; font-size: 11.5px; gap: 5px; }
 
   .dyp-tb-menu {
     display: inline-grid; place-items: center; flex: 0 0 auto;
@@ -794,10 +797,30 @@ button.dyp-res-ic, a.dyp-res-ic { border: 0; cursor: pointer; }
   }
   .dyp-sb-open .dyp-sb-backdrop { opacity: 1; pointer-events: auto; }
 
-  /* Main content: full width, lighter padding, single-column grids. */
-  .dyp-wrap { padding: 22px 16px 80px; }
+  /* Main content: full width, single-column grids, and a hard guard against any
+     stray box floating past the screen edge. */
+  .dyp-main { overflow-x: hidden; }
+  .dyp-wrap { padding: 16px 12px 72px; }   /* tighter side gutters (was 22px 16px) */
   .dyp-wrap.dyp-narrow { max-width: 100%; }
-  .dyp-hero { grid-template-columns: 1fr; gap: 22px; }
+  .dyp-pad { padding: 16px 14px; }         /* card insides (was 22px 24px) */
   .dyp-grid-2 { grid-template-columns: 1fr; }
   .dyp-upcoming { grid-template-columns: 1fr; }
+
+  /* Hero card — smaller padding + countdown so the copy never gets clipped. */
+  .dyp-hero { grid-template-columns: 1fr; gap: 18px; padding: 20px 16px; }
+  .dyp-hero-greet { font-size: 14px; }
+  .dyp-hero-count { gap: 10px; }
+  .dyp-hero-count .dyp-num { font-size: 60px; }
+  .dyp-hero-count .dyp-unit { font-size: 17px; }
+  .dyp-hero-desc { font-size: 14px; max-width: 100%; }
+
+  /* Primary CTA goes full-width and is allowed to wrap, so a long chapter name
+     ("Pick up · Motion in One Dimension") can't force horizontal scroll. */
+  .dyp-hero-cta { flex-direction: column; align-items: stretch; gap: 10px; }
+  .dyp-hero-cta .dyp-btn { width: 100%; justify-content: flex-start; white-space: normal; }
+
+  /* Progress panel + list rows — tighter insides. */
+  .dyp-prog-panel { padding: 14px; gap: 13px; }
+  .dyp-prog-top { gap: 14px; }
+  .dyp-week-item, .dyp-rev-item { padding: 10px 12px; gap: 11px; }
 }
