@@ -252,7 +252,7 @@ export default async function StudyPlannerPage() {
                                 key={f.q}
                                 className="group rounded-xl border border-white/5 bg-[#0B0F15] px-5 [&_summary::-webkit-details-marker]:hidden"
                             >
-                                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-4 text-base font-bold sm:text-lg">
+                                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-4 text-base font-bold text-white/70 sm:text-lg">
                                     {f.q}
                                     <svg className="h-4 w-4 shrink-0 text-white/40 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
                                 </summary>
