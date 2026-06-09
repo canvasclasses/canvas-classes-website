@@ -82,16 +82,17 @@ const class11to12Menu: MegaMenuDef = {
   ],
 };
 
-// JEE/NEET: The Crucible gets a featured hero panel — first thing seen on hover.
+// JEE/NEET: the Study Planner gets the featured hero panel — first thing seen on
+// hover. (The Crucible keeps its dedicated top-level link in the navbar.)
 const jeeNeetMenu: MegaMenuDef = {
   id: 'jee-neet',
   label: 'JEE/NEET',
   anchor: 'center',
   featured: {
-    label: 'The Crucible',
-    tagline: 'Adaptive question practice for JEE & NEET. Track progress, drill chapters, attempt mocks.',
-    href: '/the-crucible',
-    cta: 'Start Practicing',
+    label: 'Study Planner',
+    tagline: 'A custom study planner for Class 11, 12, and the drop year.',
+    href: '/study-planner',
+    cta: 'Open the planner',
   },
   columns: [
     {

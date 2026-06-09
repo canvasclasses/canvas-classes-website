@@ -1,5 +1,4 @@
-import { redirect } from 'next/navigation';
-import { requireSuperAdmin } from '@/lib/adminAuth';
+import AdminPanel from '@/features/admin/components/AdminPanel';
 import TaxonomyClient from './TaxonomyClient';
 
 export const metadata = {
@@ -8,8 +7,10 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic';
 
-export default async function TaxonomyPage() {
-  const admin = await requireSuperAdmin();
-  if (!admin) redirect('/');
-  return <TaxonomyClient />;
+export default function TaxonomyPage() {
+  return (
+    <AdminPanel gate="super">
+      <TaxonomyClient />
+    </AdminPanel>
+  );
 }

@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
-import { requireSuperAdmin } from '@/lib/adminAuth';
+import AdminPanel from '@/features/admin/components/AdminPanel';
 import EnhancedFlashcardAdmin from '@/features/admin/components/EnhancedFlashcardAdmin';
 
 export const metadata: Metadata = {
@@ -10,8 +9,10 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-export default async function FlashcardAdminPage() {
-  const admin = await requireSuperAdmin();
-  if (!admin) redirect('/');
-  return <EnhancedFlashcardAdmin />;
+export default function FlashcardAdminPage() {
+  return (
+    <AdminPanel gate="super">
+      <EnhancedFlashcardAdmin />
+    </AdminPanel>
+  );
 }

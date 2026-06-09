@@ -199,6 +199,13 @@ const nextConfig: NextConfig = {
         destination: 'https://www.canvasclasses.in/:path*',
         permanent: true,
       },
+      // Planner renamed 2026-06-08: drop-year-planner → study-planner (now spans
+      // Class 11 / 12 / Dropper for JEE & NEET, not just the drop year).
+      {
+        source: '/drop-year-planner',
+        destination: '/study-planner',
+        permanent: true,
+      },
       {
         source: '/flashcards',
         destination: '/chemistry-flashcards',
