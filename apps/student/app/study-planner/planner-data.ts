@@ -475,7 +475,7 @@ export function buildSubjectCatalog(
             // --- shared building blocks ---------------------------------------
             // Crucible practice — opens the chapter's topic-wise problem browser.
             const crucible: PlannerResource = {
-                label: 'Practice Questions', kind: 'questions',
+                label: 'Practice Questions on Crucible', kind: 'questions',
                 href: `/the-crucible/${ch.id}?mode=browse`, steps: ['solve', 'pyq'],
             };
             // Handwritten Notes — deep-linked per chapter (chemistry only).

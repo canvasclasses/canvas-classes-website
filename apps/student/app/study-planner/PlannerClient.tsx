@@ -153,6 +153,7 @@ export function PlannerClient({ fullCatalog }: Props) {
                             today={today}
                             defaultTargetISO={DEFAULT_TARGET_DATES[mode]}
                             eyebrow={eyebrow}
+                            mode={mode}
                             onChapter={openChapter}
                             onNavPlan={() => navTo('plan')}
                             onNavRevision={() => navTo('revision')}
