@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronDown, ChevronRight, Check, BarChart2, UserCircle, BookOpen, LayoutGrid, Clock, Lock, Sparkles, Star, LogOut, ClipboardList, Search, X } from 'lucide-react';
 import { createClient as createSupabaseClient } from '@/app/utils/supabase/client';
 import { Chapter, Question } from './types';
+import { subjectForChapterId } from '../lib/subjects';
 
 // API response types
 interface ApiQuestion {
@@ -428,7 +429,13 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
   // Exam + subject — default to JEE/Chemistry so the page shows content immediately.
   // initialExam/initialChapterId seed from the [chapterId] route on direct URL load.
   const [selectedExam, setSelectedExam] = useState<ExamType | null>(initialExam ?? 'JEE');
-  const [selectedSubject, setSelectedSubject] = useState<SubjectType | null>('Chemistry');
+  // Seed the subject from the deep-linked chapter (e.g. /the-crucible/ph12_optics
+  // is a Physics chapter) so the wizard's subject tab matches the selected chapter
+  // on direct load / back-navigation — otherwise it'd default to Chemistry and the
+  // chapter would be filtered out of the visible list.
+  const [selectedSubject, setSelectedSubject] = useState<SubjectType | null>(
+    initialChapterId ? subjectForChapterId(initialChapterId) : 'Chemistry'
+  );
 
   const [selectedChapterId, setSelectedChapterId] = useState<string | null>(initialChapterId ?? null);
   const [classTab, setClassTab] = useState<'all' | 11 | 12>('all');
@@ -1175,12 +1182,9 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
     </>
   );
   if (activeView === 'test') return <TestView questions={testQuestions} onBack={handleBackToWizard} />;
-  if (activeView === 'guided') return <GuidedPracticeWizard chapters={chapters} onBack={handleBackToWizard} preSelectedChapterId={selectedChapterId ?? undefined} preSelectedDifficulty={guidedDifficulty} preSelectedSessionLength={sessionLength} />;
-
-  // Chapter list data (kept for any legacy references)
-  const classChapters = chapters.filter(ch => ch.class_level === (classTab === 'all' ? ch.class_level : classTab));
-  const grouped: Record<string, Chapter[]> = {};
-  classChapters.forEach(ch => { const cat = ch.category ?? 'Physical'; (grouped[cat] = grouped[cat] || []).push(ch); });
+  // Guided practice is Chemistry-only (its chapter picker groups by chemistry
+  // category); pass only chemistry chapters so physics/maths don't leak into it.
+  if (activeView === 'guided') return <GuidedPracticeWizard chapters={chapters.filter(c => (c.subject ?? 'Chemistry') === 'Chemistry')} onBack={handleBackToWizard} preSelectedChapterId={selectedChapterId ?? undefined} preSelectedDifficulty={guidedDifficulty} preSelectedSessionLength={sessionLength} />;
 
   // Subject-aware grouping for the chapter list. Chemistry keeps its fixed
   // category order (Physical → Inorganic → Organic → Practical); Physics/Maths
@@ -1205,9 +1209,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
         { id: 'Maths' as SubjectType, emoji: '∑', color: '#f97316', available: true },
       ]
     : [
+        // NEET: Physics stays locked until NEET-tagged physics questions exist —
+        // the bank currently has 0 NEET physics questions (all 3.7k are JEE).
         { id: 'Chemistry' as SubjectType, emoji: '⚗️', color: '#38bdf8', available: true },
         { id: 'Biology' as SubjectType, emoji: '🧬', color: '#34d399', available: false },
-        { id: 'Physics' as SubjectType, emoji: '⚡', color: '#a78bfa', available: true },
+        { id: 'Physics' as SubjectType, emoji: '⚡', color: '#a78bfa', available: false },
       ];
 
   return (

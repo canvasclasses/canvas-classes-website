@@ -76,6 +76,11 @@ const CAT_COLOR: Record<string, string> = {
 };
 const catAccent = (cat?: string): string => CAT_COLOR[cat ?? ''] ?? '#fb923c';
 
+// Physics/Maths chapters carry a placeholder category ('Physical'), so they're
+// labelled/coloured by subject + their `group` (module/section) instead. Colours
+// match the wizard's subject tiles.
+const SUBJECT_ACCENT: Record<string, string> = { Physics: '#a78bfa', Maths: '#f97316' };
+
 // Per-question UI state. Lives in a single Map keyed by question id so it
 // survives pagination / filter changes — avoids the old indexed-by-localIdx
 // state that lost progress whenever the page changed.
@@ -234,7 +239,13 @@ export default function BrowseView({
 
   // Single accent for this chapter — drives sidebar highlight, ambient gradient,
   // and chip colors so each chapter has its own colour identity.
-  const accent = catAccent(currentChapter?.category);
+  // Chemistry colours/labels by category; Physics/Maths by subject + their
+  // `group` (their `category` is a placeholder 'Physical' — never show it).
+  const chapterSubject = currentChapter?.subject ?? 'Chemistry';
+  const sectionLabel = chapterSubject === 'Chemistry' ? currentChapter?.category : currentChapter?.group;
+  const accent = chapterSubject === 'Chemistry'
+    ? catAccent(currentChapter?.category)
+    : (SUBJECT_ACCENT[chapterSubject] ?? '#fb923c');
 
   // Topics for this chapter (from taxonomy), reordered to NCERT order if defined
   const topics = useMemo(() => {
@@ -1226,17 +1237,17 @@ export default function BrowseView({
                   <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-white/35 uppercase tracking-wider font-medium">
                     <span>The Crucible</span>
                     <span>/</span>
-                    <span>{currentChapter.category ?? 'Chemistry'}</span>
+                    <span>{sectionLabel ?? chapterSubject}</span>
                   </div>
                   <h1 className="text-[17px] lg:text-[20px] font-bold leading-tight tracking-tight text-white truncate">
                     {currentChapter.name}
                   </h1>
-                  {currentChapter.category && (
+                  {sectionLabel && (
                     <span
                       className="hidden lg:inline-flex text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md whitespace-nowrap"
                       style={{ color: accent, background: `${accent}18`, border: `1px solid ${accent}35` }}
                     >
-                      {currentChapter.category}
+                      {sectionLabel}
                     </span>
                   )}
                 </>
