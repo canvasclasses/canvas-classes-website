@@ -11,7 +11,12 @@ const PRIVATE_NO_STORE = {
 };
 
 const MAX_HISTORY = 500;
-const VALID_CONCEPTS = new Set(['comprehension', 'vocab_in_context', 'grammar', 'interpretation', 'inference']);
+const VALID_CONCEPTS = new Set([
+  // English (Kaveri)
+  'comprehension', 'vocab_in_context', 'grammar', 'interpretation', 'inference',
+  // Science / Math junior practice (junior_questions bank)
+  'concept', 'application', 'numerical', 'reasoning', 'recall',
+]);
 
 // GET /api/v2/books/practice?book_slug=x — cumulative attempt history for this
 // user+book (newest first), used by the adaptive selector to calibrate.

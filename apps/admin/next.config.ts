@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
   transpilePackages: ['@canvas/book-renderer', '@canvas/core', '@canvas/data', '@canvas/persona', '@canvas/services', '@canvas/ui'],
   experimental: {
+    // Default is 10 MB. The admin uploads videos (up to 200 MB per the asset-upload
+    // route) through middleware-gated routes. Without this, Next.js silently
+    // truncates the request body at 10 MB and the route's `request.formData()`
+    // throws "expected boundary after body" because the multipart marker got cut.
+    // Match this to the video size cap in apps/admin/app/api/v2/books/assets/upload/route.ts.
+    // NOTE: this MUST live under `experimental` — Next 15 puts it there, even
+    // though the doc URL path (`/next-config-js/middlewareClientMaxBodySize`)
+    // makes it look top-level. Confirmed by reading node_modules/next/dist/esm/
+    // server/config-shared.js: the default value sits inside the experimental
+    // block, so user overrides must too.
+    middlewareClientMaxBodySize: '200mb',
     serverActions: {
       bodySizeLimit: '20mb',
     },
