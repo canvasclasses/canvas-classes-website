@@ -255,6 +255,7 @@ Variants and when to use them:
 }
 ```
 - Always `width: "full"` unless explicitly told otherwise
+- **Always set `aspect_ratio`** so the reader reserves the box and blur-up-fades the image in — never a loading "void" (§15.6). Every image is tap-to-zoom. For 2–4 images on one concept use a `gallery`, not a vertical stack (§15.6).
 - **`src` should be empty string `""`** when the image has not been uploaded yet
 - **Always include `generation_prompt`** — this is what the user will copy into an AI image generator
 - Caption always starts with `📸 `
@@ -473,6 +474,7 @@ Two scripted pipelines enforce the rules above. Both match questions by `(page_s
 ```
 - Only use if a simulation component exists at `components/books/renderer/blocks/simulations/`
 - `simulation_id` must match an existing component registered in `SimulationBlockRenderer.tsx`
+- **Every simulation MUST carry a `prediction` (predict→reveal gate) — no bare simulators. See §15.4 and the `prediction` shape in §4B.**
 
 #### 3.7.1 Biology — use `interactive_image` instead of `simulation`
 
@@ -683,6 +685,8 @@ All biology image prompts — whether in `image` blocks, inline images, or `inte
 ## 4. Standard Page Structure
 
 ### 4A. Class 11–12 (JEE / NEET) — Default Template
+
+> **Apply §15 (Experience Standards) on top of this template.** In particular for 11–12: every `heading[2]` gets an `objective` (§15.2); add a **mid-page** `reasoning_prompt`/micro-check after each major concept, not just the closing quiz (§15.3); every `simulation` is predict-first (§15.4); end with a one-line bridge to the next page (§15.10); and split rather than exceed ~18 blocks / one sub-topic (§15.8).
 
 Every page should follow this flow. Adjust as needed but don't skip the hook or the exam tip.
 
@@ -909,6 +913,8 @@ Do not force cross-subject links. One natural connection is better than three st
 ## 4D. Topic Containment — One Page, One Sub-Topic, Fully Closed
 
 **The single most important structural rule.** Every page is a self-contained learning unit. A student who reads only this page should leave with one sub-topic *fully understood and tested*. Nothing carries over.
+
+> **Hard guardrail (§15.8):** if a page exceeds **~18 blocks** OR covers **2+ distinct sub-topics**, split it — even if every block is good. A mega-page is a flow failure and bloats the right-rail exam box into a wall.
 
 ### The Rule
 
@@ -1514,3 +1520,106 @@ Every block carries an optional `tier` field on `BaseBlock`: `'core' | 'competit
 - **Batch scripts** that write directly to Mongo can set `tier` on the block object like any other field (it bypasses the Zod route but the field is in `BaseBlockSchema`, so the admin editor and API both preserve it).
 
 When building a new page, assign `tier` as you write — it is near-zero cost at authoring time and saves a large retroactive pass once the paywall ships.
+
+---
+
+## 15. Experience Standards — the Apple-Books bar (2026-06-10)
+
+> **Why this section exists.** Our inspiration is Apple Books — specifically the *Life on Earth* series — where the *execution* (pacing, imagery, motion, calm chrome) is the product, not an afterthought. A page-by-page editorial review of Class 11 Chemistry Ch.1 found the content and art are strong but the **experience** lagged: ideas repeated in 2–3 formats back-to-back, a 44-block mega-page, image "voids" while assets loaded, media bars breaking the reading rhythm, no chapter on-ramp, and recall only at the very end. This section is the standard that closes that gap. **It applies to every new book and every new page. When it conflicts with an older section here, §15 wins.** Several items below name a `page_type`/field/block that the reader implements in phases — author to the spec even where the renderer is still catching up; the data will be correct when the feature lands.
+
+### 15.1 Chapter opener — every chapter starts with one (auto-generated)
+
+A chapter must never begin cold on page 1. Each chapter opens with a dedicated **chapter-opener page** — a full-bleed cover moment plus a visual map of the journey ahead — whose job is to *motivate the student to tap in*.
+
+- **It is a special page**, `page_type: 'chapter_opener'`, sorted first in the chapter. It is **not** a lesson: it carries no quiz, is **not** quiz-gated, and is not counted in the "N of M complete" progress.
+- **Author writes only a little** (the rest is derived):
+  - a **full-bleed hero** image (edge-to-edge cover, not boxed in the content column — see §15.6) with `generation_prompt` per §3.4.2;
+  - the chapter eyebrow + title (from the chapter record);
+  - a **1–2 sentence "why this chapter matters"** intro (the hook for the whole unit);
+  - optional **"What you'll master"** — 3–5 outcome bullets.
+- **Everything else is auto-derived from the chapter's pages — never hand-maintained:**
+  - the **journey**: the ordered list of content pages (title + subtitle), each shown as a step/card;
+  - per-page **badges** computed from that page's blocks: number of `simulation`, of `worked_example`, of checks (`inline_quiz` + `reasoning_prompt`);
+  - **chapter totals** ("4 simulations · 9 worked examples · 12 checks · ~35 min read") and an estimated time;
+  - a **"Start →"** CTA into the first content page.
+- **Voice:** inviting, second-person, a promise — "By the end of this chapter you'll count particles you can't see." Not a syllabus dump.
+
+> Implementation: the reader detects `page_type:'chapter_opener'` and renders the bespoke layout, deriving the journey/counts live from the chapter's pages. Authors supply hero + intro (+ optional outcomes) only.
+
+**Authoring recipe (live since 2026-06-10).** Create the opener as a normal `book_pages` doc with:
+> - `page_type: 'chapter_opener'`, `page_number: 0`, `published: true`, `slug` like `chapter-1-overview`;
+> - `title` = the clean chapter title (no "Ch. N |" prefix — the reader adds the "Chapter N" eyebrow);
+> - `subtitle` = the 1–2-sentence "why this chapter matters" intro;
+> - `blocks`: **(1)** a full-bleed hero `image` block (`aspect_ratio:'21:9'`, `width:'full'`, `src:''` + a §3.4.2 `generation_prompt`), and **(2)** an optional `text` block whose markdown is a `- bullet` list → rendered as the "What you'll master" outcomes.
+> Then **prepend the opener's `_id` to that chapter's `chapters[].page_ids`**. The journey map, per-page badges (sims / worked-examples / checks), totals and reading-time are computed by the route — never authored. Reader files: `ChapterOpener.tsx`, the `/class-11/chemistry/[pageSlug]` route (journey computation), `BookReader.tsx` (detection + opener excluded from progress/sidebar). The opener is reachable at its slug; linking it from the grade/TOC landing is a follow-up.
+
+### 15.2 Per-section objective — orient before you teach
+
+Every major section (`heading[2]` that opens a sub-topic) carries a **one-line objective or driving question** so the reader always knows *why they're here*.
+
+- Representation: the `heading` block gains an optional **`objective`** string, rendered as a muted italic line just under the heading.
+- Make it **outcome-based and concrete** — "By the end of this you can convert any length unit in one step" or a driving question "Why does 1 cm³ equal 1 mL but 1 cm doesn't equal 1 mm?" — **never** "In this section we will learn…".
+- **Section headings render as a band, automatically.** Level-1 and level-2 headings (the sub-topic openers) draw with a **left accent bar (sky) + a tint that fades to the right**, with the heading (white) and its objective inside — so a new sub-topic is unmistakable instead of blending into the prose below. Level-3 headings stay plain sky text (sub-sub-section). This is the same visual language as the worked-example panels but in **sky** (vs the worked-example **amber**), giving a consistent taxonomy: *blue bar = section heading, amber bar = worked example.* No authoring needed — `HeadingBlockRenderer` applies it by level. (Page titles additionally use a subtle white→warm gradient.)
+
+### 15.3 Active-recall cadence — check mid-page, not just at the end
+
+A page must not save all testing for the closing quiz.
+
+- After **each major concept**, place a quick check **soon after** the text that teaches it: a **`reasoning_prompt`** (predict / spot-the-flaw / why) or a 1–2-question micro `inline_quiz`.
+- **Class 11–12 now use the `reasoning_prompt` machinery** (schema in §3.12, placement rules in §4B) that was previously Class-9-only. Same rules: never before the concept; one per concept; placed right after the establishing text.
+- Target ≥ 1 mid-page check per ~2 major headings, **plus** the closing quiz. The closing quiz still tests the whole page (§3.6.1 option rules apply everywhere).
+
+### 15.4 Simulations are predict-first — always
+
+Every `simulation` block **must** carry a `prediction` (the predict→reveal gate; the reader already enforces it). **No bare simulators.**
+
+- The prediction targets the **exact misconception** the sim fixes (e.g. "Which is bigger — 1 cm³ or 1 mL?", "A 1 kg and a 10 kg ball are dropped together — which lands first?").
+- See §4B "simulation prediction" for the shape and the "only when the outcome is non-obvious" rule.
+
+### 15.5 Media lane — bite-size audio & video live in the rail
+
+Audio notes and videos are **support for the reading, not interruptions to it.**
+
+- Keep them **bite-size and single-idea**: audio ≤ ~3 min, video short; each with a **clear title + duration**.
+- **Media stays INLINE at its recorded section position** *and* is **mirrored in the rail's "Watch & Listen" tab** (the **first/left** rail tab; "Exam Insight" — the exam_tip callout — is the right tab). Audio/video are recorded *for specific sections*, so the inline copy is what tells the student "play this here, about this concept"; the rail is the skip-the-text playlist for someone who'd rather watch/listen than read. Both point at the same media.
+- Authoring: place each `audio_note`/`video` block in body order at the section it explains; write a descriptive `label`/`caption` + a real duration. The reader handles the rail mirroring automatically.
+
+### 15.6 Image experience — never a void, always zoomable
+
+- **Tap-to-zoom (lightbox) on every image.** Tapping any image opens it full-screen and dims everything else — essential for dense infographics and for **portrait images** that otherwise eat vertical space. Reader-level behavior; no per-block authoring needed.
+- **Because every image is tap-to-zoom, display images SMALLER inline to cut scroll.** Don't default every figure to `width:"full"` — use a narrower preset (`two_third`, `half`, `two_fifth`) for diagrams/infographics so the page scrolls less; the student taps for full detail. Reserve full-width for the hero and the rare image that must be read in place. A long vertical run of large images is a scroll tax the lightbox now lets you avoid.
+- **Blur-up + aspect-locked skeleton — no black voids.** Always set **`aspect_ratio`** on image blocks so the layout reserves the exact box and the image fades in from a blurred placeholder. An empty rectangle while loading is the single biggest "cheap web page" tell; this kills it.
+- **Full-bleed for cover moments.** Chapter-opener heroes (and, sparingly, a chapter's signature image) bleed edge-to-edge beyond the content column. Regular figures stay in-column.
+- **`gallery` block for multi-image-per-concept (live since 2026-06-10).** When **one** concept needs **several** images, use a **swipeable `gallery`** instead of stacking them vertically. This is *not* "an image per section" — it's specifically the 2-to-4-images-for-one-idea case (e.g. three apparatus variants, a before/during/after triptych). One tall vertical stack of portrait images is an anti-pattern — gallery it, or rely on tap-to-zoom. **Authoring:** in the admin editor, *Add Block → Media → Gallery (swipe)*; add 2–6 images (upload or URL) each with alt + optional caption, pick one shared frame aspect ratio. Reader shows arrows + dots + counter, each slide tap-to-zoom. Shape: `{type:'gallery', items:[{id,src,alt,caption?}], aspect_ratio?}` (`GalleryBlockRenderer`).
+
+### 15.7 No-redundancy rule — say it once, in its strongest form
+
+Never deliver the **same** concept in two or more formats back-to-back (e.g. body prose **and** a `comparison_card` **and** a full infographic image all covering "physical vs chemical"). Pick the **single strongest** treatment and cut the rest. Repetition for *reinforcement after a gap* is fine; *immediate* re-statement in another widget is padding.
+
+### 15.8 Page-size guardrail — reinforces §4D
+
+One page = one sub-topic, fully closed (§4D). Concretely: **if a page exceeds ~18 blocks OR covers 2+ distinct sub-topics, split it.** A mega-page is a flow failure even when every block is good — it also bloats the right-rail exam box into a wall. Split on the natural concept boundary, give each page its own hook, its own mid-page check(s), and its own closing quiz.
+
+### 15.9 Tappable glossary terms
+
+Key terms (the ones you bold on first use) should be **tappable for an inline definition popover**.
+
+- Mechanism: the page carries a **`glossary: [{ term, definition }]`** array; the reader makes the **first occurrence** of each term tappable. Keep each definition to **1–2 plain sentences** in the page's voice.
+- Author by listing the page's load-bearing terms in `glossary` — don't define everything, only the terms a student would genuinely stop on.
+
+### 15.10 Narrative bridge — thread the chapter into a story
+
+End **every** content page with a **one-line hand-off to the next page** ("Next: now that you can measure matter, let's meet the laws it obeys."). This is what turns a stack of pages into a *book*. The bridge is the last thing before the closing quiz (or the quiz's closing note).
+
+### 15.11 Per-page experience checklist — run before POST
+
+- [ ] (Chapter's first page only is the **chapter opener**; lessons don't start cold.)
+- [ ] Every `heading[2]` has an `objective` (outcome or driving question, not "we will learn").
+- [ ] At least one **mid-page** check (`reasoning_prompt` or micro-quiz) after each major concept — not only the end quiz.
+- [ ] Every `simulation` has a `prediction`.
+- [ ] Audio/video are bite-size with titles + durations (they'll land in the rail's Watch & Listen tab; body shows a compact chip).
+- [ ] Every `image` has `aspect_ratio` set; multi-image-for-one-concept uses a `gallery`; no tall stacks of portrait images.
+- [ ] No concept is delivered in 2+ formats back-to-back (§15.7).
+- [ ] Page is ≤ ~18 blocks and one sub-topic (§15.8) — otherwise split.
+- [ ] Load-bearing terms are listed in `glossary`.
+- [ ] Page ends with a one-line bridge to the next page.

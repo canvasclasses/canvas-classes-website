@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { Headphones, Pause } from 'lucide-react';
 import { AudioNoteBlock } from '@canvas/data/types/books';
 
 // Waveform bar heights (%) — natural audio silhouette
@@ -23,7 +24,7 @@ function formatTime(sec: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export default function AudioNoteBlockRenderer({ block }: { block: AudioNoteBlock }) {
+export default function AudioNoteBlockRenderer({ block, compact = false }: { block: AudioNoteBlock; compact?: boolean }) {
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -54,6 +55,45 @@ export default function AudioNoteBlockRenderer({ block }: { block: AudioNoteBloc
   };
 
   if (!block.src) return null;
+
+  // ── Compact card (rail "Watch & Listen") — same footprint as a video card,
+  //    with a headphones icon so audio reads as audio at a glance. ──
+  if (compact) {
+    return (
+      <div className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden">
+        <audio
+          ref={audioRef}
+          src={block.src}
+          onTimeUpdate={onTimeUpdate}
+          onEnded={onEnded}
+          preload="metadata"
+        />
+        <button
+          onClick={toggle}
+          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.03] transition-colors"
+          aria-label={playing ? 'Pause audio' : 'Play audio'}
+        >
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-500 to-cyan-400
+            flex items-center justify-center shrink-0 text-black">
+            {playing ? <Pause size={13} fill="black" /> : <Headphones size={15} />}
+          </div>
+          <span className="flex-1 text-left text-[15px] font-medium text-white/70 leading-snug line-clamp-2">
+            {block.label ?? 'Audio Explanation'}
+          </span>
+          <span className="text-[12px] text-white/30 tabular-nums shrink-0">
+            {formatTime(playing ? currentTime : block.duration_sec)}
+          </span>
+        </button>
+        {/* thin progress track at the card foot */}
+        <div className="h-0.5 bg-white/8">
+          <div
+            className="h-full transition-all duration-100"
+            style={{ width: `${progress}%`, background: 'linear-gradient(to right, #38bdf8, #22d3ee)' }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="my-3 p-4 rounded-xl border border-white/10 bg-[#0E1420]">
@@ -98,16 +138,16 @@ export default function AudioNoteBlockRenderer({ block }: { block: AudioNoteBloc
           </p>
         </div>
 
-        {/* Play / Pause */}
+        {/* Play / Pause — blue + headphones so audio reads as audio (matches the rail) */}
         <button
           onClick={toggle}
-          className="shrink-0 w-9 h-9 rounded-full bg-gradient-to-r from-orange-500 to-amber-500
+          className="shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-sky-500 to-cyan-400
             flex items-center justify-center text-black hover:scale-105 transition-transform"
-          aria-label={playing ? 'Pause' : 'Play'}
+          aria-label={playing ? 'Pause audio' : 'Play audio'}
         >
           {playing
-            ? <span className="text-[13px] font-bold">⏸</span>
-            : <span className="text-[13px] font-bold ml-0.5">▶</span>}
+            ? <Pause size={15} fill="black" />
+            : <Headphones size={16} />}
         </button>
       </div>
 
@@ -120,7 +160,7 @@ export default function AudioNoteBlockRenderer({ block }: { block: AudioNoteBloc
           className="h-full rounded-full transition-all duration-100"
           style={{
             width: `${progress}%`,
-            background: 'linear-gradient(to right, #fb923c, #fbbf24, #7dd3fc)',
+            background: 'linear-gradient(to right, #38bdf8, #22d3ee)',
           }}
         />
       </div>

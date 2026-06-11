@@ -10,6 +10,7 @@ import AddBlockMenu from './AddBlockMenu';
 import TextBlockEditor from './blocks/TextBlockEditor';
 import HeadingBlockEditor from './blocks/HeadingBlockEditor';
 import ImageBlockEditor from './blocks/ImageBlockEditor';
+import GalleryBlockEditor from './blocks/GalleryBlockEditor';
 import InteractiveImageEditor from './blocks/InteractiveImageEditor';
 import VideoBlockEditor from './blocks/VideoBlockEditor';
 import AudioNoteEditor from './blocks/AudioNoteEditor';
@@ -34,6 +35,7 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
   heading: 'Heading',
   image: 'Image',
+  gallery: 'Gallery',
   interactive_image: 'Interactive Image',
   video: 'Video',
   audio_note: 'Audio Note',
@@ -76,6 +78,7 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   text: '¶',
   heading: 'H',
   image: '🖼️',
+  gallery: '🖼',
   interactive_image: '🔍',
   video: '▶️',
   audio_note: '🎙️',
@@ -120,6 +123,7 @@ function blockPreview(block: ContentBlock): string {
       case 'text':           return (block.markdown || '').slice(0, 80) || '(empty)';
       case 'heading':        return block.text || '(empty)';
       case 'image':          return block.caption || block.alt || block.src?.split('/').pop() || '(image)';
+      case 'gallery':        return `${(block.items || []).length} image${(block.items || []).length !== 1 ? 's' : ''}`;
       case 'interactive_image': return `${(block.hotspots || []).length} hotspot${block.hotspots?.length !== 1 ? 's' : ''}`;
       case 'video':          return block.caption || block.src || '(video)';
       case 'audio_note':     return block.label || '(audio)';
@@ -167,6 +171,7 @@ export default function BlockCard({
       case 'text':             return <TextBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'heading':          return <HeadingBlockEditor block={block} onChange={onChange} />;
       case 'image':            return <ImageBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
+      case 'gallery':          return <GalleryBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'interactive_image':return <InteractiveImageEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'video':            return <VideoBlockEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'audio_note':       return <AudioNoteEditor block={block} onChange={onChange} onUpload={onUpload} />;

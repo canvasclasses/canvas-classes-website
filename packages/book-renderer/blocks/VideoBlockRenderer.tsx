@@ -34,11 +34,11 @@ function formatDuration(sec: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export default function VideoBlockRenderer({ block }: { block: VideoBlock }) {
+export default function VideoBlockRenderer({ block, compact = false }: { block: VideoBlock; compact?: boolean }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="my-4">
+    <div className={compact ? '' : 'my-4'}>
 
       {/* Collapsed trigger */}
       <button

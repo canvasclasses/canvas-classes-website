@@ -26,7 +26,8 @@ const AtomicModels = dynamic(
 // SimulationBlockRenderer.tsx, so they resolve in both the student reader and
 // the admin editor preview. Only atomic-models stays app-local.
 const EXTRA_SIMULATORS = { 'atomic-models': AtomicModels };
-import { Book, BookPage, BlockType, ContentBlock } from '@canvas/data/types/books';
+import { Book, BookPage, BlockType, ContentBlock, ChapterJourney } from '@canvas/data/types/books';
+import ChapterOpener from './ChapterOpener';
 import { useBookProgress } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
 import { useBookUserState } from '@/features/books/hooks/useBookUserState';
@@ -57,6 +58,7 @@ interface PageSummary {
   chapter_number: number;
   page_number: number;
   published: boolean;
+  page_type?: 'lesson' | 'chapter_opener';
 }
 
 interface Props {
@@ -64,6 +66,7 @@ interface Props {
   page: BookPage;
   allPages: PageSummary[];
   chapterPages: PageSummary[];
+  chapterJourney?: ChapterJourney | null;
   prevPageSlug: string | null;
   nextPageSlug: string | null;
   bookSlug: string;
@@ -71,10 +74,16 @@ interface Props {
 }
 
 export default function BookReader({
-  book, page, chapterPages, prevPageSlug, nextPageSlug, bookSlug, basePath,
+  book, page, chapterPages, chapterJourney, prevPageSlug, nextPageSlug, bookSlug, basePath,
 }: Props) {
   const bp = basePath ?? `/books/${bookSlug}`;
   const router = useRouter();
+
+  // Chapter opener (§15.1) is a cover page, not a lesson — exclude it from
+  // progress counts and the numbered sidebar list.
+  const isOpener = page.page_type === 'chapter_opener';
+  const lessonPages = chapterPages.filter(p => p.page_type !== 'chapter_opener');
+  const openerPage = chapterPages.find(p => p.page_type === 'chapter_opener');
 
   // Kicks off a single combined fetch for progress + bookmarks, seeding both
   // caches before the individual hooks would otherwise fire two round-trips.
@@ -158,19 +167,27 @@ export default function BookReader({
   // save once we know the reader is logged in; for anonymous visitors it would
   // just 401 and roll back.
   useEffect(() => {
-    if (loggedIn === true && !hasQuiz && !completedSlugs.has(page.slug)) {
+    if (loggedIn === true && !hasQuiz && !isOpener && !completedSlugs.has(page.slug)) {
       completePage(100, false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasQuiz, page.slug, loggedIn]);
+  }, [hasQuiz, page.slug, loggedIn, isOpener]);
 
-  const completedInChapter = chapterPages.filter(p => completedSlugs.has(p.slug)).length;
-  const progressPct = chapterPages.length > 0
-    ? Math.round((completedInChapter / chapterPages.length) * 100)
+  const completedInChapter = lessonPages.filter(p => completedSlugs.has(p.slug)).length;
+  const progressPct = lessonPages.length > 0
+    ? Math.round((completedInChapter / lessonPages.length) * 100)
     : 0;
 
   const chapterTitle = book.chapters.find(c => c.number === page.chapter_number)?.title ?? `Chapter ${page.chapter_number}`;
   const canGoNext = !hasQuiz || quizPassed;
+
+  // Chapter-opener content is authored as a hero image + an optional bullet-list
+  // text block ("What you'll master"); the journey is computed server-side.
+  const heroBlock = isOpener ? page.blocks.find(b => b.type === 'image') : undefined;
+  const outcomesBlock = isOpener ? page.blocks.find(b => b.type === 'text') : undefined;
+  const openerOutcomes = outcomesBlock && 'markdown' in outcomesBlock
+    ? outcomesBlock.markdown.split('\n').map(l => l.trim()).filter(l => /^[-*]\s+/.test(l)).map(l => l.replace(/^[-*]\s+/, ''))
+    : [];
 
   return (
     <div className="min-h-screen bg-[var(--book-bg)] text-white flex flex-col">
@@ -186,7 +203,7 @@ export default function BookReader({
           <BookOpen size={14} className="text-orange-400 shrink-0" />
           <span className="text-xs text-white/50 truncate flex-1">{chapterTitle}</span>
           <span className="text-xs text-white/30 shrink-0">
-            {completedInChapter}/{chapterPages.length}
+            {completedInChapter}/{lessonPages.length}
           </span>
           <button
             onClick={() => toggleBookmark(page.slug, page.title, page.chapter_number)}
@@ -259,13 +276,30 @@ export default function BookReader({
                     />
                   </div>
                   <p className="text-[10px] text-white/25">
-                    {completedInChapter} of {chapterPages.length} completed
+                    {completedInChapter} of {lessonPages.length} completed
                   </p>
                 </div>
 
                 {/* Page list */}
                 <nav className="flex flex-col gap-0.5">
-                  {chapterPages.map((pg, i) => {
+                  {/* Chapter overview (opener) — the front door, reachable from any page */}
+                  {openerPage && (
+                    <Link
+                      href={`${bp}/${openerPage.slug}`}
+                      className={`flex items-center gap-2 px-2.5 py-2 mb-1 rounded-lg transition-all ${
+                        isOpener
+                          ? 'bg-orange-500/10 border border-orange-500/20'
+                          : 'hover:bg-white/[0.04] border border-transparent'
+                      }`}
+                    >
+                      <BookOpen size={13} className={isOpener ? 'text-orange-400 shrink-0' : 'text-white/35 shrink-0'} />
+                      <span className={`text-[12px] font-medium leading-snug ${isOpener ? 'text-orange-300' : 'text-white/55'}`}>
+                        Chapter Overview
+                      </span>
+                    </Link>
+                  )}
+
+                  {lessonPages.map((pg, i) => {
                     const isCurrent = pg.slug === page.slug;
                     const isDone    = completedSlugs.has(pg.slug);
 
@@ -332,18 +366,31 @@ export default function BookReader({
 
         {/* ── Page content ──────────────────────────────────────────────── */}
         <main className="flex-1 min-w-0">
-          <ExtraSimulatorsProvider value={EXTRA_SIMULATORS}>
-            <BookProvider value={{ bookSlug }}>
-              <VaultProvider
-                value={vaultEnabled ? { onSaveWord: handleSaveWord, isWordSaved: vault.hasWord } : {}}
-              >
-                <PageRenderer
-                  page={page}
-                  onQuizPass={handleQuizPass}
-                />
-              </VaultProvider>
-            </BookProvider>
-          </ExtraSimulatorsProvider>
+          {isOpener && chapterJourney ? (
+            <ChapterOpener
+              chapterNumber={page.chapter_number}
+              chapterTitle={page.title}
+              heroSrc={heroBlock && 'src' in heroBlock ? heroBlock.src : undefined}
+              heroAlt={heroBlock && 'alt' in heroBlock ? heroBlock.alt : undefined}
+              intro={page.subtitle}
+              outcomes={openerOutcomes}
+              journey={chapterJourney}
+              basePath={bp}
+            />
+          ) : (
+            <ExtraSimulatorsProvider value={EXTRA_SIMULATORS}>
+              <BookProvider value={{ bookSlug }}>
+                <VaultProvider
+                  value={vaultEnabled ? { onSaveWord: handleSaveWord, isWordSaved: vault.hasWord } : {}}
+                >
+                  <PageRenderer
+                    page={page}
+                    onQuizPass={handleQuizPass}
+                  />
+                </VaultProvider>
+              </BookProvider>
+            </ExtraSimulatorsProvider>
+          )}
         </main>
       </div>
 
@@ -427,7 +474,7 @@ export default function BookReader({
             <div className="mb-6">
               <div className="flex justify-between text-xs text-white/40 mb-1.5">
                 <span>{chapterTitle}</span>
-                <span>{completedInChapter}/{chapterPages.length} pages</span>
+                <span>{completedInChapter}/{lessonPages.length} pages</span>
               </div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                 <div

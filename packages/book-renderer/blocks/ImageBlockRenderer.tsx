@@ -13,6 +13,7 @@ import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import type { Components } from 'react-markdown';
 import { ImageBlock } from '@canvas/data/types/books';
+import ImageLightbox from './_ImageLightbox';
 
 // ── Width presets when the block sits on its own row ──
 const fullRowWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
@@ -88,6 +89,8 @@ const sideTextComponents: Components = {
 
 export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
   const [copied, setCopied] = useState(false);
+  const [loaded, setLoaded] = useState(false); // §15.6 blur-up fade-in
+  const [zoom, setZoom] = useState(false);      // §15.6 tap-to-zoom lightbox
   const width = block.width ?? 'full';
   const align = block.align ?? 'center';
   const hasSideText = (align === 'left' || align === 'right') && !!block.side_text?.trim();
@@ -166,15 +169,33 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
 
   const figure = (
     <figure className={`${hasSideText ? 'w-full' : fullRowWidthClass[width]} ${hasSideText ? '' : 'my-4'}`}>
-      <div className={`relative w-full overflow-hidden rounded-xl border border-white/10 ${aspectClass}`}>
+      {/* The image is a button so the whole frame is tap-to-zoom (§15.6). */}
+      <button
+        type="button"
+        onClick={() => setZoom(true)}
+        aria-label={`View larger: ${block.alt}`}
+        className={`group relative block w-full overflow-hidden rounded-xl border border-white/10 cursor-zoom-in ${aspectClass}`}
+      >
+        {/* Skeleton shimmer until the image decodes — never a black void (§15.6).
+            Only shown when the box height is reserved (aspect_ratio set). */}
+        {hasAspectRatio && !loaded && (
+          <div
+            className="absolute inset-0 animate-pulse"
+            style={{
+              background:
+                'linear-gradient(110deg, rgba(255,255,255,0.03) 30%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 70%)',
+            }}
+          />
+        )}
         {useOptimizer ? (
           <Image
             src={block.src}
             alt={block.alt}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 800px"
-            className="object-cover"
+            className={`object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             loading="lazy"
+            onLoad={() => setLoaded(true)}
           />
         ) : (
           // No aspect_ratio set: we don't know the image's intrinsic dimensions,
@@ -187,12 +208,22 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
           <img
             src={block.src}
             alt={block.alt}
-            className="w-full h-auto object-contain block"
+            className={`w-full h-auto object-contain block transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             loading="lazy"
             decoding="async"
+            onLoad={() => setLoaded(true)}
           />
         )}
-      </div>
+        {/* Zoom affordance on hover */}
+        <span
+          aria-hidden
+          className="absolute bottom-2 right-2 w-7 h-7 rounded-full flex items-center justify-center
+            text-white/85 text-[13px] bg-black/45 border border-white/15 backdrop-blur-sm
+            opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+        >
+          ⤢
+        </span>
+      </button>
       {block.caption && (
         <figcaption className="mt-2 text-center text-sm text-white/50 italic">
           {block.caption}
@@ -201,8 +232,20 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
     </figure>
   );
 
-  if (!hasSideText) return figure;
-  return wrapSideBySide(figure, block, align);
+  const content = hasSideText ? wrapSideBySide(figure, block, align) : figure;
+  return (
+    <>
+      {content}
+      {zoom && (
+        <ImageLightbox
+          src={block.src}
+          alt={block.alt}
+          caption={block.caption}
+          onClose={() => setZoom(false)}
+        />
+      )}
+    </>
+  );
 }
 
 // ── Side-by-side wrapper ─────────────────────────────────────────

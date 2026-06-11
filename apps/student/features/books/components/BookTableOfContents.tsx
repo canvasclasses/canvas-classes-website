@@ -768,6 +768,10 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                         const contentIcons = (pg.content_types ?? [])
                           .map(t => CONTENT_ICONS[t])
                           .filter(Boolean);
+                        // The chapter opener (page 0) is the front door — label it
+                        // and number the lessons starting after it.
+                        const isOpenerRow = pg.page_number === 0;
+                        const lessonNum = activeChapter.pages.slice(0, i + 1).filter(p => p.page_number !== 0).length;
 
                         return (
                           <Link
@@ -779,7 +783,9 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                           >
                             {/* Status icon */}
                             <div className="shrink-0 w-5 flex items-center justify-center">
-                              {done ? (
+                              {isOpenerRow ? (
+                                <Sparkles size={16} className="text-amber-300" />
+                              ) : done ? (
                                 <CheckCircle2 size={17} className="text-emerald-400" />
                               ) : (
                                 <span className={`w-5 h-5 rounded-full border flex items-center justify-center
@@ -788,7 +794,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                                     ? 'border-white/10 text-zinc-600'
                                     : 'border-white/15 text-zinc-400'
                                 }`}>
-                                  {i + 1}
+                                  {lessonNum}
                                 </span>
                               )}
                             </div>
@@ -796,9 +802,9 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                             {/* Title + video preview + content chips */}
                             <div className="flex-1 min-w-0">
                               <span className={`text-sm md:text-[15px] leading-snug transition-colors block ${
-                                done ? 'text-zinc-400' : 'text-white/90 group-hover:text-white'
+                                isOpenerRow ? 'text-amber-200/90 font-medium' : done ? 'text-zinc-400' : 'text-white/90 group-hover:text-white'
                               }`}>
-                                {pg.title}
+                                {isOpenerRow ? 'Chapter Overview' : pg.title}
                               </span>
                               {pg.video_title && (
                                 <span className="flex items-center gap-1 mt-1">

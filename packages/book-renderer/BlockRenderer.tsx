@@ -16,6 +16,7 @@ const dynamicBlock = <P extends object>(loader: () => Promise<{ default: React.C
   dynamic(loader, { ssr: true });
 
 const ImageBlockRenderer             = dynamicBlock(() => import('./blocks/ImageBlockRenderer'));
+const GalleryBlockRenderer           = dynamicBlock(() => import('./blocks/GalleryBlockRenderer'));
 const InteractiveImageBlockRenderer  = dynamicBlock(() => import('./blocks/InteractiveImageBlockRenderer'));
 const VideoBlockRenderer             = dynamicBlock(() => import('./blocks/VideoBlockRenderer'));
 const AudioNoteBlockRenderer         = dynamicBlock(() => import('./blocks/AudioNoteBlockRenderer'));
@@ -66,6 +67,7 @@ export default function BlockRenderer({
     case 'text':              return <TextBlockRenderer block={block} />;
     case 'heading':           return <HeadingBlockRenderer block={block} />;
     case 'image':             return <ImageBlockRenderer block={block} />;
+    case 'gallery':           return <GalleryBlockRenderer block={block} />;
     case 'interactive_image': return <InteractiveImageBlockRenderer block={block} />;
     case 'video':             return <VideoBlockRenderer block={block} />;
     case 'audio_note':        return <AudioNoteBlockRenderer block={block} />;

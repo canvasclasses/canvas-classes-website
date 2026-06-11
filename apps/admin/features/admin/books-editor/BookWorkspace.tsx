@@ -18,6 +18,7 @@ export function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'text':             return { ...base, type, markdown: '' };
     case 'heading':          return { ...base, type, text: '', level: 1 };
     case 'image':            return { ...base, type, src: '', alt: '', width: 'full' };
+    case 'gallery':          return { ...base, type, items: [] };
     case 'interactive_image':return { ...base, type, src: '', alt: '', hotspots: [] };
     case 'video':            return { ...base, type, src: '', provider: 'r2_direct', duration_sec: 0 };
     case 'audio_note':       return { ...base, type, src: '', label: 'Teacher note', duration_sec: 0 };
