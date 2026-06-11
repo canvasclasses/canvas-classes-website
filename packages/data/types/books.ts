@@ -4,6 +4,7 @@ export type BlockType =
   | 'text'
   | 'heading'
   | 'image'
+  | 'gallery'
   | 'classify_exercise'
   | 'interactive_image'
   | 'video'
@@ -66,6 +67,7 @@ export interface HeadingBlock extends BaseBlock {
   type: 'heading';
   text: string;
   level: 1 | 2 | 3; // h2/h3/h4 in context (h1 reserved for page title)
+  objective?: string; // §15.2 — one-line outcome / driving question under a section heading
 }
 
 // 3. IMAGE — static image with optional caption
@@ -780,10 +782,25 @@ export interface MeetAScientistBlock extends BaseBlock {
 }
 
 // ─── Union type ───────────────────────────────────────────────────────────────
+// GALLERY — 2–6 images for ONE concept, shown as a swipeable carousel (§15.6)
+// instead of a vertical stack. Each item is tap-to-zoom in the reader.
+export interface GalleryItem {
+  id: string;
+  src: string;
+  alt: string;
+  caption?: string;
+}
+export interface GalleryBlock extends BaseBlock {
+  type: 'gallery';
+  items: GalleryItem[];
+  aspect_ratio?: '16:9' | '16:5' | '4:3' | '3:2' | '1:1' | '21:9';
+}
+
 export type ContentBlock =
   | TextBlock
   | HeadingBlock
   | ImageBlock
+  | GalleryBlock
   | ClassifyExerciseBlock
   | InteractiveImageBlock
   | VideoBlock
@@ -855,6 +872,31 @@ export interface BookPage {
    * in the reader header. Set per page from the Kaveri section taxonomy.
    */
   competency?: { code: string; label: string };
+  /**
+   * Special page kinds. Absent / 'lesson' = a normal content page. A
+   * 'chapter_opener' (§15.1) renders the bespoke full-bleed cover + auto journey
+   * map instead of the normal block flow; it is not quiz-gated and is excluded
+   * from chapter progress counts.
+   */
+  page_type?: 'lesson' | 'chapter_opener';
+}
+
+/** One lesson page in the chapter-opener journey map (§15.1, auto-derived). */
+export interface ChapterJourneyEntry {
+  slug: string;
+  title: string;
+  subtitle?: string;
+  sims: number;            // count of `simulation` blocks
+  workedExamples: number;  // count of `worked_example` blocks
+  checks: number;          // inline_quiz + reasoning_prompt + chapter_practice + apply_express
+  readingTimeMin: number;
+}
+
+/** The full auto-derived journey passed to the chapter-opener page. */
+export interface ChapterJourney {
+  entries: ChapterJourneyEntry[];
+  totals: { pages: number; sims: number; workedExamples: number; checks: number; readingTimeMin: number };
+  firstPageSlug: string | null;
 }
 
 export interface BookChapter {

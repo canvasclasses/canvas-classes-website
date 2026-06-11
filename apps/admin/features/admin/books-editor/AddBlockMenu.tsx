@@ -18,6 +18,7 @@ const BLOCK_GROUPS: { label: string; blocks: { type: BlockType; icon: string; la
     label: 'Media',
     blocks: [
       { type: 'image',             icon: '🖼️', label: 'Image' },
+      { type: 'gallery',           icon: '🖼', label: 'Gallery (swipe)' },
       { type: 'interactive_image', icon: '🔍', label: 'Interactive Image' },
       { type: 'video',             icon: '▶️', label: 'Video' },
       { type: 'audio_note',        icon: '🎙️', label: 'Audio Note' },

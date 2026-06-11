@@ -93,8 +93,12 @@ export default function WorkedExampleRenderer({ block }: Props) {
 
   return (
     <div
-      className="my-8 pl-6 pb-6 border-b border-white/5"
-      style={{ borderLeft: `2px solid ${accent}` }}
+      className="my-8 rounded-r-xl pl-6 pr-5 py-5"
+      style={{
+        borderLeft: `3px solid ${accent}`,
+        // Subtle wash that originates at the accent line and fades to the right.
+        background: `linear-gradient(to right, ${accent}1A 0%, ${accent}0A 30%, ${accent}00 75%)`,
+      }}
     >
       {/* Header row: label + subtitle + badge */}
       <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
@@ -113,7 +117,8 @@ export default function WorkedExampleRenderer({ block }: Props) {
         </span>
       </div>
 
-      {/* Problem body */}
+      {/* Problem statement — no label, no inner box. The worked-example card
+          itself makes it obvious this is the question. */}
       <div className="text-white/85 leading-relaxed">
         <ReactMarkdown
           remarkPlugins={[remarkMath, remarkGfm]}
@@ -134,7 +139,14 @@ export default function WorkedExampleRenderer({ block }: Props) {
           + Show solution
         </button>
       ) : (
-        <div className="mt-4">
+        <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+          {/* "Solution" label marks exactly where the working begins. */}
+          <div
+            className="text-[10px] font-bold uppercase tracking-widest mb-2"
+            style={{ color: accent }}
+          >
+            Solution
+          </div>
           <div className="text-white/85 leading-relaxed">
             <ReactMarkdown
               remarkPlugins={[remarkMath, remarkGfm]}

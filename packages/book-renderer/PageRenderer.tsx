@@ -3,14 +3,26 @@
 import { memo, useMemo, useState, useEffect, useCallback } from 'react';
 import { BookPage, ContentBlock, TextBlock } from '@canvas/data/types/books';
 import BlockRenderer from './BlockRenderer';
+import RailPanel from './blocks/RailPanel';
 
 // Callout variants that float to the margin sidebar on desktop.
 // fun_fact is intentionally excluded — opening hooks must render in the main column
 // so students see them before diving into core text.
 const SIDEBAR_CALLOUT_VARIANTS = new Set(['exam_tip', 'remember']);
 
-function isSidebarBlock(block: ContentBlock): boolean {
+// Bite-size media (§15.5) is pulled into the rail's "Watch & Listen" lane on
+// desktop instead of breaking the reading column with full-width player bars.
+const RAIL_MEDIA_TYPES = new Set(['audio_note', 'video']);
+
+function isExamBlock(block: ContentBlock): boolean {
   return block.type === 'callout' && SIDEBAR_CALLOUT_VARIANTS.has(block.variant);
+}
+
+function isMediaBlock(block: ContentBlock): boolean {
+  // An audio note with no uploaded src renders nothing — keep it out of the
+  // rail (and its count) so there's no empty slot / inflated badge.
+  if (block.type === 'audio_note') return !!block.src?.trim();
+  return block.type === 'video';
 }
 
 // True if any analytical block carries a Hinglish twin — so the EN/HI toggle
@@ -86,12 +98,17 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
     [activeHinglish, hinglishMap]
   );
 
-  // Memoize expensive sort + split so it only recalculates when blocks change
-  const { sorted, mainBlocks, sidebarBlocks, hasSidebar } = useMemo(() => {
+  // Memoize expensive sort + split so it only recalculates when blocks change.
+  // Only exam callouts are PULLED OUT of the main column. Media (audio/video)
+  // stays inline at its recorded section position AND is mirrored in the rail's
+  // Watch & Listen tab as a playlist (§15.5) — the inline copy gives "play this
+  // here" context, the rail gives skip-the-text convenience.
+  const { sorted, mainBlocks, examBlocks, mediaBlocks, hasRail } = useMemo(() => {
     const s = [...page.blocks].sort((a, b) => a.order - b.order);
-    const main = s.filter(b => !isSidebarBlock(b));
-    const sidebar = s.filter(b => isSidebarBlock(b));
-    return { sorted: s, mainBlocks: main, sidebarBlocks: sidebar, hasSidebar: sidebar.length > 0 };
+    const main = s.filter(b => !isExamBlock(b));
+    const exam = s.filter(b => isExamBlock(b));
+    const media = s.filter(b => isMediaBlock(b));
+    return { sorted: s, mainBlocks: main, examBlocks: exam, mediaBlocks: media, hasRail: exam.length + media.length > 0 };
   }, [page.blocks]);
 
   return (
@@ -111,7 +128,10 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
                 </span>
               </div>
             )}
-            <h1 className="text-[32px] sm:text-[38px] font-bold text-white leading-[1.15] tracking-tight">
+            <h1
+              className="text-[32px] sm:text-[38px] font-bold leading-[1.15] tracking-tight bg-clip-text text-transparent"
+              style={{ backgroundImage: 'linear-gradient(120deg, #6ee7b7 0%, #34d399 45%, #22d3ee 100%)' }}
+            >
               {page.title}
             </h1>
             {page.subtitle && (
@@ -155,11 +175,12 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
         Desktop : two columns — main prose (flex-1) + sticky sidebar (260px)
         ──────────────────────────────────────────────────────────────
       */}
-      <div className={hasSidebar ? 'xl:flex xl:gap-14 xl:items-start' : ''}>
+      <div className={hasRail ? 'xl:flex xl:gap-14 xl:items-start' : ''}>
 
         {/* ── Main prose column ── */}
         <article className="min-w-0 flex-1 max-w-[1127px]">
-          {/* Mobile/tablet: render ALL blocks inline including callouts */}
+          {/* Mobile/tablet: render ALL blocks inline including callouts + media
+              (the rail doesn't exist below xl, so media stays in the flow). */}
           <div className="xl:hidden flex flex-col gap-1">
             {sorted.map(block => (
               <div key={block.id}>
@@ -168,7 +189,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
             ))}
           </div>
 
-          {/* Desktop: render only main column blocks */}
+          {/* Desktop: main column = everything except exam callouts (media stays inline; it's also mirrored in the rail) */}
           <div className="hidden xl:flex xl:flex-col xl:gap-1">
             {mainBlocks.map(block => (
               <div key={block.id}>
@@ -178,15 +199,11 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
           </div>
         </article>
 
-        {/* ── Sidebar (desktop only) ── */}
-        {hasSidebar && (
+        {/* ── Rail (desktop only): Exam Insight | Watch & Listen ── */}
+        {hasRail && (
           <aside className="hidden xl:block w-[290px] shrink-0 sticky top-6 self-start">
-            <div className="flex flex-col gap-6 pt-1">
-              {sidebarBlocks.map(block => (
-                <div key={block.id}>
-                  <BlockRenderer block={block} onQuizPass={onQuizPass} />
-                </div>
-              ))}
+            <div className="pt-1">
+              <RailPanel examBlocks={examBlocks} mediaBlocks={mediaBlocks} onQuizPass={onQuizPass} />
             </div>
           </aside>
         )}

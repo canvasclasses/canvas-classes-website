@@ -212,6 +212,10 @@ const simulators: Record<string, React.ComponentType> = {
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   // ── Class 11 Chemistry — Chapter 1: Some Basic Concepts of Chemistry ─────
+  'unit-conversion-arena': dynamic(
+    () => import('./simulations/UnitConversionArenaSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   'eudiometer-lab': dynamic(
     () => import('./simulations/EudiometerLabSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }

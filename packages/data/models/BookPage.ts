@@ -26,6 +26,8 @@ const BookPageSchema = new Schema<IBookPage>(
     reading_time_min: Number,
     content_types: { type: [String], default: [] },
     video_title: { type: String, default: null },
+    // §15.1 — 'chapter_opener' renders the bespoke cover + journey; absent = lesson.
+    page_type: { type: String, enum: ['lesson', 'chapter_opener'], default: 'lesson' },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },

@@ -71,6 +71,7 @@ const HeadingBlockSchema = BaseBlockSchema.extend({
   type: z.literal('heading'),
   text: z.string(),
   level: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+  objective: z.string().optional(), // §15.2 — outcome/driving question under the heading
 });
 
 const ImageBlockSchema = BaseBlockSchema.extend({
@@ -82,6 +83,19 @@ const ImageBlockSchema = BaseBlockSchema.extend({
   align: z.enum(['center', 'left', 'right']).optional(),
   side_text: z.string().optional(),
   generation_prompt: z.string().optional(),
+  aspect_ratio: z.enum(['16:9', '16:5', '4:3', '3:2', '1:1', '21:9']).optional(),
+});
+
+const GalleryItemSchema = z.object({
+  id: z.string(),
+  src: z.string(),
+  alt: z.string(),
+  caption: z.string().optional(),
+});
+
+const GalleryBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('gallery'),
+  items: z.array(GalleryItemSchema),
   aspect_ratio: z.enum(['16:9', '16:5', '4:3', '3:2', '1:1', '21:9']).optional(),
 });
 
@@ -593,6 +607,7 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   TextBlockSchema,
   HeadingBlockSchema,
   ImageBlockSchema,
+  GalleryBlockSchema,
   InteractiveImageBlockSchema,
   VideoBlockSchema,
   AudioNoteBlockSchema,
@@ -643,6 +658,7 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   TextBlockSchema,
   HeadingBlockSchema,
   ImageBlockSchema,
+  GalleryBlockSchema,
   InteractiveImageBlockSchema,
   VideoBlockSchema,
   AudioNoteBlockSchema,
