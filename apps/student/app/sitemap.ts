@@ -3,6 +3,17 @@ import { getFlashcardChapters } from '@/features/public-content/data/revisionDat
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
+// Stable `lastModified` for sitemap entries that have NO real per-item content
+// timestamp. Using `new Date()` for these was a costly bug: the sitemap itself
+// revalidates every 24h (below), so a `new Date()` stamp made *every* such URL
+// look "modified today" on every regeneration. That told crawlers to re-fetch
+// the entire surface daily, driving millions of needless ISR Writes (the
+// 2026-06 Vercel bill). A fixed date removes that false-freshness signal.
+// Bump it only on a major site-wide content refresh — genuinely-dynamic blocks
+// below (books, careers, crucible questions, blog) already carry their own
+// real `updated_at`/`generatedAt` and are unaffected by this constant.
+const STABLE_LASTMOD = new Date('2026-06-12');
+
 // Cache sitemap for 24 hours — question/chapter data changes infrequently
 export const revalidate = 86400;
 
@@ -65,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const { LANDING_CONFIGS } = await import('@/features/college-predictor/data/landingConfig');
     const collegePredictorLandingEntries = LANDING_CONFIGS.map((cfg) => ({
         url: `${BASE_URL}/college-predictor/${cfg.slug}`,
-        lastModified: new Date(),
+        lastModified: STABLE_LASTMOD,
         changeFrequency: 'weekly' as const,
         priority: 0.85,
     }));
@@ -80,7 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const slugs = await loadAllCollegeSlugs();
         collegeDeepDiveEntries = slugs.map((slug) => ({
             url: `${BASE_URL}/college-predictor/college/${slug}`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'monthly' as const,
             priority: 0.75,
         }));
@@ -90,7 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const staticEntries = staticPages.map((page) => ({
         url: `${BASE_URL}${page.path}`,
-        lastModified: new Date(),
+        lastModified: STABLE_LASTMOD,
         changeFrequency: page.changeFrequency,
         priority: page.priority,
     }));
@@ -101,7 +112,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const chapters = await getFlashcardChapters();
         flashcardChapterEntries = chapters.map((chapter) => ({
             url: `${BASE_URL}/chemistry-flashcards/${chapter.slug}`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'weekly' as const,
             priority: 0.85,
         }));
@@ -118,7 +129,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // Add Directory Page
         questionEntries.push({
             url: `${BASE_URL}/chemistry-questions`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'daily' as const,
             priority: 0.9,
         });
@@ -128,7 +139,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         distinctChapters.forEach(slug => {
             questionEntries.push({
                 url: `${BASE_URL}/chemistry-questions/${slug}`,
-                lastModified: new Date(),
+                lastModified: STABLE_LASTMOD,
                 changeFrequency: 'weekly' as const,
                 priority: 0.8,
             });
@@ -137,7 +148,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // Add Individual Question Pages
         const specializedEntries = questions.map((q) => ({
             url: `${BASE_URL}/chemistry-questions/${q.chapterSlug}/${q.slug}`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'monthly' as const,
             priority: 0.6,
         }));
@@ -162,7 +173,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .map(c => c.id);
         crucibleChapterEntries = [...chemChapterIds, ...physMathChapterIds].map(id => ({
             url: `${BASE_URL}/the-crucible/${id}`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'weekly' as const,
             priority: 0.85,
         }));
@@ -280,7 +291,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .filter((ch) => Boolean(ch.slug))
             .map((ch) => ({
                 url: `${BASE_URL}/detailed-lectures/${ch.slug}`,
-                lastModified: new Date(),
+                lastModified: STABLE_LASTMOD,
                 changeFrequency: 'weekly' as const,
                 priority: 0.85,
             }));
@@ -299,7 +310,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const slugs = await getPublishedSlugs();
         blogEntries = slugs.map((slug) => ({
             url: `${BASE_URL}/blog/${slug}`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'monthly' as const,
             priority: 0.7,
         }));
@@ -363,7 +374,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // Hub page first, then individual quizzes.
         chemistryQuizEntries.push({
             url: `${BASE_URL}/quiz/chemistry`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'weekly' as const,
             priority: 0.9,
         });
@@ -392,7 +403,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 .replace(/(^-|-$)/g, '');
             return {
                 url: `${BASE_URL}/ncert-solutions/class-${g.classNum}/${slug}`,
-                lastModified: new Date(),
+                lastModified: STABLE_LASTMOD,
                 changeFrequency: 'weekly' as const,
                 priority: 0.9,
             };
@@ -409,7 +420,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const groups = await getAllChapterGroups();
         ncertPdfChapterEntries = groups.map((g) => ({
             url: `${BASE_URL}/download-ncert-books/class-${g.classNum}/${g.slug}`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'monthly' as const,
             priority: 0.8,
         }));
@@ -430,7 +441,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .filter((c) => chaptersWithNotes.has(c.chapterName))
             .map((c) => ({
                 url: `${BASE_URL}/handwritten-notes/${c.slug}`,
-                lastModified: new Date(),
+                lastModified: STABLE_LASTMOD,
                 changeFrequency: 'weekly' as const,
                 priority: 0.85,
             }));
@@ -446,7 +457,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const { TOPICS } = await import('@/features/career-guide/data/topics');
         careerTopicEntries = TOPICS.map((t) => ({
             url: `${BASE_URL}/career-guide/topics/${t.slug}`,
-            lastModified: new Date(),
+            lastModified: STABLE_LASTMOD,
             changeFrequency: 'monthly' as const,
             priority: 0.85,
         }));

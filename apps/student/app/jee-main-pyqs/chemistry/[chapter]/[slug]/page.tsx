@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
-    getActiveChapters,
     getChapterBySlug,
     getQuestion,
     getRelatedQuestions,
@@ -16,16 +15,16 @@ interface Props {
     params: Promise<{ chapter: string; slug: string }>;
 }
 
-export const revalidate = 86400;
+// 7-day ISR — PYQ solutions are effectively static. Longer window cuts the
+// steady-state ISR Writes these high-cardinality leaf pages generate (2026-06 bill).
+export const revalidate = 604800;
 
+// No pages pre-built at deploy time — generated on first request and cached via
+// ISR, matching the-crucible/q/[slug] and chemistry-questions/[chapter]/[slug].
+// Pre-rendering the entire PYQ bank on every build wrote thousands of ISR
+// entries per deploy (and inflated Build CPU) for pages crawlers fetch rarely.
 export async function generateStaticParams() {
-    const out: { chapter: string; slug: string }[] = [];
-    for (const c of getActiveChapters()) {
-        for (const slug of c.questionSlugs) {
-            out.push({ chapter: c.slug, slug });
-        }
-    }
-    return out;
+    return [];
 }
 
 /** Strip LaTeX, image markdown, and special chars for plaintext use (titles, descriptions, schema). */

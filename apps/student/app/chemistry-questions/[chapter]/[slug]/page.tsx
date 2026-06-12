@@ -18,11 +18,12 @@ export async function generateStaticParams() {
 }
 */
 
-// 24h ISR — leaf SEO pages, content is the same for everyone. The
+// 7-day ISR — leaf SEO pages, content is the same for everyone. The
 // generateStaticParams block above is commented out intentionally
 // (was causing slow builds) — pages are generated on-demand on first
-// request after the cache expires.
-export const revalidate = 86400;
+// request after the cache expires. Window lengthened from 24h to 7d to cut
+// the ISR Writes these high-cardinality leaf pages generate (2026-06 bill).
+export const revalidate = 604800;
 
 export async function generateMetadata(props: { params: Promise<{ chapter: string; slug: string }> }) {
     const params = await props.params;

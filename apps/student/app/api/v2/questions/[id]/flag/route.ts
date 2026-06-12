@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidateTag } from 'next/cache';
 import { getAuthenticatedUser } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
@@ -106,8 +105,11 @@ export async function POST(
       reason: type,
     });
 
-    // Bust the questions cache so the flag badge appears in admin list view immediately
-    revalidateTag('questions');
+    // No cache revalidation here: the admin flag badge lives in a SEPARATE
+    // deployment (admin.canvasclasses.in), and revalidateTag is deployment-local
+    // — a student-app bust cannot reach admin caches (admin reads live from
+    // MongoDB anyway). The old revalidateTag('questions') only churned the
+    // student-side chapter-count aggregations on every public flag, for nothing.
 
     return NextResponse.json({
       success: true,

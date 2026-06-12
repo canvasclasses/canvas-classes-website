@@ -9,8 +9,11 @@ import {
 import { formatExamLabel } from '@/features/crucible/components/examLabel';
 import QuestionDetailPage from './QuestionDetailPage';
 
-// ISR: revalidate daily — solutions updated infrequently
-export const revalidate = 86400;
+// ISR: 7-day revalidate — solutions change infrequently. Admin question edits
+// run in a separate deployment, so revalidateTag('questions') there does not
+// cross-invalidate this page's ISR cache; refresh is governed by this window.
+// Lengthened from 24h to 7d to cut steady-state ISR Writes (2026-06 bill).
+export const revalidate = 604800;
 
 // No pages pre-built at deploy time — generated on first request and cached via ISR.
 // With revalidate = 86400, each page is built once per day on first visit.
