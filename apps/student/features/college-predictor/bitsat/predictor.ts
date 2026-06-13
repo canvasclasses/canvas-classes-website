@@ -31,9 +31,20 @@ import {
   type BitsatProgrammeCode,
   type BitsatProgrammeInfo,
 } from '@canvas/data/bitsat/programmes';
+import {
+  getBitsatPrediction2026,
+  BITSAT_PREDICTION_YEAR,
+  type BitsatPrediction2026,
+} from '@canvas/data/bitsat/predictions2026';
 
 export type BitsatBucket = 'safe' | 'target' | 'reach' | 'unlikely';
 export type BitsatConfidence = 'high' | 'medium' | 'low';
+
+// Where a result's projection came from. 'model_v4_2026' = the authoritative
+// Admissions-Research band (predictions2026.ts); 'statistical' = the on-the-fly
+// weighted-mean + trend engine (used for backtests, the legacy regime, and any
+// branch the model sheet doesn't cover).
+export type BitsatProjectionSource = 'model_v4_2026' | 'statistical';
 
 // The BITSAT paper changed in AY 2022-23 (max 450 → max 390). Scores are NOT
 // comparable across the boundary, so the predictor scopes a single regime per
@@ -79,6 +90,15 @@ export interface BitsatPredictorResult {
   confidence_reason: string;
   regime: BitsatRegime;
   max_score: number;
+
+  // Provenance + scenario band. For 'model_v4_2026' rows the band is the
+  // Admissions-Research bear/base/bull (low/likely/high); `safe_score` == high
+  // is the score that clears the branch even in the most competitive scenario
+  // (PPT slide 16: ≈ 2025 close + 10). Undefined for 'statistical' rows.
+  projection_source: BitsatProjectionSource;
+  projected_low?: number;
+  projected_high?: number;
+  safe_score?: number;
 }
 
 // ── Projection model ───────────────────────────────────────────────────────────
@@ -170,6 +190,51 @@ function classify(
   return { bucket, probability: Math.max(0, Math.min(100, probability)) };
 }
 
+// ── Band classification (Model v4) ──────────────────────────────────────────────
+// When an authoritative 2026 band exists for a (campus, programme), bucket the
+// user's score directly against the bear/base/bull bounds rather than against a
+// statistical sigma. This honours the sheet's definitions exactly:
+//   Safe   = score ≥ high   (clears even the bull/most-competitive case)
+//   Target = likely ≤ score < high
+//   Reach  = low ≤ score < likely
+//   Unlikely = score < low
+// Probability is an asymmetric normal centred on `likely`, with each band edge
+// treated as 1σ on its own side (the band is not symmetric — the bear gap is
+// usually wider than the bull gap). So high → ~84%, likely → 50%, low → ~16%,
+// continuous and monotonically non-decreasing in score.
+function classifyByBand(
+  userScore: number,
+  band: BitsatPrediction2026,
+): { bucket: BitsatBucket; probability: number } {
+  const { low, likely, high } = band;
+
+  let bucket: BitsatBucket;
+  if (userScore >= high) bucket = 'safe';
+  else if (userScore >= likely) bucket = 'target';
+  else if (userScore >= low) bucket = 'reach';
+  else bucket = 'unlikely';
+
+  const sigmaUp = Math.max(high - likely, 4);
+  const sigmaDown = Math.max(likely - low, 4);
+  const sigma = userScore >= likely ? sigmaUp : sigmaDown;
+  const z = (userScore - likely) / sigma;
+  const probability = Math.round(Math.max(0, Math.min(100, normalCDF(z) * 100)));
+  return { bucket, probability };
+}
+
+// Map the sheet's two-level confidence (high/medium) onto the predictor's tri
+// level, with a human-readable reason describing the band.
+function bandConfidence(band: BitsatPrediction2026): {
+  confidence: BitsatConfidence;
+  confidence_reason: string;
+} {
+  const reason =
+    `Model v4 2026 outlook — base ${band.likely}, range ${band.low}–${band.high}/390` +
+    ` (${band.delta_2025_2026 >= 0 ? '+' : ''}${band.delta_2025_2026} vs 2025)` +
+    (band.confidence === 'medium' ? '; premier-branch tug-of-war' : '');
+  return { confidence: band.confidence, confidence_reason: reason };
+}
+
 // Abramowitz & Stegun 7.1.26 — standard normal CDF approximation.
 function normalCDF(z: number): number {
   const t = 1 / (1 + 0.2316419 * Math.abs(z));
@@ -237,14 +302,51 @@ export async function predictBitsat(
   const includeUnlikely = input.include_unlikely === true;
   const results: BitsatPredictorResult[] = [];
 
+  // Use the authoritative Model v4 band only when predicting the live 2026
+  // cycle in the modern regime. Backtests (asOfYear set to a past year) and the
+  // legacy regime fall through to the statistical engine so the hindsight QA in
+  // validate_predictor.ts still exercises the projection math.
+  const useBand = regime === 'modern' && cutoffYear === BITSAT_PREDICTION_YEAR;
+
   for (const [, g] of grouped) {
     const campusInfo = BITSAT_CAMPUSES.find((c: BitsatCampusInfo) => c.name === g.campus);
     const programmeInfo = BITSAT_PROGRAMME_BY_CODE[g.code];
     if (!campusInfo || !programmeInfo) continue;
 
-    const proj = project(g.rows);
-    const cls = classify(userScore, proj.projected, proj.sigma, g.rows.map((r) => r.cutoff_score));
-    if (cls.bucket === 'unlikely' && !includeUnlikely) continue;
+    const band = useBand ? getBitsatPrediction2026(g.campus, g.code) : undefined;
+
+    let bucket: BitsatBucket;
+    let probability: number;
+    let projectedCutoff: number;
+    let confidence: BitsatConfidence;
+    let confidenceReason: string;
+    let projectionSource: BitsatProjectionSource;
+    let projectedLow: number | undefined;
+    let projectedHigh: number | undefined;
+
+    if (band) {
+      const cls = classifyByBand(userScore, band);
+      bucket = cls.bucket;
+      probability = cls.probability;
+      projectedCutoff = band.likely;
+      projectedLow = band.low;
+      projectedHigh = band.high;
+      const bc = bandConfidence(band);
+      confidence = bc.confidence;
+      confidenceReason = bc.confidence_reason;
+      projectionSource = 'model_v4_2026';
+    } else {
+      const proj = project(g.rows);
+      const cls = classify(userScore, proj.projected, proj.sigma, g.rows.map((r) => r.cutoff_score));
+      bucket = cls.bucket;
+      probability = cls.probability;
+      projectedCutoff = Math.round(proj.projected);
+      confidence = proj.confidence;
+      confidenceReason = proj.confidence_reason;
+      projectionSource = 'statistical';
+    }
+
+    if (bucket === 'unlikely' && !includeUnlikely) continue;
 
     results.push({
       campus_id: campusInfo.id,
@@ -258,15 +360,20 @@ export async function predictBitsat(
       programme_name: programmeInfo.display_name,
       degree_type: programmeInfo.degree_type,
 
-      bucket: cls.bucket,
-      probability_pct: cls.probability,
-      projected_cutoff_score: Math.round(proj.projected),
+      bucket,
+      probability_pct: probability,
+      projected_cutoff_score: projectedCutoff,
       historical: g.rows.sort((a, b) => a.year - b.year),
 
-      confidence: proj.confidence,
-      confidence_reason: proj.confidence_reason,
+      confidence,
+      confidence_reason: confidenceReason,
       regime,
       max_score: maxScore,
+
+      projection_source: projectionSource,
+      projected_low: projectedLow,
+      projected_high: projectedHigh,
+      safe_score: projectedHigh,
     });
   }
 

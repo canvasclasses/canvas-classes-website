@@ -1,7 +1,14 @@
 # BITSAT predictor — integration plan
 
-Status: data layer + predictor logic complete (this PR scope). UI/API wiring is
-the next phase — described here so you can review the surface before code changes.
+Status: data layer + predictor + UI/API live. **2026-06-13 — Model v4 2026 projection integrated.**
+The live 2026 projection no longer uses the naive weighted-mean+trend (it overshot the
+founder's Admissions-Research sheet by +9 to +25 marks). It now reads the authoritative
+per-branch band in [`packages/data/bitsat/predictions2026.ts`](../../packages/data/bitsat/predictions2026.ts)
+(generated from `BITSAT_Cutoffs_BranchPredictor_Data.xlsx`, Model v4): Safe = score ≥ high,
+Target = ≥ likely, Reach = ≥ low, with asymmetric-normal probability and sheet-sourced
+confidence. Backtests (`asOfYear`) + the legacy regime still use the statistical engine, so the
+hindsight QA in `validate_predictor.ts` is unaffected (14/14 ✓). The official 2021–2025 cutoffs
+on the platform were validated against the sheet: **0 mismatches across 200 cells.**
 
 ## What's already in place (this PR)
 

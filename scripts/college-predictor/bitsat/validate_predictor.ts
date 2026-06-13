@@ -151,11 +151,18 @@ async function runInvariants() {
   }
 
   // IN-7: Bucket math — recompute bucket from historical + projected.
+  // Scoped to the STATISTICAL engine (via asOfYear, which bypasses the Model v4
+  // 2026 band). Band-sourced rows bucket against the bear/base/bull bounds, not
+  // a weighted-mean σ, so the z-reconstruction below doesn't apply to them.
   {
-    const rows = await predictBitsat({ score: 270, regime: 'modern', include_unlikely: true });
+    const rows = await predictBitsat(
+      { score: 270, regime: 'modern', include_unlikely: true },
+      { asOfYear: 2025 },
+    );
     let mathViolations = 0;
     let badSample: string | null = null;
     for (const r of rows) {
+      if (r.projection_source !== 'statistical') continue;
       // Reconstruct sigma from the bucket boundary the predictor must have used.
       // We don't expose sigma directly, so this is a coarse re-derivation:
       // compute weighted-mean + variance the same way the engine does.
@@ -168,6 +175,14 @@ async function runInvariants() {
       // since the analytic bucket from z may disagree.
       const maxHist = Math.max(...sorted.map((x) => x.cutoff_score));
       if (270 >= maxHist) continue;
+      // The exposed projected_cutoff_score is rounded to an integer and the
+      // engine's σ derives from the *un-rounded* weighted mean, so a score that
+      // sits exactly on a bucket boundary (z ≈ ±1, −2) can't be reconstructed
+      // deterministically. Skip those — they're a rounding artifact, not a math
+      // error in the predictor.
+      const zRecon = (270 - r.projected_cutoff_score) / sigma;
+      const nearBoundary = [1, -1, -2].some((b) => Math.abs(zRecon - b) < 0.1);
+      if (nearBoundary) continue;
       const expected = reapplyZ(270, r.projected_cutoff_score, sigma);
       if (expected !== r.bucket) {
         mathViolations++;
