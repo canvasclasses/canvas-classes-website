@@ -1,10 +1,40 @@
 # CAPC — Physics Solution Flags
 
-_Last updated: 2026-06-09 08:10_
+_Last updated: 2026-06-13 13:46_
 
 ## 🔴 Blocking — no solution written
 
-_(none)_
+- **CAPC-155** — solution present but stored correct_option is null
+- **CAPC-158** — solution present but stored correct_option is null
+- **CAPC-159** — solution present but stored correct_option is null
+- **CAPC-160** — solution present but stored correct_option is null
+- **CAPC-161** — solution present but stored correct_option is null
+- **CAPC-162** — solution present but stored correct_option is null
+- **CAPC-163** — solution present but stored correct_option is null
+- **CAPC-164** — solution present but stored correct_option is null
+- **CAPC-167** — solution present but stored correct_option is null
+- **CAPC-168** — solution present but stored correct_option is null
+- **CAPC-169** — solution present but stored correct_option is null
+- **CAPC-170** — solution present but stored correct_option is null
+- **CAPC-171** — solution present but stored correct_option is null
+- **CAPC-172** — solution present but stored correct_option is null
+- **CAPC-173** — solution present but stored correct_option is null
+- **CAPC-174** — solution present but stored correct_option is null
+- **CAPC-175** — solution present but stored correct_option is null
+- **CAPC-176** — solution present but stored correct_option is null
+- **CAPC-177** — solution present but stored correct_option is null
+- **CAPC-178** — solution present but stored correct_option is null
+- **CAPC-179** — solution present but stored correct_option is null
+- **CAPC-180** — solution present but stored correct_option is null
+- **CAPC-181** — solution present but stored correct_option is null
+- **CAPC-182** — solution present but stored correct_option is null
+- **CAPC-183** — solution present but stored correct_option is null
+- **CAPC-184** — solution present but stored correct_option is null
+- **CAPC-185** — solution present but stored correct_option is null
+- **CAPC-186** — solution present but stored correct_option is null
+- **CAPC-192** — solution present but stored correct_option is null
+- **CAPC-193** — solution present but stored correct_option is null
+- **CAPC-194** — solution present but stored correct_option is null
 
 ## 🟡 Needs verification — solution written, uncertain
 

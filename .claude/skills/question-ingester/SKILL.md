@@ -156,6 +156,8 @@ The script reads the buffer, derives `chapter_id` + `subject` from the prefix, r
 
 **Do NOT** create per-batch insert scripts (`insert_<short>_b<N>.js`). The legacy "6–8 questions per file" rule is retired — `insertMany` is atomic and the validator already gates correctness. One buffer = one insert command.
 
+**Mixed-prefix buffers are supported (since 2026-06-11).** `insert_questions.js` derives `chapter_id` + `subject` **per question** from each `display_id` prefix, so a revision exercise spanning several chapters (e.g. ROT/FLUI/SHM/NLM/GRAV/K2D/SOLD) goes in **one** buffer and **one** insert call — no need to split by prefix. A buffer-level `chapter_id`/`subject` export still overrides the whole batch when you genuinely want a single chapter.
+
 **Do NOT** include any cache-bust hook. The dev server's `/api/v2/admin/revalidate` endpoint is flaky; cache invalidation is a manual user call (`curl -X POST localhost:3000/api/v2/admin/revalidate -H 'Content-Type: application/json' -d '{"tag":"questions"}'`).
 
 **For `answer_pending` batches** (no answer key yet): the buffer keeps `answer_pending: true` per question, omits the `answer` field, and all options have `is_correct: false`. The generic script handles these correctly. Bulk-apply the answer key later via a dedicated `scripts/apply_answers_<short>.js` (mirror `scripts/apply_answers_units.js`).

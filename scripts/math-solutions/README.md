@@ -105,8 +105,12 @@ $\\boxed{\\text{Answer: (a) 5}}$`,
 
 Every solution must pass:
 
-- ≥ 800 chars total length
-- Contains `### 🧠`, `### 🗺️`, `### ⚡`, `### ⚠️` headings (💡 is optional per workflow)
+- (No minimum length — project decision 2026-06-11. Length should match the question's difficulty; a forced char floor bloats simple questions. Under-explaining a hard question is caught by the `audit.js` manual sample, not a hard gate.)
+- **Format gate (depends on the item's `format` field):**
+  - `format: 'v2'` (teacher voice — REQUIRED for all new chemistry, per chemistry-solution-workflow §🎤): iconified section headings (`**🧠`/`**🗺️`/`**⚡`/`**⚠️`) are **forbidden** — prose with inline `**Shortcut:**`/`**Watch out:**` only. A line with 4+ `=` raises a non-blocking SOFT flag.
+  - omitted / anything else (LEGACY 6-section — still canonical for physics & math): **must contain** `**🧠`, `**🗺️`, `**⚡`, `**⚠️` bold-icon headings (💡 optional).
+  - Either way, `###` heading syntax is forbidden (the renderer shows the `#` literally).
+  - `\ce{}` ion charges are auto-normalized on write (`^2+` → `^{2+}`).
 - `$\boxed{...}$` appears in the last 300 chars
 - Even count of `$` (no orphan math delimiters)
 - No `$$` (workflow forbids display math)

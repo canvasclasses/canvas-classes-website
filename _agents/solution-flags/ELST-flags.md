@@ -1,10 +1,28 @@
 # ELST — Physics Solution Flags
 
-_Last updated: 2026-06-09 03:58_
+_Last updated: 2026-06-13 13:13_
 
 ## 🔴 Blocking — no solution written
 
-_(none — ELST-054 initially failed validation on "Step N" enumeration, then was re-written in prose and applied successfully; the chapter audit confirms a solution is present.)_
+- **ELST-228** — solution present but stored correct_option is null
+- **ELST-229** — solution present but stored correct_option is null
+- **ELST-230** — solution present but stored correct_option is null
+- **ELST-231** — solution present but stored correct_option is null
+- **ELST-232** — solution present but stored correct_option is null
+- **ELST-233** — solution present but stored correct_option is null
+- **ELST-234** — solution present but stored correct_option is null
+- **ELST-235** — solution present but stored correct_option is null
+- **ELST-238** — solution present but stored correct_option is null
+- **ELST-239** — solution present but stored correct_option is null
+- **ELST-240** — solution present but stored correct_option is null
+- **ELST-241** — solution present but stored correct_option is null
+- **ELST-244** — solution present but stored correct_option is null
+- **ELST-245** — solution present but stored correct_option is null
+- **ELST-247** — solution present but stored correct_option is null
+- **ELST-249** — solution present but stored correct_option is null
+- **ELST-250** — solution present but stored correct_option is null
+- **ELST-251** — solution present but stored correct_option is null
+- **ELST-253** — solution present but stored correct_option is null
 
 ## 🟡 Needs verification — solution written, uncertain
 
@@ -15,4 +33,6 @@ _(none — ELST-054 initially failed validation on "Step N" enumeration, then wa
 
 ## ⚪ Soft quality — audit notes
 
-_(none)_
+- **ELST-081** — audit: forbidden phrase: "anchor"
+- **ELST-210** — audit: forbidden phrase: "anchor"
+- **ELST-211** — audit: forbidden phrase: "anchor"

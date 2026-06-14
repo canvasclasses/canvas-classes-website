@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { GalleryBlock } from '@canvas/data/types/books';
 import ImageLightbox from './_ImageLightbox';
+import { figureLabel } from '../figure-refs-context';
 
 const ASPECT_CLASS: Record<NonNullable<GalleryBlock['aspect_ratio']>, string> = {
   '16:9': 'aspect-video',
@@ -107,10 +108,19 @@ export default function GalleryBlockRenderer({ block }: { block: GalleryBlock })
         </div>
       )}
 
-      {/* Caption */}
-      {current.caption && (
-        <figcaption className="mt-2 text-center text-sm text-white/50 italic">{current.caption}</figcaption>
-      )}
+      {/* Caption — "Fig. 1.3 (a) — caption" for a numbered multi-panel figure */}
+      {(() => {
+        const lab = figureLabel('gallery', block.figure_number);
+        if (!lab && !current.caption) return null;
+        const panel = lab && items.length > 1 ? ` (${String.fromCharCode(97 + idx)})` : '';
+        return (
+          <figcaption className="mt-2 text-center text-sm text-white/50 italic">
+            {lab && <span className="font-semibold not-italic text-white/70">{lab}{panel}</span>}
+            {lab && current.caption ? ' — ' : ''}
+            {current.caption}
+          </figcaption>
+        );
+      })()}
 
       {zoom !== null && items[zoom] && (
         <ImageLightbox

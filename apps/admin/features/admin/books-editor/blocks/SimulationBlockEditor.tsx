@@ -8,6 +8,7 @@ const SIMULATION_IDS = [
   'chromatography',
   'tyndall-effect',
   // Structure of Atom
+  'bohr-spectra',
   'rutherford-comparison',
   'atomic-models',
   'cathode-ray-tube',

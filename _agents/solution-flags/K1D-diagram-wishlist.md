@@ -80,3 +80,9 @@ These have prose explanations that work, but a small hand-drawn sketch in the **
 **Already have diagram:** 23 (section 🅐)
 **Would benefit most from a new sketch:** 22 (section 🅑)
 **Would benefit somewhat:** 11 (section 🅒)
+
+---
+
+## Revision Exercise 1 (Physics MCQ, Deb Mukherji) — added 2026-06-10
+
+- **K1D-140** (book R14) — 🖼️ Visual Sketch. Velocity–time graph from $t=0$ to $t=1$ s, with $v$ starting and ending at 0. Draw the symmetric triangle OAB peaking at $v=2$ (at $t=0.5$ s) with slope $\pm 4$; overlay an alternative steeper curve OCB enclosing the same unit area — illustrating that $|\alpha|$ has no upper bound while the area (displacement) stays 1. *(Book drew this — OAB triangle + OCB curve.)*

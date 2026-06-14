@@ -28,6 +28,19 @@
 
 require('dotenv').config({ path: '.env.local' });
 const mongoose = require('mongoose');
+const { prepareImages } = require('../svg-mapper/image-prep');
+
+// Markdown ![alt](url) + HTML <img src="url"> — used for both stem and option text.
+function extractImageUrls(text) {
+  if (!text || typeof text !== 'string') return [];
+  const urls = new Set();
+  let m;
+  const mdRe = /!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g;
+  while ((m = mdRe.exec(text)) !== null) urls.add(m[1]);
+  const htmlRe = /<img\s[^>]*src=["']([^"']+)["']/gi;
+  while ((m = htmlRe.exec(text)) !== null) urls.add(m[1]);
+  return Array.from(urls);
+}
 
 function parseArgs() {
   const args = { _: [] };
@@ -72,6 +85,7 @@ function parseArgs() {
   const docs = await Q.find(filter)
     .project({
       display_id: 1,
+      type: 1,
       'question_text.markdown': 1,
       options: 1,
       answer: 1,
@@ -86,29 +100,43 @@ function parseArgs() {
     .limit(count)
     .toArray();
 
-  const out = {
-    prefix,
-    count: docs.length,
-    fetched_at: new Date().toISOString(),
-    questions: docs.map(d => {
-      const isMCQ = Array.isArray(d.options) && d.options.length > 0;
-      return {
-        display_id: d.display_id,
-        question_markdown: d.question_text && d.question_text.markdown,
-        options: isMCQ ? d.options.map(o => ({ id: o.id, text: o.text })) : null,
-        answer_type: isMCQ ? 'MCQ' : 'Integer',
-        stored_answer: {
-          correct_option: d.answer ? d.answer.correct_option : null,
-          integer_value: d.answer ? d.answer.integer_value : null,
-        },
-        chapter_id: d.metadata && d.metadata.chapter_id,
-        tag_ids: d.metadata && d.metadata.tag_ids,
-        exam_details: d.metadata && d.metadata.examDetails,
-        current_solution_length: d.solution && d.solution.text_markdown ? d.solution.text_markdown.length : 0,
-      };
-    }),
-  };
+  // Figures are SVG/PNG URLs in stem markdown + (for graph/shape-option questions)
+  // option text. The vision API can't read SVG, so rasterise each to a local
+  // dark-background PNG and surface its path in `images`.
+  const imgDir = `/tmp/solfigs/${prefix}`;
+  const questions = [];
+  for (const d of docs) {
+    const hasOptions = Array.isArray(d.options) && d.options.length > 0;
+    // answer_type reflects the stored question type when present (SCQ vs MCQ vs NVT),
+    // falling back to options-presence for older docs.
+    const answer_type = d.type || (hasOptions ? 'SCQ' : 'Integer');
+    const md = (d.question_text && d.question_text.markdown) || '';
 
+    const labeled = [];
+    for (const u of extractImageUrls(md)) labeled.push({ source: 'stem', url: u });
+    if (hasOptions) for (const o of d.options) for (const u of extractImageUrls(o.text)) labeled.push({ source: `option ${o.id}`, url: u });
+    const images = labeled.length ? await prepareImages(labeled, d.display_id, imgDir) : [];
+
+    questions.push({
+      display_id: d.display_id,
+      question_markdown: md,
+      options: hasOptions ? d.options.map(o => ({ id: o.id, text: o.text })) : null,
+      answer_type,
+      image_urls: labeled.map(l => l.url),
+      images, // [{ source: 'stem'|'option a'|…, url, file }] — Read each `file` (local dark-bg PNG)
+      stored_answer: {
+        correct_option: d.answer ? (d.answer.correct_option || null) : null,
+        correct_options: d.answer ? (d.answer.correct_options || null) : null,
+        integer_value: d.answer ? (d.answer.integer_value ?? null) : null,
+      },
+      chapter_id: d.metadata && d.metadata.chapter_id,
+      tag_ids: d.metadata && d.metadata.tag_ids,
+      exam_details: d.metadata && d.metadata.examDetails,
+      current_solution_length: d.solution && d.solution.text_markdown ? d.solution.text_markdown.length : 0,
+    });
+  }
+
+  const out = { prefix, count: docs.length, fetched_at: new Date().toISOString(), image_dir: imgDir, questions };
   console.log(JSON.stringify(out, null, 2));
   await mongoose.disconnect();
 })().catch(err => {

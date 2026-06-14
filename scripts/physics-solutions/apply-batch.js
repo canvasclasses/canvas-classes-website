@@ -9,6 +9,7 @@
 //     {
 //       display_id: "MIP-001",
 //       solution: `**🧠 ...**\n... $\\boxed{...}$`,
+//       format: "v2",                                                         // optional — see below
 //       answer: { correct_option: "a" } | { integer_value: 16 },
 //       verifier_note: "...",                                                 // optional → yellow flag
 //       question_text_fix: { from: "...", to: "..." },                        // optional OCR fix
@@ -17,8 +18,12 @@
 //     ...
 //   ];
 //
-// Mirror of scripts/math-solutions/apply-batch.js. Validator enforces the four required
-// physics-solution-workflow headings: 🧠 🗺️ ⚡ ⚠️ (🖼️ and 💡 are optional per workflow).
+// Mirror of scripts/math-solutions/apply-batch.js. Two solution formats (physics-solution-workflow):
+//   • LEGACY (no `format` field): the 6-section iconified template — validator requires
+//     the four headings 🧠 🗺️ ⚡ ⚠️ (🖼️ and 💡 optional).
+//   • FORMAT v2 (`format: 'v2'`): teacher-voice prose, NO iconified section headings (§🎤).
+//     Validator forbids the legacy section icons (except 🖼️, kept as the figure anchor),
+//     bans "monster", and still enforces boxed answer / balanced $ / no $$ / no "Step N".
 
 require('dotenv').config({ path: '.env.local' });
 const fs = require('fs');
@@ -27,52 +32,14 @@ const mongoose = require('mongoose');
 
 const FLAG_DIR = path.join(__dirname, '..', '..', '_agents', 'solution-flags');
 
-// ─── Heuristic validator ────────────────────────────────────────────────────
-const FORBIDDEN_PHRASES = [
-  "let's dive in", "in conclusion", 'therefore, we can easily see',
-  "let's break this down", 'delve', 'it is crucial to note',
-  '1. The "Aha!" Moment', '2. Method 1: The Standard Approach',
-  '3. Method 2: The 30-Second Trick', '3. Method 2: The Insight Shortcut',
-  '4. Method 3: The Alternate Angle', 'The Aha Moment',
-  '**The Smart Move**', '**Where Students Get Stuck**',
-];
-
-function validateSolution(md) {
-  const issues = [];
-
-  if (!md || typeof md !== 'string') return ['solution is empty or non-string'];
-  // Length floor intentionally removed: solution length should track pedagogical
-  // value, not a word/char minimum. Short solutions for simple questions are fine.
-
-  if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading (Reading the Question)');
-  if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading (Working It Out)');
-  if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading (The Smart Move)');
-  if (!/\*\*⚠️/.test(md)) issues.push('missing ⚠️ heading (Where Students Get Stuck)');
-  if (/^###\s/m.test(md)) issues.push('uses forbidden Markdown heading syntax (###); use **icon Heading** instead');
-
-  const tail = md.slice(-300);
-  if (!/\\boxed\{/.test(tail)) issues.push('missing $\\boxed{...}$ at end');
-
-  const dollarSingles = (md.match(/(?<!\$)\$(?!\$)/g) || []).length;
-  if (dollarSingles % 2 !== 0) issues.push(`unbalanced $ delimiters (${dollarSingles})`);
-
-  if (/\$\$/.test(md)) issues.push('uses forbidden $$ display math');
-
-  const opens = (md.match(/\{/g) || []).length;
-  const closes = (md.match(/\}/g) || []).length;
-  if (opens !== closes) issues.push(`unbalanced braces (${opens} open vs ${closes} close)`);
-
-  const lower = md.toLowerCase();
-  for (const phrase of FORBIDDEN_PHRASES) {
-    if (lower.includes(phrase.toLowerCase())) issues.push(`forbidden phrase: "${phrase}"`);
-  }
-
-  if (/^\*{0,2}step\s+\d/im.test(md)) {
-    issues.push('uses numbered "Step N" enumeration (workflow: prose only)');
-  }
-
-  return issues;
-}
+// ─── Heuristic validator (SHARED — single source of truth) ──────────────────
+// validateSolution + the base forbidden-phrase list live in
+// scripts/lib/solution-validator.js so the three toolkits can never drift again.
+// Physics policy (POLICY.physics): KEEPS 🖼️ as a v2 figure-anchor heading, ALLOWS
+// the word "anchor" (legit physics term), and bans "monster" only in v2. Those
+// intentional differences are encoded in the shared module's POLICY — change them
+// there, not here.
+const { validateSolution, POLICY } = require('../lib/solution-validator');
 
 // ─── Flag file appender ─────────────────────────────────────────────────────
 function readFlagFile(prefix) {
@@ -185,7 +152,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
       continue;
     }
 
-    const issues = validateSolution(item.solution);
+    const issues = validateSolution(item.solution, { format: item.format, policy: POLICY.physics });
     if (issues.length) {
       addOrReplaceFlag(flagSections, 'blocking', id, `validation failed: ${issues.join('; ')}`);
       blocked++;
@@ -194,14 +161,16 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
     }
 
     const solutionIsObject = cur.solution && typeof cur.solution === 'object';
+    const fmt = item.format === 'v2' ? 'v2' : 'legacy';
     const set = solutionIsObject
       ? {
           'solution.text_markdown': item.solution,
           'solution.latex_validated': true,
+          'solution.format': fmt,
           updated_at: new Date(),
         }
       : {
-          solution: { text_markdown: item.solution, latex_validated: true },
+          solution: { text_markdown: item.solution, latex_validated: true, format: fmt },
           updated_at: new Date(),
         };
     const notes = [];

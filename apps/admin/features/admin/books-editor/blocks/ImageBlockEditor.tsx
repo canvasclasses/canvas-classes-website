@@ -224,6 +224,31 @@ export default function ImageBlockEditor({ block, onChange, onUpload }: Props) {
         </p>
       </div>
 
+      {/* §16 — Figure numbering */}
+      <div className="rounded-lg border border-white/8 bg-white/[0.02] p-2.5">
+        <label className="flex items-center gap-2 text-xs text-white/60 cursor-pointer select-none">
+          <input type="checkbox" checked={!!block.decorative}
+            onChange={(e) => onChange({ decorative: e.target.checked })}
+            className="accent-orange-500" />
+          Decorative (hero/atmosphere — <span className="text-white/40">not a numbered figure</span>)
+        </label>
+        {!block.decorative && (
+          <div className="mt-2">
+            <label className="text-[11px] text-white/40 mb-1 block">
+              Figure key <span className="text-white/25">— stable id for {'{fig:key}'} references; auto-generated if blank</span>
+            </label>
+            <div className="flex items-center gap-2">
+              <input value={block.figure_key ?? ''} onChange={(e) => onChange({ figure_key: e.target.value || undefined })}
+                placeholder="e.g. atoms-diagram"
+                className="flex-1 px-2.5 py-1.5 bg-[#0B0F15] border border-white/10 rounded-lg text-xs text-white placeholder-white/25 focus:outline-none focus:border-orange-500/40" />
+              {block.figure_number && (
+                <span className="text-[11px] font-semibold text-orange-300 whitespace-nowrap">Fig. {block.figure_number}</span>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Alignment selector — controls whether the image sits centred on its own row
           or floats to one side with text beside it */}
       <div>

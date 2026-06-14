@@ -41,10 +41,15 @@ export default function MathRenderer({ markdown, className = '', fontSize, image
       //
       // Must run BEFORE the brace-aware substitution so it doesn't
       // re-process correctly-formed input.
+      // Charge bracing: a charge is digits + an optional trailing sign, e.g.
+      // `^2+`, `^3-`. The capture MUST include the sign — `\^(\d+)` alone braces
+      // only the digit (`Mg^{2}+`), leaving `+` on the baseline (renders "Mg²+"
+      // instead of "Mg²⁺"). Single-sign charges (`^+`, `^-`) need no bracing and
+      // are left untouched; already-braced `^{2+}` is skipped (next char is `{`).
       text = text.replace(/\\ce(?=[A-Z])([A-Za-z][A-Za-z0-9^_+\-]*(?:\{[^}]+\})*)/g, (_m: string, formula: string) => {
         const p = formula
           .replace(/([A-Z][a-z]?)(\d+)/g, '$1_{$2}')
-          .replace(/\^(\d+)/g, '^{$1}');
+          .replace(/\^(\d+[+\-]?)/g, '^{$1}');
         return `\\mathrm{${p}}`;
       });
       text = text.replace(/\\ce\{([^}]+)\}/g, (_m: string, formula: string) => {
@@ -53,7 +58,7 @@ export default function MathRenderer({ markdown, className = '', fontSize, image
           .replace(/->/g, '\\rightarrow')
           .replace(/<->/g, '\\leftrightarrow')
           .replace(/\[([^\]]+)\]/g, '\\overset{$1}')
-          .replace(/\^(\d+)/g, '^{$1}');
+          .replace(/\^(\d+[+\-]?)/g, '^{$1}');
         return `\\mathrm{${p}}`;
       });
 

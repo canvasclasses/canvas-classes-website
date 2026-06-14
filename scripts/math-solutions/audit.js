@@ -23,42 +23,9 @@ const mongoose = require('mongoose');
 const FLAG_DIR = path.join(__dirname, '..', '..', '_agents', 'solution-flags');
 
 // Re-use the same validator rules as apply-batch.js (kept in sync manually for now).
-const FORBIDDEN_PHRASES = [
-  "let's dive in", "in conclusion", 'therefore, we can easily see',
-  "let's break this down", 'delve', 'it is crucial to note',
-  '1. The "Aha!" Moment', '2. Method 1: The Standard Approach',
-  '3. Method 2: The 30-Second Trick', '3. Method 2: The Insight Shortcut',
-  '4. Method 3: The Alternate Angle', 'The Aha Moment',
-  '**The Smart Move**', '**Where Students Get Stuck**',
-];
-
-function validateSolution(md) {
-  const issues = [];
-  if (!md || typeof md !== 'string') return ['solution is empty or missing'];
-  if (md.length < 800) issues.push(`too short (${md.length} chars)`);
-  if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading');
-  if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading');
-  if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading');
-  if (!/\*\*⚠️/.test(md)) issues.push('missing ⚠️ heading');
-  if (/^###\s/m.test(md)) issues.push('uses forbidden Markdown heading syntax (###)');
-  const tail = md.slice(-300);
-  if (!/\\boxed\{/.test(tail)) issues.push('missing $\\boxed{...}$');
-  const dollarSingles = (md.match(/(?<!\$)\$(?!\$)/g) || []).length;
-  if (dollarSingles % 2 !== 0) issues.push(`unbalanced $ (${dollarSingles})`);
-  if (/\$\$/.test(md)) issues.push('uses $$ display math');
-  const opens = (md.match(/\{/g) || []).length;
-  const closes = (md.match(/\}/g) || []).length;
-  if (opens !== closes) issues.push(`unbalanced braces (${opens} vs ${closes})`);
-  const lower = md.toLowerCase();
-  for (const phrase of FORBIDDEN_PHRASES) {
-    if (lower.includes(phrase.toLowerCase())) issues.push(`cliche: "${phrase}"`);
-  }
-  // Numbered-step detector (workflow Rule 5)
-  if (/^\*{0,2}step\s+\d/im.test(md)) {
-    issues.push('uses numbered "Step N" enumeration');
-  }
-  return issues;
-}
+// Validation is shared across all three toolkits — see scripts/lib/solution-validator.js.
+// Audits pass autoDetect:true so format-less v2 docs aren't flagged for "missing icons".
+const { validateSolution, POLICY } = require('../lib/solution-validator');
 
 // ─── Flag file read/write (mirror of apply-batch.js) ────────────────────────
 function readFlagFile(prefix) {
@@ -181,7 +148,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
 
     if (missingOnly) continue;
 
-    const issues = validateSolution(md);
+    const issues = validateSolution(md, { policy: POLICY.math, autoDetect: true });
     if (issues.length) {
       failedValidation++;
       // Skip soft flag if the doc is already blocking — avoids double-listing
@@ -214,7 +181,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
   }
 
   if (sampleN > 0) {
-    const eligible = docs.filter(d => d.solution && d.solution.text_markdown && d.solution.text_markdown.length >= 800);
+    const eligible = docs.filter(d => d.solution && d.solution.text_markdown && d.solution.text_markdown.length >= 50);
     const shuffled = eligible.sort(() => Math.random() - 0.5).slice(0, sampleN);
     console.log(`\nManual-review sample (${sampleN} random IDs to read for soft quality):`);
     for (const d of shuffled) console.log(`  ${d.display_id}`);

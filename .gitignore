@@ -24,6 +24,11 @@ build
 .DS_Store
 *.pem
 
+# NCERT corpus source PDFs/text — bulk binaries kept local, not committed.
+# Distilled _agents/ncert/**/*.md indexes ARE committed. Re-fetch sources per
+# the curl command in each chapter file's header (see _agents/ncert/NCERT_INDEX.md).
+_agents/ncert/_source/
+
 # Claude Code — local-only files (conversation history, local settings, commands)
 .claude/worktrees/
 .claude/projects/
@@ -99,6 +104,18 @@ _source_pdfs/
 /scripts/hindi-fix/_*.json
 /scripts/science-quiz/_*.json
 /scripts/science-practice/_*.json
+# one-time solution/livebook batch scratch — spent insert/fix/audit scripts + DB
+# rollback snapshots (already applied or regenerable; backups kept LOCAL as undo
+# nets, never committed). Reusable toolkits (scripts/lib, svg-mapper, ncert,
+# normalize-ce-charges.js) are intentionally NOT matched here.
+/scripts/_batch_*.js
+/scripts/_phase1_buffer_*.js
+/scripts/_fix_*.js
+/scripts/_mole_audit_*
+/scripts/_backup_*.json
+/scripts/*_rollback_backup.json
+/scripts/inspect_*.js
+/scripts/save_solutions_rev2.js
 
 # automation pipeline output
 /automation/output/

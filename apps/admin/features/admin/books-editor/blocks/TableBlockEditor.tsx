@@ -37,11 +37,17 @@ export default function TableBlockEditor({ block, onChange }: Props) {
   return (
     <div className="flex flex-col gap-3 overflow-x-auto">
       <div>
-        <label className="text-xs text-white/40 mb-1 block">Caption</label>
+        <label className="text-xs text-white/40 mb-1 block">
+          Caption {block.figure_number && <span className="text-orange-300 font-semibold">· Table {block.figure_number}</span>}
+        </label>
         <input value={block.caption ?? ''} onChange={(e) => onChange({ caption: e.target.value })}
-          placeholder="Optional caption"
+          placeholder="Optional caption (don't type 'Table 1.1' — it's added automatically)"
           className="w-full px-3 py-1.5 bg-[#0B0F15] border border-white/10 rounded-lg
             text-sm text-white placeholder-white/25 focus:outline-none focus:border-orange-500/40" />
+        <input value={block.figure_key ?? ''} onChange={(e) => onChange({ figure_key: e.target.value || undefined })}
+          placeholder="Figure key (auto if blank) — e.g. si-base-units"
+          className="w-full mt-1.5 px-3 py-1.5 bg-[#0B0F15] border border-white/10 rounded-lg
+            text-xs text-white placeholder-white/25 focus:outline-none focus:border-orange-500/40" />
       </div>
 
       <table className="text-sm border-collapse min-w-max">

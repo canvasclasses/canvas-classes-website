@@ -86,6 +86,10 @@ export interface ImageBlock extends BaseBlock {
   // Optional display crop. undefined = natural proportions (no crop, full height).
   // When set, the container is locked to that ratio and the image covers it (object-cover).
   aspect_ratio?: '16:9' | '16:5' | '4:3' | '3:2' | '1:1' | '21:9';
+  // ── Figure numbering (§16) ──
+  decorative?: boolean;     // hero/atmosphere image — NOT a numbered figure
+  figure_key?: string;      // stable slug for cross-referencing, e.g. "atoms-diagram"
+  figure_number?: string;   // assigned by the finaliser, e.g. "1.3" (renderer shows "Fig. 1.3")
 }
 
 // 4. INTERACTIVE IMAGE — SVG/PNG with tappable hotspot annotations
@@ -150,6 +154,8 @@ export interface LatexBlock extends BaseBlock {
   latex: string;     // Raw LaTeX, no $$ delimiters — added by renderer
   label?: string;    // e.g. "Equation 3.1"
   note?: string;
+  figure_key?: string;      // §16 — Equation series, opt-in (renderer shows "Eq. 1.5")
+  figure_number?: string;
 }
 
 // 10. PRACTICE LINK — links to Crucible questions
@@ -196,6 +202,8 @@ export interface TableBlock extends BaseBlock {
   headers: string[];
   rows: string[][];
   highlight_row?: number[];
+  figure_key?: string;      // §16 — Table series (renderer shows "Table 1.2")
+  figure_number?: string;
 }
 
 // 13. TIMELINE — sequential events / process steps
@@ -794,6 +802,8 @@ export interface GalleryBlock extends BaseBlock {
   type: 'gallery';
   items: GalleryItem[];
   aspect_ratio?: '16:9' | '16:5' | '4:3' | '3:2' | '1:1' | '21:9';
+  figure_key?: string;      // §16 — a gallery is one numbered figure (panels a/b/c)
+  figure_number?: string;
 }
 
 export type ContentBlock =
@@ -879,6 +889,12 @@ export interface BookPage {
    * from chapter progress counts.
    */
   page_type?: 'lesson' | 'chapter_opener';
+  /**
+   * §16 — chapter-wide figure/table reference map (`figure_key` → rendered label
+   * like "Fig. 1.3"), written onto every page in a chapter by the numbering
+   * finaliser. The renderer uses it to resolve in-text `{fig:key}` tokens.
+   */
+  figure_refs?: Record<string, string>;
 }
 
 /** One lesson page in the chapter-opener journey map (§15.1, auto-derived). */

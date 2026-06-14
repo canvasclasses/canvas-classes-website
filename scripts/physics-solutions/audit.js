@@ -14,39 +14,9 @@ const mongoose = require('mongoose');
 
 const FLAG_DIR = path.join(__dirname, '..', '..', '_agents', 'solution-flags');
 
-const FORBIDDEN_PHRASES = [
-  "let's dive in", "in conclusion", 'therefore, we can easily see',
-  "let's break this down", 'delve', 'it is crucial to note',
-  '1. The "Aha!" Moment', '2. Method 1: The Standard Approach',
-  '3. Method 2: The 30-Second Trick', '3. Method 2: The Insight Shortcut',
-  '4. Method 3: The Alternate Angle', 'The Aha Moment',
-  '**The Smart Move**', '**Where Students Get Stuck**',
-];
-
-function validateSolution(md) {
-  const issues = [];
-  if (!md || typeof md !== 'string') return ['solution is empty or missing'];
-  // Length floor intentionally removed: brevity for simple questions is desired.
-  if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading');
-  if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading');
-  if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading');
-  if (!/\*\*⚠️/.test(md)) issues.push('missing ⚠️ heading');
-  if (/^###\s/m.test(md)) issues.push('uses forbidden Markdown heading syntax (###)');
-  const tail = md.slice(-300);
-  if (!/\\boxed\{/.test(tail)) issues.push('missing $\\boxed{...}$');
-  const dollarSingles = (md.match(/(?<!\$)\$(?!\$)/g) || []).length;
-  if (dollarSingles % 2 !== 0) issues.push(`unbalanced $ (${dollarSingles})`);
-  if (/\$\$/.test(md)) issues.push('uses $$ display math');
-  const opens = (md.match(/\{/g) || []).length;
-  const closes = (md.match(/\}/g) || []).length;
-  if (opens !== closes) issues.push(`unbalanced braces (${opens} vs ${closes})`);
-  const lower = md.toLowerCase();
-  for (const phrase of FORBIDDEN_PHRASES) {
-    if (lower.includes(phrase.toLowerCase())) issues.push(`cliche: "${phrase}"`);
-  }
-  if (/^\*{0,2}step\s+\d/im.test(md)) issues.push('uses numbered "Step N" enumeration');
-  return issues;
-}
+// Validation is shared across all three toolkits — see scripts/lib/solution-validator.js.
+// Physics policy keeps 🖼️ in v2 + allows "anchor". Audits pass autoDetect:true.
+const { validateSolution, POLICY } = require('../lib/solution-validator');
 
 function readFlagFile(prefix) {
   const file = path.join(FLAG_DIR, `${prefix}-flags.md`);
@@ -111,7 +81,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
   const Q = mongoose.connection.db.collection('questions_v2');
 
   const docs = await Q.find({ display_id: new RegExp(`^${prefix}-\\d+$`) })
-    .project({ display_id: 1, 'solution.text_markdown': 1, answer: 1, options: 1 })
+    .project({ display_id: 1, 'solution.text_markdown': 1, 'solution.format': 1, answer: 1, options: 1 })
     .sort({ display_id: 1 })
     .toArray();
 
@@ -150,7 +120,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
 
     if (missingOnly) continue;
 
-    const issues = validateSolution(md);
+    const issues = validateSolution(md, { format: d.solution && d.solution.format, policy: POLICY.physics, autoDetect: true });
     if (issues.length) {
       failedValidation++;
       if (!alreadyBlocking.has(d.display_id)) {

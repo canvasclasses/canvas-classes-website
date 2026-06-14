@@ -31,67 +31,12 @@ const mongoose = require('mongoose');
 
 const FLAG_DIR = path.join(__dirname, '..', '..', '_agents', 'solution-flags');
 
-// ─── Heuristic validator ────────────────────────────────────────────────────
-const FORBIDDEN_PHRASES = [
-  "let's dive in", "in conclusion", 'therefore, we can easily see',
-  "let's break this down", 'delve', 'it is crucial to note',
-  // literal template headings — workflow forbids them (use bespoke names instead).
-  // Keep old names too in case legacy doc phrasing slips in.
-  '1. The "Aha!" Moment', '2. Method 1: The Standard Approach',
-  '3. Method 2: The 30-Second Trick', '3. Method 2: The Insight Shortcut',
-  '4. Method 3: The Alternate Angle', 'The Aha Moment',
-  // New doc-internal names — catch direct copy-paste as headings; these are
-  // distinctive enough that they shouldn't appear in normal solution prose.
-  '**The Smart Move**', '**Where Students Get Stuck**',
-];
-
-function validateSolution(md) {
-  const issues = [];
-
-  if (!md || typeof md !== 'string') return ['solution is empty or non-string'];
-  if (md.length < 800) issues.push(`solution too short (${md.length} chars; min 800)`);
-
-  // Required bold-icon headings (💡 is optional per workflow).
-  // New format (post 2026-05-18): `**🧠 Heading text**` on its own line.
-  // The renderer renders `###` literally, so heading syntax is forbidden.
-  if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading (Aha moment)');
-  if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading (Standard approach)');
-  if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading (30-second trick)');
-  if (!/\*\*⚠️/.test(md)) issues.push('missing ⚠️ heading (Common Traps)');
-  if (/^###\s/m.test(md)) issues.push('uses forbidden Markdown heading syntax (###); use **icon Heading** instead');
-
-  // Boxed answer — must appear in last 250 chars
-  const tail = md.slice(-300);
-  if (!/\\boxed\{/.test(tail)) issues.push('missing $\\boxed{...}$ at end');
-
-  // Balanced $ (single-dollar math delimiters; even count)
-  const dollarSingles = (md.match(/(?<!\$)\$(?!\$)/g) || []).length;
-  if (dollarSingles % 2 !== 0) issues.push(`unbalanced $ delimiters (${dollarSingles})`);
-
-  // No display math $$
-  if (/\$\$/.test(md)) issues.push('uses forbidden $$ display math');
-
-  // Balanced braces in the whole solution
-  const opens = (md.match(/\{/g) || []).length;
-  const closes = (md.match(/\}/g) || []).length;
-  if (opens !== closes) issues.push(`unbalanced braces (${opens} open vs ${closes} close)`);
-
-  // Cliché / generic-heading filter
-  const lower = md.toLowerCase();
-  for (const phrase of FORBIDDEN_PHRASES) {
-    if (lower.includes(phrase.toLowerCase())) issues.push(`forbidden phrase: "${phrase}"`);
-  }
-
-  // Numbered-step detector (workflow Rule 5: prose only, no Step 1/2/3 enumeration).
-  // Matches "Step 1", "**Step 1**", "Step 1:", "Step 1." at the start of a line — both
-  // standalone and bolded. Allows incidental "step" usage in flowing prose
-  // ("the next step is to...") since that doesn't start with "Step N".
-  if (/^\*{0,2}step\s+\d/im.test(md)) {
-    issues.push('uses numbered "Step N" enumeration (workflow Rule 5: prose only)');
-  }
-
-  return issues;
-}
+// ─── Heuristic validator (SHARED — single source of truth) ──────────────────
+// validateSolution + normalizeCeCharges + the base forbidden-phrase list live in
+// scripts/lib/solution-validator.js so the three toolkits can never drift again.
+// Math policy: forbid all v2 section icons, ban "monster"+"anchor". Math is the
+// only toolkit that opts into the crammed-step SOFT lint (softLint: true below).
+const { validateSolution, normalizeCeCharges, POLICY } = require('../lib/solution-validator');
 
 // ─── Flag file appender ─────────────────────────────────────────────────────
 function readFlagFile(prefix) {
@@ -206,13 +151,31 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
       continue;
     }
 
-    // Validate solution
-    const issues = validateSolution(item.solution);
-    if (issues.length) {
-      addOrReplaceFlag(flagSections, 'blocking', id, `validation failed: ${issues.join('; ')}`);
+    // Canonicalize \ce{} ion charges (^n+ → ^{n+}) before validating/writing.
+    if (item.solution) {
+      const normed = normalizeCeCharges(item.solution);
+      if (normed !== item.solution) {
+        log.push(`${id}  NORMALIZED \\ce{} charges (^n± → ^{n±})`);
+        item.solution = normed;
+      }
+    }
+
+    // Validate solution (item.format: 'v2' = prose format, chemistry post-2026-06-12;
+    // omitted/anything else = legacy 6-section, still canonical for physics & math)
+    const allIssues = validateSolution(item.solution, { format: item.format, policy: POLICY.math, softLint: true });
+    const hardIssues = allIssues.filter(i => !i.startsWith('SOFT:'));
+    const softIssues = allIssues.filter(i => i.startsWith('SOFT:')).map(i => i.slice(5));
+    if (hardIssues.length) {
+      addOrReplaceFlag(flagSections, 'blocking', id, `validation failed: ${hardIssues.join('; ')}`);
       blocked++;
-      log.push(`${id}  BLOCK: ${issues.join('; ')}`);
+      log.push(`${id}  BLOCK: ${hardIssues.join('; ')}`);
       continue;
+    }
+    // Soft issues never block the write — surface as a soft flag + log note.
+    if (softIssues.length) {
+      addOrReplaceFlag(flagSections, 'soft', id, softIssues.join('; '));
+      softFlags++;
+      log.push(`${id}  SOFT: ${softIssues.join('; ')}`);
     }
 
     // Build $set — if the existing `solution` field is null/missing (older docs),
@@ -232,24 +195,40 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
     const notes = [];
 
     if (item.answer) {
+      // Like `solution` above, older docs may store `answer: null` (a scalar).
+      // A dotted-path $set on 'answer.correct_option' then fails ("Cannot create
+      // field 'correct_option' in element {answer: null}"), so when answer is not
+      // an object we set the whole `answer` object instead of dotted paths.
+      const answerIsObject = cur.answer && typeof cur.answer === 'object';
+      const desired = {};
+      let answerChanged = false;
       if (item.answer.correct_option != null) {
-        const old = cur.answer && cur.answer.correct_option;
+        const old = answerIsObject ? cur.answer.correct_option : undefined;
         if (old !== item.answer.correct_option) {
-          set['answer.correct_option'] = item.answer.correct_option;
+          desired.correct_option = item.answer.correct_option;
           notes.push(old == null
             ? `answer null → (${item.answer.correct_option})`
             : `answer (${old}) → (${item.answer.correct_option})`);
           answerFixes++;
+          answerChanged = true;
         }
       }
       if (item.answer.integer_value != null) {
-        const old = cur.answer && cur.answer.integer_value;
+        const old = answerIsObject ? cur.answer.integer_value : undefined;
         if (old !== item.answer.integer_value) {
-          set['answer.integer_value'] = item.answer.integer_value;
+          desired.integer_value = item.answer.integer_value;
           notes.push(old == null
             ? `integer null → ${item.answer.integer_value}`
             : `integer ${old} → ${item.answer.integer_value}`);
           answerFixes++;
+          answerChanged = true;
+        }
+      }
+      if (answerChanged) {
+        if (answerIsObject) {
+          for (const [k, v] of Object.entries(desired)) set[`answer.${k}`] = v;
+        } else {
+          set.answer = desired; // create the whole object over the null scalar
         }
       }
     }
@@ -270,6 +249,20 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
     if (item.verifier_note) {
       addOrReplaceFlag(flagSections, 'verify', id, item.verifier_note);
       verifyFlags++;
+    }
+
+    // Audio recommendation (format v2): the writer kept the text tight and flags
+    // that the founder's recorded audio would carry the elaborate framing better.
+    // Goes to the per-chapter audio wishlist — NEVER into student-visible text.
+    if (item.audio_flag) {
+      const audioFile = path.join(FLAG_DIR, `${prefix}-audio-wishlist.md`);
+      if (!fs.existsSync(audioFile)) {
+        fs.mkdirSync(FLAG_DIR, { recursive: true });
+        fs.writeFileSync(audioFile, `# ${prefix} — Audio Explanation Wishlist\n\n> Questions where the founder's recorded audio should carry the elaborate framing\n> the compact v2 text deliberately omits. Founder records → audio attached via\n> solution.asset_ids.audio. One line per question, newest appended.\n\n`);
+      }
+      const line = `- **${id}** — ${item.audio_flag.note}\n`;
+      const existing = fs.readFileSync(audioFile, 'utf8');
+      if (!existing.includes(`**${id}**`)) fs.appendFileSync(audioFile, line);
     }
 
     if (!dryRun) {

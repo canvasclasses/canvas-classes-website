@@ -66,6 +66,16 @@ Two hard rules:
 | land on (figurative) | becomes, equals, comes out to be |
 | diagnostic spot | where students go wrong |
 | crucial, paramount, leverage, elucidate | important, key, use, explain |
+| brutally capped, brutally | only, capped at, limited to |
+| fantasy math, theoretical perfection, if the universe had no friction | the perfect (theoretical) amount |
+| crush it down, slash it | cut it down, take only X% |
+| unlocking the mass, master key | use density to get the mass |
+| structured volume, hard grams, truth-state | (delete the flourish — say "volume", "grams") |
+| physically hold, we physically hold | we have, there is |
+| sandbox, mega-equation | (delete the metaphor; state the step plainly) |
+| delve, robust, seamless, intricate, realm, navigate, underscore, pivotal, holistic, nuanced | (cut — AI-tell words; use plain equivalents) |
+| monster ("redox monster", "this monster of a question") | (cut — reads as AI hype; just name it: "this redox equation", "this long question") |
+| anchor / anchor it (figurative) | "let us fix X at …", "set X = …", "take X as …" |
 
 **Sentence length rule.** Target under 20 words per sentence; never over 30. If a sentence has more than one comma, or an em-dash, check whether it can be broken into two short sentences. Short sentences are easier to read for students whose first language is not English.
 
@@ -109,6 +119,149 @@ You are a senior JEE/NEET teacher writing for a student in your class. The stude
 
 ---
 
+## 🎤 FORMAT v2 + TEACHER VOICE — CURRENT FORMAT FOR ALL NEW CHEMISTRY SOLUTIONS (2026-06-12)
+
+> **This section supersedes the 6-section iconified structure (§🧱 below) for CHEMISTRY.**
+> Founder decisions from the ATOM voice pilot: (1) the fixed 🧠/🗺️/⚡/⚠️ headline template
+> reads as AI-generated — students spot it instantly; (2) attention spans demand shorter
+> text — elaborate framing belongs in the founder's recorded audio, not in prose; (3) the
+> text must carry the founder's teaching voice. Physics & math stay on the legacy format
+> until their own pilots. Approved examples: ATOM-016/021/024/079/233 (live in DB) and
+> `_agents/voice/_atom-comparison-v2-compact.md`.
+
+### Structure (no section headlines, no icons)
+
+1. **Opening — 1–2 sentences max.** Name the move and the anchor ("You know that...";
+   "Maximum wavelength means minimum energy — ..."). NO bespoke titles, NO headings.
+   If the framing genuinely needs more than 2 sentences → CUT it and add an
+   `audio_flag` to the batch item (see below). The founder's audio carries elaborate
+   framing; the text stays tight.
+2. **Working — compact, but ONE CALCULATION STEP PER LINE.** Skip routine arithmetic. One
+   units/detail alarm only where it actually bites. For MTC/multi-statement, inline bold
+   markers (**A.**, **C** needs care:) are fine — they are content, not template.
+
+   **⚠️ Step-layout rule (founder feedback 2026-06-12, refined — non-negotiable):** never
+   chain multiple calculation steps into one run-on line with `;` / `.` / `i.e.`. Each
+   distinct step is its own line, **AND steps are separated by a BLANK LINE** (a blank line
+   between every step — `MathRenderer` renders `\n\n` as `<br/><br/>`, giving the vertical
+   breathing room). Single-newline stepping packs the lines too tightly and reads "crowded"
+   — use blank lines. The **gold standard is MOLE-060** (the founder's reference): each step
+   on its own line, a blank line between steps, and a short **bold lead-in label** where it
+   helps (`**Mass increase:**`, `**Moles of Br⁻ swapped in:**`) — labels are content, not
+   template, and make the chain scannable. Each `$...$` must stay on one line (inline math
+   cannot span a newline).
+
+   ❌ **Crammed (run-on — what students complained about):**
+   > `Moles MnO2 = 75.7/87 = 0.870; these give 0.870/3 = 0.290 mol Mn3O4, i.e. 0.290 × 229 = 66.4 g. The ignited solid is Mn3O4 + inert = 66.4 + 8.07 = 74.5 g.`
+
+   ❌ **Too tight (single newlines — also reads "crowded"):** the same steps stacked on
+   consecutive lines with no blank line between them.
+
+   ✅ **Stepped with breathing room (blank line between steps; MOLE-060 style):**
+   ```
+   Moles of $\ce{MnO2} = \frac{75.7}{87} = 0.870$
+
+   Moles of $\ce{Mn3O4} = \frac{0.870}{3} = 0.290$, mass $= 0.290 \times 229 = 66.4\,\text{g}$
+
+   Ignited solid $= 66.4 + 8.07 = 74.5\,\text{g}$ (water has left)
+
+   $\%\,\text{Mn} = \frac{47.9}{74.5} \times 100 \approx 64\%$
+   ```
+   One block ≈ one move the student's pen makes. A line with three or more `=` is the smell
+   of a crammed step — break it.
+
+   **Compactness ≠ stripping steps (founder, 2026-06-12).** "Compact" means *no long prose
+   paragraphs explaining the underlying concept* — that depth is what the founder's AUDIO /
+   VIDEO carries, so don't write it as an essay in the text. It does **NOT** mean dropping
+   calculation steps or clarifying one-liners. If one more short statement makes the
+   solution easier to follow, KEEP it. Cut concept-lectures, never cut clarity.
+3. **`**Shortcut:**`** inline label — only when a genuine option-independent shortcut
+   exists (same bar as the old ⚡). Rationed-ratta style: "remember just this one value."
+4. **`**Watch out:**`** inline label — 1–2 lines, THE trap (singular), voiced as the
+   student's reflex where natural ("You will want to say — sir, ...").
+5. **End with `$\boxed{...}$`.** An optional short verdict line before it ("An easy one
+   once you see the link.") — use sparingly, not on every question.
+6. **Length targets:** trivial 60–100 words · medium 100–160 · hard = whatever the
+   chemistry needs *after* the audio offload. When in doubt, cut.
+
+### Teacher voice (mandatory reading before writing)
+
+Before writing ANY chemistry batch, read:
+- [`_agents/voice/teacher-voice-profile.md`](../voice/teacher-voice-profile.md) — the
+  founder's teaching DNA + written-register translation rules + anti-parody guardrails
+  (moves over tics; max one Hinglish touch per solution; never fabricate quotes).
+- The chapter's `_agents/voice/<PREFIX>-exemplars.md` **if it exists** — his actual
+  analogies, traps, constants, and per-question moves for that chapter. Always prefer
+  his real analogy over inventing one. If the file doesn't exist, apply the profile
+  alone and note the gap (that chapter's lectures are a distillation target — see
+  `_agents/workflows/TEACHER_VOICE_SYSTEM.md`).
+
+### "As per NCERT" — grounding + citation (when the chapter has an NCERT index)
+
+If `_agents/ncert/chemistry/<PREFIX>-ncert.md` exists, consult it while writing:
+- **Ground the content** in NCERT's actual wording/values (constants, definitions, the
+  exact rule) rather than paraphrasing from memory — the index quotes the verbatim lines.
+- **Cite the source when the question is NCERT-derived**, using the lead phrase **"As per
+  NCERT"**. Many JEE/NEET stems are designed around an NCERT line; naming it builds
+  credibility and makes the explanation feel relatable. Add a short, natural citation —
+  *"As per NCERT (Cl-11 Ch.2, §2.6.6, p.64), half- and fully-filled subshells carry extra
+  stability."* — woven into the prose, not as a separate heading. One citation per solution,
+  only where the stem genuinely traces to NCERT; never force it. Include the §/page (and the
+  paragraph where the index gives it) so the student can find the exact line.
+- The index's **"question hooks"** flag the lines examiners reuse — a fast way to spot which
+  NCERT statement a stem is testing.
+- If no index file exists for the chapter, skip silently (it's a chapter not yet ingested —
+  see `_agents/ncert/NCERT_INDEX.md`).
+
+### Batch-item fields (apply-batch.js)
+
+```js
+{
+  display_id: 'ATOM-024',
+  format: 'v2',                    // REQUIRED for chemistry — switches the validator
+  solution: `...`,                 // v2 prose; iconified headings now FAIL validation
+  answer: { ... },
+  audio_flag: { note: '...' },     // optional — appends to <PREFIX>-audio-wishlist.md
+                                   // (founder records; NEVER visible in student text)
+}
+```
+
+### What did NOT change
+
+The §🚫 Never-Break-Character rules, the word-swap table, plain-English rules, LaTeX rules,
+answer-key verification (re-derive → correct → verifier_note → Notion), the 📐 diagram
+marker, and the Notion sync ritual all apply unchanged. The §🧱 6-section table below is
+**LEGACY for chemistry** — kept because ~15k existing solutions use it and physics/math
+still write it; do not write new chemistry solutions in it.
+
+---
+
+## 🚫 Never Break Character — Four Hard Rules
+
+These come from a real failure found in the Mole Concept chapter (MOLE-033, MOLE-039 — 2026-06-11): the solution slipped out of the teacher's voice and into an AI narrating itself and the database. **A student must never be able to tell a machine wrote the solution.** These four are hard rules, not style preferences.
+
+**Rule 1 — You are the teacher, never the narrator.** Never refer to your own working in the first person as a process.
+- ❌ *"My rigorous calculation gives 8 g…"*, *"the internal mathematical extraction…"*
+- ✅ Just state the chemistry: *"The theoretical mass is 14.3 g, so the actual yield is 8 g."*
+
+**Rule 2 — The student never sees the system.** Never mention the database, the stored answer, the "key", the option as data, or the act of "boxing" an answer. Those words are for the toolkit and the founder — never for the student. Also never narrate the paper-setter's intent.
+- ❌ *"the stored system key"*, *"legacy data mismatch"*, *"recorded logic key"*, *"we tag the final box"*, *"per recorded logic"*, *"truth-state"*
+- ❌ Narrating the examiner: *"14.3 g is sitting right there as option (c) to trap students"*
+- ✅ Teach the trap **to the student directly**: *"Many students stop at 14.3 g — that is the theoretical mass, not the real one. The question gives 56%, so the answer must be smaller."*
+
+**Rule 3 — Never write your thinking out loud.** No self-correction, no hesitation, no *"wait"*. The teacher knows the answer before speaking. If you stumbled while solving, re-solve and write only the clean path.
+- ❌ *"(Wait, evaluating options…)"*, *"So oxygen is the limiter… wait, hold on —"*, *"Let me reconsider"*
+- ✅ One clean, confident line of reasoning.
+
+**Rule 4 — Never box an answer your own derivation contradicts** (restated here because it was broken). MOLE-033 and MOLE-039 did exactly this: the math gave (a)/(b), the stored key said (d)/(c), and the solution **fabricated chemistry** (*"alternative molar assumptions or typos"*) to justify boxing the wrong key. This is forbidden. When your derivation disagrees with the stored answer:
+1. Box **your** derived answer in the solution.
+2. Set the corrected `answer` in the batch **and** add a `verifier_note` (yellow flag).
+3. Push it to the Chemistry Answer Discrepancies Notion DB at chapter end (see §🗂️).
+
+Never invent chemistry to fit a stored value. See the Answer-Key Verification table below.
+
+---
+
 ## ✏️ Formatting & Mechanical Rules
 
 1. **No `###` or `##` headings.** The renderer leaves the `#` characters visible. Use **bold-icon lines** instead, on their own line, followed by a blank line then the body:
@@ -134,6 +287,7 @@ You are a senior JEE/NEET teacher writing for a student in your class. The stude
 
 6. **Chemistry typography:**
    - **Inline formulas:** $\ce{H2SO4}$, $\ce{NH4+}$, $\ce{Fe^{2+}}$, $\ce{[Cu(NH3)4]^{2+}}$ — use `\ce{...}`.
+   - **Ion charges — ALWAYS brace the digit AND the sign together: `^{2+}`, `^{3-}`, never `^2+`.** Write `\ce{Mg^{2+}}`, `\ce{Al^{3+}}`, `\ce{O^{2-}}`. The renderer's `\ce` shim raises only what the `^` binds to; `\ce{Mg^2+}` braces just the `2` and drops the `+` to the baseline → renders "Mg²+" instead of "Mg²⁺" (the 2026-06-13 bug the founder caught on ATOM-004). Single-sign charges (`^+`, `^-`) need no braces. `apply-batch.js` now auto-normalizes `^n±` → `^{n±}` on write, and `MathRenderer.tsx` was fixed to brace the sign too — but author the braced form regardless so the stored data is canonical.
    - **Coordination compounds with square brackets:** if `\ce{[...]}` renders incorrectly in your renderer, fall back to `\mathrm{[Cu(NH_3)_4]^{2+}}`.
    - **Reaction arrows:** $\ce{->}$, $\ce{<=>}$ inside `\ce{}`. Standalone: `$\rightarrow$`, `$\rightleftharpoons$`.
    - **Greek letters:** always inside `$...$`. Never bare `Δ`, `α` in prose.
@@ -155,7 +309,7 @@ You are a senior JEE/NEET teacher writing for a student in your class. The stude
 
 ---
 
-## 🧱 Solution Structure
+## 🧱 Solution Structure — ⚠️ LEGACY FOR CHEMISTRY (see §🎤 FORMAT v2 above; physics & math still use this)
 
 Six sections. The first one (🧠) carries the most pedagogical weight — spend the most thought on it. The math/chemistry (🗺️) is the smaller part of the work; the thinking framework is the bigger part.
 
@@ -176,13 +330,12 @@ Chemistry relies on structural diagrams more than math, and these come in two fl
 
 **Mode A — Question already has a structural image.** The `fetch-batch.js` toolkit surfaces image URLs from `question_text.markdown`. Read the image first. The 🖼️ section then describes what the structure actually shows — the parent chain, the substituents, the stereochemistry, the reaction conditions written above the arrow.
 
-> **CRITICAL — SVGs in this bank are filled white.** Same as the physics bank — the R2 question-bank SVGs use `fill="#fff"` on what they expect to be a dark background. Loading the URL in a browser shows a blank page — that does NOT mean the diagram is missing. Convert before reading:
+> **CRITICAL — SVGs in this bank are filled white, and the Claude vision API can't decode SVG.** Same as the physics bank — the R2 SVGs use `fill="#fff"` on an assumed dark background; the URL shows blank in a browser and a `.svg` URL fed to the model fails with *"image couldn't be read — try a different format."* Use the dedicated tool to get legible dark-background PNGs:
 > ```bash
-> curl -s <url> -o /tmp/<display_id>.svg
-> magick -background black -density 150 /tmp/<display_id>.svg /tmp/<display_id>.png
-> # then Read /tmp/<display_id>.png
+> node scripts/svg-mapper/fetch-question-images.js <display_id...>   # or: --prefix <PFX>
+> # prints display_id → [local PNG paths]; Read those (small batches to stay under the image cap)
 > ```
-> Never skip the dark-background conversion for SVG files. PNG and JPG inputs can be read directly without conversion.
+> Do **not** use `magick`/`convert` — they need ghostscript (not installed here); the tool uses `sharp`. PNG/JPG inputs read directly.
 
 **Mode B — No image, but a structure helps.** Pure-numerical questions sometimes describe a compound in words. Give a 1–2 sentence "picture this" description so the student can sketch it on rough paper.
 
@@ -311,7 +464,10 @@ Before saving any solution:
 8. Is every `$` paired? Every `{` paired? No `$$`? No `\dfrac`?
 9. Does the solution end with `$\boxed{\text{Answer: ...}}$`?
 10. For mechanism-heavy questions, did I insert `📐 [Solution diagram: ...]` markers at the steps where arrow-pushing or stereochem would benefit from a picture?
-11. Any "Wait, let me re-read" / "Standard problem with answer..." / "If we assume..." uncertainty leakage? If yes, re-solve and rewrite.
+11. Any "Wait, let me re-read" / "Standard problem with answer..." / "If we assume..." uncertainty leakage? If yes, re-solve and rewrite. (§🚫 Rule 3)
+12. **Never-break-character check (§🚫):** No first-person about my own working (Rule 1); no mention of the database / stored answer / "the key" / "the box" / the examiner's intent to "trap" (Rule 2); no boxed answer that contradicts my derivation — corrected `answer` + `verifier_note` instead (Rule 4)?
+13. **FORMAT v2 check (chemistry only, §🎤):** No iconified section headings? Opening ≤ 2 sentences (elaborate framing → `audio_flag` instead)? `format: 'v2'` set on the batch item? Did I read `teacher-voice-profile.md` + the chapter's exemplar file, and use HIS analogy where one exists?
+14. **"As per NCERT" (§🎤):** If `_agents/ncert/chemistry/<PREFIX>-ncert.md` exists — did I ground values/wording in it, and add a natural "As per NCERT (…§…, p…)" citation *only* where the stem genuinely traces to an NCERT line (never forced)?
 
 ---
 
@@ -388,4 +544,6 @@ This workflow mirrors `math-solution-workflow.md` and `physics-solution-workflow
 
 ---
 
-**Document Version:** 3.1 | **Last Updated:** 2026-05-23 (added §🗂️ Notion Sync — mandatory chapter-end push to Chemistry Answer Discrepancies DB and Chemistry Solution-Side Diagrams Wishlist DB) | **Supersedes:** v3.0
+**Document Version:** 4.0 | **Last Updated:** 2026-06-12 (added §🎤 FORMAT v2 + TEACHER VOICE — founder-approved from the ATOM pilot: no iconified section headlines, compact prose with **Shortcut:**/**Watch out:** labels, ≤2-sentence openings with elaborate framing offloaded to founder audio via `audio_flag`, mandatory read of `_agents/voice/teacher-voice-profile.md` + chapter exemplars; §🧱 marked LEGACY for chemistry; checklist item 13; validator gained `format: 'v2'` + audio-wishlist support) | **Supersedes:** v3.2
+
+> **§🔁 mirror note:** §🚫 and the new word-swap rows are *shared voice rules*. Per §🔁 they should be mirrored into `math-solution-workflow.md` and `physics-solution-workflow.md` in the same spirit. Not yet propagated as of 2026-06-11 — pending.

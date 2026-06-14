@@ -223,7 +223,10 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
         ytVideo('Equivalent Concept & N-factor', 'DJuPWr2X7_k'),
         ytVideo('Titration & Primary Standard Solution', 'QhgfhqPPbOw'),
     ],
-    ch11_pblock: [oneShotLecture('p-Block (11) — One Shot', '8zT9gXplLBQ')],
+    ch11_pblock: [
+        ytVideo('p-Block — Crash Course L1', 'dFAxLN_s9sE'),
+        oneShotLecture('p-Block (11) — One Shot', '8zT9gXplLBQ'),
+    ],
     ch11_goc: [
         ytVideo('GOC — Basics of Organic (before GOC)', '-Y2tMcrhDxU'),
         ytVideo('GOC — IUPAC Naming', 'juJkhCprxy0'),
@@ -238,11 +241,19 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
         ytVideo('GOC — DPP 3', 'okfrmz5xpGs', ['apply']),
         ytVideo('GOC — DPP 4', 'OeKWfd1v0jQ', ['apply']),
         ytVideo('GOC — DPP 5', 'clI0KeT_h0c', ['apply']),
+        // Stereochemistry — taught within GOC (no separate planner chapter).
+        ytVideo('Stereochemistry — L1', 'CztG35_8LyU'),
+        ytVideo('Stereochemistry — L2', 'UUuMydKkxjc'),
+        ytVideo('Stereochemistry — L3', 'cER7cjvD0PY'),
+        ytVideo('Stereochemistry — DPP 1', 'pmQZ4YzC2CM', ['apply']),
+        ytVideo('Stereochemistry — DPP 2', '0TS9DlLGF4Y', ['apply']),
+        ytVideo('Stereochemistry — DPP 3', '2Mkb4d8TdHA', ['apply']),
         oneShotLecture('GOC — One Shot', 'yg_xIkyGtxg'),
     ],
     ch11_hydrocarbon: [
         ytVideo('Hydrocarbons — Crash Course L1', 'izezV1oOg88'),
         ytVideo('Hydrocarbons — Crash Course L2', 'xU_IfAL0x14'),
+        ytVideo('Aromatic Compounds — L1', '2Z1FXBYuqVA'),
         ytVideo('Hydrocarbons — DPP 1', 'PCNI19FUG5w', ['apply']),
         ytVideo('Hydrocarbons — DPP 2', 'yCgvotvl7GE', ['apply']),
         ytVideo('Hydrocarbons — DPP 3', '3EcsAlTtUIU', ['apply']),
@@ -266,20 +277,78 @@ export const RESOURCE_MAP: Record<string, ResourceSeed[]> = {
         ytVideo('Electrochemistry — Crash Course L3', 'u60yZjm8c5A'),
         oneShotLecture('Electrochemistry — One Shot', 'MiIJwC0LpaE'),
     ],
-    ch12_kinetics: [oneShotLecture('Chemical Kinetics — One Shot', 'sYXMqIHGew8')],
+    ch12_kinetics: [
+        ytVideo('Chemical Kinetics — Crash Course L1', 'uC3FNcNtLQo'),
+        ytVideo('Chemical Kinetics — Crash Course L2', 'EbHkb9_5FzU'),
+        ytVideo('Chemical Kinetics — Crash Course L3', 'lRfiA7ej9_c'),
+        oneShotLecture('Chemical Kinetics — One Shot', 'sYXMqIHGew8'),
+    ],
     ch12_pblock: [
+        ytVideo('p-Block — Crash Course L2', 'XOTxkxHReZM'),
+        ytVideo('p-Block — Crash Course L3', 'l0-4y_M1pWI'),
         oneShotLecture('p-Block (12) · N & O Family — One Shot', 'gpuuH89ZyGo'),
         oneShotLecture('p-Block (12) · Halogens & Noble Gases — One Shot', 'VEmatUp30r4'),
     ],
-    ch12_coord: [oneShotLecture('Coordination Compounds — One Shot', 'uRPfNa5_RPk')],
-    ch12_haloalkanes: [oneShotLecture('Haloalkanes, Alcohols & Ethers — One Shot', 'ZACn8YVBkGY')],
-    ch12_alcohols: [oneShotLecture('Haloalkanes, Alcohols & Ethers — One Shot', 'ZACn8YVBkGY')],
-    ch12_carbonyl: [oneShotLecture('Aldehydes, Ketones & Acids — One Shot', '4NqlPuJHves')],
-    ch12_amines: [oneShotLecture('Amines — Key NCERT Reactions', 'eyWYnda7DL8')],
-    ch12_biomolecules: [oneShotLecture('Biomolecules — One Shot', 'PnwNgp7HUeg')],
-    // Chapters with no curated videos yet (d & f block, salt analysis, practical
-    // physical) fall through to the auto class-hub lecture + NCERT notes +
-    // Crucible practice links.
+    ch12_dblock: [
+        ytVideo('d & f Block — Crash Course L1', '7xY-da7ieh4'),
+        ytVideo('d & f Block — Crash Course L2', 'sbWFK6bKzRg'),
+        ytVideo('d & f Block — Crash Course L3', 'JorfXDJzbTc'),
+    ],
+    ch12_coord: [
+        ytVideo('Coordination Compounds — Crash Course L1', 'TiSmwEBs3jg'),
+        ytVideo('Coordination Compounds — Crash Course L2', 'nYPWrhnJUbw'),
+        ytVideo('Coordination Compounds — Crash Course L2 (Part 2)', 'UJ_Hux972ZQ'),
+        ytVideo('Coordination Compounds — Crash Course L3', '5sC84hpyqsY'),
+        oneShotLecture('Coordination Compounds — One Shot', 'uRPfNa5_RPk'),
+    ],
+    ch12_haloalkanes: [
+        ytVideo('Haloalkanes — Crash Course L1', 'Z4YWjfg7pg4'),
+        ytVideo('Haloalkanes — Crash Course L2', 'ZaryOPtJJBs'),
+        ytVideo('Predicting Substitution & Elimination', 'WLmjfuOZVz0'),
+        ytVideo('Understanding E2 Reaction', 'RDb8n8vW4NQ'),
+        ytVideo('E1cB Reaction', 'CdXGWqRlG3U'),
+        ytVideo('Haloalkanes — DPP 1', '1CXZ6nbkTn4', ['apply']),
+        ytVideo('Haloalkanes — DPP 2', '9fA69CCln2k', ['apply']),
+        oneShotLecture('Haloalkanes, Alcohols & Ethers — One Shot', 'ZACn8YVBkGY'),
+    ],
+    ch12_alcohols: [
+        ytVideo('Alcohols, Phenols & Ethers — Crash Course L1', 'kQ9VF_X-LpA'),
+        ytVideo('Alcohols, Phenols & Ethers — Crash Course L2', 'CeOYhkbHkMM'),
+        ytVideo('Aromatic Compounds — L2 (Phenols)', '1ISE9oTxoSs'),
+        ytVideo('Alcohols, Phenols & Ethers — DPP 1', 'e58LfiXWNSo', ['apply']),
+        ytVideo('Alcohols, Phenols & Ethers — DPP 2', 'EjSp5KS_MBo', ['apply']),
+        ytVideo('Alcohols, Phenols & Ethers — DPP 3', 'qI3OTCIjiSE', ['apply']),
+        oneShotLecture('Haloalkanes, Alcohols & Ethers — One Shot', 'ZACn8YVBkGY'),
+    ],
+    ch12_carbonyl: [
+        ytVideo('Aldehydes, Ketones & Acids — Crash Course L1', '5hQLYGROys8'),
+        ytVideo('Aldehydes, Ketones & Acids — Crash Course L2', 'a510QK4g36g'),
+        ytVideo('Aldehydes, Ketones & Acids — Crash Course L3', 'InOZqUbJ36I'),
+        ytVideo('Grignard Reagent & its Reactions', 'zPSLTqf_OdI'),
+        ytVideo('All About Enamines', 'Tt0weUW1Fp4'),
+        ytVideo('Aldehydes, Ketones & Acids — DPP 1', '7YSM-VEerpk', ['apply']),
+        ytVideo('Aldehydes, Ketones & Acids — DPP 2', 'VaPBFtTnP-g', ['apply']),
+        ytVideo('Aldehydes, Ketones & Acids — DPP 3', 'KowXV88vUv0', ['apply']),
+        oneShotLecture('Aldehydes, Ketones & Acids — One Shot', '4NqlPuJHves'),
+    ],
+    ch12_amines: [
+        ytVideo('Amines — Crash Course L1', 'ZDkssRMx1Go'),
+        ytVideo('Aromatic Compounds — L3', 'FYX2Tx961Ss'),
+        ytVideo('Amines — DPP 1', 'G0bKRxMo5p0', ['apply']),
+        ytVideo('Amines — DPP 2', 'lKT2L6aLM3g', ['apply']),
+        oneShotLecture('Amines — Key NCERT Reactions', 'eyWYnda7DL8'),
+        // Organic Conversions — cross-chapter synthesis. Not a real chapter; placed
+        // at the end of Amines (the last core organic chapter) per the founder.
+        ytVideo('Organic Conversions — Basics', 'fBGrkjlh2kA'),
+        ytVideo('Organic Conversions — Moderate', '_Z4vlyk2LGY'),
+    ],
+    ch12_biomolecules: [
+        ytVideo('Biomolecules — Crash Course L1', 'aNTrA8TmPb8'),
+        ytVideo('Biomolecules — Crash Course L2', '3tDMfV71AT8'),
+        oneShotLecture('Biomolecules — One Shot', 'PnwNgp7HUeg'),
+    ],
+    // Chapters with no curated videos yet (salt analysis, practical physical)
+    // fall through to the auto class-hub lecture + NCERT notes + Crucible links.
 };
 
 // --- research-backed weightage map ----------------------------------------

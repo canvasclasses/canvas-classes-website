@@ -1,10 +1,10 @@
-# K1D — Physics Solution Flags
+# K1D — Math Solution Flags
 
-_Last updated: 2026-05-21 13:39_
+_Last updated: 2026-06-10 08:55_
 
 ## 🔴 Blocking — no solution written
 
-_(none — earlier validation failures were resolved on retry; all 123 solutions written successfully)_
+_(none)_
 
 ## 🟡 Needs verification — solution written, uncertain
 

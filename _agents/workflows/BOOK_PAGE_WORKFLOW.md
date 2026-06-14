@@ -1052,6 +1052,37 @@ node scripts/science-practice/practice_validate.js <N>          # MUST print PAS
 - **Analogy first:** Always lead with a real-world analogy before the technical definition
 - **No fluff:** Every sentence earns its place. Cut anything that doesn't add understanding.
 
+### 5.V — The Founder's Voice (teacher-voice system, 2026-06-12) — MANDATORY for chemistry pages
+
+The "smart tutor" above is not a generic tutor — it is **Paaras sir**, and his voice is now
+documented from his own lecture transcripts. Founder decision: Live Books pages and Crucible
+solutions must be **in sync with his video lectures** — a student who watches the lecture and
+then reads the page should hear the same teacher.
+
+Before writing or rewriting ANY chemistry book page:
+
+1. **Read [`_agents/voice/teacher-voice-profile.md`](../voice/teacher-voice-profile.md)** —
+   his teaching DNA: the self-dialogue engine (voice the student's doubt as *"sir, ...?"*
+   and answer it), analogy-at-the-confusion-point placement, trap-dramatization, rationed
+   memorization ("derive what's derivable, ratta only the high-leverage constants"), honest
+   difficulty calibration, NCERT doctrine ("read NCERT like chemistry, not history").
+2. **Read the chapter's `_agents/voice/<PREFIX>-exemplars.md` if it exists** — and **use HIS
+   actual analogies for the concepts on the page** (the namkeen packet for quantization, the
+   ₹500/₹300-book for work function, the khargosh stairs for energy levels...). Never invent
+   a new analogy for a concept he already has one for — that breaks lecture↔book sync.
+3. **Anti-parody guardrails apply** (profile §2): moves over tics, no fabricated quotes or
+   classroom memories, no session signoffs in page text. Page register stays the workflow's
+   simple English / Hinglish rules (§12) — the voice transfers as *moves*, not transliteration.
+4. If the chapter's exemplar file doesn't exist yet, apply the profile alone and flag the
+   chapter in `_agents/workflows/TEACHER_VOICE_SYSTEM.md` (the distillation queue).
+5. **NCERT grounding (if `_agents/ncert/chemistry/<PREFIX>-ncert.md` exists).** Use it as the
+   citable source of NCERT's exact wording, values, and section/page numbers — faster and more
+   reliable than re-extracting from source images, and it flags which lines examiners reuse
+   ("question hooks"). Still **rephrase in simpler English** (§ "What NOT to do" — never copy
+   NCERT prose verbatim); the index is for grounding + accurate values, not for lifting text.
+   It also makes the per-page "NCERT §x.y alignment" cross-reference (noted as a future option
+   in §1.x) trivial to populate. See `_agents/ncert/NCERT_INDEX.md`.
+
 ### Bold text
 - Bold key terms on **first use only**
 - Bold important numbers or thresholds
@@ -1623,3 +1654,38 @@ End **every** content page with a **one-line hand-off to the next page** ("Next:
 - [ ] Page is ≤ ~18 blocks and one sub-topic (§15.8) — otherwise split.
 - [ ] Load-bearing terms are listed in `glossary`.
 - [ ] Page ends with a one-line bridge to the next page.
+
+---
+
+## 16. Figure / Table / Equation Numbering (2026-06-10)
+
+> **The principle that makes this painless: never hand-type a number into a caption.** Store a stable *key*, let the finaliser assign the *number*, and reference figures by key. Numbers become a computed view over the content, so you can "number last" — insert a figure on page 2 and everything downstream renumbers itself (captions *and* in-text references) with zero manual edits. The old pain (some captions say "Fig 1.3", some don't) is the symptom of numbers living inside caption text; §16 moves the number out.
+
+### 16.1 What gets numbered
+Three **chapter-relative** series, each its own counter, reset every chapter, counted in **reading order** (page_number asc → block order). The chapter opener (page 0) is skipped.
+- **Figures → `Fig. C.N`** — `image` (non-decorative) + `gallery`.
+- **Tables → `Table C.N`** — `table` blocks. *(A markdown table written inside a `text` block is NOT a `table` block and won't be numbered — use a real `table` block for anything you want numbered.)*
+- **Equations → `Eq. C.N`** — `latex_block` **only when it has a `figure_key`** (opt-in; most display equations don't need a number).
+
+### 16.2 Figure vs decorative
+A **figure is something you can cite**; a decorative image is not.
+- **Numbered:** labelled diagrams, infographics, charts, apparatus — anything the text refers to or that carries instructional content.
+- **Not numbered:** page **hero banners** and the chapter-opener cover. Mark them `decorative: true` (the admin Image editor has a checkbox). The finaliser also auto-detects a hero (wide aspect `16:5`/`21:9` + no caption) as decorative, but the explicit flag wins.
+
+### 16.3 Captions & keys
+- **Never type the number into the caption.** Write only the descriptive sentence; the renderer prepends a bold **`Fig. 1.3`** / **`Table 1.2`** label from the assigned `figure_number`. (Drop the old `📸` prefix.)
+- Each figure has a `figure_key` (a slug, e.g. `atoms-diagram`). Set it in the editor for figures you'll reference; the finaliser auto-slugs one from the alt/caption if blank.
+- **Galleries** = one figure with lettered panels: `Fig. 1.3 (a)(b)(c)`.
+
+### 16.4 In-text references
+Reference a figure in prose with a token: `… as shown in {fig:atoms-diagram}.` The reader resolves it to "Fig. 1.3" using the chapter's `figure_refs` map. Before numbering (draft), it falls back to "the figure". Because you reference by key, renumbering updates the in-text mention automatically — never write "Figure 1.3" literally in prose. *(Resolution currently runs in `text` blocks; callouts/worked-examples are a follow-up.)*
+
+### 16.5 The finaliser — run only when the chapter is content-complete
+```
+node scripts/number-figures.js <bookSlug> <chapterNumber> [--dry]
+# e.g. node scripts/number-figures.js ncert-simplified 1
+```
+It is **idempotent** — re-run any time content changes and numbers + references re-sync. It assigns numbers, ensures keys, **strips any hard-typed "Fig 1.3 —"/"Table 1.1 —"/leading emoji** from captions, writes `figure_refs` onto every page, and **reports duplicate keys + dangling `{fig:…}` references**. Use `--dry` to preview. Numbers only "exist" after you run it, which is exactly the point: draft churn-free, finalise on confirmation.
+
+### 16.6 Topics / sub-topics are NOT numbered (decision 2026-06-10)
+Unlike NCERT (`1.4.2`), our Live Books are an Apple-Books-style *journey*, not a linear reference. Sub-topics have **titles + a position in the chapter-opener journey map (lessons 1…N) + the section objective line** — that's the wayfinding. No `1.4.2.1` heading prefixes (they'd drag the experience back toward a dry textbook). **Figures are the exception that must be numbered** because an image has no title to refer to. *(Optional future: a subtle per-page "NCERT §1.4" alignment chip for exam cross-reference — not built.)*

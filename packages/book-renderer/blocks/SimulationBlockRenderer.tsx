@@ -22,6 +22,12 @@ const simulators: Record<string, React.ComponentType> = {
   // 'atomic-models' lives in apps/student (it depends on app-local UI bits and
   // would pull in a non-shareable @/ alias) — it is injected at runtime via
   // ExtraSimulatorsProvider so the student reader still renders it.
+  // 'bohr-spectra' is the flagship Bohr→spectrum sim — fully self-contained in
+  // this package, so it renders in BOTH the student reader and the admin preview.
+  'bohr-spectra': dynamic(
+    () => import('./simulations/BohrSpectraSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   'cathode-ray-tube': dynamic(
     () => import('./simulations/CathodeRayTubeSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }

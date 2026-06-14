@@ -14,39 +14,9 @@ const mongoose = require('mongoose');
 
 const FLAG_DIR = path.join(__dirname, '..', '..', '_agents', 'solution-flags');
 
-const FORBIDDEN_PHRASES = [
-  "let's dive in", "in conclusion", 'therefore, we can easily see',
-  "let's break this down", 'delve', 'it is crucial to note',
-  '1. The "Aha!" Moment', '2. Method 1: The Standard Approach',
-  '3. Method 2: The 30-Second Trick', '3. Method 2: The Insight Shortcut',
-  '4. Method 3: The Alternate Angle', 'The Aha Moment',
-  '**The Smart Move**', '**Where Students Get Stuck**',
-];
-
-function validateSolution(md) {
-  const issues = [];
-  if (!md || typeof md !== 'string') return ['solution is empty or missing'];
-  // No minimum-length check: calibrate by substance, not a target length.
-  if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading');
-  if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading');
-  if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading');
-  if (!/\*\*⚠️/.test(md)) issues.push('missing ⚠️ heading');
-  if (/^###\s/m.test(md)) issues.push('uses forbidden Markdown heading syntax (###)');
-  const tail = md.slice(-300);
-  if (!/\\boxed\{/.test(tail)) issues.push('missing $\\boxed{...}$');
-  const dollarSingles = (md.match(/(?<!\$)\$(?!\$)/g) || []).length;
-  if (dollarSingles % 2 !== 0) issues.push(`unbalanced $ (${dollarSingles})`);
-  if (/\$\$/.test(md)) issues.push('uses $$ display math');
-  const opens = (md.match(/\{/g) || []).length;
-  const closes = (md.match(/\}/g) || []).length;
-  if (opens !== closes) issues.push(`unbalanced braces (${opens} vs ${closes})`);
-  const lower = md.toLowerCase();
-  for (const phrase of FORBIDDEN_PHRASES) {
-    if (lower.includes(phrase.toLowerCase())) issues.push(`cliche: "${phrase}"`);
-  }
-  if (/^\*{0,2}step\s+\d/im.test(md)) issues.push('uses numbered "Step N" enumeration');
-  return issues;
-}
+// Validation is shared across all three toolkits — see scripts/lib/solution-validator.js.
+// Audits pass autoDetect:true so format-less v2 docs aren't flagged for "missing icons".
+const { validateSolution, POLICY } = require('../lib/solution-validator');
 
 function readFlagFile(prefix) {
   const file = path.join(FLAG_DIR, `${prefix}-flags.md`);
@@ -150,7 +120,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
 
     if (missingOnly) continue;
 
-    const issues = validateSolution(md);
+    const issues = validateSolution(md, { policy: POLICY.chemistry, autoDetect: true });
     if (issues.length) {
       failedValidation++;
       if (!alreadyBlocking.has(d.display_id)) {

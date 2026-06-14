@@ -77,6 +77,15 @@ export default function GalleryBlockEditor({ block, onChange, onUpload }: Props)
         </div>
       </div>
 
+      {/* §16 — figure key */}
+      <div className="flex items-center gap-2">
+        <label className="text-[11px] text-white/40 shrink-0">Figure key</label>
+        <input value={block.figure_key ?? ''} onChange={(e) => onChange({ figure_key: e.target.value || undefined })}
+          placeholder="auto if blank — e.g. apparatus-variants"
+          className="flex-1 px-2.5 py-1.5 bg-[#0B0F15] border border-white/10 rounded-lg text-xs text-white placeholder-white/25 focus:outline-none focus:border-orange-500/40" />
+        {block.figure_number && <span className="text-[11px] font-semibold text-orange-300">Fig. {block.figure_number}</span>}
+      </div>
+
       {/* Items */}
       <div className="flex flex-col gap-2">
         {items.map((it, i) => (

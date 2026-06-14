@@ -14,6 +14,7 @@ import 'katex/contrib/mhchem';
 import type { Components } from 'react-markdown';
 import { ImageBlock } from '@canvas/data/types/books';
 import ImageLightbox from './_ImageLightbox';
+import { FigureCaption } from '../figure-refs-context';
 
 // ── Width presets when the block sits on its own row ──
 const fullRowWidthClass: Record<NonNullable<ImageBlock['width']>, string> = {
@@ -224,11 +225,7 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
           ⤢
         </span>
       </button>
-      {block.caption && (
-        <figcaption className="mt-2 text-center text-sm text-white/50 italic">
-          {block.caption}
-        </figcaption>
-      )}
+      <FigureCaption blockType="image" figureNumber={block.figure_number} caption={block.caption} />
     </figure>
   );
 

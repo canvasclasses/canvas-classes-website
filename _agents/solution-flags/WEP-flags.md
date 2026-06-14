@@ -1,6 +1,6 @@
-# WEP — Physics Solution Flags
+# WEP — Math Solution Flags
 
-_Last updated: 2026-05-22 12:38_
+_Last updated: 2026-06-10 08:55_
 
 ## 🔴 Blocking — no solution written
 

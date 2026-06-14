@@ -32,6 +32,7 @@
 
 require('dotenv').config({ path: '.env.local' });
 const mongoose = require('mongoose');
+const { prepareImages } = require('../svg-mapper/image-prep');
 
 function parseArgs() {
   const args = { _: [] };
@@ -105,35 +106,43 @@ function extractImageUrls(md) {
     .limit(count)
     .toArray();
 
-  const out = {
-    prefix,
-    count: docs.length,
-    fetched_at: new Date().toISOString(),
-    questions: docs.map(d => {
-      const isMCQ = Array.isArray(d.options) && d.options.length > 0;
-      const md = d.question_text && d.question_text.markdown;
-      const sol = d.solution && d.solution.text_markdown ? d.solution.text_markdown : '';
-      return {
-        display_id: d.display_id,
-        question_markdown: md,
-        options: isMCQ ? d.options.map(o => ({ id: o.id, text: o.text, is_correct: !!o.is_correct })) : null,
-        answer_type: isMCQ ? 'MCQ' : 'Integer',
-        stored_answer: {
-          correct_option: d.answer ? d.answer.correct_option : null,
-          integer_value: d.answer ? d.answer.integer_value : null,
-        },
-        image_urls: extractImageUrls(md),
-        chapter_id: d.metadata && d.metadata.chapter_id,
-        tag_ids: d.metadata && d.metadata.tag_ids,
-        exam_details: d.metadata && d.metadata.examDetails,
-        question_nature: d.metadata && d.metadata.questionNature,
-        difficulty_level: d.metadata && d.metadata.difficultyLevel,
-        current_solution_length: sol.length,
-        current_solution_preview: sol.slice(0, 200),
-      };
-    }),
-  };
+  // Figures live as SVG/PNG URLs in the stem markdown and (for graph/shape-option
+  // questions) in the option text. The vision API can't read SVG, so download +
+  // rasterise each to a local dark-background PNG and surface its path in `images`.
+  const imgDir = `/tmp/solfigs/${prefix}`;
+  const questions = [];
+  for (const d of docs) {
+    const isMCQ = Array.isArray(d.options) && d.options.length > 0;
+    const md = d.question_text && d.question_text.markdown;
+    const sol = d.solution && d.solution.text_markdown ? d.solution.text_markdown : '';
 
+    const labeled = [];
+    for (const u of extractImageUrls(md)) labeled.push({ source: 'stem', url: u });
+    if (isMCQ) for (const o of d.options) for (const u of extractImageUrls(o.text)) labeled.push({ source: `option ${o.id}`, url: u });
+    const images = labeled.length ? await prepareImages(labeled, d.display_id, imgDir) : [];
+
+    questions.push({
+      display_id: d.display_id,
+      question_markdown: md,
+      options: isMCQ ? d.options.map(o => ({ id: o.id, text: o.text, is_correct: !!o.is_correct })) : null,
+      answer_type: isMCQ ? 'MCQ' : 'Integer',
+      stored_answer: {
+        correct_option: d.answer ? d.answer.correct_option : null,
+        integer_value: d.answer ? d.answer.integer_value : null,
+      },
+      image_urls: labeled.map(l => l.url),
+      images, // [{ source: 'stem'|'option a'|…, url, file }] — Read each `file` (local dark-bg PNG)
+      chapter_id: d.metadata && d.metadata.chapter_id,
+      tag_ids: d.metadata && d.metadata.tag_ids,
+      exam_details: d.metadata && d.metadata.examDetails,
+      question_nature: d.metadata && d.metadata.questionNature,
+      difficulty_level: d.metadata && d.metadata.difficultyLevel,
+      current_solution_length: sol.length,
+      current_solution_preview: sol.slice(0, 200),
+    });
+  }
+
+  const out = { prefix, count: docs.length, fetched_at: new Date().toISOString(), image_dir: imgDir, questions };
   console.log(JSON.stringify(out, null, 2));
   await mongoose.disconnect();
 })().catch(err => {

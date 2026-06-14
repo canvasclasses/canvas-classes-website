@@ -4,9 +4,11 @@
 //   node scripts/insert_questions.js scripts/_phase1_buffer_<prefix>.js
 //
 // The buffer file must export `{ questions }` (Phase 1 array). It MAY also
-// export `chapter_id` and `subject` to override auto-derivation. If those are
-// omitted, this script derives them from the prefix in the first question's
-// `display_id` (e.g. CURR-001 → ph12_current → physics).
+// export `chapter_id` and `subject` to override auto-derivation for the WHOLE
+// batch. If those are omitted, this script derives chapter_id + subject
+// PER QUESTION from each display_id prefix (e.g. CURR-001 → ph12_current →
+// physics) — so a mixed-prefix buffer (e.g. a revision exercise spanning
+// ROT/FLUI/SHM/NLM/GRAV/K2D/SOLD) inserts correctly in a single call.
 //
 // Replaces the legacy per-batch `insert_<chapter>_b<N>.js` template. Inserts
 // the entire validated buffer in a single insertMany call. The Phase 1
@@ -100,26 +102,39 @@ function chapterToSubject(chapter_id) {
     console.error(`${bufferPath} must export { questions: [...] }`); process.exit(2);
   }
 
-  // Derive chapter_id and subject (buffer override > prefix lookup).
-  const firstId = questions[0].display_id || '';
-  const m = firstId.match(/^([A-Z0-9]+)-\d+$/);
-  if (!m) { console.error(`First question display_id "${firstId}" doesn't match PREFIX-NNN`); process.exit(2); }
-  const PREFIX = m[1];
+  // Resolve chapter_id + subject PER QUESTION from each display_id prefix.
+  // A buffer-level `chapter_id`/`subject` export still overrides for the whole
+  // batch (single-chapter behaviour). Mixed prefixes are allowed — each question
+  // is routed to its own chapter — so a revision exercise inserts in one call.
+  function resolveChapter(display_id) {
+    const mm = (display_id || '').match(/^([A-Z0-9]+)-\d+$/);
+    if (!mm) return { error: `display_id "${display_id}" doesn't match PREFIX-NNN` };
+    const prefix = mm[1];
+    const chapter_id = mod.chapter_id || PREFIX_TO_CHAPTER[prefix];
+    if (!chapter_id) return { error: `Unknown prefix "${prefix}" (${display_id}) — add it to PREFIX_TO_CHAPTER or export chapter_id from buffer` };
+    const subject = mod.subject || chapterToSubject(chapter_id);
+    if (!subject) return { error: `Cannot derive subject from chapter_id "${chapter_id}"` };
+    return { prefix, chapter_id, subject };
+  }
 
-  const CHAPTER_ID = mod.chapter_id || PREFIX_TO_CHAPTER[PREFIX];
-  if (!CHAPTER_ID) { console.error(`Unknown prefix "${PREFIX}" — add it to PREFIX_TO_CHAPTER or export chapter_id from buffer`); process.exit(2); }
-
-  const SUBJECT = mod.subject || chapterToSubject(CHAPTER_ID);
-  if (!SUBJECT) { console.error(`Cannot derive subject from chapter_id "${CHAPTER_ID}"`); process.exit(2); }
-
-  // Sanity: every question's prefix and tag_id chapter must align.
-  const wrongPrefix = questions.filter(q => !q.display_id?.startsWith(PREFIX + '-'));
-  if (wrongPrefix.length) {
-    console.error(`Mixed prefixes in batch — first is ${PREFIX} but found:`, wrongPrefix.slice(0, 3).map(q => q.display_id));
+  const resolved = questions.map(q => ({ q, ...resolveChapter(q.display_id) }));
+  const resolveErrors = resolved.filter(r => r.error);
+  if (resolveErrors.length) {
+    console.error('Cannot resolve chapter for:');
+    resolveErrors.slice(0, 10).forEach(e => console.error('  - ' + e.error));
     process.exit(2);
   }
 
-  console.log(`Inserting ${questions.length} questions into ${CHAPTER_ID} (${SUBJECT}, prefix ${PREFIX})`);
+  // Per-chapter breakdown (one chapter → single-line log; mixed → list).
+  const byChapter = {};
+  for (const r of resolved) byChapter[r.chapter_id] = (byChapter[r.chapter_id] || 0) + 1;
+  const chapterList = Object.keys(byChapter);
+  if (chapterList.length === 1) {
+    console.log(`Inserting ${questions.length} questions into ${chapterList[0]} (${resolved[0].subject}, prefix ${resolved[0].prefix})`);
+  } else {
+    console.log(`Inserting ${questions.length} questions across ${chapterList.length} chapters:`);
+    for (const ch of chapterList) console.log(`  ${ch}: ${byChapter[ch]}`);
+  }
 
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
@@ -134,7 +149,7 @@ function chapterToSubject(chapter_id) {
   }
 
   const now = new Date();
-  const docs = questions.map(q => ({
+  const docs = resolved.map(({ q, chapter_id, subject }) => ({
     _id: uuidv4(),
     display_id: q.display_id,
     question_text: { markdown: q.question_text.markdown, latex_validated: false },
@@ -146,8 +161,8 @@ function chapterToSubject(chapter_id) {
       : { text_markdown: '', latex_validated: false },
     metadata: {
       difficultyLevel: q.difficultyLevel,
-      chapter_id: CHAPTER_ID,
-      subject: SUBJECT,
+      chapter_id,
+      subject,
       tags: [{ tag_id: q.tag_id, weight: 1 }],
       questionNature: q.questionNature,
       applicableExams: q.applicableExams,
@@ -177,9 +192,11 @@ function chapterToSubject(chapter_id) {
   const verified = await col.countDocuments({ display_id: { $in: ids } });
   console.log(`✅ Verified in DB: ${verified}/${ids.length}`);
 
-  // Quick chapter audit.
-  const total = await col.countDocuments({ 'metadata.chapter_id': CHAPTER_ID });
-  console.log(`📊 Chapter ${CHAPTER_ID} now has ${total} question(s) total`);
+  // Quick per-chapter audit.
+  for (const ch of chapterList) {
+    const total = await col.countDocuments({ 'metadata.chapter_id': ch });
+    console.log(`📊 Chapter ${ch} now has ${total} question(s) total`);
+  }
 
   await client.close();
 })().catch(e => { console.error('FATAL', e); process.exit(1); });

@@ -84,6 +84,9 @@ const ImageBlockSchema = BaseBlockSchema.extend({
   side_text: z.string().optional(),
   generation_prompt: z.string().optional(),
   aspect_ratio: z.enum(['16:9', '16:5', '4:3', '3:2', '1:1', '21:9']).optional(),
+  decorative: z.boolean().optional(),
+  figure_key: z.string().optional(),
+  figure_number: z.string().optional(),
 });
 
 const GalleryItemSchema = z.object({
@@ -97,6 +100,8 @@ const GalleryBlockSchema = BaseBlockSchema.extend({
   type: z.literal('gallery'),
   items: z.array(GalleryItemSchema),
   aspect_ratio: z.enum(['16:9', '16:5', '4:3', '3:2', '1:1', '21:9']).optional(),
+  figure_key: z.string().optional(),
+  figure_number: z.string().optional(),
 });
 
 const InteractiveImageBlockSchema = BaseBlockSchema.extend({
@@ -146,6 +151,8 @@ const LatexBlockSchema = BaseBlockSchema.extend({
   latex: z.string(),
   label: z.string().optional(),
   note: z.string().optional(),
+  figure_key: z.string().optional(),
+  figure_number: z.string().optional(),
 });
 
 const PracticeLinkBlockSchema = BaseBlockSchema.extend({
@@ -179,6 +186,8 @@ const TableBlockSchema = BaseBlockSchema.extend({
   headers: z.array(z.string()),
   rows: z.array(z.array(z.string())),
   highlight_row: z.array(z.number().int().nonnegative()).optional(),
+  figure_key: z.string().optional(),
+  figure_number: z.string().optional(),
 });
 
 const TimelineBlockSchema = BaseBlockSchema.extend({

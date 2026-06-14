@@ -11,6 +11,7 @@ import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { TextBlock } from '@canvas/data/types/books';
 import type { Components } from 'react-markdown';
+import { useFigureRefs, resolveFigureRefs } from '../figure-refs-context';
 
 /**
  * Inline image layout presets — selected via the markdown title attribute.
@@ -180,6 +181,7 @@ const components: Components = {
 };
 
 export default function TextBlockRenderer({ block }: { block: TextBlock }) {
+  const figureRefs = useFigureRefs();
   return (
     <div className="max-w-none">
       <ReactMarkdown
@@ -187,7 +189,7 @@ export default function TextBlockRenderer({ block }: { block: TextBlock }) {
         rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS], rehypeRaw]}
         components={components}
       >
-        {block.markdown}
+        {resolveFigureRefs(block.markdown, figureRefs)}
       </ReactMarkdown>
     </div>
   );

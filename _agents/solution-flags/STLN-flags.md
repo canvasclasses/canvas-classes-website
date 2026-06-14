@@ -1,6 +1,6 @@
 # STLN — Math Solution Flags
 
-_Last updated: 2026-05-20 08:35_
+_Last updated: 2026-06-13 13:17_
 
 ## 🔴 Blocking — no solution written
 
@@ -14,4 +14,5 @@ _Last updated: 2026-05-20 08:35_
 
 ## ⚪ Soft quality — audit notes
 
-- **STLN-061** — audit: uses numbered "Step N" enumeration (workflow Rule 5 violation; pre-dates current style guide)
+- **STLN-061** — audit: uses numbered "Step N" enumeration (workflow: prose only)
+- **STLN-110** — audit: forbidden phrase: "anchor"

@@ -31,52 +31,13 @@ const QUESTION_NATURE_ENUM = new Set([
   'Graphical', 'Conceptual', 'Mechanistic', 'Synthesis',
 ]);
 
-// ─── Heuristic validator ────────────────────────────────────────────────────
-const FORBIDDEN_PHRASES = [
-  "let's dive in", "in conclusion", 'therefore, we can easily see',
-  "let's break this down", 'delve', 'it is crucial to note',
-  '1. The "Aha!" Moment', '2. Method 1: The Standard Approach',
-  '3. Method 2: The 30-Second Trick', '3. Method 2: The Insight Shortcut',
-  '4. Method 3: The Alternate Angle', 'The Aha Moment',
-  '**The Smart Move**', '**Where Students Get Stuck**',
-];
-
-function validateSolution(md) {
-  const issues = [];
-
-  if (!md || typeof md !== 'string') return ['solution is empty or non-string'];
-  // No minimum length: calibrate by substance per chemistry-solution-workflow.md.
-  // A 150-char solution for a trivial oxidation-state question is correct; bloat is the bug.
-
-  if (!/\*\*🧠/.test(md)) issues.push('missing 🧠 heading (Reading the Question)');
-  if (!/\*\*🗺️/.test(md)) issues.push('missing 🗺️ heading (Working It Out)');
-  if (!/\*\*⚡/.test(md)) issues.push('missing ⚡ heading (The Smart Move)');
-  if (!/\*\*⚠️/.test(md)) issues.push('missing ⚠️ heading (Where Students Get Stuck)');
-  if (/^###\s/m.test(md)) issues.push('uses forbidden Markdown heading syntax (###); use **icon Heading** instead');
-
-  const tail = md.slice(-300);
-  if (!/\\boxed\{/.test(tail)) issues.push('missing $\\boxed{...}$ at end');
-
-  const dollarSingles = (md.match(/(?<!\$)\$(?!\$)/g) || []).length;
-  if (dollarSingles % 2 !== 0) issues.push(`unbalanced $ delimiters (${dollarSingles})`);
-
-  if (/\$\$/.test(md)) issues.push('uses forbidden $$ display math');
-
-  const opens = (md.match(/\{/g) || []).length;
-  const closes = (md.match(/\}/g) || []).length;
-  if (opens !== closes) issues.push(`unbalanced braces (${opens} open vs ${closes} close)`);
-
-  const lower = md.toLowerCase();
-  for (const phrase of FORBIDDEN_PHRASES) {
-    if (lower.includes(phrase.toLowerCase())) issues.push(`forbidden phrase: "${phrase}"`);
-  }
-
-  if (/^\*{0,2}step\s+\d/im.test(md)) {
-    issues.push('uses numbered "Step N" enumeration (workflow: prose only)');
-  }
-
-  return issues;
-}
+// ─── Heuristic validator (SHARED — single source of truth) ──────────────────
+// validateSolution + normalizeCeCharges + the base forbidden-phrase list live in
+// scripts/lib/solution-validator.js so the three toolkits can never drift again
+// (that drift is what let this file keep hard-requiring the 4 icons after the v2
+// switch shipped in math/physics — fixed 2026-06-13). Chemistry policy: forbid all
+// v2 section icons, ban "monster"+"anchor". Change rules in the shared module.
+const { validateSolution, normalizeCeCharges, POLICY } = require('../lib/solution-validator');
 
 // ─── 📐 Diagram-marker extraction ───────────────────────────────────────────
 // Match `📐 [Solution diagram: <description>]` anywhere in the solution.
@@ -253,7 +214,16 @@ function clearFlagsForId(sections, displayId) {
       continue;
     }
 
-    const issues = validateSolution(item.solution);
+    // Canonicalize \ce{} ion charges (^n+ → ^{n+}) before validating/writing.
+    if (item.solution) {
+      const normed = normalizeCeCharges(item.solution);
+      if (normed !== item.solution) {
+        log.push(`${id}  NORMALIZED \\ce{} charges (^n± → ^{n±})`);
+        item.solution = normed;
+      }
+    }
+
+    const issues = validateSolution(item.solution, { format: item.format, policy: POLICY.chemistry });
     if (issues.length) {
       addOrReplaceFlag(flagSections, 'blocking', id, `validation failed: ${issues.join('; ')}`);
       blocked++;

@@ -1857,6 +1857,8 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_expp_5', name: 'Meter Bridge, Potentiometer & Galvanometer Experiments', parent_id: 'ph12_exp_phy', type: 'topic' },
     { id: 'tag_expp_6', name: 'Convex Lens, Concave Mirror & Prism Refractive Index', parent_id: 'ph12_exp_phy', type: 'topic' },
     { id: 'tag_expp_7', name: 'Diode/Transistor Characteristics & Logic Gate Verification', parent_id: 'ph12_exp_phy', type: 'topic' },
+    { id: 'tag_expp_8', name: 'Calorimetry & Latent Heat Experiments', parent_id: 'ph12_exp_phy', type: 'topic' },
+    { id: 'tag_expp_9', name: 'Magnetometer & Magnetic Moment Experiments', parent_id: 'ph12_exp_phy', type: 'topic' },
 
     // Mathematics (Competitive Syllabus)
     { id: 'ma_basic_math', name: 'Basic of Mathematics', parent_id: null, type: 'chapter', sequence_order: 301, class_level: 11, chapterType: 'algebra' },

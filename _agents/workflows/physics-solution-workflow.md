@@ -108,6 +108,89 @@ You are a senior JEE/NEET teacher writing for a student in your class. The stude
 
 ---
 
+## 🎤 FORMAT v2 + TEACHER VOICE — CURRENT FORMAT FOR ALL NEW PHYSICS SOLUTIONS (2026-06-13)
+
+> **This section supersedes the 6-section iconified structure (§🧱 below) for PHYSICS.**
+> Adopted from the chemistry ATOM pilot (`chemistry-solution-workflow.md §🎤`, v4.0). Founder
+> findings: (1) the fixed `🧠/🗺️/⚡/⚠️` headline template reads as AI-generated — students
+> spot it instantly; (2) attention spans demand shorter text — elaborate framing belongs in
+> the founder's recorded **audio**, not in prose; (3) the text must carry the founder's
+> teaching voice. Modern Physics is the physics pilot. Set `format: 'v2'` on the batch item;
+> `apply-batch.js` then forbids the legacy section icons and the word "monster".
+
+### Structure (no section headlines, no icons)
+
+1. **Opening — 1–2 sentences max.** Name the principle and the first move, anchored to
+   something the student knows ("You already know that..."; "Comes to rest means final
+   velocity is zero — ..."). NO bespoke titles, NO `**🧠 ...**` headings. If the framing
+   genuinely needs more than 2 sentences → CUT it and add an `audio_flag` (the founder's
+   audio carries the long version; the text stays tight).
+2. **Working — compact, but ONE CALCULATION STEP PER LINE, separated by a BLANK LINE.**
+   Skip routine algebra. Never chain steps into a run-on line with `;` / `.` / `i.e.` — each
+   distinct step on its own line, with a blank line between steps (`MathRenderer` renders
+   `\n\n` as `<br/><br/>`; single-newline stepping reads "crowded"). A line with three or
+   more `=` is the smell of a crammed step — break it. Short **bold lead-in labels**
+   (`**At the lowest point:**`, `**Vertical balance:**`) are content, not template — use them
+   where they make the chain scannable. State the **sign convention / `g`-value** inline, in
+   plain prose, the first line it matters ("Take upward as positive."). Each `$...$` stays on
+   one line (inline math can't span a newline).
+   - **Compactness ≠ stripping steps.** "Compact" = no long concept-lecture paragraphs (the
+     audio/video carries that depth), NOT dropping calculation steps. Never cut a step or a
+     clarifying one-liner that aids understanding. Cut lectures, keep clarity.
+3. **`**Shortcut:**`** inline label — only when a genuine option-independent shortcut exists
+   (same bar as the old ⚡: a real physics insight — symmetry, conservation, limiting case,
+   dimensional check — never "plug each option").
+4. **`**Watch out:**`** inline label — 1–2 lines, THE trap (singular), voiced as the
+   student's reflex where natural ("You will want to say it falls from 3 — but 3 doesn't
+   exist in this atom.").
+5. **End with `$\boxed{...}$`.** An optional short verdict line before it ("An easy one once
+   you see the link." / "Not hard, just different.") — use sparingly, not every question.
+6. **Length targets:** trivial 60–100 words · medium 100–160 · hard = whatever the physics
+   needs *after* the audio offload. When in doubt, cut.
+
+### Figure anchor — the ONE physics-specific exception (founder decision 2026-06-13)
+
+Physics has solution-side diagrams (the `svg-mapper` figure-inserter injects them by finding
+the `🖼️ Visual Sketch` heading). v2 is heading-free **except**: a question that will get a
+solution diagram attached keeps a **single `**🖼️ Visual Sketch**` anchor line** (followed by
+a 1-line description of what the figure shows), so the inserter has a target. No figure → no
+heading at all. (`apply-batch.js` allows `**🖼️` under `format: 'v2'` for exactly this; it
+forbids the other four section icons.) For a no-diagram chapter (e.g. Modern Physics), no
+solution carries any icon.
+
+### Teacher voice (mandatory reading before writing)
+
+Before writing ANY physics batch, read [`_agents/voice/teacher-voice-profile.md`](../voice/teacher-voice-profile.md)
+— the founder's teaching DNA + the written-register translation table (where each voice move
+lands) + the anti-parody guardrails (moves over tics; **max one Hinglish touch** like a
+student-voice "sir,"; never fabricate a quote). Physics has **no `<PREFIX>-exemplars.md` files
+yet** (the voice profile is distilled from chemistry lectures), so apply the profile's general
+arc — *budget → trap-as-student-reflex → skeleton → verdict* — and note that physics chapter
+exemplars are a future distillation target.
+
+### Batch-item fields (apply-batch.js)
+
+```js
+{
+  display_id: 'MODP-001',
+  format: 'v2',                    // REQUIRED for v2 — switches the validator
+  solution: `...`,                 // v2 prose; legacy section icons now FAIL validation
+  answer: { ... },
+  audio_flag: { note: '...' },     // optional — question whose framing was offloaded to founder audio
+}
+```
+
+### What did NOT change
+
+The §🚫-style Never-Break-Character rules (you're the teacher not the narrator; the student
+never sees the system/"key"/"box"; no thinking-out-loud; **never box an answer your derivation
+contradicts** — correct it + `verifier_note` + Notion), the word-swap table, plain-English
+rules, LaTeX rules, answer-key verification, and the Notion sync ritual all apply unchanged.
+The §🧱 6-section table below is **LEGACY for physics** — kept because ~14 already-written
+physics chapters use it; do not write new physics solutions in it.
+
+---
+
 ## ✏️ Formatting & Mechanical Rules
 
 1. **No `###` or `##` headings.** The renderer leaves the `#` characters visible. Use **bold-icon lines** instead, on their own line, followed by a blank line then the body:
@@ -139,13 +222,13 @@ You are a senior JEE/NEET teacher writing for a student in your class. The stude
    - **$g$ value:** match what the question gave you. If $g = 10$, use 10 — never silently substitute 9.8.
    - **Unit consistency:** convert all quantities to SI at the start of 🗺️ if the question mixes km/h and m/s. Show the conversion once.
 
-7. **Word target:** **300–400 words** of prose per solution (excluding LaTeX). Going 10–15% over is acceptable for genuinely complex multi-step problems (projectile + relative motion, two-body collision + energy). Going 30%+ over is a workflow violation — write tighter. Going much under 250 words usually means the 🧠 section is doing too little teaching.
+7. **Length matches difficulty — NO minimum (project decision 2026-06-11).** Write exactly as much as the question's difficulty demands, no more, no less. A one-line conceptual MCQ ("CM stays put — no external force") deserves a short, crisp solution; forcing it to 300+ words or some character floor is a bug, not thoroughness. A genuinely hard multi-step problem (projectile + relative motion, two-body collision + energy, rolling-with-slipping) earns the room it needs. There is **no character/word floor in `apply-batch.js`** — bloat and under-explaining are both quality bugs, judged by teaching value, not length. As a loose guide most solutions land around 250–400 words of prose, but treat that as a description of typical output, never a target to hit. If the 🧠 section already makes the student say "now I see how to start," stop.
 
 8. **LaTeX in batch files.** Solutions live inside CommonJS template-literal strings (`scripts/physics-solutions/_batch_*.js`). Every `\` in LaTeX must be `\\`: `\\frac{a}{b}`, `\\boxed{...}`, `\\vec{v}`, `\\mathrm{m\\,s^{-1}}`. Single backslash → silent corruption in the DB.
 
 ---
 
-## 🧱 Solution Structure
+## 🧱 Solution Structure — ⚠️ LEGACY (see §🎤 FORMAT v2 above — that is the current format for new physics solutions)
 
 Six sections. The first one (🧠) carries the most pedagogical weight — spend the most thought on it. The math (🗺️) is the smaller part of the work; the thinking framework is the bigger part.
 
@@ -164,15 +247,11 @@ Six sections. The first one (🧠) carries the most pedagogical weight — spend
 
 Physics relies on diagrams far more than math. The 🖼️ section in physics is **almost always required**, with two distinct modes depending on whether the question shipped with an image:
 
-**Mode A — Question has an image (most common).** The `fetch-batch.js` toolkit surfaces image URLs from `question_text.markdown`. Read the image first, then describe in 🖼️ what the diagram actually shows — block on incline, masses on pulley, circuit with two cells, wave with marked points, etc. This grounds the student in the same picture you're solving from.
+**Mode A — Question has an image (most common).** `fetch-batch.js` now does the figure prep for you: each question carries an **`images`** array of `{ source: 'stem'|'option a'|…, url, file }`, where `file` is a **local dark-background PNG already rasterised** (written under `/tmp/solfigs/<PREFIX>/`). **`Read` the `file` paths** — do not try to view the `url` (see below). Then describe in 🖼️ what the diagram actually shows — block on incline, masses on pulley, circuit, wave with marked points — grounding the student in the same picture you're solving from.
 
-> **CRITICAL — SVGs in this bank are filled white.** The R2 question-bank SVGs use `fill="#fff"` (white strokes/text on what they expect to be a dark background). Loading the URL directly in a browser shows a blank page — that does NOT mean the diagram is missing. Convert before reading:
-> ```bash
-> curl -s <url> -o /tmp/<display_id>.svg
-> magick -background black -density 150 /tmp/<display_id>.svg /tmp/<display_id>.png
-> # then Read /tmp/<display_id>.png — the diagram renders perfectly
-> ```
-> Never skip the dark-background conversion for SVG files — the raw SVG XML is parseable text but unreadable to a multimodal model; the white-on-black PNG is what makes the figure legible. PNG and JPG inputs can be read directly without conversion.
+> **WHY the `file`, never the `url`:** the bank's SVGs are `fill="#fff"` (white-on-transparent), and **the Claude vision API cannot decode SVG at all** — feeding a `.svg` URL fails with *"image couldn't be read — try a different format,"* and the Read tool needs a local file anyway. `fetch-batch.js` rasterises every figure to a dark-background PNG (via `sharp`) so you just Read `images[].file`. Read them in **small batches** (a few per turn) to stay under the per-request image cap.
+> - Need a figure outside a batch? `node scripts/svg-mapper/fetch-question-images.js <display_id...>` (or `--prefix NLM`) prints `display_id → [local PNG paths]`.
+> - Do **not** use `magick`/`convert` for SVG→PNG — they need ghostscript, which isn't installed here. If you already read a figure from the source PDF this session, you can ground 🖼️ from that instead.
 
 > Example: *"The diagram shows a $2$ kg block on a $30°$ incline, connected by a string over a pulley at the top to a $3$ kg block hanging vertically. The incline is rough — the surface marking shows friction is present."*
 
@@ -276,6 +355,7 @@ Before saving any solution:
 8. Is every `$` paired? Every `{` paired? No `$$`? No `\dfrac`?
 9. Does the solution end with `$\boxed{\text{Answer: ...}}$`?
 10. Any "Wait, let me re-read" / "Standard problem with answer..." / "If we assume..." uncertainty leakage? If yes, re-solve and rewrite.
+11. **FORMAT v2 check (§🎤):** `format: 'v2'` set on the batch item? No iconified section headings (the only allowed icon is a single `**🖼️ Visual Sketch**` anchor, and only when a solution figure attaches)? Opening ≤ 2 sentences (elaborate framing → `audio_flag` instead)? Working stepped one-per-line with blank lines between steps? Did I read `teacher-voice-profile.md` and apply moves-not-tics (≤ 1 Hinglish touch)?
 
 ---
 
@@ -352,4 +432,4 @@ This workflow mirrors `math-solution-workflow.md` in structure, voice, anti-AI r
 
 ---
 
-**Document Version:** 2.1 | **Last Updated:** 2026-05-23 (added §🗂️ Notion Sync — mandatory chapter-end push to Physics Answer Discrepancies DB and Physics Solution-Side Diagrams Wishlist DB) | **Mirrors:** `math-solution-workflow.md`
+**Document Version:** 3.0 | **Last Updated:** 2026-06-13 (added §🎤 FORMAT v2 + TEACHER VOICE — adopted from the chemistry ATOM pilot: no iconified section headlines, compact teacher-voice prose with **Shortcut:**/**Watch out:** inline labels, 1–2-sentence openings with elaborate framing offloaded to founder audio via `audio_flag`, one-step-per-line working with blank lines, mandatory read of `_agents/voice/teacher-voice-profile.md`; physics-specific figure-anchor exception keeps a single `**🖼️ Visual Sketch**` heading only when a solution diagram attaches; §🧱 6-section table marked LEGACY; checklist item 11; `apply-batch.js` gained a `format: 'v2'` validation branch + "monster" ban. Modern Physics is the physics v2 pilot.) | **Supersedes:** v2.1 | **Mirrors:** `chemistry-solution-workflow.md §🎤`

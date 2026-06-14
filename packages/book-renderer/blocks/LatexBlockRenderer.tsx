@@ -99,8 +99,10 @@ export default function LatexBlockRenderer({ block }: { block: LatexBlock }) {
           />
         )}
 
-        {block.label && (
-          <p className="text-xs text-white/40 font-mono mt-1">{block.label}</p>
+        {(block.figure_number || block.label) && (
+          <p className="text-xs text-white/40 font-mono mt-1">
+            {block.figure_number ? `Eq. ${block.figure_number}` : block.label}
+          </p>
         )}
         {block.note && (
           <p className="text-sm text-white/60 italic mt-1">{block.note}</p>

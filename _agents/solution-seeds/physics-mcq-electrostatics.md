@@ -1,0 +1,108 @@
+# Solution seeds — Physics MCQ Electrostatics (Part 5 Ch.1)
+
+Transcribed from the book's "Hints and Solutions to Selected Questions" (pg 5-31→5-44, phys 288-301).
+Keyed by display_id (book Q# in parens). Phase-4 reads THIS, not the PDF. Hints cover ~60/101; the rest are
+conceptual MCQs where the answer key + standard reasoning suffice (noted "no book hint"). All answers already
+re-derived & confirmed vs key in the qmap.
+
+## ELST (charges & fields)
+- **ELST-204 (Q1)** [no book hint] q at centre of two +Q: outer Q equilibrium ⇒ kQ²/(2d)² = kQq/d² ⇒ q=Q/4, attractive ⇒ **−Q/4**.
+- **ELST-205 (Q2)** Minimum charge is e. q = −Q/4 = −e ⇒ **Q = 4e**.
+- **ELST-206 (Q3)** Gravitational Gm²/d² = electrostatic kQ²/d² ⇒ Gm²=kQ² ⇒ Q/m = √(G/k) = √(6.6e−11 / 9e9) ~ **10⁻¹⁰**.
+- **ELST-207 (Q4)** Equilibrium condition independent of separation d ⇒ any displacement leaves it in equilibrium ⇒ **neutral**.
+- **ELST-208 (Q5)** [no book hint] 3 charges at triangle corners can never be in equilibrium ⇒ **(d)**.
+- **ELST-209 (Q6)** F = k·q(Q−q)/d²; dF/dq=0 ⇒ Q−2q=0 ⇒ **q=Q/2** each (max force).
+- **ELST-210 (Q7)** Two +Q on y-axis (±l), −q on x-axis. F = 2F₀cosθ = 2k·qQ/(x²+l²)·x/√(x²+l²) = 2kQq·x/(x²+l²)^{3/2}. F=0 at x=0 and x→∞; rises to a max in between. Left of O: force toward O (along motion, +); right of O: force toward O opposes motion (−). ⇒ graph **(b)**.
+- **ELST-211 (Q8)** Two +Q sep l, P at x from one. C=midpoint. Field directed right (positive) for A<P<C, zero at C, left (negative) C<P<B. |E| rises sharply near x~0 and x~l ⇒ **(d)**.
+- **ELST-212 (Q9)** Equal electrostatic forces on both bobs (Newton's 3rd), equal weights ⇒ identical FBDs ⇒ **θ₁=θ₂**.
+- **ELST-213 (Q11)** If all n corners had Q, field at centre = 0. So field of the (n−1) charges = equal & opposite to the one missing charge ⇒ magnitude **kQ/r²**.
+- **ELST-214 (Q13)** Half-ring, dl=Rdθ, dq=λRdθ, dE=kλdθ/R. Only dEcosθ survives (dEsinθ cancels by symmetric element). E = 2∫₀^{π/2} (kλ/R)cosθ dθ = **2kλ/R**.
+- **ELST-215 (Q14)** F = k·2Q²/d². Joined ⇒ each ball (2Q−Q)/2 = Q/2. F' = k(Q/2)²/d² = (1/4)kQ²/d² = **F/8**.
+- **ELST-216 (Q24)** [no book hint] Uniform field region can have free charges, uniform charge, dipoles — all possible ⇒ "not true" = **none (d)**.
+- **ELST-217 (Q28)** E=E₀x. Flux: face at x₀ gives −E₀x₀a² (into cube), face at x₀+a gives +E₀(x₀+a)a²; other faces 0. Net = E₀a³ = q/ε₀ ⇒ **q = ε₀E₀a³**.
+- **ELST-218 (Q29)** [no book hint] Charge at mouth of cone (flat opening) ⇒ half the flux through the cone surface ⇒ **Q/2ε₀**.
+- **ELST-219 (Q30)** Max length of string in cube = body diagonal √3a; enclosed charge √3aλ; flux = **√3λa/ε₀**.
+- **ELST-220 (Q34)** E = σ/ε₀ (conductor surface). qE = mg ⇒ σ = mgε₀/e = (8.85e−12·1.67e−27·10)/(1.6e−19) ~ **10⁻¹⁸** C/m².
+- **ELST-221 (Q35)** Charged sheet gives uniform field; negative bob feels constant downward force ⇒ effective g increases ⇒ **T decreases (<T)**.
+- **ELST-222 (Q36)** Effective g changes, but spring-block T=2π√(m/k) does NOT depend on g ⇒ **T unchanged**.
+- **ELST-223 (Q37)** As Q34, force on electron eσ/ε₀, accel a=eσ/(mε₀). Projectile with effective "g"=a. Max range = u²/a = **u²mε₀/(σe)**.
+- **ELST-224,225,226 (Q38,39,40)** Dipole: E_P = (kp/r³)√(3cos²θ+1); V_P = (kp/r²)cosθ. A: θ=0 (axis); B: θ=90° (bisector), r=OA=OB. ⇒ E_axis=2E_bisector and opposite ⇒ **E_A=−2E_B (Q38 c)**. V_axis≠0, V_bisector=0 ⇒ **V_A≠0,V_B=0 (Q39 c)**. Q40: field ∥ y-axis ⇒ θ+φ=90°, with tanφ=½tanθ ⇒ tan(90−θ)=½tanθ ⇒ 2cotθ=tanθ ⇒ **tanθ=√2 (Q40 b)**.
+- **ELST-227 (Q41)** τ=pEsinθ. W=∫₀^θ pEsinθ dθ = pE[−cosθ]₀^θ = **pE(1−cosθ)**.
+- **ELST-228 (Q56)** [no book hint] 3 charges in equilibrium ⇒ must be collinear, can't all same magnitude, can't all same sign, equilibrium unstable ⇒ **all a,b,c,d**.
+- **ELST-229 (Q57)** [no book hint] 4 identical +q at (±1,0,0),(0,±1,0). Field at origin=0 (symmetry) **(b)**; on z-axis field along z by symmetry **(d)**. Potential at origin=4kq≠0 (a false); on z-axis ≠0 (c false).
+- **ELST-230 (Q58)** [book shows sign diagrams] 4 equal-magnitude charges at square corners. By sign choices: V=0,E=0 (alternating); V=0,E≠0; V≠0,E=0 (all same); V≠0,E≠0 ⇒ **all a,b,c,d**.
+- **ELST-231 (Q59)** [no book hint] Deuteron (q=e,m=2u), α (q=2e,m=4u). F=qE ⇒ F_α=2F_d ⇒ **F₁≠F₂ (b)**. a=qE/m: a_d=eE/2u, a_α=2eE/4u=eE/2u ⇒ **a₁=a₂ (c)**.
+- **ELST-232 (Q60)** [no book hint] +q midway between two +Q: displaced ALONG line ⇒ nearer charge repels more ⇒ restoring ⇒ SHM (q+, along). Displaced ⊥ ⇒ pushed out (unstable) for +q, restoring for −q. ⇒ **(a) q+,along; (c) q−,⊥**.
+- **ELST-233 (Q61)** [no book hint] Ring in yz-plane, centre O. Field at O = 0 **(a)**; V at O = kQ/R **(b)**. Axial field at (x,0,0) = kQx/(R²+x²)^{3/2} ≠ kQ/x² (c) ≠ kQ/(R²+x²) (d).
+- **ELST-234 (Q62)** Ring in xy-plane, −charge released at (0,0,z₀). Field at P (OP=z₀): E=kQ·z₀/(R²+z₀²)^{3/2}, always away from O ⇒ −charge accelerated toward O ⇒ **periodic (a)** for all z₀; for z₀≪R, a∝z ⇒ **approx SHM (c)**; crosses O, oscillates through ⇒ **(d)** [not bounded to one side]. (b false: not exactly SHM.)
+- **ELST-235 (Q66)** [no book hint] Q₁ inside, Q₂ outside surface S. φ depends only on Q₁ (Gauss). Change Q₁ ⇒ E and φ change **(a)**. Change Q₂ ⇒ E changes, φ unchanged **(b)**. Q₁=0,Q₂≠0 ⇒ E≠0 on S but φ=0 **(c)**. Q₁≠0,Q₂=0 ⇒ E≠0 and φ≠0 (d false).
+- **ELST-236 (Q75)** Gauss on cylinder: ∮E·dS = 2πrlE = λl/ε₀ ⇒ E = λ/(2πε₀r) = **2kλ/r**.
+- **ELST-237,238 (Q77,78)** Circular motion around line charge: mv²/r = qE = q·λ/(2πε₀r) ⇒ v² = qλ/(2πε₀m), independent of r ⇒ **v indep of r (Q77 d)**. v ∝ √q, √λ, 1/√m ⇒ **Q78 a,b,d**.
+- **ELST-239 (Q79)** Vertical sheet field E=σ/2ε₀ (horizontal force qE). tanθ = qE/mg = qσ/(2ε₀mg) **(a)**. String tension T₀: T₀sinθ=qE, T₀cosθ=mg ⇒ T₀>mg ⇒ effective g increased ⇒ **T<2π√(l/g) (c)**.
+- **ELST-240 (Q80)** [no book hint] Uniform field: net force on dipole **F=0 (a)**; torque **τ=p×E (d)**. (b,c wrong forms.)
+- **ELST-241 (Q81)** [no book hint] Field direction fixed, magnitude varies. If p ∥ E (uniform line): net force (gradient), no torque **(b)**. If p at angle: force + torque **(c)**. If p ⊥... can get no-net-force-but-torque **(d)**. "No force no torque" (a) impossible given varying magnitude ⇒ **b,c,d**.
+
+## CAPC (potential & capacitance)
+- **CAPC-124 (Q10)** Electrostatic force on Q always ⊥ to its (circular) displacement ⇒ W=0 **in all cases (d)**.
+- **CAPC-125 (Q12)** Half-ring total charge πRλ, all at distance R ⇒ V = k·πRλ/R = **kπλ**.
+- **CAPC-126 (Q15)** F=QE; W = F·r = **Q(E·r) = Q(E₁a+E₂b)**.
+- **CAPC-127 (Q16)** Eₓ=−∂V/∂x etc. V_A−V₀=−Eₓx; V_B−V_A=−E_y y. Add: V_B = **V₀ − xEₓ − yE_y**.
+- **CAPC-128 (Q17)** W path-independent (uniform field) = (qE)·r, r = displacement P→S = −aî−bĵ; E=Eî ⇒ W = −**qaE**.
+- **CAPC-129 (Q18)** Eₓ=−∂V/∂x=−8x; E_y=E_z=0. At x=1 ⇒ **E=−8î**.
+- **CAPC-130 (Q19)** Line integral = V_centre (force on unit + charge from ∞). V = kQ/R = 9e9·1.11e−10/0.5 = **+2 V**.
+- **CAPC-131 (Q20)** V = (kq/x₀)[1 − ½ + ⅓ − ¼ …] = (kq/x₀)ln2 = **q ln2/(4πε₀x₀)**.
+- **CAPC-132 (Q21)** Uniform solid sphere: V = kQ(3R²−r²)/(2R³) inside (parabolic, max at centre), kQ/r outside ⇒ curve **(c)**.
+- **CAPC-133 (Q22)** V_centre = (3/2)kQ/R. Half = (3/4)kQ/R. Inside V≥kQ/R, so point is outside: kQ/r = 3kQ/4R ⇒ r=4R/3 ⇒ dist from surface = **R/3**.
+- **CAPC-134 (Q23)** V_∞=0, V_surf=kQ/R, V_centre=(3/2)kQ/R. ½mv²=qk Q/R (to surface); ½mv₀²=q(3/2)kQ/R (to centre). Divide: v₀²/v²=3/2 ⇒ **v₀=√1.5 v**.
+- **CAPC-135 (Q25)** [no book hint] Charge given to conductor resides on outer surface ⇒ true **in all cases (a)**.
+- **CAPC-136 (Q26)** Total field at C (inside conductor metal) = 0. Field of point charge at C = kQ/r² (toward... ). So induced-charge field = **kQ/r² directed toward Q (c)**.
+- **CAPC-137 (Q27)** Field inside conductor cavity (due to conductor's own charge) = 0 ⇒ no force ⇒ **remains stationary (c)**.
+- **CAPC-138 (Q31)** Joined by wire ⇒ single conductor ⇒ all charge to outer shell ⇒ **Q (c)**. (Method 2: V_A−V_B=k(Q−q)(1/r−1/R)>0 ⇒ flows till q=Q.)
+- **CAPC-139 (Q32)** [no book hint] Spherical equipotential impossible **for a dipole (b)** (its equipotentials aren't spheres).
+- **CAPC-140 (Q33)** Positive charge always moves from higher to lower potential ⇒ from inside S (positive) outward ⇒ **must cross S (c)**.
+- **CAPC-141 (Q42)** C = 4πε₀R = 6.4e6/9e9 ≈ 7e−4 F ~ **10⁻³ F = 1 mF (b)**.
+- **CAPC-142 (Q43)** Potentials ±e/C where C=4πε₀r. PD = 2e/(4πε₀r) = 9e9·2·1.6e−19/9e−5 = 3.2e−5 V = **32 μV (c)**.
+- **CAPC-143 (Q44)** C₁=4πε₀R, C₂=4πε₀(2R)=2C₁. Charge flowing = charge on C₂ = Q·C₂/(C₁+C₂) = Q·2C₁/3C₁ = **2Q/3 (d)**.
+- **CAPC-144 (Q45)** Facing conducting surfaces have equal & opposite charge: Q₂=−Q₃. Charge on capacitor = inner-positive-plate charge = Q₂. PD = Q₂/C = (Q₂−(−Q₂))/2C = **(Q₂−Q₃)/2C (c)**.
+- **CAPC-145 (Q46)** Inner faces ±CV after charging. Add +Q to X: inner faces become ±(CV+Q/2). q_inner=CV+Q/2. PD = q/C = **V + Q/2C (c)**.
+- **CAPC-146 (Q47)** Fully charged capacitor draws no current ⇒ no drop across internal R ⇒ PD across **cell = ε (a)** = PD across capacitor.
+- **CAPC-147 (Q48)** Metal sheet thickness d/2: equivalent to two series caps each ε₀A/(d/4)=4C ⇒ series = **2C (b)**. (Or dielectric formula with t=d/2,K=∞.)
+- **CAPC-148 (Q49)** Q₁=36μC, Q₂=72μC; opposition ⇒ net=36μC over (3+6)=9μF ⇒ V = **4 V (c)**.
+- **CAPC-149 (Q50)** Q flows through MN. 60 = Q/2C + Q/C + Q/2C = 2Q/C ⇒ Q=30C. PD(M,N)=Q/C = **30 V (d)**.
+- **CAPC-150 (Q51)** [no book hint, but] symmetric bridge of 5 equal-C ⇒ balanced ⇒ middle removed ⇒ equivalent = **C (d)**.
+- **CAPC-151 (Q52)** Rearranged Wheatstone bridge: E,D same potential (symmetry) ⇒ 5μF removed. Top (3,6 series)=2, bottom (2,4 series)=4/3; parallel = 2+4/3 = **10/3 μF (a)**.
+- **CAPC-152 (Q53)** [no book hint] u=½Kε₀E². Same E ⇒ u_d = K·u_a ⇒ **(c)**.
+- **CAPC-153 (Q54)** Cell connected ⇒ V const. Slab out ⇒ C decreases ⇒ Q decreases ⇒ **charge returned to cell (b)**.
+- **CAPC-154 (Q55)** Disconnected ⇒ Q const. Slab out ⇒ C decreases ⇒ V=Q/C increases ⇒ **PD increased (b)**.
+- **CAPC-155 (Q63)** ½mv² = kQ²/x_min ⇒ x_min ∝ Q²/(mv²) ⇒ **a,b,d (Q², 1/v², 1/m)**.
+- **CAPC-156 (Q64)** [no book hint] V and E independent (e.g. V=0,E≠0 between two equal opposite charges' midpoint; V≠0,E=0 inside charged sphere) ⇒ all assertions false ⇒ **none (d)**.
+- **CAPC-157 (Q65)** [no book hint] Uniform field: V varies linearly; equal-distance pairs along field have equal ΔV but ⊥ pairs have ΔV=0 ⇒ statement c false ⇒ **none (d)**.
+- **CAPC-158 (Q67)** [no book hint] Q₁ inside uncharged shell ⇒ shielded ⇒ force on Q₁ = 0 **(a)**. Q₂ outside ⇒ sees shell's induced charge ≡ Q₁ at centre ⇒ force on Q₂ = kQ₁Q₂/r² **(c)**.
+- **CAPC-159 (Q68)** [no book hint] A inside B. Q₁ on outer surface of A **(a)**; −Q₁ on inner surface of B **(b)**; outer surface of B = Q₁+Q₂ **(d)**. (c false.)
+- **CAPC-160 (Q69)** [no book hint] Concentric A,B,C; A charged. Inner surfaces of B and C have same charge (−q_A and... ) **(a)**; outer surfaces of A,B,C same charge **(c)**. Densities differ (radii differ) ⇒ b,d false.
+- **CAPC-161 (Q70)** [no book hint] Facing surfaces always equal & opposite ⇒ σ₁=−σ₂ **in all cases (a)**. Equal charges to both ⇒ facing surfaces zero ⇒ **σ₁=σ₂=0 (c)**.
+- **CAPC-162 (Q71)** [no book hint] Field ⊥ equipotential always **(a)**; no tangential component **(c)**.
+- **CAPC-163 (Q72)** [no book hint] Distinct equipotentials can't intersect **(a)**; field max where closest **(c)**; line of force ⊥ to both **(d)**.
+- **CAPC-164 (Q73)** [no book hint] Uniform field: equipotentials are planes **(a)**, ⊥ field **(b)**, equal ΔV equally spaced **(c)**, potential decreases along field **(d)** ⇒ all.
+- **CAPC-165 (Q74)** Field=0 inside conductor ⇒ lines can't pass through; induced charges distort field near surface; line of force deviates near surface outside ⇒ curve **(d)**.
+- **CAPC-166 (Q76)** V_a−V_b = (λ/2πε₀)ln(b/a) ⇒ PD ∝ **ln(b/a) (d)**.
+- **CAPC-167 (Q82)** [no book hint] Inner faces ±σ ⇒ field between = σ/ε₀ **(b)**; outside = 0 **(d)** (only inner surfaces charged).
+- **CAPC-168 (Q83)** [no book hint] Plates Q₁,Q₂. Outer faces A,D each = (Q₁+Q₂)/2 **(a),(d)**; inner faces B=(Q₁−Q₂)/2 **(b)**, C=−(Q₁−Q₂)/2=(Q₂−Q₁)/2 **(c)** ⇒ all.
+- **CAPC-169 (Q84)** [no book hint] X charge Q, Y uncharged. Each face Q/2. Field at B (between) = Q/2ε₀A **(a)**; |E| same magnitude at A,B,C **(c)**; A and C opposite directions **(d)**. (b false.)
+- **CAPC-170 (Q85)** A,C earthed (connected). 'A+B' and 'B+C' = two caps, same PD. If B closer to A ⇒ C_AB>C_BC ⇒ upper face of B more charge ⇒ net upward electrostatic force (F∝Q²) balances weight ⇒ **closer to A (b)**; never stable ⇒ **(d)**.
+- **CAPC-171 (Q86)** Earth one of A/C (not both): parallel-plate cap with B (±Q inner) ⇒ **Q flows to earth (a),(b)**. Both earthed: A,C parallel, capacitances ratio (spacing 2d:d)=1:2 ⇒ charge shares Q/3 through S₁, 2Q/3 through S₂ ⇒ **(c)**.
+- **CAPC-172 (Q87)** [no book hint] Isolated (Q const). Force=Q²/2ε₀A const (a false). Field=Q/ε₀A const ⇒ **(b)**. U=Q²/2C, C↓ ⇒ U↑ ⇒ **(c)**. V=Q/C↑ (d false).
+- **CAPC-173 (Q88)** [no book hint] Isolated plate Q splits both faces ⇒ σ₁=Q/2A **(b)**. Uncharged Y nearby doesn't change total ⇒ σ₂=σ₁ **(c)**. Y earthed ⇒ all Q to inner face ⇒ σ₃=Q/A **(d)**.
+- **CAPC-174 (Q89)** [no book hint] Facing inner faces ±|Q₂| (Q₂=−Q₃). PD = |Q₂|/C **(b)** = |Q₃|/C **(c)**.
+- **CAPC-175 (Q90)** [no book hint] A inside deep can B. Shielding: A's potential unchanged when placed in B **(a)**. B earthed ⇒ +Q induced charge flows to earth **(b)**, A's potential reduced **(c)**. (d false.)
+- **CAPC-176 (Q91)** Joined by wire ⇒ all Q to shell ⇒ **Q flows (c)**. Heat = E_i−E_f = (Q²/2)(1/4πε₀R − 1/(2·4πε₀R)) = kQ²/2R·(1−½) = **kQ²/4R (d)**.
+- **CAPC-177 (Q92)** [no book hint] Balanced bridge (3/6 = 6/12) ⇒ C,D same potential ⇒ no charge flows on joining **(a)**, equivalent unchanged **(c)**.
+- **CAPC-178 (Q93)** [no book hint] 3μF & 6μF in series (=2μF) parallel with 2μF ⇒ C_AB=4μF **(a)**. Charge on series branch: V_AB=60; series 2μF ⇒ Q=120μC; V across 3μF = 120/3 = **40 V (d)**.
+- **CAPC-179 (Q94)** [no book hint] Plates given Q each, then connected to cell ε=Q/C. Inner faces become ±CV=±Q. Charge Q flows through cell **(a)**; plate X total 2Q **(b)**; plate Y total 0 **(c)**; cell supplies Cε² **(d)** ⇒ all.
+- **CAPC-180 (Q95)** [no book hint] Connected to cell (V const), d→2d ⇒ C→C/2 ⇒ Q→Q/2 (charge returns, cell absorbs energy **a**); E=V/d→half **(b)**; Q half **(c)**; agent does work pulling plates **(d)** ⇒ all.
+- **CAPC-181 (Q96)** [no book hint] Disconnected (Q const), d→2d ⇒ C→C/2 ⇒ V=Q/C doubles **(a)**; E=Q/ε₀A const **(b)**; U=Q²/2C doubles **(c)**; agent does work **(d)** ⇒ all.
+- **CAPC-182 (Q97)** [no book hint] Closing S adds a branch; charge flows out of + terminal **(a)**; total through cell = (4/3)Cε **(d)**.
+- **CAPC-183 (Q98)** [no book hint] F = Q²/(2ε₀A) ⇒ **F∝Q² (a)**, **F∝1/A (b)**; independent of d (c,d false).
+- **CAPC-184 (Q99)** [no book hint] Slab in, connected to cell (V=ε). C: KC₀. Slab out ⇒ ΔQ through cell = ε(KC₀−C₀)=εC₀(K−1) **(a)**; energy absorbed by cell ε²C₀(K−1) **(b)**; agent work ½ε²C₀(K−1) **(d)**.
+- **CAPC-185 (Q100)** [no book hint] Air cap charged then disconnected (Q=C₀ε const). Insert K ⇒ C=KC₀, V=Q/C=ε/K ⇒ V down K× **(a)**; U=Q²/2C down K× **(b)**; |ΔU|=½C₀ε²(1−1/K) **(d)**.
+- **CAPC-186 (Q101)** [no book hint] Sphere a (charge Q) inside earthed shell b. Between (a≤r≤b): field kQ/r² **(a)**; V(b)=0 ⇒ V(r)=kQ(1/r−1/b) **(d)**; PD(A,B)=kQ(1/a−1/b) **(c)**. (b false: V isn't kQ/r since shell earthed.)

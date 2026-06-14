@@ -4,6 +4,7 @@ import { memo, useMemo, useState, useEffect, useCallback } from 'react';
 import { BookPage, ContentBlock, TextBlock } from '@canvas/data/types/books';
 import BlockRenderer from './BlockRenderer';
 import RailPanel from './blocks/RailPanel';
+import { FigureRefsProvider } from './figure-refs-context';
 
 // Callout variants that float to the margin sidebar on desktop.
 // fun_fact is intentionally excluded — opening hooks must render in the main column
@@ -42,7 +43,7 @@ function hasAnalyticalHinglish(blocks: ContentBlock[]): boolean {
 const HINGLISH_PREF_KEY = 'canvas_hinglish_mode';
 
 interface PageRendererProps {
-  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min' | 'hinglish_blocks' | 'competency'>;
+  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min' | 'hinglish_blocks' | 'competency' | 'figure_refs'>;
   onQuizPass?: (blockId: string, score: number) => void;
   /**
    * When provided (admin preview), PageRenderer uses this value instead of its
@@ -114,6 +115,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
   return (
     // Outer shell: centers content and caps total width on large screens
     // book-page-content scopes CSS fixes (e.g. fraction zoom) to this reader only
+    <FigureRefsProvider value={page.figure_refs ?? {}}>
     <div className="book-page-content w-full max-w-[1495px] mx-auto px-3 sm:px-8 pt-8 pb-10">
 
       {/* Page header — always full width */}
@@ -209,6 +211,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
         )}
       </div>
     </div>
+    </FigureRefsProvider>
   );
 }
 

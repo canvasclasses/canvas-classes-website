@@ -37,8 +37,10 @@ export default function TableBlockRenderer({ block }: { block: TableBlock }) {
 
   return (
     <figure className="my-6">
-      {block.caption && (
+      {(block.figure_number || block.caption) && (
         <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/35 mb-3 select-none">
+          {block.figure_number && <span className="text-white/55">Table {block.figure_number}</span>}
+          {block.figure_number && block.caption ? ' — ' : ''}
           {block.caption}
         </p>
       )}
