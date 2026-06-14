@@ -15,7 +15,40 @@ const VALID_CALLOUT_VARIANTS = new Set([
 ]);
 
 /**
- * Sanitises a single block in-place (shallow copy already made by caller):
+ * Recursively drops object keys whose value is `null`, returning a cleaned copy.
+ * Array elements and their order are preserved (we recurse into them but never
+ * remove them, so table rows / gallery item indices stay intact).
+ *
+ * WHY THIS EXISTS — read before removing it:
+ * Book `blocks` are stored as Mongoose `Mixed` (no DB-level validation), but the
+ * save path validates the WHOLE array through Zod, whose optional fields use
+ * `.optional()` — which accepts `undefined` but REJECTS `null`. Lots of paths
+ * write `null` into block fields without going through Zod: older editor builds,
+ * import scripts, and finaliser scripts that write via the raw Mongo driver
+ * (e.g. scripts/number-figures.js, where an empty `caption` round-trips to BSON
+ * null). A single stray `null` on any block then fails the entire save with
+ * "Invalid block payload: N.field: Invalid input" — even when the block you
+ * actually edited is fine. Coercing `null` → absent here makes those fields
+ * valid for `.optional()` and self-heals the bad data on the next save.
+ */
+function stripNulls<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((v) => stripNulls(v)) as unknown as T;
+  }
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      if (v === null) continue; // drop null-valued key → becomes `undefined` (valid for .optional())
+      out[k] = stripNulls(v);
+    }
+    return out as unknown as T;
+  }
+  return value;
+}
+
+/**
+ * Sanitises a single block (shallow copy already made by caller):
+ *  • Strips `null`-valued keys (deep) so they don't trip Zod's `.optional()`
  *  • Assigns a UUID if `id` is missing or not a string
  *  • Resets an invalid callout `variant` to 'note'
  *
@@ -23,6 +56,8 @@ const VALID_CALLOUT_VARIANTS = new Set([
  * every subsequent edit with a Zod validation error.
  */
 function sanitizeBlock(b: Record<string, unknown>): Record<string, unknown> {
+  b = stripNulls(b);
+
   if (!b.id || typeof b.id !== 'string') {
     b.id = randomUUID();
   }
