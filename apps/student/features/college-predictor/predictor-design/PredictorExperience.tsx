@@ -714,7 +714,15 @@ export default function PredictorExperience() {
 
   async function submitBitsat() {
     setLoading(true);
-    setExtended(false);
+    // BITSAT has only ~47 programmes total across all 3 campuses, so we fetch
+    // the FULL set up-front (extended) rather than the top-10 cap. This is what
+    // makes the bucket filters + pagination work entirely client-side: without
+    // it, only the top 10 (all Safe) rows reach the browser, so clicking
+    // "Reach"/"Target" showed nothing, paging to 2 collapsed back to 1, and
+    // genuinely-Reach programmes (e.g. BITS Pilani ECE) never appeared. Unlike
+    // JEE (96+ colleges, server-side extended fetch), BITSAT's full list is
+    // tiny — one round-trip returns everything.
+    setExtended(true);
     setFilter('all');
     try {
       // Branch filter: the chips are single-select and BITSAT filters by exact
@@ -726,7 +734,7 @@ export default function PredictorExperience() {
         score,
         regime: paper,
         ...(programmeCode ? { programmes: [programmeCode] } : {}),
-        extended: false,
+        extended: true,
       };
       const [predictRes, rangeRes] = await Promise.all([
         fetch('/api/v2/college-predictor/bitsat/predict', {

@@ -16,8 +16,11 @@ export interface BitsatCampusInfo {
   city: string;
   region: 'North' | 'South' | 'East' | 'West' | 'Central' | 'Northeast';
   established: number;
-  // NIRF Engineering ranks for the three BITS campuses (2024 release).
-  // Hyderabad doesn't appear in the top-100 list so we leave it undefined.
+  // NIRF Engineering rank. NIRF ranks "BITS Pilani" as a SINGLE institution
+  // (NIRF 2025 Engineering: #11, up from #20 in 2024) and does NOT publish
+  // separate ranks for the Goa and Hyderabad campuses. So only Pilani carries a
+  // rank here; Goa and Hyderabad are intentionally left undefined (no badge) —
+  // the earlier per-campus values (Goa #56) were not real NIRF figures.
   nirf_rank_engineering?: number;
   website: string;
   description: string;
@@ -32,7 +35,7 @@ export const BITSAT_CAMPUSES: BitsatCampusInfo[] = [
     city: 'Pilani',
     region: 'North',
     established: 1964,
-    nirf_rank_engineering: 20,
+    nirf_rank_engineering: 11,   // NIRF 2025 Engineering (institution-level)
     website: 'https://www.bits-pilani.ac.in/pilani/',
     description: 'The flagship BITS campus. CSE and MnC consistently close highest across all three campuses.',
   },
@@ -44,7 +47,7 @@ export const BITSAT_CAMPUSES: BitsatCampusInfo[] = [
     city: 'Sancoale',
     region: 'West',
     established: 2004,
-    nirf_rank_engineering: 56,
+    // NIRF does not rank the Goa campus separately — see the field note above.
     website: 'https://www.bits-pilani.ac.in/goa/',
     description: 'Coastal campus with the widest M.Sc. integrated programmes, including Semiconductor and Nanoscience.',
   },

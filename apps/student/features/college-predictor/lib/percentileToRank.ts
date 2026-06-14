@@ -90,11 +90,16 @@ const CATEGORY_CANDIDATE_SHARE_BY_YEAR: Record<number, CategoryShareTable> = {
     'EWS':            0.110,
   },
   2026: {
+    // Source: NTA JEE (Main) 2026 final press release (20 Apr 2026), the
+    // "candidates Appeared in Paper 1, both sessions, UNIQUE" table — the same
+    // pool as TOTAL_CANDIDATES_BY_YEAR[2026] (15,38,468), so shares and total
+    // share one denominator (the Session-1-only figures used before did not):
+    //   General 5,38,239 · EWS 1,80,086 · SC 1,56,038 · ST 52,152 · OBC 6,11,953
     'OPEN':           1.00,
-    'OBC-NCL':        0.397,
-    'SC':             0.100,
-    'ST':             0.033,
-    'EWS':            0.123,
+    'OBC-NCL':        0.398,   // 611953 / 1538468
+    'SC':             0.101,   // 156038 / 1538468
+    'ST':             0.034,   // 52152  / 1538468
+    'EWS':            0.117,   // 180086 / 1538468
   },
 };
 

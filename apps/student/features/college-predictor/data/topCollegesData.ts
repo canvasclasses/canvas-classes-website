@@ -370,7 +370,7 @@ export const TOP_COLLEGES: TopCollege[] = [
     tier: 'IIIT',
     city: 'Bengaluru',
     state: 'Karnataka',
-    established: 1999,
+    established: 1998,
     description:
       'A PPP-model IIIT in Bengaluru\'s Electronic City, known for research-driven CS and Electronics education. Most students are on integrated M.Tech / PG programs; academic rigor is high.',
     fees: '~₹16 L (5 yrs integrated)',
