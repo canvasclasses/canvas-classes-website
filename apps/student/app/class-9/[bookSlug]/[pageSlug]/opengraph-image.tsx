@@ -6,8 +6,11 @@
  * its own branded image with the chapter/page title instead of the
  * generic site logo.
  *
- * Edge runtime keeps cold starts fast. Revalidate matches the page
- * revalidate so a title edit in the editor reflects within a minute.
+ * Revalidate daily (86400s): a share-preview image does not need
+ * minute-level freshness, and a short window made this regenerate up to
+ * 1440x/day per URL — an ISR write + function invocation each time. For
+ * instant refresh after a title edit, call revalidatePath() from the
+ * book-save handler instead (CLAUDE.md §10.5).
  */
 
 import { ImageResponse } from 'next/og';
@@ -17,7 +20,7 @@ import BookPageModel from '@canvas/data/models/BookPage';
 import type { Book, BookPage } from '@canvas/data/types/books';
 
 export const runtime = 'nodejs';
-export const revalidate = 60;
+export const revalidate = 86400;
 
 export const alt = 'Canvas Classes — Class 9 NCERT lesson';
 export const size = { width: 1200, height: 630 };

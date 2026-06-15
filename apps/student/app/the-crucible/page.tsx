@@ -1,7 +1,5 @@
-import CrucibleWizard from '@/features/crucible/components/CrucibleWizard';
+import CrucibleLandingClient from './CrucibleLandingClient';
 import { Metadata } from 'next';
-import { createClient } from '../utils/supabase/server';
-import { isLocalhostDev } from '@/lib/bookAuth';
 import { buildChaptersWithCounts, chaptersBaseFromTaxonomy, CRUCIBLE_ALL_SUBJECTS, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 
 export const revalidate = 3600; // Revalidate every hour — question counts don't change per-request
@@ -35,19 +33,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-    // Auth check — wrapped so a Supabase outage never 500s the landing page.
-    let isLoggedIn = await isLocalhostDev();
-    try {
-        const supabase = await createClient();
-        if (supabase) {
-            const { data: { user } } = await supabase.auth.getUser();
-            isLoggedIn = isLoggedIn || !!user;
-        }
-    } catch (err) {
-        console.error('Supabase auth check failed on /the-crucible:', err);
-        // Fall through with isLoggedIn = isLocalhostDev() result
-    }
-
+    // Statically renderable + ISR-cached (revalidate = 3600 above): this page
+    // reads ONLY public Mongo data (chapter counts). The Supabase auth check
+    // (isLoggedIn) moved into CrucibleLandingClient — reading cookies() here
+    // would force dynamic rendering on every request and silently defeat the
+    // cache (CLAUDE.md §10.2/§10.3). Same pattern as the [chapterId] page.
     let chaptersWithCounts: ChapterWithCounts[] = [];
     try {
         chaptersWithCounts = await buildChaptersWithCounts({ subjects: CRUCIBLE_ALL_SUBJECTS });
@@ -57,7 +47,5 @@ export default async function Page() {
         chaptersWithCounts = await chaptersBaseFromTaxonomy(CRUCIBLE_ALL_SUBJECTS);
     }
 
-    return (
-        <CrucibleWizard chapters={chaptersWithCounts} isLoggedIn={isLoggedIn} />
-    );
+    return <CrucibleLandingClient chapters={chaptersWithCounts} />;
 }

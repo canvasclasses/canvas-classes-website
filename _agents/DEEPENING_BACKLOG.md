@@ -1,6 +1,6 @@
 # Architecture Deepening Backlog
 
-Last updated: 2026-06-01 (added items #10–12 after a four-agent depth audit covering work landed since the RBAC redesign).
+Last updated: 2026-06-15 (added the "Vercel cost / caching" section — items #16–22, label `vercel-cost` — from a Vercel cost audit).
 
 This is a living list of architecture work that came out of running the
 `improve-codebase-architecture` skill across the full repo after the
@@ -256,6 +256,185 @@ single-call-site; inline it stays.
 **Surfaced by**: 2026-06-01 admin-app depth audit. Acknowledged as
 "one-adapter = hypothetical seam" — listed so the second-consumer trigger
 isn't forgotten.
+
+---
+
+### 13. Rotate `ADMIN_SECRET` + scrub the leaked literal from a workflow doc
+
+**Files**:
+- `_agents/workflows/MOCK_TEST_INGESTION_WORKFLOW.md` lines 15, 44, 53 — the literal string `canvas-admin-2024-secure` appears 3× as the value of the `x-admin-secret` header
+- Committed 2026-04-04 in `fb0698a` (feat: period trends chart, mock tests, flags, cleanup)
+
+**Problem**: the format and naming convention of `canvas-admin-2024-secure` strongly suggest this was the real production `ADMIN_SECRET` at the time of writing, not a placeholder. Per CLAUDE.md §8.2.1, the `x-admin-secret` header IS the script-secret bypass that lets backend scripts mutate admin-only routes without a Supabase session — anyone with read access to the git history can replay this value if it's still the live secret. The string has been on public GitHub for ~2 months.
+
+**Solution shape** (two-part, with the harder part outside the codebase):
+1. **Operationally (only you can do this):** verify whether `process.env.ADMIN_SECRET` in Vercel production + preview still equals `canvas-admin-2024-secure`. If yes → rotate immediately. Don't bother rewriting git history; rotation is the only effective mitigation after public exposure.
+2. **In-repo:** replace the three literal occurrences in the workflow doc with a placeholder (`<your-admin-secret>` or `$ADMIN_SECRET`). One-line edit each.
+
+**Trigger**: today. The doc edit is mechanical; the rotation is the actual mitigation and only you can authorise it.
+
+**Surfaced by**: 2026-06-02 credential-leakage audit.
+
+---
+
+### 14. Remove `NEXT_PUBLIC_ADMIN_SECRET` from `.env.example` + CLAUDE.md (landmine for future agents)
+
+**Files**:
+- `.env.example:36` — `NEXT_PUBLIC_ADMIN_SECRET=same_string_as_above_for_client_side_admin_calls`
+- `CLAUDE.md:298` — lists `NEXT_PUBLIC_ADMIN_SECRET` in the shared env vars table
+
+**Problem**: this variable is documented in two prominent places but **zero code reads it today** (grep across `apps/`, `packages/`, `scripts/` returns nothing). So it's not actively leaking — Next.js only inlines `NEXT_PUBLIC_*` env vars that source code references. **But** the moment any future agent adds `process.env.NEXT_PUBLIC_ADMIN_SECRET` somewhere (because the docs told them to use it for "client-side admin calls"), Next.js will inline the value into every client JS bundle and the script-secret bypass becomes browser-visible. Every visitor can then send `x-admin-secret` to bypass admin auth — that's a Critical auth bypass that turns on overnight, silently.
+
+**Solution shape**: pure documentation hygiene.
+- Delete the `NEXT_PUBLIC_ADMIN_SECRET` line from `.env.example`
+- Remove it from CLAUDE.md §5.1's shared env vars table
+- Add a one-line security note: client-side admin operations MUST use the Supabase session, never a bundled secret
+
+**Trigger**: today. Cost is one PR; benefit is closing a footgun that's only one curious agent away from going live.
+
+**Surfaced by**: 2026-06-02 credential-leakage audit. Related to #6 (field-whitelist hardening) as another §8.7-flavored hardening item.
+
+---
+
+### 15. Stop echoing raw `error.message` from `chemical-bonding-batch` route (§8.5)
+
+**Files**:
+- `apps/student/app/api/v2/questions/chemical-bonding-batch/route.ts:80-86`
+
+**Problem**: the catch block does
+```ts
+const errorMessage = error instanceof Error ? error.message : String(error);
+return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
+```
+which violates CLAUDE.md §8.5 ("Error Responses Must Not Leak Internals"). Mongoose / driver errors routinely embed schema field names, query shapes, connection-state hints, and occasionally credential fragments — anything from "duplicate key error: { user_secret: '...' }" upwards. Every other handler in `apps/student/app/api/v2/*` follows §8.5 (generic client message, full error in `console.error`); this one is the lone outlier.
+
+**Solution shape**: replace the response payload with a generic message, keep the `console.error` line:
+```ts
+console.error('Error fetching Chemical Bonding questions:', error);
+return NextResponse.json({ success: false, error: 'Failed to fetch questions' }, { status: 500 });
+```
+
+**Trigger**: today. One-line code fix; the audit log already exists. Aligns this handler with the §8.5 convention used everywhere else.
+
+**Surfaced by**: 2026-06-02 credential-leakage audit.
+
+---
+
+## Vercel cost / caching (2026-06 cost audit)
+
+**Label:** `vercel-cost`. These came out of a 6-agent cost fan-out on 2026-06-15
+after the founder flagged ongoing ISR-write + Fluid-compute spend. Daily cost mix
+was ≈ ISR Writes 42% · Fast Origin Transfer 21% · Fluid CPU 14% · Fluid Memory
+10% · Web Analytics Events 7% · Function Invocations 4% — so compute + transfer
+combined exceeds the ISR-writes line; chasing ISR writes alone misses half the
+cost. The rules these all serve live in [`CLAUDE.md`](../CLAUDE.md) §10. Unlike the
+architecture items above, these are **perf/cost**, not deepening — kept here so
+there's one backlog, grouped under the `vercel-cost` label.
+
+**Already fixed (2026-06-15, pending the founder's commit):**
+- `/the-crucible` landing made cacheable — auth moved to a new `CrucibleLandingClient.tsx`; removed the page-level `cookies()`/`getUser()` read that silently overrode `revalidate = 3600`. (The `4e9f188` client-island sweep fixed the `[chapterId]` sub-page but **missed this index page** — a quiet `cookies()`-defeats-`revalidate` leak.)
+- OG image `revalidate` 60 → 86400 — `apps/student/app/class-9/[bookSlug]/[pageSlug]/opengraph-image.tsx`.
+
+**#1 cause is behavioral, not a ticket:** every production deploy cold-starts the
+ISR cache (prebuilt pages re-write at build; lazy pages regenerate on first
+post-deploy hit). 5+ deploys/day multiplies ISR writes. **Mitigation: batch
+commits into fewer deploys.** Process note — no code item.
+
+### 16. [vercel-cost] `blog/[slug]` pre-renders up to 500 pages every build
+
+**Files**: `apps/student/app/blog/[slug]/page.tsx` (`generateStaticParams`) → `apps/student/features/blog/lib/blogDb.ts` (`getPublishedSlugs`, `.limit(500)`).
+
+**Problem**: up to 500 Mongo-backed slugs are pre-rendered at every build, so each deploy writes up to ~500 ISR entries — multiplied by deploy frequency (≈2,500 writes/day at 5 deploys). Highest-impact remaining ISR-writes code item.
+
+**Solution shape**: `generateStaticParams → return []` (lazy on-demand ISR) — the pattern already used on the question/PYQ leaf pages. Blog posts are crawled, not hot; first-request generation + ISR is the right trade.
+
+**Trigger**: now — low-risk, high-leverage.
+
+**Surfaced by**: 2026-06-15 cost audit (build-time pre-render agent).
+
+---
+
+### 17. [vercel-cost] `revalidatePath('/', 'layout')` busts the whole site on every login/signup
+
+**Files**: `apps/student/features/auth/server-actions.ts` (login + signup), `apps/student/features/legal/lib/acceptConsent.ts`.
+
+**Problem**: a root-layout cascade marks the **entire** site's cache stale on a continuous trigger (every login/signup/consent); the next crawl regenerates everything. Auth is already a client island (`AuthButton`), so nothing in the cached server render depends on the session — almost certainly dead weight.
+
+**Solution shape**: remove the three `revalidatePath('/', 'layout')` calls (verify-then-delete; per §10.3 no cached server render should read session state).
+
+**Trigger**: now.
+
+**Surfaced by**: 2026-06-15 cost audit (revalidation-callers agent).
+
+---
+
+### 18. [vercel-cost] Bank-wide `revalidateTag('questions')` fired from 5 admin write paths
+
+**Files**: `packages/services/questions-by-id.ts` (PATCH + DELETE), `packages/services/questions.ts` (POST/create), `apps/admin/app/api/v2/questions/[id]/reclassify/route.ts`, `apps/admin/app/api/v2/questions/[id]/flag/[flagIdx]/route.ts`.
+
+**Problem**: the `'questions'` tag covers the **entire** cached bank, so one edit invalidates every chapter. Solution-writing / flag-triage batches → dozens of whole-bank busts → mass regeneration on next crawl. The flag-resolve call likely needn't touch the public cache at all.
+
+**Solution shape**: per-chapter tags `questions:${chapterId}` — the model already exists in `questions-by-id.ts` (the `notes-quicktest:${chapterId}` path). Reclassify busts old + new chapter; flag-resolve probably drops the tag entirely.
+
+**Trigger**: when next touching question write paths, or if admin-batch regeneration shows up in monitoring.
+
+**Surfaced by**: 2026-06-15 cost audit (revalidation-callers agent).
+
+---
+
+### 19. [vercel-cost] Drop redundant `@vercel/analytics` + `@vercel/speed-insights`
+
+**Files**: `apps/student/app/layout.tsx` (`<Analytics />`, `<SpeedInsights />`), `apps/student/package.json` (deps), CSP entries in `apps/student/next.config.ts`.
+
+**Problem**: mounted alongside GoogleAnalytics + CloudflareAnalytics + Clarity + Mixpanel — fully redundant. This IS the entire "Web Analytics Events" cost line (~7%/day).
+
+**Solution shape**: remove both components + uninstall the two deps + trim the `va.vercel-scripts.com` / `*.vercel-insights.com` CSP allowances. Zero analytics-coverage loss.
+
+**Trigger**: now — highest value-to-effort (two-line deletion kills a whole cost line).
+
+**Surfaced by**: 2026-06-15 cost audit (analytics/data-cache/images agent).
+
+---
+
+### 20. [vercel-cost] Unbounded sitemap PYQ load + double full-doc fetch on question detail
+
+**Files**: `apps/student/features/crucible/server-actions/the-crucible.ts` (the PYQ-slug load called from `sitemap.ts`; `getQuestionBySlug`), `apps/student/app/the-crucible/q/[slug]/page.tsx` (generateMetadata + Page).
+
+**Problem**: (a) the sitemap loads ALL ~4,750 published PYQs with **no `.limit()`** on every regen and every `/sitemap.xml` crawl → Fluid CPU + Memory; (b) the question-detail page fetches the full question doc **twice** per render (large `solution`/`question_text`) → Memory + Origin Transfer.
+
+**Solution shape**: (a) add `.limit(50000)`; long-term split into a paginated sitemap index. (b) wrap `getQuestionBySlug` in React `cache()` so generateMetadata + Page share one read.
+
+**Trigger**: (a) before the bank grows much past current size; (b) now — small change, halves reads on the highest-cardinality route.
+
+**Surfaced by**: 2026-06-15 cost audit (heavy-query agent).
+
+---
+
+### 21. [vercel-cost] Middleware does a per-request Supabase `getUser()` on the hottest trees
+
+**Files**: `apps/student/middleware.ts`.
+
+**Problem**: the gated branch refreshes the Supabase session on every `/the-crucible/*` and `/books|/class-9|/class-11` request — including anonymous/bot traffic that discards the cookie — adding an Edge invocation + Supabase round-trip on the highest-traffic content trees.
+
+**Solution shape**: short-circuit `NextResponse.next()` when the request carries no Supabase auth cookie, so anon/bot crawls skip the session refresh.
+
+**Trigger**: when revisiting middleware, or if Edge invocation cost on these trees stands out.
+
+**Surfaced by**: 2026-06-15 cost audit (middleware agent).
+
+---
+
+### 22. [vercel-cost] Blog-publish cron runs every 15 min
+
+**Files**: `apps/student/vercel.json` (`/api/blog/cron/publish`, `*/15 * * * *`).
+
+**Problem**: 96 runs/day, almost always a no-op (one capped query, usually zero rows). Highest-frequency cron in the repo; pure Function-Invocation waste.
+
+**Solution shape**: drop to hourly (`0 * * * *`) — a scheduled post going live up to an hour late is fine. Query is already `.limit(50)`-bounded.
+
+**Trigger**: now — one-line schedule change.
+
+**Surfaced by**: 2026-06-15 cost audit (cron agent).
 
 ---
 
