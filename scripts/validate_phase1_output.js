@@ -23,9 +23,9 @@ const path = require('path');
 const VALID_TYPES = ['SCQ', 'MCQ', 'NVT', 'AR', 'MST', 'MTC'];
 const VALID_NATURES = ['Recall', 'Rule_Application', 'Numerical', 'Comparative', 'Graphical', 'Conceptual', 'Mechanistic', 'Synthesis'];
 const ORGANIC_ONLY_NATURES = ['Mechanistic', 'Synthesis'];
-const VALID_BOARDS = ['JEE', 'NEET', 'CBSE', 'BITSAT'];
+const VALID_BOARDS = ['JEE', 'NEET', 'CBSE', 'BITSAT', 'WBJEE'];
 const VALID_SOURCE_TYPES = ['PYQ', 'Practice', 'NCERT_Textbook', 'NCERT_Exemplar', 'Mock'];
-const VALID_EXAMS = ['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG'];
+const VALID_EXAMS = ['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG', 'WBJEE'];
 
 function checkLatex(field, label, errs) {
   if (typeof field !== 'string') return;
