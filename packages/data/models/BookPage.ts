@@ -52,23 +52,27 @@ BookPageSchema.index({ book_id: 1, slug: 1 }, { unique: true });
 // so recreating a page with the same (book_id, slug) as a soft-deleted one would
 // collide — restore the old page instead (Phase-2 follow-up: make indexes partial).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function excludeSoftDeleted(this: any, next: (err?: unknown) => void) {
+// Mongoose 9 query middleware is promise-based — use an async hook, NOT the old
+// `function(next){ next() }` callback signature (which throws "next is not a
+// function" at query exec on Mongoose 9).
+async function excludeSoftDeleted(this: any) {
   if (!this.getOptions?.().includeDeleted) {
     const filter = this.getFilter ? this.getFilter() : {};
     if (filter.deleted_at === undefined) this.where({ deleted_at: null });
   }
-  next();
 }
 const SOFT_DELETE_HOOKS = [
+  // NOTE: no 'count' — Mongoose 9 removed Query.prototype.count, and registering
+  // a pre hook on a non-existent method corrupts the middleware chain (throws
+  // "next is not a function" at query exec). Use countDocuments instead.
   'find', 'findOne', 'findOneAndUpdate', 'findOneAndReplace', 'findOneAndDelete',
-  'count', 'countDocuments', 'distinct', 'updateOne', 'updateMany',
+  'countDocuments', 'distinct', 'updateOne', 'updateMany',
 ];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 for (const hook of SOFT_DELETE_HOOKS) (BookPageSchema as any).pre(hook, excludeSoftDeleted);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(BookPageSchema as any).pre('aggregate', function (this: any, next: (err?: unknown) => void) {
+(BookPageSchema as any).pre('aggregate', async function (this: any) {
   if (!this.options?.includeDeleted) this.pipeline().unshift({ $match: { deleted_at: null } });
-  next();
 });
 
 const BookPageModel: Model<IBookPage> =

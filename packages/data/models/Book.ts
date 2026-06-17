@@ -59,16 +59,21 @@ const BookSchema = new Schema<IBook>(
 // ── Soft-delete middleware (content protection, CLAUDE.md §0.6) ──────────────
 // Reads auto-exclude soft-deleted books. Bypass with .setOptions({ includeDeleted: true }).
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function excludeSoftDeleted(this: any, next: (err?: unknown) => void) {
+// Mongoose 9 query middleware is promise-based — use an async hook, NOT the old
+// `function(next){ next() }` callback signature (which throws "next is not a
+// function" at query exec on Mongoose 9).
+async function excludeSoftDeleted(this: any) {
   if (!this.getOptions?.().includeDeleted) {
     const filter = this.getFilter ? this.getFilter() : {};
     if (filter.deleted_at === undefined) this.where({ deleted_at: null });
   }
-  next();
 }
 const SOFT_DELETE_HOOKS = [
+  // NOTE: no 'count' — Mongoose 9 removed Query.prototype.count, and registering
+  // a pre hook on a non-existent method corrupts the middleware chain (throws
+  // "next is not a function" at query exec). Use countDocuments instead.
   'find', 'findOne', 'findOneAndUpdate', 'findOneAndReplace', 'findOneAndDelete',
-  'count', 'countDocuments', 'distinct', 'updateOne', 'updateMany',
+  'countDocuments', 'distinct', 'updateOne', 'updateMany',
 ];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 for (const hook of SOFT_DELETE_HOOKS) (BookSchema as any).pre(hook, excludeSoftDeleted);
