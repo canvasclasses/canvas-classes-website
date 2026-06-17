@@ -15,6 +15,7 @@ coverage
 
 # next.js — applies to any app under apps/
 .next/
+.next-*/
 out/
 
 # production
