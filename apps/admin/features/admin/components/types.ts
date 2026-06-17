@@ -62,11 +62,11 @@ export interface AdminQuestion {
     microConcept?: string;
     isMultiConcept?: boolean;
     questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
-    applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
-    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+    applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | 'WBJEE'>;
+    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | 'WBJEE';
     sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
     examDetails?: {
-      exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+      exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | 'WBJEE';
       year?: number;
       month?: string;
       phase?: string;

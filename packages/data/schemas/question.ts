@@ -46,13 +46,13 @@ export const QuestionSchema = z.object({
       question_number: z.string().optional(),
     }).optional(),
     applicableExams: z
-      .array(z.enum(['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD']))
+      .array(z.enum(['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD', 'WBJEE']))
       .min(1)
       .optional(),
-    examBoard: z.enum(['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD']).optional(),
+    examBoard: z.enum(['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD', 'WBJEE']).optional(),
     sourceType: z.enum(['PYQ', 'NCERT_Textbook', 'NCERT_Exemplar', 'Practice', 'Mock']).optional(),
     examDetails: z.object({
-      exam: z.enum(['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG']).optional(),
+      exam: z.enum(['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG', 'WBJEE']).optional(),
       year: z.number().optional(),
       month: z.string().optional(),
       phase: z.string().optional(),

@@ -636,7 +636,10 @@ function AdminPageContent() {
         <div className="fixed inset-0 z-50 flex flex-col h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden">
             {/* §5 TOP_BAR — section tabs + search + nav + filters (renders for every adminSection) */}
             {/* TOP BAR — two rows */}
-            <header className="shrink-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50 shadow-xl">
+            {/* relative z-30 lifts the whole top bar (and any open dropdown that
+                overflows down into the editor body) above the sibling body below.
+                Without it, the body's controls paint over the open question menu. */}
+            <header className="relative z-30 shrink-0 bg-gray-950/95 backdrop-blur-sm border-b border-gray-800/50 shadow-xl">
                 {/* Row 1: title + actions + search + Prev/Next + selector + chapter/type filters */}
                 {/* flex-wrap so content reflows to additional lines on narrow viewports — accessible without horizontal scroll on any laptop/OS */}
                 <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-800/40 flex-wrap">
@@ -988,13 +991,14 @@ function AdminPageContent() {
                                         className="shrink-0 w-24"
                                         title="Exam"
                                         value={(ed?.exam ?? '') as string}
-                                        onChange={(v) => patchExamDetails({ exam: (v || undefined) as 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | undefined })}
+                                        onChange={(v) => patchExamDetails({ exam: (v || undefined) as 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | 'WBJEE' | undefined })}
                                         placeholder="Exam —"
                                         options={[
                                             { value: '', label: 'Exam —' },
                                             { value: 'JEE_Main', label: 'JEE Main' },
                                             { value: 'JEE_Advanced', label: 'JEE Adv' },
                                             { value: 'NEET_UG', label: 'NEET UG' },
+                                            { value: 'WBJEE', label: 'WBJEE' },
                                         ]}
                                     />
                                     <Select
@@ -1051,7 +1055,7 @@ function AdminPageContent() {
                                             ]}
                                         />
                                     )}
-                                    {ed?.exam === 'JEE_Advanced' && (
+                                    {(ed?.exam === 'JEE_Advanced' || ed?.exam === 'WBJEE') && (
                                         <Select
                                             size="sm"
                                             className="shrink-0 w-24"

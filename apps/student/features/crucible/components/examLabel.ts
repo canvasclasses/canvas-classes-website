@@ -27,6 +27,7 @@ const EXAM_NAME_NORMALIZED: Record<string, string> = {
     JEE_Advanced: 'JEE Adv',
     NEET_UG: 'NEET',
     NEET_PG: 'NEET PG',
+    WBJEE: 'WBJEE',
     // Legacy / human-typed variants that may appear in older `exam_source` rows.
     'JEE Main': 'JEE Main',
     'JEE Advanced': 'JEE Adv',
@@ -170,19 +171,21 @@ export function isPyq(metadata: QuestionMetadataLike): boolean {
  * Returns one of the canonical examDetails enum values, or null if it can't
  * be determined (e.g. for non-PYQs or legacy data with unrecognised exam strings).
  */
-export type ExamType = 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+export type ExamType = 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | 'WBJEE';
 
 export function getExamType(metadata: QuestionMetadataLike): ExamType | null {
     if (!metadata) return null;
     // Modern field — already canonical enum value.
     const modernRaw = (metadata.examDetails as { exam?: string } | null | undefined)?.exam;
-    if (modernRaw === 'JEE_Main' || modernRaw === 'JEE_Advanced' || modernRaw === 'NEET_UG' || modernRaw === 'NEET_PG') {
+    if (modernRaw === 'JEE_Main' || modernRaw === 'JEE_Advanced' || modernRaw === 'NEET_UG' || modernRaw === 'NEET_PG' || modernRaw === 'WBJEE') {
         return modernRaw;
     }
     // Legacy field — free-text OR bridged-from-modern (which contains underscore form).
     // Allow whitespace OR underscore between words ("JEE Main" / "JEE_Main" both match).
     const legacyRaw = ((metadata.exam_source as { exam?: string } | null | undefined)?.exam ?? '').trim();
     if (!legacyRaw) return null;
+    // WBJEE first — its string contains "JEE" but must not be mistaken for JEE Main/Adv.
+    if (/wbjee|w\.?b\.?\s*jee/i.test(legacyRaw)) return 'WBJEE';
     if (/iit[\s_]*jee|jee[\s_]*adv/i.test(legacyRaw)) return 'JEE_Advanced';
     if (/jee[\s_]*main/i.test(legacyRaw)) return 'JEE_Main';
     if (/neet/i.test(legacyRaw)) return 'NEET_UG';
@@ -199,6 +202,10 @@ export function isJeeMainPyq(metadata: QuestionMetadataLike): boolean {
 
 export function isJeeAdvancedPyq(metadata: QuestionMetadataLike): boolean {
     return isPyq(metadata) && getExamType(metadata) === 'JEE_Advanced';
+}
+
+export function isWbjeePyq(metadata: QuestionMetadataLike): boolean {
+    return isPyq(metadata) && getExamType(metadata) === 'WBJEE';
 }
 
 export function isNeetPyq(metadata: QuestionMetadataLike): boolean {

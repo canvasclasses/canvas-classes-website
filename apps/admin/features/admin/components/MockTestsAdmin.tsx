@@ -57,7 +57,7 @@ interface MockQuestion {
 interface MockTestSet {
   _id: string;
   title: string;
-  exam: 'JEE' | 'NEET';
+  exam: 'JEE' | 'NEET' | 'WBJEE';
   year?: number;
   source?: string;
   duration_minutes: number;
@@ -128,7 +128,7 @@ export default function MockTestsAdmin() {
   // Create modal
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [createForm, setCreateForm] = useState({
-    title: '', exam: 'NEET' as 'JEE' | 'NEET',
+    title: '', exam: 'NEET' as 'JEE' | 'NEET' | 'WBJEE',
     year: new Date().getFullYear(), source: 'Custom',
     duration_minutes: 200, description: '',
   });
@@ -1198,10 +1198,11 @@ export default function MockTestsAdmin() {
                   <Select
                     className="w-full"
                     value={createForm.exam}
-                    onChange={(v) => setCreateForm(f => ({ ...f, exam: v as 'JEE' | 'NEET' }))}
+                    onChange={(v) => setCreateForm(f => ({ ...f, exam: v as 'JEE' | 'NEET' | 'WBJEE' }))}
                     options={[
                       { value: 'NEET', label: 'NEET' },
                       { value: 'JEE', label: 'JEE' },
+                      { value: 'WBJEE', label: 'WBJEE' },
                     ]}
                   />
                 </div>

@@ -11,7 +11,7 @@ import { difficultyColor } from '@canvas/data/difficulty';
 import { isAnswerCorrect } from '@canvas/persona/scoring';
 import { getTopicSortKey, hasNcertOrder, NCERT_TOPIC_ORDER } from '@/features/crucible/lib/ncertTopicOrder';
 import { track } from '@canvas/core/analytics/mixpanel';
-import { formatExamLabel, isPyq, isJeeAdvancedPyq, isJeeMainPyq } from './examLabel';
+import { formatExamLabel, isPyq, isJeeAdvancedPyq, isJeeMainPyq, isWbjeePyq } from './examLabel';
 
 // ───────────────────────────── Helpers ─────────────────────────────
 async function fetchOptionStats(qid: string): Promise<Record<string, number>> {
@@ -120,7 +120,7 @@ export default function BrowseView({
   const [topicDrawerOpen, setTopicDrawerOpen] = useState(false);
 
   // ── Filters
-  const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'non-pyq' | 'starred'>('all');
+  const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'wbjee' | 'non-pyq' | 'starred'>('all');
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [topicFilter, setTopicFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -285,9 +285,9 @@ export default function BrowseView({
   // examLabel.ts which prefer modern fields (sourceType, examDetails) and
   // fall back to legacy (is_pyq, exam_source) only when modern is missing.
   const availableYears = useMemo(() => {
-    if (examFilter !== 'mains' && examFilter !== 'advanced') return [];
+    if (examFilter !== 'mains' && examFilter !== 'advanced' && examFilter !== 'wbjee') return [];
     const years = questions
-      .filter(q => examFilter === 'mains' ? isJeeMainPyq(q.metadata) : isJeeAdvancedPyq(q.metadata))
+      .filter(q => examFilter === 'mains' ? isJeeMainPyq(q.metadata) : examFilter === 'advanced' ? isJeeAdvancedPyq(q.metadata) : isWbjeePyq(q.metadata))
       .map(q => (q.metadata.examDetails?.year ?? q.metadata.exam_source?.year))
       .filter((y): y is number => typeof y === 'number');
     return [...new Set(years)].sort((a, b) => b - a);
@@ -325,9 +325,10 @@ export default function BrowseView({
         } else if (examFilter !== 'all') {
           if (examFilter === 'mains' && !isJeeMainPyq(q.metadata)) return false;
           if (examFilter === 'advanced' && !isJeeAdvancedPyq(q.metadata)) return false;
+          if (examFilter === 'wbjee' && !isWbjeePyq(q.metadata)) return false;
         }
         // Year — read modern field first, fall back to legacy.
-        if (yearFilter !== 'all' && (examFilter === 'mains' || examFilter === 'advanced')) {
+        if (yearFilter !== 'all' && (examFilter === 'mains' || examFilter === 'advanced' || examFilter === 'wbjee')) {
           const qYear = q.metadata.examDetails?.year ?? q.metadata.exam_source?.year;
           if (qYear !== Number(yearFilter)) return false;
         }
@@ -657,6 +658,7 @@ export default function BrowseView({
         { id: 'all', label: 'All' },
         { id: 'mains', label: 'JEE Mains' },
         { id: 'advanced', label: 'JEE Advanced' },
+        { id: 'wbjee', label: 'WBJEE' },
         { id: 'non-pyq', label: 'Practice' },
         { id: 'starred', label: 'Bookmarked' },
       ];

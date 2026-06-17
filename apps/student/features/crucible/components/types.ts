@@ -55,9 +55,9 @@ export interface Question {
     questionNature?: 'Recall' | 'Rule_Application' | 'Numerical' | 'Comparative' | 'Graphical' | 'Conceptual' | 'Mechanistic' | 'Synthesis';
     // ── Canonical exam taxonomy (read these going forward) ───────────────
     sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
-    applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
+    applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | 'WBJEE'>;
     examDetails?: {
-      exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+      exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | 'WBJEE';
       year?: number;
       month?: string;
       phase?: string;
@@ -72,7 +72,7 @@ export interface Question {
     // These are scheduled for removal in Phase 4 (~2 weeks after Phase 1
     // ships). Read paths fall back to canonical fields above. Do NOT use
     // in new code.
-    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+    examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | 'WBJEE';
     is_pyq?: boolean;
     exam_source?: {
       exam?: string;

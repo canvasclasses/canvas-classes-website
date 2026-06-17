@@ -87,6 +87,7 @@ export default function AdminFilterRow(props: AdminFilterRowProps) {
           { value: 'NEET', label: 'NEET' },
           { value: 'CBSE', label: 'CBSE' },
           { value: 'BITSAT', label: 'BITSAT' },
+          { value: 'WBJEE', label: 'WBJEE' },
         ]}
       />
 

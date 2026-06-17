@@ -53,6 +53,12 @@ export function Select<T extends string>({
 }: SelectProps<T>) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  // Open downward by default; flip up only when the trigger sits near the
+  // bottom of the viewport and there's more room above. maxHeight is capped to
+  // whatever space is actually available so the list never runs off-screen —
+  // it scrolls internally instead.
+  const [menuPlacement, setMenuPlacement] = useState<'down' | 'up'>('down');
+  const [menuMaxHeight, setMenuMaxHeight] = useState<number | undefined>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const listboxRef = useRef<HTMLUListElement>(null);
@@ -83,12 +89,29 @@ export function Select<T extends string>({
     [enabledIndices, findFirstEnabled, findLastEnabled],
   );
 
+  // Measure the trigger against the viewport and decide how tall the menu can
+  // be and whether it should drop down or flip up. Called on open and kept in
+  // sync while open (resize / scroll).
+  const updateMenuPosition = useCallback(() => {
+    const trigger = triggerRef.current;
+    if (!trigger) return;
+    const rect = trigger.getBoundingClientRect();
+    const EDGE_MARGIN = 8; // keep a small gap from the viewport edge
+    const GAP = 4; // matches the mt-1 / mb-1 offset from the trigger
+    const spaceBelow = window.innerHeight - rect.bottom - GAP - EDGE_MARGIN;
+    const spaceAbove = rect.top - GAP - EDGE_MARGIN;
+    const placeUp = spaceBelow < spaceAbove && spaceBelow < 240;
+    setMenuPlacement(placeUp ? 'up' : 'down');
+    setMenuMaxHeight(Math.max(120, Math.floor(placeUp ? spaceAbove : spaceBelow)));
+  }, []);
+
   const openListbox = useCallback(() => {
     if (disabled) return;
     const selectedIdx = options.findIndex((o) => o.value === value && !o.disabled);
     setActiveIndex(selectedIdx >= 0 ? selectedIdx : findFirstEnabled());
+    updateMenuPosition(); // measure before paint so the menu opens at the right size
     setOpen(true);
-  }, [disabled, options, value, findFirstEnabled]);
+  }, [disabled, options, value, findFirstEnabled, updateMenuPosition]);
 
   const closeListbox = useCallback(() => {
     setOpen(false);
@@ -117,6 +140,20 @@ export function Select<T extends string>({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [open, closeListbox]);
+
+  // Keep the menu sized to the available space while it's open — the viewport
+  // can change under it (window resize, an ancestor scrolling). Capture-phase
+  // scroll catches scrollable ancestors, not just the window.
+  useEffect(() => {
+    if (!open) return;
+    updateMenuPosition();
+    window.addEventListener('resize', updateMenuPosition);
+    window.addEventListener('scroll', updateMenuPosition, true);
+    return () => {
+      window.removeEventListener('resize', updateMenuPosition);
+      window.removeEventListener('scroll', updateMenuPosition, true);
+    };
+  }, [open, updateMenuPosition]);
 
   // Scroll the active option into view when it changes.
   useEffect(() => {
@@ -234,7 +271,10 @@ export function Select<T extends string>({
           id={listboxId}
           ref={listboxRef}
           role="listbox"
-          className="absolute z-50 mt-1 max-h-60 min-w-full w-max overflow-auto rounded-md border border-white/10 bg-[#0B0F15] py-1 shadow-2xl"
+          style={menuMaxHeight ? { maxHeight: menuMaxHeight } : undefined}
+          className={`absolute z-50 ${
+            menuPlacement === 'up' ? 'bottom-full mb-1' : 'top-full mt-1'
+          } min-w-full w-max overflow-auto rounded-md border border-white/10 bg-[#0B0F15] py-1 shadow-2xl`}
         >
           {options.map((o, i) => {
             const isSelected = o.value === value;

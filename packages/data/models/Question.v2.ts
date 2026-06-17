@@ -83,16 +83,16 @@ export interface IQuestionMetadata {
   // applicableExams: which exams this question is *useful for* (multi-valued).
   // examBoard: legacy single-valued field, kept in sync as applicableExams[0]
   // during the transition. New code should read/write applicableExams.
-  applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD'>;
-  examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD';
+  applicableExams?: Array<'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | 'WBJEE'>;
+  examBoard?: 'JEE' | 'NEET' | 'CBSE' | 'State_Board' | 'BITSAT' | 'OLYMPIAD' | 'WBJEE';
   sourceType?: 'PYQ' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Practice' | 'Mock';
   examDetails?: {
-    exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG';
+    exam?: 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | 'WBJEE';
     year?: number;
     month?: string;
     phase?: string;      // For NEET (Phase 1, Phase 2)
     shift?: string;      // For JEE Main (Shift 1, Shift 2)
-    paper?: string;      // For JEE Advanced (Paper 1, Paper 2)
+    paper?: string;      // For JEE Advanced (Paper 1, Paper 2) and WBJEE (Paper I Maths / Paper II Phys+Chem). WBJEE is single-sitting — no shift.
   };
 
   // ── NCERT line-level reference (mainly Biology; optional for other subjects) ──
@@ -255,12 +255,12 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
   // NEW: 3-Tier Exam Taxonomy
   applicableExams: {
     type: [String],
-    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD'],
+    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD', 'WBJEE'],
     default: undefined,
   },
   examBoard: {
     type: String,
-    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD'],
+    enum: ['JEE', 'NEET', 'CBSE', 'State_Board', 'BITSAT', 'OLYMPIAD', 'WBJEE'],
     required: false,
   },
   sourceType: {
@@ -271,7 +271,7 @@ const QuestionMetadataSchema = new Schema<IQuestionMetadata>({
   examDetails: {
     exam: {
       type: String,
-      enum: ['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG'],
+      enum: ['JEE_Main', 'JEE_Advanced', 'NEET_UG', 'NEET_PG', 'WBJEE'],
       required: false,
     },
     year: { type: Number },

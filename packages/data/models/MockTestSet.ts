@@ -80,7 +80,7 @@ export interface IMockTestSet {
   _id: string;                       // UUID v4
   title: string;                     // e.g., "NEET Mock Test 1 · 2025"
   slug?: string;                     // URL-friendly, e.g., "neet-mock-1-2025"
-  exam: 'JEE' | 'NEET';
+  exam: 'JEE' | 'NEET' | 'WBJEE';
   year?: number;                     // e.g., 2025
   source?: string;                   // e.g., "NTA Abhyaas", "Custom", "Allen"
   duration_minutes: number;          // 180 (JEE) or 200 (NEET)
@@ -200,7 +200,7 @@ const MockTestSetSchema = new Schema<IMockTestSet>({
   _id: { type: String, required: true },
   title: { type: String, required: true },
   slug: { type: String },
-  exam: { type: String, enum: ['JEE', 'NEET'], required: true },
+  exam: { type: String, enum: ['JEE', 'NEET', 'WBJEE'], required: true },
   year: { type: Number },
   source: { type: String },
   duration_minutes: { type: Number, required: true, default: 180 },
