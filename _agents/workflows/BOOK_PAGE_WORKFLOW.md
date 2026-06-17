@@ -11,6 +11,10 @@
 > refresh that file's inventory, then add one dated line to its Changelog. This is
 > a required final step, not optional housekeeping.
 
+> **REFERENCE-FIRST (project decision 2026-06-14).** Before designing any page, **check [`_agents/reference-books/REFERENCE_LIBRARY.md`](../reference-books/REFERENCE_LIBRARY.md)** for an authored textbook covering the topic. If one exists, read its mapped section in the PDF *before* writing, and design the page's depth, sequencing, analogies, worked examples and questions around the book — it outranks the agent's training knowledge for what to cover and how to teach it. Re-express in our voice (never copy prose verbatim — copyright), and record which book/section informed the page in the `LIVE_BOOKS_STATE.md` changelog line. The first indexed book is Shishir Mittal's *Physical Chemistry* (Class 11–12 chemistry).
+
+> **CONTENT PROTECTION — NO DESTRUCTIVE OPS WITHOUT CONSENT (project decision 2026-06-14, CLAUDE.md §0.6).** Book content is founder-authored and irreplaceable. **Never hard-delete a page or silently drop blocks/asset refs.** All mutations go through **`scripts/lib/book-writer.js`** (`savePage`/`softDeletePage`/`restorePageVersion`) — it version-snapshots the prior state, runs a content-loss guard, soft-deletes (never erases), and audits. Any change that removes a block, unlinks a `src`/`url`/`audio_url`, drops a `page_id`, or sharply shrinks a page is **blocked** unless the founder explicitly approved that removal this session (pass `allowContentLoss` + a reason). R2 asset files are never deleted on block removal. Full system: [`_agents/plans/CONTENT_PROTECTION.md`](../plans/CONTENT_PROTECTION.md).
+
 ---
 
 ## 1. What You Are Building

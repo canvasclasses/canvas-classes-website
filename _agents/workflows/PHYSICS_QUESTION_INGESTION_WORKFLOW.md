@@ -141,10 +141,10 @@ Mechanistic, Synthesis  → Not used in physics. Skip.
 ### Exam Taxonomy (3-tier canonical, IDENTICAL across Chemistry / Physics / Math)
 
 ```
-TIER 1: applicableExams → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT')[]   ← multi-valued
+TIER 1: applicableExams → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT' | 'WBJEE')[]   ← multi-valued
 TIER 2: sourceType      → 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
 TIER 3: examDetails     → { exam, year, month, shift, phase, paper }
-                          exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG'} (enum, no free text)
+                          exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG', 'WBJEE'} (enum, no free text)
                           shift: ALWAYS 'Shift-I' or 'Shift-II' (never 'Morning'/'Evening'/'M'/'Shift 1'/'shift-I')
 ```
 
@@ -155,6 +155,7 @@ TIER 3: examDetails     → { exam, year, month, shift, phase, paper }
 | JEE Main | `'JEE_Main'` | required | required (`'Jan'`..`'Dec'`) | required (`'Shift-I'` / `'Shift-II'`) | — |
 | JEE Advanced | `'JEE_Advanced'` | required | `null` | `null` | required (`'Paper 1'` / `'Paper 2'`) |
 | NEET UG | `'NEET_UG'` | required | `null` | `null` (single-shift exam) | — |
+| WBJEE | `'WBJEE'` | required | `null` | `null` (single-sitting exam) | optional (`'Paper 1'` Maths / `'Paper 2'` Phys+Chem) |
 
 **Canonical mappings (use these verbatim):**
 

@@ -104,10 +104,10 @@ Decision tree (top-down, take the first match):
 **Exam Taxonomy — 3-tier canonical (IDENTICAL across Chemistry / Physics / Math):**
 
 ```
-TIER 1: applicableExams → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT')[]   ← multi-valued, replaces examBoard
+TIER 1: applicableExams → ('JEE' | 'NEET' | 'CBSE' | 'BITSAT' | 'WBJEE')[]   ← multi-valued, replaces examBoard
 TIER 2: sourceType      → 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
 TIER 3: examDetails     → { exam, year, month, shift, phase, paper }
-                          exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG'} (enum, no free text)
+                          exam ∈ {'JEE_Main', 'JEE_Advanced', 'NEET_UG', 'WBJEE'} (enum, no free text)
                           shift: ALWAYS use 'Shift-I' or 'Shift-II' (never 'Morning'/'Evening'/'M'/'Shift 1'/'shift-I')
 ```
 
@@ -118,6 +118,7 @@ TIER 3: examDetails     → { exam, year, month, shift, phase, paper }
 | JEE Main | `'JEE_Main'` | required | required (`'Jan'`..`'Dec'`) | required (`'Shift-I'` / `'Shift-II'`) | — |
 | JEE Advanced | `'JEE_Advanced'` | required | `null` | `null` | required (`'Paper 1'` / `'Paper 2'`) |
 | NEET UG | `'NEET_UG'` | required | `null` | `null` (single-shift exam) | — |
+| WBJEE | `'WBJEE'` | required | `null` | `null` (single-sitting exam) | optional (`'Paper 1'` Maths / `'Paper 2'` Phys+Chem) |
 
 **Canonical mappings (use these verbatim):**
 
@@ -245,7 +246,7 @@ Output a raw JavaScript array (not wrapped in a script). Each object:
   applicableExams: ['JEE'],   // multi-valued: ['JEE'], ['NEET'], or ['JEE','NEET'] for dual-use
   sourceType: 'PYQ',          // 'PYQ' | 'Practice' | 'NCERT_Textbook' | 'NCERT_Exemplar' | 'Mock'
   examDetails: {              // null if not PYQ
-    exam: 'JEE_Main',         // 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG'
+    exam: 'JEE_Main',         // 'JEE_Main' | 'JEE_Advanced' | 'NEET_UG' | 'NEET_PG' | 'WBJEE'
     year: 2019,
     month: 'Jan',             // optional
     shift: 'Shift-I',         // canonical: 'Shift-I' | 'Shift-II' (NEVER 'Morning'/'M'/'Shift 1'); leave null for NEET

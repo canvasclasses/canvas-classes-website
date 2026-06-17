@@ -32,6 +32,21 @@ The founder runs many initiatives in parallel and loses context when switching b
 
 ---
 
+## 0.6 LIVE BOOK CONTENT PROTECTION — NO DESTRUCTIVE OPS WITHOUT EXPLICIT CONSENT
+
+Live Book content (pages, blocks, and their video/audio/image assets in `book_pages` + R2) is **founder-authored, irreplaceable, and frequently invisible to review** — a deleted section or unlinked video can go unnoticed for months. A past restructure silently hard-deleted a whole "Classification of Matter" section *and the founder's recorded video* on 2026-06-10; it was not noticed until 2026-06-14. This rule exists so it cannot recur.
+
+**Hard rules (apply to every agent, every script, the admin UI, and any API):**
+1. **NEVER hard-delete a book page, and never silently drop blocks or asset references.** No `deleteOne`/`deleteMany`/`$pull` on `book_pages` or a chapter's `page_ids`, and no overwrite that removes blocks, unlinks a `src`/`url`/`audio_url`, or sharply shrinks a page — **unless the founder has explicitly approved that specific removal in the current session.**
+2. **Use the sanctioned gateway, not raw Mongo.** All Live Book mutations must go through **`scripts/lib/book-writer.js`** (`savePage` / `softDeletePage` / `restorePageVersion`). It snapshots the prior version, runs the content-loss guard, and writes an audit entry. Do not write to `book_pages` with raw `updateOne`/`deleteOne` in new scripts.
+3. **Removal = soft-delete only.** "Deleting" sets `deleted_at` (+ `deleted_by`, `deletion_reason`); it never erases. Reader queries filter `deleted_at: null`.
+4. **R2 assets are never deleted** when a block is removed — the file is retained (the block reference may go, the file stays), so a recording is always recoverable.
+5. If a task seems to *require* removing content, **stop and ask the founder first**, quoting exactly what would be removed. Approval for one removal does not authorize others.
+
+See [`_agents/plans/CONTENT_PROTECTION.md`](_agents/plans/CONTENT_PROTECTION.md) for the full system (version history, content-loss guard, asset registry, structural blueprint + watchdog, backups). Phase 1 (version history + guard + soft-delete) is the active safety net.
+
+---
+
 > **Before changing anything inside `apps/student/app/the-crucible/`, `apps/student/app/api/v2/`, `apps/student/features/crucible/`, `apps/admin/app/admin/`, `apps/admin/app/api/v2/`, `apps/admin/features/admin/`, `packages/data/models/UserProgress.ts`, `packages/data/models/StudentChapterProfile.ts`, `packages/persona/`, or `packages/data/models/ResourceLink.ts` — read [`_agents/CRUCIBLE_ARCHITECTURE.md`](_agents/CRUCIBLE_ARCHITECTURE.md).** It is the canonical reference for Crucible's structure, the persona pipeline, the recommendation bridge, and the invariants that must not be broken. If anything in this file or in code comments contradicts it, that document wins; the fix is to update the doc, never to silently diverge.
 
 ---
