@@ -1,7 +1,20 @@
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from "next";
+import { createRequire } from 'node:module';
+import path from 'node:path';
 
 const isProd = process.env.NODE_ENV === 'production';
+
+// JSXGraph ships its `exports` map pointing at uncompiled SOURCE (src/index.js,
+// hundreds of modules) — bundling that is slow (dev on-demand compile) and fat.
+// Alias the bare `jsxgraph` import to its prebuilt single-file core instead.
+const _require = createRequire(import.meta.url);
+const jsxgraphCore = path.join(
+  path.dirname(_require.resolve('jsxgraph')),
+  '..',
+  'distrib',
+  'jsxgraphcore.js',
+);
 
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
@@ -45,8 +58,17 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "connect-src 'self' https://*.supabase.co https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com",
+              // cdn.jsdelivr.net: Excalidraw (/diagram-editor) loads its fonts from
+              // EXCALIDRAW_ASSET_PATH on jsdelivr; the font fetch needs connect-src.
+              "connect-src 'self' blob: https://cdn.jsdelivr.net https://*.supabase.co https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com",
               "media-src 'self' https: blob:",
+              // worker-src + blob: connect-src are required by the Structure Editor
+              // (/structure-editor): Ketcher runs its Indigo cheminformatics engine
+              // (SMILES/InChI/clean-up/image export) inside a blob web worker that
+              // streams a WASM binary. Without these, the canvas mounts but every
+              // chemistry operation fails silently. script-src already has
+              // 'unsafe-eval' which permits the WASM compile.
+              "worker-src 'self' blob:",
               "object-src 'none'",
               "frame-src 'self' https://customer-stream.cloudflarestream.com",
               "frame-ancestors 'none'",
@@ -92,6 +114,21 @@ const nextConfig: NextConfig = {
     ],
   },
   staticPageGenerationTimeout: 300,
+  webpack: (config) => {
+    // Ketcher (Structure Editor) depends on Paper.js, whose Node build statically
+    // require()s `jsdom` + `canvas` for a server-side canvas shim. Those are
+    // server-only and absent in the browser bundle, so webpack fails to resolve
+    // them even though the code path never runs in the browser. Alias them to
+    // `false` so webpack supplies an empty module and tree-shakes the dead branch.
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      jsdom: false,
+      canvas: false,
+      // Use JSXGraph's prebuilt core (single file) instead of its ESM source.
+      jsxgraph$: jsxgraphCore,
+    };
+    return config;
+  },
 };
 
 export default withSentryConfig(nextConfig, {
