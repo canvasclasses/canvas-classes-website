@@ -40,7 +40,8 @@ export type BlockType =
   | 'chapter_practice'
   | 'apply_express'
   | 'reading_comprehension'
-  | 'junior_practice';
+  | 'junior_practice'
+  | 'interactive_graph';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -294,6 +295,36 @@ export interface SimulationBlock extends BaseBlock {
   simulation_id: string;  // e.g. 'fractional-distillation', 'crystallisation-column'
   title?: string;
   prediction?: SimulationPrediction; // Optional predict-observe-explain layer
+}
+
+// INTERACTIVE GRAPH — a JSXGraph board students can manipulate (drag sliders /
+// points). Two authoring modes:
+//   • spec  — config-driven (axes + functions + sliders), built via the editor form.
+//   • graph_id — a hand-built named graph from the renderer's registry (richer,
+//     e.g. tangent-to-curve, area-under-curve). When graph_id is set it wins.
+export interface GraphSlider {
+  name: string;   // single letter used in function expressions, e.g. 'a'
+  min: number;
+  max: number;
+  value: number;  // initial value
+  step?: number;
+}
+export interface GraphFunction {
+  expr: string;   // expression in x (and slider names), e.g. 'a*x^2 + b*x + c'
+  color?: string;
+}
+export interface InteractiveGraphSpec {
+  bounds: { xmin: number; xmax: number; ymin: number; ymax: number };
+  functions: GraphFunction[];
+  sliders: GraphSlider[];
+  showGrid?: boolean;
+}
+export interface InteractiveGraphBlock extends BaseBlock {
+  type: 'interactive_graph';
+  title?: string;
+  caption?: string;
+  graph_id?: string;             // prebuilt named graph (registry) — takes precedence
+  spec?: InteractiveGraphSpec;   // config-driven board
 }
 
 // 21. CURIOSITY PROMPT — open-ended Block 0 hook for Class 9 pages
@@ -846,7 +877,8 @@ export type ContentBlock =
   | ChapterPracticeBlock
   | ApplyExpressBlock
   | ReadingComprehensionBlock
-  | JuniorPracticeBlock;
+  | JuniorPracticeBlock
+  | InteractiveGraphBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
@@ -895,6 +927,14 @@ export interface BookPage {
    * finaliser. The renderer uses it to resolve in-text `{fig:key}` tokens.
    */
   figure_refs?: Record<string, string>;
+  /**
+   * Soft-delete (content protection, CLAUDE.md §0.6). A page is NEVER hard-deleted;
+   * "delete" sets `deleted_at`. Reads exclude `deleted_at != null` via model
+   * middleware. Restore by clearing these (see scripts/lib/book-writer.js).
+   */
+  deleted_at?: Date | null;
+  deleted_by?: string | null;
+  deletion_reason?: string | null;
 }
 
 /** One lesson page in the chapter-opener journey map (§15.1, auto-derived). */
@@ -946,4 +986,8 @@ export interface Book {
   is_published: boolean;
   created_at: Date;
   updated_at: Date;
+  /** Soft-delete (content protection, CLAUDE.md §0.6). Books are never hard-deleted. */
+  deleted_at?: Date | null;
+  deleted_by?: string | null;
+  deletion_reason?: string | null;
 }

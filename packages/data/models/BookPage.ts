@@ -28,6 +28,10 @@ const BookPageSchema = new Schema<IBookPage>(
     video_title: { type: String, default: null },
     // §15.1 — 'chapter_opener' renders the bespoke cover + journey; absent = lesson.
     page_type: { type: String, enum: ['lesson', 'chapter_opener'], default: 'lesson' },
+    // Soft-delete (content protection, CLAUDE.md §0.6). Pages are NEVER hard-deleted.
+    deleted_at: { type: Date, default: null },
+    deleted_by: { type: String, default: null },
+    deletion_reason: { type: String, default: null },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
@@ -40,6 +44,32 @@ BookPageSchema.index(
   { unique: true }
 );
 BookPageSchema.index({ book_id: 1, slug: 1 }, { unique: true });
+
+// ── Soft-delete middleware (content protection, CLAUDE.md §0.6) ──────────────
+// Every read/update auto-excludes soft-deleted pages so deleted content never
+// leaks to students or the editor. Bypass with `.setOptions({ includeDeleted: true })`
+// (used only by the restore path). NOTE: the unique indexes above are not partial,
+// so recreating a page with the same (book_id, slug) as a soft-deleted one would
+// collide — restore the old page instead (Phase-2 follow-up: make indexes partial).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function excludeSoftDeleted(this: any, next: (err?: unknown) => void) {
+  if (!this.getOptions?.().includeDeleted) {
+    const filter = this.getFilter ? this.getFilter() : {};
+    if (filter.deleted_at === undefined) this.where({ deleted_at: null });
+  }
+  next();
+}
+const SOFT_DELETE_HOOKS = [
+  'find', 'findOne', 'findOneAndUpdate', 'findOneAndReplace', 'findOneAndDelete',
+  'count', 'countDocuments', 'distinct', 'updateOne', 'updateMany',
+];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+for (const hook of SOFT_DELETE_HOOKS) (BookPageSchema as any).pre(hook, excludeSoftDeleted);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(BookPageSchema as any).pre('aggregate', function (this: any, next: (err?: unknown) => void) {
+  if (!this.options?.includeDeleted) this.pipeline().unshift({ $match: { deleted_at: null } });
+  next();
+});
 
 const BookPageModel: Model<IBookPage> =
   mongoose.models.BookPage || mongoose.model<IBookPage>('BookPage', BookPageSchema);

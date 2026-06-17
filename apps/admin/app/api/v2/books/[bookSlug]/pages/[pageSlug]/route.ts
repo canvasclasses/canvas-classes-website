@@ -7,6 +7,7 @@ import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { ContentBlock } from '@canvas/data/types/books';
 import { validateBlocks } from '@canvas/data/books/schemas';
 import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@canvas/data/books/utils';
+import { snapshotBookPageVersion } from '@canvas/data/books/page-protection';
 
 const VALID_CALLOUT_VARIANTS = new Set([
   'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
@@ -227,6 +228,13 @@ export async function PUT(req: NextRequest, { params }: Params) {
       delete updateFields.reading_time_min;
     }
 
+    // Content protection (CLAUDE.md §0.6): snapshot the current state into version
+    // history BEFORE overwriting, so any edit is reversible. Idempotent (deduped by hash).
+    const current = await BookPageModel.findOne({ book_id: String(book._id), slug: pageSlug }).lean();
+    if (current) {
+      await snapshotBookPageVersion(current, `pre-save via admin UI (${admin.email})`, admin.email);
+    }
+
     const page = await BookPageModel.findOneAndUpdate(
       { book_id: String(book._id), slug: pageSlug },
       { $set: updateFields },
@@ -260,7 +268,12 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
       return NextResponse.json({ success: false, error: 'Book not found' }, { status: 404 });
     }
 
-    const page = await BookPageModel.findOneAndDelete({
+    // Content protection (CLAUDE.md §0.6): SOFT-delete only — never hard-delete.
+    // Snapshot the full page into version history, then set deleted_at. Model
+    // middleware hides deleted_at != null from all reads; the page_id stays in the
+    // chapter so a restore (clear deleted_at) brings it back exactly. R2 assets are
+    // never touched. Recover via scripts/lib/book-writer.js restorePageVersion.
+    const page = await BookPageModel.findOne({
       book_id: String(book._id),
       slug: pageSlug,
     }).lean();
@@ -269,18 +282,13 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
       return NextResponse.json({ success: false, error: 'Page not found' }, { status: 404 });
     }
 
-    // Remove page_id from its chapter in the book document
-    const pageId = String(page._id);
-    for (const chapter of book.chapters) {
-      const idx = chapter.page_ids.indexOf(pageId);
-      if (idx !== -1) {
-        chapter.page_ids.splice(idx, 1);
-        break;
-      }
-    }
-    await book.save();
+    await snapshotBookPageVersion(page, `pre-delete via admin UI (${admin.email})`, admin.email);
+    await BookPageModel.updateOne(
+      { _id: page._id },
+      { $set: { deleted_at: new Date(), deleted_by: admin.email, deletion_reason: 'deleted via admin UI' } }
+    );
 
-    return NextResponse.json({ success: true, message: 'Page deleted' });
+    return NextResponse.json({ success: true, message: 'Page deleted (soft — recoverable from version history)' });
   } catch (error) {
     console.error(`DELETE /api/v2/books/${bookSlug}/pages/${pageSlug} error:`, error);
     return NextResponse.json({ success: false, error: 'Failed to delete page' }, { status: 500 });

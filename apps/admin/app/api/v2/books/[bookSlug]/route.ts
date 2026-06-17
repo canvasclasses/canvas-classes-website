@@ -4,6 +4,7 @@ import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { BookChapter } from '@canvas/data/types/books';
+import { snapshotBookPageVersion } from '@canvas/data/books/page-protection';
 
 // GET branches on isAdminRequest() — admins see unpublished chapters, students
 // don't. Caching would leak one view into the other. Students load book data
@@ -93,11 +94,24 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
       return NextResponse.json({ success: false, error: 'Book not found' }, { status: 404 });
     }
 
-    // Delete all pages belonging to this book
-    await BookPageModel.deleteMany({ book_id: String(book._id) });
-    await BookModel.deleteOne({ slug: bookSlug });
+    // Content protection (CLAUDE.md §0.6): SOFT-delete only — never hard-delete a
+    // book or its pages. Snapshot every page into version history, then mark the
+    // pages and the book as deleted. Model middleware hides them from all reads.
+    const pages = await BookPageModel.find({ book_id: String(book._id) }).lean();
+    for (const p of pages) {
+      await snapshotBookPageVersion(p, `pre book-delete via admin UI (${admin.email})`, admin.email);
+    }
+    const stamp = { deleted_at: new Date(), deleted_by: admin.email };
+    await BookPageModel.updateMany(
+      { book_id: String(book._id) },
+      { $set: { ...stamp, deletion_reason: 'book deleted via admin UI' } }
+    );
+    await BookModel.updateOne(
+      { _id: book._id },
+      { $set: { ...stamp, deletion_reason: 'deleted via admin UI' } }
+    );
 
-    return NextResponse.json({ success: true, message: 'Book and all its pages deleted' });
+    return NextResponse.json({ success: true, message: 'Book soft-deleted (recoverable from version history)' });
   } catch (error) {
     console.error(`DELETE /api/v2/books/${bookSlug} error:`, error);
     return NextResponse.json({ success: false, error: 'Failed to delete book' }, { status: 500 });

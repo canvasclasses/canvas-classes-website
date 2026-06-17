@@ -45,12 +45,33 @@ const BookSchema = new Schema<IBook>(
       enum: ['tts', 'silent', 'hide'],
       required: false,
     },
+    // Soft-delete (content protection, CLAUDE.md §0.6). Books are NEVER hard-deleted.
+    deleted_at: { type: Date, default: null },
+    deleted_by: { type: String, default: null },
+    deletion_reason: { type: String, default: null },
   },
   {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
     collection: 'books',
   }
 );
+
+// ── Soft-delete middleware (content protection, CLAUDE.md §0.6) ──────────────
+// Reads auto-exclude soft-deleted books. Bypass with .setOptions({ includeDeleted: true }).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function excludeSoftDeleted(this: any, next: (err?: unknown) => void) {
+  if (!this.getOptions?.().includeDeleted) {
+    const filter = this.getFilter ? this.getFilter() : {};
+    if (filter.deleted_at === undefined) this.where({ deleted_at: null });
+  }
+  next();
+}
+const SOFT_DELETE_HOOKS = [
+  'find', 'findOne', 'findOneAndUpdate', 'findOneAndReplace', 'findOneAndDelete',
+  'count', 'countDocuments', 'distinct', 'updateOne', 'updateMany',
+];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+for (const hook of SOFT_DELETE_HOOKS) (BookSchema as any).pre(hook, excludeSoftDeleted);
 
 const BookModel: Model<IBook> =
   mongoose.models.Book || mongoose.model<IBook>('Book', BookSchema);

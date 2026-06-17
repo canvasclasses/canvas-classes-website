@@ -520,7 +520,7 @@ function BookSidebarInner({
                           {/* Pages */}
                           {isChExpanded && (
                             <div className="pl-4">
-                              {chPages.map((page) => (
+                              {chPages.map((page, i) => (
                                 <div
                                   key={page.slug}
                                   className={`group flex items-center gap-1.5 px-2 py-1 rounded-lg mx-1 mb-0.5
@@ -530,6 +530,7 @@ function BookSidebarInner({
                                       : 'hover:bg-white/5 text-white/55'}`}
                                   onClick={() => onSelectPage(page.slug)}
                                 >
+                                  <span className="shrink-0 w-5 text-right text-[10px] font-semibold tabular-nums opacity-50">{i + 1}</span>
                                   <FileText size={11} className="shrink-0" />
                                   <span className="flex-1 text-xs truncate">{page.title}</span>
 
