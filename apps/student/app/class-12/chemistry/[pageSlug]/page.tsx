@@ -4,7 +4,10 @@ import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
 import BookReader from '@/features/books/components/reader/BookReader';
 
-export const revalidate = 3600;
+// 24h ISR — high-cardinality, bot-crawled book pages; a 1h window drove excess
+// ISR writes (2026-06). Published edits need a revalidate-on-save to propagate
+// faster (CLAUDE.md §10.5).
+export const revalidate = 86400;
 
 interface Props {
   params: Promise<{ pageSlug: string }>;

@@ -27,10 +27,35 @@ const blockedTrainingBots = [
     'cohere-ai',          // Cohere training
 ];
 
+// No-value crawlers (added 2026-06 after the Vercel bot breakdown showed these
+// hammering the high-cardinality question surface — /the-crucible/q and
+// /chemistry-questions — at ~0–8% cache hit, i.e. an ISR regeneration on nearly
+// every request, while sending zero traffic or citations back. Blocking them
+// leaves Google / Bing / the AI answer-bots untouched.
+// NOTE: robots.txt only stops the COMPLIANT ones. Meta's crawler (already listed
+// above as Meta-ExternalAgent — Vercel labels it "meta-webindexer") was the #1
+// driver and ignores robots.txt, so it MUST also be blocked at the Vercel
+// Firewall / Cloudflare WAF (edge-enforced — the only thing that actually stops it).
+const blockedNoValueCrawlers = [
+    'meta-externalfetcher', // Meta on-demand fetcher (sibling of Meta-ExternalAgent)
+    'PetalBot',             // Huawei search — negligible value for a JEE/NEET (India) audience
+    'YandexBot',            // Yandex search — negligible value for an India audience
+    'AhrefsBot',            // SEO backlink scraper — no audience value
+    'SemrushBot',           // SEO scraper
+    'MJ12bot',              // Majestic SEO scraper
+    'DotBot',               // Moz SEO scraper
+    'DataForSeoBot',        // SEO scraper
+    'BLEXBot',              // WebMeUp SEO scraper
+];
+
 export default function robots(): MetadataRoute.Robots {
     return {
         rules: [
             ...blockedTrainingBots.map((userAgent) => ({
+                userAgent,
+                disallow: '/',
+            })),
+            ...blockedNoValueCrawlers.map((userAgent) => ({
                 userAgent,
                 disallow: '/',
             })),

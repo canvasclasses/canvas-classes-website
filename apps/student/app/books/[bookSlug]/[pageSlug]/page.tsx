@@ -8,12 +8,14 @@ import type { Book, BookPage } from '@canvas/data/types/books';
 import { buildBookPageMetadata, buildBookPageJsonLd } from '@/features/books/lib/bookPageSeo';
 
 // ISR — cache the rendered RSC payload for each (bookSlug, pageSlug) tuple
-// for 1 hour. Auth is enforced by middleware on every request, so cache
-// hits still pass through the gate. Admins editing drafts bypass this route
-// entirely (they use the /crucible/admin editor), so stale draft content is
-// not a concern here. Admin save flows can fire revalidatePath() for instant
-// turnaround when needed.
-export const revalidate = 3600;
+// for 24 hours. These high-cardinality, sitemap-listed, bot-crawled DB pages
+// regenerated up to 24x/URL/day on the old 1h window (the 2026-06 ISR-write
+// cost). Auth is enforced by middleware on every request, so cache hits still
+// pass through the gate. Admins editing drafts bypass this route entirely (they
+// use the admin editor), so stale draft content is not a concern. NOTE: with a
+// 24h window, edits to PUBLISHED pages take up to 24h to reach students unless
+// admin book-save fires a cross-app revalidate (CLAUDE.md §10.5) — not yet wired.
+export const revalidate = 86400;
 
 const MAX_NAV_PAGES = 1000;
 

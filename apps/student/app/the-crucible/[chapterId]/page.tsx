@@ -3,9 +3,10 @@ import { Metadata } from 'next';
 import { buildChaptersWithCounts, chaptersBaseFromTaxonomy, CRUCIBLE_ALL_SUBJECTS, type ChapterWithCounts } from '@/features/crucible/lib/chapterCounts';
 import CrucibleChapterClient from './CrucibleChapterClient';
 
-// ISR — 1-hour edge cache. The underlying chapter counts come from
-// unstable_cache (1h TTL, invalidated by the 'questions' tag), so the
-// page payload and the data layer agree on freshness.
+// ISR — 24h edge cache (was 1h; high-cardinality, bot-crawled listing pages
+// drove excess ISR writes in 2026-06). Chapter counts are informational, so a
+// 24h lag is fine; counts come from unstable_cache (invalidated by the
+// 'questions' tag) and refresh on the next page regeneration.
 //
 // All auth-aware UI lives inside CrucibleChapterClient (a client island
 // that reads Supabase on mount). The page itself reads only public Mongo
@@ -16,7 +17,7 @@ import CrucibleChapterClient from './CrucibleChapterClient';
 // to read cookies server-side; that pattern was the primary driver of
 // Fast Origin Transfer + Function Invocation cost on canvasclasses.in.
 // The fix is documented in the bill diagnostic from that month.
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }: { params: Promise<{ chapterId: string }> }): Promise<Metadata> {
     const { chapterId } = await params;

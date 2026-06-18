@@ -8,12 +8,13 @@ import PracticeHub from '@/features/books/components/practice/PracticeHub';
 import type { Book, BookPage } from '@canvas/data/types/books';
 import { buildBookPageMetadata, buildBookPageJsonLd } from '@/features/books/lib/bookPageSeo';
 
-// CLAUDE.md §10.5: editorial book content → 1h. `revalidate = 60` is forbidden
-// by §10.2 — these DB-backed pages are sitemap-listed and bot-crawled, so a
-// 60s window meant near-constant ISR regeneration (and Atlas pool pressure that
-// slowed the whole site). Admin book-save should revalidatePath() for instant
-// freshness instead of a short window.
-export const revalidate = 3600;
+// CLAUDE.md §10.5: editorial book content → 24h. `revalidate = 60` is forbidden
+// by §10.2 — these DB-backed pages are sitemap-listed and bot-crawled, so even
+// a 1h window made them ISR-regenerate up to 24x/URL/day (the 2026-06 ISR-write
+// cost). Admin book-save should revalidatePath() for instant freshness instead
+// of a short window — until that is wired, published edits take up to 24h to
+// propagate to students.
+export const revalidate = 86400;
 
 // Hard upper bound on pages fetched for nav/ToC — no real book comes close
 // to this, but bounding the query matches CLAUDE.md §8.6.
