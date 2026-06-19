@@ -1,4 +1,5 @@
 'use strict';
+require('./lib/legacy-book-guard'); // CLAUDE.md §0.6 — refuse silent hard-delete of book_pages
 /**
  * Kaveri Ch.1 — adds a "Practice & Mastery" page with one adaptive
  * `chapter_practice` block. Questions are seeded from Ch1's own authenticated

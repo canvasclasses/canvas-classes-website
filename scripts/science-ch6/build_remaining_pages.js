@@ -1,4 +1,5 @@
 'use strict';
+require('../lib/legacy-book-guard'); // CLAUDE.md §0.6 — refuse silent hard-delete of book_pages
 /**
  * Class 9 Science · Chapter 6 "How Forces Affect Motion" — REMAINING CONTENT PAGES.
  *

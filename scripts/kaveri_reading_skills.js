@@ -1,4 +1,5 @@
 'use strict';
+require('./lib/legacy-book-guard'); // CLAUDE.md §0.6 — refuse silent hard-delete of book_pages
 /**
  * Kaveri — builds the "Reading Skills" unit (the CBSE Reading-section pillar):
  * a teaching page + a discursive unseen passage + a case-based unseen passage,

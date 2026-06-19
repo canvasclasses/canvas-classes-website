@@ -1,0 +1,114 @@
+[
+  {
+    "display_id": "BOMA-001",
+    "tag_id": "tag_ma_basic_math_1",
+    "tag_name": "Logarithms",
+    "confidence": "High",
+    "reason": "Single log equation solved by change of base to a common base; pure logarithm skill."
+  },
+  {
+    "display_id": "BOMA-002",
+    "tag_id": "tag_ma_basic_math_1",
+    "tag_name": "Logarithms",
+    "confidence": "High",
+    "reason": "Taking log of both sides yields a straightforward quadratic in log x, a standard single-log technique."
+  },
+  {
+    "display_id": "BOMA-003",
+    "tag_id": "tag_ma_basic_math_2",
+    "tag_name": "Mixed Log Problems",
+    "confidence": "High",
+    "reason": "Coupled system of two log-exponent relations requiring substitution across variables, well beyond a single log equation."
+  },
+  {
+    "display_id": "BOMA-004",
+    "tag_id": "tag_ma_basic_math_2",
+    "tag_name": "Mixed Log Problems",
+    "confidence": "High",
+    "reason": "Trigonometric-logarithmic equation with multiple variable-base log terms needing combined simplification."
+  },
+  {
+    "display_id": "BOMA-005",
+    "tag_id": "tag_ma_basic_math_2",
+    "tag_name": "Mixed Log Problems",
+    "confidence": "Medium",
+    "reason": "Requires substituting 2^x and merging log_2/log_4 terms into one equation, a multi-step log manipulation."
+  },
+  {
+    "display_id": "BOMA-006",
+    "tag_id": "tag_ma_basic_math_2",
+    "tag_name": "Mixed Log Problems",
+    "confidence": "Medium",
+    "reason": "Variable-base logs that must be reduced via change of base and substitution before solving, beyond one straightforward equation."
+  },
+  {
+    "display_id": "BOMA-007",
+    "tag_id": "tag_ma_basic_math_2",
+    "tag_name": "Mixed Log Problems",
+    "confidence": "High",
+    "reason": "Combines a trigonometric-log identity with a second log relation requiring substitution to find n."
+  },
+  {
+    "display_id": "BOMA-008",
+    "tag_id": "tag_ma_basic_math_2",
+    "tag_name": "Mixed Log Problems",
+    "confidence": "High",
+    "reason": "Merging two log_{1/2} trig terms then counting solutions over an interval is multi-step trig+log work."
+  },
+  {
+    "display_id": "BOMA-009",
+    "tag_id": "tag_ma_basic_math_3",
+    "tag_name": "Logarithmic Inequalities",
+    "confidence": "High",
+    "reason": "A log inequality (>= 0) where the core difficulty is the variable-base domain analysis and sign of the log."
+  },
+  {
+    "display_id": "BOMA-010",
+    "tag_id": "tag_ma_basic_math_4",
+    "tag_name": "Inequalities",
+    "confidence": "High",
+    "reason": "Rational/modulus inequality plus a quadratic-in-|x| inequality with set intersection; no logarithms involved."
+  },
+  {
+    "display_id": "BOMA-011",
+    "tag_id": "tag_ma_basic_math_4",
+    "tag_name": "Inequalities",
+    "confidence": "High",
+    "reason": "Sets defined by modulus inequalities, then set operations; non-log inequality skill is the bottleneck."
+  },
+  {
+    "display_id": "BOMA-012",
+    "tag_id": "tag_ma_basic_math_4",
+    "tag_name": "Inequalities",
+    "confidence": "High",
+    "reason": "Modulus and square-root inequalities defining sets with operations; no logarithms involved."
+  },
+  {
+    "display_id": "BOMA-013",
+    "tag_id": "tag_ma_basic_math_4",
+    "tag_name": "Inequalities",
+    "confidence": "High",
+    "reason": "Modulus inequalities defining sets followed by set operations; purely non-log inequality work."
+  },
+  {
+    "display_id": "BOMA-014",
+    "tag_id": "tag_ma_basic_math_1",
+    "tag_name": "Logarithms",
+    "confidence": "High",
+    "reason": "Simplifying log_x 27 and log_9 x via change of base reduces to solving for x; core skill is log identities."
+  },
+  {
+    "display_id": "BOMA-015",
+    "tag_id": "tag_ma_basic_math_3",
+    "tag_name": "Logarithmic Inequalities",
+    "confidence": "High",
+    "reason": "Inequality in log_5 x (quadratic in the log) requiring domain check; a logarithmic inequality."
+  },
+  {
+    "display_id": "BOMA-016",
+    "tag_id": "tag_ma_basic_math_2",
+    "tag_name": "Mixed Log Problems",
+    "confidence": "Medium",
+    "reason": "Chain of three change-of-base log terms that must be combined and substituted to back out a; multi-step log manipulation."
+  }
+]

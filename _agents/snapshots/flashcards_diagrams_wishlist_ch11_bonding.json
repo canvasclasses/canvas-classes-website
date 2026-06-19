@@ -1,0 +1,58 @@
+[
+  {
+    "flashcard_id": "FLASH-PHY-0633",
+    "topic": "Ionic Bond, Lattice Energy & Born-Haber",
+    "side": "Answer",
+    "priority": "High",
+    "description": "Classic Born-Haber cycle diagram for NaCl: a closed energy-level loop showing Na(s)+½Cl2(g) → NaCl(s) at the bottom, with intermediate steps Na(g), Na+(g)+e-, Cl(g), Cl-(g), and the dashed lattice-energy arrow. Each step labelled with its ΔH (sublimation, ionization, bond dissociation, electron affinity, lattice energy).",
+    "notes": "Quintessential cycle diagram — text alone cannot do it justice."
+  },
+  {
+    "flashcard_id": "FLASH-PHY-0638",
+    "topic": "Lewis Structures, Octet & Formal Charge",
+    "side": "Both",
+    "priority": "Medium",
+    "description": "SO4^2- Lewis structure with one resonance form drawn: central S, two S=O double bonds (drawn as double lines, O atoms with formal charge 0), two S–O single bonds (single lines, O atoms with formal charge −1 each). Plus a separate panel showing all four equivalent resonance structures.",
+    "notes": "Lewis-structure cards land much better with an actual drawing than ASCII attempts."
+  },
+  {
+    "flashcard_id": "FLASH-PHY-0644",
+    "topic": "Dipole Moment & Molecular Polarity",
+    "side": "Answer",
+    "priority": "High",
+    "description": "Side-by-side: (LEFT) Linear CO2 with two equal arrows pointing opposite, large 'NET = 0' below. (RIGHT) Bent H2O with two arrows at ~104.5° angle, resultant arrow drawn pointing downward through O, label 'NET μ ≠ 0'. Makes vector cancellation visceral.",
+    "notes": "This is THE classic polarity diagram. Worth doing carefully."
+  },
+  {
+    "flashcard_id": "FLASH-PHY-0654",
+    "topic": "VSEPR & Molecular Geometry",
+    "side": "Answer",
+    "priority": "High",
+    "description": "Five-panel chart showing the 5 ideal VSEPR shapes in 3D: linear, trigonal planar, tetrahedral, trigonal bipyramidal, octahedral. Each labelled with steric number, bond angles, and one example molecule. The canonical VSEPR reference image.",
+    "notes": "Every student needs this picture; it should be embedded permanently."
+  },
+  {
+    "flashcard_id": "FLASH-PHY-0667",
+    "topic": "Bent's Rule, Drago's Rule & Back-Bonding",
+    "side": "Answer",
+    "priority": "Medium",
+    "description": "BF3 molecule with three σ B-F bonds, and curved arrows from F lone pairs into the empty p orbital on B (perpendicular to the plane). Label the resulting partial π-bond. Mirrors the standard organic-chemistry electron-pushing convention.",
+    "notes": "Back-bonding is invisible without an electron-flow diagram."
+  },
+  {
+    "flashcard_id": "FLASH-PHY-0671",
+    "topic": "Molecular Orbital Theory (MOT)",
+    "side": "Answer",
+    "priority": "High",
+    "description": "MO energy-level diagram for O2: two columns of 2s and 2p atomic orbitals on the sides, central column of MOs (σ2s, σ*2s, σ2pz, π2px=π2py, π*2px=π*2py, σ*2pz) ordered by energy. Filled with 16 electrons (8 from each O) per Aufbau + Hund. Highlight the two unpaired electrons in the π* level.",
+    "notes": "The classic MOT diagram for O2 — explains paramagnetism visually. Essential."
+  },
+  {
+    "flashcard_id": "FLASH-PHY-0676",
+    "topic": "Hydrogen Bonding & Intermolecular Forces",
+    "side": "Answer",
+    "priority": "Medium",
+    "description": "Two skeletal structures side by side. LEFT: o-nitrophenol with curved dotted line from -OH hydrogen to one O of -NO2 group on adjacent C, labelled \"intramolecular H-bond\". RIGHT: p-nitrophenol with -NO2 across the ring (no possible intramolecular bond); show two molecules with intermolecular dotted bonds between -OH of one and -NO2 of the other.",
+    "notes": "Geometric explanation is much clearer with a picture."
+  }
+]

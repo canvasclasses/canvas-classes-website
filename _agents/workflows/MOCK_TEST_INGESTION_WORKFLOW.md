@@ -12,7 +12,7 @@
 **Required headers on every request:**
 ```
 Content-Type: application/json
-x-admin-secret: canvas-admin-2024-secure
+x-admin-secret: $ADMIN_SECRET
 ```
 
 **Subject values:**
@@ -41,7 +41,7 @@ Call the list endpoint to get the UUID of the target set:
 
 ```bash
 curl http://localhost:3000/api/v2/mock-tests \
-  -H "x-admin-secret: canvas-admin-2024-secure"
+  -H "x-admin-secret: $ADMIN_SECRET"
 ```
 
 Find the set by `title` and copy its `_id` field. It looks like: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`
@@ -50,7 +50,7 @@ Find the set by `title` and copy its `_id` field. It looks like: `xxxxxxxx-xxxx-
 
 ```bash
 curl http://localhost:3000/api/v2/mock-tests/{SET_ID} \
-  -H "x-admin-secret: canvas-admin-2024-secure" \
+  -H "x-admin-secret: $ADMIN_SECRET" \
   | node -e "const d=require('fs').readFileSync('/dev/stdin','utf8'); const s=JSON.parse(d).data; console.log('Questions already in set:', s.questions.length);"
 ```
 

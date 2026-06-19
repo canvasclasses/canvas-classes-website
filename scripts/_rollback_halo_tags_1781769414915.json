@@ -1,0 +1,1542 @@
+[
+  {
+    "_id": "385a5df7-be30-49f0-a67d-c3a48f23e9f6",
+    "display_id": "HALO-001",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_1",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_1",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "33c0afa8-61fd-42a1-a7a2-1b637d557b7c",
+    "display_id": "HALO-002",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_1",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_1",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "146d7be6-2b2f-4d4d-9f80-e0777db4da1c",
+    "display_id": "HALO-003",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "7ad00131-724c-48ab-8e57-d8ccb29576a9",
+    "display_id": "HALO-005",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_1",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_1",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8773c548-0da9-439c-9d83-b6edcfc088d0",
+    "display_id": "HALO-006",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c2c66ae5-50dd-4aad-b804-9e289997b2d6",
+    "display_id": "HALO-008",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_4",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ac1142f2-80ed-454d-a6e0-b93a6116ea1f",
+    "display_id": "HALO-009",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "fcee48b5-3230-4b25-9296-fc1d5b050cf7",
+    "display_id": "HALO-010",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_3",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a7717df2-2f0b-48ba-a796-1157c7577343",
+    "display_id": "HALO-012",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_3",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f0d08014-5206-4875-81df-dcf8e0378633",
+    "display_id": "HALO-014",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_7",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a26aa9f3-ea33-46cc-806a-24111d64dd6b",
+    "display_id": "HALO-015",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_8",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "318d021f-f18e-4152-b0aa-4b5d2e1ba571",
+    "display_id": "HALO-016",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b2d13d18-d724-4724-a027-eeb989f34624",
+    "display_id": "HALO-017",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_6",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f108a780-dd7d-4ccb-8091-40e8791e0315",
+    "display_id": "HALO-018",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0c5bcc3e-7c56-471c-9735-f5fd27bac39a",
+    "display_id": "HALO-019",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_6",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_10",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b2debc44-b3b8-4141-bd8f-709db72264a5",
+    "display_id": "HALO-020",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6fe9fd88-f526-4a27-94b8-c25b47508a93",
+    "display_id": "HALO-021",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "82a99567-1bf8-4551-ad69-4f8eab22ac71",
+    "display_id": "HALO-022",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6d1dc974-2687-44b5-a968-e7d2e44d19e6",
+    "display_id": "HALO-023",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4eba543a-41aa-40f6-a9c2-77974e809dc4",
+    "display_id": "HALO-024",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_7",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d4d7a14c-b9fd-4efe-a782-b77ff5c2e24e",
+    "display_id": "HALO-025",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "dbf3e1b6-28cd-4f09-8337-814048ff9efe",
+    "display_id": "HALO-026",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f25ce9ec-6871-4a2f-8fca-5e423136d5e9",
+    "display_id": "HALO-028",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_6",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c98fff60-84ee-43fa-83d6-1945a783a5f6",
+    "display_id": "HALO-029",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4e78d79a-5007-4019-a849-bc7a2b32a543",
+    "display_id": "HALO-030",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3298d87d-8b81-45ca-b541-0867278f84d4",
+    "display_id": "HALO-031",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b33ba77f-e16a-4597-9c6f-99548d28b168",
+    "display_id": "HALO-032",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4f8cc97f-03c4-46af-8666-8dae9a0107c3",
+    "display_id": "HALO-033",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ca5ba337-38b9-4df3-895e-e6b3148d9ae4",
+    "display_id": "HALO-034",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "090a8c8f-afec-4d86-8023-a0700d6143d6",
+    "display_id": "HALO-035",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0f146f2d-c5cf-41a6-b0c4-fd9b58570d33",
+    "display_id": "HALO-036",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6fd0a3bd-2e28-45af-b886-38aa64649392",
+    "display_id": "HALO-037",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_7",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6ea5bd33-4eae-4755-b11a-3080c4266d6c",
+    "display_id": "HALO-038",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_1",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "e1610906-f34b-4f9e-9eec-aedba9de5391",
+    "display_id": "HALO-039",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5bd97fd2-31ba-4d88-90eb-fddfcec4afbd",
+    "display_id": "HALO-040",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a6e2f372-a48a-4529-8b6b-da6ec6b374b2",
+    "display_id": "HALO-041",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "304daa9e-b9b7-4696-8b73-d38354f741d8",
+    "display_id": "HALO-042",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9afb0950-4df7-490f-942b-64d0f04f28af",
+    "display_id": "HALO-043",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "956c4e33-e60b-4f3f-8a05-870e86446ff3",
+    "display_id": "HALO-044",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6ca8765c-3429-4a7e-9bde-a6f7898ca126",
+    "display_id": "HALO-045",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4b7c1ebc-b90e-44fa-a9c7-78fc89287eac",
+    "display_id": "HALO-046",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_6",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "cae04bde-ecb9-4e82-9e56-2e8e8c83b75d",
+    "display_id": "HALO-047",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f7f5807d-d370-41a0-b50d-3e3a837e1979",
+    "display_id": "HALO-048",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_6",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "98e981c9-cd39-4cde-ae8b-9f2f474655eb",
+    "display_id": "HALO-049",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ba9389ae-3907-4cc4-a6c3-5da5044f24d1",
+    "display_id": "HALO-050",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4da12021-2e35-4232-8882-296758e8788f",
+    "display_id": "HALO-051",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "309d9eb6-4b86-45b1-810c-cc35cc105955",
+    "display_id": "HALO-052",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "825a9a37-0f6a-4b65-b7bc-db4f275d3834",
+    "display_id": "HALO-053",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b3e9d241-35a6-4d2c-9929-9f809e8b66e4",
+    "display_id": "HALO-054",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d0320566-4d8e-45b9-855b-c920335cb5c2",
+    "display_id": "HALO-055",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4ecdabab-da61-46a7-af8f-4f82be5c3dfd",
+    "display_id": "HALO-056",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0e878bdd-8e79-440c-a1e6-9bf5046559fb",
+    "display_id": "HALO-057",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "19c26569-674e-4b93-8ef5-8e7f115ad8ff",
+    "display_id": "HALO-058",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "1cd8d3e6-78f5-4a78-bd74-29ace3f18608",
+    "display_id": "HALO-059",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5fb57bcc-9e71-4c1b-8528-6752c8d67927",
+    "display_id": "HALO-060",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f80edcc8-f809-4878-9323-7a83d062d506",
+    "display_id": "HALO-061",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8d912663-a949-4da4-8701-cb72f9716512",
+    "display_id": "HALO-062",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4dff3c4a-f4b6-4ca5-b0f7-75d04e40ec8c",
+    "display_id": "HALO-063",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b1278d5c-24d6-4342-a7b8-8a95bb11ed8c",
+    "display_id": "HALO-064",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "49f89f0e-cdc6-4e0f-9709-2690001c016b",
+    "display_id": "HALO-065",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "84f18c86-55b6-42c6-975b-cda117fea44c",
+    "display_id": "HALO-066",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_4",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "067a3761-0a02-4aad-b081-dd3cb882769e",
+    "display_id": "HALO-067",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f33bd3be-3f3c-43f4-90e0-ae4dcfad6423",
+    "display_id": "HALO-068",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9700a23a-f93a-4139-9e09-3795ed76b01d",
+    "display_id": "HALO-069",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_8",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0d50e729-bff9-47ad-bbfe-7813e7196137",
+    "display_id": "HALO-070",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "cc52a726-72fd-474e-ae8e-3d88b42d02d9",
+    "display_id": "HALO-071",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3f4d18ce-93a6-43cb-ab50-b7e44deff515",
+    "display_id": "HALO-072",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b62b3e67-85eb-45da-bb3f-9b526e0ca91c",
+    "display_id": "HALO-073",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_4",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "e625c313-d0ce-445d-8020-2325e61a0797",
+    "display_id": "HALO-074",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_3",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "888b554d-a114-45f6-a825-dbf5d16d8623",
+    "display_id": "HALO-075",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b785eab6-0952-4817-b267-af73ca802f7e",
+    "display_id": "HALO-076",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "aaa2215c-0169-453d-96a5-f30a159660fd",
+    "display_id": "HALO-077",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a2d90a65-7684-45fd-a76e-569e5f991bbd",
+    "display_id": "HALO-078",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b0f6b553-e353-4a13-b55e-ee9d032b25da",
+    "display_id": "HALO-079",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_2",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "930fa6d8-13a2-422c-9439-08849cbb68bc",
+    "display_id": "HALO-080",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_1",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8a957080-7128-46b3-9bef-dd4353dbc763",
+    "display_id": "HALO-081",
+    "before": [
+      {
+        "tag_id": "tag_haloalkanes_4",
+        "weight": 1
+      },
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "79d27ce6-0cec-4bac-898b-446e5c97afea",
+    "display_id": "HALO-082",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "7c8aec38-0331-4d99-9892-4b344d140bf9",
+    "display_id": "HALO-083",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "e99151bc-cbaf-4e67-a6d5-b213c83377f5",
+    "display_id": "HALO-084",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "1fa2ad6f-7e32-4d92-a972-9b318e207e0b",
+    "display_id": "HALO-085",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "00b303b1-8ed8-46df-853e-2743dc1b2093",
+    "display_id": "HALO-086",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "bf3d6480-3029-4001-863b-d0affb4aab9a",
+    "display_id": "HALO-087",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0fc9ed4e-9010-451a-86cc-58468cf6429f",
+    "display_id": "HALO-088",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "91be8f8f-91e9-42f6-a97c-b6681ff6f032",
+    "display_id": "HALO-089",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a2ca4771-5a95-453a-a939-db65f02931c6",
+    "display_id": "HALO-090",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d260948e-fa82-49ef-affe-57556884c3db",
+    "display_id": "HALO-091",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_8",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d23b3067-3049-494b-be38-9e51cf560391",
+    "display_id": "HALO-092",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "429e4183-d706-4df1-ae1d-b0676c094d41",
+    "display_id": "HALO-093",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a57d8a49-8c4e-4284-a874-4604f22386c7",
+    "display_id": "HALO-094",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "55a7ffd2-349c-4698-9f25-90ed577853ef",
+    "display_id": "HALO-095",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d5730bc3-9fac-4a52-862f-601ec958ee68",
+    "display_id": "HALO-096",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a93ba36a-92c5-4085-9e51-cb04c17c8643",
+    "display_id": "HALO-097",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "12989e1a-e868-4866-b00c-afd2d72a5895",
+    "display_id": "HALO-098",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_4",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "2a6ac21d-f15c-4d03-9010-074a4d0a325f",
+    "display_id": "HALO-099",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4b48f96c-75f2-4a4b-9d3e-c5e49c231bd1",
+    "display_id": "HALO-100",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_1",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "550ed777-00dd-46b8-9ef6-3bcfc1f0c2b9",
+    "display_id": "HALO-101",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_4",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "7eeb8552-0929-4e7c-837a-7efa0533e2bc",
+    "display_id": "HALO-102",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_4",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "55c16abb-7de4-4647-ae0e-80842a9c0e1d",
+    "display_id": "HALO-103",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5be52639-a59d-4431-b863-b74588b40289",
+    "display_id": "HALO-104",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b097a17a-22e7-4463-ad6f-2fff920c8970",
+    "display_id": "HALO-105",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "53a64b41-c88d-4ea5-82ad-5857dbea72e7",
+    "display_id": "HALO-106",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "76f21488-d492-4a78-a5d0-a28b6625f0c2",
+    "display_id": "HALO-107",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "448e7ced-254d-4579-8483-b5e23c804e7e",
+    "display_id": "HALO-108",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d0fe809c-e4d1-43f1-90cc-d7d8b34940d1",
+    "display_id": "HALO-109",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "15a13f67-504c-42ba-a183-8eb67e63519a",
+    "display_id": "HALO-110",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "e5e505b8-b014-4601-ab02-a3892d1f9321",
+    "display_id": "HALO-111",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3bab9670-f650-491d-9777-717ad6d9ed4a",
+    "display_id": "HALO-112",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_4",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "433c9507-619f-40f0-a25c-736ec814352c",
+    "display_id": "HALO-113",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_3",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0eb71ab6-1098-4a10-89c4-134348a401cb",
+    "display_id": "HALO-114",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3615e73c-06a9-4f4d-a6a9-9a627699bc91",
+    "display_id": "HALO-115",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "97afff37-22e1-4426-ba28-ce8f866b4a18",
+    "display_id": "HALO-116",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "04610aa7-65d8-4111-9283-bb39df5899c6",
+    "display_id": "HALO-117",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "433d469e-357c-4d09-a237-3f99f795bf80",
+    "display_id": "HALO-118",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "56ce8c6c-d426-4899-9bb2-b448bb328558",
+    "display_id": "HALO-119",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_5",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "daccbc40-4e43-41ec-8266-300aa5e71db6",
+    "display_id": "HALO-120",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d21d7c04-4132-43b6-a070-b22d6e291816",
+    "display_id": "HALO-121",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_11",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "eef35ce2-10f3-4c7b-ac7a-9146d6f71027",
+    "display_id": "HALO-122",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5b63ceea-087a-473c-a30d-8f489f402a1c",
+    "display_id": "HALO-123",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_7",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "bbe7605a-eb75-4a1e-9fe0-34c525cb9346",
+    "display_id": "HALO-124",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "57d78c0f-0c0c-4989-bae1-ba59470e84ed",
+    "display_id": "HALO-125",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "75f85107-1815-4330-8dd0-4a35a200e07c",
+    "display_id": "HALO-126",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d3855a37-e378-40ed-85d5-cee0567082ea",
+    "display_id": "HALO-127",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3d154ec1-e8c1-4580-a362-af8fce1d8266",
+    "display_id": "HALO-128",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b45f7bfd-405c-4f84-84e4-deb090cc648a",
+    "display_id": "HALO-129",
+    "before": [
+      {
+        "tag_id": "tag_haloalkane_10",
+        "weight": 1
+      }
+    ]
+  }
+]

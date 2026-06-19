@@ -184,6 +184,7 @@ export async function getAllPublishedPYQSlugs(): Promise<Array<{ id: string; dis
       { deleted_at: null, status: 'published', 'metadata.sourceType': 'PYQ' },
       { _id: 1, display_id: 1, updated_at: 1 }
     )
+      .limit(50000) // bound the load so sitemap regen can't blow up Fluid CPU/Mem as the bank grows (vercel-cost #20a)
       .lean();
 
     return docs.map((d: MongoQuestionDoc) => ({

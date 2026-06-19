@@ -1,4 +1,5 @@
 'use strict';
+require('./lib/legacy-book-guard'); // CLAUDE.md §0.6 — refuse silent hard-delete of book_pages
 /**
  * गंगा — अपठित बोध (Unseen Comprehension) module — CBSE Class 9 Hindi A Reading section (Section अ, 14 marks).
  * A strategy page + original unseen गद्यांश (prose) and काव्यांश (poetry) passages, each with

@@ -1,3 +1,5 @@
+'use strict';
+require('./lib/legacy-book-guard'); // CLAUDE.md §0.6 — refuse silent hard-delete of book_pages
 /**
  * merge_homogeneous_heterogeneous.js
  *

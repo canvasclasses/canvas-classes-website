@@ -1,6 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { createClient } from '@/app/utils/supabase/server';
 import {
   PRIVACY_VERSION,
@@ -37,6 +36,7 @@ export async function acceptConsent(): Promise<Result> {
     return { ok: false, error: 'Failed to record consent' };
   }
 
-  revalidatePath('/', 'layout');
+  // No revalidatePath('/', 'layout') here — consent is read client-side, nothing
+  // in the cached server render depends on it; busting the whole site is waste. (vercel-cost #17)
   return { ok: true };
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "038324d4-089c-4e58-a918-ef299289e6f0",
+    "display_id": "CEQ-067",
+    "before": [
+      {
+        "tag_id": "tag_equil_3",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6099a277-4c78-4918-9d9c-6fe10ad272d6",
+    "display_id": "CEQ-066",
+    "before": [
+      {
+        "tag_id": "tag_equil_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "10e24f9a-2a28-4b8d-bba7-65cc0826f42e",
+    "display_id": "CEQ-063",
+    "before": [
+      {
+        "tag_id": "tag_ceq_3",
+        "weight": 1
+      }
+    ]
+  }
+]

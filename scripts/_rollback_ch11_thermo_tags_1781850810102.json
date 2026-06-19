@@ -1,0 +1,72 @@
+[
+  {
+    "_id": "f67480e9-5bb1-4db4-b9bc-f94c5db84e21",
+    "display_id": "THERMO-014",
+    "before": [
+      {
+        "tag_id": "tag_thermo_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "e931e00b-cdd7-4549-ba60-cf2aedf774d0",
+    "display_id": "THERMO-034",
+    "before": [
+      {
+        "tag_id": "tag_thermo_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4c2ad2d6-eb19-428c-9a0f-44fe5bbb2eb8",
+    "display_id": "THERMO-036",
+    "before": [
+      {
+        "tag_id": "tag_thermo_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0887618f-bc5d-4926-9132-fbc61cfe41e6",
+    "display_id": "THERMO-052",
+    "before": [
+      {
+        "tag_id": "tag_thermo_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a9321290-0017-4654-b437-90ce14fcfede",
+    "display_id": "THERMO-053",
+    "before": [
+      {
+        "tag_id": "tag_thermo_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "19b87c26-26be-4c30-81ad-ca2a183531d6",
+    "display_id": "THERMO-050",
+    "before": [
+      {
+        "tag_id": "tag_thermo_9",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "1cf2e230-8042-4c1d-97eb-5648acaca7d3",
+    "display_id": "THERMO-138",
+    "before": [
+      {
+        "tag_id": "tag_thermo_9",
+        "weight": 1
+      }
+    ]
+  }
+]

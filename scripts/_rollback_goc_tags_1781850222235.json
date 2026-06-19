@@ -1,0 +1,1452 @@
+[
+  {
+    "_id": "e2567c6b-806e-49d4-9a60-ab1d4776b7d1",
+    "display_id": "GOC-305",
+    "before": [
+      {
+        "tag_id": "acid_base_reactions",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0c01ea36-ca27-4f71-97a7-5faa2b5f6897",
+    "display_id": "GOC-306",
+    "before": [
+      {
+        "tag_id": "carbocation_rearrangement",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5ee0987a-c89f-453d-914b-26b395b7d53b",
+    "display_id": "GOC-307",
+    "before": [
+      {
+        "tag_id": "acidic_strength_order",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0a4bb137-c03f-41e8-a9f7-77be9091cbe9",
+    "display_id": "GOC-308",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c6d90ae8-66f2-4a5b-8e1b-739fa3a5ecf9",
+    "display_id": "GOC-309",
+    "before": [
+      {
+        "tag_id": "basic_strength_anilines",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "880edb3b-0415-4c31-9a7b-868147ac1b75",
+    "display_id": "GOC-310",
+    "before": [
+      {
+        "tag_id": "enol_content",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5d119629-41ae-43f5-b53e-7f5f41c9ca75",
+    "display_id": "GOC-311",
+    "before": [
+      {
+        "tag_id": "basic_strength_comparison",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f1fb28e2-078b-4081-b920-4da7be692538",
+    "display_id": "GOC-312",
+    "before": [
+      {
+        "tag_id": "radical_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "298c78d3-c71e-4e58-a2c6-2d6ab7164475",
+    "display_id": "GOC-313",
+    "before": [
+      {
+        "tag_id": "carbanion_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "acbb224a-6337-4227-99eb-3842170e7ec5",
+    "display_id": "GOC-314",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "887261b3-0df2-4d7d-8add-ee013bf3f6ba",
+    "display_id": "GOC-315",
+    "before": [
+      {
+        "tag_id": "aromaticity_radicals",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "28911d47-51c3-459f-9455-87bb3991dd56",
+    "display_id": "GOC-316",
+    "before": [
+      {
+        "tag_id": "boiling_point_alkanes",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4e44ddef-3ef0-46ae-b8ba-ac8cf4e947dd",
+    "display_id": "GOC-317",
+    "before": [
+      {
+        "tag_id": "dipole_moment",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "de3f6a8b-aee8-40f5-a784-193936330c98",
+    "display_id": "GOC-318",
+    "before": [
+      {
+        "tag_id": "resonating_structures",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f21fa108-8cd4-4f56-95dc-efdb03ec38cb",
+    "display_id": "GOC-319",
+    "before": [
+      {
+        "tag_id": "aromaticity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8285fe4a-086c-4b73-8408-cdc28bc63737",
+    "display_id": "GOC-320",
+    "before": [
+      {
+        "tag_id": "inductive_effect",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "55f57745-5bec-45ac-ac87-c28342c2c987",
+    "display_id": "GOC-321",
+    "before": [
+      {
+        "tag_id": "resonance_energy",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9e205749-6533-490a-a59b-35a8d4efdf2f",
+    "display_id": "GOC-322",
+    "before": [
+      {
+        "tag_id": "resonating_structures",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f417a30a-6206-4b98-afb1-04a9b40d37b2",
+    "display_id": "GOC-323",
+    "before": [
+      {
+        "tag_id": "aromaticity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "22d76b76-a51f-4c5a-9796-b345a62fbf38",
+    "display_id": "GOC-324",
+    "before": [
+      {
+        "tag_id": "aromaticity_order",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d763864e-2d17-4683-a76f-6c6b63428e7e",
+    "display_id": "GOC-325",
+    "before": [
+      {
+        "tag_id": "aromaticity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9b4c6882-408f-4260-a2bc-86bbfa08725c",
+    "display_id": "GOC-326",
+    "before": [
+      {
+        "tag_id": "resonance",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a714ef81-2868-4ac7-b7b0-058eee96c043",
+    "display_id": "GOC-327",
+    "before": [
+      {
+        "tag_id": "resonance_contribution",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "82e13c46-e1d4-4b88-bf69-ae8024bfa824",
+    "display_id": "GOC-328",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "2f1cc93a-6892-46b8-ad78-ef7af3ec179b",
+    "display_id": "GOC-329",
+    "before": [
+      {
+        "tag_id": "aromaticity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f62a5ace-e0f2-4f67-b897-bf5803637c5b",
+    "display_id": "GOC-330",
+    "before": [
+      {
+        "tag_id": "bond_dissociation_energy",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "dd3d3267-d2a4-4e41-aab9-e25bfe23f5df",
+    "display_id": "GOC-331",
+    "before": [
+      {
+        "tag_id": "dipole_moment",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8df5d22a-754f-4c4b-9eb1-02241d427c90",
+    "display_id": "GOC-332",
+    "before": [
+      {
+        "tag_id": "stability_order",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f57a936e-4d84-4ec3-bfbc-18635a85d591",
+    "display_id": "GOC-333",
+    "before": [
+      {
+        "tag_id": "aromaticity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6c952f61-4370-42f7-a028-7fdb2552f0be",
+    "display_id": "GOC-334",
+    "before": [
+      {
+        "tag_id": "stability_alkenes",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c7fb15a8-65e9-4bbb-b8d0-e9170664cd4e",
+    "display_id": "GOC-335",
+    "before": [
+      {
+        "tag_id": "resonating_structures",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "152ec9f2-2879-4171-901a-7e9269b95f9a",
+    "display_id": "GOC-336",
+    "before": [
+      {
+        "tag_id": "aromaticity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "09a04204-146c-4e4e-857f-0f7e1427bd90",
+    "display_id": "GOC-337",
+    "before": [
+      {
+        "tag_id": "tautomerism",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ad05d8d4-4c8f-42f6-a806-e7734698658f",
+    "display_id": "GOC-338",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5846bba0-3627-4735-bc19-3bd3fc9cd29d",
+    "display_id": "GOC-339",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4f6a3ba6-f9df-4c62-95dc-ba9d6afbe7f9",
+    "display_id": "GOC-340",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "22b959ee-02d4-4b2a-a494-194c96ce6275",
+    "display_id": "GOC-341",
+    "before": [
+      {
+        "tag_id": "carbocation_formation_rate",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9f59a8f5-a592-4f0c-8e4f-215f2aee916c",
+    "display_id": "GOC-342",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "75c71ada-35ec-4c1f-b2ba-4d841a5ed914",
+    "display_id": "GOC-343",
+    "before": [
+      {
+        "tag_id": "carbocation_rearrangement",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "33509997-2c73-4df4-bab0-08ac2cbe174d",
+    "display_id": "GOC-344",
+    "before": [
+      {
+        "tag_id": "hybridization_intermediates",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "691167ad-91c6-4451-a30e-67614b7936cd",
+    "display_id": "GOC-345",
+    "before": [
+      {
+        "tag_id": "carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "eeb57c8e-0a77-40bf-b4da-8b69d74e0da6",
+    "display_id": "GOC-346",
+    "before": [
+      {
+        "tag_id": "acidic_strength_phenols",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "19214a78-8748-4e60-93c2-e53ac626b641",
+    "display_id": "GOC-347",
+    "before": [
+      {
+        "tag_id": "basic_strength",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "7e78ed5a-3ddf-4554-ab13-ccb39f1a16bd",
+    "display_id": "GOC-348",
+    "before": [
+      {
+        "tag_id": "acidic_strength_carboxylic",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3fb4e67f-294e-4f11-bef3-f02c398c3f50",
+    "display_id": "GOC-349",
+    "before": [
+      {
+        "tag_id": "acidic_strength_carboxylic",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ab5bef96-7e24-4bee-b9f0-a9fdf8e5caa1",
+    "display_id": "GOC-350",
+    "before": [
+      {
+        "tag_id": "acidic_strength_hydrocarbons",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "42e6aff5-c956-45f9-880b-f44cc4397a09",
+    "display_id": "GOC-351",
+    "before": [
+      {
+        "tag_id": "acidic_strength_carboxylic",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b6169699-214a-4f6e-814c-eb03d9d9c40a",
+    "display_id": "GOC-352",
+    "before": [
+      {
+        "tag_id": "tautomerism",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "571f1570-5049-448c-94a7-f3db7ead3fc5",
+    "display_id": "GOC-353",
+    "before": [
+      {
+        "tag_id": "basic_strength",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "19254313-a1fd-48f8-9da3-37bbcc705b3c",
+    "display_id": "GOC-354",
+    "before": [
+      {
+        "tag_id": "basic_strength_amines",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b789fd13-aef9-4b06-b1e8-b90fdc37f4d7",
+    "display_id": "GOC-355",
+    "before": [
+      {
+        "tag_id": "acidic_strength_comparison",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "57550e76-d656-405c-95ed-768203d0f95a",
+    "display_id": "GOC-356",
+    "before": [
+      {
+        "tag_id": "acidic_strength_dicarboxylic",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "11ccbb36-a64d-4cff-99bf-5003130ca81e",
+    "display_id": "GOC-357",
+    "before": [
+      {
+        "tag_id": "acidic_strength_hydrocarbons",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3d679f59-2663-4ae4-a077-b2459f888aa4",
+    "display_id": "GOC-358",
+    "before": [
+      {
+        "tag_id": "acid_base_reaction_rate",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9ff09abd-56d5-41b8-8920-d67cc726ff51",
+    "display_id": "GOC-359",
+    "before": [
+      {
+        "tag_id": "acidic_strength_phenols",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "575b83b1-b1b8-407d-a1ce-24bbf85d7a16",
+    "display_id": "GOC-360",
+    "before": [
+      {
+        "tag_id": "acidic_strength_substituted_acetic",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b60b8066-c1c8-4e09-8f68-403d82f4131e",
+    "display_id": "GOC-361",
+    "before": [
+      {
+        "tag_id": "acidic_strength_hydrocarbons",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "51077697-5b75-4a07-a268-5d27003476f5",
+    "display_id": "GOC-362",
+    "before": [
+      {
+        "tag_id": "electronegativity_hybridization",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "406e5e11-f67c-4d18-b79f-c01fef2ddda0",
+    "display_id": "GOC-363",
+    "before": [
+      {
+        "tag_id": "basic_strength_amines",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6a6a38ec-8098-4035-9689-b1d25fa1861f",
+    "display_id": "GOC-364",
+    "before": [
+      {
+        "tag_id": "solubility_acid_base",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "68f49088-1601-4e2a-ad4f-7c216275fb2f",
+    "display_id": "GOC-365",
+    "before": [
+      {
+        "tag_id": "acidic_strength_hydrides",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ae1a7022-3255-40b1-9bf0-4016088e9686",
+    "display_id": "GOC-366",
+    "before": [
+      {
+        "tag_id": "pKa_comparison",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c5051f3d-4b7b-4bd4-89ae-4436338d8532",
+    "display_id": "GOC-592",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "aeb11b29-c853-42a1-9474-99c3501b7146",
+    "display_id": "GOC-593",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "525a8a1e-63ab-45b6-a57c-5e7c4e1a4e36",
+    "display_id": "GOC-594",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c6edf9e3-8041-4d99-8fa3-9fe6fece44ab",
+    "display_id": "GOC-595",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "74eee0f9-9515-42f8-8f36-b1e0bbf8afff",
+    "display_id": "GOC-607",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "326c1527-2cb4-4648-8760-92775b5f51f3",
+    "display_id": "GOC-608",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c07cfe5f-88df-46c1-bf69-4fcd7bdc623a",
+    "display_id": "GOC-609",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "92c7909a-7179-4345-9c40-d7481575fe69",
+    "display_id": "GOC-610",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8a380f2d-35da-490e-af15-5e46f00df32e",
+    "display_id": "GOC-630",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "17be023b-82a7-4e7c-aa02-333644e90b5e",
+    "display_id": "GOC-631",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "481c6f34-9b38-43bf-9dac-d9b320755da9",
+    "display_id": "GOC-632",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "66ddf80e-2ba6-419e-84d4-dad275b1fc31",
+    "display_id": "GOC-633",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3311ca5a-e44f-4b27-959d-fe4f1be8607a",
+    "display_id": "GOC-645",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f92fed80-178a-419e-a528-5c2085798b0e",
+    "display_id": "GOC-646",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "891e281d-2d33-4783-bf47-4112fef4965c",
+    "display_id": "GOC-647",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5d2db4dc-9a9c-4677-b857-27f305bd5dd0",
+    "display_id": "GOC-648",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "1875c3da-0a03-444a-b836-1651a9c9a572",
+    "display_id": "GOC-660",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f8d8b796-e264-48d1-9cd6-ed1628d1b7d6",
+    "display_id": "GOC-661",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6a5edd87-8821-46a8-a57f-67536d07b618",
+    "display_id": "GOC-662",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "7c57cafc-9efe-4c3e-aa0f-95ab819aecd8",
+    "display_id": "GOC-663",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9afd1cf5-ae1d-4422-9661-e6ce3c07aaa9",
+    "display_id": "GOC-675",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "6034dbf7-dfaf-4b5f-9cf2-24a0816d38af",
+    "display_id": "GOC-676",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "38334055-e2fd-4934-bab5-f6299d406123",
+    "display_id": "GOC-677",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "86e2a1f4-defe-4acf-bfb7-f4b779a61ea3",
+    "display_id": "GOC-678",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5fc74d75-5fea-4628-85c1-e45613f4725f",
+    "display_id": "GOC-700",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "79714ec2-4d17-47e0-a7a6-cc7cb1d9c619",
+    "display_id": "GOC-701",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4c8f8cde-9337-4a74-afe3-c270610caf0c",
+    "display_id": "GOC-702",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "10474062-ef98-42e0-81de-81c1cf894dff",
+    "display_id": "GOC-703",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f6a79300-e111-4a33-8fd5-d400d7845d1d",
+    "display_id": "GOC-715",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8015005a-eee1-4543-917d-64ad29f19bed",
+    "display_id": "GOC-716",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5f2e0901-fdec-42c7-8bd3-5f5490bbf347",
+    "display_id": "GOC-717",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8c91a705-1b31-4dcd-810b-7ab2010a11db",
+    "display_id": "GOC-718",
+    "before": [
+      {
+        "tag_id": "tag_goc_15",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5072bc23-da83-4673-9270-604b9ce3ce6e",
+    "display_id": "GOC-730",
+    "before": [
+      {
+        "tag_id": "tag_goc_12",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "77e4f025-638d-4140-94e2-5fa9dff9b7d4",
+    "display_id": "GOC-731",
+    "before": [
+      {
+        "tag_id": "tag_goc_13",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "cce1b08f-3951-43d3-8b61-682d6de8a274",
+    "display_id": "GOC-732",
+    "before": [
+      {
+        "tag_id": "tag_goc_14",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "fc3719c9-9118-4be1-b41f-dfb99e8cad1f",
+    "display_id": "GOC-741",
+    "before": [
+      {
+        "tag_id": "tag_goc_nucleophiles",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "571c90af-0be2-4f2c-b7c8-8e99780143dd",
+    "display_id": "GOC-742",
+    "before": [
+      {
+        "tag_id": "tag_goc_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "00480024-5677-40f4-a431-8e578e186978",
+    "display_id": "GOC-743",
+    "before": [
+      {
+        "tag_id": "tag_goc_intermediates",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0415e4b5-d171-4b65-9176-b4a5dcfbcb36",
+    "display_id": "GOC-744",
+    "before": [
+      {
+        "tag_id": "tag_goc_sn1",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d79324fb-8c17-4c98-96c6-cbcd14afe5c6",
+    "display_id": "GOC-745",
+    "before": [
+      {
+        "tag_id": "tag_goc_carbanion_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8a7c0f9f-6ee4-4088-b37b-5351ed1c93a2",
+    "display_id": "GOC-746",
+    "before": [
+      {
+        "tag_id": "tag_goc_carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "777d12ce-f081-4707-9201-08f566f924d0",
+    "display_id": "GOC-747",
+    "before": [
+      {
+        "tag_id": "tag_goc_nucleophiles",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "9609ce8d-7ffe-477d-821f-cfe86c295b20",
+    "display_id": "GOC-748",
+    "before": [
+      {
+        "tag_id": "tag_goc_carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5bcb5e75-033d-4cf4-90f4-8f31ad6ff808",
+    "display_id": "GOC-749",
+    "before": [
+      {
+        "tag_id": "tag_goc_basicity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "55b23a06-dbeb-4d98-8e87-35302e8748ab",
+    "display_id": "GOC-750",
+    "before": [
+      {
+        "tag_id": "tag_goc_carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "418409fe-9cee-4d0b-9b79-fc1915773357",
+    "display_id": "GOC-751",
+    "before": [
+      {
+        "tag_id": "tag_goc_esr",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "16e37987-78b3-4a3b-8d76-aa227fc22381",
+    "display_id": "GOC-752",
+    "before": [
+      {
+        "tag_id": "tag_goc_leaving_groups",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5d3cef69-0dea-48bc-9160-da4f98567567",
+    "display_id": "GOC-753",
+    "before": [
+      {
+        "tag_id": "tag_goc_resonance",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "52340d4c-1c1f-4d76-8552-cc8a6b0b7626",
+    "display_id": "GOC-754",
+    "before": [
+      {
+        "tag_id": "tag_goc_basicity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "aa7d79d9-7689-4cc7-ae2a-1dd913cf9888",
+    "display_id": "GOC-755",
+    "before": [
+      {
+        "tag_id": "tag_goc_esr",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3ee16e86-9b62-4b24-bf59-da78cbcfa27d",
+    "display_id": "GOC-756",
+    "before": [
+      {
+        "tag_id": "tag_goc_concepts",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "de1d5400-cc88-4ebe-8b9d-1932a8a7724b",
+    "display_id": "GOC-757",
+    "before": [
+      {
+        "tag_id": "tag_goc_dehydration",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "55e9cb1c-259c-4ef2-8591-f1f5bf7e4a06",
+    "display_id": "GOC-758",
+    "before": [
+      {
+        "tag_id": "tag_goc_reactions",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d63cf0eb-8ab6-4f39-8488-4af70cbd7af2",
+    "display_id": "GOC-759",
+    "before": [
+      {
+        "tag_id": "tag_goc_mechanisms",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a141d3df-de14-46e6-946e-cbd6b589fb61",
+    "display_id": "GOC-760",
+    "before": [
+      {
+        "tag_id": "tag_goc_acidity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3432ac12-29a8-4974-92f7-ac2ae96ea736",
+    "display_id": "GOC-761",
+    "before": [
+      {
+        "tag_id": "tag_goc_inductive_effect",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "e2bd4f95-4ceb-468d-a497-9a60cec4878d",
+    "display_id": "GOC-762",
+    "before": [
+      {
+        "tag_id": "tag_goc_dehydration",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "03c05b9c-cc56-4c60-87ed-344c2c20cb78",
+    "display_id": "GOC-763",
+    "before": [
+      {
+        "tag_id": "tag_goc_sn1",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "45afdf51-aaaa-4ccd-a8f1-7cdf7b5b8528",
+    "display_id": "GOC-764",
+    "before": [
+      {
+        "tag_id": "tag_goc_rearrangement",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d66680a0-8c24-478e-a796-1221ca92d580",
+    "display_id": "GOC-765",
+    "before": [
+      {
+        "tag_id": "tag_goc_acidity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "694b088b-2e14-4bc7-b11e-e477cf6e59c7",
+    "display_id": "GOC-766",
+    "before": [
+      {
+        "tag_id": "tag_goc_basicity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "2e3b110d-3cb8-4c32-a5ef-f8f13858dc9a",
+    "display_id": "GOC-767",
+    "before": [
+      {
+        "tag_id": "tag_goc_ear",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "85c82b28-f904-4b3e-a002-9c56c43739ee",
+    "display_id": "GOC-768",
+    "before": [
+      {
+        "tag_id": "tag_goc_acidity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "97221319-5cce-4110-84a6-833686f1c0d5",
+    "display_id": "GOC-769",
+    "before": [
+      {
+        "tag_id": "tag_goc_esr",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c69926f7-e216-4a0a-9a32-a6467e945d24",
+    "display_id": "GOC-770",
+    "before": [
+      {
+        "tag_id": "tag_goc_carbocation_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "8d25febd-028a-4913-b5dc-e642a6e95e14",
+    "display_id": "GOC-771",
+    "before": [
+      {
+        "tag_id": "tag_goc_basics",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "1cd2a056-82dd-46b0-99d7-1986b8f92625",
+    "display_id": "GOC-772",
+    "before": [
+      {
+        "tag_id": "tag_goc_reactions",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "37fc4473-ae76-48ee-a427-773c42f67bd3",
+    "display_id": "GOC-773",
+    "before": [
+      {
+        "tag_id": "tag_goc_acidity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "bd7ed2f8-22e7-4bb4-8387-5b8eb3bb86e2",
+    "display_id": "GOC-774",
+    "before": [
+      {
+        "tag_id": "tag_goc_rearrangement",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "91386b84-6ec7-45c3-8213-f0db1aab3752",
+    "display_id": "GOC-775",
+    "before": [
+      {
+        "tag_id": "tag_goc_nucleophiles",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "60ca4ec9-97a1-44bc-b80c-e97df9c16703",
+    "display_id": "GOC-776",
+    "before": [
+      {
+        "tag_id": "tag_goc_reactions",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c1482a3f-4193-4f7e-9c76-3aa00668d271",
+    "display_id": "GOC-777",
+    "before": [
+      {
+        "tag_id": "tag_goc_reactions",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "f50ac3dc-8537-4c0c-bbae-8d5e21cff3dd",
+    "display_id": "GOC-778",
+    "before": [
+      {
+        "tag_id": "tag_goc_nucleophilic_addition",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d7acba57-a04e-488d-b231-33932b496535",
+    "display_id": "GOC-779",
+    "before": [
+      {
+        "tag_id": "tag_goc_sn2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5aef5b60-c955-480c-b6b6-6c08155255c5",
+    "display_id": "GOC-780",
+    "before": [
+      {
+        "tag_id": "tag_goc_acidity",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "d2d1dd54-c5f0-4e10-862b-a22a01bf2be0",
+    "display_id": "GOC-781",
+    "before": [
+      {
+        "tag_id": "tag_goc_reactions",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "e6e0a700-1a5a-494b-92ae-aee0744a23a7",
+    "display_id": "GOC-782",
+    "before": [
+      {
+        "tag_id": "tag_goc_elimination",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "a2f2c7d4-6ae6-4f45-ba21-c65c3cb4ad18",
+    "display_id": "GOC-783",
+    "before": [
+      {
+        "tag_id": "tag_goc_mechanisms",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5ade73e1-3e5c-4a9d-a2cb-89f1f0d2c15d",
+    "display_id": "GOC-784",
+    "before": [
+      {
+        "tag_id": "tag_goc_radicals",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c6501b3b-92a2-421f-834f-96c9d1345ec0",
+    "display_id": "GOC-785",
+    "before": [
+      {
+        "tag_id": "tag_goc_sn2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "1a158da9-2c68-4de2-a5cd-590b431aff69",
+    "display_id": "GOC-786",
+    "before": [
+      {
+        "tag_id": "tag_goc_stability",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "26f1cea2-241b-4afa-b21d-997c84d2975e",
+    "display_id": "GOC-787",
+    "before": [
+      {
+        "tag_id": "tag_goc_resonance",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4298a51e-b2b0-4ec2-91b0-2aaa63dea162",
+    "display_id": "GOC-788",
+    "before": [
+      {
+        "tag_id": "tag_goc_sn2",
+        "weight": 1
+      }
+    ]
+  }
+]

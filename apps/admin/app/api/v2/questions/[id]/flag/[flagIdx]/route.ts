@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidateTag } from 'next/cache';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { requireAdmin } from '@/lib/auth';
@@ -39,9 +38,10 @@ export async function PATCH(
       { $set: { [updatePath]: true, [updatePathDate]: new Date() } }
     );
 
-    // Bust the questions cache so the resolved-flag state propagates to admin list view
-    revalidateTag('questions');
-
+    // No revalidateTag('questions') here: a flag's resolved state is NOT rendered on
+    // any public page, and busting the whole bank cache on every flag-resolve (especially
+    // during triage batches) caused mass ISR regeneration. The DB is correct immediately;
+    // the cached admin list reflects it within the 1h ISR window. (vercel-cost #18)
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error('[PATCH /api/v2/questions/[id]/flag/[flagIdx]/resolve]', err);

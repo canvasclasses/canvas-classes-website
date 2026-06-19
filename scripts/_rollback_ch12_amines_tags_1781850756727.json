@@ -1,0 +1,282 @@
+[
+  {
+    "_id": "704f34fd-215e-4e7f-8a58-d46f9e4c6dde",
+    "display_id": "AMIN-172",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ffd1fe46-2497-41d9-9299-2ce99c750362",
+    "display_id": "AMIN-173",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "74457559-a16b-47b5-baa0-272de127c029",
+    "display_id": "AMIN-174",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b8f9d23d-3c69-4f2d-abd8-8bf1fda4b93c",
+    "display_id": "AMIN-178",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4ee19b70-92d9-4fbd-9950-3c263e08a705",
+    "display_id": "AMIN-187",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "2351a428-ae41-4455-a044-99b52623e332",
+    "display_id": "AMIN-014",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "ac2c6f75-c1c2-48f1-ae59-1175942f590e",
+    "display_id": "AMIN-004",
+    "before": [
+      {
+        "tag_id": "tag_amines_6",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "505976fb-ac0b-42b9-8ad8-126fb45a068b",
+    "display_id": "AMIN-007",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "2cc4ebd8-924b-4195-a10e-3cbf9a70c98a",
+    "display_id": "AMIN-018",
+    "before": [
+      {
+        "tag_id": "tag_amin_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "5a65fd8f-5348-4fca-9bc1-13bfac8b96a8",
+    "display_id": "AMIN-197",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "3f73342d-1450-4fc4-97cd-a6c063443940",
+    "display_id": "AMIN-224 [NEET 2025]",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "37a2b471-a1ab-473a-b781-3902e18f337a",
+    "display_id": "AMIN-252",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4cb6cee6-9fee-43bb-8ad1-705735799c76",
+    "display_id": "AMIN-260",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "36d3bd6f-c245-4dc9-aea8-4e3f00b66202",
+    "display_id": "AMIN-230",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "98852e95-8865-4cf3-bd3e-ccc08f4fb6ad",
+    "display_id": "AMIN-233",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b19d18db-610e-45e5-b4b5-001644df718f",
+    "display_id": "AMIN-234",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "c8701af8-13c1-4568-8495-9a3054fc32fb",
+    "display_id": "AMIN-237",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "cf3a7ba1-d523-47f9-9f8b-067bbc3cdde0",
+    "display_id": "AMIN-238",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "b4ba0c89-bc30-4c39-9fe6-b1e3ec1811db",
+    "display_id": "AMIN-239",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "84dae5b6-ee48-4efa-a4ae-b951f9a9cea8",
+    "display_id": "AMIN-240",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "bbd4a949-514a-4689-9eb8-9b14d423f04f",
+    "display_id": "AMIN-242",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "4e3bf0a1-35e4-4ff0-a73b-dae92a7c12ba",
+    "display_id": "AMIN-243",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "204b159a-4166-47cb-b94d-347c2bb42b21",
+    "display_id": "AMIN-244",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "486b4293-d7eb-48d0-9e9e-dc01c519b6c5",
+    "display_id": "AMIN-245",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "2c444725-6cf7-42db-93f1-aba436b40307",
+    "display_id": "AMIN-246",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "fb211122-6b00-4ae0-8b26-716919ccfcaa",
+    "display_id": "AMIN-247",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "533c8df8-bb0c-488e-bbc0-92b6624caf5d",
+    "display_id": "AMIN-249",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "_id": "0822562d-9975-4e22-a8a5-a19413f2c637",
+    "display_id": "AMIN-250",
+    "before": [
+      {
+        "tag_id": "tag_amines_2",
+        "weight": 1
+      }
+    ]
+  }
+]
