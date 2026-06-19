@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
   transpilePackages: ['@canvas/book-renderer', '@canvas/core', '@canvas/data', '@canvas/persona', '@canvas/services', '@canvas/ui'],
   experimental: {
+    // Reduce webpack's peak memory during `next build`. The admin app bundles two
+    // heavy editors (Ketcher + Excalidraw), and the Vercel build was OOM-killed
+    // (build container ran out of RAM). This trades a little build speed for a
+    // much lower memory ceiling. See Next 15 docs: webpackMemoryOptimizations.
+    webpackMemoryOptimizations: true,
     // Default is 10 MB. The admin uploads videos (up to 200 MB per the asset-upload
     // route) through middleware-gated routes. Without this, Next.js silently
     // truncates the request body at 10 MB and the route's `request.formData()`
