@@ -1,0 +1,13 @@
+# Dependencies are reinstalled per machine; never copied. The committed dist/ is
+# what makes the folder runnable without an install step.
+node_modules/
+*.log
+.DS_Store
+.vite/
+
+# Built output is NOT committed: it's a 25MB+ minified bundle that bloats the repo
+# and trips the credential scanner (a false positive — Excalidraw's vendored code
+# contains a string matching the AWS-key pattern). Rebuild with
+# `npm install && npm run build`. To run on another machine WITHOUT building, copy
+# the whole folder (including dist/) directly — over AirDrop/USB/Drive, not git.
+dist/
