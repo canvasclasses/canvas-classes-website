@@ -30,7 +30,6 @@ import ClassifyExerciseEditor from './blocks/ClassifyExerciseEditor';
 import CuriosityPromptBlockEditor from './blocks/CuriosityPromptBlockEditor';
 import SimulationBlockEditor from './blocks/SimulationBlockEditor';
 import JuniorPracticeEditor from './blocks/JuniorPracticeEditor';
-import InteractiveGraphEditor from './blocks/InteractiveGraphEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -52,7 +51,6 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   inline_quiz: 'Quiz (Milestone)',
   worked_example: 'Worked Example',
   simulation: 'Simulation',
-  interactive_graph: 'Interactive Graph',
   section: 'Section',
   reasoning_prompt: 'Reasoning Prompt',
   curiosity_prompt: 'Curiosity Prompt',
@@ -96,7 +94,6 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   inline_quiz: '🧠',
   worked_example: '📘',
   simulation: '⚙️',
-  interactive_graph: '📈',
   section: '▦',
   reasoning_prompt: '🧩',
   curiosity_prompt: '✦',
@@ -142,7 +139,6 @@ function blockPreview(block: ContentBlock): string {
       case 'inline_quiz':    return `${(block.questions || []).length} question${block.questions?.length !== 1 ? 's' : ''} · ${Math.round((block.pass_threshold ?? 0.7) * 100)}% to pass`;
       case 'worked_example': return block.label || '(example)';
       case 'simulation':     return block.title || block.simulation_id || '(simulation)';
-      case 'interactive_graph': return block.title || block.graph_id || '(graph)';
       case 'section':           return `${block.layout} · ${block.columns.reduce((sum, col) => sum + col.length, 0)} blocks`;
       case 'reasoning_prompt':   return `${block.reasoning_type} · Level ${block.difficulty_level} · ${(block.prompt || '').slice(0, 60)}`;
       case 'curiosity_prompt':   return (block.prompt || '').slice(0, 80) || '(empty)';
@@ -194,7 +190,6 @@ export default function BlockCard({
       case 'classify_exercise': return <ClassifyExerciseEditor block={block} onChange={onChange} />;
       case 'curiosity_prompt':  return <CuriosityPromptBlockEditor block={block} onChange={onChange} />;
       case 'simulation':        return <SimulationBlockEditor block={block} onChange={onChange} />;
-      case 'interactive_graph': return <InteractiveGraphEditor block={block} onChange={onChange} />;
       case 'junior_practice':   return <JuniorPracticeEditor block={block} onChange={onChange} />;
       default:                  return null;
     }

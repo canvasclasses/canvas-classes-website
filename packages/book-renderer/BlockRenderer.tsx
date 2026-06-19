@@ -32,7 +32,6 @@ const AnimationBlockRenderer         = dynamicBlock(() => import('./blocks/Anima
 const InlineQuizRenderer             = dynamicBlock(() => import('./blocks/InlineQuizRenderer'));
 const WorkedExampleRenderer          = dynamicBlock(() => import('./blocks/WorkedExampleRenderer'));
 const SimulationBlockRenderer        = dynamicBlock(() => import('./blocks/SimulationBlockRenderer'));
-const InteractiveGraphRenderer       = dynamicBlock(() => import('./blocks/InteractiveGraphRenderer'));
 const ReasoningPromptRenderer        = dynamicBlock(() => import('./blocks/ReasoningPromptRenderer'));
 const CuriosityPromptRenderer        = dynamicBlock(() => import('./blocks/CuriosityPromptRenderer'));
 const ClassifyExerciseRenderer      = dynamicBlock(() => import('./blocks/ClassifyExerciseRenderer'));
@@ -84,7 +83,6 @@ export default function BlockRenderer({
     case 'inline_quiz':       return <InlineQuizRenderer block={block} onPass={score => onQuizPass?.(block.id, score)} />;
     case 'worked_example':    return <WorkedExampleRenderer block={block} />;
     case 'simulation':        return <SimulationBlockRenderer block={block} />;
-    case 'interactive_graph': return <InteractiveGraphRenderer block={block} />;
     case 'section':           return <SectionBlockRenderer block={block} onQuizPass={onQuizPass} />;
     case 'reasoning_prompt':   return <ReasoningPromptRenderer block={block} />;
     case 'curiosity_prompt':   return <CuriosityPromptRenderer block={block} />;

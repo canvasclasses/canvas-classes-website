@@ -39,7 +39,6 @@ export function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'curiosity_prompt':  return { ...base, type, prompt: '' };
     case 'classify_exercise': return { ...base, type, question: 'Which of these are…?', rows: [{ substance: '', is_solution: true, explanation: '' }] };
     case 'junior_practice':   return { ...base, type, book_slug: '', chapter_number: 1, session_size: 10, pass_threshold: 0.7, mode: 'practice', title: '', intro: '' };
-    case 'interactive_graph': return { ...base, type, spec: { bounds: { xmin: -5, xmax: 5, ymin: -5, ymax: 5 }, functions: [{ expr: 'a*x^2 + b*x + c' }], sliders: [{ name: 'a', min: -3, max: 3, value: 1 }, { name: 'b', min: -3, max: 3, value: 0 }, { name: 'c', min: -3, max: 3, value: 0 }], showGrid: true } };
     // English / practice blocks (narrated_passage, vocabulary_lab,
     // chapter_practice, apply_express, …) are authored via scripts / the English
     // book pipeline, not this editor's Add-block menu, so they never reach here.

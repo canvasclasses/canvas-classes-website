@@ -14,6 +14,13 @@
       "runtimeArgs": ["-c", "export PATH=/Users/CanvasClasses/.nvm/versions/node/v24.14.0/bin:$PATH && npm run dev:admin"],
       "port": 3001,
       "autoPort": true
+    },
+    {
+      "name": "draw-studio",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/Users/CanvasClasses/.nvm/versions/node/v24.14.0/bin:$PATH && CDS_NO_OPEN=1 node tools/canvas-draw-studio/serve.mjs"],
+      "port": 4321,
+      "autoPort": true
     }
   ]
 }

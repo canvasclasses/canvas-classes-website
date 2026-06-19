@@ -41,9 +41,6 @@ const BLOCK_GROUPS: { label: string; blocks: { type: BlockType; icon: string; la
       { type: 'molecule_3d', icon: '🧬', label: 'Molecule 3D' },
     ],
   },
-  // NOTE: 'Math' group ('interactive_graph') intentionally hidden — the
-  // interactive graph block is incomplete. Renderer/schema remain in place so
-  // the block stays dormant (not offerable in the editor) until it's finished.
   {
     label: 'Interactive',
     blocks: [
