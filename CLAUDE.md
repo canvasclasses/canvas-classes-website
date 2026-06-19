@@ -330,7 +330,7 @@ canvas/
 
 | Variable group | File | Why |
 |---|---|---|
-| `MONGODB_URI`, `NEXT_PUBLIC_SUPABASE_*`, `ADMIN_EMAILS`, `ADMIN_SECRET`, `NEXT_PUBLIC_ADMIN_SECRET`, `ANTHROPIC_API_KEY`, `R2_*` (5 keys), `NEXT_PUBLIC_BASE_URL` | Root `.env.local` (shared) | Used by both apps and/or by `/scripts/*.js` (which hardcode `dotenv.config({ path: '.env.local' })`) |
+| `MONGODB_URI`, `NEXT_PUBLIC_SUPABASE_*`, `ADMIN_EMAILS`, `ADMIN_SECRET`, `ANTHROPIC_API_KEY`, `R2_*` (5 keys), `NEXT_PUBLIC_BASE_URL` | Root `.env.local` (shared) | Used by both apps and/or by `/scripts/*.js` (which hardcode `dotenv.config({ path: '.env.local' })`). **Never add a `NEXT_PUBLIC_ADMIN_SECRET`: `NEXT_PUBLIC_*` is inlined into the browser bundle and `ADMIN_SECRET` is an auth-bypass header — keep it server-only.** |
 | `NEXT_PUBLIC_FEATURE_ADAPTIVE_PRACTICE`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_CF_BEACON_TOKEN`, `CRON_SECRET` | `apps/student/.env.development.local` | Only student-side code reads these |
 | `NEXT_PUBLIC_SENTRY_DSN_ADMIN`, `SENTRY_DSN_ADMIN` | `apps/admin/.env.development.local` | Only admin Sentry init reads these |
 

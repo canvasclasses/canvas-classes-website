@@ -1,6 +1,5 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { createClient } from '@/app/utils/supabase/server'
@@ -29,7 +28,6 @@ export async function login(formData: FormData) {
             return { error: error.message }
         }
 
-        revalidatePath('/', 'layout')
         redirect(next)
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : String(error)
@@ -63,7 +61,6 @@ export async function signup(formData: FormData) {
             return { error: error.message }
         }
 
-        revalidatePath('/', 'layout')
         redirect('/')
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : String(error)

@@ -262,13 +262,15 @@ isn't forgotten.
 ### 13. Rotate `ADMIN_SECRET` + scrub the leaked literal from a workflow doc
 
 **Files**:
-- `_agents/workflows/MOCK_TEST_INGESTION_WORKFLOW.md` lines 15, 44, 53 — the literal string `canvas-admin-2024-secure` appears 3× as the value of the `x-admin-secret` header
+- `_agents/workflows/MOCK_TEST_INGESTION_WORKFLOW.md` lines 15, 44, 53 — the literal string `‹leaked-admin-secret-redacted-2026-06-19›` appears 3× as the value of the `x-admin-secret` header
 - Committed 2026-04-04 in `fb0698a` (feat: period trends chart, mock tests, flags, cleanup)
 
-**Problem**: the format and naming convention of `canvas-admin-2024-secure` strongly suggest this was the real production `ADMIN_SECRET` at the time of writing, not a placeholder. Per CLAUDE.md §8.2.1, the `x-admin-secret` header IS the script-secret bypass that lets backend scripts mutate admin-only routes without a Supabase session — anyone with read access to the git history can replay this value if it's still the live secret. The string has been on public GitHub for ~2 months.
+**Problem**: the format and naming convention of `‹leaked-admin-secret-redacted-2026-06-19›` strongly suggest this was the real production `ADMIN_SECRET` at the time of writing, not a placeholder. Per CLAUDE.md §8.2.1, the `x-admin-secret` header IS the script-secret bypass that lets backend scripts mutate admin-only routes without a Supabase session — anyone with read access to the git history can replay this value if it's still the live secret. The string has been on public GitHub for ~2 months.
+
+**✅ In-repo scrub DONE 2026-06-19** — the literal is removed from `MOCK_TEST_INGESTION_WORKFLOW.md` (now `$ADMIN_SECRET`) and redacted here. **⏳ ROTATION still pending (founder-only):** the authoritative mitigation is rotating `ADMIN_SECRET` in Vercel — scrubbing the working tree does NOT remove it from git history.
 
 **Solution shape** (two-part, with the harder part outside the codebase):
-1. **Operationally (only you can do this):** verify whether `process.env.ADMIN_SECRET` in Vercel production + preview still equals `canvas-admin-2024-secure`. If yes → rotate immediately. Don't bother rewriting git history; rotation is the only effective mitigation after public exposure.
+1. **Operationally (only you can do this):** verify whether `process.env.ADMIN_SECRET` in Vercel production + preview still equals `‹leaked-admin-secret-redacted-2026-06-19›`. If yes → rotate immediately. Don't bother rewriting git history; rotation is the only effective mitigation after public exposure.
 2. **In-repo:** replace the three literal occurrences in the workflow doc with a placeholder (`<your-admin-secret>` or `$ADMIN_SECRET`). One-line edit each.
 
 **Trigger**: today. The doc edit is mechanical; the rotation is the actual mitigation and only you can authorise it.
@@ -334,6 +336,8 @@ there's one backlog, grouped under the `vercel-cost` label.
 **Already fixed (2026-06-15, pending the founder's commit):**
 - `/the-crucible` landing made cacheable — auth moved to a new `CrucibleLandingClient.tsx`; removed the page-level `cookies()`/`getUser()` read that silently overrode `revalidate = 3600`. (The `4e9f188` client-island sweep fixed the `[chapterId]` sub-page but **missed this index page** — a quiet `cookies()`-defeats-`revalidate` leak.)
 - OG image `revalidate` 60 → 86400 — `apps/student/app/class-9/[bookSlug]/[pageSlug]/opengraph-image.tsx`.
+
+**✅ Fixed 2026-06-19 (this session):** **#16** blog `generateStaticParams → []`; **#17** removed `revalidatePath('/','layout')` (login/signup/consent); **#19** dropped `<Analytics/>`+`<SpeedInsights/>` from the layout (deps/CSP left in place — harmless when unused, avoids lockfile churn); **#20** sitemap `.limit(50000)` + React `cache()` dedup on the question-detail double-fetch; **#21** middleware skips the Supabase session refresh when the request has no auth cookie (anon/bot); **#22** blog cron `*/15`→`0 * * * *` (hourly). **#18 partial:** dropped the flag-resolve bank-wide bust (flags aren't public); the PATCH/POST/DELETE (`questions-by-id.ts`) + create (`questions.ts`) + reclassify `revalidateTag('questions')` calls are **DEFERRED** — making them per-chapter needs a *coordinated read-side change* (the reads use **static** `tags:['questions']` in `unstable_cache`, which can't be made per-chapter without a per-chapter cache-factory; a naïve write-side-only change would break invalidation → permanently-stale pages). **The cost-sentinel watchdog (`scripts/watchdogs/cost-sentinel.js`) now flags all of these patterns** — whole-site busts, bank-wide `revalidateTag('questions')`, and `@vercel/analytics` imports — so they can't silently regress; it currently lists the 4 deferred #18 calls as 🟡.
 
 **#1 cause is behavioral, not a ticket:** every production deploy cold-starts the
 ISR cache (prebuilt pages re-write at build; lazy pages regenerate on first

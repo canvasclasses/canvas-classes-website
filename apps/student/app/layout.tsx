@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Kalam, Outfit } from "next/font/google";
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { MixpanelProvider } from '@/components/providers/MixpanelProvider';
 import { ClarityScript } from '@/components/analytics/ClarityScript';
 import { ConsentGate } from '@/features/legal/components/ConsentGate';
@@ -231,8 +229,6 @@ export default function RootLayout({
           <ConditionalFooter />
         </MixpanelProvider>
         <ConsentGate />
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

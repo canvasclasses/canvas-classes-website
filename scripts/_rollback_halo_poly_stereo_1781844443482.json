@@ -1,0 +1,165 @@
+[
+  {
+    "_id": "bbe7605a-eb75-4a1e-9fe0-34c525cb9346",
+    "display_id": "HALO-124",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "57d78c0f-0c0c-4989-bae1-ba59470e84ed",
+    "display_id": "HALO-125",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "75f85107-1815-4330-8dd0-4a35a200e07c",
+    "display_id": "HALO-126",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "d3855a37-e378-40ed-85d5-cee0567082ea",
+    "display_id": "HALO-127",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "3d154ec1-e8c1-4580-a362-af8fce1d8266",
+    "display_id": "HALO-128",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "b33ba77f-e16a-4597-9c6f-99548d28b168",
+    "display_id": "HALO-032",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_4",
+          "weight": 1
+        },
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "5bd97fd2-31ba-4d88-90eb-fddfcec4afbd",
+    "display_id": "HALO-040",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_4",
+          "weight": 1
+        },
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "4da12021-2e35-4232-8882-296758e8788f",
+    "display_id": "HALO-051",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_4",
+          "weight": 1
+        },
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "825a9a37-0f6a-4b65-b7bc-db4f275d3834",
+    "display_id": "HALO-053",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_4",
+          "weight": 1
+        },
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "0d50e729-bff9-47ad-bbfe-7813e7196137",
+    "display_id": "HALO-070",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_4",
+          "weight": 1
+        },
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  {
+    "_id": "e99151bc-cbaf-4e67-a6d5-b213c83377f5",
+    "display_id": "HALO-084",
+    "before": {
+      "chapter_id": "ch12_haloalkanes",
+      "tags": [
+        {
+          "tag_id": "tag_haloalkanes_1",
+          "weight": 1
+        }
+      ]
+    }
+  }
+]

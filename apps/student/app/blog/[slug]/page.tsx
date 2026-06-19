@@ -7,7 +7,7 @@ import Link from 'next/link';
 import BlogPostContent from '@/features/blog/components/BlogPostContent';
 import BreadcrumbSchema from '../../components/BreadcrumbSchema';
 import { Metadata } from 'next';
-import { getPublishedPostBySlug, getPublishedSlugs } from '@/features/blog/lib/blogDb';
+import { getPublishedPostBySlug } from '@/features/blog/lib/blogDb';
 
 const BASE_URL = 'https://www.canvasclasses.in';
 
@@ -25,8 +25,10 @@ function safeJsonLd(data: unknown): string {
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
-    const slugs = await getPublishedSlugs();
-    return slugs.map((slug) => ({ slug }));
+    // Lazy on-demand ISR: blog posts are crawled, not hot, so generate on first
+    // request instead of pre-rendering up to 500 pages (ISR writes) every build.
+    // Same pattern as the question/PYQ leaf pages. (vercel-cost #16)
+    return [];
 }
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {

@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
+import { cache } from 'react';
 import { Metadata } from 'next';
 import {
   getQuestionBySlug,
@@ -8,6 +9,10 @@ import {
 } from '@/features/crucible/server-actions/the-crucible';
 import { formatExamLabel } from '@/features/crucible/components/examLabel';
 import QuestionDetailPage from './QuestionDetailPage';
+
+// Dedupe the question read so generateMetadata + Page share ONE DB fetch per
+// request instead of fetching the full doc twice (vercel-cost #20b).
+const getQuestion = cache(getQuestionBySlug);
 
 // ISR: 7-day revalidate — solutions change infrequently. Admin question edits
 // run in a separate deployment, so revalidateTag('questions') there does not
@@ -28,7 +33,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const result = await getQuestionBySlug(slug);
+  const result = await getQuestion(slug);
   if (!result) return { title: 'Question Not Found | The Crucible' };
 
   const { question } = result;
@@ -92,7 +97,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const result = await getQuestionBySlug(slug);
+  const result = await getQuestion(slug);
 
   if (!result) notFound();
 

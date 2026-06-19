@@ -1,0 +1,4019 @@
+[
+  {
+    "display_id": "QUAD-001",
+    "_id": "add42e5e-6d89-41c5-b9b4-82499f2117b0",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of $x^{2} + \\sqrt{3}x - 16 = 0$, and $\\gamma$ and $\\delta$ be the roots of $x^{2} + 3x - 1 = 0$. If $P_{n} = \\alpha^{n} + \\beta^{n}$ and $Q_{n} = \\gamma^{n} + \\delta^{n}$, then $\\frac{P_{25} + \\sqrt{3}P_{24}}{2P_{23}} + \\frac{Q_{25}-Q_{23}}{Q_{24}}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$4$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$5$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$7$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-002",
+    "_id": "42aba7f2-d680-48ab-ad50-75e34cb6d875",
+    "stem": "For $t > -1$, let $\\alpha_{t}$ and $\\beta_{t}$ be the roots of the equation $((t+2)^{\\frac{1}{2}} - 1)x^{2} + ((t+2)^{\\frac{3}{2}} - 1)x + ((t+2)^{\\frac{5}{2}} - 1) = 0$. If $\\lim_{t \\rightarrow -1^{+}} \\alpha_{t} = a$ and $\\lim_{t \\rightarrow -1^{+}} \\beta_{t} = b$, then $72(a+b)^{2}$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 648,
+      "decimal_value": null
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-003",
+    "_id": "7610a7e6-9ae6-4e0d-adb4-2671aef7eec7",
+    "stem": "If $2$ and $6$ are the roots of the equation $ax^2 + bx + 1 = 0$, then the quadratic equation, whose roots are $\\frac{1}{2a+b}$ and $\\frac{1}{6a+b}$, is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2x^2 + 11x + 12 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$x^2 + 8x + 12 = 0$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$4x^2 + 14x + 12 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$x^2 + 10x + 16 = 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-004",
+    "_id": "7cba93bb-cbb7-4445-9e48-cae92d983ca0",
+    "stem": "If $\\alpha$, $\\beta$ are the roots of the equation, $x^2 - x - 1 = 0$ and $S_n = 2023\\alpha^{n} + 2024\\beta^{n}$, then",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2S_{12} = S_{11} + S_{10}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$S_{12} = S_{11} + S_{10}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$2S_{11} = S_{12} + S_{10}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$S_{11} = S_{10} + S_{12}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-005",
+    "_id": "da6c799b-8a0b-43ff-8faf-57ccae3ea770",
+    "stem": "The sum of all the roots of the equation $|x^2 - 8x + 15| - 2x + 7 = 0$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$9 - \\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$9 + \\sqrt{3}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$11 - \\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$11 + \\sqrt{3}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-006",
+    "_id": "cb414f61-42d1-4576-afab-e55f209c6843",
+    "stem": "The number of real solutions of the equation, $x^2 - |x| - 12 = 0$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$1$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$4$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-007",
+    "_id": "8dcd972a-6220-46b2-aa20-10b3f31aa29f",
+    "stem": "Let $p$ and $q$ be two positive numbers such that $p+q = 2$ and $p^4 + q^4 = 272$. Then $p$ and $q$ are roots of the equation:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$x^2 - 2x + 2 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$x^2 - 2x + 8 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$x^2 - 2x + 136 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$x^2 - 2x + 16 = 0$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-008",
+    "_id": "b569d924-1898-448b-9908-f6bbce254881",
+    "stem": "The number of the real roots of the equation $(x+1)^2 + |x-5| = \\frac{27}{4}$ is ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 2,
+      "decimal_value": null
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-009",
+    "_id": "6a1d453f-dbb4-452f-97a6-a85e404b05fa",
+    "stem": "If $\\alpha$, $\\beta \\in \\mathbb{R}$ are such that $1 - 2i$ (here $i^2 = -1$) is a root of $z^2 + \\alpha z + \\beta = 0$, then $(\\alpha - \\beta)$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$-7$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$7$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$-3$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$3$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-010",
+    "_id": "7b38e1f3-ae1f-417a-b466-6658380f84c8",
+    "stem": "Consider the two sets:\n$A = \\{m \\in \\mathbb{R} : \\text{both the roots of } x^2 - (m+1)x + m + 4 = 0 \\text{ are real} \\}$ and $B = [-3, 5)$.\nWhich of the following is not true?",
+    "options": [
+      {
+        "id": "a",
+        "text": "$A - B = (-\\infty, -3) \\cup [5, \\infty)$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$A \\cap B = \\{-3\\}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$B - A = (-3, 5)$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$A \\cup B = \\mathbb{R}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-011",
+    "_id": "8cbfea8d-1864-4333-b0c1-2b3fbc742a99",
+    "stem": "The product of the roots of the equation $9x^2 - 18|x| + 5 = 0$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{5}{9}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{25}{81}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{5}{27}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{25}{9}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-012",
+    "_id": "a111462a-61ac-4d71-9b47-f1a29ed6659e",
+    "stem": "If $\\alpha$ and $\\beta$ be two roots of the equation $x^2 - 64x + 256 = 0$. Then the value of $\\left(\\frac{\\alpha^3}{\\beta^5}\\right)^{\\frac{1}{8}} + \\left(\\frac{\\beta^3}{\\alpha^5}\\right)^{\\frac{1}{8}}$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$1$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$4$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-013",
+    "_id": "f9469b63-0821-4971-82e9-4b3dac9c44f9",
+    "stem": "If $\\alpha$ and $\\beta$ are the roots of the equation $2x(2x + 1) = 1$, then $\\beta$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2\\alpha(\\alpha + 1)$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$-2\\alpha(\\alpha + 1)$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$2\\alpha(\\alpha - 1)$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$2\\alpha^2$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-014",
+    "_id": "b832f3f3-c283-47d6-9708-260886d22ec2",
+    "stem": "The least positive value of `a` for which the equation, $2x^2 + (a-10)x + \\frac{33}{2} = 2a$ has real roots is ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 8,
+      "decimal_value": null
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-015",
+    "_id": "e12f2729-5e16-4c38-b9c5-e4a678885e57",
+    "stem": "The number of integral values of $m$ for which the equation, $(1 + m^2)x^2 - 2(1 + 3m)x + (1 + 8m) = 0$ has no real root, is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Infinitely many",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$1$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-016",
+    "_id": "42f83d3c-a8ba-4e79-8aec-49fb69e35357",
+    "stem": "The number of all possible positive integral value of $\\alpha$ for which the roots of the quadratic equation $6x^2 - 11x + \\alpha = 0$ are rational numbers is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$5$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$3$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$4$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$2$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-017",
+    "_id": "80bc2450-f443-4dd8-ae80-2f374ab76c1c",
+    "stem": "Let $S$ be the set of positive integral values of $a$ for which $\\frac{ax^2+2(a+1)x+9a+4}{x^2-8x+32} < 0, \\forall x \\in \\mathbb{R}$. Then, the number of elements in $S$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$1$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$0$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$\\infty$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$3$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-018",
+    "_id": "d045cb87-de92-49d7-86a6-ce6a60c7223f",
+    "stem": "The integer $k$, for which the inequality $x^2 - 2(3k - 1)x + 8k^2 - 7 > 0$ is valid for every $x$ in $\\mathbb{R}$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$4$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$2$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$3$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-019",
+    "_id": "ea7aceeb-3f81-43d4-9538-b3e8ca6a3f22",
+    "stem": "The number of integral values of $m$ for which the quadratic expression $(1 + 2m)x^2 - 2(1 + 3m)x + 4(1 + m), x \\in \\mathbb{R}$ is always positive, is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$7$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$2$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$6$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$8$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-020",
+    "_id": "c4cf6ecb-e5f8-4c75-9417-08490e75ee58",
+    "stem": "The minimum value of the sum of the squares of the roots of $x^2 + (3 - a)x = 2a - 1$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$6$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$4$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$5$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$8$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-021",
+    "_id": "dc6fc3dc-9a98-4ee0-ae4c-bd1e38ced48f",
+    "stem": "The number of solutions of the equation $\\left(\\frac{x}{x-1} - \\frac{x-1}{x} + 2\\right)\\left(\\frac{x}{x-1} - \\frac{x-1}{x} + 3\\right) = 0$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$1$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$4$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-022",
+    "_id": "7f9d016c-acd6-45bd-80e1-8d2b9c3519e4",
+    "stem": "The number of real solutions of the equation $3(x^2 + \\frac{1}{x^2}) - 2(x + \\frac{1}{x}) + 5 = 0$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$4$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$0$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$2$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-023",
+    "_id": "3c397e77-3e73-4da1-8ebd-6265c2e59e4e",
+    "stem": "The sum of $162^{\\text{th}}$ power of the roots of the equation $x^3 - 2x^2 + 2x - 1 = 0$ is ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 3,
+      "decimal_value": null
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-024",
+    "_id": "f106229f-f6c5-4a22-8d64-80e17a2fd2d7",
+    "stem": "The number of real roots of the equation $5 + |2^{x} - 1| = 2^{x}(2^{x} - 2)$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$1$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$4$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-025",
+    "_id": "74d370a0-3270-48cf-af34-2993a789a6d0",
+    "stem": "Let $P_n = \\alpha^{n} + \\beta^{n}, n \\in \\mathbb{N}$. If $P_{10} = 123, P_{9} = 76, P_{8} = 47$ and $P_{1} = 1$, then the quadratic equation having roots $\\frac{1}{\\alpha}$ and $\\frac{1}{\\beta}$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$x^2 - x + 1 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$x^2 + x - 1 = 0$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$x^2 - x - 1 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$x^2 + x + 1 = 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-026",
+    "_id": "ebb588cf-7c15-44ec-90a9-e9d1dfc646b8",
+    "stem": "If the set of all $a \\in \\mathbb{R} - \\{1\\}$, for which the roots of the equation $(1 - a)x^2 + 2(a - 3)x + 9 = 0$ are positive is $(-\\infty, -\\alpha] \\cup [\\beta, \\gamma)$, then $2\\alpha + \\beta + \\gamma$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 7,
+      "decimal_value": null
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-027",
+    "_id": "52e2a423-0770-4782-a4c1-29bd5b00c0e0",
+    "stem": "Consider the equation $x^{2} + 4x - n = 0$, where $n \\in [20, 100]$ is a natural number. Then the number of all distinct values of $n$, for which the given equation has integral roots, is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$7$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$8$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$6$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$5$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-028",
+    "_id": "078fbae9-f76f-4812-8208-e262433e73c6",
+    "stem": "Let the set of all values of $p \\in \\mathbb{R}$, for which both the roots of the equation $x^2 - (p+2)x + (2p + 9) = 0$ are negative real numbers, be the interval $(\\alpha, \\beta]$. Then $\\beta - 2\\alpha$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$9$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$5$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$20$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-029",
+    "_id": "b5ed0ec8-5873-47aa-ad04-5dc9f1af19d5",
+    "stem": "The number of real roots of the equation $x|x - 2| + 3|x - 3| + 1 = 0$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$4$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$2$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$1$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$3$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-030",
+    "_id": "070c3e90-e8a5-411d-a45a-b6570fd40bf2",
+    "stem": "The sum of the squares of the roots of $|x+2|^2 + |x - 2| - 2 = 0$ and the squares of the roots of $x^2 - 2|x - 3| - 5 = 0$, is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$26$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$36$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$30$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$24$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-031",
+    "_id": "52314b70-147b-4ff7-93f7-e243861fc8f2",
+    "stem": "The sum of the squares of all the roots of the equation $x^2 + |2x - 3| - 4 = 0$, is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$3(3 - \\sqrt{2})$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$6(3 - \\sqrt{2})$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$6(2 - \\sqrt{2})$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$4(3(2 - \\sqrt{2})$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-032",
+    "_id": "c63e3a1a-1a6b-43e0-9b23-46e3b73841c9",
+    "stem": "If the set of all $a \\in \\mathbb{R}$, for which the equation $2x^2 + (a-5)x + 15 = 3a$ has no real root, is the interval $(\\alpha, \\beta)$, and $X = \\{x \\in \\mathbb{Z} : \\alpha < x < \\beta\\}$, then $\\sum_{x \\in X} x^{2}$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2109$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$2129$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$2119$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$2139$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-033",
+    "_id": "0d5228e0-3919-420b-b53a-c115c8acd351",
+    "stem": "The number of real solutions of the equation $x|x+5| + 2|x+7| - 2 = 0$ is ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 3,
+      "decimal_value": null
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-034",
+    "_id": "d3134e79-270a-4118-ab56-6b23648ef4f0",
+    "stem": "Let $\\alpha, \\beta$ be the distinct roots of the equation $x^2 - (t^2 - 5t + 6)x + 1 = 0, t \\in \\mathbb{R}$ and $a_n = \\alpha^{n} + \\beta^{n}$. Then the minimum value of $\\frac{a_{2023}+a_{2025}}{a_{2024}}$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$-1/4$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$-1/4$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$-1/2$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$1/4$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-035",
+    "_id": "55405f0c-fa10-4a6e-a048-ebf8986fd4ba",
+    "stem": "Let $\\alpha, \\beta$ be roots of $x^2 + \\sqrt{2}x - 8 = 0$. If $U_n = \\alpha^{n} + \\beta^{n}$, then $\\frac{U_{10} + \\sqrt{2}U_{9}}{2U_{8}}$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 4,
+      "decimal_value": null
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-036",
+    "_id": "a77ed2ab-6db9-4970-b73f-55a08bbcbf87",
+    "stem": "The sum of all the solutions of the equation $(8)^{2x} - 16 \\cdot (8)^{x} + 48 = 0$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$1 + \\log_{8}(6)$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$1 + \\log_{8}(8)$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\log_{8}(6)$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\log_{8}(4)$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-037",
+    "_id": "3f6e9050-016b-45c5-a058-2d8bed2c5896",
+    "stem": "Let $\\alpha, \\beta$ be the roots of the equation $x^2 + 2\\sqrt{2}x - 1 = 0$. The quadratic equation, whose roots are $\\alpha^{4} + \\beta^{4}$ and $\\frac{1}{10}(\\alpha^{6} + \\beta^{6})$, is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$x^2 - 190x + 9466 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$x^2 - 180x + 9506 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$x^2 - 195x + 9506 = 0$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$x^2 - 195x + 9466 = 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-038",
+    "_id": "c169dc3a-3c3a-4b7d-bd30-0c6e139308a9",
+    "stem": "Let $\\alpha, \\beta; \\alpha > \\beta$, be the roots of the equation $x^2 - \\sqrt{2}x - \\sqrt{3} = 0$. Let $P_n = \\alpha^{n} - \\beta^{n}, n \\in \\mathbb{N}$. Then $(11\\sqrt{3} - 10\\sqrt{2})P_{10} + (11\\sqrt{2} + 10)P_{11} - 11P_{12}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$10\\sqrt{3}P_{9}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$11\\sqrt{3}P_{9}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$10\\sqrt{2}P_{9}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$11\\sqrt{2}P_{9}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-039",
+    "_id": "2dc39d97-296c-47e7-9cab-d406371c0e4c",
+    "stem": "Let $\\alpha, \\beta$ be roots of equation $x^2 - 70x + \\lambda = 0$, where $\\frac{\\lambda}{3}, \\frac{\\lambda}{2} \\notin \\mathbb{Z}$. If $\\lambda$ assumes the minimum possible value, then $\\frac{(\\sqrt{\\alpha-1} - \\sqrt{\\beta-1})(\\lambda + 35)}{|\\alpha - \\beta|}$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 36,
+      "decimal_value": null
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-040",
+    "_id": "fe011f3b-2086-4341-89d4-74135a9135b7",
+    "stem": "For $0 < c < b < a$, let $(a+b-2c)x^2 + (b+c-2a)x + (c+a-2b) = 0$ and $\\alpha \\neq 1$ be one of its root. Then, among the two statements\n(I) If $\\alpha \\in (-1, 0)$, then $b$ cannot be the geometric mean of $a$ and $c$.\n(II) If $\\alpha \\in (0, 1)$, then $b$ may be the geometric mean of $a$ and $c$.",
+    "options": [
+      {
+        "id": "a",
+        "text": "Both (I) and (II) are true",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "Neither (I) nor (II) is true",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "Only (II) is true",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "Only (I) is true",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-041",
+    "_id": "4078145b-816d-42d6-92c6-9f8ec405b1a9",
+    "stem": "Let $a, b, c$ be the length of three sides of a triangle satisfying the condition $(a^2 + b^2)x^2 - 2b(a+c)x + (b^2 + c^2) = 0$. If the set of all possible values of $x$ is in the interval $(\\alpha, \\beta)$, then $12(\\alpha^2 + \\beta^2)$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 36,
+      "decimal_value": null
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-042",
+    "_id": "ecdb1a53-7b63-4e09-853c-88632c723fb6",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of the equation $px^2 + qx - r = 0$, where $p \\neq 0$. If $p, q$ and $r$ be the consecutive terms of a non-constant G.P. and $\\frac{1}{\\alpha} + \\frac{1}{\\beta} = \\frac{3}{4}$, then the value of $(\\alpha - \\beta)^2$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{80}{9}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$9$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{20}{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$8$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-043",
+    "_id": "8b7723dc-a4a9-42fa-a7a8-2a3f27881596",
+    "stem": "If $a$ and $b$ are the roots of the equation $x^2 - 7x - 1 = 0$, then the value of $\\frac{a^{21} + b^{21} + a^{17} + b^{17}}{a^{19} + b^{19}}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$51$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$49$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$50$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$48$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-044",
+    "_id": "30d7dbb7-eb48-4f7b-b0e9-4555bf41b910",
+    "stem": "Let $\\alpha, \\beta$ be the roots of the quadratic equation $x^2 + \\sqrt{6}x + 3 = 0$. Then $\\frac{\\alpha^{23} + \\beta^{23} + \\alpha^{14} + \\beta^{14}}{\\alpha^{15} + \\beta^{15} + \\alpha^{10} + \\beta^{10}}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$81$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$9$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$72$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$729$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-045",
+    "_id": "eae045fb-8392-4223-9a72-6b3d3209c59d",
+    "stem": "Let $\\alpha, \\beta$ be the roots of the equation $x^2 - \\sqrt{2}x + 2 = 0$. Then $\\alpha^{14} + \\beta^{14}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$-64$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$-64\\sqrt{2}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$-128$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$-128\\sqrt{2}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-046",
+    "_id": "7ec45a43-a95c-42d7-8c04-2ccf3b201e4d",
+    "stem": "The number of real roots of the equation $x|x| - 5|x + 2| + 6 = 0$, is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$5$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$4$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$3$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$3$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-047",
+    "_id": "4c865c87-4ebe-42ce-931a-dede94d08480",
+    "stem": "Let $\\lambda \\in \\mathbb{R}$ and let the equation $E$ be $|x|^2 - 2|x| + |\\lambda - 3| = 0$. Then the largest element in the set $S = \\{x + \\lambda : x \\text{ is an integer solution of } E\\}$ is ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 5,
+      "decimal_value": null
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-048",
+    "_id": "fd5a95aa-d4c9-4639-afd7-4d28711dc151",
+    "stem": "Let $a \\in \\mathbb{R}$ and let $\\alpha, \\beta$ be the roots of the equation $x^2 + 60^{\\frac{1}{4}}x + a = 0$. If $\\alpha^4 + \\beta^4 = -30$, then the product of all possible values of $a$ is ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 45,
+      "decimal_value": null
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-049",
+    "_id": "ad339112-1489-43a8-b453-9e0f4d816b1e",
+    "stem": "The number of real roots of the equation $\\sqrt{x^2 - 4x + 3} + \\sqrt{x^2 - 9} = \\sqrt{4x^2 - 14x + 6}$, is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$1$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$3$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$2$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-050",
+    "_id": "43119f86-5cbc-470a-adaa-f51809f060af",
+    "stem": "Let $a, b$ be two non-zero real numbers. If $p$ and $r$ are the roots of the equation $x^2 - 8ax + 2a = 0$ and $q$ and $s$ are the roots of the equation $x^2 + 12bx + 6b = 0$, such that $\\frac{1}{p}, \\frac{1}{q}, \\frac{1}{r}, \\frac{1}{s}$ are in A.P., then $a^{-1} - b^{-1}$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 38,
+      "decimal_value": null
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-051",
+    "_id": "f0a79746-68e9-4c9f-baf3-40b228af4dcf",
+    "stem": "If $\\alpha, \\beta$ are the roots of the equation $x^2 - (5 + 3^{\\sqrt{\\log_3 5}} - 5^{\\sqrt{\\log_5 3}})x + 3(3^{\\log_3 5})^{\\frac{1}{3}} - 5^{(\\log_5 3)^{\\frac{2}{3}}} - 1 = 0$ then the equation, whose roots are $\\alpha + \\frac{1}{\\beta}$ and $\\beta + \\frac{1}{\\alpha}$, is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$3x^2 - 20x - 12 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$3x^2 - 10x - 4 = 0$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$3x^2 - 10x + 2 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$3x^2 - 20x + 16 = 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-052",
+    "_id": "c8b801f4-5482-4ff8-a19d-1744c493eeba",
+    "stem": "The sum of all real values of $x$ for which $\\frac{3x^2 - 9x + 17}{x^2 + 3x + 10} = \\frac{5x^2 - 7x - 19}{3x^2 + 5x - 12}$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 5
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-053",
+    "_id": "f698f4e5-ffc4-4e03-950f-cb7ed4f140b2",
+    "stem": "Let $\\alpha, \\beta$ be the roots of the equation $x^2 - \\sqrt{2}x + \\sqrt{6} = 0$ and $\\frac{1}{\\alpha^2} + 1$, $\\frac{1}{\\beta^2} + 1$ be the roots of the equation $x^2 + ax + b = 0$. Then the roots of the equation $x^2 - (a + b - 2)x + (a + b + 2) = 0$ are:",
+    "options": [
+      {
+        "id": "a",
+        "text": "non-real complex numbers",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "real and both negative",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "real and both positive",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "real and exactly one of them is positive",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-054",
+    "_id": "b2ac2bf8-f14e-4217-a379-dbc0014f22a7",
+    "stem": "Let $\\alpha, \\beta (\\alpha > \\beta)$ be the roots of the quadratic equation $x^2 - x - 4 = 0$. If $P_n = \\alpha^{n} - \\beta^{n}, n \\in \\mathbb{N}$, then $\\frac{P_{15}P_{16} - P_{14}P_{16} - P_{15}^2 + P_{14}P_{15}}{P_{13}P_{14}}$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 16
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-055",
+    "_id": "ec32605e-3d2f-4f12-9dfa-9bcb0c8f52ce",
+    "stem": "If the sum of the squares of the reciprocals of the roots $\\alpha$ and $\\beta$ of the equation $3x^2 + \\lambda x - 1 = 0$ is $15$, then $6(\\alpha^3 + \\beta^3)^2$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$46$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$36$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$24$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$18$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-056",
+    "_id": "712be7e7-2db0-464f-b31f-61956c2465e5",
+    "stem": "If $p$ and $q$ are real number such that $p + q = 3, p^4 + q^4 = 369$, then the value of $(\\frac{1}{p} + \\frac{1}{q})^{-2}$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 4
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-057",
+    "_id": "e09344a2-8f92-47eb-8201-8698ca278c7d",
+    "stem": "Let $\\alpha, \\beta$ be the roots of the equation $x^2 - 4\\lambda x + 5 = 0$ and $\\alpha, \\gamma$ be the roots of the equation $x^2 - (3\\sqrt{2} + 2\\sqrt{3})x + 7 + 3\\lambda\\sqrt{3} = 0$. If $\\beta + \\gamma = 3\\sqrt{2}$, then $(\\alpha + 2\\beta + \\gamma)^2$ is equal to ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 98
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-058",
+    "_id": "3ba2b1f0-d780-4735-b6d1-aa7aba773205",
+    "stem": "Let $f(x)$ be a quadratic polynomial such that $f(-2) + f(3) = 0$. If one of the roots of $f(x) = 0$ is $-1$, then the sum of the roots of $f(x) = 0$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{11}{3}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{7}{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{13}{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{14}{3}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-059",
+    "_id": "8b56e8ae-18ca-4fb3-8439-aac2527b7c1d",
+    "stem": "Let $\\alpha$ be a root of the equation $1 + x^2 + x^4 = 0$. Then the value of $\\alpha^{1011} + \\alpha^{2022} - \\alpha^{3033}$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$1$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$2\\alpha$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$1 + \\alpha$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$1 + 2\\alpha$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-060",
+    "_id": "da43350c-6107-420f-8af1-fc35198abbdd",
+    "stem": "The sum of all integral values of $k(k \\neq 0)$ for which the equation $\\frac{2}{x-1} - \\frac{1}{x-2} = \\frac{2}{k}$ in $x$ has no real roots, is ______.",
+    "options": [],
+    "answer": {
+      "integer_value": 66
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-061",
+    "_id": "21d85115-0bb6-40ef-80d0-cc50b07e0cb5",
+    "stem": "Let $\\lambda \\neq 0$ be in $R$. If $\\alpha$ and $\\beta$ are the roots of the equation $x^2 - x + 2\\lambda = 0$, and $\\alpha$ and $\\gamma$ are the roots of the equation $3x^2 - 10x + 27\\lambda = 0$, then $\\frac{\\beta\\gamma}{\\lambda}$ is equal to ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 18
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-062",
+    "_id": "fecd102e-15e0-4f3c-b593-9c743e85e210",
+    "stem": "The set of all values of $k > -1$, for which the equation $(3x^2 + 4x + 3)^2 - (k + 1)(3x^2 + 4x + 3)(3x^2 + 4x + 2) + k(3x^2 + 4x + 2)^2 = 0$ has real roots, is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$[-\\frac{1}{2}, 1]$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$(1, \\frac{5}{2}]$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$(\\frac{1}{2}, \\frac{3}{2}] - \\{1\\}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$[2, 3]$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-063",
+    "_id": "27822cb2-04ed-4b3d-aa3f-4081c17de4fc",
+    "stem": "If $\\alpha$ and $\\beta$ are the distinct roots of the equation $x^2 + (3)^{\\frac{1}{4}}x + 3^{\\frac{1}{2}} = 0$, then the value of $\\alpha^{96}(\\alpha^{12} - 1) + \\beta^{96}(\\beta^{12} - 1)$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$56 \\times 3^{25}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$56 \\times 3^{24}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$52 \\times 3^{24}$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$28 \\times 3^{25}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-064",
+    "_id": "d9f125d9-9983-494b-963e-96f343c00809",
+    "stem": "If $\\alpha, \\beta$ are roots of the equation $x^2 + 5(\\sqrt{2})x + 10 = 0$, $\\alpha > \\beta$ and $P_n = \\alpha^n - \\beta^n$ for each positive integer $n$, then the value of $(\\frac{P_{17}P_{20} + 5\\sqrt{2}P_{17}P_{19}}{P_{18}P_{19} + 5\\sqrt{2}P_{18}^2})$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "5",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "10",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "15",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-065",
+    "_id": "463dd3fb-7c35-457d-8ceb-6a81bd199b80",
+    "stem": "Let $\\alpha, \\beta$ be two roots of the equation $x^2 + (20)^{1/4}x + (5)^{1/2} = 0$. Then $\\alpha^8 + \\beta^8$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "10",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "100",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "50",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "160",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-066",
+    "_id": "0331c6ef-7e10-4b65-9991-aecc5ffd806f",
+    "stem": "Let $\\alpha = \\max_{x \\in R} \\{8^{2 \\sin 3x} \\cdot 4^{4 \\cos 3x}\\}$ and $\\beta = \\min_{x \\in R} \\{8^{2 \\sin 3x} \\cdot 4^{4 \\cos 3x}\\}$. If $8x^2 + bx + c = 0$ is a quadratic equation whose roots are $\\alpha^{1/5}$ and $\\beta^{1/5}$, then the value of $c - b$ is equal to :",
+    "options": [
+      {
+        "id": "a",
+        "text": "42",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "47",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "43",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "50",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-067",
+    "_id": "6e1293c1-88bd-4407-8984-91cb41d6d9d5",
+    "stem": "The value of $4 + \\frac{1}{5 + \\frac{1}{4 + \\frac{1}{5 + \\frac{1}{4 + \\dots}}}}$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2 + \\frac{2}{5}\\sqrt{30}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$2 + \\frac{4}{\\sqrt{5}}\\sqrt{30}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$4 + \\frac{4}{\\sqrt{5}}\\sqrt{30}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$5 + \\frac{2}{5}\\sqrt{30}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-068",
+    "_id": "8f5e9091-59c5-441f-aa55-54fad772e301",
+    "stem": "The value of $3 + \\frac{1}{4 + \\frac{1}{3 + \\frac{1}{4 + \\dots}}}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$1.5 + \\sqrt{3}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$2 + \\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$3 + 2\\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$4 + \\sqrt{3}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-069",
+    "_id": "ef843dd4-04fc-42a4-bfd4-e71808959330",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of $x^2 - 6x - 2 = 0$. If $a_n = \\alpha^n - \\beta^n$ for $n \\geq 1$, then the value of $\\frac{a_{10} - 2a_8}{2a_9}$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "3",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "4",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-070",
+    "_id": "cd299442-810b-4978-ab6d-885b77140543",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of the equation, $5x^2 + 6x - 2 = 0$. If $S_n = \\alpha^n + \\beta^n$, $n = 1, 2, 3, \\dots$, then",
+    "options": [
+      {
+        "id": "a",
+        "text": "$6S_6 + 5S_5 = 2S_4$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$5S_6 + 6S_5 + 2S_4 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$5S_6 + 6S_5 = 2S_4$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$6S_6 + 5S_5 + 2S_4 = 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-071",
+    "_id": "f3bce606-4703-46f8-830e-3059afc50c60",
+    "stem": "If $\\alpha$ and $\\beta$ are the roots of the equation $x^2 + px + 2 = 0$ and $\\frac{1}{\\alpha}$ and $\\frac{1}{\\beta}$ are the roots of the equation $2x^2 + 2qx + 1 = 0$, then $(\\alpha - \\frac{1}{\\alpha})(\\beta - \\frac{1}{\\beta})(\\alpha + \\frac{1}{\\beta})(\\beta + \\frac{1}{\\alpha})$ is equal to :",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{9}{4}(9 + q^2)$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{9}{4}(9 - q^2)$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{9}{4}(9 + p^2)$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{9}{4}(9 - p^2)$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-072",
+    "_id": "1320335e-7ce8-43bf-88c3-b0bd98bd10f5",
+    "stem": "Let $[t]$ denote the greatest integer $\\leq t$. Then the equation in $x$, $[x]^2 + 2[x + 2] - 7 = 0$ has :",
+    "options": [
+      {
+        "id": "a",
+        "text": "exactly two solutions",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "exactly four integral solutions",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "no integral solution",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "infinitely many solutions",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-073",
+    "_id": "957692ca-d2fe-41c0-a181-7cc63a48cd4c",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of $x^2 - 3x + p = 0$ and $\\gamma$ and $\\delta$ be the roots of $x^2 - 6x + q = 0$. If $\\alpha, \\beta, \\gamma, \\delta$ form a geometric progression. Then ratio $(2q + p) : (2q - p)$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$3 : 1$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$9 : 7$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$5 : 3$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$33 : 31$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-074",
+    "_id": "51151951-bc67-412d-9d96-7b7e9a0eabd6",
+    "stem": "If $\\alpha$ and $\\beta$ are the roots of the equation, $7x^2 - 3x - 2 = 0$, then the value of $\\frac{\\alpha}{1-\\alpha^2} + \\frac{\\beta}{1-\\beta^2}$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{27}{32}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{1}{24}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{3}{8}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{27}{16}$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-075",
+    "_id": "dda65c72-5d11-4638-904d-c193b73e19f5",
+    "stem": "Let $\\alpha$ and $\\beta$ be two real roots of the equation $(k + 1)\\tan^2 x - \\sqrt{2} \\cdot \\lambda \\tan x = (1 - k)$, where $k(\\neq -1)$ and $\\lambda$ are real numbers. If $\\tan^2(\\alpha + \\beta) = 50$, then a value of $\\lambda$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$10\\sqrt{2}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "10",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "5",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$5\\sqrt{2}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-076",
+    "_id": "9bdc867f-aff9-4ce6-b718-0997b77d9fbe",
+    "stem": "Let $S$ be the set of all real roots of the equation, $3^x(3^x - 1) + 2 = |3^x - 1| + |3^x - 2|$, then",
+    "options": [
+      {
+        "id": "a",
+        "text": "contains exactly two elements.",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "is a singleton.",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "is an empty set.",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "contains at least four elements.",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-077",
+    "_id": "a0eca90f-6fad-462e-8023-4ee4aa953f10",
+    "stem": "Let $S = \\{ \\alpha : \\log_2 (9^{2 \\alpha-4} + 1) - \\log_2 (\\frac{5}{2} \\cdot 3^{2 \\alpha-4} + 1) = 2 \\}$. Then the maximum value of $\\beta$ for which the equation $x^2 - 2(\\sum_{\\alpha \\in S} \\alpha)^2 x + \\sum_{\\alpha \\in S} (\\alpha + 1)^2 \\beta = 0$ has real roots, is ________.",
+    "options": [
+      {
+        "id": "a",
+        "text": "10",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "9",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "12",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "4",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-078",
+    "_id": "ea5541d5-80f2-4e6e-9840-23bd27a3c9e0",
+    "stem": "Let $p, q \\in Q$. If $2 - \\sqrt{3}$ is a root of the quadratic equation $x^2 + px + q = 0$, then",
+    "options": [
+      {
+        "id": "a",
+        "text": "$p^2 - 4q + 12 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$q^2 + 4p + 14 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$p^2 - 4q - 12 = 0$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$q^2 - 4p - 16 = 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-079",
+    "_id": "8acd530e-24b8-45b4-a475-78c35a1db840",
+    "stem": "If $m$ is chosen in the quadratic equation $(m^2 + 1)x^2 - 3x + (m^2 + 1)^2 = 0$ such that the sum of its roots is greatest, then the absolute difference of the cubes of its roots is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$4\\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$10\\sqrt{5}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$8\\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$8\\sqrt{5}$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-080",
+    "_id": "34831699-89d4-4848-9700-9d454429ea15",
+    "stem": "If $\\alpha$ and $\\beta$ are the roots of the quadratic equation $x^2 + x\\sin\\theta - 2\\sin\\theta = 0$, $\\theta \\in (0, \\frac{\\pi}{2})$, then $\\frac{\\alpha^{12} + \\beta^{12}}{(\\alpha^{-12} + \\beta^{-12}) \\cdot (\\alpha - \\beta)^{24}}$ is equal to :",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{2^6}{(\\sin\\theta + 8)^{12}}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{2^{12}}{(\\sin\\theta - 4)^{12}}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{2^{12}}{(\\sin\\theta + 8)^{12}}$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{2^{12}}{(\\sin\\theta - 8)^6}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-081",
+    "_id": "7edde1b5-ac29-450b-8527-52dc49afcecd",
+    "stem": "If $\\alpha$ and $\\beta$ are the roots of the equation $375x^2 - 25x - 2 = 0$, then $\\lim_{n \\to \\infty} \\sum_{r=1}^n \\alpha^r + \\lim_{n \\to \\infty} \\sum_{r=1}^n \\beta^r$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{1}{12}$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{21}{346}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{7}{116}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{29}{358}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-082",
+    "_id": "c78003da-e894-4a6c-ba70-633552c86c64",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of the equation $x^2 + 2x + 2 = 0$, then $\\alpha^{15} + \\beta^{15}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$-512$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$128$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$512$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$-256$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-083",
+    "_id": "ef57d2fe-40ed-4077-a396-000a174bbb9f",
+    "stem": "If one real root of the quadratic equation $81x^2 + kx + 256 = 0$ is cube of the other root, then a value of $k$ is :",
+    "options": [
+      {
+        "id": "a",
+        "text": "$-81$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$100$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$144$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$-300$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-084",
+    "_id": "5bf552bf-91d6-440b-8bfb-d5daa1858284",
+    "stem": "If $\\lambda$ be the ratio of the roots of the quadratic equation in $x$, $3m^2x^2 + m(m - 4)x + 2 = 0$, then the least value of $m$ for which $\\lambda + \\frac{1}{\\lambda} = 1$, is :",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2 - \\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$-2 + \\sqrt{2}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$4 - 2\\sqrt{3}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$4 - 3\\sqrt{2}$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-085",
+    "_id": "0d589520-b600-4267-9a4c-de3b7c2eb677",
+    "stem": "The probability of selecting integers $a \\in [-5, 30]$ such that $x^2 + 2(a + 4)x - 5a + 64 > 0$, for all $x \\in R$, is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{7}{36}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{2}{9}$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{1}{6}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{1}{4}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-086",
+    "_id": "6f6a158e-fb06-4cd1-93c4-68b121a7fdd6",
+    "stem": "If $x^2 + 9y^2 - 4x + 3 = 0$, $x, y \\in R$, then $x$ and $y$ respectively lie in the intervals",
+    "options": [
+      {
+        "id": "a",
+        "text": "$[-\\frac{1}{3}, \\frac{1}{3}]$ and $[-\\frac{1}{3}, \\frac{1}{3}]$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$[1, 3]$ and $[-\\frac{1}{3}, \\frac{1}{3}]$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$[-\\frac{1}{3}, \\frac{1}{3}]$ and $[1, 3]$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$[1, 3]$ and $[1, 3]$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-087",
+    "_id": "e434ad87-f532-4371-bfd7-1af78bac36d5",
+    "stem": "The value of $\\lambda$ such that sum of the squares of the roots of the quadratic equation, $x^2 + (3 - \\lambda)x + 2 = \\lambda$ has the least value is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "2",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{4}{9}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{15}{8}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "1",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-088",
+    "_id": "76d58b10-9160-4eec-92ee-0b2bc8f3a717",
+    "stem": "If the equation $a(b - c)x^2 + b(c - a)x + c(a - b) = 0$ has equal roots, where $a + c = 15$ and $b = \\frac{36}{5}$, then $a^2 + c^2$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "225",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "113",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "153",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "125",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-089",
+    "_id": "9d5d0cd6-a321-40b4-b9d2-83b5b64abaa0",
+    "stem": "If the value of real number $\\alpha > 0$ for which $x^2 - 5\\alpha x + 1 = 0$ and $x^2 - \\alpha x - 5 = 0$ have a common real roots is $\\frac{3}{\\sqrt{2\\beta}}$, then $\\beta$ is equal to ________",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 13
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-090",
+    "_id": "a8b95fa7-ab79-47e3-87d7-90d1c3e75163",
+    "stem": "Let $f(x)$ be a quadratic polynomial with leading coefficient $1$ such that $f(0) = p$, $p \\neq 0$, and $f(1) = \\frac{1}{3}$. If the equations $f(x) = 0$ and $f \\circ f \\circ f \\circ f(x) = 0$ have a common real root, then $f(-3)$ is equal to ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 25
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-091",
+    "_id": "9d5bfc99-2db4-451f-bf3c-565c9ac37270",
+    "stem": "If for some $p, q, r \\in R$, all have positive sign, one of the roots of the equation $(p^2 + q^2)x^2 - 2q(p + r)x + q^2 + r^2 = 0$ is also a root of the equation $x^2 - 2x - 8 = 0$, then $\\frac{q^2 + r^2}{p^2}$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "4",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "9",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-092",
+    "_id": "9ab9b49f-bbdc-4d30-81f2-8b16261f8968",
+    "stem": "Let $a, b \\in R$ be such that the equation $ax^2 - 2bx + 15 = 0$ has repeated root $\\alpha$ and if $\\alpha$ and $\\beta$ are the roots of the equation $x^2 - 2bx + 21 = 0$, then $\\alpha^2 + \\beta^2$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "37",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "58",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "68",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "92",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-093",
+    "_id": "a33e99ce-1022-46c2-921a-e136481b5088",
+    "stem": "Let $\\lambda \\neq 0$ be in $R$. If $\\alpha$ and $\\beta$ are the roots of the equation, $x^2 - x + 2\\lambda = 0$ and $\\alpha$ and $\\gamma$ are the roots of the equation, $3x^2 - 10x + 27\\lambda = 0$, then $\\frac{\\beta\\gamma}{\\lambda}$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "27",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "18",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "9",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "36",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-094",
+    "_id": "e649009f-9e06-41d7-85c2-bff5fd5a4b7a",
+    "stem": "Let $a, b \\in R$, $a \\neq 0$ be such that the equation, $ax^2 - 2bx + 5 = 0$ has a repeated root $\\alpha$, which is also a root of the equation, $x^2 - 2bx - 10 = 0$. If $\\beta$ is the other root of this equation, then $\\alpha^2 + \\beta^2$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "25",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "26",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "28",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "24",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-095",
+    "_id": "306dce58-9261-4b6c-8fa0-f3f664b45460",
+    "stem": "If three distinct numbers $a, b, c$ are in G.P. and the equations $ax^2 + 2bx + c = 0$ and $dx^2 + 2ex + f = 0$ have a common root, then which one of the following statements is correct?",
+    "options": [
+      {
+        "id": "a",
+        "text": "$d, e, f$ are in A.P.",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{d}{a}, \\frac{e}{b}, \\frac{f}{c}$ are in G.P.",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$d, e, f$ are in G.P.",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{d}{a}, \\frac{e}{b}, \\frac{f}{c}$ are in A.P.",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-096",
+    "_id": "b18f01a8-0a6e-4c9c-b616-61fcc4b2bb6d",
+    "stem": "If $\\alpha, \\beta$ and $\\gamma$ are three consecutive terms of a non-constant G.P. Such that the equations $\\alpha x^2 + 2\\beta x + \\gamma = 0$ and $x^2 + x - 1 = 0$ have a common root, then $\\alpha(\\beta + \\gamma)$ is equal to:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\beta\\gamma$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$\\alpha\\beta$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\alpha\\gamma$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "0",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-097",
+    "_id": "5860c686-f0e0-4eb6-8c6d-11fb26e93ad1",
+    "stem": "The number of integral values of $k$, for which one root of the equation $2x^2 - 8x + k = 0$ lies in the interval $(1, 2)$ and its other root lies in the interval $(2, 3)$, is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "3",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-098",
+    "_id": "5109f712-2b01-4035-aa18-a139b896424e",
+    "stem": "Let $f(x)$ be a quadratic polynomial such that $f(-1) + f(2) = 0$. If one of the roots of $f(x) = 0$ is 3, then its other root lies in",
+    "options": [
+      {
+        "id": "a",
+        "text": "$(-1, 0)$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$(1, 3)$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$(-3, -1)$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$(0, 1)$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-099",
+    "_id": "d7f17e41-2cb3-4818-9c9f-3cdd5e9ada0e",
+    "stem": "The set of all real values of $\\lambda$ for which the quadratic equation $(\\lambda^2 + 1)x^2 - 4\\lambda x + 2 = 0$ always have exactly one root in the interval $(0, 1)$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$(-3, -1)$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$(0, 2)$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$(1, 3]$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$(2, 4]$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-100",
+    "_id": "b649afe8-9a2b-436a-9e84-ed76ed921348",
+    "stem": "If both the roots of the quadratic equation $x^2 - mx + 4 = 0$ are real and distinct and they lie in the interval $(1, 5)$, then $m$ lies in the interval:",
+    "options": [
+      {
+        "id": "a",
+        "text": "$(-5, -4)$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$(3, 4)$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$(5, 6)$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$(4, 5)$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-101",
+    "_id": "4eb915ab-9392-4496-9a61-5531d1642435",
+    "stem": "The product of all the rational roots of the equation $(x^2 - 9x + 11)^2 - (x - 4)(x - 5) = 3$, is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "14",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "21",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "28",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "7",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-102",
+    "_id": "44256017-8ea5-4eaf-86ab-88aea819fe63",
+    "stem": "The number of real solutions of the equation $x(x^2 + 3|x| + 5|x - 1| + 6|x - 2|) = 0$ is ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 1
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-103",
+    "_id": "369a6ccc-f54a-4526-af1a-2c0534d20374",
+    "stem": "The number of solutions, of the equation $e^{\\sin x} - 2e^{-\\sin x} = 2$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "more than 2",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "1",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "0",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-104",
+    "_id": "afd2f9a8-c60e-42b8-8d67-cca6bb1b0573",
+    "stem": "Let $S = \\{ x \\in R : (\\sqrt{3} + \\sqrt{2})^x + (\\sqrt{3} - \\sqrt{2})^x = 10 \\}$. Then the number of elements in $S$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "2",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "1",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-105",
+    "_id": "bf99f335-a17e-429b-9274-421c6a85ad28",
+    "stem": "Let $\\alpha, \\beta, \\gamma$ be the three roots of the equation $x^3 + bx + c = 0$. If $\\beta\\gamma = 1 = -\\alpha$ then $b^3 + 2c^3 - 3\\alpha^3 - 6\\beta^3 - 8\\gamma^3$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{155}{8}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "21",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{169}{8}$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "19",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-106",
+    "_id": "b88d54f5-8324-47e4-b284-c9ad2077a711",
+    "stem": "The number of points, where the curve $f(x) = e^{8x} - e^{6x} - 3e^{4x} - e^{2x} + 1, x \\in \\mathbb{R}$ cuts $x$-axis, is equal to ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 2
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-107",
+    "_id": "e78cbb05-0988-42fb-a757-9777a8b7a08c",
+    "stem": "Let $S = \\{ \\alpha : \\log_2 (9^{2 \\alpha-4} + 1) - \\log_2 (\\frac{5}{2} \\cdot 3^{2 \\alpha-4} + 1) = 2 \\}$. Then the maximum value of $\\beta$ for which the equation $x^2 - 2(\\sum_{\\alpha \\in S} \\alpha)^2 x + \\sum_{\\alpha \\in S} (\\alpha + 1)^2 \\beta = 0$ has real roots, is:",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 10
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-108",
+    "_id": "92998495-303b-46c2-9897-40c5ef0bb925",
+    "stem": "The equation $e^{4x} + 8e^{3x} + 13e^{2x} - 8e^x + 1 = 0, x \\in R$ has :",
+    "options": [
+      {
+        "id": "a",
+        "text": "four solutions two of which are negative",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "two solutions and both are negative",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "no solution",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "two solutions and only one of them is negative",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-109",
+    "_id": "f8f23a7d-6132-40de-94f6-7e22aeb37db0",
+    "stem": "The sum of all real roots of equation $(e^{2x} - 4)(6e^{2x} - 5e^x + 1) = 0$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\ln 4$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$-\\ln 3$",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$\\ln 3$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$\\ln 5$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-110",
+    "_id": "f580dc1b-2818-4772-ba52-9358fa7c0642",
+    "stem": "If the sum of all the roots of the equation $e^{2x} - 11e^x - 45e^{-x} + \\frac{81}{e^x} = 0$ is $\\log_e P$, then $P$ is equal to ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 45
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-111",
+    "_id": "60c8be90-4b84-48d0-8b3b-51860a5add02",
+    "stem": "The number of real solutions of the equation $e^{4x} + 4e^{3x} - 58e^{2x} + 4e^x + 1 = 0$ is ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 2
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-112",
+    "_id": "427e8f9f-82d6-4dbd-a888-255c3cb3473d",
+    "stem": "The number of solutions of the equation $32^{\\tan^2 x} + 32^{\\sec^2 x} = 81, 0 \\leq x \\leq \\frac{\\pi}{4}$ is :",
+    "options": [
+      {
+        "id": "a",
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "3",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-113",
+    "_id": "9081bba6-0e71-436c-8481-4f2d6a7a55c4",
+    "stem": "The number of real roots of the equation, $e^{4x} + e^{3x} - 4e^{2x} + e^x + 1 = 0$ is:",
+    "options": [
+      {
+        "id": "a",
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "3",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "4",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-114",
+    "_id": "e48265b6-8e1c-46be-8acb-7f431a5d0eda",
+    "stem": "Let $\\alpha_{\\theta}$ and $\\beta_{\\theta}$ be the distinct roots of $2x^2 + (\\cos\\theta)x - 1 = 0, \\theta \\in (0, 2\\pi)$. If $m$ and $M$ are the minimum and the maximum values of $\\alpha_{\\theta}^4 + \\beta_{\\theta}^4$, then $16(M + m)$ equals :",
+    "options": [
+      {
+        "id": "a",
+        "text": "24",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "25",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "17",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "27",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-115",
+    "_id": "3e63df79-93a0-411f-b266-a141c276c811",
+    "stem": "Let the set $C = \\{ (x, y) \\mid x^2 - 2^y = 2023, x, y \\in \\mathbb{N} \\}$. Then $\\sum_{(x, y) \\in C} (x + y)$ is equal to ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 46
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-116",
+    "_id": "68489c98-5593-43ad-8838-f08211a897b9",
+    "stem": "Let $m$ and $n$ be the numbers of real roots of the quadratic equations $x^2 - 12x + [x] + 31 = 0$ and $x^2 - 5|x + 2| - 4 = 0$ respectively, where $[x]$ denotes the greatest integer $\\leq x$. Then $m^2 + mn + n^2$ is equal to",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 9
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-117",
+    "_id": "c0a431ea-f772-4e1e-91b3-8af962bb299a",
+    "stem": "Let $\\lambda \\neq 0$ be a real number. Let $\\alpha, \\beta$ be the roots of the equation $14x^2 - 31x + 3\\lambda = 0$ and $\\alpha, \\gamma$ be the roots of the equation $35x^2 - 53x + 4\\lambda = 0$. Then $\\frac{3\\alpha}{\\beta}$ and $\\frac{4\\alpha}{\\gamma}$ are the roots of the equation :",
+    "options": [
+      {
+        "id": "a",
+        "text": "$7x^2 + 245x - 250 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$7x^2 - 245x + 250 = 0$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$49x^2 - 245x + 250 = 0$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$49x^2 + 245x + 250 = 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-118",
+    "_id": "b50b553a-3ffd-435b-97f5-da4215391b77",
+    "stem": "For a natural number $n$, let $\\alpha_n = 19^n - 12^n$. Then, the value of $\\frac{31\\alpha_9 - \\alpha_{10}}{57\\alpha_8}$ is",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 4
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-119",
+    "_id": "3fd74427-6208-4178-afe6-eddefac727fd",
+    "stem": "The number of pairs $(a, b)$ of real numbers, such that whenever $\\alpha$ is a root of the equation $x^2 + ax + b = 0$, $\\alpha^2 - 2$ is also a root of this equation, is :",
+    "options": [
+      {
+        "id": "a",
+        "text": "6",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "8",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "4",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "2",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-120",
+    "_id": "92641b51-4129-443d-b750-cb9f5568ab53",
+    "stem": "If $a + b + c = 1, ab + bc + ca = 2$ and $abc = 3$, then the value of $a^4 + b^4 + c^4$ is equal to:",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 13
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-121",
+    "_id": "49d7e08d-3d42-4c3c-8626-c570c20688fc",
+    "stem": "Let $\\alpha$ and $\\beta$ be two real numbers such that $\\alpha + \\beta = 1$ and $\\alpha\\beta = -1$. Let $p_n = (\\alpha)^n + (\\beta)^n$, $p_{n-1} = 11$ and $p_{n+1} = 29$ for some integer $n \\geq 1$. Then, the value of $p_n^2$ is ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 324
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-122",
+    "_id": "efeba4b3-72ff-41be-836c-f792f6812008",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of the equation $x^2 - x - 1 = 0$. If $p_k = (\\alpha)^k + (\\beta)^k, k \\geq 1$, then which one of the following statements is not true?",
+    "options": [
+      {
+        "id": "a",
+        "text": "$p_3 = p_5 - p_4$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$p_5 = 11$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$(p_1 + p_2 + p_3 + p_4 + p_5) = 26$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$p_5 = p_2 \\cdot p_3$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-123",
+    "_id": "026013e0-7301-422c-bd65-7d40cebe3504",
+    "stem": "Let $\\alpha$ and $\\beta$ be the roots of the quadratic equation $x^2 \\sin\\theta - x(\\sin\\theta\\cos\\theta + 1) + \\cos\\theta = 0$ $(0 < \\theta < 45^{\\circ})$, and $\\alpha < \\beta$. Then $\\sum_{n=0}^{\\infty} (\\alpha^n + \\frac{(-1)^n}{\\beta^n})$ is equal to :",
+    "options": [
+      {
+        "id": "a",
+        "text": "$\\frac{1}{1 - \\cos \\theta} - \\frac{1}{1 + \\sin \\theta}$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$\\frac{1}{1 - \\cos \\theta} + \\frac{1}{1 - \\sin \\theta}$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$\\frac{1}{1 - \\cos \\theta} + \\frac{1}{1 + \\sin \\theta}$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$\\frac{1}{1 + \\cos \\theta} - \\frac{1}{1 - \\sin \\theta}$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-124",
+    "_id": "39cbd70b-0b8a-4795-900f-522949ac1d7c",
+    "stem": "The number of distinct real roots of the equation $|x + 1||x + 3| - 4|x + 2| + 5 = 0$, is",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 2
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-125",
+    "_id": "faab8d10-91f7-4f73-b487-31ef7b24994d",
+    "stem": "Consider the quadratic equation $(c - 5)x^2 - 2cx + (c - 4) = 0, c \\neq 5$. Let $S$ be the set of all integral values of $c$ for which one root of the equation lies in the interval $(0, 2)$ and its other root lies in the interval $(2, 3)$. Then the number of elements in $S$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "11",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "12",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "18",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "10",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-126",
+    "_id": "348314db-84a7-4ae8-b91f-c617161d62db",
+    "stem": "Let $x_1, x_2, x_3, x_4$ be the solution of the equation $4x^4 + 8x^3 - 17x^2 - 12x + 9 = 0$ and $(4 + x_1^2)(4 + x_2^2)(4 + x_3^2)(4 + x_4^2) = \\frac{125}{16}m$. Then the value of $m$ is",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 221
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-127",
+    "_id": "1dbf0cb8-f95f-4f27-8193-f3606250fb13",
+    "stem": "Let $\\alpha_1, \\alpha_2, \\dots, \\alpha_7$ be the roots of the equation $x^7 + 3x^5 - 13x^3 - 15x = 0$ and $|\\alpha_1| \\geq |\\alpha_2| \\geq \\dots \\geq |\\alpha_7|$. Then, $\\alpha_1\\alpha_2 - \\alpha_3\\alpha_4 + \\alpha_5\\alpha_6$ is equal to ________",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 9
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-128",
+    "_id": "1556d908-ede3-4e64-8685-14f5183fc1af",
+    "stem": "Let $S = \\{ x : x \\in \\mathbb{R} \\text{ and } (\\sqrt{3} + \\sqrt{2})^{x^2-4} + (\\sqrt{3} - \\sqrt{2})^{x^2-4} = 10 \\}$ Then $n(S)$ is equal to",
+    "options": [
+      {
+        "id": "a",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "4",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "6",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "0",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-129",
+    "_id": "1870c4ef-c3c8-4c66-84ad-eb22b6e9fcd6",
+    "stem": "The sum of the cubes of all the roots of the equation $x^4 - 3x^3 - 2x^2 + 3x + 1 = 0$ is ________.",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 36
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-130",
+    "_id": "24f9769c-3e8b-4af5-8669-19afd970c423",
+    "stem": "The number of real roots of the equation $e^{4x} - e^{3x} - 4e^{2x} - e^x + 1 = 0$ is equal to",
+    "options": [],
+    "answer": {
+      "decimal_value": null,
+      "integer_value": 2
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-131",
+    "_id": "77838bab-c516-414d-9cda-0ed9b39d8092",
+    "stem": "If $a, b, c$ are in A.P. and if the equations $(b-c)x^2 + (c-a)x + (a-b) = 0$ and $2(c+a)x^2 + (b+c)x = 0$ have a common root, then",
+    "options": [
+      {
+        "id": "a",
+        "text": "$a^2, b^2, c^2$ are in A.P.",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$a^2, c^2, b^2$ are in A.P.",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "$c^2, a^2, b^2$ are in A.P.",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$a^2, b^2, c^2$ are in G.P.",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-132",
+    "_id": "ff31dfc5-7f84-43b0-8080-4c2cd7ef8f5b",
+    "stem": "If the sum of the squares of the roots of the equation $x^2 - (a-2)x - (a+1) = 0$ is least for an appropriate value of the variable parameter $a$, then the value of $a$ will be",
+    "options": [
+      {
+        "id": "a",
+        "text": "3",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "0",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-133",
+    "_id": "a52a0f16-5cdd-4d48-b77a-f89e3fd1aa96",
+    "stem": "For what value of $a$, the sum of the squares of the roots of the equation $x^2 - (a-2)x - a + 1 = 0$ will have the least value?",
+    "options": [
+      {
+        "id": "a",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "3",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "1",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 2,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-134",
+    "_id": "c39afbb7-f001-42cc-add1-763645960e24",
+    "stem": "If $P(x) = ax^2 + bx + c$ and $Q(x) = -ax^2 + dx + c$ where $ac \\neq 0$, then $P(x) \\cdot Q(x) = 0$ has ($a, b, c, d$ are real)",
+    "options": [
+      {
+        "id": "a",
+        "text": "2 real roots",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "at least two real roots",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "4 real roots",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "no real root",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-135",
+    "_id": "f484b320-a037-4a4b-a461-ff3e8cc36a93",
+    "stem": "If $a, b, c$ are distinct odd natural numbers, then the number of rational roots of the equation $ax^2 + bx + c = 0$",
+    "options": [
+      {
+        "id": "a",
+        "text": "must be 0",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "must be 1",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "must be 2",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "cannot be determined from the given data",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-136",
+    "_id": "5e02f43a-1922-4461-aced-f82df8d547b0",
+    "stem": "Let $N$ be the number of quadratic equations with coefficients from $\\{0, 1, 2, \\ldots, 9\\}$ such that $0$ is a solution of each equation. Then the value of $N$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$2^9$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$3^9$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "90",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "81",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-137",
+    "_id": "c4fe4f2b-7435-42c1-895e-88f8a5e2dfd8",
+    "stem": "If the quadratic equation $ax^2 + bx + c = 0$ ($a > 0$) has two roots $\\alpha$ and $\\beta$ such that $\\alpha < -2$ and $\\beta > 2$ then",
+    "options": [
+      {
+        "id": "a",
+        "text": "$c < 0$",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "$a + b + c > 0$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$a - b + c < 0$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$a - b + c > 0$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_options": [
+        "a",
+        "c"
+      ]
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-138",
+    "_id": "92609520-419b-4b77-b217-758e06124529",
+    "stem": "If one root of $x^2 + px - q^2 = 0$, $p$ and $q$ are real, be less than 2 and the other be greater than 2, then",
+    "options": [
+      {
+        "id": "a",
+        "text": "$4 + 2p + q^2 > 0$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$4 + 2p + q^2 < 0$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$4 + 2p - q^2 > 0$",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "$4 + 2p - q^2 < 0$",
+        "is_correct": true
+      }
+    ],
+    "answer": {
+      "correct_option": "d"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-139",
+    "_id": "88a1a0fe-0b19-4487-b70f-8197af43e4af",
+    "stem": "Consider a quadratic equation $ax^2 + 2bx + c = 0$ where $a, b, c$ are positive real numbers. If the equation has no real root, then which of the following is true?",
+    "options": [
+      {
+        "id": "a",
+        "text": "a, b, c cannot be in A.P. or H.P. but can be in G.P.",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "a, b, c cannot be in G.P. or H.P. but can be in A.P.",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "a, b, c cannot be in A.P. or G.P. but can be in H.P.",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "a, b, c cannot be in A.P., G.P. or H.P.",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 4,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-140",
+    "_id": "68f96af8-3395-4ba9-819e-d92a4d36ee73",
+    "stem": "The value of $a$ for which sum of the squares of the roots of the equation $x^2 - (a-2)x - a - 1 = 0$ assumes the least value is",
+    "options": [
+      {
+        "id": "a",
+        "text": "0",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "1",
+        "is_correct": true
+      },
+      {
+        "id": "c",
+        "text": "2",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "3",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "b"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-141",
+    "_id": "ddb13740-8ef4-4213-9878-066dcfb154b7",
+    "stem": "If $a, b$ are odd integers, then the roots of the equation $2ax^2 + (2a+b)x + b = 0$, $a \\neq 0$ are",
+    "options": [
+      {
+        "id": "a",
+        "text": "rational",
+        "is_correct": true
+      },
+      {
+        "id": "b",
+        "text": "irrational",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "non-real",
+        "is_correct": false
+      },
+      {
+        "id": "d",
+        "text": "equal",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "a"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-142",
+    "_id": "13cecaf9-2db1-4d2f-bda5-10a81a58a140",
+    "stem": "Let $ \\alpha, \\beta$ be the roots of the equation $ x^2 - 6x - 2 = 0$ with $ \\alpha > \\beta$. If $ a_n = \\alpha^n - \\beta^n$ for $ n \\ge 1$, then the value of $ \\frac{a_{10} - 2a_8}{2a_9}$ is",
+    "options": [
+      {
+        "id": "a",
+        "text": "$ 1$",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "$ 2$",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "$ 3$",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "$ 4$",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Numerical",
+    "current_primary_tag": "tag_ma_quadratic"
+  },
+  {
+    "display_id": "QUAD-143",
+    "_id": "ba24302d-0278-4521-9d2c-e89c3264ce9d",
+    "stem": "The equation $ 6^x + 8^x = 10^x$ has",
+    "options": [
+      {
+        "id": "a",
+        "text": "no real root.",
+        "is_correct": false
+      },
+      {
+        "id": "b",
+        "text": "infinitely many rational roots.",
+        "is_correct": false
+      },
+      {
+        "id": "c",
+        "text": "exactly one real root.",
+        "is_correct": true
+      },
+      {
+        "id": "d",
+        "text": "two distinct real roots.",
+        "is_correct": false
+      }
+    ],
+    "answer": {
+      "correct_option": "c"
+    },
+    "difficultyLevel": 3,
+    "questionNature": "Conceptual",
+    "current_primary_tag": "tag_ma_quadratic"
+  }
+]

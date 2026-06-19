@@ -35,6 +35,14 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next({ request });
     }
 
+    // Anonymous / bot traffic carries no Supabase auth cookie — there's no session
+    // to refresh, so skip the Edge invocation + Supabase round-trip entirely on
+    // these high-traffic content trees. Logged-in users still get the refresh. (vercel-cost #21)
+    const hasAuthCookie = request.cookies.getAll().some((c) => c.name.includes('-auth-token'));
+    if (!hasAuthCookie) {
+        return NextResponse.next({ request });
+    }
+
     let supabaseResponse = NextResponse.next({ request });
 
     const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
