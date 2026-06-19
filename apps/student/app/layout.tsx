@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Kalam, Outfit } from "next/font/google";
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { MixpanelProvider } from '@/components/providers/MixpanelProvider';
 import { ClarityScript } from '@/components/analytics/ClarityScript';
 import { ConsentGate } from '@/features/legal/components/ConsentGate';
@@ -229,6 +231,12 @@ export default function RootLayout({
           <ConditionalFooter />
         </MixpanelProvider>
         <ConsentGate />
+        {/* KEEP — Vercel Analytics + Speed Insights are intentionally retained (decided 2026-06,
+            founder) alongside GoogleAnalytics / Clarity / Mixpanel. Do NOT remove in a cost or
+            cleanup pass — a prior "multi-thread catch-all" commit stripped these by accident.
+            See DEEPENING_BACKLOG.md #19. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

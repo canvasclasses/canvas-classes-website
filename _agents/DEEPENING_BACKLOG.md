@@ -386,17 +386,18 @@ commits into fewer deploys.** Process note — no code item.
 
 ---
 
-### 19. [vercel-cost] Drop redundant `@vercel/analytics` + `@vercel/speed-insights`
+### 19. [vercel-cost] ~~Drop redundant `@vercel/analytics` + `@vercel/speed-insights`~~ — DECIDED: KEEP (2026-06-20)
 
-**Files**: `apps/student/app/layout.tsx` (`<Analytics />`, `<SpeedInsights />`), `apps/student/package.json` (deps), CSP entries in `apps/student/next.config.ts`.
+**DECISION (2026-06-20, founder): KEEP both.** Do NOT remove `<Analytics />` / `<SpeedInsights />`
+from `apps/student/app/layout.tsx`, and do NOT uninstall the deps. The founder uses the Vercel
+dashboards; the ~$0.52/cycle "Web Analytics Events" line is an accepted cost. A load-bearing guard
+comment sits next to the components in `layout.tsx`. **This item is CLOSED — do not re-suggest removal.**
 
-**Problem**: mounted alongside GoogleAnalytics + CloudflareAnalytics + Clarity + Mixpanel — fully redundant. This IS the entire "Web Analytics Events" cost line (~7%/day).
-
-**Solution shape**: remove both components + uninstall the two deps + trim the `va.vercel-scripts.com` / `*.vercel-insights.com` CSP allowances. Zero analytics-coverage loss.
-
-**Trigger**: now — highest value-to-effort (two-line deletion kills a whole cost line).
-
-**Surfaced by**: 2026-06-15 cost audit (analytics/data-cache/images agent).
+History: surfaced by the 2026-06-15 cost audit as redundant with GA / Cloudflare / Clarity /
+Mixpanel. It was then removed twice (once in this session, once by a parallel-machine "multi-thread
+catch-all" commit `5c46d91`) before the keep decision — a cross-machine ping-pong on the same file.
+Analytics was never the cost driver (~7% of a small cycle); the real ISR-write fixes are #16–#18,
+#20–#22 plus the Vercel Firewall block on `meta-webindexer`.
 
 ---
 
