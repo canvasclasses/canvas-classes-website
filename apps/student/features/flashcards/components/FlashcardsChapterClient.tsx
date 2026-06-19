@@ -519,11 +519,11 @@ export default function FlashcardsChapterClient({
                                                     : 'bg-gradient-to-br from-purple-600/20 to-pink-600/20 border-purple-500/30'
                                                     }`}
                                             >
-                                                <div>
-                                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-4">
+                                                <div className="w-full max-w-2xl mx-auto">
+                                                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-4 text-center">
                                                         {isFlipped ? 'Answer' : 'Question'}
                                                     </p>
-                                                    <div className="text-xl sm:text-2xl text-white font-medium leading-relaxed flashcard-content">
+                                                    <div className={`text-xl sm:text-2xl text-white font-medium leading-relaxed flashcard-content ${isFlipped ? 'text-left' : 'text-center'}`}>
                                                         <ReactMarkdown
                                                             remarkPlugins={[remarkMath]}
                                                             rehypePlugins={[rehypeKatex]}
@@ -533,7 +533,7 @@ export default function FlashcardsChapterClient({
                                                         </ReactMarkdown>
                                                     </div>
                                                     {!isFlipped && (
-                                                        <p className="mt-6 text-slate-500 text-sm">Click to reveal answer</p>
+                                                        <p className="mt-6 text-slate-500 text-sm text-center">Click to reveal answer</p>
                                                     )}
                                                 </div>
                                             </motion.div>
