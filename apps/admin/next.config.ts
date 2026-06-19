@@ -1,20 +1,7 @@
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from "next";
-import { createRequire } from 'node:module';
-import path from 'node:path';
 
 const isProd = process.env.NODE_ENV === 'production';
-
-// JSXGraph ships its `exports` map pointing at uncompiled SOURCE (src/index.js,
-// hundreds of modules) — bundling that is slow (dev on-demand compile) and fat.
-// Alias the bare `jsxgraph` import to its prebuilt single-file core instead.
-const _require = createRequire(import.meta.url);
-const jsxgraphCore = path.join(
-  path.dirname(_require.resolve('jsxgraph')),
-  '..',
-  'distrib',
-  'jsxgraphcore.js',
-);
 
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
@@ -124,8 +111,6 @@ const nextConfig: NextConfig = {
       ...(config.resolve.alias || {}),
       jsdom: false,
       canvas: false,
-      // Use JSXGraph's prebuilt core (single file) instead of its ESM source.
-      jsxgraph$: jsxgraphCore,
     };
     return config;
   },

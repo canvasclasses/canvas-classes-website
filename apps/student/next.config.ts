@@ -1,20 +1,7 @@
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from "next";
-import { createRequire } from 'node:module';
-import path from 'node:path';
 
 const isProd = process.env.NODE_ENV === 'production';
-
-// JSXGraph (Live Books interactive_graph block) ships its `exports` map pointing
-// at uncompiled SOURCE — slow to bundle and fat. Alias the bare `jsxgraph`
-// import to its prebuilt single-file core.
-const _require = createRequire(import.meta.url);
-const jsxgraphCore = path.join(
-  path.dirname(_require.resolve('jsxgraph')),
-  '..',
-  'distrib',
-  'jsxgraphcore.js',
-);
 
 const nextConfig: NextConfig = {
   // Isolated cache dir — lets secondary/preview servers use NEXT_DIST_DIR=.next-preview
@@ -297,15 +284,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
-  },
-  webpack: (config) => {
-    // Use JSXGraph's prebuilt core (single file) instead of its ESM source —
-    // far faster to compile and smaller in the bundle.
-    config.resolve.alias = {
-      ...(config.resolve.alias || {}),
-      jsxgraph$: jsxgraphCore,
-    };
-    return config;
   },
 };
 

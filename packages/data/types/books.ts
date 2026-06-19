@@ -40,8 +40,7 @@ export type BlockType =
   | 'chapter_practice'
   | 'apply_express'
   | 'reading_comprehension'
-  | 'junior_practice'
-  | 'interactive_graph';
+  | 'junior_practice';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -295,36 +294,6 @@ export interface SimulationBlock extends BaseBlock {
   simulation_id: string;  // e.g. 'fractional-distillation', 'crystallisation-column'
   title?: string;
   prediction?: SimulationPrediction; // Optional predict-observe-explain layer
-}
-
-// INTERACTIVE GRAPH — a JSXGraph board students can manipulate (drag sliders /
-// points). Two authoring modes:
-//   • spec  — config-driven (axes + functions + sliders), built via the editor form.
-//   • graph_id — a hand-built named graph from the renderer's registry (richer,
-//     e.g. tangent-to-curve, area-under-curve). When graph_id is set it wins.
-export interface GraphSlider {
-  name: string;   // single letter used in function expressions, e.g. 'a'
-  min: number;
-  max: number;
-  value: number;  // initial value
-  step?: number;
-}
-export interface GraphFunction {
-  expr: string;   // expression in x (and slider names), e.g. 'a*x^2 + b*x + c'
-  color?: string;
-}
-export interface InteractiveGraphSpec {
-  bounds: { xmin: number; xmax: number; ymin: number; ymax: number };
-  functions: GraphFunction[];
-  sliders: GraphSlider[];
-  showGrid?: boolean;
-}
-export interface InteractiveGraphBlock extends BaseBlock {
-  type: 'interactive_graph';
-  title?: string;
-  caption?: string;
-  graph_id?: string;             // prebuilt named graph (registry) — takes precedence
-  spec?: InteractiveGraphSpec;   // config-driven board
 }
 
 // 21. CURIOSITY PROMPT — open-ended Block 0 hook for Class 9 pages
@@ -877,8 +846,7 @@ export type ContentBlock =
   | ChapterPracticeBlock
   | ApplyExpressBlock
   | ReadingComprehensionBlock
-  | JuniorPracticeBlock
-  | InteractiveGraphBlock;
+  | JuniorPracticeBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────

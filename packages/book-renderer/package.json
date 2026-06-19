@@ -8,7 +8,6 @@
     ".": "./index.ts",
     "./PageRenderer": "./PageRenderer.tsx",
     "./BlockRenderer": "./BlockRenderer.tsx",
-    "./blocks/InteractiveGraphRenderer": "./blocks/InteractiveGraphRenderer.tsx",
     "./simulators-context": "./simulators-context.tsx",
     "./simulations/vector-lab": "./blocks/simulations/vector-lab/VectorLabSim.tsx",
     "./vault-context": "./vault-context.tsx",
@@ -17,7 +16,6 @@
   "dependencies": {
     "@canvas/data": "*",
     "@canvas/ui": "*",
-    "jsxgraph": "^1.12.2",
     "katex": "^0.16.28",
     "lottie-react": "^2.4.1",
     "planck": "^1.5.0",

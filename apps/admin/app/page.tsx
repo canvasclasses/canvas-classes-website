@@ -14,7 +14,6 @@ import {
   GraduationCap,
   Hexagon,
   PencilRuler,
-  LineChart,
 } from 'lucide-react';
 import { createClient } from '@/app/utils/supabase/server';
 import { SignoutButton } from '@/features/admin/components/SignoutButton';
@@ -136,12 +135,6 @@ export default async function AdminHome() {
                 icon={<PencilRuler />}
                 title="Diagram Editor"
                 hint="Physics & math diagrams — pulleys, wedges, circuits, optics, thermo graphs. Drag-in shape libraries; export clean SVG / PNG (precise or hand-drawn)."
-              />
-              <PanelCard
-                href="/graph-editor"
-                icon={<LineChart />}
-                title="Graph Editor"
-                hint="Math grapher (GeoGebra-style) — plot functions with draggable sliders, geometry & calculus visuals. Interact live; export SVG / PNG. Same engine as Live Books graphs."
               />
             </Section>
 

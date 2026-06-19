@@ -254,34 +254,6 @@ const SimulationBlockSchema = BaseBlockSchema.extend({
   prediction: SimulationPredictionSchema.optional(),
 });
 
-const InteractiveGraphBlockSchema = BaseBlockSchema.extend({
-  type: z.literal('interactive_graph'),
-  title: z.string().optional(),
-  caption: z.string().optional(),
-  graph_id: z.string().optional(),
-  spec: z
-    .object({
-      bounds: z.object({
-        xmin: z.number(),
-        xmax: z.number(),
-        ymin: z.number(),
-        ymax: z.number(),
-      }),
-      functions: z.array(z.object({ expr: z.string(), color: z.string().optional() })),
-      sliders: z.array(
-        z.object({
-          name: z.string().min(1),
-          min: z.number(),
-          max: z.number(),
-          value: z.number(),
-          step: z.number().optional(),
-        }),
-      ),
-      showGrid: z.boolean().optional(),
-    })
-    .optional(),
-});
-
 const ReasoningPromptBlockSchema = BaseBlockSchema.extend({
   type: z.literal('reasoning_prompt'),
   reasoning_type: z.enum(['logical', 'spatial', 'quantitative', 'analogical']),
@@ -680,7 +652,6 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   ApplyExpressBlockSchema,
   ReadingComprehensionBlockSchema,
   JuniorPracticeBlockSchema,
-  InteractiveGraphBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -733,7 +704,6 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   ApplyExpressBlockSchema,
   ReadingComprehensionBlockSchema,
   JuniorPracticeBlockSchema,
-  InteractiveGraphBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);
