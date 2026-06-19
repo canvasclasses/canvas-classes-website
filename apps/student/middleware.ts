@@ -4,6 +4,24 @@ import { createServerClient } from '@supabase/ssr'
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
+    // ── Block no-value crawlers at the edge (vercel-cost ROOT CAUSE) ─────
+    // These bots crawl the high-cardinality question surface (/the-crucible/q,
+    // /chemistry-questions) at ~0% cache hit — an ISR regeneration on nearly
+    // every request — while sending zero traffic/citations back. Returning 403
+    // HERE, before the route renders, means the page never regenerates and no
+    // ISR write happens. The middleware already runs on these routes (matcher
+    // below covers them), so this adds no invocations — it converts a pass-
+    // through into a 403. meta-externalagent (Vercel labels it "meta-webindexer")
+    // IGNORES robots.txt, so this edge block is the only thing that actually
+    // stops it. All VALUE bots (Googlebot, Bingbot, ChatGPT-User, Perplexity,
+    // Claude, facebookexternalhit, uptime monitors) are intentionally NOT listed.
+    // Mirrors blockedNoValueCrawlers in app/robots.ts. A Vercel Firewall rule
+    // would do this one step earlier; this is the code-tracked equivalent.
+    const NO_VALUE_BOT_RE = /meta-externalagent|meta-externalfetcher|meta-webindexer|petalbot|yandexbot|ahrefsbot|semrushbot|mj12bot|dotbot|dataforseobot|blexbot/i;
+    if (NO_VALUE_BOT_RE.test(request.headers.get('user-agent') || '')) {
+        return new NextResponse(null, { status: 403 });
+    }
+
     // ── Redirect old /books/ URLs for Class 9 books to /class-9/ ────────
     const class9Redirect = pathname.match(/^\/books\/(class9-[^/]+)(\/(.+))?$/);
     if (class9Redirect) {
