@@ -134,6 +134,7 @@ export default function BrowseView({
   chapterId,
   examBoard,
   onLoadSolutionsForPage,
+  initialExamFilter = 'all',
 }: {
   questions: Question[];
   chapters: Chapter[];
@@ -143,13 +144,14 @@ export default function BrowseView({
   onQuestionAnswered?: (isCorrect: boolean) => void;
   examBoard?: 'JEE' | 'NEET';
   onLoadSolutionsForPage?: (qids: string[]) => void;
+  initialExamFilter?: 'all' | 'pyq' | 'mains' | 'advanced' | 'wbjee' | 'non-pyq' | 'starred';
 }) {
   // ── Layout / device state
   const [isMobile, setIsMobile] = useState(false);
   const [topicDrawerOpen, setTopicDrawerOpen] = useState(false);
 
   // ── Filters
-  const [examFilter, setExamFilter] = useState<'all' | 'mains' | 'advanced' | 'wbjee' | 'non-pyq' | 'starred'>('all');
+  const [examFilter, setExamFilter] = useState<'all' | 'pyq' | 'mains' | 'advanced' | 'wbjee' | 'non-pyq' | 'starred'>(initialExamFilter);
   const [yearFilter, setYearFilter] = useState<string>('all');
   const [topicFilter, setTopicFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -351,6 +353,8 @@ export default function BrowseView({
           if (!starred.has(q.id)) return false;
         } else if (examFilter === 'non-pyq') {
           if (isPyq(q.metadata)) return false;
+        } else if (examFilter === 'pyq') {
+          if (!isPyq(q.metadata)) return false;
         } else if (examFilter !== 'all') {
           if (examFilter === 'mains' && !isJeeMainPyq(q.metadata)) return false;
           if (examFilter === 'advanced' && !isJeeAdvancedPyq(q.metadata)) return false;
@@ -685,6 +689,7 @@ export default function BrowseView({
       ]
     : [
         { id: 'all', label: 'All' },
+        { id: 'pyq', label: 'All PYQs' },
         { id: 'mains', label: 'JEE Mains' },
         { id: 'advanced', label: 'JEE Advanced' },
         { id: 'wbjee', label: 'WBJEE' },
