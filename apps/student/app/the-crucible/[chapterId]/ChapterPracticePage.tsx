@@ -189,7 +189,10 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
         const browseQuestions = isTopPYQFilter
             ? questions.filter(q => q.metadata?.is_top_pyq === true)
             : questions;
-        return <BrowseView questions={browseQuestions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} examBoard={examBoard} />;
+        const examParam = searchParams.get('exam');
+        const initialExamFilter: 'all' | 'pyq' | 'non-pyq' =
+            examParam === 'pyq' ? 'pyq' : examParam === 'non-pyq' ? 'non-pyq' : 'all';
+        return <BrowseView questions={browseQuestions} chapters={allChapters} onBack={() => updateMode('choose')} chapterId={chapter.id} examBoard={examBoard} initialExamFilter={initialExamFilter} />;
     }
 
     if (mode === 'test') {
@@ -275,21 +278,27 @@ export default function ChapterPracticePage({ chapter, questions, allChapters, e
 
                         {/* Action buttons */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            <button onClick={() => updateMode('browse')}
-                                style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-                                📖 Topic-wise Problems
-                                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 400 }}>Solutions visible</span>
+                            <button onClick={() => router.push(chapterUrl(chapter.id, 'mode=browse&exam=pyq'))}
+                                style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(56,189,248,0.3)', background: 'rgba(56,189,248,0.08)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                                📜 Topic-wise PYQs
+                                <span style={{ fontSize: 12, color: 'rgba(56,189,248,0.7)', fontWeight: 400 }}>Past-year questions, by topic</span>
                             </button>
-                            
-                            {/* Quick Revision - only show if ≥20 star questions */}
+
+                            <button onClick={() => router.push(chapterUrl(chapter.id, 'mode=browse&exam=non-pyq'))}
+                                style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(52,211,153,0.3)', background: 'rgba(52,211,153,0.08)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                                📖 Topic-wise Practice
+                                <span style={{ fontSize: 12, color: 'rgba(52,211,153,0.7)', fontWeight: 400 }}>Concept-building, non-PYQ</span>
+                            </button>
+
+                            {/* Top Questions — hand-picked by Paaras Sir */}
                             {(chapter.star_question_count ?? 0) >= 20 && (
                                 <button onClick={() => router.push(chapterUrl(chapter.id, 'mode=browse&is_top_pyq=true'))}
                                     style={{ padding: '18px', borderRadius: 14, border: '1px solid rgba(251,191,36,0.3)', background: 'rgba(251,191,36,0.1)', color: '#fbbf24', fontSize: 15, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
                                     ⭐ Top Questions
-                                    <span style={{ fontSize: 12, color: 'rgba(251,191,36,0.6)', fontWeight: 400 }}>{chapter.star_question_count} hand-picked · for revision &amp; backlogs</span>
+                                    <span style={{ fontSize: 12, color: 'rgba(251,191,36,0.6)', fontWeight: 400 }}>{chapter.star_question_count} hand-picked by Paaras Sir</span>
                                 </button>
                             )}
-                            
+
                             <button onClick={() => setShowTestConfig(true)} disabled={isBuilding}
                                 style={{ padding: '18px', borderRadius: 14, border: 'none', background: isBuilding ? 'rgba(124,58,237,0.4)' : 'linear-gradient(135deg,#7c3aed,#5b21b6)', color: '#fff', fontSize: 15, fontWeight: 800, cursor: isBuilding ? 'default' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}>
                                 {isBuilding ? '⏳ Building test…' : '⏱ Chapter Test'}

@@ -176,8 +176,10 @@ async function fetchQuestions(chapterIds: string[], limit?: number, topPYQOnly?:
 
 // Single batch fetch — used by both prefetch and the streaming continuation.
 // Returns the questions plus the chapter total so the caller knows when to stop.
-// Pass excludeSolutions=true to skip the heavy solution markdown (loaded lazily
-// when the user navigates to that page in BrowseView).
+// The default (excludeSolutions=true) skips the heavy solution markdown so the
+// streaming path stays cheap; the first batch (skip=0) explicitly passes
+// excludeSolutions=false so Q1–Q50 arrive with solutions already present and
+// the visible window never depends on a follow-up lazy-load round-trip.
 async function fetchBatch(
   chapterId: string,
   examBoard: string | undefined,
@@ -473,6 +475,10 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
   // Live chapter stats for Free Browse card
   const [chapterStats, setChapterStats] = useState<{ total: number; jeeMain: number; jeeAdv: number; nonPyq: number; neetPyq?: number } | null>(null);
 
+  // Which filter BrowseView should land on when launched from the mode-picker.
+  // 'all' = legacy mixed view, 'pyq' = PYQ-only, 'non-pyq' = Practice-only.
+  const [pendingExamFilter, setPendingExamFilter] = useState<'all' | 'pyq' | 'non-pyq'>('all');
+
   // View state
   const [activeView, setActiveView] = useState<ActiveView>('wizard');
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -508,7 +514,10 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
     transitionedRef.current = true;
     setLoading(true);
 
-    fetchBatch(initialChapterId, exam, 0, 50, controller.signal)
+    // First batch includes solutions so Q1–Q50 render with solutions present.
+    // Closes the lazy-loader race that left the visible window stuck on
+    // "Loading solution…" during fast opens.
+    fetchBatch(initialChapterId, exam, 0, 50, controller.signal, false)
       .then(({ questions: firstBatch, total }) => {
         if (controller.signal.aborted) return;
         setQuestions(firstBatch);
@@ -798,7 +807,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
       setPrefetchedQuestions(null);
       setPrefetchedTotal(0);
 
-      fetchBatch(id, selectedExam ?? undefined, 0, 50, controller.signal)
+      // First batch includes solutions (excludeSolutions=false) so Q1–Q50 render
+      // with their solutions already present — the lazy-loader race that left
+      // Q1–Q3 stuck on "Loading solution…" during fast opens cannot happen for
+      // the visible window. Streaming continuation keeps excludeSolutions=true.
+      fetchBatch(id, selectedExam ?? undefined, 0, 50, controller.signal, false)
         .then(({ questions, total }) => {
           if (controller.signal.aborted) return;
           setPrefetchedQuestions(questions);
@@ -908,7 +921,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
     const controller = new AbortController();
     streamAbortRef.current = controller;
 
-    fetchBatch(chapterId, examBoard, 0, 50, controller.signal)
+    // First batch includes solutions (excludeSolutions=false). This closes the
+    // race where the lazy-solution loader could fail/return-empty during the
+    // fast-open burst and leave Q1–Q3 stuck on "Loading solution…" forever.
+    // Streaming continuation batches still use excludeSolutions=true (default).
+    fetchBatch(chapterId, examBoard, 0, 50, controller.signal, false)
       .then(({ questions, total }) => {
         if (controller.signal.aborted) return;
         setPendingQuestions(questions);
@@ -1148,7 +1165,7 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
   if (activeView === 'shloka') return <ShlokaScreen onDone={onShlokaDone} />;
   if (activeView === 'browse') return (
     <>
-      <BrowseView questions={questions} chapters={chapters} onBack={handleBackToWizard} chapterId={selectedChapterId ?? undefined} examBoard={selectedExam ?? undefined} onLoadSolutionsForPage={loadSolutionsForPage} />
+      <BrowseView questions={questions} chapters={chapters} onBack={handleBackToWizard} chapterId={selectedChapterId ?? undefined} examBoard={selectedExam ?? undefined} onLoadSolutionsForPage={loadSolutionsForPage} initialExamFilter={pendingExamFilter} />
       {streamProgress && streamProgress.loaded < streamProgress.total && (
         <div
           aria-live="polite"
@@ -1684,34 +1701,60 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
               <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginBottom: 10 }}>How do you want to practice?</div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {/* A. Free Browse */}
-                <button onClick={handleBrowseLaunch} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(56,189,248,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
+                {/* A1. Topic-wise PYQs */}
+                <button onClick={() => { setPendingExamFilter('pyq'); handleBrowseLaunch(); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(56,189,248,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
                   <div style={{ width: 3, height: 36, borderRadius: 2, background: '#38bdf8', flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Topic-wise Problems</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Topic-wise PYQs</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                       {chapterStats === null ? (
                         <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>Loading…</span>
-                      ) : (selectedExam === 'NEET'
-                        ? [[String(chapterStats.total), 'total'], [String(chapterStats.neetPyq ?? 0), 'PYQ'], [String(chapterStats.nonPyq), 'new']]
-                        : [[String(chapterStats.total), 'total'], [String(chapterStats.jeeMain), 'Main'], [String(chapterStats.jeeAdv), 'Adv']]
-                      ).map(([val, lbl]) => (
-                        <span key={lbl} style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
-                          <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.75)' }}>{val}</span> {lbl}
+                      ) : selectedExam === 'NEET' ? (
+                        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+                          <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.75)' }}>{chapterStats.neetPyq ?? 0}</span> NEET PYQ
                         </span>
-                      ))}
+                      ) : (
+                        [[String(chapterStats.jeeMain + chapterStats.jeeAdv), 'PYQs'], [String(chapterStats.jeeMain), 'Main'], [String(chapterStats.jeeAdv), 'Adv']].map(([val, lbl]) => (
+                          <span key={lbl} style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+                            <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.75)' }}>{val}</span> {lbl}
+                          </span>
+                        ))
+                      )}
                     </div>
                   </div>
                   <ChevronRight style={{ width: 15, height: 15, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
                 </button>
 
-                {/* B. Quick Revision (conditional) */}
+                {/* A2. Topic-wise Practice */}
+                <button onClick={() => { setPendingExamFilter('non-pyq'); handleBrowseLaunch(); }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(52,211,153,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
+                  <div style={{ width: 3, height: 36, borderRadius: 2, background: '#34d399', flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Topic-wise Practice</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                      {chapterStats === null ? (
+                        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>Loading…</span>
+                      ) : (
+                        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+                          <span style={{ fontWeight: 700, color: 'rgba(255,255,255,0.75)' }}>{chapterStats.nonPyq}</span> non-PYQ · for concept-building
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <ChevronRight style={{ width: 15, height: 15, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
+                </button>
+
+                {/* B. Top Questions — hand-picked by Paaras Sir (conditional) */}
                 {chapterStarCount >= 20 && (
                   <button onClick={handleQuickRevisionLaunch} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 14, padding: '14px 4px', borderRadius: 0, border: 'none', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'transparent', cursor: 'pointer', transition: 'background 0.15s', textAlign: 'left', WebkitTapHighlightColor: 'transparent' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(251,191,36,0.04)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}>
                     <div style={{ width: 3, height: 36, borderRadius: 2, background: '#fbbf24', flexShrink: 0 }} />
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 15, fontWeight: 600, color: '#fafafa', marginBottom: 3 }}>Top Questions</div>
-                      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{chapterStarCount} hand-picked · for revision &amp; backlogs</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 3 }}>
+                        <Star style={{ width: 14, height: 14, color: '#fbbf24', fill: '#fbbf24' }} />
+                        <span style={{ fontSize: 15, fontWeight: 600, color: '#fafafa' }}>Top Questions</span>
+                      </div>
+                      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+                        <span style={{ fontWeight: 700, color: 'rgba(251,191,36,0.85)' }}>{chapterStarCount}</span> hand-picked by Paaras Sir · for revision &amp; backlogs
+                      </div>
                     </div>
                     <ChevronRight style={{ width: 15, height: 15, color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
                   </button>
