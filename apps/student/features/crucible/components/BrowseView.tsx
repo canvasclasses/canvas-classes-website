@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Bookmark, Check, X, Search, Flag, Volume2, MonitorPlay, ChevronDown, ChevronUp, ExternalLink, Menu, AlertCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Bookmark, Check, X, Search, Flag, Volume2, MonitorPlay, ChevronDown, ChevronUp, ExternalLink, Menu, AlertCircle, Layers } from 'lucide-react';
 import WaveformAudioPlayer from '@/components/WaveformAudioPlayer';
 import { Chapter, Question } from './types';
 import MathRenderer from '@canvas/ui/MathRenderer';
@@ -80,6 +80,35 @@ const catAccent = (cat?: string): string => CAT_COLOR[cat ?? ''] ?? '#fb923c';
 // labelled/coloured by subject + their `group` (module/section) instead. Colours
 // match the wizard's subject tiles.
 const SUBJECT_ACCENT: Record<string, string> = { Physics: '#a78bfa', Maths: '#f97316' };
+
+// Crucible chapter_id → /chemistry-flashcards slug. Only the chapters that have
+// a published deck appear here; the rest don't render a CTA. Keep in sync with
+// packages/data/flashcards/flashcardTaxonomy.ts.
+const CHEM_FLASHCARD_SLUG: Record<string, string> = {
+  ch11_atom: 'atomic-structure',
+  ch11_bonding: 'chemical-bonding',
+  ch11_chem_eq: 'chemical-equilibrium',
+  ch11_goc: 'goc-and-poc',
+  ch11_hydrocarbon: 'hydrocarbons',
+  ch11_ionic_eq: 'ionic-equilibrium',
+  ch11_mole: 'mole-concept',
+  ch11_pblock: 'p-block-group-13-14',
+  ch11_periodic: 'periodic-table-periodicity',
+  ch11_redox: 'redox-reactions',
+  ch11_thermo: 'thermodynamics',
+  ch12_alcohols: 'alcohols-phenols-ethers',
+  ch12_amines: 'amines',
+  ch12_biomolecules: 'biomolecules',
+  ch12_carbonyl: 'aldehydes-ketones-acids',
+  ch12_coord: 'coordination-compounds',
+  ch12_dblock: 'd-f-block',
+  ch12_electrochem: 'electrochemistry',
+  ch12_haloalkanes: 'haloalkanes',
+  ch12_kinetics: 'chemical-kinetics',
+  ch12_pblock: 'p-block-elements-g15-18',
+  ch12_salt: 'salt-analysis',
+  ch12_solutions: 'solutions',
+};
 
 // Per-question UI state. Lives in a single Map keyed by question id so it
 // survives pagination / filter changes — avoids the old indexed-by-localIdx
@@ -1251,6 +1280,18 @@ export default function BrowseView({
                     >
                       {sectionLabel}
                     </span>
+                  )}
+                  {currentChapter && CHEM_FLASHCARD_SLUG[currentChapter.id] && (
+                    <a
+                      href={`/chemistry-flashcards/${CHEM_FLASHCARD_SLUG[currentChapter.id]}`}
+                      onClick={() => track('crucible_flashcard_cta_click', { chapter_id: currentChapter.id })}
+                      className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md whitespace-nowrap transition-all hover:scale-[1.03]"
+                      style={{ color: accent, background: `${accent}10`, border: `1px solid ${accent}40` }}
+                      title="Drill this chapter as flashcards (spaced repetition)"
+                    >
+                      <Layers className="w-3 h-3" />
+                      Flashcards
+                    </a>
                   )}
                 </>
               )}
