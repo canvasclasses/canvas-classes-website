@@ -352,18 +352,38 @@ export default function BookWorkspace() {
   }
 
   // ── Upload helper (passed down to block editors) ──────────────────────────
+  // Uses a two-step presign → direct-R2-PUT flow so large videos bypass
+  // Vercel's 4.5 MB serverless function body limit.
   const upload: UploadFn = async (file, blockId) => {
-    const fd = new FormData();
-    fd.append('file', file);
-    fd.append('book_id', selectedBook?._id ?? '');
-    fd.append('chapter_number', String(
+    const chapterNumber = String(
       pages.find((p) => p.slug === selectedPageSlug)?.chapter_number ?? 1
-    ));
-    fd.append('block_id', blockId);
-    const res = await fetch('/api/v2/books/assets/upload', { method: 'POST', body: fd });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error || 'Upload failed');
-    return data.url as string;
+    );
+
+    // Step 1: get a pre-signed PUT URL from our API (tiny JSON request).
+    const metaRes = await fetch('/api/v2/books/assets/presign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        file_name: file.name,
+        file_type: file.type,
+        file_size: file.size,
+        book_id: selectedBook?._id ?? '',
+        chapter_number: chapterNumber,
+        block_id: blockId,
+      }),
+    });
+    const meta = await metaRes.json();
+    if (!metaRes.ok) throw new Error(meta.error || 'Failed to get upload URL');
+
+    // Step 2: PUT the file directly to R2 — never touches Vercel.
+    const uploadRes = await fetch(meta.presignedUrl, {
+      method: 'PUT',
+      body: file,
+      headers: { 'Content-Type': file.type },
+    });
+    if (!uploadRes.ok) throw new Error(`R2 upload failed (${uploadRes.status})`);
+
+    return meta.publicUrl as string;
   };
 
   // ── Sidebar callbacks (stable refs so memo'd sidebar doesn't re-render) ──

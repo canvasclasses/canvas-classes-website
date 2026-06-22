@@ -45,7 +45,14 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "connect-src 'self' https://*.supabase.co https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com",
+              // *.r2.cloudflarestorage.com: the admin uploads assets (videos,
+              // images, audio) directly to Cloudflare R2 via a presigned PUT
+              // (apps/admin/app/api/v2/{assets,books/assets}/presign). The
+              // browser PUTs straight to the R2 S3 endpoint to bypass Vercel's
+              // ~4.5 MB serverless body limit, so connect-src must allow it —
+              // otherwise the PUT is blocked by CSP ("Failed to fetch", no
+              // network entry). r2.dev (public read) goes through img-/media-src.
+              "connect-src 'self' https://*.supabase.co https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com https://*.r2.cloudflarestorage.com",
               "media-src 'self' https: blob:",
               "object-src 'none'",
               "frame-src 'self' https://customer-stream.cloudflarestream.com",

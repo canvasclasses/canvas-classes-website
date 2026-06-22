@@ -12,6 +12,15 @@ interface VideoDropZoneProps {
 
 type UploadState = 'idle' | 'dragging' | 'uploading' | 'success' | 'error';
 
+// SHA-256 of the file bytes, hex-encoded — computed in the browser so the
+// direct-to-R2 upload can still dedup server-side (the bytes never reach our API).
+async function sha256Hex(buf: ArrayBuffer): Promise<string> {
+    const digest = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(digest))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
+}
+
 export default function VideoDropZone({ questionId, onUploaded, context }: VideoDropZoneProps) {
     const [state, setState] = useState<UploadState>('idle');
     const [lastUrl, setLastUrl] = useState<string>('');
@@ -42,30 +51,58 @@ export default function VideoDropZone({ questionId, onUploaded, context }: Video
         setErrorMsg('');
 
         try {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('questionId', questionId);
-            formData.append('field_type', 'solution');
-            if (context) formData.append('context', context);
+            // Two-step direct-to-R2 upload so large videos bypass Vercel's
+            // ~4.5 MB serverless body limit (a proxied POST 413s in production).
+            // Step 1: presign. Step 2: PUT straight to R2. Step 3: register the
+            // Asset doc. Checksum is hashed in the browser for server-side dedup.
+            const buf = await file.arrayBuffer();
+            const checksum = await sha256Hex(buf);
 
-            const res = await fetch('/api/v2/assets/upload', {
+            const presignRes = await fetch('/api/v2/assets/presign', {
                 method: 'POST',
-                body: formData,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    file_name: file.name,
+                    file_type: file.type || 'video/mp4',
+                    file_size: file.size,
+                    question_id: questionId,
+                }),
             });
-
-            let data;
-            try {
-                data = await res.json();
-            } catch (jsonError) {
-                console.error('Failed to parse JSON response:', jsonError);
-                throw new Error(`Server error: ${res.status} ${res.statusText}`);
+            const presign = await presignRes.json().catch(() => null);
+            if (!presignRes.ok || !presign?.presignedUrl) {
+                throw new Error(presign?.error || `Server error: ${presignRes.status} ${presignRes.statusText}`);
             }
 
-            if (!res.ok || !data.success) {
-                throw new Error(data.error || `Upload failed: ${res.status}`);
+            const putRes = await fetch(presign.presignedUrl, {
+                method: 'PUT',
+                body: file,
+                headers: { 'Content-Type': file.type || 'video/mp4' },
+            });
+            if (!putRes.ok) {
+                throw new Error(`R2 upload failed (${putRes.status})`);
             }
 
-            const cdnUrl: string = data.data.file.cdn_url;
+            // Step 3: record the Asset doc + audit (best-effort: the file is
+            // already in R2 and usable even if this bookkeeping call fails).
+            await fetch('/api/v2/assets/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    asset_id: presign.asset_id,
+                    key: presign.key,
+                    cdn_url: presign.cdn_url,
+                    asset_type: presign.asset_type,
+                    mime_type: (file.type || 'video/mp4').split(';')[0].trim(),
+                    file_name: file.name,
+                    size_bytes: file.size,
+                    checksum,
+                    question_id: questionId,
+                    field_type: 'solution',
+                    context,
+                }),
+            }).catch((regErr) => console.error('Asset register failed (file is uploaded):', regErr));
+
+            const cdnUrl: string = presign.cdn_url;
 
             setLastUrl(cdnUrl);
             setState('success');
