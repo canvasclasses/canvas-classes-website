@@ -1,6 +1,8 @@
 # BITSAT predictor — integration plan
 
 Status: data layer + predictor + UI/API live. **2026-06-13 — Model v4 2026 projection integrated.**
+
+**2026-06-22 — 2024-alignment layer added.** Iteration-1 2026 cutoffs came in close to **2024** (a bounce-back above 2025), so the live-cycle engine now leans each branch's projection toward its 2024 final closing score before bucketing: `aligned = projection + α·(close2024 − projection)`, band width preserved, `α = BITSAT_2024_ALIGNMENT = 0.75` (Strong, founder-set). Lives in [`predictor.ts`](../../apps/student/features/college-predictor/bitsat/predictor.ts); gated to `regime==='modern' && cutoffYear===BITSAT_PREDICTION_YEAR` and only when a 2024 close exists (branches introduced 2025 keep the pure Model-v4 band). Backtests/legacy are unaffected. Tune or revert by changing the one constant. The Model-v4 band (`predictions2026.ts`) is untouched — alignment is layered on top.
 The live 2026 projection no longer uses the naive weighted-mean+trend (it overshot the
 founder's Admissions-Research sheet by +9 to +25 marks). It now reads the authoritative
 per-branch band in [`packages/data/bitsat/predictions2026.ts`](../../packages/data/bitsat/predictions2026.ts)

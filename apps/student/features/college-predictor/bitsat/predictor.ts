@@ -57,6 +57,18 @@ export const REGIME_MAX_SCORE: Record<BitsatRegime, number> = {
   legacy: 450,
 };
 
+// ── 2024 alignment ───────────────────────────────────────────────────────────
+// The Model-v4 band projected 2026 *down* from 2025, but the Iteration-1 2026
+// cutoffs came in close to 2024 (a bounce-back above 2025). So for the LIVE 2026
+// cycle we lean each branch's projected cutoff toward its 2024 final closing
+// score (the same `bitsat_cutoffs` historical the engine already loads):
+//   aligned = projection + α · (close2024 − projection)
+//   0 = pure Model-v4 / statistical projection · 1 = the 2024 close itself.
+// Band width (low..high) is preserved by shifting all three bounds equally.
+// Applies only when predicting the live cycle (not backtests / legacy), and only
+// when a 2024 close exists for the branch. Founder-set 2026-06-22 (Strong).
+export const BITSAT_2024_ALIGNMENT = 0.75;
+
 export interface BitsatPredictorInput {
   // Raw BITSAT score (0..390 for the modern paper, 0..450 for the legacy one).
   score: number;
@@ -204,7 +216,7 @@ function classify(
 // continuous and monotonically non-decreasing in score.
 function classifyByBand(
   userScore: number,
-  band: BitsatPrediction2026,
+  band: { low: number; likely: number; high: number },
 ): { bucket: BitsatBucket; probability: number } {
   const { low, likely, high } = band;
 
@@ -315,6 +327,14 @@ export async function predictBitsat(
 
     const band = useBand ? getBitsatPrediction2026(g.campus, g.code) : undefined;
 
+    // 2024 final close for this branch (modern-regime historical), used to lean
+    // the live-cycle projection toward 2024 — see BITSAT_2024_ALIGNMENT.
+    const close2024 = g.rows.find((r) => r.year === 2024)?.cutoff_score;
+    const aligning = useBand && BITSAT_2024_ALIGNMENT > 0 && close2024 != null;
+    const alignNote = aligning
+      ? `; leaned ${Math.round(BITSAT_2024_ALIGNMENT * 100)}% toward 2024 close (${close2024})`
+      : '';
+
     let bucket: BitsatBucket;
     let probability: number;
     let projectedCutoff: number;
@@ -325,24 +345,38 @@ export async function predictBitsat(
     let projectedHigh: number | undefined;
 
     if (band) {
-      const cls = classifyByBand(userScore, band);
+      // Shift the whole band toward the 2024 close (preserving its width) before
+      // bucketing, so Safe/Target/Reach reflect the 2024-aligned projection.
+      let low = band.low;
+      let likely = band.likely;
+      let high = band.high;
+      if (aligning) {
+        const shift = BITSAT_2024_ALIGNMENT * (close2024! - likely);
+        low += shift;
+        likely += shift;
+        high += shift;
+      }
+      const cls = classifyByBand(userScore, { low, likely, high });
       bucket = cls.bucket;
       probability = cls.probability;
-      projectedCutoff = band.likely;
-      projectedLow = band.low;
-      projectedHigh = band.high;
+      projectedCutoff = Math.round(likely);
+      projectedLow = Math.round(low);
+      projectedHigh = Math.round(high);
       const bc = bandConfidence(band);
       confidence = bc.confidence;
-      confidenceReason = bc.confidence_reason;
+      confidenceReason = bc.confidence_reason + alignNote;
       projectionSource = 'model_v4_2026';
     } else {
       const proj = project(g.rows);
-      const cls = classify(userScore, proj.projected, proj.sigma, g.rows.map((r) => r.cutoff_score));
+      const projected = aligning
+        ? proj.projected + BITSAT_2024_ALIGNMENT * (close2024! - proj.projected)
+        : proj.projected;
+      const cls = classify(userScore, projected, proj.sigma, g.rows.map((r) => r.cutoff_score));
       bucket = cls.bucket;
       probability = cls.probability;
-      projectedCutoff = Math.round(proj.projected);
+      projectedCutoff = Math.round(projected);
       confidence = proj.confidence;
-      confidenceReason = proj.confidence_reason;
+      confidenceReason = proj.confidence_reason + alignNote;
       projectionSource = 'statistical';
     }
 
