@@ -48,7 +48,7 @@ function BannerInner() {
             {/* One slim promo bar with two CTA chips — College Predictor +
                 BITSAT hub — instead of two stacked bars. The pill keeps the
                 under-navbar tuck (pt-30, border-t-0). */}
-            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-[30px] pb-2.5 rounded-full bg-gradient-to-r from-orange-500/[0.12] via-amber-500/[0.08] to-amber-400/[0.04] backdrop-blur-xl border border-t-0 border-orange-500/25 shadow-md shadow-amber-950/30">
+            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-[42px] pb-2.5 rounded-full bg-gradient-to-r from-orange-500/[0.12] via-amber-500/[0.08] to-amber-400/[0.04] backdrop-blur-xl border border-t-0 border-orange-500/25 shadow-md shadow-amber-950/30">
                 {/* Lead label */}
                 <div className="flex items-baseline gap-1.5 min-w-0">
                     <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 shrink-0">
