@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Kalam, Outfit } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -39,8 +39,20 @@ const outfit = Outfit({
 
 const siteUrl = "https://www.canvasclasses.in";
 
+// theme-color tints the mobile browser/PWA status bar. Next 15 emits this from the
+// viewport export (it was moved out of `metadata`). Dark to match the app shell.
+export const viewport: Viewport = {
+  themeColor: "#050505",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: "Canvas Classes",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black",
+    title: "Canvas",
+  },
   alternates: {
     canonical: './',
     // Explicit India targeting — emits <link rel="alternate" hreflang="en-IN" />
@@ -134,7 +146,7 @@ export const metadata: Metadata = {
       { url: '/icon-light.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
       { url: '/icon-dark.svg',  type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' },
     ],
-    apple: '/apple-icon.png',
+    apple: '/icons/apple-touch-icon.png',
   },
 };
 
@@ -202,6 +214,8 @@ import { AuthButton } from "@/features/auth/components/AuthButton";
 import { ConditionalFooter } from "./components/ConditionalFooter";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import CloudflareAnalytics from "./components/CloudflareAnalytics";
+import { ServiceWorkerRegistrar } from "./components/ServiceWorkerRegistrar";
+import { InstallBanner } from "@/features/pwa/InstallBanner";
 
 export default function RootLayout({
   children,
@@ -220,6 +234,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${kalam.variable} ${outfit.variable} antialiased`}
         suppressHydrationWarning
       >
+        <ServiceWorkerRegistrar />
         <GoogleAnalytics />
         <CloudflareAnalytics />
         <ClarityScript />
@@ -231,6 +246,7 @@ export default function RootLayout({
           <ConditionalFooter />
         </MixpanelProvider>
         <ConsentGate />
+        <InstallBanner />
         {/* KEEP — Vercel Analytics + Speed Insights are intentionally retained (decided 2026-06,
             founder) alongside GoogleAnalytics / Clarity / Mixpanel. Do NOT remove in a cost or
             cleanup pass — a prior "multi-thread catch-all" commit stripped these by accident.
