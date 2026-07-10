@@ -23,6 +23,7 @@ const MAX_SIZE: Record<AssetType, number> = {
   svg:    5 * 1024 * 1024,
   audio: 50 * 1024 * 1024,
   video: 200 * 1024 * 1024,
+  model: 60 * 1024 * 1024,
 };
 
 // POST /api/v2/books/assets/presign
