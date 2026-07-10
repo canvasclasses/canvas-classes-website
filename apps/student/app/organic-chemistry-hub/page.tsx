@@ -47,7 +47,7 @@ const bgColors: Record<string, string> = {
 
 // Simplified Reaction View - Focused on pedagogical clarity and visual impact
 
-function Panel({ variant, label, body, icon: Icon }: { variant: 'stereo' | 'mistake' | 'hook' | 'jee'; label: string; body: string; icon: React.ElementType }) {
+function Panel({ variant, label, body, icon: Icon }: { variant: 'stereo' | 'mistake' | 'hook' | 'jee'; label: string; body: string; icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }> }) {
   if (!body) return null;
   const s = {
     stereo: 'bg-white/[0.03] border-blue-500/30 text-blue-50/90',

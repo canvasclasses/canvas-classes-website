@@ -19,7 +19,7 @@ import {
 type CategoryKey = 'Organic Chemistry' | 'Inorganic Chemistry' | 'Physical Chemistry' | 'General chemistry';
 
 const categoryStyles: Record<string, {
-    icon: React.ElementType;
+    icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
     text: string;
     border: string;        // hover border for full card
     leftBorder: string;    // colored left edge — instant scan signal
@@ -81,7 +81,7 @@ type Tool = {
     name: string;
     hook: string;
     href: string;
-    icon: React.ElementType;
+    icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
     badge: string;
     iconBg: string;
     iconColor: string;
