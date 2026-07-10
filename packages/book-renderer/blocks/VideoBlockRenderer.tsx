@@ -5,10 +5,14 @@ import { Play, ChevronDown, ChevronUp } from 'lucide-react';
 import { VideoBlock } from '@canvas/data/types/books';
 
 // YouTube requires the `origin` parameter in the embed URL to identify
-// the embedding site. Without it, the player shows "An error occurred"
-// on any deployed (non-localhost) site.
+// the embedding site, and rejects the embed ("This content is blocked")
+// if it doesn't match the page's real origin. The env-var default only
+// matches the student app's own domain — the admin editor runs on a
+// different origin (localhost:3001 in dev, admin.canvasclasses.in in
+// prod) and must pass its real origin via `originOverride` instead of
+// relying on this fallback.
 // Source: https://developers.google.com/youtube/player_parameters#origin
-const EMBED_ORIGIN =
+const DEFAULT_EMBED_ORIGIN =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.canvasclasses.in';
 
 /**
@@ -34,8 +38,17 @@ function formatDuration(sec: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export default function VideoBlockRenderer({ block, compact = false }: { block: VideoBlock; compact?: boolean }) {
+export default function VideoBlockRenderer({
+  block,
+  compact = false,
+  originOverride,
+}: {
+  block: VideoBlock;
+  compact?: boolean;
+  originOverride?: string;
+}) {
   const [expanded, setExpanded] = useState(false);
+  const embedOrigin = originOverride ?? DEFAULT_EMBED_ORIGIN;
 
   return (
     <div className={compact ? '' : 'my-4'}>
@@ -88,7 +101,7 @@ export default function VideoBlockRenderer({ block, compact = false }: { block: 
           )}
           {block.provider === 'youtube_nocookie' && (
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(block.src)}?rel=0&modestbranding=1&autoplay=1&enablejsapi=1&origin=${encodeURIComponent(EMBED_ORIGIN)}`}
+              src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(block.src)}?rel=0&modestbranding=1&autoplay=1&enablejsapi=1&origin=${encodeURIComponent(embedOrigin)}`}
               className="w-full h-full"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen

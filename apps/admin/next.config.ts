@@ -55,7 +55,14 @@ const nextConfig: NextConfig = {
               "connect-src 'self' https://*.supabase.co https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com https://*.r2.cloudflarestorage.com",
               "media-src 'self' https: blob:",
               "object-src 'none'",
-              "frame-src 'self' https://customer-stream.cloudflarestream.com",
+              // Must allow the same embeddable media sources the student app allows —
+              // the admin editor's preview pane renders the exact same book content
+              // (YouTube/youtube-nocookie video blocks, Drive/Docs embeds, PhET sims),
+              // so anything a student can see must render here too. Kept in sync with
+              // apps/student/next.config.ts frame-src. frame-ancestors 'none' + the
+              // X-Frame-Options: DENY above still prevent the admin app itself from
+              // being embedded anywhere — this only governs what it may embed.
+              "frame-src 'self' https://www.youtube.com https://youtube.com https://www.youtube-nocookie.com https://customer-stream.cloudflarestream.com https://drive.google.com https://docs.google.com https://phet.colorado.edu",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

@@ -29,6 +29,7 @@ If no reference book covers the topic yet, proceed normally — but say so, so t
 | Book | Author | Subject · Level | Map doc | File location |
 |---|---|---|---|---|
 | Physical Chemistry for JEE Main & Advanced, Vol. 1 (8th ed.) | Shishir Mittal (Disha) | Chemistry (Physical) · Class 11–12, JEE | [physical-chemistry-mittal-vol1.md](physical-chemistry-mittal-vol1.md) | `/Users/CanvasClasses/iCloud Drive (Archive)/Kindle Converter/Physical Chemistry/Physical Chemistry - Shishir Mittal.pdf` (732 pp, 27.6 MB) |
+| Conceptual Integrated Science (2nd ed.) | Hewitt, Lyons, Suchocki, Yeh (Pearson) | Integrated Science — Phys/Chem/Bio/Earth/Astro · **Class 9–10 / foundations** (concept-first, analogy-driven) | [conceptual-integrated-science-hewitt.md](conceptual-integrated-science-hewitt.md) | `/Users/CanvasClasses/iCloud Drive (Archive)/Kindle Converter/Conceptual Integrated Science …(z-lib.org).pdf` (1012 pp, **107 MB — too big for Read tool; use `pdftotext`**) |
 
 > **Storage caveat:** the Mittal PDF currently lives in **iCloud Drive (Archive)**, which can evict/offload the file. If a future agent can't read it, the file may need re-downloading from iCloud, or the founder should move reference PDFs into a stable local folder (and we add a gitignored `reference-books/pdfs/` pointer). PDFs are NOT committed to git (large binaries).
 
@@ -47,4 +48,4 @@ If no reference book covers the topic yet, proceed normally — but say so, so t
 
 ---
 
-_Last updated: 2026-06-14 · books indexed: 1_
+_Last updated: 2026-06-24 · books indexed: 2_

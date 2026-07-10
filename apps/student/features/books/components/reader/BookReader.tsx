@@ -11,21 +11,9 @@ import PageRenderer from '@canvas/book-renderer/PageRenderer';
 import { ExtraSimulatorsProvider } from '@canvas/book-renderer/simulators-context';
 import { VaultProvider } from '@canvas/book-renderer/vault-context';
 import { BookProvider } from '@canvas/book-renderer/book-context';
-import dynamic from 'next/dynamic';
-
-// `atomic-models` is the one book simulator that lives outside the renderer
-// package (it's a 555-line component in apps/student/app/physical-chemistry-hub/
-// with app-local UI dependencies). Inject it into the renderer via context so
-// the in-package SimulationBlockRenderer can still resolve it by id.
-const AtomicModels = dynamic(
-  () => import('@/app/physical-chemistry-hub/AtomicModels'),
-  { ssr: false }
-);
-// Chapter 3 (Periodicity) simulators now live IN the shared renderer package
-// (packages/book-renderer/blocks/simulations/), registered directly in
-// SimulationBlockRenderer.tsx, so they resolve in both the student reader and
-// the admin editor preview. Only atomic-models stays app-local.
-const EXTRA_SIMULATORS = { 'atomic-models': AtomicModels };
+// App-injected simulators (atomic-models, heart-3d, VSEPR, bond-angle) live in a
+// shared module so the reader AND the Biology Hub render the same sims by id.
+import { EXTRA_SIMULATORS } from '@/features/books/lib/extraSimulators';
 import { Book, BookPage, BlockType, ContentBlock, ChapterJourney } from '@canvas/data/types/books';
 import ChapterOpener from './ChapterOpener';
 import { useBookProgress } from '@/features/books/hooks/useBookProgress';

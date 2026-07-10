@@ -10,6 +10,7 @@
 5. **Student app** (public, cached) — reads content; auth-aware bits in client islands.
 6. **Admin app** (operator, RBAC-gated) — authoring + write APIs.
 7. **Assets** (R2 `canvas-chemistry-assets`) — images/SVGs/video/audio, linked from questions + book blocks.
+8. **3D anatomy sims** (`apps/student/features/anatomy/`, glbs in `apps/student/public/anatomy/`, catalog `packages/data/simulations/`) — Z-Anatomy-derived glTF organ/system models (skeleton, heart) in three.js/R3F; embedded in Live Books as `simulation` blocks + shown in the Biology Hub. North-star = the **Anatomy Explorer** (full-body multi-layer atlas). Canonical: [`ANATOMY_3D_SIMULATOR_WORKFLOW.md`](../workflows/ANATOMY_3D_SIMULATOR_WORKFLOW.md) + [`plans/ANATOMY_EXPLORER_VISION.md`](../plans/ANATOMY_EXPLORER_VISION.md). **P1 spike 2026-06-22 → GO (build on Z-Anatomy, not license BioDigital); quality-first (meshopt compression is lossless + CSP-safe, decimation minimized); lazy-load per system is mandatory (the ceiling is the GPU, not bandwidth)** — vision-doc §8.
 
 ## The joints (where gaps open)
 
@@ -19,7 +20,9 @@
 | Question → Solution | a published question should have a solution | questions with no solution, or solutions with broken LaTeX, ship silently. |
 | Question → Assets | a question's markdown references an R2 image/SVG | the Asset doc or R2 file goes missing → broken figure in the stem/option/solution. |
 | Book block → Assets | a block references a `src`/`url`/`audio_url` | an unlinked video/audio (the **June-10 incident**) → content silently gone. Now guarded by `book-writer.js`. |
+| Book content → Publish-readiness | a page shouldn't go public with placeholder images, no quiz, invalid blocks/LaTeX, or without a human sign-off | a chapter is published with pending-image placeholders or a missing quiz and nobody notices. **Surfaced by the Book Readiness dashboard** (`admin.../books/dashboard`; pure engine `packages/data/books/readiness.ts`) — per-page stage + hard blockers (pending images / missing quiz / invalid / LaTeX) + soft warnings + a separate human sign-off (`BookPage.review`); summary stored on `BookPage.readiness`, computed on every save, backfillable via `scripts/backfill-book-readiness.ts`. Cockpit row "Book Readiness Dashboard". |
 | Book ↔ Crucible | books deep-link to Crucible practice; persona may recommend across surfaces | a renamed chapter id or route breaks the link. (Cross-surface recommendation was decoupled per ADR-012 — parked, not deleted.) |
+| 3D sim → Hosting / Live Books | each sim's `.glb` must be served **static** from `public/anatomy/` (R2's public URL is CORS-blocked for three.js `fetch`); injected sims render only in the **published** reader + Biology Hub, not the admin preview | a glb moved to R2, or a viewer pointed at the R2 proxy → silent load hang/blank canvas; a renamed/unversioned glb → stale cache; an `EXTRA_SIMULATORS`/catalog-id mismatch → sim doesn't appear. |
 | Public page → Cache config | every public page must be cacheable (CLAUDE.md §10) | a new page ships `force-dynamic`/`revalidate=0` → the **June-2026 bill spike**. A `cookies()`/`headers()` call in the layout tree flips every page below to dynamic (E132 trap). |
 | Write API → Auth | every mutating route needs an auth guard (CLAUDE.md §8) | a new route ships without `requireAdmin`/`getAuthenticatedUser` → an open write path. |
 | Student face → Data scope (future) | student-facing brain faces must only read published, student-safe content | a retrieval filter gap → operational docs or another student's data leak (AI_NATIVE_ROADMAP §5.2). |
@@ -32,5 +35,6 @@
 - **Morning brief** (`morning-brief.js`) → runs all of the above, one aggregated brief, worst-severity exit.
 - **Founder advisor** (`/founder-advisor`) → the prose layer over all of it + the brain + cockpit; reports.
 - **Industry scout** (`/industry-scout`) → external joint: competitor/market moves → writes to `_agents/brain/industry/`.
+- **Book Readiness dashboard** (`admin.../books/dashboard`, BUILT 2026-07-10) → human-driven, on-demand pre-release gate over the **Book content → Publish-readiness** joint: pending images, missing quizzes, invalid/LaTeX, and unreviewed pages, per chapter/page across all classes. Not a scheduled script — the operator's cockpit for deciding a chapter is safe to publish.
 
 Scheduling these (daily morning brief) is the remaining step; until then run on demand or via the advisor.

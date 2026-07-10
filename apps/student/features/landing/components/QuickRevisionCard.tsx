@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 
 interface RevisionResource {
-    icon: React.ElementType;
+    icon: React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
     title: string;
     href: string;
     color: string;

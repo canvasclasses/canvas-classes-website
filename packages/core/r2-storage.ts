@@ -41,7 +41,7 @@ function getR2Client() {
 export const r2Client = new S3Client({ region: 'auto', endpoint: 'https://placeholder.r2.cloudflarestorage.com', credentials: { accessKeyId: 'placeholder', secretAccessKey: 'placeholder' } });
 
 // Asset type configuration
-export type AssetType = 'audio' | 'svg' | 'image' | 'video';
+export type AssetType = 'audio' | 'svg' | 'image' | 'video' | 'model';
 
 interface AssetConfig {
   folder: string;
@@ -69,6 +69,15 @@ const ASSET_CONFIG: Record<AssetType, AssetConfig> = {
     folder: 'videos',
     allowedTypes: ['video/mp4', 'video/webm'],
     maxSize: 100 * 1024 * 1024, // 100 MB
+  },
+  // 3D models (glTF binary / JSON) for the anatomy / 3D-viewer blocks.
+  // .glb often arrives as application/octet-stream when the browser can't
+  // sniff the glTF MIME, so we allow that too (the upload route still gates
+  // on its own ALLOWED_TYPES map + admin auth + size before reaching here).
+  model: {
+    folder: 'models',
+    allowedTypes: ['model/gltf-binary', 'model/gltf+json', 'application/octet-stream'],
+    maxSize: 60 * 1024 * 1024, // 60 MB — well above a decimated organ (~1-8 MB)
   },
 };
 
@@ -261,6 +270,8 @@ export function getExtensionFromMimeType(mimeType: string): string {
     'image/webp': 'webp',
     'video/mp4': 'mp4',
     'video/webm': 'webm',
+    'model/gltf-binary': 'glb',
+    'model/gltf+json': 'gltf',
   };
   return map[mimeType] || 'bin';
 }

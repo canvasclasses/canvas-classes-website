@@ -32,6 +32,15 @@ export function computeReadingTime(blocks: ContentBlock[]): number {
     if (block.type === 'text') wordCount += block.markdown.split(/\s+/).length;
     if (block.type === 'heading') wordCount += block.text.split(/\s+/).length;
     if (block.type === 'callout') wordCount += block.markdown.split(/\s+/).length;
+    if (block.type === 'career_spotlight') {
+      wordCount += (block.intro ?? '').split(/\s+/).length + (block.closing ?? '').split(/\s+/).length;
+      for (const c of block.careers) wordCount += (c.role + ' ' + c.description).split(/\s+/).length;
+    }
+    if (block.type === 'you_solve_it') {
+      wordCount += (block.problem + ' ' + block.why_hard + ' ' + block.prompt + ' ' +
+        block.reality_check + ' ' + block.source_note).split(/\s+/).length;
+      for (const s of block.solutions) wordCount += (s.label + ' ' + s.upside + ' ' + s.tradeoff).split(/\s+/).length;
+    }
     if (block.type === 'video') videoCount++;
     if (block.type === 'audio_note') audioCount++;
   }

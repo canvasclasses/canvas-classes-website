@@ -16,6 +16,14 @@ const ASPECT_CLASS: Record<NonNullable<GalleryBlock['aspect_ratio']>, string> = 
   '21:9': 'aspect-[21/9]',
 };
 
+// Real photos vary wildly in shape. When the block doesn't pin an explicit
+// aspect_ratio, size the carousel to the CURRENT slide's own natural ratio
+// (clamped so a stray portrait/panorama can't turn the carousel into a
+// sliver or a skyscraper) instead of force-cropping every slide into one box.
+const MIN_RATIO = 0.66; // tallest allowed (~2:3 portrait)
+const MAX_RATIO = 2.2; // widest allowed (~21:9-ish)
+const FALLBACK_RATIO = 3 / 2;
+
 /**
  * Swipeable gallery (§15.6) — 2–6 images for ONE concept shown as a carousel
  * instead of a vertical stack. Arrows + dots to move; each slide is tap-to-zoom.
@@ -25,18 +33,28 @@ export default function GalleryBlockRenderer({ block }: { block: GalleryBlock })
   const [idx, setIdx] = useState(0);
   const [zoom, setZoom] = useState<number | null>(null);
   const [loaded, setLoaded] = useState<Record<string, boolean>>({});
+  const [naturalRatio, setNaturalRatio] = useState<Record<string, number>>({});
 
   if (items.length === 0) return null;
 
-  const aspect = block.aspect_ratio ? ASPECT_CLASS[block.aspect_ratio] : 'aspect-[3/2]';
   const clamp = (i: number) => (i + items.length) % items.length;
   const go = (d: number) => setIdx((i) => clamp(i + d));
   const current = items[idx];
 
+  // Explicit aspect_ratio on the block is author intent — respect it (locked
+  // box, cropped fill). Otherwise adapt to the current slide's own shape.
+  const hasExplicitRatio = !!block.aspect_ratio;
+  const aspectClass = hasExplicitRatio ? ASPECT_CLASS[block.aspect_ratio!] : '';
+  const currentRatio = naturalRatio[current.id];
+  const containerStyle = hasExplicitRatio
+    ? undefined
+    : { aspectRatio: String(currentRatio ? Math.min(MAX_RATIO, Math.max(MIN_RATIO, currentRatio)) : FALLBACK_RATIO) };
+
   return (
     <figure className="my-5 w-full">
       <div
-        className={`relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black/20 ${aspect}`}
+        className={`relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black/20 transition-[aspect-ratio] duration-300 ${aspectClass}`}
+        style={containerStyle}
       >
         {/* Slides track */}
         <div
@@ -60,9 +78,16 @@ export default function GalleryBlockRenderer({ block }: { block: GalleryBlock })
                 alt={it.alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 800px"
-                className={`object-cover transition-opacity duration-500 ${loaded[it.id] ? 'opacity-100' : 'opacity-0'}`}
+                className={`${hasExplicitRatio ? 'object-cover' : 'object-contain'} transition-opacity duration-500 ${loaded[it.id] ? 'opacity-100' : 'opacity-0'}`}
                 loading="lazy"
-                onLoad={() => setLoaded((m) => ({ ...m, [it.id]: true }))}
+                onLoad={(e) => {
+                  setLoaded((m) => ({ ...m, [it.id]: true }));
+                  const img = e.currentTarget;
+                  if (img.naturalWidth && img.naturalHeight) {
+                    const ratio = img.naturalWidth / img.naturalHeight;
+                    setNaturalRatio((m) => (m[it.id] ? m : { ...m, [it.id]: ratio }));
+                  }
+                }}
               />
               <span className="absolute bottom-2 right-2 w-7 h-7 rounded-full flex items-center justify-center
                 bg-black/45 border border-white/15 text-white/85 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">

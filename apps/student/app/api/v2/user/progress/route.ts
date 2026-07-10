@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
             question_id, display_id, chapter_id, difficulty,
             concept_tags = [], is_correct, time_spent_seconds = 0,
             selected_option = null, source = 'browse',
-            confidence, session_id,
+            confidence, session_id, client_attempt_id,
             // Persona unification — required to feed StudentChapterProfile.
             // Falls back to '_untagged' if the question has no microConcept.
             micro_concept,
@@ -128,6 +128,7 @@ export async function POST(req: NextRequest) {
             selected_option,
             confidence: confidenceTier,
             session_id: typeof session_id === 'string' ? session_id : undefined,
+            client_attempt_id: typeof client_attempt_id === 'string' ? client_attempt_id : undefined,
         };
 
         // Retry loop: optimistic concurrency on UserProgress means a

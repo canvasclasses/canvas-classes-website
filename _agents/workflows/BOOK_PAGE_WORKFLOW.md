@@ -596,8 +596,8 @@ Open-ended curiosity hook. **Block 0 on Class 9 pages.** Primes the student's th
 - **No `options` array.** `curiosity_prompt` is never an MCQ. For MCQ-style reasoning, use `reasoning_prompt` (§4B), placed mid-page after the concept is introduced.
 - The `prompt` must be ponderable by a 9th grader with **zero prior knowledge** of the page's topic. If the student needs definitions first, the question belongs in `reasoning_prompt`, not here.
 - `reveal` is optional. Use it only when a short reflection genuinely adds something; otherwise the act of wondering is the whole point.
-- **Only ever used at Block 0.** Never place a `curiosity_prompt` mid-page.
-- Class 11–12 pages do not use `curiosity_prompt` — they open with a `callout[fun_fact]` directly.
+- **Class 9:** only ever used at **Block 0** (the "Think It Over" opener); never mid-page.
+- **Class 11–12 — "food for thought" lesson opener (founder decision 2026-06-21).** A lesson page may open with **one or two `curiosity_prompt` cards in the opening cluster** — after the hero (and optional `callout[fun_fact]` hook) but **before the first concept** — to *build curiosity instead of starting cold on a definition*. Rules: each prompt must be ponderable without the page's content; give each a `reveal` that points toward the idea the page is about to teach; keep them at the **top** (don't scatter `curiosity_prompt`s mid-lesson — the post-concept check is still a `reasoning_prompt`, §15.3). A `callout[fun_fact]` opener is still fine when a curiosity prompt doesn't fit. **The chapter-opener page itself does NOT carry food-for-thought** — it follows §15.1 strictly (hero image + subtitle intro + optional outcome bullets; the journey/page-list is auto-derived). Reference build: Ch.4 Chemical Bonding (`why-atoms-bond` opens with two stardust food-for-thought prompts; the opener `chapter-4-stardust-opener` stays minimal).
 
 ---
 

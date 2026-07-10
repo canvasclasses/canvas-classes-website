@@ -42,7 +42,7 @@ const QUICK_LINKS = [
 
 type PopularItem = {
     id: string;
-    Icon: React.ElementType;
+    Icon: React.ComponentType<{ size?: number; className?: string }>;
     iconColor: string;
     title: string;
     subtitle: string;

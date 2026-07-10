@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { Save, BookOpen, PanelLeft, Columns2, Eye, ChevronLeft } from 'lucide-react';
+import { Save, BookOpen, PanelLeft, Columns2, Eye, ChevronLeft, Gauge } from 'lucide-react';
 import { Book, BookPage, ContentBlock, BlockType } from '@canvas/data/types/books';
 import BookSidebar from './BookSidebar';
 import BlockEditor from './BlockEditor';
@@ -494,6 +494,15 @@ export default function BookWorkspace() {
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
+          <Link
+            href="/books/dashboard"
+            title="Book readiness dashboard — publish-readiness of every chapter"
+            className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium
+              border border-white/10 bg-white/5 text-white/60 hover:text-orange-300 hover:bg-white/8 transition-colors"
+          >
+            <Gauge size={13} />
+            <span className="hidden sm:inline">Readiness</span>
+          </Link>
           {saveError && (
             <span className="text-xs text-red-400">{saveError}</span>
           )}
@@ -670,6 +679,11 @@ export default function BookWorkspace() {
                         ? previewHinglish
                         : undefined
                     }
+                    // YouTube rejects embeds whose `origin` param doesn't match the
+                    // real page origin — the shared renderer's env-based default only
+                    // matches the student app's domain, never the admin editor's own
+                    // (localhost:3001 in dev, admin.canvasclasses.in in prod).
+                    videoOriginOverride={typeof window !== 'undefined' ? window.location.origin : undefined}
                   />
                 </div>
               )}

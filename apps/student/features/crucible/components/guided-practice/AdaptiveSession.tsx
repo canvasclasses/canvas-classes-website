@@ -161,6 +161,7 @@ export default function AdaptiveSession({
   const viewedSolutionRef = useRef<boolean>(false);
   const pendingAnswerRef = useRef<{
     q: Question; correct: boolean; timeMs: number; viewedSol: boolean;
+    selected: string | string[] | number | null;
   } | null>(null);
   const pendingMicroFeedbackRef = useRef<MicroFeedbackResponse | null>(null);
   const sessionIdRef = useRef<string>('');
@@ -254,7 +255,7 @@ export default function AdaptiveSession({
   }, [chapter, filteredPool, diagnosticQuestions, sessionMaxQuestions, initialDifficulty]);
 
   // ── Answer tracked (BrowseView callback) ────────────────────────────────────
-  const handleQuestionAnswered = useCallback((isCorrect: boolean) => {
+  const handleQuestionAnswered = useCallback((isCorrect: boolean, selected: string | string[] | number | null) => {
     if (!currentQuestion) return;
     // Show micro-feedback after answer
     setPendingFeedbackQ(currentQuestion);
@@ -267,12 +268,13 @@ export default function AdaptiveSession({
     const timeMs = Date.now() - questionStartTimeRef.current;
     const viewedSol = viewedSolutionRef.current;
     // Store metadata in ref so handleMicroFeedback can read it
-    pendingAnswerRef.current = { q, correct, timeMs, viewedSol };
+    pendingAnswerRef.current = { q, correct, timeMs, viewedSol, selected };
   }, [currentQuestion]);
 
   // ── Write StudentResponse to API (fire-and-forget) ─────────────────────────
   const writeResponseToAPI = useCallback((meta: {
     q: Question; correct: boolean; timeMs: number; viewedSol: boolean;
+    selected: string | string[] | number | null;
   }, response: MicroFeedbackResponse, stuckPoint: StuckPoint | null) => {
     const totalServed = feedbackHistory.length + conceptBaseline.length + 1;
     const payload = {
@@ -281,6 +283,9 @@ export default function AdaptiveSession({
       chapterId: chapter.id,
       primaryConcept: meta.q.metadata.tags?.[0]?.tag_id ?? '',
       microConcept: meta.q.metadata.microConcept ?? '',
+      // Raw selection — lets the server recompute correctness authoritatively
+      // instead of trusting the client's answeredCorrectly.
+      selectedOption: meta.selected,
       answeredCorrectly: meta.correct,
       timeSpentMs: meta.timeMs,
       viewedSolutionBeforeAnswer: meta.viewedSol,

@@ -9,6 +9,42 @@ import { canEditQuestion, canDeleteQuestion } from '@canvas/data/rbac';
 import { trackServer } from '@canvas/core/analytics/mixpanel.server';
 import type { ServiceDeps } from './types';
 
+// ── Transient-DB resilience ──────────────────────────────────────────────────
+// A MongoDB socket can drop mid-request (Atlas idle-disconnect, laptop
+// sleep/wake, a network blip, or a Next dev recompile). connectToDatabase()
+// guarantees a good connection at the START of a request, but an individual
+// operation issued after a mid-request drop throws immediately (bufferCommands
+// is false). Without a retry, that one blip surfaces to the operator as a
+// scary "Failed to update question" even though nothing is wrong with the data.
+function isTransientDbError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  const name = err.name || '';
+  const msg = err.message || '';
+  return (
+    /Mongo(Network|ServerSelection|NotConnected|PoolCleared|Topology)|ServerSelection|PoolCleared/i.test(name) ||
+    /ECONNRESET|ETIMEDOUT|EPIPE|socket|topology was destroyed|connection.*(closed|reset)|server selection timed out|not connected|pool was (cleared|closed)/i.test(msg)
+  );
+}
+
+// Run a DB operation, retrying a few times on transient connection errors and
+// re-establishing the connection between attempts. Non-transient errors (bad
+// data, validation) throw immediately — we only paper over infrastructure
+// blips, never real failures.
+async function retryDbOp<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
+  let lastErr: unknown;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (e) {
+      lastErr = e;
+      if (!isTransientDbError(e) || i === attempts - 1) throw e;
+      try { await connectToDatabase(); } catch { /* next attempt will rethrow */ }
+      await new Promise(r => setTimeout(r, 150 * (i + 1)));
+    }
+  }
+  throw lastErr;
+}
+
 // GET - Fetch single question by ID
 export async function GET(
   request: NextRequest,
@@ -32,10 +68,15 @@ export async function GET(
       );
     }
 
-    // Strip solution for unauthenticated requests
+    // Strip solution for unauthenticated PUBLIC requests only. Authenticated
+    // users get the full doc; so does localhost dev (which authenticates via the
+    // bypass, not a Supabase session — mirroring PATCH/DELETE below). Without the
+    // localhost branch, the admin editor's failed-save recovery GET would return
+    // a solution-less doc on local dev and blank the solution in the UI.
     const user = await deps.getAuthenticatedUser(request);
+    const isLocalDev = await deps.isLocalhostDev();
     const questionObj = question as Record<string, unknown>;
-    const responseData = user ? question : (() => { const { solution: _, ...rest } = questionObj; return rest; })();
+    const responseData = (user || isLocalDev) ? question : (() => { const { solution: _, ...rest } = questionObj; return rest; })();
 
     return NextResponse.json({
       success: true,
@@ -57,10 +98,14 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
   deps: ServiceDeps,
 ) {
+  // Hoisted so the catch can decide whether to surface error detail to the
+  // operator (localhost dev or an authenticated admin) — students never see it.
+  let user: Awaited<ReturnType<ServiceDeps['getAuthenticatedUser']>> = null;
+  let isLocalDev = false;
   try {
     // Require authentication for all write operations
-    const user = await deps.getAuthenticatedUser(request);
-    const isLocalDev = await deps.isLocalhostDev();
+    user = await deps.getAuthenticatedUser(request);
+    isLocalDev = await deps.isLocalhostDev();
     if (!user && !isLocalDev) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
@@ -70,11 +115,11 @@ export async function PATCH(
     const body = await request.json();
     const { id } = await params;
 
-    // Get existing question
-    const existingQuestion = await QuestionV2.findOne({
+    // Get existing question (retry transient connection blips)
+    const existingQuestion = await retryDbOp(() => QuestionV2.findOne({
       _id: id,
       deleted_at: null
-    });
+    }));
 
     if (!existingQuestion) {
       return NextResponse.json(
@@ -277,12 +322,13 @@ export async function PATCH(
     // Increment version
     updates.version = (existing.version as number) + 1;
 
-    // Update question — no runValidators to avoid rejecting docs with stale enum values
-    const updatedQuestion = await QuestionV2.findByIdAndUpdate(
+    // Update question — no runValidators to avoid rejecting docs with stale enum
+    // values. Idempotent ($set), so a transient-blip retry is safe.
+    const updatedQuestion = await retryDbOp(() => QuestionV2.findByIdAndUpdate(
       id,
       { $set: updates },
       { new: true }
-    );
+    ));
 
     if (!updatedQuestion) {
       return NextResponse.json(
@@ -291,45 +337,56 @@ export async function PATCH(
       );
     }
 
-    // Create audit log
-    if (changes.length > 0) {
-      const auditLog = new AuditLog({
-        _id: uuidv4(),
-        entity_type: 'question',
+    // ── Post-write side effects are NON-FATAL ───────────────────────────────
+    // The question is already persisted. Audit-logging, analytics, and cache
+    // revalidation must never turn a successful save into a reported failure —
+    // a transient blip on any of them previously surfaced as a scary
+    // "Failed to update question" while the edit had actually saved. They are
+    // best-effort; a failure here is logged, not propagated.
+    try {
+      // Create audit log
+      if (changes.length > 0) {
+        const auditLog = new AuditLog({
+          _id: uuidv4(),
+          entity_type: 'question',
+          entity_id: id,
+          action: 'update',
+          changes,
+          user_id: user?.id ?? 'local-dev',
+          user_email: user?.email ?? 'local-dev',
+          timestamp: new Date(),
+          can_rollback: true,
+          rollback_data: existingQuestion.toObject()
+        });
+
+        await auditLog.save();
+      }
+
+      await trackServer(user?.id ?? 'local_dev', 'admin_action', {
+        type: 'edit',
+        entity: 'question',
         entity_id: id,
-        action: 'update',
-        changes,
-        user_id: user?.id ?? 'local-dev',
-        user_email: user?.email ?? 'local-dev',
-        timestamp: new Date(),
-        can_rollback: true,
-        rollback_data: existingQuestion.toObject()
       });
 
-      await auditLog.save();
-    }
+      // Bust the questions cache so the edit is visible to students immediately
+      revalidateTag('questions');
 
-    await trackServer(user?.id ?? 'local_dev', 'admin_action', {
-      type: 'edit',
-      entity: 'question',
-      entity_id: id,
-    });
-
-    // Bust the questions cache so the edit is visible to students immediately
-    revalidateTag('questions');
-
-    // If this is (or was) a demo question, also bust the notes-quicktest cache
-    // so the side-by-side practice panel reflects the change. Covers: flag flip
-    // either direction, and edits to question_text / options / solution on a
-    // doc that's currently flagged demo.
-    const wasDemoFinal = (existingQuestion.metadata as Record<string, unknown>)?.is_demo_question === true;
-    const isDemoFinal = (updatedQuestion.metadata as Record<string, unknown>)?.is_demo_question === true;
-    if (wasDemoFinal || isDemoFinal) {
-      const chapterId = (updatedQuestion.metadata as { chapter_id?: string })?.chapter_id;
-      if (chapterId) {
-        revalidatePath(`/api/v2/notes-quicktest/${chapterId}`);
-        revalidateTag(`notes-quicktest:${chapterId}`);
+      // If this is (or was) a demo question, also bust the notes-quicktest cache
+      // so the side-by-side practice panel reflects the change. Covers: flag flip
+      // either direction, and edits to question_text / options / solution on a
+      // doc that's currently flagged demo.
+      const wasDemoFinal = (existingQuestion.metadata as Record<string, unknown>)?.is_demo_question === true;
+      const isDemoFinal = (updatedQuestion.metadata as Record<string, unknown>)?.is_demo_question === true;
+      if (wasDemoFinal || isDemoFinal) {
+        const chapterId = (updatedQuestion.metadata as { chapter_id?: string })?.chapter_id;
+        if (chapterId) {
+          revalidatePath(`/api/v2/notes-quicktest/${chapterId}`);
+          revalidateTag(`notes-quicktest:${chapterId}`);
+        }
       }
+    } catch (sideEffectErr) {
+      // The write succeeded — do NOT fail the request. Log loudly for ops.
+      console.error('[PATCH question] post-write side effect failed (write already committed):', sideEffectErr);
     }
 
     return NextResponse.json({
@@ -340,8 +397,22 @@ export async function PATCH(
 
   } catch (error: unknown) {
     console.error('Error updating question:', error);
+    // Surface the real cause to the operator (localhost dev or an authenticated
+    // admin) so an intermittent failure is diagnosable instead of a grey zone.
+    // Students never reach this write (RBAC blocks them) and never get detail
+    // — keeps §8.5 (no internals to public clients). The admin editor already
+    // renders this `details` field in its failure dialog.
+    const showDetail = isLocalDev || !!(user && deps.isAdmin(user.email));
+    const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+    const transient = isTransientDbError(error);
     return NextResponse.json(
-      { success: false, error: 'Failed to update question' },
+      {
+        success: false,
+        error: transient
+          ? 'Temporary database hiccup — your edit was NOT saved. Please try again.'
+          : 'Failed to update question',
+        ...(showDetail ? { details: detail, transient } : {}),
+      },
       { status: 500 }
     );
   }

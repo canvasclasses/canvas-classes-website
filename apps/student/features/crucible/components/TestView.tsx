@@ -184,6 +184,26 @@ export default function TestView({ questions, onBack }: { questions: Question[];
     fetchOptionStats(rq.id).then(setRevStats);
   }, [reviewing, revIdx, questions]);
 
+  // Guard against accidental refresh / tab-close destroying an in-progress
+  // test. Test state (answers, marks, timer) lives only in memory and isn't
+  // persisted until submit, so a reload loses everything — warn the student
+  // with the browser's native "Leave site?" prompt before the page unloads.
+  // Only armed once they've actually answered something, and disarmed on
+  // submit/review (by then it's saved). NOTE: full resume-after-refresh is a
+  // separate follow-up; this prevents the most common accidental-loss trigger.
+  useEffect(() => {
+    const hasProgress =
+      Object.keys(answers).length > 0 ||
+      Object.values(nvtInputs).some(v => !!(v && v.trim()));
+    if (submitted || reviewing || !hasProgress) return;
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [answers, nvtInputs, submitted, reviewing]);
+
   // Persist the test on submit. Was previously gated behind a "Save" button in
   // the post-submit modal — meaning a single tap on "Discard" silently nuked
   // the test results and per-question attempts. Now it runs unconditionally
@@ -219,6 +239,10 @@ export default function TestView({ questions, onBack }: { questions: Question[];
           micro_concept: qq.metadata.microConcept ?? null,
           is_correct: isQuestionCorrect(qq),
           selected_option: qq.type === 'NVT' ? nvtInputs[qq.id] ?? null : (answers[qq.id] ?? null),
+          // Stable idempotency key per (sitting, question) — testStartTime is
+          // fixed for this mount, so a client retry of the batch reuses the
+          // same ids and the server dedups instead of double-counting.
+          client_attempt_id: `t${testStartTime}_${qq.id}`,
           source: 'test',
           // Tests are intentional, focused work — see CRUCIBLE_ARCHITECTURE.md
           // §3.2. HIGH confidence: drives mastery counters and the

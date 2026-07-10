@@ -28,6 +28,17 @@ const BookPageSchema = new Schema<IBookPage>(
     video_title: { type: String, default: null },
     // §15.1 — 'chapter_opener' renders the bespoke cover + journey; absent = lesson.
     page_type: { type: String, enum: ['lesson', 'chapter_opener'], default: 'lesson' },
+    // Automated readiness summary (computed on save + recompute backfill). Stored
+    // schema-less; shape is PageReadinessSummary from books/readiness.ts. Powers
+    // the Book Readiness dashboard. Additive — never required, never destructive.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    readiness: { type: Schema.Types.Mixed, default: null } as any,
+    // Human sign-off, separate from the automated checks in `readiness`.
+    review: {
+      reviewed: { type: Boolean, default: false },
+      reviewed_by: { type: String, default: null },
+      reviewed_at: { type: Date, default: null },
+    },
     // Soft-delete (content protection, CLAUDE.md §0.6). Pages are NEVER hard-deleted.
     deleted_at: { type: Date, default: null },
     deleted_by: { type: String, default: null },

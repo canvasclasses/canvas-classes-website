@@ -36,6 +36,9 @@ const ReasoningPromptRenderer        = dynamicBlock(() => import('./blocks/Reaso
 const CuriosityPromptRenderer        = dynamicBlock(() => import('./blocks/CuriosityPromptRenderer'));
 const ClassifyExerciseRenderer      = dynamicBlock(() => import('./blocks/ClassifyExerciseRenderer'));
 const MeetAScientistRenderer        = dynamicBlock(() => import('./blocks/MeetAScientistRenderer'));
+const PerspectiveScenarioRenderer   = dynamicBlock(() => import('./blocks/PerspectiveScenarioRenderer'));
+const CareerSpotlightRenderer       = dynamicBlock(() => import('./blocks/CareerSpotlightRenderer'));
+const YouSolveItRenderer            = dynamicBlock(() => import('./blocks/YouSolveItRenderer'));
 
 // English blocks — Class 9 Kaveri. Spec: _agents/workflows/ENGLISH_BOOK_PAGE_WORKFLOW.md
 const NarratedPassageRenderer            = dynamicBlock(() => import('./blocks/english/NarratedPassageRenderer'));
@@ -53,15 +56,31 @@ const ChapterPracticeRenderer            = dynamicBlock(() => import('./blocks/e
 const ApplyExpressRenderer               = dynamicBlock(() => import('./blocks/english/ApplyExpressRenderer'));
 const ReadingComprehensionRenderer       = dynamicBlock(() => import('./blocks/english/ReadingComprehensionRenderer'));
 const JuniorPracticeRenderer             = dynamicBlock(() => import('./blocks/JuniorPracticeRenderer'));
+const PracticeBankRenderer               = dynamicBlock(() => import('./blocks/PracticeBankRenderer'));
+const GroupElementsRenderer              = dynamicBlock(() => import('./blocks/GroupElementsRenderer'));
+
+// Life Skills blocks — Class 9 & 10 strand. Spec: _agents/workflows/LIFE_SKILLS_WORKFLOW.md
+const GuidedPracticeRenderer             = dynamicBlock(() => import('./blocks/lifeskills/GuidedPracticeRenderer'));
+const ReflectionJournalRenderer          = dynamicBlock(() => import('./blocks/lifeskills/ReflectionJournalRenderer'));
+const HabitTrackerRenderer               = dynamicBlock(() => import('./blocks/lifeskills/HabitTrackerRenderer'));
+const FocusGameRenderer                  = dynamicBlock(() => import('./blocks/lifeskills/FocusGameRenderer'));
+const AttentionXrayRenderer              = dynamicBlock(() => import('./blocks/lifeskills/AttentionXrayRenderer'));
+const SelfExperimentRenderer             = dynamicBlock(() => import('./blocks/lifeskills/SelfExperimentRenderer'));
+const GuidedRevealRenderer               = dynamicBlock(() => import('./blocks/lifeskills/GuidedRevealRenderer'));
 
 export default function BlockRenderer({
   block,
   onQuizPass,
   hinglish,
+  videoOriginOverride,
 }: {
   block: ContentBlock;
   onQuizPass?: (blockId: string, score: number) => void;
   hinglish?: boolean;  // HI mode — analytical renderers show their Hinglish twin
+  // Real page origin (e.g. from window.location.origin) for YouTube embeds —
+  // required in the admin editor, whose origin never matches the student
+  // app's default. See VideoBlockRenderer.tsx for why this exists.
+  videoOriginOverride?: string;
 }) {
   switch (block.type) {
     case 'text':              return <TextBlockRenderer block={block} />;
@@ -69,7 +88,7 @@ export default function BlockRenderer({
     case 'image':             return <ImageBlockRenderer block={block} />;
     case 'gallery':           return <GalleryBlockRenderer block={block} />;
     case 'interactive_image': return <InteractiveImageBlockRenderer block={block} />;
-    case 'video':             return <VideoBlockRenderer block={block} />;
+    case 'video':             return <VideoBlockRenderer block={block} originOverride={videoOriginOverride} />;
     case 'audio_note':        return <AudioNoteBlockRenderer block={block} />;
     case 'molecule_2d':       return <Molecule2DBlockRenderer block={block} />;
     case 'molecule_3d':       return <Molecule3DBlockRenderer block={block} />;
@@ -88,6 +107,9 @@ export default function BlockRenderer({
     case 'curiosity_prompt':   return <CuriosityPromptRenderer block={block} />;
     case 'classify_exercise':  return <ClassifyExerciseRenderer block={block} />;
     case 'meet_a_scientist':   return <MeetAScientistRenderer block={block} />;
+    case 'perspective_scenario': return <PerspectiveScenarioRenderer block={block} />;
+    case 'career_spotlight':     return <CareerSpotlightRenderer block={block} />;
+    case 'you_solve_it':         return <YouSolveItRenderer block={block} />;
     // English blocks (Class 9 Kaveri)
     case 'narrated_passage':              return <NarratedPassageRenderer block={block} />;
     case 'vocabulary_lab':                return <VocabularyLabRenderer block={block} />;
@@ -104,6 +126,16 @@ export default function BlockRenderer({
     case 'apply_express':                 return <ApplyExpressRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
     case 'reading_comprehension':         return <ReadingComprehensionRenderer block={block} />;
     case 'junior_practice':               return <JuniorPracticeRenderer block={block} onComplete={score => onQuizPass?.(block.id, score)} />;
+    case 'practice_bank':                 return <PracticeBankRenderer block={block} />;
+    case 'group_elements':                return <GroupElementsRenderer block={block} />;
+    // Life Skills blocks (Class 9 & 10 strand)
+    case 'guided_practice':               return <GuidedPracticeRenderer block={block} />;
+    case 'reflection_journal':            return <ReflectionJournalRenderer block={block} />;
+    case 'habit_tracker':                 return <HabitTrackerRenderer block={block} />;
+    case 'focus_game':                    return <FocusGameRenderer block={block} />;
+    case 'attention_xray':                return <AttentionXrayRenderer block={block} />;
+    case 'self_experiment':               return <SelfExperimentRenderer block={block} />;
+    case 'guided_reveal':                 return <GuidedRevealRenderer block={block} />;
     default:                   return null;
   }
 }

@@ -65,6 +65,28 @@ for (const ch of Object.keys(inlineByCh).sort((a, b) => a - b)) {
   if (posFail || give) FAIL = true;          // inline length tell hand-cleared (Ch1–12) → now a hard gate to catch regressions
   console.log(`  Ch${String(ch).padStart(2)} n=${qs.length} pos ${pos.join('/')} ${posFail ? '❌POS' : '✅'} | length-giveaways ${give} ${give ? '❌' : ''}`);
 }
+// ── ADVISORY: key↔explanation consistency (catches mis-keyed items like the 2026-06 pr-21/pr-23 bug) ──
+// On 2026-06 23 graded keys pointed at the WRONG option while the explanation described the RIGHT one;
+// the position/length gates passed because the keys were spread, so nothing caught it. This is a
+// token-overlap heuristic between the explanation and each option. It CANNOT tell a wrong key from a
+// distractor that is the semantic OPPOSITE using shared words, so it is ADVISORY (never fails the build) —
+// it just prints a short list to eyeball. Every one of the 23 real bugs would have shown up here.
+const wtok = (s) => { const set = new Set(); for (const w of String(s || '').replace(/[।,.\-—()'"’‘:;?!]/g, ' ').split(/\s+/)) if ([...seg.segment(w)].length > 2) set.add(w); return set; };
+const wov = (a, b) => { const A = wtok(a), B = wtok(b); let n = 0; for (const t of A) if (B.has(t)) n++; return n; };
+const keySuspects = [];
+for (const [map, label] of [[practiceByCh, 'practice'], [inlineByCh, 'inline']]) {
+  for (const ch of Object.keys(map)) for (const q of map[ch]) {
+    if (!q.options || q.correct_index == null || !q.explanation) continue;
+    const ov = q.options.map((o) => wov(q.explanation, (o.text ?? o)));
+    const mx = Math.max(...ov); const best = ov.indexOf(mx);
+    if (best !== q.correct_index && mx - ov[q.correct_index] >= 2 && ov[q.correct_index] <= 1)
+      keySuspects.push(`Ch${ch} ${label} ${q.id || '(noid)'}: keyed #${q.correct_index} (ov ${ov[q.correct_index]}) vs explanation best #${best} (ov ${mx})`);
+  }
+}
+console.log('\n── key↔explanation review (ADVISORY — token-overlap heuristic; verify by hand, not a gate) ──');
+if (keySuspects.length) { console.log(`  ⚠️ ${keySuspects.length} question(s) to eyeball (key may not match its explanation):`); keySuspects.forEach((s) => console.log(`     ${s}`)); }
+else console.log('  ✅ none flagged');
+
 console.log(`\nRESULT: ${FAIL ? '❌ FAIL' : '✅ PASS'}  (gate = graded banks + answer-position + zero >1.3× length giveaways on every surface)`);
 await c.close();
 process.exit(FAIL ? 1 : 0);

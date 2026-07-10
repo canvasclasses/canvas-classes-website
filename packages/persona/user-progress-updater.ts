@@ -33,6 +33,7 @@ import type {
 import { getTagName } from '@canvas/data/taxonomy/lookup';
 import {
   RECENT_ATTEMPTS_CAP,
+  ALL_ATTEMPTED_IDS_CAP,
   computeChapterMasteryLevel,
   updateMasteryProb,
   nextReview,
@@ -65,6 +66,12 @@ export interface UserProgressUpdate {
   concept_mastery: Array<{ tag_id: string; value: IConceptMastery }>;
   stats: IUserStats;
   updated_at: Date;
+  // True when the attempt was a duplicate (same client_attempt_id already in
+  // recent_attempts) and must NOT be applied. The writer early-returns on this
+  // so a double-delivered attempt (beacon + keepalive, or a retry where the
+  // server already committed) doesn't double-count. The other fields are
+  // unspecified when skipped — callers must check this first.
+  skipped?: boolean;
 }
 
 /**
@@ -87,6 +94,28 @@ export function computeUserProgressUpdate(
   const isLow = tier === 'low';
   const counts_for_mastery = isHigh;
   const counts_for_exposure = !isLow;
+
+  // ── Idempotency: skip a duplicate delivery of the same attempt ────────
+  // Clients stamp a stable `client_attempt_id` per logical attempt. If one is
+  // already present in the recent window (capped at RECENT_ATTEMPTS_CAP), this
+  // is a re-delivery (beacon + keepalive both landed, or a client retried a
+  // request the server had already committed) — return a no-op so counters
+  // don't double-count. Attempts without an id keep the old behaviour.
+  if (attempt.client_attempt_id) {
+    const dup = current.recent_attempts.some(
+      a => a.client_attempt_id === attempt.client_attempt_id,
+    );
+    if (dup) {
+      return {
+        recent_attempts: [],
+        all_attempted_ids: [],
+        concept_mastery: [],
+        stats: current.stats,
+        updated_at: new Date(),
+        skipped: true,
+      };
+    }
+  }
 
   // ── recent_attempts: prepend + cap (analytics feed) ───────────────────
   const recent_attempts = [attempt, ...current.recent_attempts];
@@ -121,6 +150,20 @@ export function computeUserProgressUpdate(
         last_attempted_at: attempt.attempted_at,
         last_correct_at: attempt.is_correct ? attempt.attempted_at : undefined,
       });
+      // Safety cap (see ALL_ATTEMPTED_IDS_CAP). Only a fresh push can grow the
+      // array, and it grows by one, so evicting a single least-recently-
+      // attempted entry keeps it at the cap. O(n) single pass — runs only for
+      // users already at the cap (very rare), never on the common path.
+      if (all_attempted_ids.length > ALL_ATTEMPTED_IDS_CAP) {
+        let oldestIdx = 0;
+        let oldestTime = Infinity;
+        for (let i = 0; i < all_attempted_ids.length; i++) {
+          const la = all_attempted_ids[i].last_attempted_at;
+          const t = la ? new Date(la).getTime() : 0;
+          if (t < oldestTime) { oldestTime = t; oldestIdx = i; }
+        }
+        all_attempted_ids.splice(oldestIdx, 1);
+      }
     }
   }
 

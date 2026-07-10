@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress, IQuestionAttempt } from '@canvas/data/models/UserProgress';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
 import { updateProfileFromAttempt, createEmptyProfile } from '@canvas/persona/profile-engine';
 import { getUserIdFromRequest } from '@/lib/auth';
 import { applyAttemptToProgress, resolveConfidenceTier } from '@canvas/persona/writer';
+import { isAnswerCorrect, type ScorableQuestion } from '@canvas/persona/scoring';
 import { emitLearningEvent } from '@canvas/persona/learning-event';
 import { resolveTenantId } from '@canvas/data/tenancy';
+
+// Canonical fields needed to recompute correctness server-side.
+type CanonicalQuestion = ScorableQuestion & { _id: string };
 
 // ─── POST /api/v2/user/progress/batch ────────────────────────────────────────
 // Body: { attempts: Array<{ question_id, display_id, chapter_id, difficulty,
@@ -27,11 +32,44 @@ export async function POST(req: NextRequest) {
         if (!Array.isArray(attempts) || attempts.length === 0) {
             return NextResponse.json({ error: 'Invalid attempts array' }, { status: 400 });
         }
+        // Bound the batch (mirror the test-results route's 200 cap) — an
+        // unbounded array would loop applyAttemptToProgress + a learning-event
+        // emit per element inside a retry loop. CLAUDE.md §8.6.
+        if (attempts.length > 200) {
+            return NextResponse.json({ error: 'Too many attempts in one batch (max 200)' }, { status: 400 });
+        }
 
         await connectToDatabase();
         // Resolve tenant once (Phase 3) — stamps a new persona doc, profiles,
         // and every learning event for this batch. Fail-safe to 'public'.
         const tenantId = await resolveTenantId(userId);
+
+        // ── Recompute correctness server-side, never trusting the client.
+        // The client sends `is_correct`, but mastery counters / persona signal
+        // must derive from the canonical answer (CRUCIBLE_ARCHITECTURE.md §10,
+        // mirroring the test-results route's Audit-#8 hardening). We fetch each
+        // referenced question once and override is_correct on every attempt.
+        const qIds = [...new Set(
+            (attempts as Array<{ question_id?: unknown }>)
+                .map(a => (typeof a?.question_id === 'string' ? a.question_id : null))
+                .filter((x): x is string => !!x),
+        )];
+        const canonicals = await QuestionV2.find(
+            { _id: { $in: qIds }, deleted_at: null },
+            { _id: 1, type: 1, options: { id: 1, is_correct: 1 }, answer: 1 },
+        ).lean<CanonicalQuestion[]>();
+        const canonById = new Map(canonicals.map(c => [c._id, c]));
+        // Unknown/deleted question → wrong (safer than awarding a point).
+        // Cast to the same loose shape `attempts` already had (it comes off
+        // req.json()), so the downstream destructuring keeps compiling as before
+        // — we only override is_correct with the server-computed value.
+        const verifiedAttempts = (attempts as Array<Record<string, unknown>>).map(a => {
+            const qid = typeof a.question_id === 'string' ? a.question_id : '';
+            const canon = qid ? canonById.get(qid) : undefined;
+            const is_correct = canon ? isAnswerCorrect(canon, a.selected_option) : false;
+            return { ...a, is_correct };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        }) as any[];
 
         const now = new Date();
         // Retry loop: optimistic concurrency (via __v) detects concurrent
@@ -60,7 +98,7 @@ export async function POST(req: NextRequest) {
 
             totalAttempted = 0;
 
-            for (const raw of attempts) {
+            for (const raw of verifiedAttempts) {
                 const {
                     question_id,
                     display_id,
@@ -73,6 +111,7 @@ export async function POST(req: NextRequest) {
                     time_spent_seconds = 0,
                     confidence,
                     session_id,
+                    client_attempt_id,
                 } = raw;
 
                 if (!question_id || !chapter_id || is_correct === undefined) {
@@ -95,6 +134,7 @@ export async function POST(req: NextRequest) {
                     selected_option,
                     confidence: tier,
                     session_id: typeof session_id === 'string' ? session_id : undefined,
+                    client_attempt_id: typeof client_attempt_id === 'string' ? client_attempt_id : undefined,
                 };
 
                 applyAttemptToProgress(progress, personaAttempt);
@@ -135,7 +175,7 @@ export async function POST(req: NextRequest) {
                 answeredCorrectly: boolean;
                 timestamp: Date;
             }>>();
-            for (const a of (attempts as ClientAttemptShape[])) {
+            for (const a of (verifiedAttempts as ClientAttemptShape[])) {
                 const tier = resolveConfidenceTier(
                     a.confidence,
                     typeof a.source === 'string' ? a.source : undefined,
@@ -187,7 +227,7 @@ export async function POST(req: NextRequest) {
         // Fire-and-forget: emitLearningEvent never throws, but we also skip the
         // same invalid attempts the UserProgress loop above skipped, so the
         // event log matches what was actually recorded.
-        for (const raw of attempts) {
+        for (const raw of verifiedAttempts) {
             const {
                 question_id, chapter_id, difficulty, concept_tags = [],
                 is_correct, source = 'test', time_spent_seconds = 0,

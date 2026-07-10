@@ -41,6 +41,12 @@ const ALLOWED_TYPES: Record<string, AssetType> = {
   'video/3gpp2':     'video',
   // ── Lottie animations (JSON) ─────────────────────────────────────────────
   'application/json': 'image', // stored as-is, no R2 type restriction needed
+  // ── 3D models (glTF binary / JSON) for anatomy / 3D-viewer blocks ─────────
+  'model/gltf-binary': 'model',
+  'model/gltf+json': 'model',
+  // .glb frequently arrives as octet-stream when the browser can't sniff the
+  // glTF MIME — accept it for model uploads (admin-gated + size-capped below).
+  'application/octet-stream': 'model',
 };
 
 const MAX_SIZE: Record<AssetType, number> = {
@@ -50,6 +56,9 @@ const MAX_SIZE: Record<AssetType, number> = {
   // Bumped 100 MB → 200 MB so screen-recording-length MP4s clear the cap
   // before the author has to manually compress.
   video: 200 * 1024 * 1024,   // 200 MB
+  // A decimated, meshopt-compressed organ is ~1-8 MB; 60 MB leaves headroom
+  // for a richer multi-layer model before the author must re-optimise.
+  model: 60 * 1024 * 1024,    // 60 MB
 };
 
 // POST /api/v2/books/assets/upload
@@ -109,8 +118,18 @@ export async function POST(request: NextRequest) {
       .replace(/\.[^.]+$/, '')
       .slice(0, 40);
 
+    // A per-upload unique token so two different files NEVER collide to the same
+    // R2 key. Without it, uploads that resolve to the same `{blockId}_{safeName}`
+    // silently overwrote each other and the API returned the FIRST image's URL.
+    // This bit galleries hardest: every gallery item uploads with the SAME
+    // block_id, and any filename whose distinguishing suffix (e.g. "(1)" / "(2)")
+    // sits past the 40-char safeName cap gets truncated to an identical name —
+    // so two different picks produced one identical key, and the second clobbered
+    // the first. The unique token also prevents a new upload from ever silently
+    // overwriting an existing asset still referenced elsewhere (content-safety).
     const fileId = blockId || uuidv4().slice(0, 8);
-    const filename = `${fileId}_${safeName}.${ext}`;
+    const unique = uuidv4().slice(0, 8);
+    const filename = `${fileId}_${safeName}_${unique}.${ext}`;
 
     const chapterPart = chapterNumber ? `ch${chapterNumber}` : 'shared';
     const bookPart = bookId || 'shared';

@@ -35,6 +35,13 @@ export interface IQuestionAttempt {
   // The /api/v2/user/progress/session-confidence PATCH endpoint uses this to
   // retroactively reclassify every attempt in a session as casual.
   session_id?: string;
+  // Stable per-logical-attempt id (uuid) generated client-side. Used for
+  // idempotency: the persona updater skips an attempt whose client_attempt_id
+  // already exists in the recent window, so a double-delivered attempt (beacon
+  // + keepalive, or a client retry the server already committed) is not
+  // double-counted. Optional for backward compatibility — pre-id attempts keep
+  // the old behaviour.
+  client_attempt_id?: string;
 }
 
 // Lightweight per-question index (never capped — used by test generator)
@@ -187,6 +194,9 @@ const QuestionAttemptSchema = new Schema<IQuestionAttempt>({
   // browse-mode default; route handlers override per source.
   confidence: { type: String, enum: ['high', 'medium', 'low'], default: 'medium', index: true },
   session_id: { type: String, index: true },
+  // Idempotency key (uuid) — see IQuestionAttempt.client_attempt_id. Not
+  // indexed: dedup scans the in-memory recent_attempts window, not the DB.
+  client_attempt_id: { type: String },
 }, { _id: false });
 
 const AttemptedIdEntrySchema = new Schema<IAttemptedIdEntry>({

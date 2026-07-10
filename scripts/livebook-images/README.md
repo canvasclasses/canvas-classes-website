@@ -51,13 +51,19 @@ Runtime files (`_queue.json`, `_journal.jsonl`, `_downloads/`) are gitignored.
 Prereq: Chrome open + logged into ChatGPT + the Claude-in-Chrome extension connected.
 
 1. `node scripts/livebook-images/worklist.js --book <id> --chapter <n>` → builds `_queue.json`.
-2. For each queue item, Claude:
-   a. opens a **new** ChatGPT chat, pastes the `prompt`, waits for the image;
+2. Claude opens **one** ChatGPT chat and reuses it for the next 12-15 queue items
+   (paste next prompt in the same chat, don't hit "new chat" each time) — start a fresh
+   chat only after ~12-15 images, or sooner if the chat gets stuck/glitchy. **Never a new
+   chat per image** — that scatters generations across dozens of conversations the founder
+   then has to hunt through to download from. See `feedback_livebook_image_chat_batching`
+   memory for why this is a hard rule, not a suggestion.
+3. For each queue item, Claude:
+   a. pastes the `prompt` in the current chat, waits for the image;
    b. downloads the PNG into `_downloads/`;
    c. **looks at the image** and compares it to the prompt intent;
    d. if it matches → `node ingest.js --file <png> --page <…> --block <…> --field <src|image_src> --lang <en|hi> --book <…> --chapter <n>`;
    e. if it doesn't → `node flag.js --page … --block … --book … --chapter … --kind … --reason "…" --prompt "…"` and move on.
-3. When ChatGPT throws a Cloudflare/rate-limit challenge, it **pauses** for you to clear it
+4. When ChatGPT throws a Cloudflare/rate-limit challenge, it **pauses** for you to clear it
    (Claude will not bypass bot-detection). Then resume from the same queue.
 
 ## Undo

@@ -19,10 +19,12 @@ export default function RailPanel({
   examBlocks,
   mediaBlocks,
   onQuizPass,
+  videoOriginOverride,
 }: {
   examBlocks: ContentBlock[];
   mediaBlocks: ContentBlock[];
   onQuizPass?: (blockId: string, score: number) => void;
+  videoOriginOverride?: string;
 }) {
   const hasExam = examBlocks.length > 0;
   const hasMedia = mediaBlocks.length > 0;
@@ -48,7 +50,7 @@ export default function RailPanel({
           {b.type === 'audio_note' ? (
             <AudioNoteBlockRenderer block={b} compact />
           ) : b.type === 'video' ? (
-            <VideoBlockRenderer block={b} compact />
+            <VideoBlockRenderer block={b} compact originOverride={videoOriginOverride} />
           ) : (
             <BlockRenderer block={b} />
           )}

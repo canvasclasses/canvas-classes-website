@@ -5,6 +5,12 @@ description: Simulation Design Workflow — Canvas Classes Interactive Labs
 # SIMULATION DESIGN WORKFLOW v1.0
 
 > **Design principle:** Every simulation — Chemistry, Physics, Biology — must feel like it belongs to the same product. Never invent new colors, fonts, or component patterns. This document is the single source of truth. When it conflicts with anything else, it wins.
+>
+> **Building a 3D anatomy model (heart/nephron/neuron — glTF + three.js/R3F)?** This
+> doc covers 2D/SVG canvas sims. For 3D organ models use the dedicated
+> [`ANATOMY_3D_SIMULATOR_WORKFLOW.md`](ANATOMY_3D_SIMULATOR_WORKFLOW.md) (Z-Anatomy →
+> Blender → glTF pipeline, the viewer template, the guided "follow a drop of blood"
+> pattern, and all the hard-won gotchas). It inherits the colour/typography tokens below.
 
 ---
 

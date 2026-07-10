@@ -172,6 +172,13 @@ const CalloutBlockSchema = BaseBlockSchema.extend({
     // English-track variants — see ENGLISH_BOOK_PAGE_WORKFLOW.md §3.1
     'india_voice', 'literature_in_life',
     'voices_that_inspire',
+    // Social Science engagement-plan variant (2026-07-08) — renders via the
+    // default NoteCallout card, no new renderer needed. See
+    // _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement retrofit" section.
+    // (`career_spotlight` was here too but was promoted to its own block type —
+    // see CareerSpotlightBlockSchema below — after founder feedback that a wall
+    // of prose buries the actual list of professions.)
+    'evidence_pack',
   ]),
   title: z.string().optional(),
   markdown: z.string(),
@@ -525,6 +532,49 @@ const JuniorPracticeBlockSchema = BaseBlockSchema.extend({
   mode: z.enum(['practice', 'test']).optional(),
 });
 
+// PRACTICE BANK — section-navigated, source-tagged end-of-chapter bank.
+const PRACTICE_SOURCE = z.enum(['ncert_exercise', 'ncert_exemplar', 'cbse_pyq', 'jee_neet', 'mcq']);
+const PracticeBankItemSchema = z.discriminatedUnion('kind', [
+  z.object({
+    kind: z.literal('mcq'),
+    id: z.string().min(1),
+    source: PRACTICE_SOURCE,
+    source_label: z.string().optional(),
+    prompt: z.string().min(1),
+    options: z.array(z.string()).min(2),
+    correct_index: z.number().int().min(0),
+    explanation: z.string().min(1),
+  }),
+  z.object({
+    kind: z.literal('numerical'),
+    id: z.string().min(1),
+    source: PRACTICE_SOURCE,
+    source_label: z.string().optional(),
+    prompt: z.string().min(1),
+    answer: z.string().optional(),
+    solution: z.string().min(1),
+  }),
+]);
+const PracticeBankSectionSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  blurb: z.string().optional(),
+  items: z.array(PracticeBankItemSchema).min(1),
+});
+const PracticeBankBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('practice_bank'),
+  title: z.string().optional(),
+  intro: z.string().optional(),
+  sections: z.array(PracticeBankSectionSchema).min(1),
+});
+
+const GroupElementsBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('group_elements'),
+  title: z.string().optional(),
+  intro: z.string().optional(),
+  element_symbols: z.array(z.string()).min(1),
+});
+
 const ChallengeBase = {
   id: z.string().min(1),
   concept_tag: PRACTICE_CONCEPT,
@@ -610,6 +660,178 @@ const MeetAScientistBlockSchema = BaseBlockSchema.extend({
   learn_more: z.string().min(1),
 });
 
+// ─── Life Skills blocks (Class 9 & 10 strand — LIFE_SKILLS_WORKFLOW.md §5) ───
+
+const GuidedPracticeStepSchema = z.object({
+  id: z.string().min(1),
+  instruction: z.string().min(1),
+  duration_sec: z.number().int().positive().optional(),
+});
+
+const BreathPatternSchema = z.object({
+  inhale_sec: z.number().positive(),
+  hold_sec: z.number().positive().optional(),
+  exhale_sec: z.number().positive(),
+  hold_out_sec: z.number().positive().optional(),
+  cycles: z.number().int().min(1).max(50),
+});
+
+const GuidedPracticeBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('guided_practice'),
+  practice_kind: z.enum(['breathing', 'focus_timer', 'meditation', 'observation', 'custom']),
+  title: z.string().min(1),
+  intro: z.string().optional(),
+  steps: z.array(GuidedPracticeStepSchema),
+  breath_pattern: BreathPatternSchema.optional(),
+  audio_url: z.string().optional(),
+  completion_note: z.string().optional(),
+});
+
+const ReflectionJournalBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('reflection_journal'),
+  prompt: z.string().min(1),
+  placeholder: z.string().optional(),
+  min_words: z.number().int().positive().optional(),
+});
+
+const HabitTrackerBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('habit_tracker'),
+  title: z.string().min(1),
+  habit: z.string().min(1),
+  duration_days: z.number().int().min(1).max(60),
+  why: z.string().optional(),
+  day_labels: z.array(z.string()).optional(),
+});
+
+const FocusGameBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('focus_game'),
+  test_id: z.string().min(1),
+  role: z.enum(['baseline', 'retest', 'standalone']),
+  title: z.string().min(1),
+  intro: z.string().optional(),
+  duration_sec: z.number().int().min(30).max(600).optional(),
+  completion_note: z.string().optional(),
+});
+
+const AttentionXrayCardSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  front: z.string().min(1),
+  reveal: z.string().min(1),
+});
+const AttentionXrayBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('attention_xray'),
+  title: z.string().min(1),
+  intro: z.string().optional(),
+  cards: z.array(AttentionXrayCardSchema).min(2).max(10),
+  closing: z.string().min(1),
+  watch_note: z.string().optional(),
+});
+
+const SelfExperimentOptionSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  explanation: z.string().min(1),
+});
+const SelfExperimentBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('self_experiment'),
+  title: z.string().min(1),
+  intro: z.string().min(1),
+  steps: z.array(z.string().min(1)).max(8).optional(),
+  duration_sec: z.number().int().min(30).max(1800).optional(),
+  prompt: z.string().min(1),
+  options: z.array(SelfExperimentOptionSchema).min(2).max(12),
+  min_select: z.number().int().min(1).max(12).optional(),
+  completion_note: z.string().optional(),
+});
+
+const GuidedRevealCheckerOptionSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  weight: z.union([z.literal(0), z.literal(1), z.literal(2)]),
+});
+const GuidedRevealCheckerSchema = z.object({
+  task_label: z.string().min(1),
+  tasks: z.array(GuidedRevealCheckerOptionSchema).min(2).max(6),
+  audio_label: z.string().min(1),
+  audios: z.array(GuidedRevealCheckerOptionSchema).min(2).max(6),
+  verdicts: z.object({ high: z.string().min(1), mild: z.string().min(1), clear: z.string().min(1) }),
+});
+const GuidedRevealStepSchema = z.object({
+  id: z.string().min(1),
+  kind: z.enum(['point', 'cost_checker']),
+  kicker: z.string().optional(),
+  headline: z.string().min(1),
+  body: z.string().optional(),
+  image_src: z.string().optional(),
+  checker: GuidedRevealCheckerSchema.optional(),
+});
+const GuidedRevealBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('guided_reveal'),
+  title: z.string().min(1),
+  intro: z.string().optional(),
+  steps: z.array(GuidedRevealStepSchema).min(2).max(20),
+  outro: z.string().optional(),
+});
+
+// Perspective Scenario — Social Science engagement mechanic (2026-07-08, founder
+// design). See PerspectiveScenarioBlock in types/books.ts for the full rationale.
+const PerspectiveScenarioOptionSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  real_position: z.string().min(1),
+  perspective: z.string().min(1),
+});
+const PerspectiveScenarioBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('perspective_scenario'),
+  title: z.string().min(1),
+  role_frame: z.string().min(1),
+  event_context: z.string().min(1),
+  image_src: z.string().optional(),
+  image_prompt: z.string().optional(),
+  image_caption: z.string().optional(),
+  source_note: z.string().min(1),
+  prompt: z.string().min(1),
+  options: z.array(PerspectiveScenarioOptionSchema).min(2).max(4),
+  synthesis: z.string().min(1),
+});
+
+// Career Spotlight — see CareerSpotlightBlock in types/books.ts.
+const CareerRoleSchema = z.object({
+  id: z.string().min(1),
+  role: z.string().min(1),
+  description: z.string().min(1),
+});
+const CareerSpotlightBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('career_spotlight'),
+  title: z.string().min(1),
+  intro: z.string().optional(),
+  careers: z.array(CareerRoleSchema).min(2).max(6),
+  closing: z.string().optional(),
+});
+
+// "You Solve It" — Social Science problem-solving mechanic (2026-07-10, founder
+// design). See YouSolveItBlock in types/books.ts for the full rationale.
+const YouSolveItSolutionSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  upside: z.string().min(1),
+  tradeoff: z.string().min(1),
+});
+const YouSolveItBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('you_solve_it'),
+  title: z.string().min(1),
+  problem: z.string().min(1),
+  why_hard: z.string().min(1),
+  image_src: z.string().optional(),
+  image_prompt: z.string().optional(),
+  image_caption: z.string().optional(),
+  source_note: z.string().min(1),
+  solutions: z.array(YouSolveItSolutionSchema).min(2).max(4),
+  prompt: z.string().min(1),
+  reality_check: z.string().min(1),
+});
+
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
 
 const ChildContentBlockSchema = z.discriminatedUnion('type', [
@@ -652,6 +874,17 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   ApplyExpressBlockSchema,
   ReadingComprehensionBlockSchema,
   JuniorPracticeBlockSchema,
+  // Life Skills blocks
+  GuidedPracticeBlockSchema,
+  ReflectionJournalBlockSchema,
+  HabitTrackerBlockSchema,
+  FocusGameBlockSchema,
+  AttentionXrayBlockSchema,
+  SelfExperimentBlockSchema,
+  GuidedRevealBlockSchema,
+  PerspectiveScenarioBlockSchema,
+  CareerSpotlightBlockSchema,
+  YouSolveItBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -704,6 +937,19 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   ApplyExpressBlockSchema,
   ReadingComprehensionBlockSchema,
   JuniorPracticeBlockSchema,
+  PracticeBankBlockSchema,
+  GroupElementsBlockSchema,
+  // Life Skills blocks (Class 9 & 10 strand)
+  GuidedPracticeBlockSchema,
+  ReflectionJournalBlockSchema,
+  HabitTrackerBlockSchema,
+  FocusGameBlockSchema,
+  AttentionXrayBlockSchema,
+  SelfExperimentBlockSchema,
+  GuidedRevealBlockSchema,
+  PerspectiveScenarioBlockSchema,
+  CareerSpotlightBlockSchema,
+  YouSolveItBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

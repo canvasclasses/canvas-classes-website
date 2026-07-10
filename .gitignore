@@ -147,3 +147,8 @@ html_output.txt
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# one-time throwaway: all underscore-prefixed scratch scripts/dumps, root scratch files, logs
+/scripts/_*
+/scratch_*
+*.log
