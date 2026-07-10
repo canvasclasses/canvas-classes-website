@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 
-// Where the banner is allowed to render. Homepage only — College Predictor
-// has its own page; showing the banner there would be redundant.
+// Homepage promo banner. Despite the filename, it's a single slim bar with two
+// CTA chips: the College Predictor (JEE/NEET) and the BITSAT 2026 hub (/bitsat).
+// Homepage-only — each tool has its own page where the banner is redundant.
 const ALLOWED_PATHS = new Set<string>(['/']);
 
 export default function CollegePredictorBanner() {
@@ -44,30 +45,43 @@ function BannerInner() {
                 isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[200%] opacity-0 pointer-events-none'
             }`}
         >
-            <Link
-                href="/college-predictor"
-                className="group flex items-center justify-between gap-2.5 px-5 sm:px-7 pt-[30px] pb-2 rounded-full bg-gradient-to-r from-orange-500/[0.14] via-amber-500/[0.09] to-amber-400/[0.05] backdrop-blur-xl border border-t-0 border-orange-500/30 hover:border-orange-400/55 hover:from-orange-500/20 hover:via-amber-500/14 hover:to-amber-400/8 shadow-md shadow-amber-950/30 transition-all no-underline"
-            >
-                <div className="flex items-center gap-2 min-w-0">
-                    <div className="flex items-baseline gap-1.5 min-w-0">
-                        <span className="hidden sm:inline text-[10px] font-semibold uppercase tracking-wider text-orange-300 shrink-0">
-                            New
-                        </span>
-                        <span className="hidden sm:inline text-orange-500/40 shrink-0">·</span>
-                        <span className="text-[13px] text-white font-medium truncate">
-                            <span className="hidden md:inline">Predict your colleges based on your </span>
-                            <span className="md:hidden">College Predictor — </span>
-                            JEE / NEET rank
-                        </span>
-                    </div>
+            {/* One slim promo bar with two CTA chips — College Predictor +
+                BITSAT hub — instead of two stacked bars. The pill keeps the
+                under-navbar tuck (pt-30, border-t-0). */}
+            <div className="flex items-center justify-between gap-3 px-4 sm:px-6 pt-[37px] pb-2.5 rounded-full bg-gradient-to-r from-orange-500/[0.12] via-amber-500/[0.08] to-amber-400/[0.04] backdrop-blur-xl border border-t-0 border-orange-500/25 shadow-md shadow-amber-950/30">
+                {/* Lead label */}
+                <div className="flex items-baseline gap-1.5 min-w-0">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 shrink-0">
+                        New
+                    </span>
+                    <span className="hidden sm:inline text-amber-500/40 shrink-0">·</span>
+                    <span className="text-[12px] sm:text-[13px] font-medium text-white/90 truncate">
+                        <span className="hidden md:inline">College admission tools are live</span>
+                        <span className="md:hidden">Admissions</span>
+                    </span>
                 </div>
 
-                <span className="shrink-0 flex items-center gap-1 text-[11px] font-semibold text-orange-300 group-hover:text-orange-200 transition-colors">
-                    <span className="hidden sm:inline">Open the Predictor</span>
-                    <span className="sm:hidden">Open</span>
-                    <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
-                </span>
-            </Link>
+                {/* CTA text links (no buttons) — matches the original banner's
+                    "Open the Predictor →" affordance. */}
+                <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 text-[11px] sm:text-[12px] font-semibold">
+                    <Link
+                        href="/college-predictor"
+                        className="group inline-flex items-center gap-1 text-orange-300 hover:text-orange-200 transition-colors no-underline"
+                    >
+                        <span className="hidden sm:inline">JEE / NEET Predictor</span>
+                        <span className="sm:hidden">Predictor</span>
+                        <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
+                    <span className="text-white/15" aria-hidden>·</span>
+                    <Link
+                        href="/bitsat"
+                        className="group inline-flex items-center gap-1 text-amber-300 hover:text-amber-200 transition-colors no-underline"
+                    >
+                        BITSAT 2026
+                        <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 }

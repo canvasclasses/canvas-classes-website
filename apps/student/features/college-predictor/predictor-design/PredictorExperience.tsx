@@ -401,13 +401,18 @@ function branchChipStyle(active: boolean): React.CSSProperties {
   };
 }
 
-export default function PredictorExperience() {
+export default function PredictorExperience({ lockExam }: { lockExam?: Exam } = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   // Read initial exam tab from URL so a shared link lands in the right place.
-  const initialExam: Exam = searchParams.get('tool') === 'bitsat' ? 'bitsat' : 'jee';
+  // When `lockExam` is set (e.g. the dedicated /bitsat page embeds this locked
+  // to BITSAT), the exam selector is hidden and the tab is fixed — the URL
+  // `?tool=` read/sync and the cross-exam session restore are skipped so this
+  // instance never fights the host page's own params or pollutes the shared
+  // /college-predictor session store.
+  const initialExam: Exam = lockExam ?? (searchParams.get('tool') === 'bitsat' ? 'bitsat' : 'jee');
   const [exam, setExam] = useState<Exam>(initialExam);
 
   // Branch Finder hands off here with ?dream_branch=<value> — pre-select that
@@ -492,7 +497,9 @@ export default function PredictorExperience() {
   // would still hold default values when it fires and would clobber the
   // snapshot we just read.
   const [hydrated, setHydrated] = useState(false);
-  const STORAGE_KEY = 'predictor:state:v2';
+  // Isolate the locked (e.g. /bitsat) instance's session from the main
+  // /college-predictor instance so restoring one never flips the other's exam.
+  const STORAGE_KEY = lockExam ? `predictor:state:v2:${lockExam}` : 'predictor:state:v2';
 
   // Hydrate from sessionStorage on mount. Navigating away (e.g. clicking a
   // college card) and back used to wipe the form + results because they live
@@ -503,7 +510,7 @@ export default function PredictorExperience() {
       const raw = sessionStorage.getItem(STORAGE_KEY);
       if (raw) {
         const s = JSON.parse(raw) as Record<string, unknown>;
-        if (s.exam === 'jee' || s.exam === 'bitsat') setExam(s.exam);
+        if (!lockExam && (s.exam === 'jee' || s.exam === 'bitsat')) setExam(s.exam);
         if (typeof s.rank === 'number') setRank(s.rank);
         if (s.rankType === 'CRL' || s.rankType === 'CAT') setRankType(s.rankType);
         if (s.category === 'OPEN' || s.category === 'EWS' || s.category === 'OBC-NCL' || s.category === 'SC' || s.category === 'ST') setCategory(s.category);
@@ -558,7 +565,9 @@ export default function PredictorExperience() {
       audience, filter, extended]);
 
   // Keep URL in sync with the active exam so a shared link respects the tab.
+  // Skipped when locked — the host page (/bitsat) owns its own query params.
   useEffect(() => {
+    if (lockExam) return;
     const params = new URLSearchParams(searchParams.toString());
     if (exam === 'bitsat') params.set('tool', 'bitsat');
     else params.delete('tool');
@@ -1162,7 +1171,7 @@ export default function PredictorExperience() {
     <section style={{ position: 'relative', maxWidth: 1180, margin: '0 auto', padding: '100px 8px 0' }}>
       <SectionHead
         eyebrow="STEP 02 · YOUR TURN"
-        titlePlain="Tell us your rank."
+        titlePlain={lockExam === 'bitsat' ? 'Tell us your score.' : 'Tell us your rank.'}
         titleAccent="We'll do the rest."
         sub="Three steps. Sixty seconds. A college list backed by five years of counseling data."
       />
@@ -1183,7 +1192,9 @@ export default function PredictorExperience() {
           decides which predictor renders), so the visual weight earns its
           place. Active card uses the same amber gradient as the primary CTA
           so a user instantly maps "amber = current exam." Inactive card stays
-          tappable with a visible "Switch →" hint. */}
+          tappable with a visible "Switch →" hint. Hidden entirely when the
+          exam is locked (the dedicated /bitsat page renders BITSAT only). */}
+      {!lockExam && (
       <div className="mb-6">
         <div
           className="text-center mb-3"
@@ -1328,6 +1339,7 @@ export default function PredictorExperience() {
           })}
         </div>
       </div>
+      )}
 
       {/* Form panel — relaxed padding on mobile so we don't lose 72px of
           width to padding alone on a 390px screen. */}

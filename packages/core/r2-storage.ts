@@ -174,6 +174,25 @@ export async function uploadToR2(
 }
 
 /**
+ * Generate a pre-signed PUT URL so the browser can upload directly to R2,
+ * bypassing Vercel's 4.5 MB serverless function body limit.
+ */
+export async function getPresignedPutUrl(
+  key: string,
+  contentType: string,
+  expirationSeconds = 900  // 15 minutes
+): Promise<string> {
+  const { bucketName } = getR2Config();
+  const client = getR2Client();
+  const command = new PutObjectCommand({
+    Bucket: bucketName,
+    Key: key,
+    ContentType: contentType,
+  });
+  return getSignedUrl(client, command, { expiresIn: expirationSeconds });
+}
+
+/**
  * Get signed URL for temporary access (optional)
  */
 export async function getSignedR2Url(

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, ChevronDown, X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { InstallAppButton } from '@/features/pwa/InstallAppButton';
 
 // =====================================================================
 // TYPES
@@ -281,6 +282,7 @@ export default function Navbar({ authButton }: { authButton: React.ReactNode }) 
               >
                 Handwritten Notes
               </Link>
+              <InstallAppButton onAction={() => setMobileMenuOpen(false)} />
               <div className="pt-2 border-t border-white/[0.08]">{authButton}</div>
             </motion.div>
           )}
