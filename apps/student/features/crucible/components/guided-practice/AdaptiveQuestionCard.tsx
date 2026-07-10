@@ -14,7 +14,9 @@ import { formatExamLabel } from '@/features/crucible/components/examLabel';
 
 interface AdaptiveQuestionCardProps {
   question: Question;
-  onAnswered: (isCorrect: boolean) => void;
+  // `selected` is the raw user choice (option id, MCQ id array, or NVT string)
+  // so the server can recompute correctness authoritatively. `null` = skipped.
+  onAnswered: (isCorrect: boolean, selected: string | string[] | number | null) => void;
 }
 
 export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQuestionCardProps) {
@@ -45,7 +47,7 @@ export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQ
       const option = question.options?.find(o => o.id === optionId);
       const correct = option?.is_correct ?? false;
       setIsCorrectAnswer(correct);
-      onAnswered(correct);
+      onAnswered(correct, optionId);
     }
   }, [answered, isMCQ, question.options, onAnswered]);
 
@@ -59,7 +61,7 @@ export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQ
       selectedOptions.every(id => correctIds.includes(id));
     
     setIsCorrectAnswer(isCorrect);
-    onAnswered(isCorrect);
+    onAnswered(isCorrect, selectedOptions);
   }, [selectedOptions, answered, question.options, onAnswered]);
 
   const handleNVTSubmit = useCallback(() => {
@@ -69,7 +71,7 @@ export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQ
     const correctVal = question.answer?.integer_value;
     const isCorrect = correctVal !== undefined && !isNaN(userVal) && Math.abs(userVal - correctVal) < 0.01;
     setIsCorrectAnswer(isCorrect);
-    onAnswered(isCorrect);
+    onAnswered(isCorrect, nvtInput.trim());
   }, [nvtInput, answered, question.answer, onAnswered]);
 
   // Helper for option styling after answer
@@ -300,7 +302,7 @@ export default function AdaptiveQuestionCard({ question, onAnswered }: AdaptiveQ
               Solve this on paper, then check the solution
             </div>
             <button
-              onClick={() => { setAnswered(true); onAnswered(false); }}
+              onClick={() => { setAnswered(true); onAnswered(false, null); }}
               disabled={answered}
               style={{ padding: '10px 20px', borderRadius: 8, border: '1px solid rgba(124,58,237,0.4)', background: 'rgba(124,58,237,0.1)', color: '#a78bfa', fontSize: 13, fontWeight: 600, cursor: answered ? 'default' : 'pointer' }}
             >

@@ -14,7 +14,7 @@
 |---|---|
 | **Crucible question bank** (ingest / solutions / tags / flags) | `_agents/state/CRUCIBLE_STATE.md` (live counts) · `_agents/CRUCIBLE_ARCHITECTURE.md` · the subject workflow doc in `_agents/workflows/` · [`systems-map.md`](systems-map.md) (the Question joints) |
 | **Crucible / landing-page UI** | `_agents/CRUCIBLE_ARCHITECTURE.md` · `apps/student/features/crucible/` · CLAUDE.md §7 (design system) + §10 (caching) |
-| **Live Books** (authoring / pages / images) | `_agents/state/LIVE_BOOKS_STATE.md` · `_agents/workflows/BOOK_PAGE_WORKFLOW.md` · `_agents/plans/CONTENT_PROTECTION.md` + CLAUDE.md §0.6 |
+| **Live Books** (authoring / pages / images) | `_agents/state/LIVE_BOOKS_STATE.md` · `_agents/workflows/BOOK_PAGE_WORKFLOW.md` · `_agents/plans/CONTENT_PROTECTION.md` + CLAUDE.md §0.6 · **publish-readiness of every chapter/page** → the Book Readiness dashboard `admin.../books/dashboard` (engine `packages/data/books/readiness.ts`; cockpit row "Book Readiness Dashboard") |
 | **Taxonomy / tagging** | `packages/data/taxonomy/` · `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md` |
 | **Persona / adaptive engine** | `_agents/CRUCIBLE_ARCHITECTURE.md` (persona pipeline) · `_agents/plans/UNIFIED_LEARNER_PERSONA.md` |
 | **SEO / any public page** | `_agents/SEO_PLAYBOOK.md` · CLAUDE.md §10 |
@@ -42,6 +42,7 @@ Cross-cutting (always cheap to skim, applies to most tasks): [`company-overview.
 | Repo rules, security, caching, conventions | [`CLAUDE.md`](../../CLAUDE.md) |
 | Crucible architecture + invariants | [`_agents/CRUCIBLE_ARCHITECTURE.md`](../CRUCIBLE_ARCHITECTURE.md) |
 | Live Books content inventory | [`_agents/state/LIVE_BOOKS_STATE.md`](../state/LIVE_BOOKS_STATE.md) |
+| Authored reference textbooks (Reference-First rule → Live Books / Crucible) | [`_agents/reference-books/REFERENCE_LIBRARY.md`](../reference-books/REFERENCE_LIBRARY.md) — index + per-book maps (Mittal Physical Chemistry; Hewitt Conceptual Integrated Science) |
 | Crucible question-bank inventory | [`_agents/state/CRUCIBLE_STATE.md`](../state/CRUCIBLE_STATE.md) |
 | Content-protection system | [`_agents/plans/CONTENT_PROTECTION.md`](../plans/CONTENT_PROTECTION.md) |
 | SEO / caching record | [`_agents/SEO_PLAYBOOK.md`](../SEO_PLAYBOOK.md) |

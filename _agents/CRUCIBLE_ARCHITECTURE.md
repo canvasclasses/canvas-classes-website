@@ -237,12 +237,12 @@ recommendation engine input) reads from.
 | Field | Purpose | Notes |
 |---|---|---|
 | `recent_attempts[]` | Capped at 200, used for activity feed + `reclassifyBrowseSession` | Most recent first (unshift). Each element carries `confidence` + optional `session_id` — see §4.1.1 |
-| `all_attempted_ids[]` | Uncapped, lightweight per-question index. Drives the test generator's "avoid recently-tested" logic | **HIGH-confidence attempts only** populate this. Browse-mode (medium/low) intentionally does not — see §3.2 part B |
+| `all_attempted_ids[]` | Lightweight per-question index. Drives the test generator's "avoid recently-tested" logic. **Safety-capped at `ALL_ATTEMPTED_IDS_CAP` (20,000), LRU eviction by `last_attempted_at`** (2026-06-26) — prevents unbounded doc growth toward the 16 MB BSON ceiling; long-term fix is its own collection | **HIGH-confidence attempts only** populate this. Browse-mode (medium/low) intentionally does not — see §3.2 part B |
 | `chapter_progress: Map<chapter_id, …>` | Per-chapter rollup: total/correct/accuracy/last_attempted/mastery_level. **HIGH-confidence only** | mastery_level is computed: `Mastered (≥20 attempts, ≥80%) > Proficient (≥10, ≥60%) > Learning (≥5) > Beginner` |
 | `concept_mastery: Map<tag_id, …>` | **The persona substrate.** Two parallel counter sets per tag: mastery (HIGH only) and exposure (HIGH+MEDIUM) | See §4.2 — strict shape contract |
-| `starred_questions[]` | Bookmarks | Currently uncapped — audit #9 flagged FIFO eviction needed |
+| `starred_questions[]` | Bookmarks | **Capped at `STARRED_QUESTIONS_CAP` (2,000), FIFO eviction of the oldest** (2026-06-26, closes audit #9). Generous so normal users never hit it (§0.6 spirit) |
 | `test_sessions[]` | Last test sessions for overlap detection | Capped to last 10 |
-| `stats` | Lifetime totals + streak. **HIGH-confidence only** for `total_questions_attempted` / `total_correct` / `overall_accuracy` (browse should not inflate the dashboard's "official" mastery %) | Streak increment is currently broken — audit #18 |
+| `stats` | Lifetime totals + streak. **HIGH-confidence only** for `total_questions_attempted` / `total_correct` / `overall_accuracy` (browse should not inflate the dashboard's "official" mastery %) | Streak increment is **fixed** (was audit #18; corrected 2026-06-26 in `user-progress-updater.ts:219-246`). Residual: day-bucketing uses server-UTC midnight, so a late-evening IST attempt can be off by one day. |
 
 #### 4.1.1 `IQuestionAttempt` shape
 
@@ -267,8 +267,25 @@ interface IQuestionAttempt {
   // Browse-only: stable per-mount UUID. Used by reclassifyBrowseSession to
   // walk-and-relabel every attempt in the session without re-POSTing.
   session_id?: string;
+  // Idempotency key (uuid), stable per logical attempt. The persona updater
+  // skips an attempt whose client_attempt_id is already in recent_attempts, so
+  // a double-delivered attempt (beacon + keepalive, or a client retry the
+  // server already committed) is not double-counted. Added 2026-06-26.
+  client_attempt_id?: string;
 }
 ```
+
+**Idempotency (2026-06-26).** All client write paths stamp a stable
+`client_attempt_id`; `computeUserProgressUpdate` returns `skipped: true` for a
+duplicate (found in the capped `recent_attempts` window) and `writer.ts`
+early-returns. New writers MUST forward `client_attempt_id` from the payload.
+
+**Server-side correctness is authoritative (2026-06-26).** Every attempt write
+path recomputes `is_correct` from the canonical `QuestionV2` via
+`isAnswerCorrect` — never trusting the client. This now holds for
+`/test-results`, `/progress/batch`, AND `/session-response` (guided, which
+sends the raw `selectedOption` for this). Never add a writer that trusts a
+client `is_correct` / `answeredCorrectly`.
 
 `confidence` and `session_id` are optional in the schema for backwards
 compatibility with pre-tier documents; **all new writers must set them**

@@ -63,6 +63,134 @@
 
 ---
 
+## Chapters 19–21 — Chemical Bonding — section map
+
+Serves **our Class 11 Chem Ch.4 (Chemical Bonding) Live Book** (built 2026-06-21). PDF↔book offset ≈ **+13** (book p1 ≈ PDF p13).
+
+| Mittal chapter | Book pp | PDF pp | Covers |
+|---|---|---|---|
+| **Ch 19 — Chemical Bonding-1** | 481–526 | **≈ 494–538** | bonds, ionic, covalent, octet, VBT, formal charge, Lewis structures, resonance, VSEPR, hybridisation, bond angles |
+| **Ch 20 — Chemical Bonding-2** | 527–540 | **≈ 539–552** | Molecular Orbital Theory (full) |
+| **Ch 21 — Chemical Bonding-3** | 541–556 | **≈ 553–568** | dipole moment, Fajan's rules, intermolecular (van der Waals) forces, hydrogen bonding |
+
+### Ch 19 — section list (read the matching span before building a page)
+- **19.1 Chemical Bonds** (intro: 3 bond types + vdW/London/H-bond preview) · **19.1.1 Ionic Bond** (Coulomb's law, electronegativity) · **19.1.2 Lattice energy of ionic crystals** (U = ΔH°, definition + stability)
+- **19.2 Covalent Bond** · 19.2.1 Unequal electron sharing · 19.2.2 Electronegativity · (incl. **coordinate/dative bond**; **TABLE 19.2 ionic vs covalent**)
+- **19.3 Metallic Bond**
+- **19.4 The Octet Rule** · 19.4.1 Examples · **19.4.2 Exceptions to the octet rule**
+- **19.5 Valence Bond Theory** · 19.5.1 Sigma bond · 19.5.2 Pi & delta bonds · 19.5.3 Valence electrons & valence-shell orbitals
+- **19.6 Formal Charge** · 19.6.1 Formal charge & bond polarity
+- **19.7 Writing a Covalent Molecule** · molecular / structural / electron-dot formulae
+- **19.8 Drawing Electron-Dot Formulae (Lewis dot structures)**
+- **19.9 Resonance** · rules · physical meaning · ranking contributing structures · how to evaluate
+- **19.10 VSEPR Theory: A Quick Look** · electron-group arrangements & molecular shapes (2/3/4/5/6 groups)
+- **19.11 Hybridization of Atomic Orbitals**
+- **19.12 Types of Hybrid Orbitals** · sp/sp²/sp³ · **19.12.6 Shortcut to hybridisation** ← *matches the founder's own σ-bonds + free-lone-pairs shortcut (BOND-exemplars §B)*
+- **19.13 More about Hybridisation** · 19.13.1 hybridisation & overlap · 19.13.3 hybridisation index m
+- **19.14 Bond Strength and Bond Angles** · 19.14.2 Bond Angles
+
+### Ch 20 — section list (MOT)
+- **20.1 Molecular Orbital Theory** · intro · LCAO · bonding MOs · non-bonding interaction · antibonding MOs
+- **20.2 Homonuclear diatomics** · H₂ · breaking bonds · "there exists nothing like He₂" · involving 2s & 2p
+- **20.3 Bond properties & MO theory** · bond order · bond strength · periodic trend
+- **20.4 Experimental proof for MO existence**
+- **20.5 Heteronuclear diatomics** · CN⁻ ion · CO molecule
+
+### Ch 21 — section list (dipole / Fajan's / intermolecular / H-bond)
+- **21.1 Some molecules are polar** (the burette + charged-rod demonstration)
+- **21.2 The Dipole Moment** · definition · dipole & geometry · **21.2.3 the strange case of CO** · 21.2.4 percent ionic character
+- **21.3 Covalent character: Fajan's Rules** · covalent character of ionic compounds · the rules · application
+- **21.4 Forces between molecules** · dipole-dipole · evidence · how van der Waals forces arise
+- **21.5 Hydrogen Bonding** · what it is · strength · effect on boiling point
+
+### Our Ch.4 pages → read these Mittal sections (reference-first lookup)
+| Our page | Mittal §(PDF pp via +13 offset) |
+|---|---|
+| p1 why-atoms-bond | 19.1, 19.4 (octet) |
+| p2 lewis-structures-formal-charge | 19.7, 19.8, 19.6 (formal charge) |
+| p3 ionic-bond-lattice-enthalpy | 19.1.1, 19.1.2 |
+| p4 born-haber-cycle | 19.1.2 (lattice energy) — ⚠ Born–Haber cycle itself is **thin/absent** in Mittal; our page is NCERT/JEE-led |
+| p5 covalent-bond-parameters | 19.2, 19.5 (σ/π), 19.14 |
+| p6 resonance | 19.9 (full) |
+| p7 fajans | 21.3 |
+| p8 lattice-vs-hydration-solubility | 19.1.2 — ⚠ solubility ledger is NCERT/JEE-led; Mittal covers lattice energy not the hydration trade-off in depth |
+| p9 vsepr-theory | 19.10 |
+| p10 molecular-shapes-gallery | 19.10.x |
+| p11 bond-angle-bent-drago | 19.14 — ⚠ **Bent's & Drago's rules** are NCERT/JEE-extension; Mittal's 19.14 covers bond angles but verify these two named rules elsewhere |
+| p12 hybridisation | 19.11, 19.12 (incl. 19.12.6 shortcut) |
+| p13 expanded-octet-hybridisation | 19.12, 19.13, 19.4.2 |
+| p14 dipole-moment-polarity | 21.1, 21.2 (incl. 21.2.3 CO, 21.2.4 % ionic) |
+| **Arc C** — VBT | 19.5 |
+| **Arc C** — back bonding | ⚠ NCERT/JEE-led; verify (not a standalone Mittal §) |
+| **Arc C** — MOT | **20.1–20.5 (full)** — Mittal is rich here; read before building |
+| **Arc D** — hydrogen bonding | 21.5 |
+| **Arc D** — van der Waals / intermolecular | 21.4 |
+
+### Bonding-specific style notes (borrow these)
+- **Demonstration-led openers:** Ch21 opens by *doing an experiment* — "Fill a burette with water, bring a charged ebonite rod near the stream… why does it deflect?" then a table of which liquids deflect → polarity. Reuse this exact demo framing for our dipole page.
+- **Real, vivid evidence for abstract theory:** MOT is motivated by O₂ being **paramagnetic — visibly attracted to the poles of a magnet** (the Lewis structure can't explain it). Use this as the MOT hook on the Arc-C MOT page.
+- **Honest meta-commentary:** Mittal calls electron-deficient molecules *"theory-deficient molecules — the molecules aren't deficient, the valence-bond theory was."* This matches the founder's honest-on-air register; reuse for "why we need MOT."
+- **His hybridisation shortcut (19.12.6)** is the same one the founder teaches — text and lecture agree, good cross-reference.
+- **Comparison tables** (TABLE 19.2 ionic vs covalent) → our `comparison_card`/`table` blocks.
+- **Chapter-opener "Picture Description"** ties an image to a metaphor (skydivers = non-bonding intermolecular interaction) → our hero-banner concept.
+- **Gaps to fill from NCERT/JEE, not Mittal:** Born–Haber cycle, Bent's & Drago's rules (named), the lattice-vs-hydration solubility ledger, metallic band theory — Mittal is light on these; ground those pages in NCERT + standard JEE.
+
+---
+
+## Chapters 23–25 — Thermodynamics — section map
+
+Serves **our Class 11 Chem Ch.5 (Thermodynamics) Live Book** (building 2026-06-21). Thermo spans **book pp. 579–710**. Built from the PDF this session.
+
+| Mittal chapter | Book pp | Covers |
+|---|---|---|
+| **Ch 23 — Thermodynamics (First Law)** | 579–~646 | system/surroundings, state vs path functions, work (PV, reversible/irreversible, max/min), heat, internal energy, specific heats (Cp>Cv / Mayer), first law, isothermal & adiabatic processes, enthalpy, equipartition, degrees of freedom, Joule–Thomson, limitations |
+| **Ch 24 — Thermochemistry** | ~647–675 | exo/endothermic, Laplace–Lavoisier (Hess), calorimetry (ΔE↔ΔH), Kirchhoff (T-dependence), standard states + enthalpy of formation/combustion, phase-change enthalpies, lattice/Born–Haber/solution/hydration, neutralization, bond enthalpy + resonance energy |
+| **Ch 25 — Thermodynamics (Second Law)** | 676–710 | diffusion & probability, entropy (Boltzmann microstates, disorder, predicting S°), calculating ΔS (reversible path for irreversible, gas mixing, hot+cold metals, phase-change, Trouton), third law, ΔS of reaction, free energy (spontaneity criteria, standard ΔG, T-dependence, Helmholtz, ΔG & equilibrium / ΔG°=−RT ln K) |
+
+### Ch 23 — section list (First Law)
+- **23.2 Basic Definitions** — system · surroundings · closed/open/isolated · property · extensive/intensive · equation of state · **state function vs path function** · thermodynamic cycle · state postulate · process types · adiabatic process
+- **23.3 Temperature** — Zeroth law · measuring devices · units
+- **23.4 Heat** · **23.5 Work** — mechanics vs thermo defn · sign convention · **23.5.5 PV work** · **23.5.6 work is a path function** · reversible · irreversible · **23.5.10 max/min work** · electrical/shaft/surface-tension work
+- **23.6 Internal Energy** · **23.7 Specific Heats** — **23.7.1 why Cp > Cv (Mayer's relation)** · 23.7.2 calorimetry · 23.7.3 Dulong–Petit
+- **23.8 First Law** · **23.9 Adiabatic & Isothermal** — const-V · const-P · **23.9.3 work in adiabatic reversible**
+- **23.10 Enthalpy** · 23.11 equipartition · 23.12 degrees of freedom · **23.13 Joule–Thomson** (Joule expt, J-T expt, coefficient, inversion temp) · 23.14 limitations
+
+### Ch 24 — section list (Thermochemistry)
+- 24.3 exo/endothermic · **24.4 Laplace–Lavoisier's Law (Hess basis)** · **24.5 measurement** (direct/indirect calorimetry, ΔE↔ΔH) · **24.6 Kirchhoff (T-dependence of ΔH)** · **24.7 standard states + enthalpy of formation** (+ exothermicity/stability) · **24.8 combustion** · 24.9 phase-change enthalpies (vap/fusion/sublimation/transition) · 24.10 hydration of salts · **24.11 crystal formation** (ionisation energy, electron affinity, lattice energy, cohesive energy → Born–Haber) · **24.12 solutions** (enthalpy of solution & hydration, aqueous ions) · **24.13 neutralization** (strong–strong fixed; weak gap) · **24.14 bond enthalpy** (dissociation, atomisation, average bond energy, estimating ΔH, resonance energy)
+
+### Ch 25 — section list (Second Law)
+- 25.2 diffusion & probability (six-molecule model) · **25.3 Entropy** (Boltzmann microstates, emergence of 2nd law, entropy & energy, **25.3.5 predicting relative S°**, disorder) · **25.4 calculating ΔS** (reversible path for irreversible process, gas mixing, hot+cold metals, **25.4.5 ΔS for phase change**, Trouton, isentropic) · **25.5 Third Law** · **25.6 ΔS of a reaction** · **25.7 Free Energy** (definition, **25.7.2 criteria for spontaneity**, phase transitions, standard ΔG, what is "free", **25.7.6 T-dependence of ΔG**, Helmholtz, **25.7.8–9 ΔG & equilibrium / ΔG°=−RT ln K**)
+
+### Our Ch.5 pages → read these Mittal sections (reference-first lookup)
+| Our page | Mittal § |
+|---|---|
+| p1 system-surroundings-universe | 23.2 |
+| p2 state-vs-path-functions | 23.2.11–12, 23.5.6 |
+| p3 heat-work-internal-energy | 23.4, 23.5.1–4, 23.6 |
+| p4 pressure-volume-work | 23.5.5–23.5.10 |
+| p5 first-law | 23.8 |
+| p6 enthalpy | 23.10 |
+| p7 heat-capacity-cp-cv | 23.7 |
+| p8 isothermal-processes | 23.9.1–2 |
+| p9 adiabatic-processes | 23.9.3 |
+| p10 thermochemical-eqns-hess | 24.3, 24.4 |
+| p11 standard-enthalpies | 24.7, 24.8 |
+| p12 calorimetry-bomb-vs-water | 24.5 |
+| p13 bond-enthalpy-resonance | 24.14 |
+| p14 enthalpy-of-neutralization | 24.13 |
+| p15 born-haber-light | 24.11 — ⚠ kept LIGHT, cross-links Ch.4 lattice enthalpy |
+| p16 spontaneity-first-law-limit | 25.1, 25.2 |
+| p17 entropy-measure-of-dispersal | 25.2, 25.3 |
+| p18 calculating-entropy-changes | 25.4 |
+| p19 second-and-third-laws | 25.3.3, 25.5, 25.6 |
+| p20 gibbs-free-energy | 25.7.1–6 |
+| p21 free-energy-and-equilibrium | 25.7.8–9 |
+| *(opt-adv, not in this build: equipartition 23.11–12, Joule–Thomson 23.13, Kirchhoff 24.6)* | — |
+
+> **Thermo-specific style notes:** Mittal opens Ch 23 calling thermodynamics "the foundation of physical chemistry… these three chapters are a self-contained course." His entropy chapter (25.2) motivates the 2nd law from a **six-molecule diffusion probability** thought-experiment before any formula — reuse that "count the arrangements" framing (it matches the founder's 10-chairs microstates analogy). The free-energy section (25.7.5) literally asks "what is *free* about free energy?" — mirrors the founder's "spendable part of your energy" framing.
+
+---
+
 ## Style & voice guide — what makes Mittal's teaching good (borrow this)
 
 1. **Inquiry-first openings.** Sections begin with an everyday scene or a question, *before* the definition ("Look around your desk… scratch them, burn them, which is harder?"). Hook → then formalise.

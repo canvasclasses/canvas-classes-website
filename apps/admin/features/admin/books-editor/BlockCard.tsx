@@ -30,6 +30,7 @@ import ClassifyExerciseEditor from './blocks/ClassifyExerciseEditor';
 import CuriosityPromptBlockEditor from './blocks/CuriosityPromptBlockEditor';
 import SimulationBlockEditor from './blocks/SimulationBlockEditor';
 import JuniorPracticeEditor from './blocks/JuniorPracticeEditor';
+import YouSolveItEditor from './blocks/YouSolveItEditor';
 
 const BLOCK_LABELS: Record<BlockType, string> = {
   text: 'Text',
@@ -43,6 +44,7 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   molecule_3d: 'Molecule 3D',
   latex_block: 'Equation',
   practice_link: 'Practice Link',
+  practice_bank: 'Practice Bank',
   callout: 'Callout',
   table: 'Table',
   timeline: 'Timeline',
@@ -72,6 +74,18 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   chapter_practice: 'Chapter Practice',
   apply_express: 'Apply & Express',
   junior_practice: 'Junior Practice (bank)',
+  group_elements: 'Group Elements',
+  // Life Skills + Social Science engagement blocks (script-authored; labels for the editor list)
+  guided_practice: 'Guided Practice',
+  reflection_journal: 'Reflection Journal',
+  habit_tracker: 'Habit Tracker',
+  focus_game: 'Focus Game',
+  attention_xray: 'Attention X-Ray',
+  self_experiment: 'Self-Experiment',
+  guided_reveal: 'Guided Reveal',
+  perspective_scenario: 'Perspective Scenario',
+  career_spotlight: 'Career Spotlight',
+  you_solve_it: 'You Solve It',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -86,6 +100,7 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   molecule_3d: '🧬',
   latex_block: '∑',
   practice_link: '🎯',
+  practice_bank: '📝',
   callout: '💡',
   table: '⊞',
   timeline: '⟶',
@@ -115,6 +130,17 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   chapter_practice: '◎',
   apply_express: '🎮',
   junior_practice: '🎓',
+  group_elements: '🧪',
+  guided_practice: '🧭',
+  reflection_journal: '📓',
+  habit_tracker: '📊',
+  focus_game: '🎯',
+  attention_xray: '🩻',
+  self_experiment: '🔬',
+  guided_reveal: '🎬',
+  perspective_scenario: '⚖️',
+  career_spotlight: '💼',
+  you_solve_it: '◎',
 };
 
 function blockPreview(block: ContentBlock): string {
@@ -131,6 +157,8 @@ function blockPreview(block: ContentBlock): string {
       case 'molecule_3d':    return block.name || block.smiles || '(molecule)';
       case 'latex_block':    return (block.latex || '').slice(0, 60) || '(equation)';
       case 'practice_link':  return block.label || '(link)';
+      case 'practice_bank':  return `${(block.sections || []).length} sections · ${(block.sections || []).reduce((s, x) => s + (x.items || []).length, 0)} questions`;
+      case 'group_elements': return `${(block.element_symbols || []).join(', ')}`;
       case 'callout':        return `${block.variant}: ${(block.markdown || '').slice(0, 60)}`;
       case 'table':          return `${(block.headers || []).length} cols × ${(block.rows || []).length} rows`;
       case 'timeline':       return `${(block.events || []).length} event${(block.events || []).length !== 1 ? 's' : ''}`;
@@ -145,6 +173,7 @@ function blockPreview(block: ContentBlock): string {
       case 'classify_exercise':  return `${(block.rows || []).length} rows · ${(block.question || '').slice(0, 50)}`;
       case 'meet_a_scientist':   return `${block.name}${block.years ? ` (${block.years})` : ''}`;
       case 'junior_practice':    return `Ch ${block.chapter_number} · ${block.mode === 'test' ? 'test' : 'practice'} · ${block.session_size ?? 10} Qs`;
+      case 'you_solve_it':       return block.title || '(you solve it)';
       default:                   return `(${(block as ContentBlock).type})`;
     }
   } catch {
@@ -191,6 +220,21 @@ export default function BlockCard({
       case 'curiosity_prompt':  return <CuriosityPromptBlockEditor block={block} onChange={onChange} />;
       case 'simulation':        return <SimulationBlockEditor block={block} onChange={onChange} />;
       case 'junior_practice':   return <JuniorPracticeEditor block={block} onChange={onChange} />;
+      case 'you_solve_it':      return <YouSolveItEditor block={block} onChange={onChange} onUpload={onUpload} />;
+      case 'practice_bank':     return (
+        <div className="text-xs text-white/40 leading-relaxed px-1 py-2 space-y-1">
+          <p className="text-white/60 font-semibold">{block.title || 'Practice Bank'}</p>
+          <p>{(block.sections || []).length} sections · {(block.sections || []).reduce((s, x) => s + (x.items || []).length, 0)} questions (NCERT exercises + Exemplar).</p>
+          <p className="text-white/30">Authored via <code>scripts/practice/</code>. See the live preview on the right for the rendered bank.</p>
+        </div>
+      );
+      case 'group_elements':    return (
+        <div className="text-xs text-white/40 leading-relaxed px-1 py-2 space-y-1">
+          <p className="text-white/60 font-semibold">{block.title || 'Group Elements'}</p>
+          <p>Elements: <span className="font-mono text-white/70">{(block.element_symbols || []).join(', ') || '(none)'}</span></p>
+          <p className="text-white/30">The element list is authored in-script (looked up in the shared periodic table by symbol). See the live preview on the right for the rendered cards.</p>
+        </div>
+      );
       default:                  return null;
     }
   }

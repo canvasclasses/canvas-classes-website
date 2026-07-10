@@ -549,6 +549,33 @@ select {
      Slate). Defined here so SSR / first paint shows Charcoal with no flash. */
   --book-bg: #121316;
   --book-surface: #181A21;
+  /* Live Books accent — the single knob for interactive-block highlights (kickers,
+     progress, active markers, tinted buttons, selected chips). Deliberately a CALM
+     steel-blue, NOT the hot global orange: reading surfaces must not have a
+     high-saturation accent competing with the content for attention (founder
+     decision 2026-07-05). Every Life Skills block reads these via
+     var(--book-accent, …) with a matching fallback, so retuning here restyles all
+     of them at once. Keep it desaturated; never swap in a neon/bright hue. */
+  --book-accent: #9fb2d4;                          /* labels, headings, button text, active markers */
+  --book-accent-strong: #8fa6c9;                   /* thin progress fills, small solid elements */
+  --book-accent-bg: rgba(159, 178, 212, 0.12);     /* tinted button / selected-card background */
+  --book-accent-border: rgba(159, 178, 212, 0.40); /* accent borders */
+  /* Live Books reading INK — the brightest reading text is capped at this calm
+     muted grey instead of pure white, so it stops glaring on the near-black
+     surface (founder chose it from samples, 2026-07-05). Applied by remapping
+     Tailwind's --color-white inside the reader scope only (rule below), so every
+     `text-white` / `text-white/NN` in the reader dims at once. Retune the whole
+     reader's text brightness by editing THIS one value. */
+  --book-ink: #dbdbdb;
+}
+
+/* One knob: remap white → the muted reading ink for everything inside the reader
+   ONLY. Tailwind v4 utilities read var(--color-white), so this single line dims all
+   reader text together; Crucible / admin (no .book-page-content wrapper) keep pure
+   white. Low-opacity structural whites (hairline borders, faint bg washes) shift
+   imperceptibly. Semantic/accent colours (sky, emerald, --book-accent) are untouched. */
+.book-page-content {
+  --color-white: var(--book-ink);
 }
 
 @media (prefers-color-scheme: dark) {

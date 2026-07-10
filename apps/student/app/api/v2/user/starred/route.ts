@@ -4,6 +4,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { UserProgress } from '@canvas/data/models/UserProgress';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { resolveTenantId } from '@canvas/data/tenancy';
+import { STARRED_QUESTIONS_CAP } from '@canvas/persona/contract';
 
 interface StarredEntry {
     question_id: string;
@@ -105,6 +106,11 @@ export async function POST(req: NextRequest) {
 
         if (action === 'star' && !alreadyStarred) {
             progress.starred_questions.push({ question_id, chapter_id, starred_at: new Date() });
+            // Safety FIFO cap (see STARRED_QUESTIONS_CAP) — keep the most recent
+            // N bookmarks. Generous: only a runaway client hits it.
+            if (progress.starred_questions.length > STARRED_QUESTIONS_CAP) {
+                progress.starred_questions = progress.starred_questions.slice(-STARRED_QUESTIONS_CAP);
+            }
             progress.updated_at = new Date();
             await progress.save();
         } else if (action === 'unstar' && alreadyStarred) {

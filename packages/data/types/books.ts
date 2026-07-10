@@ -1,3 +1,5 @@
+import type { PageReadinessSummary } from '../books/readiness';
+
 // ─── Block Types ──────────────────────────────────────────────────────────────
 
 export type BlockType =
@@ -40,7 +42,24 @@ export type BlockType =
   | 'chapter_practice'
   | 'apply_express'
   | 'reading_comprehension'
-  | 'junior_practice';
+  | 'junior_practice'
+  | 'practice_bank'
+  | 'group_elements'
+  // Life Skills blocks (Class 9 & 10 strand)
+  | 'guided_practice'
+  | 'reflection_journal'
+  | 'habit_tracker'
+  | 'focus_game'
+  | 'attention_xray'
+  | 'self_experiment'
+  | 'guided_reveal'
+  // Social Science engagement-plan blocks (2026-07-08) — see
+  // _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement retrofit" section.
+  | 'perspective_scenario'
+  | 'career_spotlight'
+  // "You Solve It" — real, unsolved Indian problem the student must reason a
+  // solution to (2026-07-10, founder design). See YouSolveItBlock below.
+  | 'you_solve_it';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -605,6 +624,60 @@ export interface JuniorPracticeBlock extends BaseBlock {
   mode?: 'practice' | 'test';  // 'test' = timed, no per-question feedback
 }
 
+// PRACTICE BANK — the section-navigated, source-tagged end-of-chapter bank
+// (founder design 2026-06-25). A single end-of-chapter block holding 4–5
+// SUB-TOPIC sections; each section mixes NCERT exercises, CBSE PYQs and MCQs,
+// every item carrying a source tag. The renderer is a two-pane UI: a section
+// list on the left, the chosen section's bank on the right. Two item kinds:
+// MCQ (gradable — pick → check → explanation) and numerical (tap-to-reveal
+// worked solution). NCERT portion is frozen once added; the PYQ/MCQ portion is
+// refreshed yearly. See _agents/plans/CHEMICAL_EQUILIBRIUM_BUILD.md.
+export type PracticeSource = 'ncert_exercise' | 'ncert_exemplar' | 'cbse_pyq' | 'jee_neet' | 'mcq';
+
+interface PracticeBankItemBase {
+  id: string;                  // stable, e.g. 'ceq-pr-lechat-01'
+  source: PracticeSource;
+  source_label?: string;       // shown on the badge, e.g. 'NCERT 7.25', 'CBSE 2023', 'JEE Main 2024'
+  prompt: string;              // markdown + LaTeX
+}
+export interface PracticeBankMCQ extends PracticeBankItemBase {
+  kind: 'mcq';
+  options: string[];
+  correct_index: number;
+  explanation: string;
+}
+export interface PracticeBankNumerical extends PracticeBankItemBase {
+  kind: 'numerical';           // free-response / numerical — tap-to-reveal solution
+  answer?: string;             // short final answer
+  solution: string;            // full worked solution (markdown + LaTeX)
+}
+export type PracticeBankItem = PracticeBankMCQ | PracticeBankNumerical;
+
+export interface PracticeBankSection {
+  id: string;
+  title: string;               // sub-topic, e.g. 'Le Chatelier & Factors'
+  blurb?: string;              // optional one-liner under the section title
+  items: PracticeBankItem[];
+}
+export interface PracticeBankBlock extends BaseBlock {
+  type: 'practice_bank';
+  title?: string;
+  intro?: string;
+  sections: PracticeBankSection[];
+}
+
+// GROUP ELEMENTS — a row of element buttons (looked up by symbol in the shared
+// 118-element table at @canvas/data/periodic/elementsData) that each expand into
+// a rich ElementDetailCard. Authored in-script: list the group's members by
+// symbol, e.g. the nitrogen group ['N','P','As','Sb','Bi']. Built for the
+// Class 12 p-Block chapters.
+export interface GroupElementsBlock extends BaseBlock {
+  type: 'group_elements';
+  title?: string;
+  intro?: string;
+  element_symbols: string[]; // e.g. ['N','P','As','Sb','Bi']
+}
+
 // E13. APPLY & EXPRESS — the *productive* tier. Where `chapter_practice` (MCQ)
 //      tests recognition, this tier makes students PRODUCE language — NCERT's
 //      actual emphasis (CG-1 communication, CG-3 employ-in-writing): fill the
@@ -806,6 +879,245 @@ export interface GalleryBlock extends BaseBlock {
   figure_number?: string;
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// LIFE SKILLS BLOCKS — Class 9 & 10 Life Skills strand
+// Spec: _agents/workflows/LIFE_SKILLS_WORKFLOW.md §5
+// Renderers: packages/book-renderer/blocks/lifeskills/*
+// Persistence: per-device localStorage (`canvas_practice:<block.id>`) for the
+// pilot — server-side sync is a deliberate follow-up, not an oversight.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// LS1. GUIDED PRACTICE — timed, step-sequenced exercise (breathing pacer, focus
+//      sprint, observation drill). The "do it now" block — the strand's core mechanic.
+export interface GuidedPracticeStep {
+  id: string;
+  instruction: string;    // "Sit up straight. Let your shoulders drop."
+  duration_sec?: number;  // timed steps auto-advance; untimed steps wait for a tap
+}
+export interface BreathPattern {
+  inhale_sec: number;
+  hold_sec?: number;      // hold after the inhale
+  exhale_sec: number;
+  hold_out_sec?: number;  // hold after the exhale
+  cycles: number;
+}
+export interface GuidedPracticeBlock extends BaseBlock {
+  type: 'guided_practice';
+  practice_kind: 'breathing' | 'focus_timer' | 'meditation' | 'observation' | 'custom';
+  title: string;                  // "The 2-Minute Breathing Reset"
+  intro?: string;                 // one line on why this practice matters
+  steps: GuidedPracticeStep[];    // with breath_pattern set, steps are pre-practice setup notes
+  breath_pattern?: BreathPattern; // breathing kind only — drives the visual pacer
+  audio_url?: string;             // optional guided audio track (R2)
+  completion_note?: string;       // teacher-voice line shown when finished
+}
+
+// LS2. REFLECTION JOURNAL — private free-writing box, saved on-device only.
+export interface ReflectionJournalBlock extends BaseBlock {
+  type: 'reflection_journal';
+  prompt: string;
+  placeholder?: string;
+  min_words?: number;   // gentle nudge shown under the box; never blocks saving
+}
+
+// LS3. HABIT TRACKER — N-day challenge with one check-in per calendar day.
+export interface HabitTrackerBlock extends BaseBlock {
+  type: 'habit_tracker';
+  title: string;          // "7-Day Focus Challenge"
+  habit: string;          // the daily action, stated concretely
+  duration_days: number;  // 1–60
+  why?: string;           // one line on what this builds
+  day_labels?: string[];  // optional per-day task variation; length = duration_days
+}
+
+// LS4. FOCUS GAME — "The Steady Flame": a gradCPT/SART-style sustained-attention
+// meter. Lanterns fade in and out on a steady cadence; tap every lit one but let
+// the rare unlit one pass. Scored primarily on the STEADINESS of tap timing
+// (response-time variability — the most validated behavioural marker of attention
+// lapses), plus lapses caught/missed. It is a MEASURING instrument + one honest
+// rep of the notice-and-return skill — NOT a standalone "focus trainer" (there is
+// no evidence such games transfer to real-world focus; the chapter's daily
+// practice does that). Scored per-device under `test_id` so a baseline run (p1)
+// and a retest run (p10) can be compared. Renderer: blocks/lifeskills/FocusGameRenderer.
+export interface FocusGameBlock extends BaseBlock {
+  type: 'focus_game';
+  test_id: string;                              // shared key linking baseline + retest
+  role: 'baseline' | 'retest' | 'standalone';
+  title: string;
+  intro?: string;
+  duration_sec?: number;                        // total run length; default 120
+  completion_note?: string;
+}
+
+// LS5. ATTENTION X-RAY — "The Notification Autopsy": an interactive reveal of how
+// every innocent-looking part of a phone screen (the red badge, "tagged you", the
+// timing, the streak, infinite scroll, autoplay) is a deliberate, tested design
+// choice built to keep you scrolling. The student taps each card to flip it and
+// see the hidden intent; a closing panel unlocks the business-model reveal (your
+// attention is the product) landing on agency, not fear. Content-driven so the
+// copy lives in the DB, not the renderer. Renderer: blocks/lifeskills/AttentionXrayRenderer.
+export interface AttentionXrayCard {
+  id: string;
+  label: string;      // the innocent thing they see, e.g. "The little red dot"
+  front: string;      // short glyph/text shown on the un-flipped card, e.g. "🔴 3"
+  reveal: string;     // the hidden design intent (markdown), shown on flip
+}
+export interface AttentionXrayBlock extends BaseBlock {
+  type: 'attention_xray';
+  title: string;
+  intro?: string;
+  cards: AttentionXrayCard[];
+  closing: string;        // business-model reveal (markdown), unlocks after cards flipped
+  watch_note?: string;    // optional "watch The Social Dilemma" pointer (markdown)
+}
+
+// LS6. SELF EXPERIMENT — "do this small experiment, then tick what you noticed,
+// then learn what each thing means." A student runs a short real-world experiment
+// (e.g. 5 minutes without reaching for the phone), multi-selects which urges/
+// sensations showed up from a fixed option list, and each selected option reveals
+// a tailored plain-English explanation. Reusable across the strand (focus, stress,
+// health). Selections persist per-device. Renderer: blocks/lifeskills/SelfExperimentRenderer.
+export interface SelfExperimentOption {
+  id: string;
+  label: string;        // "A sudden itch to 'just check' something"
+  explanation: string;  // what that signal means (markdown), revealed when selected
+}
+export interface SelfExperimentBlock extends BaseBlock {
+  type: 'self_experiment';
+  title: string;
+  intro: string;             // sets up the experiment (markdown)
+  steps?: string[];          // optional concrete setup steps
+  duration_sec?: number;     // optional countdown timer for the experiment
+  prompt: string;            // "Which of these showed up? Tick all that did."
+  options: SelfExperimentOption[];
+  min_select?: number;       // gentle nudge only; never blocks
+  completion_note?: string;  // teacher-voice close (markdown)
+}
+
+// LS7. GUIDED REVEAL — a paced, click-to-advance "slide deck" walkthrough that
+// takes the student through an argument ONE beat at a time (build-up: past beats
+// settle into a dimmed trail, the current beat is the bright focus). Advance by
+// click or keyboard (→/Space next, ← back). Content-driven and reusable platform-
+// wide. Most beats are 'point' (kicker + headline + body + optional image); one
+// special 'cost_checker' beat is a tiny interactive verdict tool (e.g. "will your
+// study playlist cost you?" — pick task × audio → green/amber/red verdict).
+// Renderer: blocks/lifeskills/GuidedRevealRenderer.
+export interface GuidedRevealCheckerOption {
+  id: string;
+  label: string;
+  weight: 0 | 1 | 2;   // interference weight: 0 none · 1 low · 2 high
+}
+export interface GuidedRevealChecker {
+  task_label: string;                    // "What are you studying?"
+  tasks: GuidedRevealCheckerOption[];    // weight = verbal/language load
+  audio_label: string;                   // "What's playing?"
+  audios: GuidedRevealCheckerOption[];   // weight = lyric clash
+  // Verdict copy per tier (markdown); tier = task.weight × audio.weight
+  // (>=4 high, >=2 mild, else clear).
+  verdicts: { high: string; mild: string; clear: string };
+}
+export interface GuidedRevealStep {
+  id: string;
+  kind: 'point' | 'cost_checker';
+  kicker?: string;         // small label above the headline, e.g. "The catch"
+  headline: string;
+  body?: string;           // markdown
+  image_src?: string;      // optional visual
+  checker?: GuidedRevealChecker;  // required when kind === 'cost_checker'
+}
+export interface GuidedRevealBlock extends BaseBlock {
+  type: 'guided_reveal';
+  title: string;
+  intro?: string;          // one line before the first beat
+  steps: GuidedRevealStep[];
+  outro?: string;          // shown after the last beat (markdown)
+}
+
+// PERSPECTIVE SCENARIO — Social Science engagement mechanic (2026-07-08, founder
+// design). A real, documented Indian case (a genuine institutional/expert debate,
+// not an invented hypothetical) presented as a decision the student must make.
+// Every option represents an ACTUAL real-world position (a named committee/report/
+// stakeholder group), not a right/wrong choice. Picking one reveals that
+// position's real reasoning and tradeoff; the other options then unlock too, so
+// the student sees all real perspectives regardless of which they picked. Closes
+// on a synthesis note — explicitly NOT a verdict. See
+// _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement retrofit" section for
+// the design rationale and the founder conversation that shaped this.
+export interface PerspectiveScenarioOption {
+  id: string;
+  label: string;          // "Go with the Gadgil approach — protect nearly the whole range"
+  real_position: string;  // "The Western Ghats Ecology Expert Panel's actual 2011 recommendation"
+  perspective: string;    // that position's real reasoning + its real tradeoff (markdown)
+}
+export interface PerspectiveScenarioBlock extends BaseBlock {
+  type: 'perspective_scenario';
+  title: string;
+  role_frame: string;       // "You're advising..." — puts the student in a real decision seat
+  event_context: string;    // the real documented background (markdown), with dates/institutions named
+  // Infographic (2026-07-08, founder request): offloads comparative/timeline
+  // facts (who proposed what, when) to a visual so event_context can stay short.
+  // Empty src + image_prompt set = placeholder state, same convention as ImageBlock.
+  image_src?: string;
+  image_prompt?: string;
+  image_caption?: string;
+  source_note: string;      // explicit citation of the real report(s)/case this is grounded in
+  prompt: string;           // the decision question
+  options: PerspectiveScenarioOption[];  // 2-4 real documented positions
+  synthesis: string;        // closing note (markdown) — ties perspectives together, not a verdict
+}
+
+// CAREER SPOTLIGHT — Social Science engagement mechanic (2026-07-08, founder
+// design). Was originally a `callout` variant rendering one dense paragraph;
+// promoted to its own block after founder feedback that a wall of text buries
+// the actual list of professions — this renders each role as its own scannable
+// row instead. See _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement
+// retrofit" section.
+export interface CareerRole {
+  id: string;
+  role: string;         // "Geographers & GIS analysts" — bolded, the scannable anchor
+  description: string;  // what they actually do, tied back to the chapter's content
+}
+export interface CareerSpotlightBlock extends BaseBlock {
+  type: 'career_spotlight';
+  title: string;
+  intro?: string;        // one line before the list, e.g. "Every discipline here has a real job built on it."
+  careers: CareerRole[]; // 2-6 roles
+  closing?: string;      // one line after the list, e.g. "None of these are historical curiosities."
+}
+
+// "YOU SOLVE IT" — Social Science problem-solving mechanic (2026-07-10, founder
+// design). Distinct from perspective_scenario: where that block is about
+// APPRECIATING why stakeholders disagree (and never asks the student to pick a
+// solution), this one drops the student inside a real, unsolved Indian problem
+// (e.g. the Kosi/Bihar floods), lays out the ACTUAL solutions being debated —
+// each with its genuine upside AND its genuine catch — and asks them to commit
+// to one and defend it, naming the biggest weakness of their own choice. The
+// close is a reality-check ("where the debate actually stands"), grounded in
+// real reports/experts and explicitly NOT "the one correct answer" — because the
+// country itself hasn't settled it. Every instance must be web-verified against
+// real documented sources before authoring (source_note always visible). One
+// flagship per chapter. See _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md.
+export interface YouSolveItSolution {
+  id: string;
+  label: string;     // the proposal, e.g. "Build a giant high dam in Nepal"
+  upside: string;    // its real benefit (markdown)
+  tradeoff: string;  // its real catch/cost (markdown)
+}
+export interface YouSolveItBlock extends BaseBlock {
+  type: 'you_solve_it';
+  title: string;
+  problem: string;      // The Problem — real, named, current, with a human stake (markdown)
+  why_hard: string;     // Why it's stubborn — the twist that keeps it unsolved (markdown)
+  // Optional infographic — same empty-src placeholder convention as ImageBlock.
+  image_src?: string;
+  image_prompt?: string;
+  image_caption?: string;
+  source_note: string;  // explicit citation of the real report(s)/case this is grounded in
+  solutions: YouSolveItSolution[]; // 2-4 real proposals actually on the table
+  prompt: string;       // the decision question (asks student to commit + name their pick's weakness)
+  reality_check: string; // "Where the debate actually stands" — grounding reveal, NOT a verdict (markdown)
+}
+
 export type ContentBlock =
   | TextBlock
   | HeadingBlock
@@ -846,7 +1158,20 @@ export type ContentBlock =
   | ChapterPracticeBlock
   | ApplyExpressBlock
   | ReadingComprehensionBlock
-  | JuniorPracticeBlock;
+  | JuniorPracticeBlock
+  | PracticeBankBlock
+  | GroupElementsBlock
+  // ─── Life Skills blocks (Class 9 & 10 strand) ───
+  | GuidedPracticeBlock
+  | ReflectionJournalBlock
+  | HabitTrackerBlock
+  | FocusGameBlock
+  | AttentionXrayBlock
+  | SelfExperimentBlock
+  | GuidedRevealBlock
+  | PerspectiveScenarioBlock
+  | CareerSpotlightBlock
+  | YouSolveItBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
@@ -896,6 +1221,19 @@ export interface BookPage {
    */
   figure_refs?: Record<string, string>;
   /**
+   * Automated readiness summary (computed on every save + by the recompute
+   * backfill; see `packages/data/books/readiness.ts`). Powers the Book Readiness
+   * dashboard so it reads pre-computed summaries instead of re-scanning blocks.
+   * Stored as the `PageReadinessSummary` shape.
+   */
+  readiness?: PageReadinessSummary;
+  /**
+   * Human sign-off, separate from the automated checks above. A super-admin
+   * toggles `reviewed` from the readiness dashboard once they have personally
+   * validated the page; it feeds the page's readiness stage.
+   */
+  review?: { reviewed: boolean; reviewed_by?: string | null; reviewed_at?: Date | null };
+  /**
    * Soft-delete (content protection, CLAUDE.md §0.6). A page is NEVER hard-deleted;
    * "delete" sets `deleted_at`. Reads exclude `deleted_at != null` via model
    * middleware. Restore by clearing these (see scripts/lib/book-writer.js).
@@ -936,7 +1274,7 @@ export interface Book {
   _id: string;
   slug: string;          // e.g. "ncert-chemistry-class-11"
   title: string;
-  subject: 'chemistry' | 'biology' | 'physics' | 'mathematics' | 'science' | 'social_science' | 'english' | 'ict' | 'hindi';
+  subject: 'chemistry' | 'biology' | 'physics' | 'mathematics' | 'science' | 'social_science' | 'english' | 'ict' | 'hindi' | 'life_skills';
   /**
    * How the renderer behaves when an audio_url is empty on blocks that support audio
    * (narrated_passage, vocabulary_lab, dialogue_role_play, pronunciation_drill).

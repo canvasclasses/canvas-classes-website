@@ -1,14 +1,27 @@
 'use client';
 
 import { SimulationBlock } from '@canvas/data/types/books';
+import { BIOLOGY_SIMULATIONS } from '@canvas/data/simulations/biologySimulations';
 
 const SIMULATION_IDS = [
   // Class 11 Chemistry
   'fractional-distillation',
   'chromatography',
   'tyndall-effect',
+  // Equilibrium
+  'le-chatelier-lab',
+  'titration-curve-builder',
+  // Chemical Kinetics
+  'order-explorer',
+  'maxwell-boltzmann-temperature',
+  'energy-profile-explorer',
+  'consecutive-reactions',
   // Structure of Atom
   'bohr-spectra',
+  'hydrogen-spectrum-decoder',
+  'debroglie-wavelength',
+  'heisenberg-uncertainty',
+  'electron-configuration-builder',
   'rutherford-comparison',
   'atomic-models',
   'cathode-ray-tube',
@@ -73,11 +86,23 @@ export default function SimulationBlockEditor({ block, onChange }: Props) {
           className="w-full px-3 py-2 bg-[#0B0F15] border border-white/10 rounded-lg
             text-sm text-white focus:outline-none focus:border-orange-500/40 cursor-pointer"
         >
-          {SIMULATION_IDS.map((id) => (
-            <option key={id} value={id} className="bg-[#0B0F15]">
-              {id}
-            </option>
-          ))}
+          {/* Biology — catalog-driven (single source of truth:
+              @canvas/data/simulations/biologySimulations). Friendly titles so you
+              pick by name, not by id. These insert into ANY grade's page. */}
+          <optgroup label="Biology — 3D models & sims">
+            {BIOLOGY_SIMULATIONS.map((s) => (
+              <option key={s.id} value={s.id} className="bg-[#0B0F15]">
+                {s.title}{s.status === 'coming_soon' ? ' — (coming soon)' : ''}
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="Chemistry / Physics / Maths">
+            {SIMULATION_IDS.map((id) => (
+              <option key={id} value={id} className="bg-[#0B0F15]">
+                {id}
+              </option>
+            ))}
+          </optgroup>
         </select>
       </div>
 

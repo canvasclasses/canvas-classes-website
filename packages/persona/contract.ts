@@ -62,6 +62,29 @@ export function resolveConfidenceTier(
  */
 export const RECENT_ATTEMPTS_CAP = 200;
 
+/**
+ * Safety cap on `UserProgress.all_attempted_ids` (the lightweight per-question
+ * index that drives the test generator's "avoid recently shown" dedup and the
+ * browse "solved" markers). It is otherwise uncapped, and the whole document is
+ * loaded on every attempt write — so an unbounded index eventually pushes the
+ * doc toward the 16 MB BSON ceiling (a hard write-outage for that user) and
+ * degrades every read long before that. This cap is a SAFETY VALVE set well
+ * above realistic distinct-question counts; when exceeded, the
+ * least-recently-attempted entry is evicted (LRU) — also the least useful entry
+ * to the test generator. The proper long-term fix is to move this index into
+ * its own collection keyed by user (tracked in _agents/brain/incidents.md).
+ */
+export const ALL_ATTEMPTED_IDS_CAP = 20_000;
+
+/**
+ * Safety cap on `UserProgress.starred_questions` (bookmarks). Bookmarks are
+ * user-authored, so this is set high enough that a normal — even heavy — user
+ * never hits it; only a runaway client/script would. When exceeded, the OLDEST
+ * bookmark is evicted (FIFO). Keep this generous (§0.6 spirit: don't silently
+ * drop meaningful user data).
+ */
+export const STARRED_QUESTIONS_CAP = 2_000;
+
 // ============================================
 // SECTION 3 — Chapter mastery levels
 // ============================================

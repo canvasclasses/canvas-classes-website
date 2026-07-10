@@ -28,6 +28,56 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/BohrSpectraSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // 'hydrogen-spectrum-decoder' is the empirical "read the fingerprint" companion
+  // for the Atomic Spectra page — click a line, decode which jump made it, prove
+  // it with a step-by-step Rydberg worksheet. Self-contained, so it renders in
+  // both the student reader and the admin preview.
+  'hydrogen-spectrum-decoder': dynamic(
+    () => import('./simulations/HydrogenSpectrumDecoderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // dual-nature page: de Broglie wavelength scale + Heisenberg uncertainty trade-off
+  'debroglie-wavelength': dynamic(
+    () => import('./simulations/DeBroglieWavelengthSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'heisenberg-uncertainty': dynamic(
+    () => import('./simulations/HeisenbergUncertaintySim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // electronic-configuration finale: Aufbau / Hund / Pauli + Cr/Cu exceptions
+  'electron-configuration-builder': dynamic(
+    () => import('./simulations/ElectronConfigurationBuilderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // Chemical Equilibrium flagship: disturb N2O4<=>2NO2 and watch Q chase Kc back
+  'le-chatelier-lab': dynamic(
+    () => import('./simulations/LeChatelierLabSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // Ionic Equilibrium flagship: build SA-SB / WA-SB / SA-WB titration curves + pick the indicator
+  'titration-curve-builder': dynamic(
+    () => import('./simulations/TitrationCurveBuilderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // Chemical Kinetics (Ch.3): order shortcut staircase, Maxwell-Boltzmann vs T,
+  // reaction energy profile + catalyst, consecutive A→I→P with k1/k2 control.
+  'order-explorer': dynamic(
+    () => import('./simulations/OrderExplorerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'maxwell-boltzmann-temperature': dynamic(
+    () => import('./simulations/MaxwellBoltzmannSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'energy-profile-explorer': dynamic(
+    () => import('./simulations/EnergyProfileSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'consecutive-reactions': dynamic(
+    () => import('./simulations/ConsecutiveReactionsSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   'cathode-ray-tube': dynamic(
     () => import('./simulations/CathodeRayTubeSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
@@ -434,6 +484,14 @@ const simulators: Record<string, React.ComponentType> = {
   ),
   'sound-wave-studio': dynamic(
     () => import('./simulations/SoundWaveStudioSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // ── Class 9 Social Science — Chapter 2: Shaping of the Earth's Surface ────
+  // "A River's Journey" — animated source→sea landscape; a droplet travels the
+  // course and lights up each stage (upper/middle/lower) with its landforms.
+  // Self-contained, so it renders in both the student reader and admin preview.
+  'river-journey': dynamic(
+    () => import('./simulations/RiverJourneySim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
 };

@@ -26,6 +26,56 @@ Two rules carried over from the Industry Scout:
 
 ---
 
+## 1.5 The depth mandate — surface the non-obvious, or don't bother
+
+> **Founder feedback, 2026-06-19:** the first brief failed the bar. "RE-NEET is hot, make a drop-decision video" is a *headline anyone finds in 5 minutes*, not research. A brief that only restates what's trending is worthless. **Every run must clear the "I already knew that" test.**
+
+Before any recommendation ships, the run must do **at least 3 of these 5 analytical lenses** — these are what separate research from a news summary. Each produced a real, non-obvious finding on the 2026-06-19 deep pass (see that brief):
+
+1. **Demand ÷ supply gap scoring.** Use `vidiq_keyword_research` in **`mode:'research'`** (returns *volume + competition + overall*), not just country volume. Rank candidate topics by **high volume × LOW competition**. The win is a query lots search and few cover well — e.g. *"iit motivation"* (~64K/mo, competition **27**) beats *"physical chemistry one shot"* (66K/mo, competition 64) on opportunity even though both have demand.
+2. **Own-catalogue conversion diagnosis.** Contrast `vidiq_channel_videos popular:true` (all-time winners) vs `popular:false` (recent uploads) vs `vidiq_outliers channelIds:[own]` (recent overperformers). Ask: *is the channel publishing discovery content or course-delivery dumps?* Sequential lecture/DPP series (e.g. "Salt Analysis 1–4") serve enrolled students, not the algorithm — they explain "views grow, subs flat." An empty own-outlier scan = no breakout in that window = a content-mix problem, not bad luck.
+3. **Packaging-vs-search-reality check.** Test how students actually phrase the search. The 2026-06-19 pass found *"…strategy"/"…roadmap"* framings return ~0 volume while *"… one shot"* returns 19–66K/mo — so the whole niche mis-titles. Recommend the title students actually type, and `vidiq_score_title` it.
+4. **Publish-before-the-wave (lead, don't chase).** Don't only surface what's hot *now* (everyone has it). Map the predictable next beat of the exam calendar (result → cutoff → counselling → "low score, what now" → dropper) and recommend building the NEXT wave's asset this week, while rivals fight over today's.
+5. **Name-brand / personal-SEO check.** Teacher-name queries are huge and sticky (e.g. *"akansha karnwal chemistry"* ~50K/mo). Check whether our host's name owns branded-search real estate, and whether the content mix builds it (on-camera presence vs faceless dumps).
+
+**Rule:** a recommendation backed only by "this topic is trending" is rejected. Each card must cite at least one *gap, diagnosis, mispackaging, or lead-time* edge from the lenses above — the thing competitors are missing — not just the wave everyone sees.
+
+---
+
+## 1.6 Channel-state diagnosis + the reactivation operating model (MANDATORY step zero)
+
+> **Founder feedback, 2026-06-21:** the radar was acting as a *trend-and-views* radar (chases what's hot now, defaults to academic one-shots) when the channel needs a *reactivation strategist*. It recommended a RE-NEET video **during** RE-NEET (window already closed), and over-indexed on academic content that doesn't acquire. These rules fix that. They **override** the generic ranking when the channel is not healthy.
+
+**Before ranking anything, diagnose the channel and pick the mode.** Pull `vidiq_channel_stats` (subs trend), `vidiq_channel_videos` (popular vs recent), `vidiq_outliers channelIds:[own]` (any recent breakout?). Classify:
+
+| Mode | Signal | Operating playbook |
+|---|---|---|
+| 🟢 **Growing** | subs rising, recent outliers exist | Double down on what's breaking out; optimise. |
+| 🟡 **Plateaued** | subs flat-ish, occasional hit | Inject Hero swings; find the next format. |
+| 🔴 **Hibernating** | subs flat for months, **zero recent outliers**, uploads are course-dumps | **Reactivation campaign** (below). NOT more academic uploads. |
+| ⚫ **Declining** | subs/views falling | Pattern-interrupt + repositioning, urgently. |
+
+**Canvas as of 2026-06-19 = 🔴 Hibernating** (136K flat all month, zero outliers in a year, recent feed = Salt Analysis/BITSAT/DPP dumps). So the following rules are *active*, not hypothetical.
+
+### The six intelligence layers (apply in hibernation/decline; relax for growing)
+
+1. **T+ horizon rule (never chase a live wave).** The radar is **forbidden** from recommending content for an event already underway (e.g. a "last-48h" video during the exam). Minimum lead time. Its job is the **next 2–6 weeks**: pre-build for the *predictable next beat* (exam → result day → cutoff shock → "low score, what now" → dropper decision) and schedule it to drop the hour the wave breaks.
+
+2. **Content-portfolio growth-weighting.** Academic content is *retention/credibility* (keeps who you have); it rarely *acquires*. Identity / truth / motivation / documentary is the *acquisition* engine. **In reactivation mode a brief must be ≈70% non-academic (identity/truth/motivation/documentary) and ≤30% academic.** The radar may NOT hand a hibernating channel an academic-dominant list. (Evidence: Canvas's own overperformers are truth/curiosity; lowest-competition lane is "iit motivation", comp 27.)
+
+3. **Emotional calendar > exam calendar.** Browse-feed growth is driven by emotion, not search intent. Map content to the audience's **emotional peaks**, not just exam dates: result-day despair/elation, dropper-decision guilt, new-session hope, mid-syllabus fear. Every Hero idea must **name the emotion it fires** (fear / outrage / identity / regret / belonging / aspiration) and is ranked by **emotional intensity × audience size**, not keyword volume.
+
+4. **Packaging-first greenlight.** An idea is dead unless it packages into a **title + thumbnail you'd click before the video exists.** Start from the package, work backward. Kill un-packageable ideas regardless of topic merit. (Hero titles judged by CTR, never the search score — see GROWTH_PLAYBOOK §0.)
+
+5. **Cross-niche format transplant.** Studying only JEE/NEET competitors → converging toward them. Each weekly run mines **≥1 format from OUTSIDE the niche** (finance/fitness/MrBeast/video-essay/documentary/challenge) to bolt onto chemistry/JEE. That's where un-copyable differentiation lives. (Use `vidiq_trending_videos`/`vidiq_outliers` with non-edu keywords for format patterns.)
+
+6. **Output a sequenced campaign, not a shopping list.** Reviving a channel is a *launch*, not random uploads. In reactivation mode the deliverable is a **30-day sequence** — teaser → comeback/anchor → villain/manifesto → bingeable series launch → ride the next emotional peak — with the dormant base re-pinged (premieres, community polls, the bell) at each step.
+
+### The reactivation north-star (the positioning that drives all of it)
+**"We are not a chemistry channel that needs more chemistry. We are a movement-with-a-teacher that went quiet and needs a reason for people to care again."** The fastest revival levers are narrative + villain + emotion + receipts (per the [Growth Playbook](../brain/content-radar/GROWTH_PLAYBOOK.md)'s TRUTH/CURIOSITY/RECEIPTS pillars), with academic content as the credibility floor — not the growth engine.
+
+---
+
 ## 2. Sources — ranked by how trustworthy the signal is
 
 Pull from the top of this list first; weight ground-truth sources heaviest. Not every source is reachable every run — use what's connected and **say in the brief which sources you actually hit** (no silent gaps).

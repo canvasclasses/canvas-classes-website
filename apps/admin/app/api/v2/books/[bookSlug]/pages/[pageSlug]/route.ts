@@ -7,6 +7,7 @@ import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { ContentBlock } from '@canvas/data/types/books';
 import { validateBlocks } from '@canvas/data/books/schemas';
 import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@canvas/data/books/utils';
+import { computePageReadiness } from '@canvas/data/books/readiness';
 import { snapshotBookPageVersion } from '@canvas/data/books/page-protection';
 
 const VALID_CALLOUT_VARIANTS = new Set([
@@ -234,6 +235,22 @@ export async function PUT(req: NextRequest, { params }: Params) {
     if (current) {
       await snapshotBookPageVersion(current, `pre-save via admin UI (${admin.email})`, admin.email);
     }
+
+    // Recompute the readiness summary from the merged final state (this save's
+    // fields fall back to the current stored values) so the dashboard stays fresh.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cur = current as any;
+    updateFields.readiness = computePageReadiness(
+      {
+        subject: book.subject,
+        blocks: updateFields.blocks ?? cur?.blocks ?? [],
+        hinglish_blocks: updateFields.hinglish_blocks ?? cur?.hinglish_blocks ?? [],
+        published: updateFields.published ?? cur?.published ?? false,
+        page_type: updateFields.page_type ?? cur?.page_type ?? 'lesson',
+        review: cur?.review ?? null,
+      },
+      validateBlocks
+    );
 
     const page = await BookPageModel.findOneAndUpdate(
       { book_id: String(book._id), slug: pageSlug },

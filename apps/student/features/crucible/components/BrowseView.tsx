@@ -150,16 +150,26 @@ export default function BrowseView({
   const [isMobile, setIsMobile] = useState(false);
   const [topicDrawerOpen, setTopicDrawerOpen] = useState(false);
 
-  // ── Filters
-  const [examFilter, setExamFilter] = useState<'all' | 'pyq' | 'mains' | 'advanced' | 'wbjee' | 'non-pyq' | 'starred'>(initialExamFilter);
-  const [yearFilter, setYearFilter] = useState<string>('all');
-  const [topicFilter, setTopicFilter] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  // ── Filters — seeded from the URL so a refresh keeps the student's place
+  //    (mirrored back into the query string by the effect below).
+  const [examFilter, setExamFilter] = useState<'all' | 'pyq' | 'mains' | 'advanced' | 'wbjee' | 'non-pyq' | 'starred'>(() => {
+    const valid = ['all', 'pyq', 'mains', 'advanced', 'wbjee', 'non-pyq', 'starred'];
+    const f = typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get('f_exam');
+    return f && valid.includes(f) ? (f as typeof initialExamFilter) : initialExamFilter;
+  });
+  const urlSeed = (k: string, fallback: string) =>
+    (typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(k)) ?? fallback;
+  const [yearFilter, setYearFilter] = useState<string>(() => urlSeed('f_year', 'all'));
+  const [topicFilter, setTopicFilter] = useState<string>(() => urlSeed('f_topic', 'all'));
+  const [searchQuery, setSearchQuery] = useState(() => urlSeed('q', ''));
   const [searchOpen, setSearchOpen] = useState(false);
 
   // ── User progress / stars
   const [starred, setStarred] = useState<Set<string>>(new Set());
   const [persistedAttempts, setPersistedAttempts] = useState<Map<string, 'correct' | 'wrong'>>(new Map());
+  // False until the mount-time progress GET resolves. Gates "solved" counts so
+  // a refresh doesn't flash a misleading "0 solved" before progress loads.
+  const [progressLoaded, setProgressLoaded] = useState(false);
 
   // ── Per-question UI state
   const [qStates, setQStates] = useState<Map<string, QuestionState>>(new Map());
@@ -170,7 +180,7 @@ export default function BrowseView({
 
   // ── Session-local attempt buffer (drives the post-session classification
   //     modal — see CRUCIBLE_ARCHITECTURE.md §3.2)
-  type BrowseAttempt = { qq: Question; is_correct: boolean; selected_option: string | string[] | number | null };
+  type BrowseAttempt = { qq: Question; is_correct: boolean; selected_option: string | string[] | number | null; client_attempt_id?: string };
   const [browseAttempts, setBrowseAttempts] = useState<BrowseAttempt[]>([]);
   const [showSaveModal, setShowSaveModal] = useState(false);
   // True after the student taps "This was casual" — disables the button so
@@ -250,8 +260,25 @@ export default function BrowseView({
             }
           }
           setPersistedAttempts(map);
+          // Restore answered-card state after a refresh: each previously
+          // attempted question comes back locked + marked correct/wrong, so a
+          // student who refreshes mid-session doesn't see already-solved
+          // questions as untouched (and re-answer them). The GET doesn't return
+          // selected_option, so we restore correctness only. Merge — never
+          // clobber a state the student already created this session before
+          // this async load resolved.
+          setQStates(prev => {
+            const next = new Map(prev);
+            for (const [qid, verdict] of map) {
+              if (!next.has(qid)) {
+                next.set(qid, { selected: null, submitted: true, isCorrect: verdict === 'correct', showSolution: false });
+              }
+            }
+            return next;
+          });
         }
       } catch { /* unauth — local only */ }
+      finally { setProgressLoaded(true); }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -260,6 +287,26 @@ export default function BrowseView({
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
     scrollAreaRef.current?.scrollTo({ top: 0 });
+  }, [examFilter, yearFilter, topicFilter, searchQuery]);
+
+  // Mirror filters into the URL (merging — preserves mode/examBoard written by
+  // the wizard) so a refresh restores them. Defaults are omitted to keep the
+  // address bar clean. replaceState — no history spam, no navigation.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const setOrDel = (k: string, v: string, def: string) => {
+      if (v && v !== def) params.set(k, v); else params.delete(k);
+    };
+    setOrDel('f_exam', examFilter, 'all');
+    setOrDel('f_year', yearFilter, 'all');
+    setOrDel('f_topic', topicFilter, 'all');
+    setOrDel('q', searchQuery.trim(), '');
+    const search = params.toString();
+    const target = window.location.pathname + (search ? `?${search}` : '');
+    if (target !== window.location.pathname + window.location.search) {
+      window.history.replaceState(null, '', target);
+    }
   }, [examFilter, yearFilter, topicFilter, searchQuery]);
 
   // ───────────────────────── Derived data ─────────────────────────
@@ -439,8 +486,13 @@ export default function BrowseView({
       return [...prev, { qq, is_correct, selected_option: sel }];
     });
 
-    // 2) Mark as in-flight so the unload handler can replay it.
-    const inflight: BrowseAttempt = { qq, is_correct, selected_option: sel };
+    // 2) Mark as in-flight so the unload handler can replay it. The stable
+    //    client_attempt_id rides along so a beacon replay of the SAME pending
+    //    attempt is deduped server-side (idempotency) rather than double-counted.
+    const clientAttemptId = (typeof crypto !== 'undefined' && 'randomUUID' in crypto)
+      ? crypto.randomUUID()
+      : `a_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+    const inflight: BrowseAttempt = { qq, is_correct, selected_option: sel, client_attempt_id: clientAttemptId };
     pendingFlushRef.current.push(inflight);
 
     const payload = {
@@ -449,6 +501,7 @@ export default function BrowseView({
       chapter_id: qq.metadata.chapter_id,
       difficulty: qq.metadata.difficultyLevel,
       concept_tags: qq.metadata.tags?.map(t => t.tag_id) ?? [],
+      client_attempt_id: clientAttemptId,
       // Persona unification — feeds StudentChapterProfile's microConcept
       // dimension (audit #5). Browse-medium attempts get the field but the
       // server-side persona update is gated on HIGH so this is informational.
@@ -619,7 +672,7 @@ export default function BrowseView({
     const flush = () => {
       const pending = pendingFlushRef.current;
       if (pending.length === 0) return;
-      for (const { qq, is_correct, selected_option } of pending) {
+      for (const { qq, is_correct, selected_option, client_attempt_id } of pending) {
         const body = JSON.stringify({
           question_id: qq.id,
           display_id: qq.display_id,
@@ -632,6 +685,8 @@ export default function BrowseView({
           source: 'browse',
           confidence: 'medium',
           session_id: sessionIdRef.current,
+          // Same id as the original POST → server dedups if both land.
+          client_attempt_id,
         });
         try {
           navigator.sendBeacon(
@@ -732,7 +787,7 @@ export default function BrowseView({
                   background: active ? `${accent}1F` : 'rgba(255,255,255,0.06)',
                 }}
               >
-                {topicCounts.all.solved}/{topicCounts.all.total}
+                {progressLoaded ? topicCounts.all.solved : '–'}/{topicCounts.all.total}
               </span>
             </div>
             <div className="h-[3px] w-full bg-white/[0.06] rounded-full overflow-hidden">
@@ -784,7 +839,7 @@ export default function BrowseView({
                   background: active ? `${accent}1F` : 'rgba(255,255,255,0.05)',
                 }}
               >
-                {c.solved}/{c.total}
+                {progressLoaded ? c.solved : '–'}/{c.total}
               </span>
             </div>
             <div className="h-[3px] w-full bg-white/[0.06] rounded-full overflow-hidden">
@@ -1307,7 +1362,7 @@ export default function BrowseView({
               <div className="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06]">
                 <div className="text-[9px] text-white/40 uppercase tracking-[0.1em] font-bold leading-none mb-1">Answered</div>
                 <div className="font-mono text-[13px] text-white tabular-nums leading-none">
-                  {sessionStats.answered}<span className="text-white/30">/{sessionStats.total}</span>
+                  {progressLoaded ? sessionStats.answered : '–'}<span className="text-white/30">/{sessionStats.total}</span>
                 </div>
               </div>
               <div
@@ -1315,7 +1370,7 @@ export default function BrowseView({
                 style={{ background: 'rgba(52,211,153,0.10)', borderColor: 'rgba(52,211,153,0.25)' }}
               >
                 <div className="text-[9px] text-emerald-400/70 uppercase tracking-[0.1em] font-bold leading-none mb-1">Accuracy</div>
-                <div className="font-mono text-[13px] text-emerald-300 tabular-nums leading-none">{sessionStats.accuracy}%</div>
+                <div className="font-mono text-[13px] text-emerald-300 tabular-nums leading-none">{progressLoaded ? `${sessionStats.accuracy}%` : '–'}</div>
               </div>
               <div
                 className="px-3 py-1.5 rounded-lg border"

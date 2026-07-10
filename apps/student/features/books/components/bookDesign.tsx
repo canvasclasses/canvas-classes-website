@@ -180,6 +180,11 @@ export const SUBJECT_DECOR: Record<string, DecorIcon[]> = {
     { Icon: Globe,       top: '55%',  left: '88%', size: 46, rotate: -12, opacity: 0.1  },
     { Icon: Zap,         top: '22%',  left: '82%', size: 38, rotate: 18,  opacity: 0.09 },
   ],
+  life_skills: [
+    { Icon: Brain,       top: '-10%', left: '60%', size: 92, rotate: 10,  opacity: 0.08 },
+    { Icon: Heart,       top: '55%',  left: '88%', size: 44, rotate: -10, opacity: 0.1  },
+    { Icon: Sparkles,    top: '22%',  left: '82%', size: 36, rotate: 18,  opacity: 0.09 },
+  ],
 };
 
 export function getDecor(subject: string): DecorIcon[] {

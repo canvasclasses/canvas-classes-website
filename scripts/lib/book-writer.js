@@ -47,6 +47,15 @@ function computeReadingTime(arr) {
     if (b.type === 'text') w += (b.markdown || '').split(/\s+/).length;
     else if (b.type === 'heading') w += (b.text || '').split(/\s+/).length;
     else if (b.type === 'callout') w += (b.markdown || '').split(/\s+/).length;
+    else if (b.type === 'career_spotlight') {
+      w += (b.intro || '').split(/\s+/).length + (b.closing || '').split(/\s+/).length;
+      for (const c of (b.careers || [])) w += ((c.role || '') + ' ' + (c.description || '')).split(/\s+/).length;
+    }
+    else if (b.type === 'you_solve_it') {
+      w += ((b.problem || '') + ' ' + (b.why_hard || '') + ' ' + (b.prompt || '') + ' ' +
+        (b.reality_check || '') + ' ' + (b.source_note || '')).split(/\s+/).length;
+      for (const s of (b.solutions || [])) w += ((s.label || '') + ' ' + (s.upside || '') + ' ' + (s.tradeoff || '')).split(/\s+/).length;
+    }
     else if (b.type === 'video') v++;
     else if (b.type === 'audio_note') a++;
   }

@@ -51,9 +51,15 @@ interface PageRendererProps {
    * When undefined (student reader), the component manages its own toggle.
    */
   hinglishOverride?: boolean;
+  /**
+   * Real page origin (e.g. window.location.origin) for YouTube embeds — the
+   * admin editor must pass this explicitly since its origin never matches
+   * the student app's default. See VideoBlockRenderer.tsx.
+   */
+  videoOriginOverride?: string;
 }
 
-function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererProps) {
+function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOverride }: PageRendererProps) {
   const hasHinglish = Boolean(
     (page.hinglish_blocks && page.hinglish_blocks.length > 0) || hasAnalyticalHinglish(page.blocks)
   );
@@ -186,7 +192,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
           <div className="xl:hidden flex flex-col gap-1">
             {sorted.map(block => (
               <div key={block.id}>
-                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} />
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} videoOriginOverride={videoOriginOverride} />
               </div>
             ))}
           </div>
@@ -195,7 +201,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
           <div className="hidden xl:flex xl:flex-col xl:gap-1">
             {mainBlocks.map(block => (
               <div key={block.id}>
-                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} />
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} videoOriginOverride={videoOriginOverride} />
               </div>
             ))}
           </div>
@@ -205,7 +211,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride }: PageRendererP
         {hasRail && (
           <aside className="hidden xl:block w-[290px] shrink-0 sticky top-6 self-start">
             <div className="pt-1">
-              <RailPanel examBlocks={examBlocks} mediaBlocks={mediaBlocks} onQuizPass={onQuizPass} />
+              <RailPanel examBlocks={examBlocks} mediaBlocks={mediaBlocks} onQuizPass={onQuizPass} videoOriginOverride={videoOriginOverride} />
             </div>
           </aside>
         )}

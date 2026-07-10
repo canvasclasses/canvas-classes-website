@@ -378,6 +378,8 @@ The only exception is when the user types something like "open the preview," "st
 
 Simulators live at: `app/[subject]-[hub-name]/[Topic]Simulator.tsx`
 
+**3D anatomy models** (heart/nephron/neuron — glTF + three.js/R3F, NOT SVG) have their own canonical doc: [`_agents/workflows/ANATOMY_3D_SIMULATOR_WORKFLOW.md`](_agents/workflows/ANATOMY_3D_SIMULATOR_WORKFLOW.md). Read it before building/editing any 3D organ — it covers the Z-Anatomy→Blender→glTF pipeline, the `Heart3DViewer.tsx` template, the guided "follow a drop of blood" pattern, the shared catalog (`packages/data/simulations/biologySimulations.ts`), the Biology Hub, and the hard-won gotchas. The heart (`heart-3d`) is the finished reference build.
+
 ---
 
 ## 7. ARCHITECTURE

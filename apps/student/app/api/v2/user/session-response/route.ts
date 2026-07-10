@@ -3,8 +3,12 @@ import { getUserIdFromRequest } from '@/lib/auth';
 import connectToDatabase from '@canvas/data/db/mongodb';
 import { StudentResponse } from '@canvas/data/models/StudentResponse';
 import { StudentChapterProfile, IStudentChapterProfile } from '@canvas/data/models/StudentChapterProfile';
+import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { updateProfileFromResponse, createEmptyProfile } from '@canvas/persona/profile-engine';
+import { isAnswerCorrect, type ScorableQuestion } from '@canvas/persona/scoring';
 import { resolveTenantId } from '@canvas/data/tenancy';
+
+type CanonicalQuestion = ScorableQuestion & { _id: string };
 
 // ─── POST /api/v2/user/session-response ──────────────────────────────────────
 // Records a single question attempt during a guided practice session.
@@ -24,6 +28,7 @@ export async function POST(req: NextRequest) {
       primaryConcept = '',
       microConcept = '',
       answeredCorrectly,
+      selectedOption,
       timeSpentMs,
       viewedSolutionBeforeAnswer = false,
       microFeedback,
@@ -42,13 +47,27 @@ export async function POST(req: NextRequest) {
 
     await connectToDatabase();
 
+    // Recompute correctness server-side from the canonical question, never
+    // trusting the client (mirrors the test-results / progress-batch routes).
+    // Backward-compatible: only override when the client actually sent the raw
+    // selection AND the question is found — otherwise fall back to the client's
+    // value (older clients that don't send selectedOption keep working).
+    let effectiveCorrect: boolean = !!answeredCorrectly;
+    if (selectedOption !== undefined) {
+      const canon = await QuestionV2.findOne(
+        { _id: questionId, deleted_at: null },
+        { _id: 1, type: 1, options: { id: 1, is_correct: 1 }, answer: 1 },
+      ).lean<CanonicalQuestion | null>();
+      if (canon) effectiveCorrect = isAnswerCorrect(canon, selectedOption);
+    }
+
     const doc = await StudentResponse.create({
       studentId: userId,
       sessionId,
       questionId,
       primaryConcept,
       microConcept,
-      answeredCorrectly,
+      answeredCorrectly: effectiveCorrect,
       timeSpentMs: timeSpentMs ?? 0,
       viewedSolutionBeforeAnswer,
       microFeedback,
@@ -69,7 +88,7 @@ export async function POST(req: NextRequest) {
           questionId,
           primaryConcept,
           microConcept,
-          answeredCorrectly,
+          answeredCorrectly: effectiveCorrect,
           timeSpentMs: timeSpentMs ?? 0,
           viewedSolutionBeforeAnswer,
           microFeedback,

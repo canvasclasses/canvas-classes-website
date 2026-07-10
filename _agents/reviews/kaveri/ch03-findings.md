@@ -1,0 +1,89 @@
+# Chapter 3 review — "Winds of Change" (Kaveri, Class 9 English, Unit 3)
+
+SUMMARY: This is a competent, faithful adaptation of a four-text NCERT unit (the pankha article, O. Henry's *The Last Leaf*, Maya Anthony's *Canvas of Soil*, and Toru Dutt's sonnet). Source fidelity is high: every quoted prose/poem line I checked matches the PDF verbatim, the narrated passages preserve the original wording, and the fixed-expression/collocation exercises map correctly to NCERT's own answer key. The single biggest systemic weakness is **assessment integrity in the auto-graded items**: several "natural collocation" and pronunciation questions mark a defensible answer wrong (notably "take a seat" vs "have a seat", and "own/take responsibility"), and the chapter leans hard on a small set of cross-chapter callbacks (Gessler, Sentila/Arenla, "The Pot Maker") that cannot be verified from this PDF and risk drifting from what the other units actually contain. The second weakness is mild AI-slop: banned-word usage ("vibrant", "delve"-family adjacents) and a chapter-wide formulaic page rhythm (image → text → narrated_passage → reasoning_prompt → inline_quiz). No CRITICAL source errors were found; the criticals below are quiz items that can mis-mark a thinking student.
+
+TOP 5 MOST IMPORTANT FINDINGS (ranked):
+1. [CRITICAL · C] PAGE 7 collocation item "asked the candidate to ___ a seat" marks only "take" correct while the explanation itself admits "have a seat" is acceptable — a thinking student is mis-marked. (block #7)
+2. [CRITICAL · C] PAGE 7 collocation item "I must ___ responsibility for my success" marks "own" correct and "take" wrong, though "take responsibility" is the more standard collocation and the explanation concedes it "collocates too." Ambiguous item, defensible distractor marked wrong.
+3. [MAJOR · A/F] Repeated unverifiable cross-chapter claims (Gessler in *Quality* "made good boots and still died poor", "Sentila, Arenla", "The Pot Maker", "village-council principle from Unit 2") are stated as fact across pages 3, 5, 10 — none verifiable from this PDF; if any detail is wrong the error is invisible and propagates.
+4. [MAJOR · B] The "self_check" and "comprehension_checkpoint" items repeatedly restate the gloss verbatim, so they test recall of a definition just shown, not comprehension (e.g. page 1 vocab self-check, page 11 palette/till/coincide checks).
+5. [MINOR · D] Banned/AI-tell vocabulary recurs — "vibrant" (used as a vocab word AND in prose), and the chapter's every reading page follows an identical block skeleton, giving a machine-stamped uniformity.
+
+---
+
+## A. Source fidelity
+
+Largely clean. Spot-checks against the PDF:
+
+- Narrated prose passages (pages 2–4) reproduce the NCERT article **verbatim** — e.g. "The word punkha or pankha originates from the word 'pankh'…" (page 2, block #3) matches PDF lines 56–57; "With time and the advent of technology… runs the risk of slowly losing its presence among Indians" (page 4, block #3) matches PDF lines 156–158.
+- *The Last Leaf* revelation passage (page 10, block #3) reproduces O. Henry's lines verbatim ("Mr Behrman died of pneumonia this morning. He was ill for only two days." matches PDF line 699).
+- *Canvas of Soil* poem (page 12, block #2) reproduces all 12 lines verbatim against PDF lines 759–770.
+- Fixed-expression and collocation answers (page 7) map correctly to NCERT's own key (PDF lines 355–377): high and dry, wear and tear, facts and figures, through thick and thin, all and sundry, time and again, cut and run — all correct.
+
+[MAJOR] A. PAGE 5 › block #2 (theme_explorer) / PAGE 3 › block #4 (narrated commentary) / PAGE 10 › block #5 — Unverifiable cross-chapter "facts" stated with confidence — these reference prior units NOT in this PDF, so their accuracy cannot be confirmed here and an error would be invisible. EVIDENCE: "The last unit's *Quality* ended with a craftsman who 'made good boots' and still died poor" (page 5, theme 3 reflection_prompt); "Pichhle chapter ki Arenla yaad aati hai?" and the Hinglish "Sentila, Arenla" reference (page 3, block #4 hinglish; page 5 block #4 reveal names "Sentila, Arenla"); "the village-council principle from Unit 2: a craft survives only if it is taught onward" (page 6, block #7). FIX: Verify each against the actual Unit 2 / prior-chapter corpus before publish; if any detail (Gessler's exact fate, character names, "village-council principle") is even slightly off, correct or soften to a non-specific reference.
+
+[MINOR] A. PAGE 16 › block #2 (meet_a_scientist, Toru Dutt) — The "Keats of Indo-English literature" epithet is plausibly attributed but is the author's framing, not in the PDF. EVIDENCE: "She has been called the **'Keats of Indo-English literature'**". FIX: Acceptable as widely-used criticism, but confirm the epithet is standard (it is commonly applied) — low risk, flagged only for completeness.
+
+[MINOR] A. PAGE 16 › block #1 — Maya Anthony is asserted to be "a contemporary poet… a modern voice." EVIDENCE: "*Canvas of Soil* is by a contemporary poet, **Maya Anthony**." The PDF only attributes the poem to "Maya Anthony" with no biographical claim. FIX: The "contemporary/modern voice" characterisation is an unsourced inference; keep neutral ("the poet Maya Anthony") unless the textbook itself or a verifiable source supports "contemporary."
+
+## B. Pedagogical depth & scaffolding
+
+[MAJOR] B. PAGE 1 › block #4 (vocabulary_lab self_check) — Self-check questions restate the gloss just shown, testing recall of a definition rather than understanding. EVIDENCE: card defines indigenous = "local; originating from a particular place"; the self-check immediately asks "*Indigenous* most nearly means:" with answer "local / native to a place." FIX: Make at least one self-check item application-based (use the word in a novel sentence and ask which meaning fits) rather than a definition echo.
+
+[MAJOR] B. PAGE 11 › block #3 (vocabulary_lab self_check) — Same pattern: the cards define palette/till/coincide and the self-check asks for those exact definitions back. EVIDENCE: card "till … to prepare and work the soil"; self-check "To *till* the soil means to: … prepare and work it for growing." FIX: Replace one definition-echo with a context-inference item.
+
+[MINOR] B. PAGE 2 › block #3 (narrated_passage glosses) — Some glosses are near-redundant for the target reader. EVIDENCE: gloss on "trade routes" = "the paths along which goods were carried and sold" is fine, but "deities" → "gods and goddesses" is likely already known; the gloss load per sentence is generally good (≤1 hard word/sentence) but a few sentences carry two glosses ("substantial" + "commonality" in one sentence, page 2). FIX: Where two glosses land in one sentence, consider whether the easier one ("substantial") can be dropped to keep the ≤1-unfamiliar-word-per-sentence bar.
+
+[MINOR] B. PAGE 13 › block #5 (reasoning_prompt, yellow colour) — Genuinely open and good, but its premise ("Kaveri suggests adding yellow would have strengthened the imagery") frames the textbook's own exercise question (PDF line 938) as Kaveri's editorial view. EVIDENCE: "Kaveri suggests adding **yellow** would have strengthened the imagery." The PDF poses it as a student task to *support* the view, not as Kaveri asserting it. FIX: Reword to "An NCERT exercise asks you to argue that adding yellow…" so the prompt doesn't misattribute a stance to the book.
+
+Note: the reasoning_prompts and theme_explorers across pages 2–6, 10, 13 do contain genuine open interpretive reasoning (fact/opinion, craft-as-fingerprint, art's purpose, survival-as-decoration). This dimension is stronger than B's findings suggest; the issue is concentrated in the auto-graded vocab self-checks.
+
+## C. Assessment integrity
+
+[CRITICAL] C. PAGE 7 › block #7 (comprehension_checkpoint, "take a seat") — Ambiguous item: marks "take" the only correct answer while the explanation concedes "have a seat" is also correct, so a student who picks the equally-valid "have" is mis-marked. EVIDENCE: options ["take","have","catch","hold"], correct_index 0, explanation: "'Have a seat' is also acceptable conversationally, but *take a seat* is the standard fixed pairing tested here." FIX: Either accept both "take" and "have," or reword the stem to force a single answer (e.g. ask which is the *more formal/standard* collocation) — don't mark a defensible answer wrong.
+
+[CRITICAL] C. PAGE 7 › block #7 (comprehension_checkpoint, "responsibility for my success") — Marks "own" correct and "take" a distractor, although "take responsibility" is the more common standard collocation; explanation admits it "collocates too." A strong student picking "take" is mis-marked. EVIDENCE: options ["take","own","give","make"], correct_index 1, explanation: "('Take responsibility' collocates too, but the exercise pairs *own* with success.)" FIX: This mirrors a flaw in NCERT's own exercise; rather than reproduce the ambiguity in an auto-graded item, convert to fill-in or accept both — the current key punishes correct English.
+
+[MAJOR] C. PAGE 2 › block #5 (comprehension_checkpoint) — Distractors are throwaway, not real misconceptions; the answer is findable by elimination. EVIDENCE: "In ancient times, what were pankhas used for (besides cooling)?" options include "Cooking food," "Writing letters," "Building houses" against "Fanning deities in temples and kings in royal courts." FIX: Replace silly distractors with plausible-but-wrong ones (e.g. "fanning grain to remove chaff," "drying dyed cloth") so the item tests reading, not absurdity-spotting.
+
+[MAJOR] C. PAGE 4 › block #6 (inline_quiz, q1) — Same throwaway-distractor problem; the correct option is the only sensible one. EVIDENCE: "What threatens the culture of pankhas…?" distractors "A sudden, nationwide shortage of bamboo / A new government ban on selling hand fans / Far too many artisans crowding the same trade" vs "The arrival of technology." FIX: Use distractors drawn from genuine misreadings (e.g. "Indians forgot how to make them," "foreign fans replaced them") rather than inventions the text never raises.
+
+[MINOR] C. PAGE 4 › block #6 (inline_quiz, q3) — The correct answer is also the longest/most-detailed option, a known give-away pattern. EVIDENCE: "Why is the chapter titled *Winds of Change*?" correct option "Because a fan makes wind, and change reshapes the craft" is the most complete; distractors are short dismissive throwaways ("editors chose the title with no real meaning"). FIX: Balance option length so the answer isn't cued by detail.
+
+[MINOR] C. PAGE 17 › block #2 (chapter_practice, ch3-pr-12 vermilion) — Tests trivia (a colour-name introduced only as supplementary vocabulary), not comprehension of either text. EVIDENCE: "The colour word 'vermilion'… names a shade that is — … a brilliant red-orange." difficulty 4. FIX: Acceptable as a vocab item but should not carry difficulty 4 / sit in an "interpretation"-heavy mastery set as if it tested reasoning; recategorise as low-difficulty vocab.
+
+[MINOR] C. PAGE 6 › block #2 (comprehension_checkpoint) — Two-option true/false where the "False" option embeds the full explanation in the option text, giving the answer away. EVIDENCE: option "False — the article calls them cultural goods on trade routes, but never says \"most popular item of commerce\"" — the reasoning is inside the choice. FIX: Move the rationale to the explanation; keep the option as a bare "False."
+
+## D. AI-slop / authenticity
+
+[MINOR] D. Cross-page formulaic uniformity — Every reading/poem page is built on the identical beat: full-width 16:5 watercolour image → short framing text → narrated_passage(s) → reasoning_prompt → inline_quiz, and every inline_quiz has exactly 3 questions at difficulty 1/2/3. EVIDENCE: pages 1,2,3,4,5,6,8,9,10,11,12,13,14,15,16 all close on a 3-item inline_quiz ladder; pages 2,3,4 share the image→heading→text→narrated_passage→card→reasoning_prompt→quiz skeleton. FIX: Vary the page architecture (occasionally lead with a question, drop the quiz on a pure-context page) so the unit doesn't read machine-stamped.
+
+[MINOR] D. Banned/AI-tell word usage. EVIDENCE: "vibrant" appears as a taught vocab word (page 14 card) and in prose/glosses ("bright and full of life," page 12); the image generation_prompts repeat the exact boilerplate "Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels." on all 17 images verbatim. FIX: "vibrant" is on the banned-tell list — since it's the poem's own word ("spring's vibrant hue") it must be retained in quotations, but avoid reusing it in authored prose/glosses where "bright/lively" would do.
+
+[MINOR] D. PAGE 4 › block #4 (callout "literature_in_life") — "reveal framing" / cadence-over-meaning tell. EVIDENCE: "the machine wins on **price and convenience** — and loses on **beauty, meaning, and the livelihood of a real human being**." This is a "not X but Y" rhythm dressed as antithesis. The content is sound but the construction is a recognisable AI cadence. FIX: Acceptable but watch the antithesis-stacking; one such flourish per page is the cap.
+
+[MINOR] D. PAGE 16 › block #2 (Toru Dutt fun_detail) — Patronising/rhetorical closer. EVIDENCE: "Imagine how much was lost — and how much she still managed to leave." FIX: Trim the apostrophe-to-reader; let the fact (mastered four languages, died at 21) carry itself.
+
+## E. Literary & linguistic accuracy
+
+Largely clean. Device labels checked against the poem are correct: "Palette of earth"/"Brushstrokes of seeds"/"Each plot, a canvas wide" correctly tagged **metaphor**; "Blossoms bloom… Dancing" correctly **personification**; "Blossoms bloom" correctly **alliteration**; AABB rhyme correctly identified (page 12 block #4; page 13 block #3 worked_example). These match NCERT's own device-matching key (PDF lines 807–836).
+
+[MINOR] E. PAGE 12 › block #4 (literary_devices_highlighter, symbolism) — Labels "Where art and life coincide" as **symbolism**, but the line is the poem's thematic statement, not a symbol; the symbol is the *garden*, not the line. EVIDENCE: device "symbolism", match text "Where art and life coincide", explanation "The garden symbolises the meeting of art and life." FIX: Anchor the symbolism match to "garden/plot," not to the abstract statement line, so the device example actually demonstrates the device.
+
+[MINOR] E. PAGE 12 › block #4 (personification, "dreams… seep") — Calling "Where dreams of gardeners seep" personification is debatable; "seep" attributes a physical (not specifically human) action to an abstraction — closer to a transferred-epithet / abstraction-made-physical than personification proper. EVIDENCE: explanation "an abstract feeling given a physical action. Yeh personification hai." FIX: Either defend it as personification more carefully or relabel as imagery/abstraction-given-agency; for a Class 9 reader the loose label risks teaching a fuzzy definition of personification.
+
+[MINOR] E. PAGE 12 › block #2 hinglish_commentary — Devanagari/transliteration corruption in the Hinglish commentary: Latin and Devanagari characters are mixed mid-word. EVIDENCE: "Beejon ko kaha 'brushstrokes' — तूलika ke stroke" (page 12, stanza-1 commentary: "तूलika") and earlier "ek safed जलीय ghaas" (page 3, block #4 hinglish). FIX: Render Hinglish consistently in Latin script ("toolika," "jaleeya") — the stray Devanagari fragments are encoding artifacts that will display as broken words.
+
+## F. Completeness & consistency
+
+[MAJOR] F. Audio gaps throughout — every narrated_passage sentence has `"audio_url": ""`, yet multiple blocks instruct the student to "Tap any line to hear it" / "Tap to hear." EVIDENCE: page 12 block #1 "**Tap any line to hear it.**"; page 8 block #2 pronunciation_drill "Tap to hear; read aloud twice" — all audio_url fields empty across pages 2,3,4,10,12. FIX: Either populate audio_url or remove the "tap to hear" affordance promises until audio exists, so the UI doesn't advertise a dead feature.
+
+[MAJOR] F. Image src gaps on context cards / portraits — cultural_context_card and meet_a_scientist blocks carry image_prompt/portrait_prompt but empty `image_url`/`portrait_src`. EVIDENCE: page 2 block #4 (Ajanta) image_url ""; page 10 block #4 (O. Henry) portrait_src ""; page 16 block #2 (Toru Dutt) portrait_src "". FIX: Generate and attach these images or confirm the renderer degrades gracefully; a portrait card with no portrait is a visible stub.
+
+[MINOR] F. Cross-page redundancy on the title's double meaning — the "literal wind vs figurative change" point is taught on page 4 (block #5 reasoning + quiz), page 5 (block #3 comparison_card + quiz q1), and page 6 (block #5 worked_example + quiz q2). EVIDENCE: page 5 comparison_card "How the title works — two meanings" and page 6 worked_example Q1 both fully re-explain it. FIX: The repetition pads the count; consolidate to one full treatment plus one recall check rather than three full re-explanations.
+
+[MINOR] F. PAGE 7 › block #11 vs block #10 — The apply_express "Grammar Gym" and the comprehension_checkpoint both drill present-perfect form_select with near-identical items ("machines have replaced," "have created"). EVIDENCE: block #10 q1 "have created" and block #11 ch3-gram-01 "have replaced" test the same single concept back-to-back. FIX: Differentiate — one for/since contrast, one finished-time-marker item, rather than two same-shape "pick the present perfect" questions.
+
+[MINOR] F. CBSE alignment — Strong here: the worked_examples on page 6 reproduce NCERT's Assertion-Reason, fact/opinion, and inference question styles faithfully, and the chapter_practice mixes comprehension/interpretation/inference/grammar as the exam does. No misalignment found; noted as the dimension's one clean point.
+
+STATS: pages reviewed=17, critical=2, major=8, minor=18

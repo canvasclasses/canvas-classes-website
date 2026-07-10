@@ -612,8 +612,11 @@ export default function CrucibleWizard({ chapters, isLoggedIn, initialChapterId,
     const base = '/the-crucible';
     let target = base;
     if ((activeView === 'browse' || activeView === 'guided' || activeView === 'test') && selectedChapterId) {
-      const params = new URLSearchParams({ mode: activeView });
-      if (selectedExam) params.set('examBoard', selectedExam);
+      // Preserve params we don't own (e.g. BrowseView's filter params f_*, q)
+      // so a refresh keeps the student's filters — only set the ones we manage.
+      const params = new URLSearchParams(window.location.search);
+      params.set('mode', activeView);
+      if (selectedExam) params.set('examBoard', selectedExam); else params.delete('examBoard');
       target = `${base}/${selectedChapterId}?${params.toString()}`;
     }
     if (window.location.pathname + window.location.search !== target) {

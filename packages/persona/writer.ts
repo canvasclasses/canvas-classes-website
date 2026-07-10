@@ -72,6 +72,10 @@ export function applyAttemptToProgress(
     attempt,
   );
 
+  // Duplicate delivery (same client_attempt_id already recorded) — do not
+  // re-apply, or counters would double-count. See computeUserProgressUpdate.
+  if (update.skipped) return;
+
   progress.recent_attempts = update.recent_attempts;
   progress.all_attempted_ids = update.all_attempted_ids;
 
