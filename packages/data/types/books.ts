@@ -126,6 +126,9 @@ export interface InteractiveImageBlock extends BaseBlock {
   alt: string;
   hotspots: Hotspot[];
   caption?: string;
+  // AI generation spec for the base diagram, shown as a copyable placeholder
+  // while src is empty (BOOK_PAGE_WORKFLOW §3.13). Preserved on save.
+  generation_prompt?: string;
 }
 
 // 5. VIDEO — short lecture clip
@@ -306,7 +309,10 @@ export interface WorkedExampleBlock extends BaseBlock {
 export interface SimulationPrediction {
   prompt: string;       // "What do you think will happen if...?"
   options: string[];    // e.g. ["Yes, it will double", "No, it won't change", "It depends"]
-  reveal_after: string; // Shown below the sim after they've interacted — explains what actually happens
+  // Shown below the sim after they've interacted — explains what actually happens.
+  // Optional: a prediction may pose the guess without a canned reveal (the renderer
+  // hides the reveal section when this is absent).
+  reveal_after?: string;
 }
 export interface SimulationBlock extends BaseBlock {
   type: 'simulation';
@@ -407,7 +413,9 @@ export type LiteraryDevice =
   | 'simile' | 'metaphor' | 'personification' | 'imagery'
   | 'alliteration' | 'rhyme' | 'symbolism' | 'hyperbole' | 'onomatopoeia'
   // Hindi track — गद्य narrative features (NCERT गंगा "कहानी का सौंदर्य")
-  | 'vyangya' | 'virodhabhas' | 'samvadatmakta' | 'sandeh';
+  | 'vyangya' | 'virodhabhas' | 'samvadatmakta' | 'sandeh'
+  // Hindi काव्य — पदावृत्ति (word/foot repetition) + refrain (a repeated line/chorus, टेक)
+  | 'padavritti' | 'refrain';
 export interface DeviceMatch {
   text: string;          // exact substring of the passage that demonstrates this device
   explanation: string;   // 1–2 sentences: what device, what reading it unlocks
@@ -480,7 +488,7 @@ export interface ToneMeterBlock extends BaseBlock {
 
 // E7. CULTURAL CONTEXT CARD — standalone reference card for a place/person/concept
 //     the non-native reader may not recognise.
-export type CulturalContextCategory = 'place' | 'person' | 'event' | 'concept' | 'tradition';
+export type CulturalContextCategory = 'place' | 'person' | 'event' | 'concept' | 'tradition' | 'history';
 export interface CulturalContextCardBlock extends BaseBlock {
   type: 'cultural_context_card';
   reference: string;     // "Kashi" | "Triveni" | "Lord Vishweshwara"
@@ -504,7 +512,7 @@ export interface ComprehensionQuestion {
 export interface ComprehensionCheckpointBlock extends BaseBlock {
   type: 'comprehension_checkpoint';
   intro?: string;             // soft framing — "Pause and check"
-  questions: ComprehensionQuestion[];   // 1–3 questions
+  questions: ComprehensionQuestion[];   // typically 1–3, up to 10
 }
 
 // E9. WRITING SCAFFOLD — annotated model answer for Kaveri's Writing Task.
@@ -803,7 +811,7 @@ export interface ApplyExpressBlock extends BaseBlock {
 //      of question kinds. Checks BASIC understanding of the passage (competitive-
 //      level items live in Crucible, not here). Friendly North-Indian-classroom
 //      teacher voice in `intro` and `explanation`s. See ENGLISH_BOOK_PAGE_WORKFLOW §10.
-export type ReadingPassageType = 'discursive' | 'factual' | 'case_based' | 'literary';
+export type ReadingPassageType = 'discursive' | 'factual' | 'case_based' | 'literary' | 'descriptive';
 export interface ReadingMCQ {
   kind: 'mcq';
   id: string;

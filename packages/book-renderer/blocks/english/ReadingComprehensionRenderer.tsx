@@ -46,12 +46,14 @@ const TYPE_LABEL: Record<string, string> = {
   factual: 'Factual Passage',
   case_based: 'Case-based Passage',
   literary: 'Literary Passage',
+  descriptive: 'Descriptive Passage',
 };
 const TYPE_LABEL_HI: Record<string, string> = {
   discursive: 'विचारात्मक गद्यांश',
   factual: 'तथ्यात्मक गद्यांश',
   case_based: 'प्रसंग-आधारित गद्यांश',
   literary: 'काव्यांश',
+  descriptive: 'वर्णनात्मक गद्यांश',
 };
 
 const ACCENT = '#38bdf8'; // sky — distinct from inline_quiz (indigo) & practice (violet)

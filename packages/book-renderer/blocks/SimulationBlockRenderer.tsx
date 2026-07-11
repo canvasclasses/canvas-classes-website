@@ -634,29 +634,32 @@ export default function SimulationBlockRenderer({ block }: { block: SimulationBl
       {/* Simulation */}
       <Sim />
 
-      {/* What actually happens — reveal */}
-      {!showReveal ? (
-        <button
-          onClick={() => setShowReveal(true)}
-          className="mt-4 w-full py-2.5 rounded-xl text-sm font-semibold transition-all"
-          style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px dashed rgba(255,255,255,0.12)',
-            color: 'rgba(255,255,255,0.4)',
-          }}
-        >
-          What actually happens? →
-        </button>
-      ) : (
-        <div
-          className="mt-4 rounded-xl px-4 py-4 text-sm leading-relaxed"
-          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.65)' }}
-        >
-          <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5 text-indigo-400">
-            Observe &amp; Explain
-          </p>
-          {pred.reveal_after}
-        </div>
+      {/* What actually happens — reveal. Only shown when the prediction carries
+          a reveal explanation; a prediction may pose the guess without one. */}
+      {pred.reveal_after && (
+        !showReveal ? (
+          <button
+            onClick={() => setShowReveal(true)}
+            className="mt-4 w-full py-2.5 rounded-xl text-sm font-semibold transition-all"
+            style={{
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px dashed rgba(255,255,255,0.12)',
+              color: 'rgba(255,255,255,0.4)',
+            }}
+          >
+            What actually happens? →
+          </button>
+        ) : (
+          <div
+            className="mt-4 rounded-xl px-4 py-4 text-sm leading-relaxed"
+            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.65)' }}
+          >
+            <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5 text-indigo-400">
+              Observe &amp; Explain
+            </p>
+            {pred.reveal_after}
+          </div>
+        )
       )}
     </div>
   );
