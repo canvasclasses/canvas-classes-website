@@ -1,10 +1,10 @@
 # Crucible Cache + SEO Redesign — "Edits are events, not timers"
 
-> **Status:** 🟡 Step 0 BUILT on main (uncommitted) — `/api/revalidate` hardened · **Last updated:** 2026-07-16
-> **Done:** Diagnosis; GSC verdict; 2 deep-research passes; 5-phase plan agreed. **Step 0 (2026-07-16):** `apps/student/app/api/revalidate/route.ts` rewritten — was UNAUTHENTICATED since 2026-04-18 (commit d6aa867, zero callers); now `x-revalidate-secret` (timing-safe) + path whitelist + 50-path cap + 30/min rate limit + fail-closed 503 when env unset. `REVALIDATE_SECRET` added to root `.env.local` (generated) + `.env.example` template. ESLint clean.
-> **Pending:** Founder: commit + add `REVALIDATE_SECRET` to both Vercel projects. Then Phase 0 painkiller (2-line revalidate bump), Phase 1 wiring (admin save hooks), Phases 2–5.
-> **Blocked on:** Founder commit + Vercel env vars.
-> **Next action:** Phase 0 painkiller, then Phase 1 admin-save → revalidate wiring.
+> **Status:** 🟡 Phases 0+1 BUILT on main — endpoint hardened (fe677a5), 28d windows (5e85532), bridge wired (uncommitted) · **Last updated:** 2026-07-16
+> **Done:** Diagnosis; GSC verdict; research. **Step 0:** `/api/revalidate` hardened (was UNAUTHENTICATED since d6aa867 2026-04-18) — secret + whitelist + caps + rate limit. **Phase 0:** question-detail `revalidate` 7d→28d. **Phase 1:** `@canvas/services/revalidate-bridge` (local revalidatePath + HTTP bridge when `REVALIDATE_URL` set) wired into questions-by-id PATCH + DELETE, admin reclassify route, and batch scripts via `scripts/lib/revalidate.js` → `apply-batch.js` (revalidates written question pages, new summary line). Env: `REVALIDATE_SECRET` in all three `.env.local` files (NOT symlinks on the Windows machine!) + Vercel (founder); `REVALIDATE_URL` in `apps/admin/.env.local` + documented in `.env.example` (admin-only — student must not set it).
+> **Pending:** Founder: add `REVALIDATE_URL` to the admin Vercel project; push + deploy both apps; verify ISR-writes drop over ~1 week. Then Phases 2–5. Note: bridge only truly refreshes `/the-crucible/q/*` (live DB) — `/jee-main-pyqs` + `/chemistry-questions` are baked/external data (three-surface consolidation = Phase 5 opening decision).
+> **Blocked on:** Founder: admin Vercel env (`REVALIDATE_URL`) + push/deploy.
+> **Next action:** Push, deploy, watch Observability → ISR writes; then Phase 2 (middleware cookie discipline).
 
 ## Why this doc exists
 
