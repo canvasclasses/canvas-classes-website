@@ -14,14 +14,17 @@ import QuestionDetailPage from './QuestionDetailPage';
 // request instead of fetching the full doc twice (vercel-cost #20b).
 const getQuestion = cache(getQuestionBySlug);
 
-// ISR: 7-day revalidate — solutions change infrequently. Admin question edits
+// ISR: 28-day revalidate — solutions change infrequently. Admin question edits
 // run in a separate deployment, so revalidateTag('questions') there does not
-// cross-invalidate this page's ISR cache; refresh is governed by this window.
-// Lengthened from 24h to 7d to cut steady-state ISR Writes (2026-06 bill).
-export const revalidate = 604800;
+// cross-invalidate this page's ISR cache; edits reach students via the
+// secret-gated /api/revalidate bridge instead (cache redesign Phase 1 —
+// _agents/plans/CRUCIBLE_CACHE_SEO_REDESIGN.md). Crawlers sweep this surface
+// ~weekly, so the earlier 7d window put ~every visit just past expiry and
+// triggered a stale-while-revalidate rebuild (2026-07 diagnosis); 28d lets
+// ~3 of 4 sweeps hit fresh. This window is only the self-healing backstop.
+export const revalidate = 2419200;
 
 // No pages pre-built at deploy time — generated on first request and cached via ISR.
-// With revalidate = 86400, each page is built once per day on first visit.
 // This keeps deploy times fast regardless of how many questions exist.
 export async function generateStaticParams() {
   return [];

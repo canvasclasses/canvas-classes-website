@@ -15,9 +15,13 @@ interface Props {
     params: Promise<{ chapter: string; slug: string }>;
 }
 
-// 7-day ISR — PYQ solutions are effectively static. Longer window cuts the
-// steady-state ISR Writes these high-cardinality leaf pages generate (2026-06 bill).
-export const revalidate = 604800;
+// 28-day ISR — PYQ solutions are effectively static. Crawlers sweep this
+// high-cardinality surface ~weekly, so a 7d window meant nearly every visit
+// landed just past expiry and triggered a stale-while-revalidate rebuild
+// (2026-07 diagnosis). 28d lets ~3 of 4 sweeps hit fresh. Freshness on edit
+// comes from on-demand revalidation via /api/revalidate (cache redesign
+// Phase 1 — _agents/plans/CRUCIBLE_CACHE_SEO_REDESIGN.md).
+export const revalidate = 2419200;
 
 // No pages pre-built at deploy time — generated on first request and cached via
 // ISR, matching the-crucible/q/[slug] and chemistry-questions/[chapter]/[slug].
