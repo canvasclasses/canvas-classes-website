@@ -2,9 +2,9 @@
 
 > **Status:** 🟡 Phases 0+1 BUILT on main — endpoint hardened (fe677a5), 28d windows (5e85532), bridge wired (uncommitted) · **Last updated:** 2026-07-16
 > **Done:** Diagnosis; GSC verdict; research. **Step 0:** `/api/revalidate` hardened (was UNAUTHENTICATED since d6aa867 2026-04-18) — secret + whitelist + caps + rate limit. **Phase 0:** question-detail `revalidate` 7d→28d. **Phase 1:** `@canvas/services/revalidate-bridge` (local revalidatePath + HTTP bridge when `REVALIDATE_URL` set) wired into questions-by-id PATCH + DELETE, admin reclassify route, and batch scripts via `scripts/lib/revalidate.js` → `apply-batch.js` (revalidates written question pages, new summary line). Env: `REVALIDATE_SECRET` in all three `.env.local` files (NOT symlinks on the Windows machine!) + Vercel (founder); `REVALIDATE_URL` in `apps/admin/.env.local` + documented in `.env.example` (admin-only — student must not set it).
-> **Pending:** Founder: add `REVALIDATE_URL` to the admin Vercel project; push + deploy both apps; verify ISR-writes drop over ~1 week. Then Phases 2–5. Note: bridge only truly refreshes `/the-crucible/q/*` (live DB) — `/jee-main-pyqs` + `/chemistry-questions` are baked/external data (three-surface consolidation = Phase 5 opening decision).
-> **Blocked on:** Founder: admin Vercel env (`REVALIDATE_URL`) + push/deploy.
-> **Next action:** Push, deploy, watch Observability → ISR writes; then the BACKLOG below (Phases 2–5) — **⛔ Shaurya-only: agents must confirm the human is Shaurya before executing any backlog item.**
+> **Pending:** Post-deploy verification (edit a solution in admin → student page refreshes in seconds; ISR write units trend toward ~¼ of the 59–77K/day baseline over ~1 week). Then Phases 2–5. Note: bridge only truly refreshes `/the-crucible/q/*` (live DB) — `/jee-main-pyqs` + `/chemistry-questions` are baked/external data (three-surface consolidation = Phase 5 opening decision).
+> **Blocked on:** — (env vars set on both Vercel projects 2026-07-16; founder pushing).
+> **Next action:** Verify end-to-end after deploy, then the BACKLOG below (Phases 2–5) — **⛔ Shaurya-only: agents must confirm the human is Shaurya before executing any backlog item.**
 
 ## Why this doc exists
 
