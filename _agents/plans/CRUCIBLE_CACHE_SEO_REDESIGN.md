@@ -4,7 +4,7 @@
 > **Done:** Diagnosis; GSC verdict; research. **Step 0:** `/api/revalidate` hardened (was UNAUTHENTICATED since d6aa867 2026-04-18) — secret + whitelist + caps + rate limit. **Phase 0:** question-detail `revalidate` 7d→28d. **Phase 1:** `@canvas/services/revalidate-bridge` (local revalidatePath + HTTP bridge when `REVALIDATE_URL` set) wired into questions-by-id PATCH + DELETE, admin reclassify route, and batch scripts via `scripts/lib/revalidate.js` → `apply-batch.js` (revalidates written question pages, new summary line). Env: `REVALIDATE_SECRET` in all three `.env.local` files (NOT symlinks on the Windows machine!) + Vercel (founder); `REVALIDATE_URL` in `apps/admin/.env.local` + documented in `.env.example` (admin-only — student must not set it).
 > **Pending:** Founder: add `REVALIDATE_URL` to the admin Vercel project; push + deploy both apps; verify ISR-writes drop over ~1 week. Then Phases 2–5. Note: bridge only truly refreshes `/the-crucible/q/*` (live DB) — `/jee-main-pyqs` + `/chemistry-questions` are baked/external data (three-surface consolidation = Phase 5 opening decision).
 > **Blocked on:** Founder: admin Vercel env (`REVALIDATE_URL`) + push/deploy.
-> **Next action:** Push, deploy, watch Observability → ISR writes; then Phase 2 (middleware cookie discipline).
+> **Next action:** Push, deploy, watch Observability → ISR writes; then the BACKLOG below (Phases 2–5) — **⛔ Shaurya-only: agents must confirm the human is Shaurya before executing any backlog item.**
 
 ## Why this doc exists
 
@@ -54,6 +54,45 @@ Keep the question pages (they rank — finding #7 — and feed GEO). **Solution-
 - Human-readable slugs (leverage `display_id`) — **requires a 301 migration plan for ~15K UUID URLs; separate spec before touching.**
 - Prioritize multi-step numerical/derivation questions for any index-curation decisions (finding #8).
 Prize: 0.25% → ~2% CTR on ~40K monthly impressions ≈ +700 clicks/mo, roughly doubling non-brand organic at 4× bank scale.
+
+## BACKLOG — Phases 2–5 (remaining work)
+
+> **⛔ OWNERSHIP RULE — READ BEFORE TOUCHING ANY ITEM BELOW.**
+> **This backlog is to be cleared by Shaurya ONLY.** Multiple people work in this
+> repo under shared agent sessions, so any agent asked to work on one of these
+> items MUST FIRST ask the human to confirm they are Shaurya — every time, even
+> if a previous session already confirmed it ("Confirm you are Shaurya before I
+> start on this backlog item?"). If the human is not Shaurya, or does not
+> confirm, do NOT execute the item — tell them these items are reserved for
+> Shaurya and stop. Reading/explaining the backlog is fine for anyone;
+> executing it is not.
+
+### Phase 2 — Middleware cookie discipline (fixes `/class-9` 0%-cached)
+- `apps/student/middleware.ts` session-refresh sets cookies on `/books`, `/class-9`, `/class-11`, `/the-crucible` (minus `/q/`) → Set-Cookie makes responses uncacheable → ~2K uncached renders/day on `/class-9` for logged-in students.
+- First verify none of those pages read auth server-side (initial grep: they don't), then exclude the content trees from the cookie-writing path exactly like `/the-crucible/q/*` already is (middleware lines 40–44). Auth stays in client islands (§10.3).
+- Verify: Observability → `/class-9/[bookSlug]/[pageSlug]` Cached% rises from ~0%; TTFB drops for logged-in students.
+
+### Phase 3 — Segmented sitemaps (SEO instrument for 60K)
+- Split `apps/student/app/sitemap.ts` into per-subject/chapter segment sitemaps (≤50K URLs each, honest `lastmod`), via a sitemap index.
+- Purpose: per-segment indexed-ratio + GSC regex measurement as the bank grows 15K→60K. Queries already bounded (`.limit(50000)`, #20a).
+
+### Phase 4 — Solution-gated indexing + hub→leaf links
+- Only questions with published solutions enter the sitemap: filter in `getAllPublishedPYQSlugs` (`apps/student/features/crucible/server-actions/the-crucible.ts`) on non-empty `solution.text_markdown`.
+- Rationale: Google suppresses thin content at the URL-pattern level — one sampled bare-answer page can stall indexing for the whole pattern (2026-07 research).
+- Ensure chapter hub pages genuinely link to every question (crawl path; orphaned URLs rot in "Discovered – currently not indexed").
+
+### Phase 5 — Win the click (separate design pass before any code)
+1. **Three-surface consolidation (opening decision):** the same question content lives at `/the-crucible/q/*` (live Mongo), `/jee-main-pyqs/*` (repo-baked JSON, May 2026), `/chemistry-questions/*` (Google-Sheets flashcards CSV, Jan 2026) — all sitemapped, all self-canonical, competing in Google. Recommended lean: upgrade crucible pages with jee-main-pyqs' craft, 301 `/jee-main-pyqs` into them, retire `/chemistry-questions` by 301. Only the live surface benefits from the Phase-1 bridge.
+2. Readable slugs via `display_id` + careful 301 migration off UUID URLs (~15K URLs — needs its own spec).
+3. QAPage structured data with single expert `acceptedAnswer` (Google's education exception). Do NOT use deprecated types (Practice Problem, FAQ, Course Info, Learning Video).
+4. Query-matched `<title>`/meta from question text + exam/year (`formatExamLabel` conventions).
+5. Invest in chapter hubs (currently ~invisible: 282 impressions/28d) — the head-term opportunity.
+- Prize: 0.25% → ~2% CTR on ~40K monthly impressions ≈ +700 clicks/mo. Record all of it in `_agents/SEO_PLAYBOOK.md`.
+
+### Ongoing verification (not a phase)
+- After each deploy: Observability → ISR write units should trend toward ~¼ of the 59–77K/day baseline (deploy days burst — deployment-scoped cache).
+- End-to-end freshness test: edit a solution in admin → student page shows it within seconds.
+- Housekeeping (anyone, low prio): two uptime monitors (Sentry + Better Stack, ~3K req/day combined) — consolidate or slow to 5-min checks.
 
 ## Invariants / cautions
 - All caching rules in CLAUDE.md §10 still apply; this plan extends them, it does not relax them.
