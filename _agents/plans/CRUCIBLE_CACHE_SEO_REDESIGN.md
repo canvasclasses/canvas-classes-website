@@ -1,6 +1,7 @@
 # Crucible Cache + SEO Redesign — "Edits are events, not timers"
 
-> **Status:** 🟡 Phases 0+1 BUILT on main — endpoint hardened (fe677a5), 28d windows (5e85532), bridge wired (uncommitted) · **Last updated:** 2026-07-16
+> **Status:** 🟡 Phases 0+1 SHIPPED on main — endpoint hardened (fe677a5), 28d windows (5e85532), bridge wired (d302fa0, pushed) · **Last updated:** 2026-07-18
+> **⚠️ 2026-07-18 — Phases 3–5 of the backlog below are ABSORBED into [`QUESTION_LIBRARY_SPEC.md`](QUESTION_LIBRARY_SPEC.md)** (the unified `/questions/*` public surface, written after 5-agent adversarial verification). Phase 2 (middleware cookie discipline) remains HERE. The Phase-5 item-1 lean ("upgrade `/the-crucible/q/*` in place, 301 `/jee-main-pyqs` into it") is **superseded** by the Library decision (new `/questions/*` root, canonical-first then gated pilot then 301s; `/jee-main-pyqs` migrates LAST or stays — open decision in the spec §7). The ⛔ Shaurya-only rule inherits to the entire Library spec.
 > **Done:** Diagnosis; GSC verdict; research. **Step 0:** `/api/revalidate` hardened (was UNAUTHENTICATED since d6aa867 2026-04-18) — secret + whitelist + caps + rate limit. **Phase 0:** question-detail `revalidate` 7d→28d. **Phase 1:** `@canvas/services/revalidate-bridge` (local revalidatePath + HTTP bridge when `REVALIDATE_URL` set) wired into questions-by-id PATCH + DELETE, admin reclassify route, and batch scripts via `scripts/lib/revalidate.js` → `apply-batch.js` (revalidates written question pages, new summary line). Env: `REVALIDATE_SECRET` in all three `.env.local` files (NOT symlinks on the Windows machine!) + Vercel (founder); `REVALIDATE_URL` in `apps/admin/.env.local` + documented in `.env.example` (admin-only — student must not set it).
 > **Pending:** Post-deploy verification (edit a solution in admin → student page refreshes in seconds; ISR write units trend toward ~¼ of the 59–77K/day baseline over ~1 week). Then Phases 2–5. Note: bridge only truly refreshes `/the-crucible/q/*` (live DB) — `/jee-main-pyqs` + `/chemistry-questions` are baked/external data (three-surface consolidation = Phase 5 opening decision).
 > **Blocked on:** — (env vars set on both Vercel projects 2026-07-16; founder pushing).
@@ -56,6 +57,14 @@ Keep the question pages (they rank — finding #7 — and feed GEO). **Solution-
 Prize: 0.25% → ~2% CTR on ~40K monthly impressions ≈ +700 clicks/mo, roughly doubling non-brand organic at 4× bank scale.
 
 ## BACKLOG — Phases 2–5 (remaining work)
+
+> **📌 2026-07-18: Phases 3–5 below are kept for the record but are now executed
+> via [`QUESTION_LIBRARY_SPEC.md`](QUESTION_LIBRARY_SPEC.md)** — segmented
+> sitemaps (P3), solution-gated indexing + hub→leaf links (P4), and the whole
+> "win the click" pass (P5: consolidation, slugs, QAPage, titles, hubs) are
+> folded into the Library's phases with corrected sequencing (canonical-first,
+> gated pilot, then 301s). Only **Phase 2 remains a standalone item here.**
+> The ownership rule below applies to the Library spec identically.
 
 > **⛔ OWNERSHIP RULE — READ BEFORE TOUCHING ANY ITEM BELOW.**
 > **This backlog is to be cleared by Shaurya ONLY.** Multiple people work in this

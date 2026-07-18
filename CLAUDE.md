@@ -834,21 +834,24 @@ For instant-turnaround on admin saves, call `revalidatePath()` from the admin sa
 [`apps/student/app/robots.ts`](apps/student/app/robots.ts) blocks AI **training** crawlers:
 
 - `GPTBot` (OpenAI training)
-- `Google-Extended` (Bard/Gemini training — separate from Googlebot)
+- `Google-Extended` (Gemini training/grounding — separate from Googlebot; blocking it does NOT affect Search ranking or AI Overviews eligibility)
 - `Applebot-Extended` (Apple Intelligence training — separate from Applebot)
 - `CCBot` (Common Crawl)
+- `ClaudeBot` (**Anthropic's TRAINING crawler** — corrected 2026-07-18; it was wrongly listed here as a citation bot)
 - `Bytespider`, `anthropic-ai` (legacy), `Amazonbot`, `Meta-ExternalAgent`, `cohere-ai`
 
 …and explicitly **allows** AI **answer/citation** crawlers (these grant clickable links back in AI search results):
 
 - `ChatGPT-User`, `OAI-SearchBot` (ChatGPT search mode)
 - `PerplexityBot`, `Perplexity-User`
-- `ClaudeBot`
-- `Googlebot`, `Bingbot` (untouched)
+- `Claude-User`, `Claude-SearchBot` (Anthropic's user-fetch + search-index agents — the actual Claude citation surface; NOT ClaudeBot)
+- `meta-externalfetcher` (Meta AI's user-triggered fetcher — citations in Meta AI on WhatsApp; the training crawler `Meta-ExternalAgent` stays blocked, incl. at the middleware edge block)
+- `Googlebot`, `Bingbot` (untouched; Bingbot also grounds Microsoft Copilot citations)
 
 **Do not:**
 - Add `*` allowance for the blocked training bots — they pulled 5–8 GB/day on uncached pages in the 2026-06 incident with zero return.
-- Block the on-demand answer bots — that breaks GEO (citations in ChatGPT / Perplexity / Claude answers).
+- Block the on-demand answer bots — that breaks GEO (citations in ChatGPT / Perplexity / Claude / Meta AI answers).
+- Conflate Anthropic's three bots: ClaudeBot = training (block), Claude-User + Claude-SearchBot = citations (allow).
 
 The distinction is: **training crawlers cost bandwidth, return nothing measurable; answer crawlers grant citations + clicks per user query.**
 
