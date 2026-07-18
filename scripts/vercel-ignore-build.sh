@@ -31,8 +31,31 @@ fi
 # Run from the repo root regardless of the project's Root Directory setting.
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
-# First push / no parent commit -> build.
-if ! git rev-parse HEAD^ >/dev/null 2>&1; then
+# ── Diff base ────────────────────────────────────────────────────────────────
+# MUST be the last successfully DEPLOYED commit, not HEAD^. A push can carry
+# several commits; diffing only HEAD^..HEAD sees just the top one. That bug
+# skipped a real deploy on 2026-07-18: the Phase-A push ended with a
+# docs/scripts-only commit, so the script saw "no apps/student changes" and
+# ignored the two app commits underneath. Vercel provides
+# VERCEL_GIT_PREVIOUS_SHA (the last successful deployment's commit) to the
+# Ignored Build Step for exactly this comparison.
+BASE=""
+if [ -n "${VERCEL_GIT_PREVIOUS_SHA:-}" ]; then
+  if git rev-parse -q --verify "${VERCEL_GIT_PREVIOUS_SHA}^{commit}" >/dev/null 2>&1; then
+    BASE="$VERCEL_GIT_PREVIOUS_SHA"
+  elif git fetch --quiet --depth=1 origin "$VERCEL_GIT_PREVIOUS_SHA" 2>/dev/null \
+       && git rev-parse -q --verify "${VERCEL_GIT_PREVIOUS_SHA}^{commit}" >/dev/null 2>&1; then
+    BASE="$VERCEL_GIT_PREVIOUS_SHA"
+  else
+    # Previous-deploy SHA exists but isn't reachable in this clone — never
+    # guess with a shallower base; build.
+    echo "[ignore-build] previous deploy SHA ${VERCEL_GIT_PREVIOUS_SHA} unavailable in clone — building to be safe"
+    exit 1
+  fi
+elif git rev-parse -q --verify HEAD^ >/dev/null 2>&1; then
+  # No Vercel env (local testing) — single-commit diff is the best available.
+  BASE="HEAD^"
+else
   echo "[ignore-build] no parent commit — building"
   exit 1
 fi
@@ -40,10 +63,10 @@ fi
 # Everything that can influence this app's build output.
 WATCHED="apps/$APP packages package.json package-lock.json"
 
-if git diff --quiet HEAD^ HEAD -- $WATCHED; then
-  echo "[ignore-build] no changes in ($WATCHED) — SKIPPING $APP build"
+if git diff --quiet "$BASE" HEAD -- $WATCHED; then
+  echo "[ignore-build] no changes in ($WATCHED) since $BASE — SKIPPING $APP build"
   exit 0
 fi
 
-echo "[ignore-build] changes in $APP dependency graph — building"
+echo "[ignore-build] changes in $APP dependency graph since $BASE — building"
 exit 1
