@@ -16,7 +16,10 @@ import {
   Tag,
   ArrowLeft,
 } from 'lucide-react';
-import MathRenderer from '@canvas/ui/MathRenderer';
+// QuestionContent (ReactMarkdown + rehype-katex + mhchem) renders the content
+// into SSR HTML — the legacy MathRenderer built it client-side in a useEffect,
+// which shipped EMPTY divs to crawlers (QUESTION_LIBRARY_SPEC Phase A.2).
+import QuestionContent from '@/features/crucible/components/QuestionContent';
 import { QuestionDetail } from '@/features/crucible/server-actions/the-crucible';
 import { Chapter } from '@/features/crucible/components/types';
 import { formatExamLabel } from '@/features/crucible/components/examLabel';
@@ -116,6 +119,13 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
                   .substring(0, 500),
                 'upvoteCount': 0,
                 'url': `https://www.canvasclasses.in/the-crucible/q/${question.id}`,
+                // Organization author ON PURPOSE (decision 2026-07-18): this
+                // surface serves ALL subjects (chemistry, physics, maths) and
+                // Paaras Sir teaches chemistry only — a Person credit here
+                // would mis-attribute physics/maths solutions. Also the
+                // "teacher as face of the brand" question is an OPEN decision
+                // (QUESTION_LIBRARY_SPEC §7). Do not switch to Person until
+                // both are resolved (per-subject author map + face decision).
                 'author': {
                   '@type': 'Organization',
                   'name': 'Canvas Classes',
@@ -217,9 +227,18 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
               )}
             </div>
 
-            {/* Question text */}
+            {/* h1 for SEO/a11y — this page had NO h1 (2026-07-18 audit). Plain
+                stripped stem, sr-only: verbatim subset of the visible rich stem
+                below (standard accessible-heading pattern, not hidden-text SEO —
+                the visible content matches). Block content (MTC tables, images)
+                can't legally nest inside a heading, hence not wrapping the rich
+                renderer itself. */}
+            <h1 className="sr-only">{questionText.substring(0, 200)}</h1>
+
+            {/* Question text — rendered into SSR HTML by QuestionContent
+                (legacy MathRenderer shipped empty divs to crawlers). */}
             <div style={{ fontSize: 17, lineHeight: 1.7, color: 'rgba(255,255,255,0.92)', marginBottom: 20 }}>
-              <MathRenderer
+              <QuestionContent
                 markdown={question.question_text.markdown}
                 className="text-base leading-relaxed"
                 fontSize={17}
@@ -240,7 +259,7 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
                   }}>
                     <OptionLabel id={opt.id} />
                     <div style={{ fontSize: 14, color: opt.is_correct ? '#34d399' : 'rgba(255,255,255,0.75)', paddingTop: 4 }}>
-                      <MathRenderer
+                      <QuestionContent
                         markdown={opt.text || ''}
                         className="text-sm"
                         fontSize={14}
@@ -363,10 +382,11 @@ export default function QuestionDetailPage({ question, chapter, adjacent, relate
                 ) : null
               )}
 
-              {/* Text Solution */}
+              {/* Text Solution — SSR'd via QuestionContent so the solution is
+                  readable by crawlers (the free-text-solution SEO moat). */}
               {question.solution.text_markdown && (
                 <div style={{ fontSize: 15, lineHeight: 1.75, color: 'rgba(255,255,255,0.85)' }}>
-                  <MathRenderer
+                  <QuestionContent
                     markdown={question.solution.text_markdown}
                     className="text-sm leading-relaxed"
                     fontSize={15}

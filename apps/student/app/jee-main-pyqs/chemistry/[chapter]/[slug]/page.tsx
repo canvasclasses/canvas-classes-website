@@ -55,7 +55,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const url = `${BASE_URL}/jee-main-pyqs/chemistry/${chapter.slug}/${question.slug}`;
     const stemPreview = stripForText(question.stem, 100);
     const yearTag = question.examYear ? ` (JEE Main ${question.examYear})` : '';
-    const title = `${stemPreview}${yearTag}`;
+    // Verbatim stem first, "— Solved" as a compact suffix promise (founder
+    // decision 2026-07-18, option B; SEO_PLAYBOOK Part G).
+    const title = `${stemPreview} — Solved${yearTag}`;
 
     const correctText = stripForText(
         question.options.find((o) => o.id === question.answerId)?.text || '',
@@ -162,17 +164,22 @@ function buildQAPageSchema(chapter: JmpChapterMeta, question: JmpQuestion) {
                 educationalFramework: 'NCERT',
             },
             educationalLevel: `Class ${chapter.classLevel}`,
+            // Single expert acceptedAnswer, capped at 500 chars — the
+            // education-exception shape (2026-07-18, QUESTION_LIBRARY_SPEC
+            // Phase A.4): Google's QAPage education carve-out is for pages
+            // with "a single answer provided or selected by in-house
+            // experts". The former suggestedAnswer array (all 4 MCQ options
+            // as Answers) read as MULTIPLE answers — schema mismatch — and
+            // the former 1500-char cap shipped the near-full solution as
+            // machine-readable text. 500 chars = consistent teaser across
+            // all question surfaces; the full solution lives in the SSR
+            // page body where it earns dwell time.
             acceptedAnswer: {
                 '@type': 'Answer',
-                text: acceptedAnswerText.slice(0, 1500),
+                text: acceptedAnswerText.slice(0, 500),
                 author: PAARAS_PERSON,
                 ...(question.examYear ? { dateCreated: `${question.examYear}-01-01` } : {}),
             },
-            suggestedAnswer: question.options.map((opt) => ({
-                '@type': 'Answer',
-                text: stripForText(opt.text, 300),
-                position: opt.id.charCodeAt(0) - 96,
-            })),
         },
     };
 }

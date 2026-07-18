@@ -61,8 +61,21 @@ export async function generateMetadata({
     question.metadata.exam_source
   ) ?? 'JEE PYQ';
 
-  const title = `${question.display_id}: ${rawText.substring(0, 55)}... | ${examLabel}`;
-  const description = `${examLabel} question on ${chapterName}. ${rawText.substring(0, 120)}. Full solution${question.solution.video_url ? ' with video explanation' : ''} by Paaras Sir.`;
+  // Title leads with the QUESTION TEXT (what students actually search /
+  // paste), never the internal display_id — the audit (2026-07-18) found the
+  // old `GOC-524: …` pattern spent the highest-value title slot on a token
+  // nobody searches, and Google fell back to bare "Canvasclasses" on at
+  // least one page. display_id trails for brand/reference.
+  // Verbatim question text FIRST (matches pasted-question searches + Google
+  // Lens photo→text queries; Google bolds the matched words), "— Solved" as a
+  // compact suffix promise (founder decision 2026-07-18, option B: text-first
+  // survives mobile truncation, no content-farm prefix; SEO_PLAYBOOK Part G).
+  const title = `${rawText.substring(0, 70)} — Solved (${examLabel}) | ${question.display_id}`;
+  // Subject-neutral attribution (2026-07-18): this surface serves ALL
+  // subjects; "by Paaras Sir" mis-credited physics/maths solutions to a
+  // chemistry teacher, and teacher-as-brand-face is an open decision
+  // (QUESTION_LIBRARY_SPEC §7).
+  const description = `${examLabel} question on ${chapterName}. ${rawText.substring(0, 120)}. Free step-by-step solution${question.solution.video_url ? ' with video explanation' : ''} — Canvas Classes.`;
 
   return {
     title,
@@ -80,7 +93,10 @@ export async function generateMetadata({
       canonical: `https://www.canvasclasses.in/the-crucible/q/${question.id}`,
     },
     openGraph: {
-      title: `${question.display_id} — ${examLabel} | Canvas Classes`,
+      // Question-text-first here too — OG titles are what WhatsApp/Telegram
+      // shares display, and a student sharing into a 200-member prep group
+      // needs the link to say what the question IS, not an internal ID.
+      title: `${rawText.substring(0, 70)} (${examLabel}) | Canvas Classes`,
       description,
       url: `https://www.canvasclasses.in/the-crucible/q/${question.id}`,
       siteName: 'Canvas Classes',
@@ -88,7 +104,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${question.display_id} — ${examLabel} | Canvas Classes`,
+      title: `${rawText.substring(0, 70)} (${examLabel}) | Canvas Classes`,
       description,
     },
   };

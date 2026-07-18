@@ -7,6 +7,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
+// \ce{} chemistry macro support — without this, any \ce formula renders as a
+// KaTeX ParseError (see QuestionMarkdown.tsx / QUESTION_LIBRARY_SPEC Phase A.1).
+import 'katex/contrib/mhchem';
 
 /*
 export async function generateStaticParams() {
@@ -18,12 +21,14 @@ export async function generateStaticParams() {
 }
 */
 
-// 7-day ISR — leaf SEO pages, content is the same for everyone. The
+// 28-day ISR — leaf SEO pages, content is the same for everyone. The
 // generateStaticParams block above is commented out intentionally
 // (was causing slow builds) — pages are generated on-demand on first
-// request after the cache expires. Window lengthened from 24h to 7d to cut
-// the ISR Writes these high-cardinality leaf pages generate (2026-06 bill).
-export const revalidate = 604800;
+// request after the cache expires. 7d → 28d (2026-07-18): this was the last
+// question family on the 7-day window, whose expiry resonated with the weekly
+// value-bot sitemap sweep (every visit = just-expired page = SWR rebuild).
+// Matches the-crucible/q and jee-main-pyqs. See QUESTION_LIBRARY_SPEC Phase A.5.
+export const revalidate = 2419200;
 
 export async function generateMetadata(props: { params: Promise<{ chapter: string; slug: string }> }) {
     const params = await props.params;
@@ -60,27 +65,50 @@ export default async function QuestionPage(props: { params: Promise<{ chapter: s
 
     const relatedQuestions = await getRelatedQuestions(question);
 
-    // JSON-LD Schema for Q&A Page
+    // JSON-LD Schema for Q&A Page — education-exception shape (2026-07-18,
+    // QUESTION_LIBRARY_SPEC Phase A.4): single expert acceptedAnswer capped at
+    // 500 chars (was the COMPLETE untruncated answer — the most
+    // AI-Overview-feedable object on the page), Person author for E-E-A-T
+    // (was anonymous Organization), www-canonical URL (was bare domain,
+    // violating SEO_PLAYBOOK Part A #1), + BreadcrumbList (was missing).
+    const pageUrl = `https://www.canvasclasses.in/chemistry-questions/${params.chapter}/${params.slug}`;
+    const answerTeaser = question.answer
+        .replace(/\$\$?[^$]*\$\$?/g, '')
+        .replace(/[*_`#>]/g, '')
+        .trim()
+        .substring(0, 500);
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'QAPage',
         'mainEntity': {
             '@type': 'Question',
-            'name': question.question,
+            'name': question.question.substring(0, 200),
             'text': question.question,
             'answerCount': 1,
             'upvoteCount': 0,
             'acceptedAnswer': {
                 '@type': 'Answer',
-                'text': question.answer,
+                'text': answerTeaser,
                 'upvoteCount': 0,
-                'url': `https://canvasclasses.in/chemistry-questions/${params.chapter}/${params.slug}`,
+                'url': pageUrl,
+                // Organization author — the "teacher as face of the brand"
+                // question is an OPEN decision (QUESTION_LIBRARY_SPEC §7);
+                // keep attribution neutral until it's made.
                 'author': {
                     '@type': 'Organization',
-                    'name': 'Canvas Classes'
+                    'name': 'Canvas Classes',
+                    'url': 'https://www.canvasclasses.in',
                 }
             }
-        }
+        },
+        'breadcrumb': {
+            '@type': 'BreadcrumbList',
+            'itemListElement': [
+                { '@type': 'ListItem', 'position': 1, 'name': 'Chemistry Questions', 'item': 'https://www.canvasclasses.in/chemistry-questions' },
+                { '@type': 'ListItem', 'position': 2, 'name': question.chapterName, 'item': `https://www.canvasclasses.in/chemistry-questions/${params.chapter}` },
+                { '@type': 'ListItem', 'position': 3, 'name': question.question.substring(0, 60), 'item': pageUrl },
+            ],
+        },
     };
 
     return (

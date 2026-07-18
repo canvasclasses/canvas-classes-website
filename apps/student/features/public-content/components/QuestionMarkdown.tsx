@@ -4,6 +4,13 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
+// mhchem teaches KaTeX the \ce{...} chemistry macro. Without this import every
+// \ce formula (6,521 occurrences across the exported PYQ JSON) renders as a
+// KaTeX ParseError — red raw-LaTeX error text — for users AND for crawlers
+// reading the SSR HTML. Same pattern as packages/book-renderer TextBlockRenderer.
+// (Do NOT copy book-renderer's REHYPE_KATEX_OPTIONS \frac→\dfrac macro here —
+// questions are authored under the §4 rule that \dfrac is wrong for them.)
+import 'katex/contrib/mhchem';
 
 interface Props {
     children: string;
