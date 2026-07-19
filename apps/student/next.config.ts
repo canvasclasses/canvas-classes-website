@@ -42,7 +42,13 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com https://*.clarity.ms https://*.clarity.microsoft.com https://*.vercel-insights.com https://va.vercel-scripts.com https://cloudflareinsights.com",
+              // blob: needed so THREE.ImageBitmapLoader (used by useGLTF for any
+              // model with embedded textures, e.g. the heart-3d simulator) can
+              // fetch() the blob: URLs it creates from a glTF's binary chunk —
+              // img-src/media-src already allow blob: for the same same-origin,
+              // page-generated-only reason. Without it, GLTFLoader silently fails
+              // every embedded texture and the model renders untextured/white.
+              "connect-src 'self' blob: https://*.supabase.co https://www.google-analytics.com https://*.sentry.io https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://api.mixpanel.com https://*.clarity.ms https://*.clarity.microsoft.com https://*.vercel-insights.com https://va.vercel-scripts.com https://cloudflareinsights.com",
               "media-src 'self' https: blob:",
               "object-src 'none'",
               "frame-src 'self' https://www.youtube.com https://youtube.com https://www.youtube-nocookie.com https://customer-stream.cloudflarestream.com https://drive.google.com https://docs.google.com https://phet.colorado.edu",
