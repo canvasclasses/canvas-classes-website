@@ -1,0 +1,94 @@
+NCERT Class 11 Chemistry — Unit 4: Chemical Bonding and Molecular Structure — EXERCISES
+(Live Book chapter: Ch.4 "Chemical Bonding", book ncert-simplified)
+NOTE: No official NCERT "selected answers" exist for this unit — derive and verify every answer yourself against the chapter's own content.
+
+4.1 Explain the formation of a chemical bond.
+
+4.2 Write Lewis dot symbols for atoms of the following elements: Mg, Na, B, O, N, Br.
+
+4.3 Write Lewis symbols for the following atoms and ions:
+S and S2-; Al and Al3+; H and H-
+
+4.4 Draw the Lewis structures for the following molecules and ions:
+H2S, SiCl4, BeF2, CO3^2-, HCOOH
+
+4.5 Define octet rule. Write its significance and limitations.
+
+4.6 Write the favourable factors for the formation of ionic bond.
+
+4.7 Discuss the shape of the following molecules using the VSEPR model:
+BeCl2, BCl3, SiCl4, AsF5, H2S, PH3
+
+4.8 Although geometries of NH3 and H2O molecules are distorted tetrahedral, bond angle in water is less than that of ammonia. Discuss.
+
+4.9 How do you express the bond strength in terms of bond order?
+
+4.10 Define the bond length.
+
+4.11 Explain the important aspects of resonance with reference to the CO3^2- ion.
+
+4.12 H3PO3 can be represented by structures 1 and 2 shown below. Can these two structures be taken as the canonical forms of the resonance hybrid representing H3PO3? If not, give reasons for the same.
+Structure 1: H-O-P(=O)(-O-H)(-H) [phosphorus bonded to: OH, OH, =O, and H directly]
+Structure 2: H-O-P(-O-H)(-O-H) [phosphorus bonded to: OH, OH, OH — i.e. all three O-H, no P-H, no P=O]
+(The two structures differ in whether phosphorus has a direct P-H bond and a P=O, or three P-OH bonds — they are NOT interconvertible by only moving electrons, since atom connectivity itself differs.)
+
+4.13 Write the resonance structures for SO3, NO2 and NO3^-.
+
+4.14 Use Lewis symbols to show electron transfer between the following atoms to form cations and anions: (a) K and S (b) Ca and O (c) Al and N.
+
+4.15 Although both CO2 and H2O are triatomic molecules, the shape of H2O molecule is bent while that of CO2 is linear. Explain this on the basis of dipole moment.
+
+4.16 Write the significance/applications of dipole moment.
+
+4.17 Define electronegativity. How does it differ from electron gain enthalpy?
+
+4.18 Explain with the help of suitable example polar covalent bond.
+
+4.19 Arrange the bonds in order of increasing ionic character in the molecules: LiF, K2O, N2, SO2 and ClF3.
+
+4.20 The skeletal structure of CH3COOH as shown below is correct, but some of the bonds are shown incorrectly. Write the correct Lewis structure for acetic acid.
+[Given skeletal structure: H3C-C(=O)-O-H drawn with a double bond error — one H shown bonded directly to the carbonyl O by a vertical line instead of the O-H being on the other oxygen; the correct structure has the carbonyl C=O double bond and a separate -O-H single-bonded oxygen.]
+
+4.21 Apart from tetrahedral geometry, another possible geometry for CH4 is square planar with the four H atoms at the corners of the square and the C atom at its centre. Explain why CH4 is not square planar.
+
+4.22 Explain why BeH2 molecule has a zero dipole moment although the Be–H bonds are polar.
+
+4.23 Which out of NH3 and NF3 has higher dipole moment and why?
+
+4.24 What is meant by hybridisation of atomic orbitals? Describe the shapes of sp, sp2, sp3 hybrid orbitals.
+
+4.25 Describe the change in hybridisation (if any) of the Al atom in the following reaction.
+AlCl3 + Cl- → AlCl4-
+
+4.26 Is there any change in the hybridisation of B and N atoms as a result of the following reaction?
+BF3 + NH3 → F3B.NH3
+
+4.27 Draw diagrams showing the formation of a double bond and a triple bond between carbon atoms in C2H4 and C2H2 molecules.
+
+4.28 What is the total number of sigma and pi bonds in the following molecules?
+(a) C2H2 (b) C2H4
+
+4.29 Considering x-axis as the internuclear axis which out of the following will not form a sigma bond and why? (a) 1s and 1s (b) 1s and 2px; (c) 2py and 2py (d) 1s and 2s.
+
+4.30 Which hybrid orbitals are used by carbon atoms in the following molecules?
+CH3–CH3; (b) CH3-CH=CH2; (c) CH3-CH2-OH; (d) CH3-CHO (e) CH3COOH
+
+4.31 What do you understand by bond pairs and lone pairs of electrons? Illustrate by giving one example of each type.
+
+4.32 Distinguish between a sigma and a pi bond.
+
+4.33 Explain the formation of H2 molecule on the basis of valence bond theory.
+
+4.34 Write the important conditions required for the linear combination of atomic orbitals to form molecular orbitals.
+
+4.35 Use molecular orbital theory to explain why the Be2 molecule does not exist.
+
+4.36 Compare the relative stability of the following species and indicate their magnetic properties: O2, O2+, O2- (superoxide), O2^2- (peroxide)
+
+4.37 Write the significance of a plus and a minus sign shown in representing the orbitals.
+
+4.38 Describe the hybridisation in case of PCl5. Why are the axial bonds longer as compared to equatorial bonds?
+
+4.39 Define hydrogen bond. Is it weaker or stronger than the van der Waals forces?
+
+4.40 What is meant by the term bond order? Calculate the bond order of: N2, O2, O2+ and O2-.

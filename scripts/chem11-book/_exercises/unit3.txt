@@ -1,0 +1,154 @@
+NCERT Class 11 Chemistry — Unit 3: Classification of Elements and Periodicity in Properties — EXERCISES
+(Live Book chapter: Ch.3 "Classification of Elements and Periodicity in Properties", book ncert-simplified)
+NOTE: No official NCERT "selected answers" exist for this unit (it is descriptive/conceptual) — derive and verify every answer yourself against the chapter's own content.
+
+3.1 What is the basic theme of organisation in the periodic table?
+
+3.2 Which important property did Mendeleev use to classify the elements in his periodic table and did he stick to that?
+
+3.3 What is the basic difference in approach between the Mendeleev's Periodic Law and the Modern Periodic Law?
+
+3.4 On the basis of quantum numbers, justify that the sixth period of the periodic table should have 32 elements.
+
+3.5 In terms of period and group where would you locate the element with Z=114?
+
+3.6 Write the atomic number of the element present in the third period and seventeenth group of the periodic table.
+
+3.7 Which element do you think would have been named by
+(i) Lawrence Berkeley Laboratory
+(ii) Seaborg's group?
+
+3.8 Why do elements in the same group have similar physical and chemical properties?
+
+3.9 What does atomic radius and ionic radius really mean to you?
+
+3.10 How do atomic radius vary in a period and in a group? How do you explain the variation?
+
+3.11 What do you understand by isoelectronic species? Name a species that will be isoelectronic with each of the following atoms or ions.
+(i) F- (ii) Ar (iii) Mg2+ (iv) Rb+
+
+3.12 Consider the following species:
+N3-, O2-, F-, Na+, Mg2+ and Al3+
+(a) What is common in them?
+(b) Arrange them in the order of increasing ionic radii.
+
+3.13 Explain why cation are smaller and anions larger in radii than their parent atoms?
+
+3.14 What is the significance of the terms — 'isolated gaseous atom' and 'ground state' while defining the ionization enthalpy and electron gain enthalpy?
+Hint: Requirements for comparison purposes.
+
+3.15 Energy of an electron in the ground state of the hydrogen atom is −2.18×10^-18 J. Calculate the ionization enthalpy of atomic hydrogen in terms of J mol-1.
+Hint: Apply the idea of mole concept to derive the answer.
+
+3.16 Among the second period elements the actual ionization enthalpies are in the order Li < B < Be < C < O < N < F < Ne.
+Explain why
+(i) Be has higher ΔiH than B
+(ii) O has lower ΔiH than N and F?
+
+3.17 How would you explain the fact that the first ionization enthalpy of sodium is lower than that of magnesium but its second ionization enthalpy is higher than that of magnesium?
+
+3.18 What are the various factors due to which the ionization enthalpy of the main group elements tends to decrease down a group?
+
+3.19 The first ionization enthalpy values (in kJ mol-1) of group 13 elements are:
+B    Al    Ga    In    Tl
+801    577    579    558    589
+How would you explain this deviation from the general trend?
+
+3.20 Which of the following pairs of elements would have a more negative electron gain enthalpy?
+(i) O or F    (ii) F or Cl
+
+3.21 Would you expect the second electron gain enthalpy of O as positive, more negative or less negative than the first? Justify your answer.
+
+3.22 What is the basic difference between the terms electron gain enthalpy and electronegativity?
+
+3.23 How would you react to the statement that the electronegativity of N on Pauling scale is 3.0 in all the nitrogen compounds?
+
+3.24 Describe the theory associated with the radius of an atom as it
+(a) gains an electron
+(b) loses an electron
+
+3.25 Would you expect the first ionization enthalpies for two isotopes of the same element to be the same or different? Justify your answer.
+
+3.26 What are the major differences between metals and non-metals?
+
+3.27 Use the periodic table to answer the following questions.
+(a) Identify an element with five electrons in the outer subshell.
+(b) Identify an element that would tend to lose two electrons.
+(c) Identify an element that would tend to gain two electrons.
+(d) Identify the group having metal, non-metal, liquid as well as gas at the room temperature.
+
+3.28 The increasing order of reactivity among group 1 elements is Li < Na < K < Rb < Cs whereas that among group 17 elements is F > Cl > Br > I. Explain.
+
+3.29 Write the general outer electronic configuration of s-, p-, d- and f- block elements.
+
+3.30 Assign the position of the element having outer electronic configuration
+(i) ns2np4 for n=3 (ii) (n-1)d2ns2 for n=4, and (iii) (n-2)f7 (n-1)d1ns2 for n=6, in the periodic table.
+
+3.31 The first (ΔiH1) and the second (ΔiH2) ionization enthalpies (in kJ mol-1) and the (ΔegH) electron gain enthalpy (in kJ mol-1) of a few elements are given below:
+Elements    ΔiH1    ΔiH2    ΔegH
+I    520    7300    -60
+II    419    3051    -48
+III    1681    3374    -328
+IV    1008    1846    -295
+V    2372    5251    +48
+VI    738    1451    -40
+Which of the above elements is likely to be:
+(a) the least reactive element.
+(b) the most reactive metal.
+(c) the most reactive non-metal.
+(d) the least reactive non-metal.
+(e) the metal which can form a stable binary halide of the formula MX2 (X=halogen).
+(f) the metal which can form a predominantly stable covalent halide of the formula MX (X=halogen)?
+
+3.32 Predict the formulas of the stable binary compounds that would be formed by the combination of the following pairs of elements.
+(a) Lithium and oxygen    (b) Magnesium and nitrogen
+(c) Aluminium and iodine    (d) Silicon and oxygen
+(e) Phosphorus and fluorine    (f) Element 71 and fluorine
+
+3.33 In the modern periodic table, the period indicates the value of:
+(a) atomic number
+(b) atomic mass
+(c) principal quantum number
+(d) azimuthal quantum number.
+
+3.34 Which of the following statements related to the modern periodic table is incorrect?
+(a) The p-block has 6 columns, because a maximum of 6 electrons can occupy all the orbitals in a p-shell.
+(b) The d-block has 8 columns, because a maximum of 8 electrons can occupy all the orbitals in a d-subshell.
+(c) Each block contains a number of columns equal to the number of electrons that can occupy that subshell.
+(d) The block indicates value of azimuthal quantum number (l) for the last subshell that received electrons in building up the electronic configuration.
+
+3.35 Anything that influences the valence electrons will affect the chemistry of the element. Which one of the following factors does not affect the valence shell?
+(a) Valence principal quantum number (n)
+(b) Nuclear charge (Z)
+(c) Nuclear mass
+(d) Number of core electrons.
+
+3.36 The size of isoelectronic species — F-, Ne and Na+ is affected by
+(a) nuclear charge (Z)
+(b) valence principal quantum number (n)
+(c) electron-electron interaction in the outer orbitals
+(d) none of the factors because their size is the same.
+
+3.37 Which one of the following statements is incorrect in relation to ionization enthalpy?
+(a) Ionization enthalpy increases for each successive electron.
+(b) The greatest increase in ionization enthalpy is experienced on removal of electron from core noble gas configuration.
+(c) End of valence electrons is marked by a big jump in ionization enthalpy.
+(d) Removal of electron from orbitals bearing lower n value is easier than from orbital having higher n value.
+
+3.38 Considering the elements B, Al, Mg, and K, the correct order of their metallic character is:
+(a) B > Al > Mg > K
+(b) Al > Mg > B > K
+(c) Mg > Al > K > B
+(d) K > Mg > Al > B
+
+3.39 Considering the elements B, C, N, F, and Si, the correct order of their non-metallic character is:
+(a) B > C > Si > N > F
+(b) Si > C > B > N > F
+(c) F > N > C > B > Si
+(d) F > N > C > Si > B
+
+3.40 Considering the elements F, Cl, O and N, the correct order of their chemical reactivity in terms of oxidizing property is:
+(a) F > Cl > O > N
+(b) F > O > Cl > N
+(c) Cl > F > O > N
+(d) O > F > N > Cl

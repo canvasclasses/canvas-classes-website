@@ -1,0 +1,240 @@
+NCERT Class 11 Chemistry — Unit 2: Structure of Atom — EXERCISES
+(Live Book chapter: Ch.2 "Structure of Atom", book ncert-simplified)
+
+2.1 (i) Calculate the number of electrons which will together weigh one gram.
+(ii) Calculate the mass and charge of one mole of electrons.
+
+2.2 (i) Calculate the total number of electrons present in one mole of methane.
+(ii) Find (a) the total number and (b) the total mass of neutrons in 7 mg of 14C. (Assume that mass of a neutron = 1.675 × 10-27 kg).
+(iii) Find (a) the total number and (b) the total mass of protons in 34 mg of NH3 at STP. Will the answer change if the temperature and pressure are changed?
+
+2.3 How many neutrons and protons are there in the following nuclei?
+13C(6), 16O(8), 24Mg(12), 56Fe(26), 88Sr(38)
+
+2.4 Write the complete symbol for the atom with the given atomic number (Z) and atomic mass (A)
+(i) Z = 17, A = 35.
+(ii) Z = 92, A = 233.
+(iii) Z = 4, A = 9.
+
+2.5 Yellow light emitted from a sodium lamp has a wavelength (λ) of 580 nm. Calculate the frequency (ν) and wavenumber (ῡ) of the yellow light.
+
+2.6 Find energy of each of the photons which
+(i) correspond to light of frequency 3×10^15 Hz.
+(ii) have wavelength of 0.50 Å.
+
+2.7 Calculate the wavelength, frequency and wavenumber of a light wave whose period is 2.0 × 10^-10 s.
+
+2.8 What is the number of photons of light with a wavelength of 4000 pm that provide 1J of energy?
+
+2.9 A photon of wavelength 4 × 10^-7 m strikes on metal surface, the work function of the metal being 2.13 eV. Calculate (i) the energy of the photon (eV), (ii) the kinetic energy of the emission, and (iii) the velocity of the photoelectron (1 eV= 1.6020 × 10^-19 J).
+
+2.10 Electromagnetic radiation of wavelength 242 nm is just sufficient to ionise the sodium atom. Calculate the ionisation energy of sodium in kJ mol-1.
+
+2.11 A 25 watt bulb emits monochromatic yellow light of wavelength of 0.57μm. Calculate the rate of emission of quanta per second.
+
+2.12 Electrons are emitted with zero velocity from a metal surface when it is exposed to radiation of wavelength 6800 Å. Calculate threshold frequency (ν0) and work function (W0) of the metal.
+
+2.13 What is the wavelength of light emitted when the electron in a hydrogen atom undergoes transition from an energy level with n = 4 to an energy level with n = 2?
+
+2.14 How much energy is required to ionise a H atom if the electron occupies n = 5 orbit? Compare your answer with the ionization enthalpy of H atom (energy required to remove the electron from n =1 orbit).
+
+2.15 What is the maximum number of emission lines when the excited electron of a H atom in n = 6 drops to the ground state?
+
+2.16 (i) The energy associated with the first orbit in the hydrogen atom is −2.18 × 10^-18 J atom-1. What is the energy associated with the fifth orbit?
+(ii) Calculate the radius of Bohr's fifth orbit for hydrogen atom.
+
+2.17 Calculate the wavenumber for the longest wavelength transition in the Balmer series of atomic hydrogen.
+
+2.18 What is the energy in joules, required to shift the electron of the hydrogen atom from the first Bohr orbit to the fifth Bohr orbit and what is the wavelength of the light emitted when the electron returns to the ground state? The ground state electron energy is –2.18 × 10^-11 ergs.
+
+2.19 The electron energy in hydrogen atom is given by En = (–2.18 × 10^-18)/n2 J. Calculate the energy required to remove an electron completely from the n = 2 orbit. What is the longest wavelength of light in cm that can be used to cause this transition?
+
+2.20 Calculate the wavelength of an electron moving with a velocity of 2.05 × 10^7 m s-1.
+
+2.21 The mass of an electron is 9.1 × 10^-31 kg. If its K.E. is 3.0 × 10^-25 J, calculate its wavelength.
+
+2.22 Which of the following are isoelectronic species i.e., those having the same number of electrons?
+Na+, K+, Mg2+, Ca2+, S2-, Ar.
+
+2.23 (i) Write the electronic configurations of the following ions: (a) H– (b) Na+ (c) O2– (d) F–
+(ii) What are the atomic numbers of elements whose outermost electrons are represented by (a) 3s1 (b) 2p3 and (c) 3p5?
+(iii) Which atoms are indicated by the following configurations? (a) [He] 2s1 (b) [Ne] 3s2 3p3 (c) [Ar] 4s2 3d1.
+
+2.24 What is the lowest value of n that allows g orbitals to exist?
+
+2.25 An electron is in one of the 3d orbitals. Give the possible values of n, l and ml for this electron.
+
+2.26 An atom of an element contains 29 electrons and 35 neutrons. Deduce (i) the number of protons and (ii) the electronic configuration of the element.
+
+2.27 Give the number of electrons in the species H2+, H2 and O2+
+
+2.28 (i) An atomic orbital has n = 3. What are the possible values of l and ml?
+(ii) List the quantum numbers (ml and l) of electrons for 3d orbital.
+(iii) Which of the following orbitals are possible? 1p, 2s, 2p and 3f
+
+2.29 Using s, p, d notations, describe the orbital with the following quantum numbers.
+(a) n=1, l=0; (b) n=3; l=1 (c) n=4; l=2, (d) n=4; l=3.
+
+2.30 Explain, giving reasons, which of the following sets of quantum numbers are not possible.
+(a) n=0, l=0, ml=0, ms=+½
+(b) n=1, l=0, ml=0, ms=–½
+(c) n=1, l=1, ml=0, ms=+½
+(d) n=2, l=1, ml=0, ms=–½
+(e) n=3, l=3, ml=–3, ms=+½
+(f) n=3, l=1, ml=0, ms=+½
+
+2.31 How many electrons in an atom may have the following quantum numbers?
+(a) n = 4, ms = – ½ (b) n = 3, l = 0
+
+2.32 Show that the circumference of the Bohr orbit for the hydrogen atom is an integral multiple of the de Broglie wavelength associated with the electron revolving around the orbit.
+
+2.33 What transition in the hydrogen spectrum would have the same wavelength as the Balmer transition n = 4 to n = 2 of He+ spectrum?
+
+2.34 Calculate the energy required for the process
+He+(g) → He2+(g) + e–
+The ionization energy for the H atom in the ground state is 2.18 × 10^-18 J atom-1.
+
+2.35 If the diameter of a carbon atom is 0.15 nm, calculate the number of carbon atoms which can be placed side by side in a straight line across length of scale of length 20 cm long.
+
+2.36 2 ×10^8 atoms of carbon are arranged side by side. Calculate the radius of carbon atom if the length of this arrangement is 2.4 cm.
+
+2.37 The diameter of zinc atom is 2.6 Å. Calculate (a) radius of zinc atom in pm and (b) number of atoms present in a length of 1.6 cm if the zinc atoms are arranged side by side lengthwise.
+
+2.38 A certain particle carries 2.5 × 10^-16 C of static electric charge. Calculate the number of electrons present in it.
+
+2.39 In Milikan's experiment, static electric charge on the oil drops has been obtained by shining X-rays. If the static electric charge on the oil drop is –1.282 × 10^-18 C, calculate the number of electrons present on it.
+
+2.40 In Rutherford's experiment, generally the thin foil of heavy atoms, like gold, platinum etc. have been used to be bombarded by the α-particles. If the thin foil of light atoms like aluminium etc. is used, what difference would be observed from the above results?
+
+2.41 Symbols 79Br(35) and 79Br can be written, whereas symbols 35Br(79) and 35Br are not acceptable. Answer briefly.
+
+2.42 An element with mass number 81 contains 31.7% more neutrons as compared to protons. Assign the atomic symbol.
+
+2.43 An ion with mass number 37 possesses one unit of negative charge. If the ion conatins 11.1% more neutrons than the electrons, find the symbol of the ion.
+
+2.44 An ion with mass number 56 contains 3 units of positive charge and 30.4% more neutrons than electrons. Assign the symbol to this ion.
+
+2.45 Arrange the following type of radiations in increasing order of frequency: (a) radiation from microwave oven (b) amber light from traffic signal (c) radiation from FM radio (d) cosmic rays from outer space and (e) X-rays.
+
+2.46 Nitrogen laser produces a radiation at a wavelength of 337.1 nm. If the number of photons emitted is 5.6 × 10^24, calculate the power of this laser.
+
+2.47 Neon gas is generally used in the sign boards. If it emits strongly at 616 nm, calculate (a) the frequency of emission, (b) distance traveled by this radiation in 30 s (c) energy of quantum and (d) number of quanta present if it produces 2 J of energy.
+
+2.48 In astronomical observations, signals observed from the distant stars are generally weak. If the photon detector receives a total of 3.15 × 10^-18 J from the radiations of 600 nm, calculate the number of photons received by the detector.
+
+2.49 Lifetimes of the molecules in the excited states are often measured by using pulsed radiation source of duration nearly in the nano second range. If the radiation source has the duration of 2 ns and the number of photons emitted during the pulse source is 2.5 × 10^15, calculate the energy of the source.
+
+2.50 The longest wavelength doublet absorption transition is observed at 589 and 589.6 nm. Calcualte the frequency of each transition and energy difference between two excited states.
+
+2.51 The work function for caesium atom is 1.9 eV. Calculate (a) the threshold wavelength and (b) the threshold frequency of the radiation. If the caesium element is irradiated with a wavelength 500 nm, calculate the kinetic energy and the velocity of the ejected photoelectron.
+
+2.52 Following results are observed when sodium metal is irradiated with different wavelengths. Calculate (a) threshold wavelength and, (b) Planck's constant.
+λ (nm)    500    450    400
+v × 10^-5 (cm s-1)    2.55    4.35    5.35
+
+2.53 The ejection of the photoelectron from the silver metal in the photoelectric effect experiment can be stopped by applying the voltage of 0.35 V when the radiation 256.7 nm is used. Calculate the work function for silver metal.
+
+2.54 If the photon of the wavelength 150 pm strikes an atom and one of tis inner bound electrons is ejected out with a velocity of 1.5 × 10^7 m s-1, calculate the energy with which it is bound to the nucleus.
+
+2.55 Emission transitions in the Paschen series end at orbit n = 3 and start from orbit n and can be represeted as v = 3.29 × 10^15 (Hz) [1/3^2 – 1/n^2]
+Calculate the value of n if the transition is observed at 1285 nm. Find the region of the spectrum.
+
+2.56 Calculate the wavelength for the emission transition if it starts from the orbit having radius 1.3225 nm and ends at 211.6 pm. Name the series to which this transition belongs and the region of the spectrum.
+
+2.57 Dual behaviour of matter proposed by de Broglie led to the discovery of electron microscope often used for the highly magnified images of biological molecules and other type of material. If the velocity of the electron in this microscope is 1.6 × 10^6 ms-1, calculate de Broglie wavelength associated with this electron.
+
+2.58 Similar to electron diffraction, neutron diffraction microscope is also used for the determination of the structure of molecules. If the wavelength used here is 800 pm, calculate the characteristic velocity associated with the neutron.
+
+2.59 If the velocity of the electron in Bohr's first orbit is 2.19 × 10^6 ms-1, calculate the de Broglie wavelength associated with it.
+
+2.60 The velocity associated with a proton moving in a potential difference of 1000 V is 4.37 × 10^5 ms-1. If the hockey ball of mass 0.1 kg is moving with this velocity, calcualte the wavelength associated with this velocity.
+
+2.61 If the position of the electron is measured within an accuracy of ± 0.002 nm, calculate the uncertainty in the momentum of the electron. Suppose the momentum of the electron is h/4πm × 0.05 nm, is there any problem in defining this value.
+
+2.62 The quantum numbers of six electrons are given below. Arrange them in order of increasing energies. If any of these combination(s) has/have the same energy lists:
+1. n = 4, l = 2, ml = –2, ms = –1/2
+2. n = 3, l = 2, ml = 1, ms = +1/2
+3. n = 4, l = 1, ml = 0, ms = +1/2
+4. n = 3, l = 2, ml = –2, ms = –1/2
+5. n = 3, l = 1, ml = –1, ms = +1/2
+6. n = 4, l = 1, ml = 0, ms = +1/2
+
+2.63 The bromine atom possesses 35 electrons. It contains 6 electrons in 2p orbital, 6 electrons in 3p orbital and 5 electron in 4p orbital. Which of these electron experiences the lowest effective nuclear charge?
+
+2.64 Among the following pairs of orbitals which orbital will experience the larger effective nuclear charge? (i) 2s and 3s, (ii) 4d and 4f, (iii) 3d and 3p.
+
+2.65 The unpaired electrons in Al and Si are present in 3p orbital. Which electrons will experience more effective nuclear charge from the nucleus?
+
+2.66 Indicate the number of unpaired electrons in: (a) P, (b) Si, (c) Cr, (d) Fe and (e) Kr.
+
+2.67 (a) How many subshells are associated with n = 4? (b) How many electrons will be present in the subshells having ms value of –1/2 for n = 4?
+
+--- NCERT OFFICIAL SELECTED ANSWERS (cross-check only, re-derive the full working yourself) ---
+2.1 (i) 1.099 × 10^27 electrons (ii) 5.48 × 10^-7 kg, 9.65 × 10^4 C
+2.2 (i) 6.022 × 10^24 electrons
+    (ii)(a) 2.4088 × 10^21 neutrons (b) 4.0347 × 10^-6 kg
+    (iii)(a) 1.2044 × 10^22 protons (b) 2.015 × 10^-5 kg
+2.3 7,6: 8,8: 12,12: 30,26: 50, 38  [neutrons,protons for each nucleus in order given]
+2.4 (i) Cl (ii) U (iii) Be
+2.5 5.17 × 10^14 s-1, 1.72 × 10^6 m-1
+2.6 (i) 1.988 × 10^-18 J (ii) 3.98 × 10^-15 J
+2.7 6.0 × 10^-2 m, 5.0 × 10^9 s-1 and 16.66 m-1
+2.8 2.012 × 10^16 photons
+2.9 (i) 4.97 × 10^-19 J (3.10 eV); (ii) 0.97 eV (iii) 5.84 × 10^5 m s-1
+2.10 494 kJ mol-1
+2.11 7.18 × 10^19 s-1
+2.12 4.41 × 10^14 s-1, 2.91 × 10^-19 J
+2.13 486 nm
+2.14 8.72 × 10^-20 J
+2.15 15 emission lines
+2.16 (i) 8.72 × 10^-20 J (ii) 1.3225 nm
+2.17 1.523 × 10^6 m-1
+2.18 2.08 × 10^-11 ergs, 950 Å
+2.19 3647Å
+2.20 3.55 × 10^-11 m
+2.21 8967Å
+2.22 Na+, Mg2+, Ca2+; Ar, S2- and K+  [isoelectronic groupings]
+2.23 (i)(a) 1s2 (b) 1s2 2s2 2p6 (c) 1s2 2s2 2p6 (d) 1s2 2s2 2p6
+2.24 n = 5
+2.25 n = 3; l = 2; ml = –2, –1, 0, +1, +2 (any one value)
+2.26 (i) 29 protons
+2.27 1, 2, 15
+2.28 (i) l=0: ml=0; l=1: ml=–1,0,+1; l=2: ml=–2,–1,0,+1,+2 (ii) l = 2; ml=–2,–1,0,+1,+2 (iii) 2s, 2p
+2.29 (a) 1s, (b) 3p, (c) 4d and (d) 4f
+2.30 (a), (c) and (e) are not possible
+2.31 (a) 16 electrons (b) 2 electrons
+2.33 n = 2 to n = 1
+2.34 8.72 × 10^-18 J per atom
+2.35 1.33 × 10^9
+2.36 0.06 nm
+2.37 (a) 1.3 × 10^2 pm (b) 6.15 × 10^7
+2.38 1560
+2.39 8
+2.40 More number of α-particles will pass as the nucleus of the lighter atoms is small, smaller number of α-particles will be deflected as a number of positve charges is less on the lighter nuclei.
+2.41 For a given element the number of protons is the same for the isotopes, whereas the mass number can be different for the given atomic number.
+2.42 81Br(35)
+2.43 37Cl(17)-1
+2.44 56Fe(26)3+
+2.45 Cosmic rays > X-rays > amber colour > microwave > FM
+2.46 3.3 × 10^6 J
+2.47 (a) 4.87 × 10^14 s-1 (b) 9.0 × 10^9 m (c) 32.27 × 10^-20 J (d) 6.2 × 10^18 quanta
+2.48 10
+2.49 8.28 × 10^-10 J
+2.50 3.45 × 10^-22 J
+2.51 (a) Threshold wave length 652.46 nm (b) Threshold frequency of radiation 4.598 ×10^14 s-1 (c) Kinetic energy of ejected photoelectron 9.29 ×10^-20 J, Velocity of photoelectron 4.516 × 10^5 ms-1
+2.52 530.9 nm
+2.53 4.48 eV
+2.54 7.6 × 10^3 eV
+2.55 infrared, n = 5
+2.56 434 nm
+2.57 455 pm
+2.58 494.5 ms-1
+2.59 332 pm
+2.60 1.516 × 10^-38 m
+2.61 Cannot be defined as the actual magnitude is smaller than uncertainty.
+2.62 (v) < (ii) = (iv) < (vi) = (iii) < (i)
+2.63 4p
+2.64 (i) 2s (ii) 4d (iii) 3p
+2.65 Si
+2.66 (a) 3 (b) 2 (c) 6 (d) 4 (e) zero
+2.67 16

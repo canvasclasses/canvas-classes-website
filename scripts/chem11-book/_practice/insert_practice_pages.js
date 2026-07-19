@@ -1,0 +1,125 @@
+'use strict';
+/**
+ * Inserts the per-chapter "Practice — NCERT Exercises" pages into ncert-simplified
+ * (Class 11 Chemistry).
+ *
+ * ADDITIVE ONLY. Each chapter gets ONE new page appended as its last page; existing
+ * pages are never touched (no re-save, no version churn) unless a practice page for
+ * that chapter already exists, in which case it is UPDATED in place via
+ * book-writer.savePage (versioned, content-loss-guarded) rather than duplicated.
+ *
+ * Reads page modules from scripts/chem11-book/_practice/ch<N>.js (one per Live Book
+ * chapter, authored against ./CONTRACT.md). N is the LIVE BOOK chapter number (not
+ * the NCERT unit number — see CONTRACT.md for why they diverge).
+ *
+ * Dry-run by default; pass --apply to write.
+ * Usage: node scripts/chem11-book/_practice/insert_practice_pages.js [--apply]
+ */
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '..', '.env.local') });
+const fs = require('fs');
+const { v4: uuid } = require('uuid');
+const { MongoClient } = require('mongodb');
+const bw = require('../../lib/book-writer');
+
+const APPLY = process.argv.includes('--apply');
+const BOOK_SLUG = 'ncert-simplified';
+const CHAPTERS = [1, 2, 3, 4, 5, 6, 7, 13];
+const must = (c, m) => { if (!c) throw new Error('SAFETY: ' + m); };
+
+function loadModules() {
+  const out = [];
+  for (const ch of CHAPTERS) {
+    const f = path.join(__dirname, `ch${ch}.js`);
+    if (!fs.existsSync(f)) { console.log(`  ch${ch}: (no module yet — skipped)`); continue; }
+    delete require.cache[require.resolve(f)];
+    out.push({ chapter: ch, mod: require(f) });
+  }
+  return out;
+}
+
+async function main() {
+  const mods = loadModules();
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  try {
+    const db = client.db('crucible');
+    const books = db.collection('books');
+    const pages = db.collection('book_pages');
+    const book = await books.findOne({ slug: BOOK_SLUG });
+    must(book, `book ${BOOK_SLUG} not found`);
+    const bookId = String(book._id);
+    const chapters = Array.isArray(book.chapters) ? book.chapters : [];
+
+    let inserted = 0, updated = 0;
+
+    for (const { chapter, mod } of mods) {
+      // ---- guards on the authored module ----
+      must(mod && typeof mod === 'object', `ch${chapter}: module is not an object`);
+      must(typeof mod.slug === 'string' && mod.slug, `ch${chapter}: missing slug`);
+      must(Array.isArray(mod.blocks) && mod.blocks.length >= 1, `ch${chapter}: no blocks`);
+      const pb = mod.blocks.find((b) => b.type === 'practice_bank');
+      must(pb, `ch${chapter}: no practice_bank block`);
+      must(Array.isArray(pb.sections) && pb.sections.length, `ch${chapter}: practice_bank has no sections`);
+      const itemCount = pb.sections.reduce((s, sec) => s + (sec.items || []).length, 0);
+      must(itemCount >= 1, `ch${chapter}: practice_bank has no items`);
+
+      const chapEntry = chapters.find((c) => c.number === chapter);
+      must(chapEntry, `ch${chapter}: chapter entry not found on book`);
+
+      const existing = await pages.findOne({ book_id: bookId, slug: mod.slug });
+
+      if (existing) {
+        if (APPLY) {
+          await bw.savePage(db, { pageId: existing._id }, mod.blocks, {
+            author: 'agent', summary: `ch${chapter} NCERT-exercises practice page rebuild`,
+            extraSet: {
+              title: mod.title, subtitle: mod.subtitle || '',
+              page_type: mod.page_type || 'lesson', tags: mod.tags || [],
+            },
+          });
+          if (!chapEntry.page_ids.map(String).includes(String(existing._id))) {
+            chapEntry.page_ids.push(existing._id);
+          }
+        }
+        updated++;
+        console.log(`  ch${chapter}: UPDATE ${mod.slug} (${itemCount} exercises, ${pb.sections.length} themes)`);
+      } else {
+        const chapterPages = await pages.find(
+          { book_id: bookId, chapter_number: chapter, deleted_at: null },
+          { projection: { page_number: 1 } }
+        ).toArray();
+        const nextPageNumber = Math.max(0, ...chapterPages.map((p) => p.page_number || 0)) + 1;
+        const _id = uuid();
+        const doc = {
+          _id, book_id: bookId, chapter_number: chapter, page_number: nextPageNumber,
+          slug: mod.slug, title: mod.title, subtitle: mod.subtitle || '',
+          blocks: mod.blocks, hinglish_blocks: [], tags: mod.tags || [], glossary: [],
+          published: false, page_type: mod.page_type || 'lesson',
+          reading_time_min: bw.computeReadingTime(mod.blocks),
+          content_types: bw.computeContentTypes(mod.blocks),
+          video_title: null, readiness: null,
+          review: { reviewed: false, reviewed_by: null, reviewed_at: null },
+          deleted_at: null, deleted_by: null, deletion_reason: null,
+          created_at: new Date(), updated_at: new Date(),
+        };
+        if (APPLY) {
+          await pages.insertOne(doc);
+          chapEntry.page_ids.push(_id);
+        }
+        inserted++;
+        console.log(`  ch${chapter}: INSERT ${mod.slug} as p${nextPageNumber} (${itemCount} exercises, ${pb.sections.length} themes, ${doc.reading_time_min} min)`);
+      }
+    }
+
+    if (APPLY) {
+      await books.updateOne({ _id: book._id }, { $set: { chapters, updated_at: new Date() } });
+    }
+    console.log(`\n${inserted} inserted, ${updated} updated across ${mods.length} chapters.`);
+    if (!APPLY) console.log('DRY RUN — nothing written. Re-run with --apply.');
+    else console.log('✅ APPLIED (new pages inserted additively; existing pages untouched). All new pages are published:false — review before publishing.');
+  } finally {
+    await client.close();
+  }
+}
+main().catch((e) => { console.error(e); process.exit(1); });
