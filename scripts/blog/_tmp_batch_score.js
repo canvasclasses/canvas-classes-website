@@ -1,61 +1,95 @@
+#!/usr/bin/env node
+/* Daily-run batch scorer for 2026-07-04. Reads /tmp/blog_new_sources.json,
+ * applies an index->[score, reason, status] map via bulkWrite on explicit _ids.
+ * Whitelisted fields only (relevance_score/relevance_reason/status). */
 require('dotenv').config({ path: '.env.local' });
 const mongoose = require('mongoose');
-const MONGODB_URI = process.env.MONGODB_URI;
-const BlogSourceSchema = new mongoose.Schema({}, { strict: false, collection: 'blog_sources', _id: false });
-const BlogSource = mongoose.models.BlogSource || mongoose.model('BlogSource', BlogSourceSchema);
 
-// [id, score, reason, status]
-const SCORES = [
-['f7b3b638-185e-40e8-a93d-9d87ae197f17',0.25,'UoH PG admissions via CUET PG — postgraduate, not JEE/NEET/CBSE target audience','ignored'],
-['22432029-dbe5-4a6d-bc59-b3aaa7657360',0.6,'JEE AAT 2026 reg deadline — relevant but niche (BArch aspirants among JEE Advanced qualifiers)','reviewed'],
-['8e7177c3-b2b3-403e-bc90-134f187950ac',0.15,'BSEB D.El.Ed admit cards — teacher-training, off-topic','ignored'],
-['77327e1e-1469-426a-88f3-1be19957d70d',0.7,'NEET-UG leak probe / COEMPT contract — relevant NEET integrity story','reviewed'],
-['f94b5846-a109-4b69-8839-6e51aa0f565d',0.45,'NMC 10-year MBBS limit — medical policy, loosely relevant to NEET aspirants','reviewed'],
-['98547741-edb9-4bdd-9523-a945816fdb58',0.5,'CBSE OSM whistleblower before parliamentary panel — CBSE governance angle','reviewed'],
-['b595b5d2-1fd8-480f-ae21-d60ba0edf358',0.6,'CBSE re-evaluation portal cyberattack — relevant to Class 12 CBSE students','reviewed'],
-['a733ad15-794a-4158-9311-0a4c294a4f2a',0.1,'US workers / money — off-topic, no India student angle','ignored'],
-['8f5aef0d-b7b7-46f0-b77e-37d3bf8a218f',0.2,'Haryana board inspection — regional admin, off-topic','ignored'],
-['88df938c-8207-4fca-860a-be3027f3be6f',0.2,'RUHS CUET result — niche state medical entrance, off-topic','ignored'],
-['9af33ef8-8541-4338-a46f-a13668eca32d',0.15,'IGNOU BEd result — teacher-training, off-topic','ignored'],
-['ee4a67c5-cc15-4835-b947-7ee0e9bd714f',0.3,'NEET MDS result — postgraduate dental, not target audience','ignored'],
-['53f34471-1df6-4772-a91e-3be9e7b26287',0.5,'CBSE OSM officials shunted out — CBSE governance, mild student relevance','reviewed'],
-['1a61f4cc-2053-4a03-849a-91f378f80f3c',0.2,'CGBSE Chhattisgarh supplementary — regional board, off-topic','ignored'],
-['1dbb6dfc-d2cf-45bd-b749-4dafbd7d6122',0.1,'TGPSC AEE recruitment — govt jobs, off-topic','ignored'],
-['03e7580c-c5ab-4bd8-8d9e-a1066fb93813',0.1,'TEDx youth event — off-topic','ignored'],
-['cbac47e2-cbc7-418f-800a-cf6691dd0b5e',0.1,'ICMAI chapter chairman — off-topic','ignored'],
-['957f840d-6057-4426-b16b-ca1c729572f3',0.15,'RRB NTPC city slip — govt recruitment, off-topic','ignored'],
-['f7d24b5b-c048-477e-8147-4b5a0f712812',0.2,'CGBSE supplementary timetable — regional board, off-topic','ignored'],
-['59d9eedb-5f7f-42f1-b767-8dc7e6139207',0.45,'New CBSE Chairperson appointed — governance context for CBSE students','reviewed'],
-['80e0fd4e-e3b6-46e9-a16e-a0eaa86786c1',0.4,'Rethinking university rankings — opinion, loose student angle','reviewed'],
-['8e6f9c78-7a63-4349-b225-5d498ca3ed7a',0.45,'NSUI moves HC on CBSE OSM — CBSE governance','reviewed'],
-['7977ea3b-6259-40b1-bd12-9e2f8915ae3a',0.5,'CBSE Chairman/Secretary replaced amid OSM — CBSE governance','reviewed'],
-['ef58db51-1670-4812-9fed-f08711d23268',0.1,'Know your English column — off-topic','ignored'],
-['169eb0db-a5b3-45b9-920f-582f7771fd6f',0.6,'CBSE re-eval portal glitches + Aadhaar mandatory — actionable for CBSE Class 12','reviewed'],
-['7ab7618e-0bd0-48e7-924f-2bf6daca5f2b',0.75,'CBSE Class 12 re-evaluation portal opens + video guide — directly actionable','reviewed'],
-['0875a65b-10b1-42df-88ad-fc331f3a3a99',0.4,'TNEA registration extended — Tamil Nadu engineering, regional','reviewed'],
-['6dc2f7fc-fa68-49e5-96e3-85c9ff01873e',0.7,'Kota AIR 1&2 JEE Advanced toppers on AI — strong editorial JEE angle','reviewed'],
-['fd596730-8d1b-4b87-a30e-dbdc9d91d3d1',0.3,'NEET MDS result — postgraduate, off-topic','ignored'],
-['5014c63d-f2df-48e1-9f9d-9463bb236268',0.9,'NEET UG June 21 retest defended by NTA — directly actionable for NEET aspirants','reviewed'],
-['9724977f-e7bd-4306-b6ea-f626ee69829e',0.1,'UP Police Constable admit card — govt recruitment, off-topic','ignored'],
-['c32ad35a-c2ae-4978-ae1f-9c172b0fd1eb',0.92,'JoSAA Counselling 2026 begins — directly actionable for every JEE Main/Advanced qualifier','reviewed'],
-['90860ffc-0481-4b15-a7dc-f207c0c461dc',0.82,'NEET UG reform blueprint (multi-set, AI checks) — strong explainer for NEET audience','reviewed'],
-['249d0aca-e46d-4049-993b-dbc22aa06caa',0.25,'UoH PG admissions (dup angle) — postgraduate, off-topic','ignored'],
-['83e86851-dc3e-43a4-9fb3-693d05549db9',0.2,'JIPMAT admit card — management entrance, off-topic','ignored'],
-['e69921b9-6927-41f0-8a65-d982dc23ab96',0.55,'CBSE cyberattack on re-eval portal — CBSE Class 12 relevance','reviewed'],
-['24d55035-53a5-4fba-85e0-71a3ad2ce220',0.3,'KCET results / exam security — Karnataka regional, off-topic','ignored'],
-['4d787f22-c06b-4dd9-b353-d9786dba4bc0',0.2,'CGBSE schedule — regional board, off-topic','ignored'],
-['2b29f3ef-008e-4603-a46e-adcf65cf0461',0.45,'CBSE OSM whistleblower tender irregularities — CBSE governance','reviewed'],
-['50716a2d-50f1-4ae6-9f41-4f1286cab90d',0.5,'CBSE re-eval portal cyberattack statement — CBSE Class 12 relevance','reviewed'],
-];
+const MONGODB_URI = process.env.MONGODB_URI;
+if (!MONGODB_URI) { console.error('MONGODB_URI missing'); process.exit(1); }
+
+const sources = require('/tmp/blog_new_sources.json');
+
+// index -> [score, reason, status]
+const BY_INDEX = {
+  0:  [0.15, 'NIFT counselling round 2; fashion-design admissions, off-topic', 'ignored'],
+  1:  [0.3,  'DU CSAS UG Phase II; college admissions, not JEE/NEET/CBSE prep audience', 'ignored'],
+  2:  [0.5,  'New IIT Madras/Kanpur Bachelor of Cybersecurity; branch-choice interest for JEE aspirants', 'reviewed'],
+  3:  [0.1,  '11-year-old startup valuation; human-interest, off-topic', 'ignored'],
+  4:  [0.4,  'New CBSE Chairperson appointment; CBSE leadership, marginally relevant', 'reviewed'],
+  5:  [0.15, 'CG PPHT pharmacy entrance results; state exam, off-topic', 'ignored'],
+  6:  [0.25, 'UGC NET answer key timing; PG exam, off-topic for school aspirants', 'ignored'],
+  7:  [0.1,  'Assam ITI round 3 seat allotment; off-topic', 'ignored'],
+  8:  [0.3,  'HBSE 10/12 supplementary admit card; state-board compartment, narrow', 'ignored'],
+  9:  [0.2,  'CUSAT CAT seat allotment; state engineering entrance, narrow', 'ignored'],
+  10: [0.2,  'JKCET round 3 counselling; state engineering, regional', 'ignored'],
+  11: [0.1,  'Telangana police recruitment; off-topic', 'ignored'],
+  12: [0.1,  'LIC HFL Junior Assistant result; off-topic', 'ignored'],
+  13: [0.1,  'WUD theatre programmes; off-topic', 'ignored'],
+  14: [0.1,  'SSB HC ministerial admit card; recruitment, off-topic', 'ignored'],
+  15: [0.1,  'JNCU semester results; off-topic', 'ignored'],
+  16: [0.1,  'GIM leadership programme for DU principals; off-topic', 'ignored'],
+  17: [0.15, 'BITS graduate money essay; human-interest, off-topic', 'ignored'],
+  18: [0.1,  'HTET exam-day guidelines; teacher eligibility test, off-topic', 'ignored'],
+  19: [0.2,  'AIIMS BSc Nursing result; nursing, not NEET-UG core', 'ignored'],
+  20: [0.3,  'General education news round-up; low actionability', 'ignored'],
+  21: [0.2,  'UGC NET sociology paper errors; PG exam, off-topic', 'ignored'],
+  22: [0.35, 'Rethink classroom-lectures think-piece; pedagogy, marginal', 'reviewed'],
+  23: [0.4,  'IIT report-card feature; branch/institution interest, mildly relevant', 'reviewed'],
+  24: [0.15, 'How to get hired by GCCs; careers, off-topic', 'ignored'],
+  25: [0.1,  'Language-in-conversation piece; off-topic', 'ignored'],
+  26: [0.15, 'Teaching commerce as a discipline; commerce ed, off-topic', 'ignored'],
+  27: [0.8,  'SC plea vs coaching Raj + dummy schools; strong editorial angle for JEE/NEET ecosystem', 'reviewed'],
+  28: [0.4,  'CBSE three-language formula confusion; CBSE policy, marginal', 'reviewed'],
+  29: [0.15, 'State school-closure/holiday announcements; off-topic', 'ignored'],
+  30: [0.1,  'UPTET NIOS DElEd relief; teacher ed, off-topic', 'ignored'],
+  31: [0.2,  'UGC NET sociology errors (duplicate angle); off-topic', 'ignored'],
+  32: [0.3,  'DU 2026-27 academic calendar; college admin, marginal', 'ignored'],
+  33: [0.1,  'ICAI CA Foundation topper; CA, off-topic', 'ignored'],
+  34: [0.2,  'Ivy/UK accept Duolingo test; study-abroad, off-topic', 'ignored'],
+  35: [0.92, 'MoE panel proposes up to 50% Class-12 board weightage in NEET/JEE admissions; top student-relevant policy signal', 'reviewed'],
+  36: [0.1,  'ICAI CA Foundation result when/where; off-topic', 'ignored'],
+  37: [0.15, 'AICTE Industry Fellowship stipend; off-topic', 'ignored'],
+  38: [0.3,  'DU UG Phase 2 (duplicate); college admissions, marginal', 'ignored'],
+  39: [0.1,  'ICAI CA Foundation download steps; off-topic', 'ignored'],
+  40: [0.1,  'ICAI CA Foundation result websites; off-topic', 'ignored'],
+  41: [0.45, 'MHT CET CAP registration; state engineering counselling, actionable but regional', 'reviewed'],
+  42: [0.3,  'Bihar Board class 11 spot admission extended; state board, narrow', 'ignored'],
+  43: [0.25, 'Delhi private-school fee-hike parameters; parents, marginal', 'ignored'],
+  44: [0.35, 'CBSE Chairperson appointment (duplicate); marginal', 'ignored'],
+  45: [0.1,  'ICAI CA Foundation topper (duplicate); off-topic', 'ignored'],
+  46: [0.4,  'Punjab AI curriculum in schools from August; ed-tech policy, mild student angle', 'reviewed'],
+  47: [0.15, 'AI skills B-school hiring GMAC survey; MBA, off-topic', 'ignored'],
+  48: [0.5,  'BSEB free JEE/NEET coaching teacher applications; JEE/NEET-relevant but teacher-facing', 'reviewed'],
+  49: [0.3,  'Gujarat SSC/HSC supplementary results; state board, narrow', 'ignored'],
+  50: [0.1,  'Haryana TET candidate guidelines; teacher exam, off-topic', 'ignored'],
+  51: [0.5,  'IIT Madras+Kanpur cybersecurity course (duplicate of item 2); branch interest', 'reviewed'],
+  52: [0.1,  'Agniveer CEE results; off-topic', 'ignored'],
+  53: [0.2,  'IIT Delhi IP certificate course; off-topic for aspirants', 'ignored'],
+  54: [0.1,  'IIM Shillong director appointment; off-topic', 'ignored'],
+  55: [0.4,  'KCET ranks revised after class-12 revaluation; state engineering, marginal', 'reviewed'],
+  56: [0.1,  'UPTET 93% attendance; teacher exam, off-topic', 'ignored'],
+  57: [0.1,  'DU VC re-appointment; off-topic', 'ignored'],
+  58: [0.1,  'IBPS PO recruitment notice; banking, off-topic', 'ignored'],
+  59: [0.3,  'Maharashtra makes Marathi mandatory 1-10; state language policy, marginal', 'ignored'],
+};
 
 async function main() {
   await mongoose.connect(MONGODB_URI);
-  let matched = 0, modified = 0;
-  for (const [id, score, reason, status] of SCORES) {
-    const res = await BlogSource.updateOne({ _id: id }, { $set: { relevance_score: score, relevance_reason: reason.slice(0,500), status } });
-    matched += res.matchedCount; modified += res.modifiedCount;
+  const coll = mongoose.connection.collection('blog_sources');
+  const ops = [];
+  for (const [idx, [score, reason, status]] of Object.entries(BY_INDEX)) {
+    const src = sources[Number(idx)];
+    if (!src) { console.warn(`no source at index ${idx}`); continue; }
+    ops.push({
+      updateOne: {
+        filter: { _id: src._id },
+        update: { $set: { relevance_score: score, relevance_reason: reason, status } },
+      },
+    });
   }
-  console.log(JSON.stringify({ total: SCORES.length, matched, modified }));
+  const res = await coll.bulkWrite(ops);
+  console.log(`Scored ${ops.length} sources. modified=${res.modifiedCount}`);
   await mongoose.disconnect();
 }
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch((e) => { console.error(e); process.exit(1); });
