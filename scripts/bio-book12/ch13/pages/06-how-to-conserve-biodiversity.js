@@ -1,0 +1,288 @@
+'use strict';
+const { v4: uuid } = require('uuid');
+
+module.exports = {
+  slug: 'how-we-conserve-biodiversity',
+  title: 'How We Conserve Biodiversity — In Situ & Ex Situ',
+  subtitle: "Two ways to hold on to a species: save the whole home it lives in, or lift it out and give it special care. When each one is the right call, and what the world agreed to do about it.",
+  page_number: 6,
+  page_type: 'lesson',
+  tags: ['biodiversity', 'conservation', 'in-situ', 'ex-situ', 'biodiversity-hotspots', 'sacred-groves', 'earth-summit'],
+  glossary: [
+    { term: 'in situ conservation', definition: 'On-site conservation — we conserve and protect the whole ecosystem, so its biodiversity at all levels is protected. We save the entire forest to save the tiger. Biodiversity hotspots, biosphere reserves, national parks, sanctuaries and sacred groves all work this way.' },
+    { term: 'ex situ conservation', definition: 'Off-site conservation — threatened animals and plants are taken out of their natural habitat and placed in a special setting where they can be protected and given special care. Zoological parks, botanical gardens, wildlife safari parks, cryopreservation and seed banks work this way.' },
+    { term: 'biodiversity hotspot', definition: 'A region identified for maximum protection because it has very high levels of species richness together with a high degree of endemism. Hotspots are also regions of accelerated habitat loss. There are 34 in the world.' },
+    { term: 'endemism', definition: 'The condition of a species being confined to one region and not found anywhere else. A high degree of endemism, along with very high species richness, is what makes a region a hotspot.' },
+    { term: 'sacred grove', definition: 'A tract of forest set aside by religious and cultural tradition, where all the trees and wildlife within were venerated and given total protection. Found in Khasi and Jaintia Hills (Meghalaya), Aravalli Hills (Rajasthan), Western Ghat regions of Karnataka and Maharashtra, and the Sarguja, Chanda and Bastar areas of Madhya Pradesh.' },
+    { term: 'cryopreservation', definition: 'A technique by which gametes of threatened species are preserved in viable and fertile condition for long periods. It is one of the modern advances of ex situ conservation, beyond simply keeping animals in enclosures.' },
+    { term: 'seed bank', definition: 'A facility where seeds of different genetic strains of commercially important plants are kept for long periods. An ex situ method that conserves genetic diversity without keeping the whole plant alive.' },
+    { term: 'biosphere reserve', definition: 'One of the legal categories under which ecologically unique and biodiversity-rich regions in India are protected, along with national parks and sanctuaries. India now has 14 biosphere reserves.' },
+  ],
+  blocks: [
+    // ── hero ─────────────────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'image',
+      order: 0,
+      src: '',
+      alt: 'A misty forested mountain range at dawn seen from a height, with a small walled enclosure of glasshouses and planted beds on the near ridge, the two held in one frame',
+      caption: '',
+      width: 'full',
+      aspect_ratio: '16:5',
+      generation_prompt: "Ultra-wide cinematic banner (16:5 ratio). One continuous dawn landscape. Filling most of the frame, a vast forested mountain range receding into cool blue mist — ridge behind ridge of dense evergreen canopy, a river thread glinting far below, a few distant bird silhouettes crossing the pale sky, everything untouched and whole. On the near right ridge, small and low in the frame, sits a modest human-built enclosure: a few glasshouses with warm light inside, neat planted beds and a low stone wall, a single quiet lamp — clearly cared for, clearly tiny against the mountains behind it. One soft warm sunrise glow along the far horizon ties the wild range and the small enclosure together as one continuous world. Painterly atmospheric illustration, naturalistic, deep dark tones throughout (#0a0a0a base), muted earthy palette of deep green, slate blue and dull gold. No people, no text, no labels, no diagram elements, no arrows.",
+    },
+    // ── fun_fact ─────────────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'callout',
+      order: 1,
+      variant: 'fun_fact',
+      title: 'Two per cent of the land, thirty per cent of the extinctions',
+      markdown: "Here is a number that changes how you think about conservation budgets.\n\nAll the **biodiversity hotspots in the world put together cover less than 2 per cent of the earth's land area**. That is a sliver. Yet the number of species they collectively harbour is extremely high — and **strict protection of these hotspots alone could reduce the ongoing mass extinctions by almost 30 per cent**.\n\nGuard two per cent of the land properly, and you keep nearly a third of what we are otherwise going to lose. No other conservation move comes close to that return, and that is exactly why conservationists went looking for hotspots in the first place.\n\nThe other thing worth knowing: India was doing a version of this long before anyone drew a hotspot map. In many cultures here, **tracts of forest were set aside and every tree and animal inside them was venerated and given total protection** — the **sacred groves**. Faith did the work that fences and laws are trying to do now.",
+    },
+    // ── the core split ───────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'text',
+      order: 2,
+      markdown: "We have settled *why* we should conserve — narrowly utilitarian, broadly utilitarian, ethical. Now the practical question: *how*?\n\nThere are two approaches, and the whole difference between them is **where the species is when you protect it**.\n\n**When we conserve and protect the whole ecosystem, its biodiversity at all levels is protected.** We save the entire forest to save the tiger. This approach is called ***in situ*** — literally **on site**. You do not touch the animal at all; you protect the place it already lives in, and everything else living there gets protected along with it, free of cost.\n\nBut sometimes that is not enough. When an animal or plant is **endangered or threatened** — meaning it is **facing a very high risk of extinction in the wild in the near future** — and needs **urgent measures** to save it from extinction, then leaving it where it is may simply mean watching it go. In that situation the desirable approach is ***ex situ*** — **off site**. You take the organism out of its natural habitat and put it somewhere it can be protected and given special care.\n\nSo *in situ* is the default and the big-picture method; *ex situ* is the rescue for the species that cannot wait.",
+    },
+    // ── IN SITU ──────────────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'heading',
+      order: 3,
+      level: 2,
+      text: 'In Situ — Saving the Forest to Save the Tiger',
+      objective: "You can explain what a biodiversity hotspot is, name the three that cover India, and quote India's protected-area numbers.",
+    },
+    {
+      id: uuid(),
+      type: 'text',
+      order: 4,
+      markdown: "*In situ* conservation runs into a hard wall straight away. Nations are caught in the **conflict between development and conservation**, and many find it **unrealistic and economically not feasible to conserve all their biological wealth**. Invariably, **the number of species waiting to be saved from extinction far exceeds the conservation resources available**. You cannot protect everything, so you have to choose — and choosing badly wastes the little money there is.\n\nOn a global basis, eminent conservationists addressed this by asking a sharper question: where does protection buy the most life per rupee? Their answer was the **'biodiversity hotspots'** — **regions with very high levels of species richness and a high degree of endemism**, that is, **species confined to that region and not found anywhere else**. Both halves matter. Species richness alone is not enough; the endemism is what makes the loss permanent, because if an endemic species disappears from that patch, it disappears from Earth. And these hotspots are **also regions of accelerated habitat loss** — so they are precisely the places where the clock is running fastest.\n\n**Initially 25 biodiversity hotspots were identified, but subsequently nine more were added, bringing the total number in the world to 34.** Three of these hotspots — the **Western Ghats and Sri Lanka**, **Indo-Burma** and the **Himalaya** — cover our country's exceptionally high biodiversity regions. And as the fact box said: all the hotspots together are **less than 2 per cent of the earth's land area**, yet strict protection of them could **reduce ongoing mass extinctions by almost 30 per cent**.",
+    },
+    {
+      id: uuid(),
+      type: 'interactive_image',
+      order: 5,
+      src: '',
+      alt: 'A flat map of India with the three biodiversity hotspots that cover it shaded — the Himalaya along the north, Indo-Burma to the north-east, and the Western Ghats with Sri Lanka along the south-west — with the sacred grove regions marked',
+      caption: '📸 Tap each dot to explore the three hotspots that cover India, and the places where forests were protected by faith',
+      generation_prompt: "Scientific textbook illustration of a map of India showing its biodiversity hotspots and sacred grove regions. Flat 2D educational diagram on a dark background (#0a0a0a near-black). A clean, geographically accurate outline of India drawn in thin white line, with Sri Lanka as a separate island off the southern tip. Three distinct shaded regions in translucent green overlays with soft edges: (1) a long band curving across the entire northern border following the Himalayan arc; (2) a region covering the north-eastern states and extending off the eastern edge of the frame toward Myanmar; (3) a narrow strip running down the whole south-western coast parallel to the Arabian Sea, continuing across the sea to shade the island of Sri Lanka in the same green. Separately, four small brown/tan tree-cluster symbols placed on the map to mark sacred groves: one in the far north-east on the Meghalaya hills, one in the north-west on the Aravalli range of Rajasthan, one on the south-western coastal strip over Karnataka and Maharashtra, and one in the central-eastern interior over Madhya Pradesh. Clean white outlines throughout, thin white leader lines, muted colours: green for the biodiversity-rich hotspot regions, brown/tan for the culturally protected forest tracts, blue for the surrounding sea. No text or labels baked into the image itself. No photorealism, no cartoon, no mascots.",
+      hotspots: [
+        {
+          id: uuid(),
+          x: 0.50,
+          y: 0.16,
+          label: 'Himalaya',
+          icon: 'circle',
+          detail: 'One of the **three hotspots that cover India\'s exceptionally high biodiversity regions**. Like every hotspot, it qualifies on two counts together: **very high species richness** and a **high degree of endemism** — species found here and nowhere else on Earth.',
+        },
+        {
+          id: uuid(),
+          x: 0.78,
+          y: 0.30,
+          label: 'Indo-Burma',
+          icon: 'circle',
+          detail: 'The second of India\'s three hotspots. Note that hotspot boundaries follow **biology, not politics** — this one runs across the north-east and on beyond our borders, which is exactly why NCERT ends the chapter by saying **biodiversity knows no political boundaries**.',
+        },
+        {
+          id: uuid(),
+          x: 0.30,
+          y: 0.74,
+          label: 'Western Ghats and Sri Lanka',
+          icon: 'circle',
+          detail: 'The third Indian hotspot — and its full NCERT name is **Western Ghats and Sri Lanka**, not "Western Ghats" alone. Options that split the two apart are a standard trap.',
+        },
+        {
+          id: uuid(),
+          x: 0.82,
+          y: 0.42,
+          label: 'Sacred groves — Khasi & Jaintia Hills',
+          icon: 'circle',
+          detail: 'In **Meghalaya**, the sacred groves are the **last refuges for a large number of rare and threatened plants**. Tracts of forest were set aside by tradition and every tree and animal inside was venerated and given total protection.',
+        },
+        {
+          id: uuid(),
+          x: 0.26,
+          y: 0.38,
+          label: 'Sacred groves — Aravalli Hills',
+          icon: 'circle',
+          detail: 'Sacred groves in the **Aravalli Hills of Rajasthan**. India has a long **history of religious and cultural traditions that emphasised protection of nature** — this is *in situ* conservation done by belief rather than by law.',
+        },
+        {
+          id: uuid(),
+          x: 0.52,
+          y: 0.56,
+          label: 'Sacred groves — Sarguja, Chanda, Bastar',
+          icon: 'circle',
+          detail: 'The sacred groves of the **Sarguja, Chanda and Bastar areas of Madhya Pradesh**. Along with the **Western Ghat regions of Karnataka and Maharashtra**, these complete NCERT\'s list of where sacred groves are found.',
+        },
+      ],
+    },
+    {
+      id: uuid(),
+      type: 'text',
+      order: 6,
+      markdown: "Hotspots are the global filter. Inside the country, the protection is legal: **ecologically unique and biodiversity-rich regions in India are legally protected as biosphere reserves, national parks and sanctuaries.** Three numbers, and NEET asks for them straight: **India now has 14 biosphere reserves, 90 national parks and 448 wildlife sanctuaries.**\n\nAnd then there is the older, quieter system. **India has a history of religious and cultural traditions that emphasised protection of nature.** In many cultures, **tracts of forest were set aside, and all the trees and wildlife within were venerated and given total protection.** These **sacred groves** are found in the **Khasi and Jaintia Hills in Meghalaya**, the **Aravalli Hills of Rajasthan**, the **Western Ghat regions of Karnataka and Maharashtra**, and the **Sarguja, Chanda and Bastar areas of Madhya Pradesh**. **In Meghalaya, the sacred groves are the last refuges for a large number of rare and threatened plants.**\n\nRead that last line slowly. No forest department drew those boundaries. Villages did, out of reverence, generations ago — and today those patches hold plants that survive nowhere else nearby. That is *in situ* conservation in its purest form: nobody moved a single organism, and everything inside was saved together.",
+    },
+    // ── EX SITU ──────────────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'heading',
+      order: 7,
+      level: 2,
+      text: 'Ex Situ — Taking It Out to Keep It Alive',
+      objective: "You can list the ex situ methods NCERT names and say what each one actually preserves — the whole animal, the gametes, or the seeds.",
+    },
+    {
+      id: uuid(),
+      type: 'text',
+      order: 8,
+      markdown: "In *ex situ* conservation, **threatened animals and plants are taken out from their natural habitat and placed in a special setting where they can be protected and given special care.** **Zoological parks, botanical gardens and wildlife safari parks serve this purpose.**\n\nThat is not a small thing. **There are many animals that have become extinct in the wild but continue to be maintained in zoological parks.** For those species, a zoo is not an exhibit — it is the entire remaining population of that kind of animal on this planet.\n\nBut in recent years *ex situ* conservation has **advanced beyond keeping threatened species in enclosures**, and this is where the modern half of it sits. Three moves, and each preserves something different:\n\n- **Cryopreservation.** **Gametes of threatened species can be preserved in viable and fertile condition for long periods using cryopreservation techniques.** You are not keeping the animal — you are keeping its **gametes**, still alive and still fertile, waiting.\n- **In vitro fertilisation.** **Eggs can be fertilised in vitro** — fertilisation carried out outside the body, so the next generation can be started even when the parents cannot manage it themselves in the wild.\n- **Tissue culture and seed banks.** For plants, propagation is done using **tissue culture methods**, and **seeds of different genetic strains of commercially important plants can be kept for long periods in seed banks.** Note the phrase **different genetic strains** — a seed bank is not just saving a species, it is saving the **genetic diversity within** that species.\n\nSo the enclosure keeps the organism, cryopreservation keeps the gametes, and the seed bank keeps the strains. Between them they cover an organism at almost every stage at which it can be held on to.",
+    },
+    // ── comparison card ──────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'comparison_card',
+      order: 9,
+      title: 'In situ vs Ex situ conservation',
+      columns: [
+        {
+          heading: 'In situ (on site)',
+          points: [
+            'The species is protected **in its natural habitat** — nothing is moved out.',
+            'We conserve and protect the **whole ecosystem**, so its **biodiversity at all levels** is protected.',
+            'The slogan: **we save the entire forest to save the tiger**.',
+            'Methods: **biodiversity hotspots** (34 in the world), **biosphere reserves**, **national parks**, **wildlife sanctuaries**, **sacred groves**.',
+            'Indian examples: **Western Ghats and Sri Lanka, Indo-Burma, Himalaya** hotspots; **14 biosphere reserves, 90 national parks, 448 wildlife sanctuaries**; the sacred groves of **Khasi and Jaintia Hills, Aravalli Hills, Western Ghat regions of Karnataka and Maharashtra, and Sarguja, Chanda and Bastar**.',
+            'When it is used: as the **general approach**, wherever an ecosystem can still be protected as a whole.',
+          ],
+        },
+        {
+          heading: 'Ex situ (off site)',
+          points: [
+            'Threatened animals and plants are **taken out from their natural habitat** and placed in a **special setting**.',
+            'Only the **selected species** gets protected and given **special care** — not the ecosystem around it.',
+            'The point: keep the species alive when the habitat can no longer keep it alive.',
+            'Methods: **zoological parks**, **botanical gardens**, **wildlife safari parks**; and beyond enclosures — **cryopreservation** of gametes, **in vitro fertilisation** of eggs, **tissue culture** propagation of plants, **seed banks** for different genetic strains.',
+            'Examples: **many animals extinct in the wild continue to be maintained in zoological parks**; **seeds of different genetic strains of commercially important plants kept for long periods in seed banks**.',
+            'When it is used: when a species is **endangered or threatened** — **facing a very high risk of extinction in the wild in the near future** — and needs **urgent measures**.',
+          ],
+        },
+      ],
+    },
+    // ── international efforts ────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'heading',
+      order: 10,
+      level: 2,
+      text: 'Biodiversity Knows No Political Boundaries',
+      objective: "You can state what the Earth Summit of 1992 called for and exactly what the 190 countries pledged at Johannesburg in 2002.",
+    },
+    {
+      id: uuid(),
+      type: 'text',
+      order: 11,
+      markdown: "A tiger does not stop at a border checkpoint. Neither does a monsoon, a migrating bird, or a hotspot — the **Indo-Burma** hotspot on that map spills straight out of India. **Biodiversity knows no political boundaries and its conservation is therefore a collective responsibility of all nations.** One country protecting its share while its neighbours clear theirs is not conservation; it is a patch.\n\nSo the world sat down twice, and both meetings are worth remembering by name, place and year.\n\nThe **historic Convention on Biological Diversity — 'The Earth Summit' — was held in Rio de Janeiro in 1992**. It **called upon all nations to take appropriate measures for conservation of biodiversity and sustainable utilisation of its benefits.** Note both halves: not just protection, but **sustainable use** of what protection gives you.\n\nIn a follow-up, the **World Summit on Sustainable Development was held in 2002 in Johannesburg, South Africa**, where **190 countries pledged their commitment to achieve by 2010 a significant reduction in the current rate of biodiversity loss at global, regional and local levels.** Read the pledge precisely — it was not to *stop* the loss, and not to *reverse* it. It was to significantly reduce the **rate** of loss, by **2010**, at all three levels.\n\nAnd that is where the chapter, and this book, closes. You started this course with a single cell and a single gene, and you end it standing in front of the whole living planet. Everything in between — genes, gametes, embryos, populations, ecosystems — is a level at which diversity exists, and now you know the level at which each one can be protected. **Nature's biological library is burning before we have even catalogued the titles of all the books stocked in it.** You are one of the very few people who can now read that catalogue. Carry it well.",
+    },
+    // ── mid-page reasoning check ─────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'reasoning_prompt',
+      order: 12,
+      reasoning_type: 'logical',
+      prompt: "A wildlife team is working on a plant that survives in one small valley. Team A fences and legally protects the entire valley, so every tree, insect and bird in it is safe. Team B collects seeds of several genetic strains of the plant and stores them for long periods in a facility far away. Classify each measure, and say what each one protects.",
+      options: [
+        "Team A is ex situ because it built a man-made fence; Team B is in situ because seeds are still living plant material",
+        "Team A is in situ — the whole ecosystem is protected in place, so biodiversity at all levels is saved; Team B is ex situ — the material is taken out of the habitat into a seed bank, which conserves the genetic strains of that one species",
+        "Both are in situ, because in both cases the plant species itself is being protected from extinction by human effort",
+        "Team A is in situ and protects only the one plant species; Team B is ex situ and protects the entire valley ecosystem along with the plant",
+      ],
+      correct_index: 1,
+      reveal: "*In situ* means **on site** — protecting the whole ecosystem where it already stands, and its **biodiversity at all levels** is protected along with it, which is exactly Team A. *Ex situ* means **off site** — the material is **taken out of its natural habitat and placed in a special setting**, and a **seed bank** storing **different genetic strains for long periods** is a textbook *ex situ* method, which is Team B. The tempting wrong pick is the last one: it gets the labels right but flips what each protects — *in situ* is precisely the approach that saves everything in the ecosystem, while *ex situ* saves only the species you carried out. And a fence does not make something *ex situ*: what matters is whether the organism was **moved out of its habitat**, not whether humans built anything.",
+    difficulty_level: 2,
+    },
+    // ── remember ─────────────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'callout',
+      order: 13,
+      variant: 'remember',
+      title: 'Lock These Down',
+      markdown: "- ***In situ* = on site.** Conserve and protect the **whole ecosystem** → biodiversity at **all levels** is protected. **We save the entire forest to save the tiger.**\n- ***Ex situ* = off site.** Threatened plants and animals are **taken out of their natural habitat** and placed in a **special setting** with **special care**. Used when a species is **endangered/threatened** — facing a **very high risk of extinction in the wild in the near future** — and needs **urgent measures**.\n- **Hotspot definition (both halves):** **very high species richness** + **high degree of endemism** (species confined to that region, found nowhere else). Hotspots are **also regions of accelerated habitat loss**.\n- **The hotspot numbers: 25 initially → 9 more added → 34 in total.** Together **< 2 per cent of the earth's land area**; strict protection could cut ongoing mass extinctions by **almost 30 per cent**.\n- **India's three hotspots: Western Ghats and Sri Lanka, Indo-Burma, Himalaya.** Three — not two, not four.\n- **India's protected areas: 14 biosphere reserves, 90 national parks, 448 wildlife sanctuaries.**\n- ***In situ* methods:** hotspots, biosphere reserves, national parks, sanctuaries, **sacred groves** (Khasi & Jaintia Hills–Meghalaya; Aravalli Hills–Rajasthan; Western Ghat regions of Karnataka & Maharashtra; Sarguja, Chanda & Bastar–Madhya Pradesh). **In Meghalaya the sacred groves are the last refuges for a large number of rare and threatened plants.**\n- ***Ex situ* methods:** zoological parks, botanical gardens, wildlife safari parks, **cryopreservation** of gametes, **in vitro** fertilisation of eggs, **tissue culture** of plants, **seed banks** for **different genetic strains**.\n- **Earth Summit = Convention on Biological Diversity, Rio de Janeiro, 1992** → called on all nations to conserve biodiversity and use its benefits **sustainably**.\n- **World Summit on Sustainable Development, Johannesburg, 2002** → **190 countries** pledged to achieve **by 2010** a **significant reduction in the rate** of biodiversity loss at **global, regional and local** levels.",
+    },
+    // ── exam_tip ─────────────────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'callout',
+      order: 14,
+      variant: 'exam_tip',
+      title: 'NEET Exam Insight',
+      markdown: "**In situ vs ex situ classification is the single most asked thing on this page.** The test is one question only: **was the organism moved out of its natural habitat?** No → *in situ*. Yes → *ex situ*. Sacred groves, sanctuaries, national parks, biosphere reserves and hotspots are all *in situ*; zoos, botanical gardens, safari parks, cryopreservation, in vitro fertilisation, tissue culture and seed banks are all *ex situ*. Papers love pairing **sacred grove** with **botanical garden** in the same option set.\n\n**The numbers are lifted verbatim.** **34** hotspots (from **25 + 9**), **< 2%** of land area, **~30%** reduction in mass extinctions, **14** biosphere reserves, **90** national parks, **448** wildlife sanctuaries, **190** countries at Johannesburg, target year **2010**, Rio **1992**.\n\n**Hotspot definition traps:** an option giving only **high species richness** and dropping **endemism** is wrong — NCERT requires both. Also, the hotspot is named **\"Western Ghats and Sri Lanka\"**, so an option listing \"Western Ghats\" and \"Sri Lanka\" as two separate hotspots (making four for India) is a trap.\n\n**The two summits get swapped.** **Rio de Janeiro = 1992 = The Earth Summit = Convention on Biological Diversity.** **Johannesburg = 2002 = World Summit on Sustainable Development = 190 countries, by 2010.** Learn them as pairs of place-and-year.\n\n**Cryopreservation preserves gametes**, not embryos, not adults — \"gametes of threatened species in viable and fertile condition for long periods.\" And **seed banks store different genetic strains**, which is why they conserve genetic diversity, not just species.\n\n**Classic NEET question:** \"Which of the following is an *ex situ* conservation method?\" → **Cryopreservation of gametes** (or seed bank / botanical garden / zoological park). The tempting wrong pick is **sacred groves** — they are protected *in situ*, in place, by tradition; nothing is taken out of the habitat.",
+    },
+    // ── inline quiz (LAST) ───────────────────────────────────────────────
+    {
+      id: uuid(),
+      type: 'inline_quiz',
+      order: 15,
+      pass_threshold: 0.67,
+      questions: [
+        {
+          id: uuid(),
+          question: 'Which of the following groups consists only of measures that NCERT classifies as ex situ conservation?',
+          options: [
+            'Sacred groves, biosphere reserves and wildlife sanctuaries',
+            'Biodiversity hotspots, national parks and sacred groves',
+            'Seed banks, cryopreservation of gametes and botanical gardens',
+            'National parks, botanical gardens and biodiversity hotspots',
+          ],
+          correct_index: 2,
+          explanation: 'Seed banks, cryopreservation and botanical gardens all take the organism or its material out of the natural habitat into a special setting, which is what ex situ means. The tempting pick is the last group, because botanical gardens really are ex situ — but national parks and hotspots are in situ, so the group is mixed. The first two groups are entirely in situ: sacred groves, biosphere reserves, sanctuaries, hotspots and national parks all protect the species where it already lives.',
+          difficulty_level: 2,
+        },
+        {
+          id: uuid(),
+          question: 'A region is declared a biodiversity hotspot on the basis of which combination of features?',
+          options: [
+            'Very high species richness together with a high degree of endemism',
+            'Very high species richness together with a very large land area',
+            'A high degree of endemism together with a complete absence of habitat loss',
+            'A large number of national parks together with a high degree of endemism',
+          ],
+          correct_index: 0,
+          explanation: 'NCERT defines hotspots as regions with very high levels of species richness and a high degree of endemism — species confined to that region and not found anywhere else. The most tempting distractor is the third one, because endemism is genuinely half the definition; but hotspots are in fact regions of accelerated habitat loss, not places free of it. Land area is wrong too — all the hotspots together cover less than 2 per cent of the earth\'s land area.',
+          difficulty_level: 2,
+        },
+        {
+          id: uuid(),
+          question: 'How many biodiversity hotspots are there in the world, and which ones cover India\'s exceptionally high biodiversity regions?',
+          options: [
+            '25 in the world; the Western Ghats, Sri Lanka and the Himalaya cover India',
+            '34 in the world; the Eastern Ghats, Indo-Burma and the Himalaya cover India',
+            '14 in the world; the Western Ghats and Sri Lanka, Indo-Burma and the Aravallis cover India',
+            '34 in the world; the Western Ghats and Sri Lanka, Indo-Burma and the Himalaya cover India',
+          ],
+          correct_index: 3,
+          explanation: 'Initially 25 hotspots were identified and nine more were added later, bringing the world total to 34, and the three covering India are the Western Ghats and Sri Lanka, Indo-Burma, and the Himalaya. The first option quotes the original figure of 25 before the nine were added and splits Sri Lanka off as its own hotspot; the second swaps in the Eastern Ghats, which are not a hotspot; the third borrows 14, which is India\'s number of biosphere reserves, not hotspots.',
+          difficulty_level: 3,
+        },
+        {
+          id: uuid(),
+          question: 'At the World Summit on Sustainable Development held in 2002 in Johannesburg, what exactly did the participating countries pledge?',
+          options: [
+            '190 countries pledged to achieve by 2010 a significant reduction in the current rate of biodiversity loss at global, regional and local levels',
+            '190 countries pledged to achieve by 2010 a complete stop to all biodiversity loss at global, regional and local levels',
+            '25 countries pledged to declare every biodiversity hotspot within their borders a national park by 2010',
+            '190 countries pledged to set up seed banks and zoological parks for every threatened species by 2010',
+          ],
+          correct_index: 0,
+          explanation: 'The pledge at Johannesburg was by 190 countries, to achieve by 2010 a significant reduction in the current rate of biodiversity loss at global, regional and local levels. The strongest trap is the second option, which keeps the right number and year but upgrades "significant reduction in the rate" to a "complete stop" — the loss was to be slowed, not halted. The other two invent commitments that were never made; the Rio Earth Summit of 1992 is the meeting that called on nations to conserve biodiversity and use its benefits sustainably.',
+          difficulty_level: 1,
+        },
+      ],
+    },
+  ],
+};

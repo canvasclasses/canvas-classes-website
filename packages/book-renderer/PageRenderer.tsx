@@ -5,6 +5,7 @@ import { BookPage, ContentBlock, TextBlock } from '@canvas/data/types/books';
 import BlockRenderer from './BlockRenderer';
 import RailPanel from './blocks/RailPanel';
 import { FigureRefsProvider } from './figure-refs-context';
+import { GlossaryProvider } from './glossary-context';
 
 // Callout variants that float to the margin sidebar on desktop.
 // fun_fact is intentionally excluded — opening hooks must render in the main column
@@ -43,7 +44,7 @@ function hasAnalyticalHinglish(blocks: ContentBlock[]): boolean {
 const HINGLISH_PREF_KEY = 'canvas_hinglish_mode';
 
 interface PageRendererProps {
-  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min' | 'hinglish_blocks' | 'competency' | 'figure_refs'>;
+  page: Pick<BookPage, 'title' | 'subtitle' | 'blocks' | 'reading_time_min' | 'hinglish_blocks' | 'competency' | 'figure_refs' | 'glossary'>;
   onQuizPass?: (blockId: string, score: number) => void;
   /**
    * When provided (admin preview), PageRenderer uses this value instead of its
@@ -122,10 +123,11 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
     // Outer shell: centers content and caps total width on large screens
     // book-page-content scopes CSS fixes (e.g. fraction zoom) to this reader only
     <FigureRefsProvider value={page.figure_refs ?? {}}>
+    <GlossaryProvider value={page.glossary ?? []}>
     <div className="book-page-content w-full max-w-[1495px] mx-auto px-3 sm:px-8 pt-8 pb-10">
 
       {/* Page header — always full width */}
-      <header className="mb-5 max-w-[1127px]">
+      <header className="mb-5 max-w-[1014px]">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             {page.competency && (
@@ -186,7 +188,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
       <div className={hasRail ? 'xl:flex xl:gap-14 xl:items-start' : ''}>
 
         {/* ── Main prose column ── */}
-        <article className="min-w-0 flex-1 max-w-[1127px]">
+        <article className="min-w-0 flex-1 max-w-[1014px]">
           {/* Mobile/tablet: render ALL blocks inline including callouts + media
               (the rail doesn't exist below xl, so media stays in the flow). */}
           <div className="xl:hidden flex flex-col gap-1">
@@ -217,6 +219,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
         )}
       </div>
     </div>
+    </GlossaryProvider>
     </FigureRefsProvider>
   );
 }

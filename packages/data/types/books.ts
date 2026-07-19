@@ -126,6 +126,13 @@ export interface InteractiveImageBlock extends BaseBlock {
   alt: string;
   hotspots: Hotspot[];
   caption?: string;
+  // AI generation spec for the base diagram, shown as a copyable placeholder
+  // while src is empty (BOOK_PAGE_WORKFLOW §3.13). Preserved on save.
+  generation_prompt?: string;
+  // Block-level width preset — same options/meaning as ImageBlock['width'].
+  // Optional; renderer defaults to 'full'. A tall/portrait diagram is
+  // additionally height-capped by the renderer regardless of this setting.
+  width?: 'full' | 'five_sixth' | 'three_quarter' | 'two_third' | 'half' | 'two_fifth' | 'third' | 'quarter';
 }
 
 // 5. VIDEO — short lecture clip
@@ -306,7 +313,10 @@ export interface WorkedExampleBlock extends BaseBlock {
 export interface SimulationPrediction {
   prompt: string;       // "What do you think will happen if...?"
   options: string[];    // e.g. ["Yes, it will double", "No, it won't change", "It depends"]
-  reveal_after: string; // Shown below the sim after they've interacted — explains what actually happens
+  // Shown below the sim after they've interacted — explains what actually happens.
+  // Optional: a prediction may pose the guess without a canned reveal (the renderer
+  // hides the reveal section when this is absent).
+  reveal_after?: string;
 }
 export interface SimulationBlock extends BaseBlock {
   type: 'simulation';
@@ -407,7 +417,9 @@ export type LiteraryDevice =
   | 'simile' | 'metaphor' | 'personification' | 'imagery'
   | 'alliteration' | 'rhyme' | 'symbolism' | 'hyperbole' | 'onomatopoeia'
   // Hindi track — गद्य narrative features (NCERT गंगा "कहानी का सौंदर्य")
-  | 'vyangya' | 'virodhabhas' | 'samvadatmakta' | 'sandeh';
+  | 'vyangya' | 'virodhabhas' | 'samvadatmakta' | 'sandeh'
+  // Hindi काव्य — पदावृत्ति (word/foot repetition) + refrain (a repeated line/chorus, टेक)
+  | 'padavritti' | 'refrain';
 export interface DeviceMatch {
   text: string;          // exact substring of the passage that demonstrates this device
   explanation: string;   // 1–2 sentences: what device, what reading it unlocks
@@ -480,7 +492,7 @@ export interface ToneMeterBlock extends BaseBlock {
 
 // E7. CULTURAL CONTEXT CARD — standalone reference card for a place/person/concept
 //     the non-native reader may not recognise.
-export type CulturalContextCategory = 'place' | 'person' | 'event' | 'concept' | 'tradition';
+export type CulturalContextCategory = 'place' | 'person' | 'event' | 'concept' | 'tradition' | 'history';
 export interface CulturalContextCardBlock extends BaseBlock {
   type: 'cultural_context_card';
   reference: string;     // "Kashi" | "Triveni" | "Lord Vishweshwara"
@@ -504,7 +516,7 @@ export interface ComprehensionQuestion {
 export interface ComprehensionCheckpointBlock extends BaseBlock {
   type: 'comprehension_checkpoint';
   intro?: string;             // soft framing — "Pause and check"
-  questions: ComprehensionQuestion[];   // 1–3 questions
+  questions: ComprehensionQuestion[];   // typically 1–3, up to 10
 }
 
 // E9. WRITING SCAFFOLD — annotated model answer for Kaveri's Writing Task.
@@ -803,7 +815,7 @@ export interface ApplyExpressBlock extends BaseBlock {
 //      of question kinds. Checks BASIC understanding of the passage (competitive-
 //      level items live in Crucible, not here). Friendly North-Indian-classroom
 //      teacher voice in `intro` and `explanation`s. See ENGLISH_BOOK_PAGE_WORKFLOW §10.
-export type ReadingPassageType = 'discursive' | 'factual' | 'case_based' | 'literary';
+export type ReadingPassageType = 'discursive' | 'factual' | 'case_based' | 'literary' | 'descriptive';
 export interface ReadingMCQ {
   kind: 'mcq';
   id: string;
@@ -1176,6 +1188,14 @@ export type ContentBlock =
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
 
+/** One technical term this page introduces, plus its plain-English definition. */
+export interface GlossaryEntry {
+  /** The term as it appears in the prose, e.g. "sporopollenin". Matched case-insensitively. */
+  term: string;
+  /** 1–2 plain sentences. Shown in the hover/tap popover. */
+  definition: string;
+}
+
 export interface BookPage {
   _id: string;
   book_id: string;
@@ -1192,6 +1212,24 @@ export interface BookPage {
    * When this array is empty or absent, the Hinglish toggle is hidden entirely.
    */
   hinglish_blocks?: TextBlock[];
+  /**
+   * Per-page glossary of the technical terms this page introduces. Authored by
+   * the book page-module contracts (see the PAGE_MODULE_CONTRACT.md files under
+   * `scripts/bio-book/` and `scripts/bio-book12/`).
+   *
+   * Consumed by the reader as **hover/tap definitions**: PageRenderer injects this
+   * into `GlossaryProvider`, and TextBlockRenderer underlines the first occurrence
+   * of each term in the prose and shows its definition in a popover. A
+   * terminology-dense subject read by second-language students gets a
+   * zero-navigation-cost lookup — comprehension, accessibility and localisation
+   * in one feature.
+   *
+   * NOTE (2026-07-16): this field existed on ~1,754 authored entries across the two
+   * Biology books for months while being absent from this type AND from the Zod
+   * schema, so nothing rendered it and nothing flagged it. If you add a page-level
+   * field, add it here too, or it silently becomes dead data.
+   */
+  glossary?: GlossaryEntry[];
   tags?: string[];       // Links to Crucible taxonomy tags
   created_at: Date;
   updated_at: Date;

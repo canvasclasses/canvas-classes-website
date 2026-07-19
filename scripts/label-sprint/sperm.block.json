@@ -1,0 +1,42 @@
+{
+  "_note": "Label Sprint round for sperm \u2014 generated sperm_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Human sperm cell structure",
+  "caption": "Tap each label, then tap where it belongs on the sperm cell.",
+  "hotspots": [
+    {
+      "id": "0fe5919e-52a2-419c-b36a-728d3159f401",
+      "x": 0.2,
+      "y": 0.42,
+      "label": "Head",
+      "detail": "Contains the nucleus with the highly condensed genetic material.",
+      "icon": "pin"
+    },
+    {
+      "id": "12cfc417-34a3-4dd9-a38a-61d542af490b",
+      "x": 0.07,
+      "y": 0.42,
+      "label": "Acrosome",
+      "detail": "A cap over the head's tip containing enzymes to penetrate the egg.",
+      "icon": "pin"
+    },
+    {
+      "id": "98cc5c6c-1fe6-4ec2-a221-81f114a9b577",
+      "x": 0.42,
+      "y": 0.45,
+      "label": "Midpiece",
+      "detail": "Packed with spiral mitochondria that power the tail's movement.",
+      "icon": "pin"
+    },
+    {
+      "id": "9e366d9a-79e6-42f9-92e2-a76ccaf49f9b",
+      "x": 0.7,
+      "y": 0.55,
+      "label": "Tail (flagellum)",
+      "detail": "The long whip-like structure that propels the sperm forward.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "human sperm cell, 3D detail, side view"
+}

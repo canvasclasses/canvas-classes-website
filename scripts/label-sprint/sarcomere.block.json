@@ -1,0 +1,58 @@
+{
+  "_note": "Label Sprint round for sarcomere \u2014 generated sarcomere_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Sarcomere structure showing thick and thin filaments",
+  "caption": "Tap each label, then tap where it belongs on the sarcomere.",
+  "hotspots": [
+    {
+      "id": "abd958e3-2b73-4c1b-b688-efc520ed86cf",
+      "x": 0.1,
+      "y": 0.5,
+      "label": "Z-line",
+      "detail": "Boundary of a sarcomere, anchoring the thin filaments.",
+      "icon": "pin"
+    },
+    {
+      "id": "a9fe9208-1fb7-40e6-9811-5a8338742419",
+      "x": 0.9,
+      "y": 0.5,
+      "label": "Z-line",
+      "detail": "Boundary of a sarcomere, anchoring the thin filaments.",
+      "icon": "pin"
+    },
+    {
+      "id": "6888fb45-47f4-48f3-9e39-bad4d6b70bd3",
+      "x": 0.25,
+      "y": 0.3,
+      "label": "Thin filament (actin)",
+      "detail": "Thinner protein strand anchored at the Z-line; slides during contraction.",
+      "icon": "pin"
+    },
+    {
+      "id": "f4938c0c-0a93-4d59-aa7a-6c8fbbfcf60d",
+      "x": 0.5,
+      "y": 0.38,
+      "label": "Thick filament (myosin)",
+      "detail": "Thicker protein filament with projecting heads that pull on actin.",
+      "icon": "pin"
+    },
+    {
+      "id": "6fd5674b-b4ae-451d-9c8c-4243f5668663",
+      "x": 0.47,
+      "y": 0.26,
+      "label": "Myosin head",
+      "detail": "The globular cross-bridge that binds actin and generates the power stroke.",
+      "icon": "pin"
+    },
+    {
+      "id": "ce3f8e9c-56a0-4d6a-ba2d-9a96479b818f",
+      "x": 0.5,
+      "y": 0.5,
+      "label": "M-line",
+      "detail": "The midline of the sarcomere, anchoring the thick filaments.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "sarcomere structure in 3D detail"
+}

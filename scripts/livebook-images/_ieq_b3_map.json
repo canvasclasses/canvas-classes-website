@@ -1,0 +1,92 @@
+[
+  {
+    "file": "ieq_b3_01.png",
+    "n": 31,
+    "page": 15,
+    "slug": "buffer-solutions",
+    "pageId": "0afd02eb-e1c6-4d0c-868c-cca4e69fd7ed",
+    "blockId": "653d831a-7e7d-4908-bc8b-a7d725f28246",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_02.png",
+    "n": 32,
+    "page": 16,
+    "slug": "titration-curves-and-indicators",
+    "pageId": "9d3dfb1a-a6de-438d-8c57-cad6a49b96a9",
+    "blockId": "caf1adc0-38de-4cd3-8155-2d5d4f9663b8",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_03.png",
+    "n": 33,
+    "page": 16,
+    "slug": "titration-curves-and-indicators",
+    "pageId": "9d3dfb1a-a6de-438d-8c57-cad6a49b96a9",
+    "blockId": "b5aacac5-d3e5-4de6-8aec-ca141d0a1ba7",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_04.png",
+    "n": 34,
+    "page": 17,
+    "slug": "solubility-product-ksp",
+    "pageId": "d03d0603-42e6-43d5-9837-51cda9ad1ac0",
+    "blockId": "53162b76-ce81-450c-9aad-fe216a0af173",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_05.png",
+    "n": 35,
+    "page": 17,
+    "slug": "solubility-product-ksp",
+    "pageId": "d03d0603-42e6-43d5-9837-51cda9ad1ac0",
+    "blockId": "0f08e06c-4093-420c-a0f8-d22a8e5b8ba2",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_06.png",
+    "n": 36,
+    "page": 18,
+    "slug": "common-ion-effect-on-solubility",
+    "pageId": "7a70b1c4-3a04-4924-acf8-7347932fbc9c",
+    "blockId": "7ee966d2-f9ba-4dc0-953f-05ada8b83c2a",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_07.png",
+    "n": 37,
+    "page": 18,
+    "slug": "common-ion-effect-on-solubility",
+    "pageId": "7a70b1c4-3a04-4924-acf8-7347932fbc9c",
+    "blockId": "9378f37c-2ebf-479d-91f5-7841bc4cb198",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_08.png",
+    "n": 38,
+    "page": 19,
+    "slug": "solubility-applications",
+    "pageId": "5f61bdee-f48d-4f9e-98f5-0ee89583d74a",
+    "blockId": "66e278cd-3ab2-4bb4-b80a-2ee244ad7754",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b3_09.png",
+    "n": 39,
+    "page": 19,
+    "slug": "solubility-applications",
+    "pageId": "5f61bdee-f48d-4f9e-98f5-0ee89583d74a",
+    "blockId": "e6b00155-b61f-4b07-966e-fa3b42b0d92a",
+    "field": "src",
+    "lang": "en"
+  }
+]

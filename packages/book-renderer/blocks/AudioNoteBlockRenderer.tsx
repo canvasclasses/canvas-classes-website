@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Headphones, Pause } from 'lucide-react';
+import { Headphones, Pause, Play } from 'lucide-react';
 import { AudioNoteBlock } from '@canvas/data/types/books';
 
 // Waveform bar heights (%) — natural audio silhouette
@@ -96,7 +96,7 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
   }
 
   return (
-    <div className="my-3 p-4 rounded-xl border border-white/10 bg-[#0E1420]">
+    <div className="my-3 rounded-xl border border-white/10 bg-[#0E1420] overflow-hidden">
       <audio
         ref={audioRef}
         src={block.src}
@@ -105,11 +105,25 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
         preload="metadata"
       />
 
-      {/* Header row */}
-      <div className="flex items-center gap-3 mb-3.5">
+      {/* Header row is now ONE button — the whole row plays/pauses, not just a small
+          disconnected circle. Play/Pause icon moved to the LEFT (the convention every
+          media player uses), with a Play triangle — not a Headphones glyph — since a
+          triangle is the universal "press this to play" signal. */}
+      <button
+        onClick={toggle}
+        className="w-full flex items-center gap-3 px-4 py-3.5 text-left hover:bg-white/[0.03] transition-colors"
+        aria-label={playing ? 'Pause audio' : 'Play audio'}
+      >
+        <div className="shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-sky-500 to-cyan-400
+          flex items-center justify-center text-black">
+          {playing
+            ? <Pause size={16} fill="black" />
+            : <Play size={16} fill="black" className="ml-0.5" />}
+        </div>
 
-        {/* Multicolor waveform */}
-        <div className="flex items-end gap-[2.5px] shrink-0" style={{ height: 32 }}>
+        {/* Multicolor waveform — now a secondary visual beside the label, not the
+            focal point (the play button is). */}
+        <div className="flex items-end gap-[2.5px] shrink-0" style={{ height: 26 }}>
           {WAVE_HEIGHTS.map((h, i) => (
             <div
               key={i}
@@ -134,41 +148,36 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
             {block.label ?? 'Audio Explanation'}
           </p>
           <p className="text-[11px] text-white/35 mt-0.5">
-            Listen to the audio explanation
+            {playing ? 'Playing…' : 'Tap to listen'}
           </p>
         </div>
 
-        {/* Play / Pause — blue + headphones so audio reads as audio (matches the rail) */}
-        <button
-          onClick={toggle}
-          className="shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-sky-500 to-cyan-400
-            flex items-center justify-center text-black hover:scale-105 transition-transform"
-          aria-label={playing ? 'Pause audio' : 'Play audio'}
-        >
-          {playing
-            ? <Pause size={15} fill="black" />
-            : <Headphones size={16} />}
-        </button>
-      </div>
+        <span className="text-[12px] text-white/30 tabular-nums shrink-0">
+          {formatTime(playing ? currentTime : block.duration_sec)}
+        </span>
+      </button>
 
-      {/* Progress bar */}
-      <div
-        className="w-full h-1 bg-white/10 rounded-full cursor-pointer"
-        onClick={seek}
-      >
+      {/* Progress bar — kept as a sibling below the button (not nested inside it),
+          so seeking never also triggers the play/pause toggle. */}
+      <div className="px-4 pb-3.5">
         <div
-          className="h-full rounded-full transition-all duration-100"
-          style={{
-            width: `${progress}%`,
-            background: 'linear-gradient(to right, #38bdf8, #22d3ee)',
-          }}
-        />
-      </div>
+          className="w-full h-1 bg-white/10 rounded-full cursor-pointer"
+          onClick={seek}
+        >
+          <div
+            className="h-full rounded-full transition-all duration-100"
+            style={{
+              width: `${progress}%`,
+              background: 'linear-gradient(to right, #38bdf8, #22d3ee)',
+            }}
+          />
+        </div>
 
-      {/* Time */}
-      <div className="flex justify-between mt-1.5 text-[11px] text-white/30 tabular-nums">
-        <span>{formatTime(currentTime)}</span>
-        <span>{formatTime(block.duration_sec)}</span>
+        {/* Time */}
+        <div className="flex justify-between mt-1.5 text-[11px] text-white/30 tabular-nums">
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(block.duration_sec)}</span>
+        </div>
       </div>
 
       {/* Waveform keyframe */}

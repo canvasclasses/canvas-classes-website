@@ -1,0 +1,58 @@
+{
+  "_note": "Label Sprint round for follicle \u2014 generated follicle_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Graafian follicle containing an ovum",
+  "caption": "Tap each label, then tap where it belongs on the Graafian follicle.",
+  "hotspots": [
+    {
+      "id": "b0361bcc-0af2-4dc8-a7e1-6945cdb23277",
+      "x": 0.5,
+      "y": 0.06,
+      "label": "Theca",
+      "detail": "The outer follicular wall enclosing the follicle.",
+      "icon": "pin"
+    },
+    {
+      "id": "09379b4f-ca10-4d10-bc47-f4cf865bbc8b",
+      "x": 0.2,
+      "y": 0.3,
+      "label": "Antrum",
+      "detail": "The large fluid-filled cavity within the follicle.",
+      "icon": "pin"
+    },
+    {
+      "id": "28faaa09-24df-4523-a9b9-260194658b9d",
+      "x": 0.58,
+      "y": 0.42,
+      "label": "Cumulus oophorus",
+      "detail": "The mound of cells that anchors the ovum to the follicle wall.",
+      "icon": "pin"
+    },
+    {
+      "id": "1a6b097a-299b-4dfb-83ad-9806aaa2a962",
+      "x": 0.85,
+      "y": 0.5,
+      "label": "Corona radiata",
+      "detail": "A ring of small cells immediately surrounding the ovum.",
+      "icon": "pin"
+    },
+    {
+      "id": "6012812b-e795-473a-8288-0ea41f8c4dc0",
+      "x": 0.782,
+      "y": 0.591,
+      "label": "Zona pellucida",
+      "detail": "A thin clear layer just outside the ovum's own membrane.",
+      "icon": "pin"
+    },
+    {
+      "id": "2231ce5f-a731-41c6-b6e8-a6099514469e",
+      "x": 0.705,
+      "y": 0.545,
+      "label": "Ovum",
+      "detail": "The egg cell, with its nucleus visible at the centre.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "Graafian follicle cross-section, ovum, medical-textbook diagram"
+}

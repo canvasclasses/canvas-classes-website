@@ -1,0 +1,166 @@
+'use strict';
+const { v4: uuid } = require('uuid');
+
+module.exports = {
+  slug: 'transcription',
+  title: 'Transcription — Writing RNA from DNA',
+  subtitle: "How the cell copies just one strand of one gene into RNA — and why picking the right strand, the right boundaries, and the right processing steps decides which protein gets made.",
+  page_number: 5,
+  page_type: 'lesson',
+  tags: ['transcription', 'transcription-unit', 'molecular-basis-of-inheritance', 'rna'],
+  glossary: [
+    { term: 'transcription', definition: 'The process of copying genetic information from one strand of the DNA into RNA.' },
+    { term: 'transcription unit', definition: 'The stretch of DNA that gets transcribed, defined by three regions — a promoter, the structural gene, and a terminator.' },
+    { term: 'promoter', definition: 'A DNA sequence upstream (towards the 5\'-end) of the structural gene that provides the binding site for RNA polymerase. Its position defines which strand is template and which is coding.' },
+    { term: 'terminator', definition: 'A DNA sequence downstream (towards the 3\'-end) of the coding strand that usually marks the end of transcription.' },
+    { term: 'template strand', definition: 'The strand with 3\'→5\' polarity that is actually read and copied by RNA polymerase into RNA.' },
+    { term: 'coding strand', definition: 'The strand with 5\'→3\' polarity that is displaced (not copied). Its sequence is the same as the RNA except thymine sits where RNA has uracil, so all reference points are described from it.' },
+    { term: 'hnRNA', definition: 'Heterogeneous nuclear RNA — the primary transcript made by RNA polymerase II in eukaryotes, containing both exons and introns before processing.' },
+    { term: 'exon', definition: 'A coding (expressed) sequence that appears in the mature, processed RNA.' },
+    { term: 'intron', definition: 'An intervening sequence that interrupts exons and is removed during processing, so it does not appear in mature RNA.' },
+    { term: 'splicing', definition: 'The processing step that removes introns from hnRNA and joins the exons together in a defined order.' },
+  ],
+  blocks: [
+    {
+      id: uuid(), type: 'image', order: 0, src: '',
+      alt: 'A single DNA strand being read and a growing ribbon of RNA peeling away from it in a dark cellular space',
+      caption: '', width: 'full', aspect_ratio: '16:5',
+      generation_prompt: "Ultra-wide cinematic banner (16:5 ratio). A long DNA double helix stretched horizontally across a dark cellular interior, its two strands gently unwound in the middle to form a small open bubble. From that opening a single new ribbon of RNA (rendered in soft purple, the nucleic-acid colour) peels away and trails off to one side, catching a faint glow. Only one of the two DNA strands is clearly being read; the other lies quiet. Atmospheric, painterly, deep dusk lighting, dark near-black background (#0a0a0a base tones), a subtle warm rim-light along the helix. No text, no labels, no diagram callouts, no letters on the strands.",
+    },
+    {
+      id: uuid(), type: 'callout', order: 1, variant: 'fun_fact', title: 'One Book, Copied One Page at a Time',
+      markdown: "Replication copies your **entire** genome — every letter, all at once, before a cell divides. Transcription is nothing like that. It copies **only a short segment** of the DNA, and even there, it copies **only one of the two strands**. Think of your DNA as a huge reference book that never leaves the library. When the cell needs one recipe, it doesn't photocopy the whole book — it copies out a single page as an RNA note and sends that note off to work. The book stays safe; the note does the running around.",
+    },
+    {
+      id: uuid(), type: 'text', order: 2,
+      markdown: "**Transcription** is the process of copying genetic information from one strand of the DNA into **RNA**. The same rule that held DNA together holds here too — **complementarity** — with one swap: the adenine of DNA now pairs with **uracil (U)** in the RNA instead of thymine.\n\nBut transcription differs from replication in a big way. Replication, once it starts, duplicates the **whole** DNA of the organism. Transcription copies **only a segment** of DNA, and **only one strand** of it. That immediately raises a practical problem: the cell must mark out exactly **which region** and **which strand** to copy. Get the boundaries or the strand wrong and the wrong message goes out.",
+    },
+    {
+      id: uuid(), type: 'heading', order: 3, level: 2,
+      text: 'The Transcription Unit: Promoter, Gene, Terminator',
+      objective: "By the end of this you can name the three regions of a transcription unit and tell the template strand from the coding strand by their polarity.",
+    },
+    {
+      id: uuid(), type: 'text', order: 4,
+      markdown: "A **transcription unit** in DNA is defined by **three regions**:\n\n1. A **Promoter**\n2. The **Structural gene**\n3. A **Terminator**\n\nNow the two strands. They run in **opposite directions** (opposite polarity), and RNA polymerase can only build in **one** direction — **5'→3'**. So the strand that runs **3'→5'** is the one the enzyme reads, and we call it the **template strand**. The other strand runs **5'→3'**, is **displaced** during transcription, and never gets copied — yet, confusingly, it is called the **coding strand**. Why? Because its sequence is the **same as the RNA** that gets made (just with T wherever RNA has U), so it's the convenient strand to quote. Every reference point in a transcription unit is described using the **coding strand**.\n\nHere is NCERT's worked example:\n\n- **Template Strand:** 3'-ATGCATGCATGCATGCATGCATGC-5'\n- **Coding Strand:** 5'-TACGTACGTACGTACGTACGTACG-3'\n\nRead the template 3'→5' and apply complementarity (A→U, T→A, G→C, C→G) and the RNA comes out as **5'-UACGUACGUACGUACGUACGUACG-3'** — the same letters as the coding strand, with **U** in place of **T**.\n\nThe **promoter** sits at the **5'-end (upstream)** of the structural gene and provides the **binding site for RNA polymerase**. It's the promoter's position that actually **defines which strand is template and which is coding** — flip the promoter and terminator around, and the two labels swap. The **terminator** sits at the **3'-end (downstream)** of the coding strand and usually marks where transcription **stops**.\n\nWhy not just copy **both** strands and be done? NCERT gives two clean reasons. First, the two strands are complementary, not identical, so they'd code for **two different RNAs** — one segment of DNA ending up making two different proteins, which would tangle the whole information system. Second, those two RNAs would be complementary to each other and would **stick together into double-stranded RNA**, which can't be translated — making the whole effort pointless.",
+    },
+    {
+      id: uuid(), type: 'reasoning_prompt', order: 5, reasoning_type: 'logical',
+      prompt: "In a transcription unit, one strand reads 3'-...-5' and the other reads 5'-...-3'. RNA polymerase can only add nucleotides in the 5'→3' direction. Which strand does it actually read as its template, and what do we call the other one?",
+      options: [
+        "It reads the 5'→3' strand as template; the 3'→5' strand is the coding strand",
+        "It reads the 3'→5' strand as template; the 5'→3' strand is the coding strand",
+        "It reads both strands as templates so no strand is left over to be called coding",
+        "It reads whichever strand is richer in adenine; polarity does not matter",
+      ],
+      correct_index: 1,
+      reveal: "Because the enzyme builds only 5'→3', it must run along a strand pointing the opposite way — the 3'→5' strand — so that is the template. The leftover 5'→3' strand is displaced and is (oddly) named the coding strand, since its sequence matches the RNA except T-for-U. The tempting trap is option 1: students see 'coding' and assume the enzyme reads the coding strand — but the coding strand is the one that is NOT copied. And both strands are never read together, or they'd make two clashing RNAs that stick into useless double-stranded RNA.",
+      difficulty_level: 2,
+    },
+    {
+      id: uuid(), type: 'interactive_image', order: 6, src: '',
+      alt: 'A labelled transcription unit — promoter, structural gene and terminator with template and coding strands, RNA polymerase and the growing RNA transcript',
+      caption: '📸 Tap each dot to explore the parts of a transcription unit and how RNA is written from it (Figure 5.9)',
+      hotspots: [
+        { id: uuid(), x: 0.15, y: 0.44, label: 'Promoter', icon: 'circle',
+          detail: 'Sits **upstream (towards the 5\'-end)** of the structural gene. It is the **binding site for RNA polymerase**, and its position is what **defines which strand is template and which is coding**.' },
+        { id: uuid(), x: 0.48, y: 0.16, label: 'Coding strand', icon: 'circle',
+          detail: 'The top strand, running **5\'→3\'**. It is **displaced, not copied**, yet its sequence matches the RNA (T for U), so all reference points are described from it.' },
+        { id: uuid(), x: 0.48, y: 0.70, label: 'Template strand', icon: 'circle',
+          detail: 'The bottom strand, running **3\'→5\'**. This is the strand RNA polymerase actually **reads and copies**, following base-pairing rules (A→U).' },
+        { id: uuid(), x: 0.46, y: 0.42, label: 'Structural gene', icon: 'circle',
+          detail: 'The middle region that is actually transcribed into RNA. It is **flanked** by the promoter on one side and the terminator on the other.' },
+        { id: uuid(), x: 0.60, y: 0.50, label: 'RNA polymerase', icon: 'circle',
+          detail: 'The enzyme that **binds the promoter**, opens the helix and moves along the template, **polymerising 5\'→3\'** using nucleoside triphosphates as substrate.' },
+        { id: uuid(), x: 0.68, y: 0.80, label: 'RNA transcript', icon: 'circle',
+          detail: 'The new RNA being built. Only a **short stretch** stays bound to the enzyme at a time; the rest peels away as the polymerase moves along.' },
+        { id: uuid(), x: 0.86, y: 0.44, label: 'Terminator', icon: 'circle',
+          detail: 'Sits **downstream (towards the 3\'-end)** of the coding strand. When the polymerase reaches it, the RNA and the enzyme **fall off** — transcription ends.' },
+      ],
+      generation_prompt: "Scientific textbook illustration of a transcription unit. Flat 2D educational diagram on a dark background (#0a0a0a near-black). Two long horizontal parallel DNA strands drawn as clean thin white lines running across the frame, with a small unwound transcription bubble in the middle. The TOP strand runs 5' on the left to 3' on the right (coding strand); the BOTTOM strand runs 3' on the left to 5' on the right (template strand); mark the 5' and 3' ends faintly at each end. On the far LEFT, before the strands, a short highlighted box region for the promoter. In the MIDDLE, the long central region is the structural gene. On the far RIGHT, a short highlighted box region for the terminator. Sitting on the strands over the structural gene, a rounded blob shape representing RNA polymerase (soft neutral fill, white outline). From beneath the polymerase, a single new RNA strand rendered in soft purple (nucleic-acid colour) peels downward and trails to the right as the RNA transcript. Biologically accurate proportions, evenly spaced, clean white outlines, no baked-in text labels, no letters spelled out on the strands. No photorealism, no cartoon, no mascots.",
+    },
+    {
+      id: uuid(), type: 'heading', order: 7, level: 2,
+      text: 'Eukaryotes Add Extra Steps: Splicing, Capping, Tailing',
+      objective: "By the end of this you can list the three eukaryotic RNA polymerases by product and describe how a raw hnRNA is turned into finished mRNA.",
+    },
+    {
+      id: uuid(), type: 'text', order: 8,
+      markdown: "In **bacteria**, one **DNA-dependent RNA polymerase** does everything. It binds the promoter and starts (**initiation**), adds nucleotides along the template (**elongation**), and lets go at the terminator (**termination**). By itself the enzyme can really only do elongation — it borrows an **initiation-factor (σ, sigma)** to start and a **termination-factor (ρ, rho)** to stop. And because a bacterium has no nucleus, the mRNA needs **no processing** and **translation can begin before transcription even finishes** — the two are coupled.\n\nEukaryotes add **two complexities**:\n\n**(1) Three RNA polymerases, with a division of labour:**\n- **RNA polymerase I** → transcribes **rRNAs** (28S, 18S and 5.8S).\n- **RNA polymerase III** → transcribes **tRNA, 5srRNA and snRNAs** (small nuclear RNAs).\n- **RNA polymerase II** → transcribes the **precursor of mRNA**, the **heterogeneous nuclear RNA (hnRNA)**.\n\n**(2) The primary transcript must be processed.** The hnRNA that pol II makes contains both **exons** (the coding, expressed pieces that stay in the final RNA) and **introns** (intervening pieces that must go). It is **non-functional** as-is, so it goes through:\n- **Splicing** — the **introns are removed** and the **exons joined** in a defined order.\n- **Capping** — an unusual nucleotide, **methyl guanosine triphosphate**, is added to the **5'-end**.\n- **Tailing** — **200–300 adenylate residues** (a poly-A tail) are added to the **3'-end**, in a **template-independent** way.\n\nOnce capped, tailed and spliced, the fully processed hnRNA is now called **mRNA**, and it is **transported out of the nucleus** for translation. Next we'll see how that mRNA's letters are read three at a time — the genetic code.",
+    },
+    {
+      id: uuid(), type: 'reasoning_prompt', order: 9, reasoning_type: 'logical',
+      prompt: "A eukaryotic gene's primary transcript (hnRNA) is 5,000 nucleotides long, but the mRNA that finally leaves the nucleus is much shorter. The main reason the transcript shrank is that:",
+      options: [
+        "The exons were cut out and discarded, leaving only the introns",
+        "The introns were removed during splicing and the exons joined together",
+        "Capping at the 5'-end trimmed away most of the middle sequence",
+        "The poly-A tail replaced the removed coding sequence",
+      ],
+      correct_index: 1,
+      reveal: "hnRNA carries both exons and introns; during splicing the **introns (intervening sequences) are cut out** and the **exons (expressed sequences) are joined** in order — that removal is what makes the mature mRNA shorter. Option 1 is the classic swap: exons are the parts KEPT, not discarded. Capping only adds one unusual nucleotide at the 5'-end and tailing only adds adenylate residues at the 3'-end — neither removes internal sequence, so they can't explain the shrink.",
+      difficulty_level: 2,
+    },
+    {
+      id: uuid(), type: 'callout', order: 10, variant: 'remember', title: 'Lock These In',
+      markdown: "- **Transcription unit = promoter + structural gene + terminator.**\n- **Promoter** → upstream (5'-end); **terminator** → downstream (3'-end) — both described w.r.t. the **coding strand**.\n- **Template strand** = 3'→5', the one **read**. **Coding strand** = 5'→3', **displaced**, but its sequence **matches the RNA** (T for U).\n- Complementarity in RNA: A pairs with **U**, not T.\n- **hnRNA** (from RNA pol II) is processed by **splicing** (remove introns, join exons) + **capping** (methyl guanosine triphosphate at 5'-end) + **tailing** (200–300 adenylate residues at 3'-end).\n- **Exons stay** in mature RNA; **introns are removed**.",
+    },
+    {
+      id: uuid(), type: 'callout', order: 11, variant: 'exam_tip', title: 'NEET Exam Insight',
+      markdown: "**Template vs coding — the #1 trap:** the strand that is read is the **template (3'→5')**; the strand that is NOT copied is the **coding (5'→3')**. NEET loves to flip these. Remember: the *coding* strand is coding only in name — it's the displaced one.\n\n**Three eukaryotic polymerases:** RNA pol **I → rRNA**, pol **II → hnRNA (mRNA precursor)**, pol **III → tRNA / 5srRNA / snRNA**. A single mismatched pair is the usual wrong option.\n\n**Capping vs tailing:** capping adds **methyl guanosine triphosphate at the 5'-end**; tailing adds **200–300 adenylate residues at the 3'-end**. Swapping the ends or the molecule is the standard distractor.\n\n**Bacterial factors:** initiation-factor is **σ (sigma)**, termination-factor is **ρ (rho)** — don't swap them.\n\n**Classic NEET question:** \"In eukaryotes, hnRNA is processed to mRNA by which steps?\" → **splicing (introns removed, exons joined), 5'-capping, and 3'-tailing (poly-A).**",
+    },
+    {
+      id: uuid(), type: 'inline_quiz', order: 12, pass_threshold: 0.67,
+      questions: [
+        {
+          id: uuid(), question: 'Which strand of a transcription unit does RNA polymerase actually read to build the RNA?',
+          options: [
+            'The coding strand, which runs 5\'→3\'',
+            'Both strands at the same time',
+            'The template strand, which runs 3\'→5\'',
+            'Whichever strand has more thymine',
+          ],
+          correct_index: 2,
+          explanation: "RNA polymerase builds only 5'→3', so it reads the strand pointing the opposite way — the template strand (3'→5'). The coding strand runs 5'→3' and is displaced, not read; reading both strands would produce two clashing RNAs that pair into useless double-stranded RNA, which is exactly why the cell copies only one.",
+          difficulty_level: 1,
+        },
+        {
+          id: uuid(), question: 'Why is the coding strand called "coding" even though it is not the strand that is copied?',
+          options: [
+            'Its base sequence is the same as the RNA (with T in place of U), so it is used as the reference',
+            'It codes for a second, complementary protein at the same time',
+            'It is the strand RNA polymerase binds and reads first',
+            'It carries the promoter and terminator sequences on its own',
+          ],
+          correct_index: 0,
+          explanation: "The coding strand is displaced during transcription, but its sequence matches the RNA made from the template (just T where RNA has U), so it's the convenient strand to quote and all reference points are described from it. It is never actually read (that's the template strand), and a single strand is never copied into two proteins at once — that scenario is exactly what copying one strand avoids.",
+          difficulty_level: 2,
+        },
+        {
+          id: uuid(), question: 'In eukaryotic RNA processing, tailing adds which of the following, and to which end of the hnRNA?',
+          options: [
+            'Methyl guanosine triphosphate to the 5\'-end',
+            'Introns joined back to the 3\'-end',
+            'A single unusual nucleotide to both ends',
+            '200–300 adenylate residues to the 3\'-end',
+          ],
+          correct_index: 3,
+          explanation: "Tailing adds 200–300 adenylate residues (the poly-A tail) at the 3'-end, in a template-independent manner. Adding methyl guanosine triphosphate is capping, and it happens at the 5'-end — a common swap in exam options; introns are removed during splicing, never joined back on.",
+          difficulty_level: 2,
+        },
+        {
+          id: uuid(), question: 'Which RNA polymerase transcribes the precursor of mRNA (the hnRNA) in eukaryotes?',
+          options: [
+            'RNA polymerase II',
+            'RNA polymerase I',
+            'RNA polymerase III',
+            'The single bacterial DNA-dependent RNA polymerase',
+          ],
+          correct_index: 0,
+          explanation: "In eukaryotes RNA polymerase II makes the hnRNA, the precursor of mRNA. RNA polymerase I makes rRNAs (28S, 18S, 5.8S) and RNA polymerase III makes tRNA, 5srRNA and snRNAs; the single DNA-dependent RNA polymerase that does all types belongs to bacteria, not eukaryotes.",
+          difficulty_level: 3,
+        },
+      ],
+    },
+  ],
+};

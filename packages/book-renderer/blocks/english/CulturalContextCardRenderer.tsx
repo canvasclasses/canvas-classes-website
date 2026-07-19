@@ -11,6 +11,7 @@ const CATEGORY_ICON: Record<CulturalContextCategory, string> = {
   event: '◷',
   concept: '◇',
   tradition: '✦',
+  history: '📜',
 };
 
 export default function CulturalContextCardRenderer({ block, hinglish }: { block: CulturalContextCardBlock; hinglish?: boolean }) {

@@ -10,7 +10,7 @@
 //
 // Output (default): scripts/livebook-images/_queue.json
 // Each item: { pageId, slug, bookId, chapterNumber, pageNumber, lang,
-//              blockId, kind: 'image'|'callout', prompt, alt, targetField }
+//              blockId, kind: 'image'|'interactive_image'|'callout', prompt, alt, targetField }
 require('dotenv').config({ path: '.env.local' });
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -48,6 +48,14 @@ const outPath = arg('out') || path.join(__dirname, '_queue.json');
           pageId: page._id, slug: page.slug, bookId: page.book_id,
           chapterNumber: page.chapter_number, pageNumber: page.page_number, lang,
           blockId: b.id, kind: 'image', targetField: 'src',
+          prompt: b.generation_prompt, alt: b.alt || '',
+        });
+      }
+      if (b?.type === 'interactive_image' && b.generation_prompt && (!b.src || b.src === '')) {
+        queue.push({
+          pageId: page._id, slug: page.slug, bookId: page.book_id,
+          chapterNumber: page.chapter_number, pageNumber: page.page_number, lang,
+          blockId: b.id, kind: 'interactive_image', targetField: 'src',
           prompt: b.generation_prompt, alt: b.alt || '',
         });
       }

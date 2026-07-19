@@ -110,6 +110,8 @@ const InteractiveImageBlockSchema = BaseBlockSchema.extend({
   alt: z.string(),
   hotspots: z.array(HotspotSchema),
   caption: z.string().optional(),
+  generation_prompt: z.string().optional(),
+  width: z.enum(['full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter']).optional(),
 });
 
 const VideoBlockSchema = BaseBlockSchema.extend({
@@ -251,7 +253,7 @@ const WorkedExampleBlockSchema = BaseBlockSchema.extend({
 const SimulationPredictionSchema = z.object({
   prompt: z.string().min(1),
   options: z.array(z.string()).min(2),
-  reveal_after: z.string().min(1),
+  reveal_after: z.string().min(1).optional(),
 });
 
 const SimulationBlockSchema = BaseBlockSchema.extend({
@@ -343,7 +345,7 @@ const DeviceHighlightSchema = z.object({
   device: z.enum([
     'simile', 'metaphor', 'personification', 'imagery',
     'alliteration', 'rhyme', 'symbolism', 'hyperbole', 'onomatopoeia',
-    'vyangya', 'virodhabhas', 'samvadatmakta', 'sandeh',
+    'vyangya', 'virodhabhas', 'samvadatmakta', 'sandeh', 'padavritti', 'refrain',
   ]),
   matches: z.array(DeviceMatchSchema).min(1),
 });
@@ -411,7 +413,7 @@ const ToneMeterBlockSchema = BaseBlockSchema.extend({
 const CulturalContextCardBlockSchema = BaseBlockSchema.extend({
   type: z.literal('cultural_context_card'),
   reference: z.string().min(1),
-  category: z.enum(['place', 'person', 'event', 'concept', 'tradition']),
+  category: z.enum(['place', 'person', 'event', 'concept', 'tradition', 'history']),
   short_desc: z.string().min(1),
   detail: z.string().min(1),
   detail_hinglish: z.string().optional(),
@@ -430,7 +432,7 @@ const ComprehensionQuestionSchema = z.object({
 const ComprehensionCheckpointBlockSchema = BaseBlockSchema.extend({
   type: z.literal('comprehension_checkpoint'),
   intro: z.string().optional(),
-  questions: z.array(ComprehensionQuestionSchema).min(1).max(3),
+  questions: z.array(ComprehensionQuestionSchema).min(1).max(10),
 });
 
 const ScaffoldPartSchema = z.object({
@@ -596,6 +598,9 @@ const ApplyChallengeSchema = z.discriminatedUnion('kind', [
     min_words: z.number().int().min(1).max(40).optional() }),
   z.object({ ...ChallengeBase, kind: z.literal('unscramble'),
     tokens: z.array(z.string().min(1)).min(3).max(20), answer: z.string().min(1) }),
+  z.object({ ...ChallengeBase, kind: z.literal('word_match'),
+    instruction: z.string().optional(),
+    pairs: z.array(z.object({ left: z.string().min(1), right: z.string().min(1) })).min(2).max(8) }),
   // ─── Grammar Gym kinds ───
   z.object({ ...ChallengeBase, kind: z.literal('transform'),
     source: z.string().min(1), instruction: z.string().min(1),
@@ -632,7 +637,7 @@ const ReadingQuestionSchema = z.discriminatedUnion('kind', [
 ]);
 const ReadingComprehensionBlockSchema = BaseBlockSchema.extend({
   type: z.literal('reading_comprehension'),
-  passage_type: z.enum(['discursive', 'factual', 'case_based', 'literary']),
+  passage_type: z.enum(['discursive', 'factual', 'case_based', 'literary', 'descriptive']),
   lang: z.enum(['english', 'hindi']).optional(),
   title: z.string().optional(),
   intro: z.string().optional(),

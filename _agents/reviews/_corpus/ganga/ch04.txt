@@ -1,0 +1,2252 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 4: ऐसी भी बातें होती हैं
+book=class9-hindi-ganga chapter=4 pages=9
+
+
+================================================================================
+## PAGE 1 — "परिचय — साक्षात्कार से पहले"  (slug: ch4-parichay)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=e53fe2ea-649f-40d6-aa55-9350c576ef89 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/e53fe2ea-649f-40d6-aa55-9350c576ef89_gen.webp",
+ "alt": "लता मंगेशकर — माइक पर गाती हुईं",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a dignified woman in a white sari singing into a vintage microphone in a recording studio, warm focused light, on a dark ground. Loose washes, soft bleeding edges, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=8afac941-6882-4a34-95eb-751a571ecbca ---
+{
+ "prompt": "\"मेरी आवाज़ ही पहचान है।\" — सोचिए, अगर आपकी कोई एक चीज़ ही आपकी पूरी पहचान बन जाए, तो वह क्या होगी? और उस पहचान को बनाने के पीछे कितनी मेहनत और किन मूल्यों की ज़रूरत होगी?",
+ "hint": "किसी ऐसी हस्ती के बारे में सोचिए जिसे उसकी एक ख़ास बात से पहचाना जाता है।"
+}
+
+--- block #2 [meet_a_scientist] id=f6d4e4a1-5871-4e41-ba6b-97e64346828a ---
+{
+ "name": "यतींद्र मिश्र (साक्षात्कारकर्ता)",
+ "years": "जन्म 1977",
+ "nationality": "भारतीय — अयोध्या, उत्तर प्रदेश",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of writer Yatindra Mishra, dark ground.",
+ "contribution": "कवि, संगीत-प्रेमी और संस्कृति के अध्येता। तीन काव्य-संग्रह — **यदा-कदा**, अयोध्या तथा अन्य कविताएँ, ड्योढ़ी पर आलाप। शास्त्रीय गायिका गिरिजा देवी पर पुस्तक *गिरिजा* लिखी; पत्रिका *सहित* का संपादन करते हैं।",
+ "connection": "इस पाठ में यतींद्र मिश्र **भारत रत्न लता मंगेशकर** से एक आत्मीय साक्षात्कार लेते हैं, जिसमें संगीत, परिवार और जीवन-मूल्यों की दुर्लभ बातें उभरती हैं।",
+ "fun_detail": "कविता के साथ-साथ संगीत और ललित कलाओं में उनकी गहरी रुचि है — इसीलिए वे संगीत पर इतने गहरे प्रश्न पूछ पाते हैं।",
+ "learn_more": "पुस्तक \"गिरिजा\" और काव्य-संग्रह \"यदा-कदा\"।"
+}
+
+--- block #3 [callout] id=043aedd1-4339-4898-b7ba-798a42beb3aa ---
+{
+ "variant": "india_voice",
+ "title": "साक्षात्कार क्या है?",
+ "markdown": "**साक्षात्कार (Interview)** एक विधा है जिसमें एक व्यक्ति प्रश्न पूछता है और दूसरा उनके उत्तर देता है। अच्छा साक्षात्कार सूखे सवाल-जवाब नहीं, बल्कि एक **आत्मीय बातचीत** होती है — जिसमें व्यक्ति का असली व्यक्तित्व खुलकर सामने आ जाता है।"
+}
+
+--- block #4 [text] id=6950ca27-cf60-4886-9806-c455e01e8788 ---
+{
+ "markdown": "इस साक्षात्कार की नायिका हैं **लता मंगेशकर** — इंदौर में जन्मीं, मात्र पाँच वर्ष की आयु में पिता पं. दीनानाथ मंगेशकर से संगीत सीखना शुरू करने वाली \"भारत रत्न\" गायिका। पढ़ने से पहले कुछ शब्द जान लें।"
+}
+
+--- block #5 [vocabulary_lab] id=548febfb-1885-4740-b1aa-d9dbabb6a38d ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "साक्षात्कार में आने वाले शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "e84316b5-f6ed-40a7-b0a9-6825c94a039c",
+   "word": "अप्रतिम",
+   "pronunciation": "a-pra-tim",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बेजोड़, अनुपम",
+   "english": "peerless",
+   "example": "उनकी अप्रतिम आवाज़ बेजोड़ है।",
+   "memory_hook": "अ + प्रतिम।"
+  },
+  {
+   "id": "a35f0f7d-a984-4897-aa6d-2a9a293994d9",
+   "word": "स्वाभिमान",
+   "pronunciation": "swaa-bhi-maan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आत्मसम्मान",
+   "english": "self-respect",
+   "example": "पिताजी से स्वाभिमान की सीख मिली।",
+   "memory_hook": "स्व + अभिमान।"
+  },
+  {
+   "id": "8fa81c4f-af50-449e-8030-52bee387ad9c",
+   "word": "समर्पित",
+   "pronunciation": "sa-mar-pit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "अर्पित, सौंपा हुआ",
+   "english": "dedicated",
+   "example": "वे संगीत के प्रति समर्पित रहीं।",
+   "memory_hook": "समर्पण से।"
+  },
+  {
+   "id": "38a681f9-7cf7-4b0c-9dcb-8f466efd933d",
+   "word": "पार्श्वगायन",
+   "pronunciation": "paarshv-gaa-yan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "परदे के पीछे गाना",
+   "english": "playback singing",
+   "example": "उन्होंने पार्श्वगायन किया।",
+   "memory_hook": "पार्श्व + गायन।"
+  },
+  {
+   "id": "02f2224c-63c2-423f-8cde-a69a79d9b338",
+   "word": "साधना",
+   "pronunciation": "saa-dha-naa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कठिन अभ्यास, लगन",
+   "english": "devotion; practice",
+   "example": "साधना से ऐसी आवाज़ बनती है।",
+   "memory_hook": "devoted practice।"
+  },
+  {
+   "id": "5b3adbd6-c4fc-41b9-8eb6-52988c0b3d8b",
+   "word": "अमर",
+   "pronunciation": "a-mar",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जो कभी न मरे",
+   "english": "immortal",
+   "example": "उनका गाना अमर है।",
+   "memory_hook": "अ + मर।"
+  },
+  {
+   "id": "a6fcf650-d687-4351-89ad-797467a28966",
+   "word": "मार्मिक",
+   "pronunciation": "maar-mik",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "दिल को छू लेने वाला",
+   "english": "poignant",
+   "example": "एक मार्मिक बात कही गई।",
+   "memory_hook": "मर्म से।"
+  },
+  {
+   "id": "78b8a006-b489-44fc-b0ed-b13f3f4bb119",
+   "word": "कृतज्ञता",
+   "pronunciation": "kri-tagy-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आभार का भाव",
+   "english": "gratitude",
+   "example": "प्रशंसकों के प्रति कृतज्ञता।",
+   "memory_hook": "कृत + ज्ञ।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=a9e15d16-55ae-410c-93ea-116580dcf09b ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "7b22f447-6e04-4ba6-a981-76a647ea2b11",
+   "question": "इस साक्षात्कार में लता मंगेशकर से बातचीत कौन कर रहे हैं?",
+   "options": [
+    "उनके पिता दीनानाथ मंगेशकर",
+    "यतींद्र मिश्र",
+    "संगीतकार नौशाद साहब",
+    "उस्ताद अली अकबर खाँ"
+   ],
+   "correct_index": 1,
+   "explanation": "साक्षात्कार कवि-संगीत-प्रेमी यतींद्र मिश्र ले रहे हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "8fde0ae9-e6a7-465a-b16d-e04c37e1201c",
+   "question": "लता मंगेशकर ने संगीत की प्रारंभिक शिक्षा किससे ली?",
+   "options": [
+    "उस्ताद अली अकबर खाँ से",
+    "किसी फ़िल्म-संगीतकार से",
+    "सितारवादक पंडित रविशंकर से",
+    "अपने पिता पं. दीनानाथ मंगेशकर से"
+   ],
+   "correct_index": 3,
+   "explanation": "मात्र पाँच वर्ष की आयु में उन्होंने पिता दीनानाथ मंगेशकर से सीखना शुरू किया।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "46e2845f-e08d-4fc1-989c-5afef11dad2e",
+   "question": "\"साक्षात्कार\" विधा की मुख्य पहचान क्या है?",
+   "options": [
+    "प्रश्न-उत्तर के रूप में बातचीत",
+    "केवल लेखक के अपने विचार",
+    "काल्पनिक कहानी",
+    "छंदबद्ध कविता"
+   ],
+   "correct_index": 0,
+   "explanation": "साक्षात्कार में एक व्यक्ति प्रश्न पूछता है और दूसरा उत्तर देता है।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "साक्षात्कार — भाग १"  (slug: ch4-sakshatkar-bhag-1)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=11bbd18a-6ed5-4c3e-8d73-a5c7eae814e0 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/11bbd18a-6ed5-4c3e-8d73-a5c7eae814e0_gen.webp",
+ "alt": "पिता और संगीत की विरासत",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a vintage stage where a father figure performs music while children watch with admiration, warm theatrical light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [heading] id=db30e802-200f-4ee4-94b6-e1061f39deac ---
+{
+ "text": "भाग १ — पिताजी और स्वाभिमान",
+ "level": 2
+}
+
+--- block #2 [text] id=7a4a58fb-36fa-412f-bbb7-4d3c7c12cc9f ---
+{
+ "markdown": "साक्षात्कार पिता पं. दीनानाथ मंगेशकर की यादों से शुरू होता है — उनके अनुशासन, संगीत, और उस सबसे बड़ी सीख से जो लता जी के पूरे जीवन का आधार बनी।"
+}
+
+--- block #3 [dialogue_role_play] id=6318857e-132b-4434-a606-704e2de95fde ---
+{
+ "mode": "dialogue",
+ "scene_description": "यतींद्र मिश्र लता मंगेशकर से उनके पिता और जीवन-मूल्यों के बारे में पूछते हैं। एक पात्र चुनकर भूमिका निभाइए।",
+ "characters": [
+  {
+   "id": "yat",
+   "name": "यतींद्र मिश्र",
+   "color": "deep_clay"
+  },
+  {
+   "id": "lata",
+   "name": "लता मंगेशकर",
+   "color": "warm_amber"
+  }
+ ],
+ "lines": [
+  {
+   "id": "7895bd0b-61af-49db-a97a-09d46c7ba5f1",
+   "character_id": "yat",
+   "text": "दीदी, आपके संगीत की अप्रतिम यात्रा पर बातचीत शुरू करते हैं... आप अगर तैयार हों, तो मैं आपके करोड़ों प्रशंसकों की ओर से प्रणाम करते हुए आपसे प्रश्न पूछना चाहूँगा।",
+   "audio_url": "",
+   "stage_direction": "(आदर के साथ)"
+  },
+  {
+   "id": "9830c543-aa1d-40c8-96ee-0869e6cf2bae",
+   "character_id": "lata",
+   "text": "जी, ज़रूर। आपका बेहद शुक्रिया कि आपका ऐसा कुछ करने का मन है। मैं कोशिश करूँगी कि जो कुछ भी मैंने संगीत में रहते हुए जाना है, उसे आपको बता सकूँ।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "1ae381b1-f0f3-47f5-98f6-a53bc30e0ee5",
+   "character_id": "yat",
+   "text": "आपके पिताजी पं. दीनानाथ मंगेशकर की वे कौन-सी स्मृतियाँ हैं, जो आज भी आपके स्मरण में जीवित हैं?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "fafa55f7-6333-4aed-b264-a16d98fe249a",
+   "character_id": "lata",
+   "text": "कई बातें हैं। बचपन में जब हम बहुत शरारत करते थे, तब पिताजी सबको बुलाकर अपने सामने खड़ा करते थे। वे बस हमको गंभीरता से देखते थे और इतने में ही हमारा रोना शुरू हो जाता था। फिर पूछते— \"समझ गए न?\" और हम कहते, \"हाँ, हम समझ गए।\"",
+   "audio_url": "",
+   "stage_direction": "(स्नेह से याद करते हुए)"
+  },
+  {
+   "id": "7de7d4d4-4e1c-4a62-813d-4203fd41772a",
+   "character_id": "yat",
+   "text": "पिताजी से संगीत के अलावा आपने क्या-क्या और सीखा?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "3981a904-9bc3-4842-ab86-ec9189ebec24",
+   "character_id": "lata",
+   "text": "सबसे ज़्यादा तो स्वाभिमान से जीने की प्रेरणा। यह मेरे पिताजी ने ही सिखाया कि अगर कोई बात तुम्हें सही लगती है, तो उसे करो और किसी के आगे झुकने की ज़रूरत नहीं है।",
+   "audio_url": "",
+   "stage_direction": null
+  }
+ ],
+ "debate_frames": null
+}
+
+--- block #4 [comprehension_checkpoint] id=c7616f36-99e6-4663-b08d-98fb65ed6fb8 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "51c16628-13e6-4e52-a978-1199f762a5df",
+   "question": "पिताजी से लता जी को सबसे बड़ी कौन-सी सीख मिली?",
+   "options": [
+    "हमेशा सबकी बात मान लेना",
+    "स्वाभिमान से जीना — सही बात पर अडिग रहना, किसी के आगे न झुकना",
+    "ख़ूब पैसा कमाना",
+    "दूसरों की नक़ल करना"
+   ],
+   "correct_index": 1,
+   "explanation": "पिताजी की सबसे बड़ी सीख थी — स्वाभिमान से जीना; सही बात पर अडिग रहना और किसी के आगे न झुकना।"
+  }
+ ]
+}
+
+--- block #5 [reasoning_prompt] id=452ac69b-7079-4523-8f70-9235ca9ba065 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "पिताजी बच्चों को कुछ कहते नहीं थे, न डाँटते थे — बस गंभीरता से देखते थे और बच्चे समझ जाते थे। यह \"बिना कहे समझा देना\" अनुशासन का कैसा तरीक़ा है — डर का या सम्मान का?",
+ "reveal": "यह मुख्यतः सम्मान और स्नेह से उपजे अनुशासन का तरीक़ा है, केवल डर का नहीं। बच्चे पिता का इतना आदर करते थे कि उनकी एक गंभीर नज़र ही काफ़ी थी — मार-डाँट की ज़रूरत न पड़ती। पर इसमें थोड़ा \"ग़ुस्से का डर\" भी था; असली ताक़त उस आदर-भरे रिश्ते की है, जहाँ शब्दों के बिना भी बात पहुँच जाती है।",
+ "difficulty_level": 3
+}
+
+--- block #6 [inline_quiz] id=c120d189-dfb7-4a9d-b36d-6616a081560a ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d9435ff9-e4bc-47ae-9aed-e65f37f54d89",
+   "question": "शरारत करने पर पिताजी बच्चों के साथ क्या करते थे?",
+   "options": [
+    "ज़ोर से डाँटते और मारते थे",
+    "घर से बाहर निकाल देते थे",
+    "सामने खड़ा कर गंभीरता से देखते थे",
+    "उनसे बात करना बंद कर देते थे"
+   ],
+   "correct_index": 2,
+   "explanation": "वे कुछ कहते नहीं थे — बस सामने खड़ा कर गंभीरता से देखते, और बच्चे ख़ुद समझ जाते।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "da40855a-3ec1-40cb-9b31-3db51b5ad3ac",
+   "question": "लता जी के अनुसार पिता से मिली सबसे बड़ी सीख क्या थी?",
+   "options": [
+    "अधिक से अधिक धन कमाना",
+    "हर किसी की बात मान लेना",
+    "स्वाभिमान से जीने की प्रेरणा",
+    "दूसरों से डरकर रहना"
+   ],
+   "correct_index": 2,
+   "explanation": "स्वाभिमान से जीना — सही बात पर अडिग रहना और किसी के आगे न झुकना।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "c5e8161a-005a-4896-994a-a1b69228da4d",
+   "question": "पिता का \"बिना कुछ कहे\" बच्चों को समझा देना किस बात का संकेत है?",
+   "options": [
+    "आदर और स्नेह से बने गहरे रिश्ते का",
+    "घर के बच्चों के बहुत डरपोक होने का",
+    "पिता के कठोर होने का",
+    "बच्चों के नटखट होने का"
+   ],
+   "correct_index": 0,
+   "explanation": "बच्चे पिता का इतना आदर करते थे कि एक गंभीर नज़र ही पर्याप्त थी — यह आदर-भरे रिश्ते की ताक़त है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "साक्षात्कार — भाग २"  (slug: ch4-sakshatkar-bhag-2)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=e7551534-8546-4665-b3b1-475c002add0d ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/e7551534-8546-4665-b3b1-475c002add0d_gen.webp",
+ "alt": "बचपन, फिल्में और कड़ी मेहनत",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — children playfully imitating a film scene on a bed-pillow \"stage\" at home, and beside it a young woman hurrying between recording studios. Warm nostalgic light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=fa80f2dd-c53f-4ddf-9374-436d0b3ad609 ---
+{
+ "markdown": "लता जी बचपन की शरारतों, फ़िल्मों की नक़ल, अभिनय को नापसंद करने, और कड़ी मेहनत व परिवार के प्रति ज़िम्मेदारी की बातें साझा करती हैं।"
+}
+
+--- block #2 [dialogue_role_play] id=9f64a990-c091-472d-8a9f-d0668882f5b9 ---
+{
+ "mode": "dialogue",
+ "scene_description": "साक्षात्कार आगे बढ़ता है — बचपन, अभिनय और संघर्ष की बातें।",
+ "characters": [
+  {
+   "id": "yat",
+   "name": "यतींद्र मिश्र",
+   "color": "deep_clay"
+  },
+  {
+   "id": "lata",
+   "name": "लता मंगेशकर",
+   "color": "warm_amber"
+  }
+ ],
+ "lines": [
+  {
+   "id": "fe03de23-80e2-45d7-84a9-86344c784de9",
+   "character_id": "yat",
+   "text": "बचपन में आप सभी भाई-बहन फ़िल्में देखकर उसकी नक़ल उतारते थे। किसी ख़ास फ़िल्म की नक़ल का स्मरण करेंगी?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "707f2095-5556-4224-9792-bc9ddd3eb1f3",
+   "character_id": "lata",
+   "text": "अरे! यह तो हम बहुत करते थे। मुझे याद है \"संत तुकाराम\" फ़िल्म — तुकाराम सदेह बैकुंठ जाते हैं। हम कमरे में गद्दे-तकिये एक के ऊपर एक रखकर ऊँचा स्वर्ग बनाते थे, जिस पर चढ़कर मैं गीत गाती थी।",
+   "audio_url": "",
+   "stage_direction": "(हँसते हुए)"
+  },
+  {
+   "id": "f26e4b38-42e0-41f6-a764-87315d51b978",
+   "character_id": "yat",
+   "text": "अगर किसी फ़िल्म में आपको अभिनय करने को कहा जाता, तो वह कौन-सी फ़िल्म होती?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "4da246d5-5934-4238-81ae-ded0b5962485",
+   "character_id": "lata",
+   "text": "मैंने शुरू में फ़िल्मों में काम किया था, पर मुझे कभी अच्छा नहीं लगा — मेकअप करना, लाइट के सामने जाना। अच्छी फ़िल्मों को देखकर सराहने का जी ज़रूर करता है, मगर अभिनय के बारे में तो सोच भी नहीं सकती।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "dafce7d0-8e5e-4840-9103-a8f42fac1aa2",
+   "character_id": "yat",
+   "text": "उस दौर में आपके काम की परिस्थितियाँ कैसी थीं?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "c8c29a4a-ec4b-456a-a476-4de02bb82198",
+   "character_id": "lata",
+   "text": "मेरी रिकॉर्डिंग सुबह से रात तक चलती रहती थी, एक स्टूडियो से दूसरे और तीसरे स्टूडियो के चक्कर में ही पूरा दिन बीत जाता था। हमेशा यही बात दिमाग़ में घूमती थी कि किसी तरह बस मुझे अपने परिवार को देखना है।",
+   "audio_url": "",
+   "stage_direction": "(गंभीरता से)"
+  }
+ ],
+ "debate_frames": null
+}
+
+--- block #3 [comprehension_checkpoint] id=689659b4-0097-42f9-9938-dab015b25f2b ---
+{
+ "questions": [
+  {
+   "id": "fbf0cb07-d6f1-4ea8-8d7c-74d5653ddde3",
+   "question": "लता जी को अभिनय (acting) क्यों पसंद नहीं था?",
+   "options": [
+    "उन्हें अभिनय आता ही नहीं था",
+    "पिता ने मना किया था",
+    "पैसे कम मिलते थे",
+    "मेकअप करना और लाइट-कैमरे के सामने जाना अच्छा नहीं लगता था"
+   ],
+   "correct_index": 3,
+   "explanation": "मेकअप, लाइट के सामने जाना — यह सब उन्हें कभी अच्छा नहीं लगा; वे गायन को ही समर्पित रहीं।"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=22cd3edd-32f1-41f5-8770-910d20380253 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "सुबह से रात तक स्टूडियो-दर-स्टूडियो दौड़ती लता जी के मन में हमेशा एक ही बात रहती थी — \"किसी तरह बस मुझे अपने परिवार को देखना है।\" यह उनके किस गुण और किस ज़िम्मेदारी को दर्शाता है?",
+ "reveal": "पिता की मृत्यु (1942) के बाद, मात्र 13 वर्ष की उम्र में पूरे परिवार का उत्तरदायित्व लता जी पर आ गया था। यह उनकी गहरी कर्तव्यनिष्ठा, त्याग और परिवार के प्रति समर्पण को दर्शाता है — अपनी थकान-तकलीफ़ से ज़्यादा उन्हें इसकी चिंता थी कि परिवार की ज़रूरतें कैसे पूरी हों।",
+ "difficulty_level": 4
+}
+
+--- block #5 [inline_quiz] id=1175bf6e-2300-4cf6-b096-b91a5235c382 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "53458a7f-64ba-43a5-999e-f305ace67729",
+   "question": "बचपन में लता जी ने किस फ़िल्म की नक़ल का ज़िक्र किया?",
+   "options": [
+    "छत्रपति शिवाजी",
+    "महल",
+    "बरसात",
+    "संत तुकाराम"
+   ],
+   "correct_index": 3,
+   "explanation": "\"संत तुकाराम\" — जिसमें तुकाराम सदेह बैकुंठ जाते हैं; बच्चे गद्दे-तकिये से \"स्वर्ग\" बनाते थे।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "22eb3af1-4f19-4c33-82bf-2a39cfb82b5f",
+   "question": "उस दौर में लता जी की रिकॉर्डिंग कैसी चलती थी?",
+   "options": [
+    "पूरे सप्ताह में केवल एक ही दिन",
+    "सुबह से रात तक, स्टूडियो-दर-स्टूडियो",
+    "केवल रात के समय",
+    "महीने में एक बार"
+   ],
+   "correct_index": 1,
+   "explanation": "सुबह से रात तक एक से दूसरे-तीसरे स्टूडियो के चक्कर में पूरा दिन बीत जाता था।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "38443e26-0d1e-4002-8f7e-5c544737a3ab",
+   "question": "लता जी की \"परिवार को देखना है\" वाली चिंता किस गुण को दर्शाती है?",
+   "options": [
+    "मन में केवल धन कमाने का लालच",
+    "कर्तव्यनिष्ठा और परिवार के प्रति समर्पण",
+    "प्रसिद्धि की भूख",
+    "काम से भागना"
+   ],
+   "correct_index": 1,
+   "explanation": "पिता की मृत्यु के बाद कम उम्र में परिवार का भार उठाना — गहरी कर्तव्यनिष्ठा और त्याग।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "साक्षात्कार — भाग ३"  (slug: ch4-sakshatkar-bhag-3)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=9cb37187-af50-45bd-b9c7-35360caea48f ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/9cb37187-af50-45bd-b9c7-35360caea48f_gen.webp",
+ "alt": "सुर, साधना और अमरता",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a sarod with one string snapping mid-performance, a serene singer in a white sari nearby, glowing musical motifs on a dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=2e22206d-28c9-4e85-ae57-f90efb840926 ---
+{
+ "markdown": "साक्षात्कार के गहरे क्षणों में लता जी संगीत की असीम शक्ति, उस्ताद अली अकबर खाँ की एक मार्मिक बात, और \"अमरता\" पर अपने विचार साझा करती हैं।"
+}
+
+--- block #2 [dialogue_role_play] id=b22e64b0-9395-4d58-bcba-fe1be37a72bf ---
+{
+ "mode": "dialogue",
+ "scene_description": "साक्षात्कार का गहन भाग — संगीत, सुर और अमरता पर।",
+ "characters": [
+  {
+   "id": "yat",
+   "name": "यतींद्र मिश्र",
+   "color": "deep_clay"
+  },
+  {
+   "id": "lata",
+   "name": "लता मंगेशकर",
+   "color": "warm_amber"
+  }
+ ],
+ "lines": [
+  {
+   "id": "2c010554-73dd-49a5-9ae0-4b2108cd08f8",
+   "character_id": "yat",
+   "text": "संगीत की प्राचीन परंपरा में कई कथाएँ हैं — जैसे तानसेन के दीपक राग गाने से दीये जल उठे। इन अवधारणाओं पर आप कैसे सोचती हैं?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "6033ad0e-9ce4-4587-8b99-64a90ece26a0",
+   "character_id": "lata",
+   "text": "यह जिस ज़माने की कथाएँ हैं, हो सकता है उनकी कला में कोई सच्चा सुर या आत्मा की आवाज़ लगी होगी। मैं मानती हूँ कि संगीत में वह असीम शक्ति है कि कुछ अप्रत्याशित वह ज़रूर रच देता है।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "5c5c638c-cdef-4711-b7cd-c8a3251e3924",
+   "character_id": "lata",
+   "text": "आपको एक वाकया बताती हूँ। मैं अली अकबर खाँ और रविशंकर का कंसर्ट सुन रही थी। अचानक अली अकबर भाई के सरोद का एक तार टूट गया। मैंने कहा, \"काश यह तार न टूटता।\" उन्होंने एक मार्मिक बात कही— \"बहन, जब बहुत सुर में तार लगता है, तो टूट जाता है।\"",
+   "audio_url": "",
+   "stage_direction": "(श्रद्धा से याद करते हुए)"
+  },
+  {
+   "id": "3421811f-a3e8-492f-b249-2d9a144c5fac",
+   "character_id": "yat",
+   "text": "दीदी, आप तो घर-घर में व्याप्त हैं। आप अमर हैं और दूसरी लता मंगेशकर होना संभव नहीं...",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "08d94a27-9016-4104-9178-bf4700671157",
+   "character_id": "lata",
+   "text": "मुझे भगवान ने बहुत कुछ दिया है, मुझे किसी बात की शिकायत नहीं। मेरा गाना अमर है, पर शरीर तो अमर नहीं। हमारे यहाँ कहा जाता है— \"गाव गेला वाहुन, नाव गेला राहुन।\" मतलब गाँव तो बह जाता है, लेकिन जो नाम है, वह रह जाता है।",
+   "audio_url": "",
+   "stage_direction": "(विनम्रता से)"
+  }
+ ],
+ "debate_frames": null
+}
+
+--- block #3 [comprehension_checkpoint] id=32ca7ab1-5409-4c79-8937-95fb1d5c0f6a ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "71ec4d5b-13a6-4b67-be29-3aa3fea20f49",
+   "question": "अली अकबर खाँ की बात \"बहुत सुर में तार लगता है, तो टूट जाता है\" का गहरा अर्थ क्या है?",
+   "options": [
+    "संगीत/पूर्णता की पराकाष्ठा इतनी तीव्र है कि साधारण तार भी उसका आघात नहीं सह पाता",
+    "सरोद की तार कमज़ोर थी",
+    "अली अकबर ख़राब बजा रहे थे",
+    "तार सस्ती थी"
+   ],
+   "correct_index": 0,
+   "explanation": "पूर्ण सुर की पवित्रता इतनी प्रबल होती है कि भौतिक तार उसका आघात सह नहीं पाती — संगीत की असीमता का प्रतीक।"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=ba44efca-e70d-4978-9873-07b686f53ba6 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "इतनी प्रसिद्धि और \"भारत रत्न\" पाकर भी लता जी कहती हैं — \"मेरा गाना अमर है, पर शरीर तो अमर नहीं।\" यह कथन उनके किस व्यक्तित्व को उजागर करता है?",
+ "reveal": "यह उनकी गहरी विनम्रता, सादगी और दार्शनिक दृष्टि को उजागर करता है। दुनिया उन्हें \"अमर\" कहती है, पर वे शरीर की नश्वरता को सहज स्वीकार करती हैं और सारा श्रेय भगवान व प्रशंसकों के प्रेम को देती हैं। इतनी ऊँचाई पर पहुँचकर भी घमंड न करना — यही उनकी सबसे बड़ी विशेषता है।",
+ "difficulty_level": 4
+}
+
+--- block #5 [inline_quiz] id=121346a2-72fc-4d6b-8816-1a5a4c8ea4e2 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "9285f74c-ca55-422c-a47d-dce7ff8b3f00",
+   "question": "सरोद की तार टूटने पर अली अकबर खाँ ने क्या कहा?",
+   "options": [
+    "\"यह तार तो बहुत पुरानी और कमज़ोर पड़ चुकी थी।\"",
+    "\"अब कंसर्ट रोकना पड़ेगा।\"",
+    "\"मुझसे ग़लती हो गई।\"",
+    "\"बहन, जब बहुत सुर में तार लगता है, तो टूट जाता है।\""
+   ],
+   "correct_index": 3,
+   "explanation": "यह मार्मिक बात संगीत की पवित्रता और असीमता का प्रतीक है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "ee69051d-8751-4ed2-8514-7ed989b5adec",
+   "question": "\"मेरा गाना अमर है, पर शरीर तो अमर नहीं\" — यह कथन क्या दर्शाता है?",
+   "options": [
+    "गहरी विनम्रता और सादगी",
+    "अपनी प्रसिद्धि का घमंड",
+    "जीवन से निराशा",
+    "धन का लालच"
+   ],
+   "correct_index": 0,
+   "explanation": "इतनी ऊँचाई पर भी शरीर की नश्वरता को सहज स्वीकारना — विनम्रता और दार्शनिक दृष्टि।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "2aa12d59-8a68-4694-9470-75944816b093",
+   "question": "\"गाव गेला वाहुन, नाव गेला राहुन\" कहावत का प्रतीकात्मक अर्थ क्या है?",
+   "options": [
+    "गाँव में नाव नहीं चलती",
+    "फ़िल्मों की दुनिया में नाम कमाना बहुत आसान है",
+    "शरीर/जीवन नश्वर है, पर नाम-कर्म अमर रहते हैं",
+    "नदी में सब बह जाता है"
+   ],
+   "correct_index": 2,
+   "explanation": "गाँव (शरीर) बह जाता है, पर नाम (कर्म/कीर्ति) रह जाता है — जीवन नश्वर, कर्म अमर।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "शब्द-संपदा"  (slug: ch4-shabd-sampada)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=882ce58a-e020-4205-a156-ffc6b2ffd335 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/882ce58a-e020-4205-a156-ffc6b2ffd335_gen.webp",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a tanpura silhouette, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=20161d66-4d85-4440-810f-2359f40bb324 ---
+{
+ "markdown": "इस साक्षात्कार के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और याद रखने की ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=6fd4225d-6298-4214-b29d-0bfa54ed28de ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: साक्षात्कार के मूल शब्द।",
+ "cards": [
+  {
+   "id": "99d1108e-9602-46e4-a709-7c9401fef51d",
+   "word": "अप्रतिम",
+   "pronunciation": "a-pra-tim",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बेजोड़, अनुपम, जिसकी तुलना न हो",
+   "english": "peerless; matchless",
+   "example": "लता जी की अप्रतिम आवाज़ की कोई दूसरी मिसाल नहीं।",
+   "memory_hook": "अ + प्रतिम (तुलना) = without equal।"
+  },
+  {
+   "id": "a465c4b4-45d2-42db-b291-9b2018506788",
+   "word": "आकंठ",
+   "pronunciation": "aa-kanth",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "गले तक, पूरी तरह डूबकर",
+   "english": "up to the brim; completely",
+   "example": "वे संगीत में आकंठ डूबी हुई थीं।",
+   "memory_hook": "आ + कंठ (गला) = up to the throat।"
+  },
+  {
+   "id": "e958b8df-7590-4e51-bed4-83ec906ab920",
+   "word": "समर्पित",
+   "pronunciation": "sa-mar-pit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "अर्पित, पूरी तरह सौंपा हुआ",
+   "english": "dedicated; devoted",
+   "example": "जीवन-भर वे संगीत के प्रति समर्पित रहीं।",
+   "memory_hook": "\"समर्पण\" से — dedicated।"
+  },
+  {
+   "id": "085b1b01-d8c3-4e99-a2a5-25736335e181",
+   "word": "स्वाभिमान",
+   "pronunciation": "swaa-bhi-maan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आत्मसम्मान, अपनी प्रतिष्ठा का आदर",
+   "english": "self-respect; dignity",
+   "example": "पिताजी से सबसे बड़ी सीख स्वाभिमान से जीने की मिली।",
+   "memory_hook": "स्व (अपना) + अभिमान = self-respect।"
+  },
+  {
+   "id": "f09363b8-d84d-46e8-82a6-7c26a36df2d3",
+   "word": "रागदारी",
+   "pronunciation": "raag-daa-ree",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "राग गाने का ढंग/कला",
+   "english": "the art of singing a raga",
+   "example": "उनके नाटकों में लंबी-लंबी रागदारी का गायन होता था।",
+   "memory_hook": "राग + दारी।"
+  },
+  {
+   "id": "d5ddf8ab-1f14-4700-abd8-633cf7fd88a2",
+   "word": "अनुयायी",
+   "pronunciation": "a-nu-yaa-yee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पीछे चलने वाला, अनुगामी",
+   "english": "a follower",
+   "example": "मीना और आशा तुकाराम के अनुयायी बनकर पीछे चलते।",
+   "memory_hook": "अनु + यायी = one who follows।"
+  },
+  {
+   "id": "215365eb-c627-4115-b83e-3324ce427182",
+   "word": "मार्फ़त",
+   "pronunciation": "maar-fat",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "के माध्यम से, ज़रिये",
+   "english": "through; via",
+   "example": "फ़िल्मों की मार्फ़त ही उन्हें पहला काम मिला।",
+   "memory_hook": "उर्दू — by means of।"
+  },
+  {
+   "id": "cc7ab8bd-c8dd-4607-a3d5-304291570d48",
+   "word": "सबब",
+   "pronunciation": "sa-bab",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कारण, वजह, हेतु",
+   "english": "reason; cause",
+   "example": "क्या यह हमेशा की तरह चुनौती का सबब बनी रही?",
+   "memory_hook": "उर्दू — a cause।"
+  },
+  {
+   "id": "eec3b426-eb7b-4750-a124-492d20e76f0b",
+   "word": "अलबत्ता",
+   "pronunciation": "al-bat-taa",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "हाँ ज़रूर, निस्संदेह",
+   "english": "of course; certainly",
+   "example": "अलबत्ता मैं उस ज़माने से बहुत मेहनत से काम करती थी।",
+   "memory_hook": "उर्दू — indeed/of course।"
+  },
+  {
+   "id": "8230cde9-3463-495f-bb3e-e2e36b446506",
+   "word": "सूत्रपात",
+   "pronunciation": "soo-tra-paat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "किसी कार्य का आरंभ",
+   "english": "inception; beginning",
+   "example": "इन गीतों से एक नए युग का सूत्रपात हुआ।",
+   "memory_hook": "सूत्र + पात = laying the first thread।"
+  },
+  {
+   "id": "a4c5032c-12c6-49f9-9a49-37b99e2412d1",
+   "word": "आमद",
+   "pronunciation": "aa-mad",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आना, आगमन",
+   "english": "arrival; coming",
+   "example": "\"आएगा आने वाला\" की आमद कैसी होती?",
+   "memory_hook": "उर्दू — arrival।"
+  },
+  {
+   "id": "005f3c3f-c136-46c5-b2f6-48f7eda82d78",
+   "word": "पार्श्वगायन",
+   "pronunciation": "paarshv-gaa-yan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "फ़िल्म में परदे के पीछे रहकर गाना",
+   "english": "playback singing",
+   "example": "लता जी ने हज़ारों फ़िल्मों के लिए पार्श्वगायन किया।",
+   "memory_hook": "पार्श्व (पीछे) + गायन।"
+  },
+  {
+   "id": "c6e3f163-8d7f-4f87-9741-ef039241a9eb",
+   "word": "परहेज़",
+   "pronunciation": "par-hez",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "किसी चीज़ से बचना, दूर रहना",
+   "english": "abstinence; avoidance",
+   "example": "उन्होंने अपने पहनावे में रंगों से सदा परहेज़ किया।",
+   "memory_hook": "उर्दू — to avoid।"
+  },
+  {
+   "id": "43e453f8-4430-4855-8322-a6ba7f620207",
+   "word": "वाकया",
+   "pronunciation": "waa-ki-yaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "घटना",
+   "english": "an incident; episode",
+   "example": "नौशाद साहब के घर एक मज़ेदार वाकया हुआ।",
+   "memory_hook": "उर्दू — an event।"
+  },
+  {
+   "id": "2c2d7b05-c695-426b-a4bc-4bb9c93fadf5",
+   "word": "खैरियत",
+   "pronunciation": "khai-ri-yat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कुशलता, भलाई",
+   "english": "well-being",
+   "example": "\"लता बाई, सब खैरियत तो है?\"",
+   "memory_hook": "उर्दू — well-being।"
+  },
+  {
+   "id": "c801e738-d5ff-407c-aa13-782f48e0662e",
+   "word": "मार्मिक",
+   "pronunciation": "maar-mik",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "दिल/मर्म को छू लेने वाला",
+   "english": "touching; poignant",
+   "example": "अली अकबर भाई ने एक बड़ी मार्मिक बात कही।",
+   "memory_hook": "\"मर्म\" (दिल) से — heart-touching।"
+  },
+  {
+   "id": "ad2c45b5-ea59-4f8c-ae50-ead489e7d67a",
+   "word": "अप्रत्याशित",
+   "pronunciation": "a-pra-tyaa-shit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "अनसोचा, आकस्मिक",
+   "english": "unexpected",
+   "example": "संगीत में वह असीम शक्ति है कि कुछ अप्रत्याशित रच देता है।",
+   "memory_hook": "अ + प्रत्याशित (उम्मीद किया) = unexpected।"
+  },
+  {
+   "id": "73cfda28-7fa4-4e33-92d9-391d05dfd364",
+   "word": "अतिरेक",
+   "pronunciation": "a-ti-rek",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आवश्यकता से अधिक, अधिकता",
+   "english": "excess",
+   "example": "अगर मैं अतिरेक न कर रहा हूँ तो यह कहना वाजिब है...",
+   "memory_hook": "अति (बहुत) + रेक = excess।"
+  },
+  {
+   "id": "b230f334-fed8-47a4-9e7b-e71e784200e1",
+   "word": "वाजिब",
+   "pronunciation": "waa-jib",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "उचित, ठीक",
+   "english": "proper; justified",
+   "example": "यह कहना वाजिब है कि वे अमर हैं।",
+   "memory_hook": "उर्दू — proper।"
+  },
+  {
+   "id": "ba0d5af5-4dec-4d41-ab3c-bec58c8b8466",
+   "word": "कृतज्ञता",
+   "pronunciation": "kri-tagy-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आभार, एहसान मानने का भाव",
+   "english": "gratitude",
+   "example": "प्रशंसकों के प्रति वे गहरी कृतज्ञता रखती थीं।",
+   "memory_hook": "कृत (किया) + ज्ञ (जानना) = gratitude।"
+  },
+  {
+   "id": "20a21d86-d978-4b7a-954c-da57c59d3577",
+   "word": "संस्कार",
+   "pronunciation": "sans-kaar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अच्छे गुणों की सीख/शिक्षा",
+   "english": "values; upbringing",
+   "example": "पिताजी के दिए संस्कार जीवन-भर काम आए।",
+   "memory_hook": "good values instilled।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "f3ef4aec-e713-4af3-93dc-9bc16e5a5525",
+   "question": "किस शब्द का अर्थ \"बेजोड़, अनुपम\" है?",
+   "options": [
+    "अतिरेक",
+    "अनुयायी",
+    "अप्रतिम",
+    "सूत्रपात"
+   ],
+   "correct_index": 2,
+   "explanation": "अप्रतिम = peerless/matchless।"
+  },
+  {
+   "id": "bbde0a0f-560f-426c-a7ba-a023b3b6c1f1",
+   "question": "\"पार्श्वगायन\" का अर्थ है —",
+   "options": [
+    "मंच पर नाचना",
+    "फ़िल्म में अभिनय करना",
+    "फ़िल्म में परदे के पीछे रहकर गाना",
+    "वाद्य बजाना"
+   ],
+   "correct_index": 2,
+   "explanation": "पार्श्वगायन = playback singing।"
+  },
+  {
+   "id": "a11acef5-911e-4599-bfb6-53be73252f61",
+   "question": "\"स्वाभिमान\" का अर्थ है —",
+   "options": [
+    "आत्मसम्मान",
+    "दूसरों का अपमान",
+    "गहरी नींद",
+    "बहुत धन"
+   ],
+   "correct_index": 0,
+   "explanation": "स्वाभिमान = self-respect।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=8f4945d1-db18-4b55-b5d7-d3e4222dabdf ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: साक्षात्कार से जुड़े और शब्द।",
+ "cards": [
+  {
+   "id": "089757b2-d768-4831-b51e-41a776819a12",
+   "word": "साधना",
+   "pronunciation": "saa-dha-naa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कठिन अभ्यास, तप, लगन",
+   "english": "disciplined practice; devotion",
+   "example": "जीवन-भर की साधना से ही ऐसी आवाज़ बनती है।",
+   "memory_hook": "devoted practice।"
+  },
+  {
+   "id": "cd05ec1b-c2c1-4c06-abc4-d0b229931c56",
+   "word": "उत्तरदायित्व",
+   "pronunciation": "ut-tar-daa-yi-tva",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ज़िम्मेदारी",
+   "english": "responsibility",
+   "example": "पिता की मृत्यु पर पूरे परिवार का उत्तरदायित्व लता पर आ गया।",
+   "memory_hook": "उत्तर + दायित्व = duty।"
+  },
+  {
+   "id": "943a061c-dc50-488d-8c77-fd282f2e8c73",
+   "word": "मंगलागौर",
+   "pronunciation": "man-gala-gaur",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विवाह के बाद का स्त्री-उत्सव (महाराष्ट्र)",
+   "english": "a women’s post-wedding festival",
+   "example": "विवाह के बाद घरों में मंगलागौर मनाया जाता था।",
+   "memory_hook": "मंगल + गौर (पार्वती)।"
+  },
+  {
+   "id": "ce369252-f8cd-45cf-9602-16538a30899f",
+   "word": "दीवानगी",
+   "pronunciation": "dee-vaa-na-gee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पागलपन-भरी चाहत/लगन",
+   "english": "passionate devotion",
+   "example": "श्रोता उनके संगीत के प्रति दीवानगी रखते थे।",
+   "memory_hook": "\"दीवाना\" से — madness/passion।"
+  },
+  {
+   "id": "9a876aa9-f218-40dd-80b6-459627fa9ea3",
+   "word": "नश्वर",
+   "pronunciation": "nash-var",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "नाशवान, मिट जाने वाला",
+   "english": "mortal; perishable",
+   "example": "शरीर नश्वर है, पर गीत अमर रहते हैं।",
+   "memory_hook": "\"नाश\" से — perishable।"
+  },
+  {
+   "id": "c50eb797-0e99-4641-8ff9-8c92e494d991",
+   "word": "अमर",
+   "pronunciation": "a-mar",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जो कभी न मरे, चिरस्थायी",
+   "english": "immortal",
+   "example": "\"मेरा गाना अमर है, पर शरीर तो अमर नहीं।\"",
+   "memory_hook": "अ + मर = un-dying।"
+  },
+  {
+   "id": "5b92b64d-26f6-445b-86ad-0bb08c64e3f0",
+   "word": "सादगी",
+   "pronunciation": "saa-da-gee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सरलता, बनावट का अभाव",
+   "english": "simplicity",
+   "example": "इतनी प्रसिद्धि पर भी उनके जीवन में गहरी सादगी थी।",
+   "memory_hook": "उर्दू — simplicity।"
+  },
+  {
+   "id": "66a81b87-650c-4401-b5ad-f82c208ae02f",
+   "word": "विनम्रता",
+   "pronunciation": "vi-nam-ra-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "नम्रता, झुककर आदर देना",
+   "english": "humility",
+   "example": "बड़ी होकर भी उन्होंने विनम्रता नहीं छोड़ी।",
+   "memory_hook": "\"विनम्र\" से — humility।"
+  },
+  {
+   "id": "92788682-47e0-475c-878e-fb2432e12996",
+   "word": "प्रचलन",
+   "pronunciation": "pra-cha-lan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "चलन, रिवाज़",
+   "english": "prevalence; custom",
+   "example": "उस समय म्यूज़िकल ड्रामा का बहुत प्रचलन था।",
+   "memory_hook": "प्र + चलन = in vogue।"
+  },
+  {
+   "id": "b89dd45f-f176-4402-ba59-555c1efb4405",
+   "word": "सोहर",
+   "pronunciation": "so-har",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बच्चे के जन्म पर गाया मंगलगीत",
+   "english": "a birth-celebration song",
+   "example": "जन्म के अवसर पर स्त्रियाँ सोहर गाती हैं।",
+   "memory_hook": "a birth song।"
+  },
+  {
+   "id": "cf4626cc-2a5e-4165-998b-d09e9f117672",
+   "word": "फाग",
+   "pronunciation": "phaag",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "होली/फागुन में गाया जाने वाला गीत",
+   "english": "a Holi (Phagun) song",
+   "example": "होली पर गाँव में फाग गाए जाते हैं।",
+   "memory_hook": "फागुन का गीत।"
+  },
+  {
+   "id": "e5203959-3605-4663-bfd7-f8f62c51683e",
+   "word": "बैकुंठ",
+   "pronunciation": "bai-kunth",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "स्वर्ग",
+   "english": "heaven; paradise",
+   "example": "तुकाराम सदेह बैकुंठ जाते हैं।",
+   "memory_hook": "Vishnu’s heaven।"
+  },
+  {
+   "id": "8a977446-8d7d-416c-adbb-f9b27d418bc4",
+   "word": "स्मरण",
+   "pronunciation": "sma-ran",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "याद, स्मृति",
+   "english": "remembrance; recollection",
+   "example": "पिताजी की स्मृतियाँ आज भी उनके स्मरण में जीवित हैं।",
+   "memory_hook": "\"स्मृति\" से — memory।"
+  },
+  {
+   "id": "dcf564e6-83e3-46b6-b902-08aa445a10d9",
+   "word": "राग",
+   "pronunciation": "raag",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "शास्त्रीय संगीत की स्वर-रचना",
+   "english": "a raga (melodic mode)",
+   "example": "पिताजी एक राग में सुर बदलकर भी गाते थे।",
+   "memory_hook": "a musical mode।"
+  },
+  {
+   "id": "84ffae34-a68e-4334-a7c1-4076ac8b8e19",
+   "word": "मसलन",
+   "pronunciation": "mas-lan",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "उदाहरण के लिए",
+   "english": "for instance",
+   "example": "मसलन स्वामी हरिदास और तानसेन की कथाएँ।",
+   "memory_hook": "उर्दू — for example।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=f66415ee-0432-4add-b56a-f4cbc600865b ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d9982e6e-90bc-471a-9505-d002deef343b",
+   "question": "\"मार्मिक बात\" में \"मार्मिक\" का अर्थ है —",
+   "options": [
+    "बहुत कठोर और रूखी",
+    "हँसी-मज़ाक से भरी",
+    "दिल को छू लेने वाली",
+    "बहुत लंबी"
+   ],
+   "correct_index": 2,
+   "explanation": "मार्मिक = touching/poignant, मर्म (दिल) को छूने वाला।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "640bb996-b6c1-4ac9-9aaa-71825e7483e5",
+   "question": "\"अप्रत्याशित\" का सबसे सही अर्थ है —",
+   "options": [
+    "अनसोचा, आकस्मिक",
+    "पहले से तय किया हुआ",
+    "बहुत साधारण",
+    "बहुत पुराना"
+   ],
+   "correct_index": 0,
+   "explanation": "अप्रत्याशित = unexpected, जिसकी आशा न रही हो।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "bd7ffa0c-1eb2-47cd-bd39-5a3574c2de90",
+   "question": "\"उत्तरदायित्व\" का अर्थ है —",
+   "options": [
+    "किसी का उत्तर देना",
+    "अधिकार और सत्ता",
+    "दिशा-उत्तर",
+    "ज़िम्मेदारी"
+   ],
+   "correct_index": 3,
+   "explanation": "उत्तरदायित्व = responsibility।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "व्यक्तित्व और साक्षात्कार की विधा"  (slug: ch4-vyaktitva-vidha)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=d23bcbdf-d905-4acc-8b12-737f935ffaa2 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/d23bcbdf-d905-4acc-8b12-737f935ffaa2_gen.webp",
+ "alt": "साक्षात्कार से उभरती छवि",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a serene portrait of a woman in a white sari with subtle glowing words around her suggesting qualities, on a dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=6851ab6f-7385-4a77-a68b-387977e2816c ---
+{
+ "markdown": "इस साक्षात्कार से लता मंगेशकर का जो व्यक्तित्व उभरता है, और साक्षात्कार-विधा कैसे काम करती है — दोनों को देखिए।"
+}
+
+--- block #2 [theme_explorer] id=6e84bbe2-ca5a-486a-a71e-0d726f01db5e ---
+{
+ "intro": "साक्षात्कार से उभरते गुण — हर कार्ड पर टैप कीजिए।",
+ "themes": [
+  {
+   "id": "bbd0a157-b807-4a24-991d-7c93e478610f",
+   "title": "स्वाभिमान और सच्चाई",
+   "description": "किसी के आगे न झुकना, सही बात पर अडिग रहना — पिता से मिली सबसे बड़ी सीख।",
+   "evidence": [
+    "\"अगर कोई बात तुम्हें सही लगती है, तो उसे करो और किसी के आगे झुकने की ज़रूरत नहीं है।\""
+   ],
+   "reflection_prompt": "अपने जीवन का एक मौक़ा सोचिए जब आपको किसी सही बात पर अकेले खड़ा होना पड़ा। आपने क्या किया?"
+  },
+  {
+   "id": "d9e2af1c-0280-4117-b876-57e73a9380bf",
+   "title": "सादगी और विनम्रता",
+   "description": "इतनी प्रसिद्धि पर भी घमंड नहीं — छोटे घर में ख़ुश, श्रेय भगवान व प्रशंसकों को।",
+   "evidence": [
+    "\"हम जहाँ रहते हैं, वह भले ही छोटा-सा घर है, पर उसमें हम बहुत ख़ुश हैं।\"",
+    "\"मेरा गाना अमर है, पर शरीर तो अमर नहीं।\""
+   ],
+   "reflection_prompt": "किसी ऐसे व्यक्ति को जानते हैं जो बड़ा होकर भी विनम्र है? उनकी कौन-सी बात आपको प्रेरित करती है?"
+  },
+  {
+   "id": "476b5c34-862e-4dfe-aa0c-a5597a564eae",
+   "title": "समर्पण और कर्तव्यनिष्ठा",
+   "description": "संगीत के प्रति आजीवन साधना और परिवार के प्रति गहरी ज़िम्मेदारी।",
+   "evidence": [
+    "\"मुझे अपने गाने और रिकॉर्डिंग के अलावा किसी दूसरी चीज़ की सुध नहीं रहती थी।\""
+   ],
+   "reflection_prompt": "अपने परिवार/समूह के लिए \"ज़िम्मेदारी\" निभाने का कोई अनुभव बताइए।"
+  }
+ ]
+}
+
+--- block #3 [comparison_card] id=4c666a80-38b3-4818-b4a2-84300f1856eb ---
+{
+ "title": "लता जी का व्यक्तित्व — दो पहलू",
+ "columns": [
+  {
+   "heading": "बाहरी पहचान",
+   "color": "#fbbf24",
+   "points": [
+    "भारत रत्न, विश्व-प्रसिद्ध",
+    "करोड़ों प्रशंसक",
+    "\"मेरी आवाज़ ही पहचान\"",
+    "अनगिनत पुरस्कार-मेडल"
+   ]
+  },
+  {
+   "heading": "भीतरी व्यक्तित्व",
+   "color": "#34d399",
+   "points": [
+    "गहरी सादगी और विनम्रता",
+    "अडिग स्वाभिमान",
+    "परिवार के प्रति समर्पण",
+    "भगवान-प्रशंसकों के प्रति कृतज्ञता"
+   ]
+  }
+ ]
+}
+
+--- block #4 [heading] id=68e0b8e3-7a79-4eb0-829e-28693f87afc6 ---
+{
+ "text": "साक्षात्कार की विधा — मुख्य बिंदु",
+ "level": 2
+}
+
+--- block #5 [timeline] id=b2b0796d-dec9-440c-8df9-f007a0d854ab ---
+{
+ "title": "एक अच्छे साक्षात्कार के मुख्य बिंदु",
+ "orientation": "vertical",
+ "events": [
+  {
+   "id": "5252bcbb-b3ac-42ad-bd0f-157f75aefa9e",
+   "label": "नाम-परिचय",
+   "detail": "साक्षात्कार लेने वाले और जिसका साक्षात्कार लिया गया — दोनों का नाम/परिचय।"
+  },
+  {
+   "id": "05927fd0-54be-4587-bdd7-b11b180af99f",
+   "label": "आमंत्रण-स्वागत",
+   "detail": "आदर के साथ आमंत्रण, स्वागत और भूमिका।"
+  },
+  {
+   "id": "54ff8871-c1bd-4eb0-b9bc-98c87e0aea1e",
+   "label": "प्रश्नोत्तर",
+   "detail": "क्रमबद्ध प्रश्न और उनके उत्तर — साक्षात्कार की रीढ़।"
+  },
+  {
+   "id": "d4795a62-2570-4bab-b1ef-7ce8ba648240",
+   "label": "भावनात्मक वातावरण",
+   "detail": "आत्मीय, सहज माहौल जिसमें व्यक्ति खुलकर बात करे।"
+  },
+  {
+   "id": "80f3be34-86fe-4afe-9fee-b838e004a287",
+   "label": "विचार-उदाहरण-संस्मरण",
+   "detail": "उत्तरों में विचार, उदाहरण और यादें (जैसे नौशाद/अली अकबर वाले वाकये)।"
+  },
+  {
+   "id": "5f08feff-c395-4b89-b81d-21720f5a77fc",
+   "label": "समापन",
+   "detail": "आभार और सार्थक अंत।"
+  }
+ ]
+}
+
+--- block #6 [worked_example] id=760b9e16-2bdb-4e05-9051-e55a05854a22 ---
+{
+ "label": "साक्षात्कार की शैली — औपचारिक या आत्मीय?",
+ "variant": "ncert_intext",
+ "problem": "\"मैं कोशिश करूँगी कि जो कुछ मैंने संगीत में जाना है, उसे आपको बता सकूँ।\" — इस कथन से साक्षात्कार की शैली के बारे में क्या पता चलता है? सोचिए, फिर उत्तर देखिए।",
+ "solution": "यह कथन दिखाता है कि यह साक्षात्कार सूखा, औपचारिक प्रश्न-उत्तर नहीं, बल्कि एक **आत्मीय बातचीत** है।\n\nलता जी \"बता सकूँ\" जैसे सहज, अपनेपन-भरे शब्द चुनती हैं — मानो किसी अपने से बात कर रही हों। पूरे साक्षात्कार में हँसी, यादें और भावनाएँ घुली हैं — यही आत्मीयता इसे जीवंत और प्रभावशाली बनाती है।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #7 [inline_quiz] id=a6ae05a4-d969-4c00-9ecc-ffc3a5310470 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "5c596914-05d1-477d-b087-393cae56fd92",
+   "question": "पूरे साक्षात्कार में लता मंगेशकर की मुख्य छवि कैसी उभरती है?",
+   "options": [
+    "बहुत अधिक घमंड और दिखावे की",
+    "सादगी, समर्पण और आत्मसम्मान की",
+    "निराशा और शिकायत की",
+    "कठोरता और रूखेपन की"
+   ],
+   "correct_index": 1,
+   "explanation": "पूरे साक्षात्कार में सादगी, संगीत के प्रति समर्पण और अडिग स्वाभिमान झलकता है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "8f02210e-193c-410a-95c5-82357867eaf2",
+   "question": "इस साक्षात्कार की शैली कैसी है?",
+   "options": [
+    "सूखी औपचारिक रिपोर्ट",
+    "आत्मीय बातचीत जैसी",
+    "काल्पनिक कहानी",
+    "गणितीय विवरण"
+   ],
+   "correct_index": 1,
+   "explanation": "हँसी, यादें और सहज शब्द इसे एक आत्मीय बातचीत बनाते हैं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "7e52f066-fc9a-4bb3-b2f5-12f7a994335b",
+   "question": "एक अच्छे साक्षात्कार में \"संस्मरण\" (यादें) क्यों ज़रूरी हैं?",
+   "options": [
+    "वे साक्षात्कार को बेवजह बहुत लंबा बना देती हैं",
+    "उनसे कुछ नहीं मिलता",
+    "वे केवल समय भरती हैं",
+    "वे व्यक्ति का असली व्यक्तित्व जीवंत रूप में सामने लाती हैं"
+   ],
+   "correct_index": 3,
+   "explanation": "नौशाद/अली अकबर जैसे संस्मरण व्यक्ति के स्वभाव और मूल्यों को सजीव रूप में उजागर करते हैं।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "विषयों से संवाद"  (slug: ch4-vishayon-se-samvad)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=1f5ddb12-b9e3-47d6-acbd-523e0a170a5f ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/1f5ddb12-b9e3-47d6-acbd-523e0a170a5f_gen.webp",
+ "alt": "संघर्ष, सहयोग और संगीत",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a young woman amid recording studios and chorus singers seated on the floor, suggesting struggle and teamwork in music. Warm light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=43f74a1e-569a-454a-94e0-b0c817b06b1e ---
+{
+ "markdown": "साक्षात्कार आज के जीवन से कई विषयों को जोड़ता है — कम उम्र में संघर्ष, सहयोग की शक्ति, और आज की एक नई चुनौती: साइबर सुरक्षा।"
+}
+
+--- block #2 [cultural_context_card] id=50b1a1ff-6285-4405-9ec9-a01284fb2b49 ---
+{
+ "reference": "कोरस और सहयोग",
+ "category": "concept",
+ "short_desc": "गीत में पार्श्व में साथ गाने वाली गायिकाओं/गायकों का समूह।",
+ "detail": "पुराने दौर में मुख्य पार्श्वगायक के साथ **कोरस** की लड़कियाँ-लड़के एक साथ गाते थे। लता जी कहती हैं कि उनका कोरस की लड़कियों से \"घर जैसा\" आत्मीय रिश्ता था — कविता, गांधारी, कल्याणी, सुमन, रेखा जैसी कई सुरीली आवाज़ें। यह दिखाता है कि कोई भी बड़ा काम **सहयोग और सामूहिकता** से ही पूरा होता है — अकेली प्रतिभा काफ़ी नहीं।",
+ "image_url": ""
+}
+
+--- block #3 [cultural_context_card] id=a253e4fc-df92-47c6-92ef-0854c02bde2f ---
+{
+ "reference": "साइबर सुरक्षा — आज की चुनौती",
+ "category": "concept",
+ "short_desc": "आवाज़/पहचान की नक़ल से होने वाली ऑनलाइन धोखाधड़ी से बचाव।",
+ "detail": "लता जी \"आवाज़ ही पहचान\" थीं। पर आज तकनीक इतनी बढ़ गई है कि **धोखेबाज़ कृत्रिम बुद्धिमत्ता (AI) से किसी की आवाज़ हूबहू नक़ल करके** ठगी कर सकते हैं। इसलिए ज़रूरी है — अनजान कॉल/संदेश पर भरोसा न करें, OTP/पैसे माँगने वाली \"जानी-पहचानी आवाज़\" को भी जाँच लें, और परिवार से पुष्टि करें। **पहचान अनमोल है — उसे सुरक्षित रखना भी ज़रूरी है।**",
+ "image_url": ""
+}
+
+--- block #4 [callout] id=5cb7bcdf-c95e-44aa-85fe-354ce22de15b ---
+{
+ "variant": "literature_in_life",
+ "title": "पाठ और आपका जीवन",
+ "markdown": "लता जी ने 13 वर्ष की उम्र में परिवार सँभाला और जीवन-भर साधना की। अगली बार जब कोई काम कठिन लगे, याद रखिए — बड़ी उपलब्धियाँ \"रातोंरात\" नहीं, सालों की मेहनत और स्वाभिमान से बनती हैं।"
+}
+
+--- block #5 [reasoning_prompt] id=b0e644f9-345a-4530-882f-5d19d283e5e6 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "लता जी कहती हैं कि कोरस की लड़कियों से उनका \"घर जैसा\" रिश्ता था। एक \"अकेली महान गायिका\" के पीछे इतने सारे साथियों का होना क्या बताता है?",
+ "reveal": "यह बताता है कि कोई भी बड़ी उपलब्धि अकेले की नहीं होती — उसके पीछे अनगिनत सहयोगियों की मेहनत होती है (कोरस, संगीतकार, वादक, तकनीशियन)। लता जी की महानता इसमें भी है कि उन्होंने इन साथियों को \"छोटा\" नहीं समझा, बल्कि उनसे आत्मीय, बराबरी का रिश्ता रखा — सच्चा बड़प्पन दूसरों को साथ लेकर चलने में है।",
+ "difficulty_level": 4
+}
+
+--- block #6 [inline_quiz] id=8eee9494-eade-40b9-9e20-c574916166f4 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "e2b00417-3e1a-45af-a41c-e614a735108f",
+   "question": "पिता की मृत्यु के बाद लता जी ने किस उम्र में परिवार का भार उठाया?",
+   "options": [
+    "मात्र 13 वर्ष की उम्र में",
+    "पच्चीस वर्ष की उम्र में",
+    "चालीस वर्ष की उम्र में",
+    "पाँच वर्ष की उम्र में"
+   ],
+   "correct_index": 0,
+   "explanation": "सन् 1942 में पिता की मृत्यु के बाद, मात्र 13 वर्ष की आयु में उन्होंने परिवार सँभाला।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "a0a90ef6-8294-448a-a95e-d0291ff72e1a",
+   "question": "कोरस की लड़कियों के साथ लता जी का रिश्ता कैसा था?",
+   "options": [
+    "केवल औपचारिक और दूर का",
+    "प्रतिस्पर्धा और जलन का",
+    "घर जैसा आत्मीय",
+    "रूखा और कठोर"
+   ],
+   "correct_index": 2,
+   "explanation": "वे कोरस की लड़कियों को \"घर जैसी\" मानती थीं — गहरा, आत्मीय संबंध।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "90ff0a2a-4f76-4cd1-82d9-15709652bd4f",
+   "question": "आज \"आवाज़ की नक़ल\" से होने वाली ठगी से बचने का सही तरीक़ा क्या है?",
+   "options": [
+    "हर कॉल पर तुरंत OTP बता देना",
+    "अपनी आवाज़ कभी इस्तेमाल न करना",
+    "अनजान कॉल/माँग की पुष्टि किए बिना भरोसा न करना",
+    "घबराकर फ़ोन रखना ही पूरी तरह बंद कर देना"
+   ],
+   "correct_index": 2,
+   "explanation": "साइबर सुरक्षा: जानी-पहचानी लगती आवाज़/संदेश को भी जाँचें, परिवार से पुष्टि करें, OTP किसी को न दें।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "सृजन और व्याकरण"  (slug: ch4-srijan-vyakaran)
+published=false blocks=10 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=4b8573e6-2bd6-409d-b617-5646778e1894 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/4b8573e6-2bd6-409d-b617-5646778e1894_gen.webp",
+ "alt": "रचना और हाथ के मुहावरे",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a diary and quill with playful hand-gesture motifs glowing around them, on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=bf6082d3-6f03-4b75-9958-5b0f4446a56f ---
+{
+ "markdown": "अब आपकी बारी। पहले एक \"टाइम मशीन डायरी\" लिखिए, फिर **हाथ से जुड़े मुहावरों** का अभ्यास कीजिए।"
+}
+
+--- block #2 [writing_scaffold] id=9dd9a0fe-1919-4061-afdc-135971c2d911 ---
+{
+ "task": "कल्पना कीजिए कि आपके पास टाइम मशीन है। 1940–50 के दशक में जाकर लता जी से मिलिए और उनके साथ बिताए एक दिन का वर्णन डायरी के रूप में लिखिए।",
+ "format": "diary_entry",
+ "model_parts": [
+  {
+   "id": "2c4737a0-d1ce-45b3-a5da-a20cc77761df",
+   "label": "तिथि व आरंभ",
+   "text": "आज का दिन — मुंबई, सन् 1948\n\nआज मेरी टाइम मशीन मुझे लता जी के युग में ले आई।",
+   "annotation": "डायरी \"आज का दिन...\" और स्थान-समय से शुरू कीजिए — पाठक तुरंत उस युग में पहुँच जाता है।"
+  },
+  {
+   "id": "b0482b6d-49bb-4e29-a34c-f33b40f30c32",
+   "label": "वर्णन",
+   "text": "मैंने उन्हें एक स्टूडियो में सफ़ेद साड़ी में, ज़मीन पर बैठे कोरस की लड़कियों के साथ हँसते-गाते देखा। पुराने माइक, रिकॉर्डिंग की भागदौड़, और उनकी सादगी ने मेरा मन मोह लिया। उन्होंने बड़े स्नेह से मुझसे बात की।",
+   "annotation": "उस समय की वेशभूषा, भोजन, संगीत और माहौल का वर्णन ज़रूर कीजिए — डायरी तभी जीवंत बनती है।"
+  },
+  {
+   "id": "143d7d88-4d1d-48c6-8b14-2a4dce72dcaa",
+   "label": "भाव/संकल्प",
+   "text": "उनसे मिलकर मैंने सीखा कि स्वाभिमान और मेहनत के बिना कोई \"अमर पहचान\" नहीं बनती। मैं भी अपने काम में ऐसी ही लगन रखूँगा।",
+   "annotation": "अंत अपने भाव या संकल्प पर कीजिए — डायरी एक सीख की कहानी बन जाती है।"
+  }
+ ],
+ "tips": [
+  "\"मैं\" में लिखिए।",
+  "उस युग का वर्णन कीजिए।",
+  "अंत भाव/संकल्प पर कीजिए।"
+ ]
+}
+
+--- block #3 [heading] id=8b82831e-d11c-424e-9045-b280d65a6b94 ---
+{
+ "text": "हाथ से जुड़े मुहावरे",
+ "level": 2
+}
+
+--- block #4 [text] id=65e188b7-3a52-461d-86ee-cf834ab4f922 ---
+{
+ "markdown": "\"किसी के आगे **हाथ नहीं पसारना**\" — यह मुहावरा है (अर्थ — कुछ माँगना/याचना करना)। हाथ से जुड़े कई मुहावरे हैं। नीचे पलटकर अर्थ देखिए, फिर अभ्यास कीजिए।"
+}
+
+--- block #5 [vocabulary_lab] id=a4b481a5-c5c7-48d6-a1aa-df3fe683c46f ---
+{
+ "mode": "idioms",
+ "lang": "hindi",
+ "intro": "हाथ के मुहावरे — टैप कर के पलटिए।",
+ "cards": [
+  {
+   "id": "65d80655-b834-4db6-813d-52d1d0260baa",
+   "word": "हाथ पसारना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "कुछ माँगना, याचना करना — to beg/ask for",
+   "example": "स्वाभिमानी व्यक्ति किसी के आगे हाथ नहीं पसारता।"
+  },
+  {
+   "id": "2ac29ded-94a0-48a4-84f6-63c5a940f962",
+   "word": "हाथ से निकल जाना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "काबू/अधिकार से बाहर हो जाना — to slip out of one’s control",
+   "example": "देर करने पर अच्छा मौक़ा हाथ से निकल गया।"
+  },
+  {
+   "id": "ac595131-d84e-4eab-8765-1bd9d37f4c7e",
+   "word": "हाथ धो बैठना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "किसी चीज़ को खो देना — to lose something",
+   "example": "लापरवाही से वह अपनी नौकरी से हाथ धो बैठा।"
+  },
+  {
+   "id": "1570de1e-c10c-4b1c-a875-893640d3e8a2",
+   "word": "हाथ बँटाना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "काम में मदद करना — to lend a hand",
+   "example": "सबने मिलकर हाथ बँटाया तो काम जल्दी हो गया।"
+  },
+  {
+   "id": "f3caa869-dc58-4c74-bb1b-95a68438f711",
+   "word": "हाथों-हाथ लेना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "बहुत आदर/उत्साह से स्वीकारना — to receive eagerly",
+   "example": "लता जी के नए गीत को लोगों ने हाथों-हाथ लिया।"
+  },
+  {
+   "id": "451e8979-27f0-40fa-96f0-9a6d5de69749",
+   "word": "हाथ का मैल",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "तुच्छ/मामूली चीज़ (विशेषकर धन) — a trifle (esp. money)",
+   "example": "सच्चे कलाकार के लिए धन हाथ का मैल है।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "dedc0609-82d8-4815-8eba-f0dcd356bef6",
+   "question": "\"हाथ पसारना\" मुहावरे का अर्थ है —",
+   "options": [
+    "मदद करना",
+    "खो देना",
+    "स्वागत करना",
+    "कुछ माँगना/याचना करना"
+   ],
+   "correct_index": 3,
+   "explanation": "हाथ पसारना = कुछ माँगना/याचना करना।"
+  },
+  {
+   "id": "f0d0e407-2486-4031-a95a-2a6b0d4bcf9a",
+   "question": "किसी चीज़ को खो देने के लिए कौन-सा मुहावरा सही है?",
+   "options": [
+    "हाथ बँटाना",
+    "हाथ धो बैठना",
+    "हाथों-हाथ लेना",
+    "हाथ पसारना"
+   ],
+   "correct_index": 1,
+   "explanation": "हाथ धो बैठना = किसी चीज़ को खो देना।"
+  }
+ ]
+}
+
+--- block #6 [apply_express] id=81a25cc8-48dd-46bd-aecf-15b11fc909e9 ---
+{
+ "title": "व्याकरण व्यायामशाला — मुहावरे व शास्त्रीय-संगीत शब्द",
+ "intro": "प्रयोग और पहचान का अभ्यास कीजिए।",
+ "chapter_number": 4,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h4-gr-01",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "हाथ बँटाना",
+   "instruction": "\"हाथ बँटाना\" मुहावरे का प्रयोग करते हुए वाक्य बनाइए।",
+   "rubric": [
+    "मुहावरे का प्रयोग किया",
+    "अर्थ सही (मदद करना)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "परीक्षा की तैयारी में दोस्तों ने एक-दूसरे का हाथ बँटाया।",
+   "min_words": 6
+  },
+  {
+   "id": "h4-gr-02",
+   "kind": "form_select",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "prompt": "\"हाथ से निकल जाना\" का सही अर्थ कौन-सा है?",
+   "options": [
+    "काबू/अधिकार से बाहर हो जाना",
+    "किसी से हाथ मिलाना",
+    "काम में मदद करना"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "सही — नियंत्रण से बाहर हो जाना।",
+    "ग़लत — वह \"हाथ मिलाना\" है।",
+    "ग़लत — वह \"हाथ बँटाना\" है।"
+   ]
+  },
+  {
+   "id": "h4-gr-03",
+   "kind": "fill_blank",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2,
+   "prompt": "सही मुहावरा भरिए — स्वाभिमानी व्यक्ति किसी के आगे हाथ नहीं ______।",
+   "answers": [
+    [
+     "पसारता"
+    ]
+   ],
+   "hint": "माँगने वाला मुहावरा।",
+   "explanation": "\"हाथ पसारना\" = कुछ माँगना; स्वाभिमानी हाथ नहीं पसारता।"
+  },
+  {
+   "id": "h4-gr-04",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "लता जी ने गीत गाया।",
+   "instruction": "इस वाक्य को प्रश्नवाचक वाक्य में बदलिए।",
+   "answers": [
+    "क्या लता जी ने गीत गाया?",
+    "लता जी ने कौन-सा गीत गाया?"
+   ],
+   "hint": "\"क्या\" जोड़िए।",
+   "rule": "विधानवाचक → प्रश्नवाचक: \"क्या\" + प्रश्नचिह्न।"
+  },
+  {
+   "id": "h4-gr-05",
+   "kind": "word_builder",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "base": "मान",
+   "affixes": [
+    "स्वाभि",
+    "अप",
+    "सम्",
+    "अनु"
+   ],
+   "correct": "स्वाभि",
+   "target": "स्वाभिमान",
+   "position": "prefix",
+   "meaning_hint": "आत्मसम्मान — self-respect",
+   "explanation": "\"स्व + अभि\" उपसर्ग-समूह + मान = स्वाभिमान (आत्मसम्मान)।"
+  },
+  {
+   "id": "h4-gr-06",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "पार्श्वगायन",
+   "instruction": "\"पार्श्वगायन\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (playback singing)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "लता जी ने हज़ारों फ़िल्मों के लिए पार्श्वगायन किया।",
+   "min_words": 6
+  }
+ ]
+}
+
+--- block #7 [heading] id=c8587151-3c1a-4f86-9422-6edfc53bbd74 ---
+{
+ "text": "भाषा संगम — \"संगीत\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #8 [table] id=34fe753a-3b3a-46cc-b810-5a754d136417 ---
+{
+ "caption": "\"संगीत\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "संगीत"
+  ],
+  [
+   "संस्कृत",
+   "सङ्गीतम्"
+  ],
+  [
+   "पंजाबी",
+   "संगीत"
+  ],
+  [
+   "उर्दू",
+   "मूसीक़ी"
+  ],
+  [
+   "मराठी",
+   "संगीत"
+  ],
+  [
+   "गुजराती",
+   "સંગીતકલા (संगीतकला)"
+  ],
+  [
+   "बांग्ला",
+   "সঙ্গীত (संगीत)"
+  ],
+  [
+   "ओडिआ",
+   "ସଙ୍ଗୀତ (संगीत)"
+  ],
+  [
+   "तेलुगु",
+   "సంగీతం (संगीतम्)"
+  ],
+  [
+   "तमिल",
+   "இசை (इशै)"
+  ],
+  [
+   "कन्नड़",
+   "ಸಂಗೀತ (संगीत)"
+  ],
+  [
+   "मलयालम",
+   "സംഗീതം (संगीतम्)"
+  ]
+ ]
+}
+
+--- block #9 [inline_quiz] id=044026a2-bf77-440f-bac8-d4bf6adf9422 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "b1dcf645-484a-4326-a2d3-ec53fc2a0a2d",
+   "question": "\"किसी के आगे हाथ पसारना\" मुहावरे का अर्थ है —",
+   "options": [
+    "कुछ माँगना/याचना करना",
+    "किसी से हाथ मिलाना",
+    "काम में मदद करना",
+    "खो देना"
+   ],
+   "correct_index": 0,
+   "explanation": "हाथ पसारना = कुछ माँगना/याचना करना।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "8818e0ad-be79-441d-90de-bab1be772d8e",
+   "question": "\"हाथ का मैल\" किस भाव में प्रयुक्त होता है?",
+   "options": [
+    "बहुत क़ीमती और मूल्यवान वस्तु",
+    "गंदा हाथ",
+    "मेहनत का फल",
+    "तुच्छ/मामूली चीज़ (विशेषकर धन)"
+   ],
+   "correct_index": 3,
+   "explanation": "हाथ का मैल = मामूली/तुच्छ चीज़, अक्सर धन के लिए।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "86199d08-af1d-4e3f-a09b-743432a25a4c",
+   "question": "\"पार्श्वगायन\" किन दो शब्दों से बना है?",
+   "options": [
+    "पार + श्वगायन",
+    "पार्श्व + गायन",
+    "पारस + गायन",
+    "पार्श्वग + आयन"
+   ],
+   "correct_index": 1,
+   "explanation": "पार्श्व (पीछे/परदे के पीछे) + गायन (गाना) = पार्श्वगायन।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 9 — "अभ्यास — Practice"  (slug: ch4-abhyas)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=da40c2b5-f28a-43e6-b367-5ab364da7f59 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch4/da40c2b5-f28a-43e6-b367-5ab364da7f59_gen.webp",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi book, a quill and lamp, faint microphone motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=f6581f9b-b2bb-4f8a-a71b-0469dc493dc3 ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=ca16b703-7fcc-4aec-a952-e1d5e1b801e9 ---
+{
+ "title": "अध्याय 4 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 4,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h4-pr-01",
+   "question": "इस साक्षात्कार में लता मंगेशकर से बातचीत कौन कर रहे हैं?",
+   "options": [
+    "उनके पिता दीनानाथ मंगेशकर",
+    "यतींद्र मिश्र",
+    "संगीतकार नौशाद साहब",
+    "उस्ताद अली अकबर खाँ"
+   ],
+   "correct_index": 1,
+   "explanation": "साक्षात्कार कवि यतींद्र मिश्र ले रहे हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h4-pr-02",
+   "question": "लता जी ने संगीत की प्रारंभिक शिक्षा किससे ली?",
+   "options": [
+    "किसी प्रसिद्ध फ़िल्म-संगीतकार से",
+    "मशहूर उस्ताद अली अकबर खाँ से",
+    "पंडित रविशंकर से",
+    "अपने पिता दीनानाथ से"
+   ],
+   "correct_index": 3,
+   "explanation": "पाँच वर्ष की आयु में पिता दीनानाथ मंगेशकर से।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h4-pr-03",
+   "question": "लता जी ने अपने पिता से सबसे बड़ी कौन-सी सीख ली?",
+   "options": [
+    "स्वाभिमान से जीना",
+    "अधिक से अधिक धन कमाना",
+    "सबकी हर बात मान लेना",
+    "दूसरों से डरकर रहना"
+   ],
+   "correct_index": 0,
+   "explanation": "स्वाभिमान से जीना — सही बात पर अडिग रहना, किसी के आगे न झुकना।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h4-pr-04",
+   "question": "लता जी ने बचपन में किस फ़िल्म की नक़ल का ज़िक्र किया?",
+   "options": [
+    "छत्रपति शिवाजी",
+    "फ़िल्म महल",
+    "संत तुकाराम",
+    "फ़िल्म बरसात"
+   ],
+   "correct_index": 2,
+   "explanation": "संत तुकाराम — गद्दे-तकिये से \"स्वर्ग\" बनाकर गाना।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h4-pr-05",
+   "question": "सरोद की तार टूटने पर अली अकबर खाँ ने क्या मार्मिक बात कही?",
+   "options": [
+    "शायद यह तार बहुत पुरानी और कमज़ोर रही होगी",
+    "अब तो पूरा कंसर्ट ही रोकना पड़ेगा",
+    "सुर में तार लगता है तो टूट जाता है",
+    "मुझसे ग़लती हो गई"
+   ],
+   "correct_index": 2,
+   "explanation": "संगीत/पूर्णता की पराकाष्ठा का प्रतीक — तार भी शुद्ध सुर का आघात नहीं सह पाती।",
+   "concept_tag": "comprehension",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-06",
+   "question": "\"अप्रतिम\" शब्द का अर्थ है —",
+   "options": [
+    "बेजोड़, अनुपम",
+    "बहुत साधारण और आम",
+    "देखने में कुरूप",
+    "बहुत पुराना"
+   ],
+   "correct_index": 0,
+   "explanation": "अप्रतिम = peerless/matchless।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h4-pr-07",
+   "question": "\"पार्श्वगायन\" का सही अर्थ है —",
+   "options": [
+    "मंच पर सबके सामने नाचना",
+    "फ़िल्म में अभिनय करना",
+    "वाद्य-यंत्र बजाना",
+    "परदे के पीछे रहकर गाना"
+   ],
+   "correct_index": 3,
+   "explanation": "पार्श्वगायन = playback singing।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h4-pr-08",
+   "question": "\"मार्मिक\" का सबसे सही अर्थ है —",
+   "options": [
+    "बहुत कठोर, रूखा और बेरुख़ा",
+    "दिल को छू लेने वाला",
+    "हँसी-मज़ाक से भरा हुआ",
+    "बहुत उबाऊ"
+   ],
+   "correct_index": 1,
+   "explanation": "मार्मिक = touching/poignant।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-09",
+   "question": "\"अप्रत्याशित\" का अर्थ है —",
+   "options": [
+    "पहले से तय किया हुआ",
+    "अनसोचा, आकस्मिक",
+    "बिलकुल साधारण",
+    "बहुत आसान"
+   ],
+   "correct_index": 1,
+   "explanation": "अप्रत्याशित = unexpected।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h4-pr-10",
+   "question": "\"स्वाभिमान\" किन घटकों से बना है?",
+   "options": [
+    "स्वा + भिमान",
+    "स + वाभिमान",
+    "स्वाभि + मान",
+    "स्व + अभिमान"
+   ],
+   "correct_index": 3,
+   "explanation": "स्व (अपना) + अभिमान (गर्व) = आत्मसम्मान।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-11",
+   "question": "\"पार्श्वगायन\" में समास के दो पद कौन-से हैं?",
+   "options": [
+    "पार्श्व + गायन",
+    "पार + श्वगायन",
+    "पारस + गायन",
+    "पा + र्श्वगायन"
+   ],
+   "correct_index": 0,
+   "explanation": "पार्श्व (पीछे) + गायन (गाना)।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-12",
+   "question": "\"हाथ पसारना\" मुहावरे का अर्थ है —",
+   "options": [
+    "किसी से गर्मजोशी से हाथ मिलाना",
+    "किसी के काम में मदद करना",
+    "कुछ माँगना/याचना करना",
+    "किसी चीज़ को खोना"
+   ],
+   "correct_index": 2,
+   "explanation": "हाथ पसारना = कुछ माँगना/याचना करना।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-13",
+   "question": "\"हाथ धो बैठना\" का अर्थ है —",
+   "options": [
+    "अच्छी तरह से हाथ साफ़ करना",
+    "किसी के काम में मदद करना",
+    "किसी चीज़ को खो देना",
+    "गर्मजोशी से स्वागत करना"
+   ],
+   "correct_index": 2,
+   "explanation": "हाथ धो बैठना = किसी चीज़ को खो देना।",
+   "concept_tag": "grammar",
+   "difficulty": 4
+  },
+  {
+   "id": "h4-pr-14",
+   "question": "\"लता जी ने गीत गाया।\" — इसका प्रश्नवाचक रूप है —",
+   "options": [
+    "क्या लता जी ने गीत गाया?",
+    "लता जी गीत गाया ने?",
+    "लता जी ने गीत गाया।",
+    "गीत लता जी गाया ने?"
+   ],
+   "correct_index": 0,
+   "explanation": "आरंभ में \"क्या\" + अंत में प्रश्नचिह्न।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-15",
+   "question": "पिता का बिना कुछ कहे बच्चों को समझा देना किसका संकेत है?",
+   "options": [
+    "बच्चों के डरपोक होने का",
+    "पिता की कठोरता का",
+    "बच्चों के नटखट होने का",
+    "आदर-भरे गहरे रिश्ते का"
+   ],
+   "correct_index": 3,
+   "explanation": "आदर और स्नेह से बने रिश्ते में एक गंभीर नज़र ही काफ़ी थी।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-16",
+   "question": "\"मेरा गाना अमर है, पर शरीर तो अमर नहीं\" — यह कथन क्या दर्शाता है?",
+   "options": [
+    "अपनी प्रसिद्धि पर गहरा घमंड",
+    "गहरी विनम्रता और सादगी",
+    "जीवन से उपजी गहरी निराशा",
+    "धन का लालच"
+   ],
+   "correct_index": 1,
+   "explanation": "इतनी ऊँचाई पर भी नश्वरता को सहज स्वीकारना — विनम्रता।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h4-pr-17",
+   "question": "\"गाव गेला वाहुन, नाव गेला राहुन\" कहावत का प्रतीकात्मक अर्थ क्या है?",
+   "options": [
+    "गाँव में नाव नहीं चलती",
+    "जीवन नश्वर, पर कर्म-नाम अमर",
+    "फ़िल्मों में नाम कमाना आसान है",
+    "नदी सब बहा ले जाती है"
+   ],
+   "correct_index": 1,
+   "explanation": "गाँव (शरीर) बह जाता है, नाम (कर्म) रह जाता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h4-pr-18",
+   "question": "कोरस की लड़कियों से \"घर जैसा\" रिश्ता रखना लता जी के किस गुण को दिखाता है?",
+   "options": [
+    "अपने को सबसे बड़ा कलाकार समझना",
+    "दूसरों से हमेशा दूरी बनाए रखना",
+    "प्रतिस्पर्धा और जलन",
+    "सच्चा बड़प्पन और सहयोग-भाव"
+   ],
+   "correct_index": 3,
+   "explanation": "बड़ी होकर भी साथियों को बराबरी का सम्मान देना — सच्चा बड़प्पन।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h4-pr-19",
+   "question": "पूरे साक्षात्कार में लता मंगेशकर की मुख्य छवि कैसी उभरती है?",
+   "options": [
+    "सादगी, समर्पण और आत्मसम्मान की",
+    "घमंड, दिखावे और आत्ममुग्धता से भरी",
+    "निराशा और शिकायत की",
+    "कठोरता की"
+   ],
+   "correct_index": 0,
+   "explanation": "पूरे साक्षात्कार में सादगी, समर्पण और अडिग स्वाभिमान झलकता है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h4-pr-20",
+   "question": "इस साक्षात्कार-विधा की सबसे बड़ी विशेषता क्या है?",
+   "options": [
+    "केवल सूखे आँकड़ों और तथ्यों का संग्रह",
+    "काल्पनिक घटनाओं की रोचक रचना",
+    "आत्मीय बातचीत में व्यक्तित्व का खुलना",
+    "केवल प्रशंसा करना"
+   ],
+   "correct_index": 2,
+   "explanation": "अच्छा साक्षात्कार आत्मीय बातचीत है, जिसमें व्यक्ति का असली व्यक्तित्व उभर आता है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h4-pr-21",
+   "question": "इस पाठ में अनजान फ़ोन-कॉल पर तुरंत भरोसा न करने का संदेश क्यों ज़रूरी है?",
+   "options": [
+    "आज ठग फ़ोन/संदेश से लोगों को आसानी से धोखा देते हैं",
+    "फ़ोन पर बात करना मना है",
+    "अनजान लोग हमेशा अच्छे होते हैं",
+    "फ़ोन महँगे होते हैं"
+   ],
+   "correct_index": 1,
+   "explanation": "पाठ आज के डिजिटल ठगी-दौर में सतर्कता और पुष्टि-किए-बिना-भरोसा-न-करने की सीख देता है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h4-pr-22",
+   "question": "पात्र की कर्तव्यनिष्ठा और सतर्कता से पाठक को क्या प्रेरणा मिलती है?",
+   "options": [
+    "सूझ-बूझ और ज़िम्मेदारी से ही मुसीबत टाली जा सकती है",
+    "हर बात पर घबरा जाना चाहिए",
+    "किसी अनजान की किसी भी हाल में मदद नहीं करनी चाहिए",
+    "नियम तोड़ना समझदारी है"
+   ],
+   "correct_index": 0,
+   "explanation": "सतर्क, ज़िम्मेदार व्यवहार ही संकट से बचाता है — यही पाठ का व्यावहारिक संदेश है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h4-pr-23",
+   "question": "साक्षात्कार/संवाद-शैली इस तरह की बातों को बताने में क्यों कारगर है?",
+   "options": [
+    "पात्र का असली स्वभाव सीधे उसके अपने शब्दों में उभरता है",
+    "इससे कहानी बहुत लंबी हो जाती है",
+    "इसमें कुछ समझ नहीं आता",
+    "यह सबसे कठिन शैली है"
+   ],
+   "correct_index": 2,
+   "explanation": "संवाद/साक्षात्कार में पात्र अपने शब्दों से सामने आता है — व्यक्तित्व जीवंत हो उठता है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h4-pr-24",
+   "question": "\"ऐसी भी बातें होती हैं\" शीर्षक पाठक के मन में क्या भाव जगाता है?",
+   "options": [
+    "रोज़मर्रा में भी अनोखी/सतर्क करने वाली घटनाएँ घट सकती हैं",
+    "ऐसी अनोखी बातें असल ज़िंदगी में तो कभी नहीं होतीं",
+    "सब बातें झूठी हैं",
+    "जीवन बहुत उबाऊ है"
+   ],
+   "correct_index": 0,
+   "explanation": "शीर्षक जिज्ञासा जगाता है कि साधारण जीवन में भी असाधारण/सीख देने वाली बातें होती हैं।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=b12690bf-eb8d-4680-982d-f43ef92a4e17 ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 4,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h4-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "मेरा",
+    "गाना",
+    "अमर",
+    "है",
+    "पर",
+    "शरीर",
+    "नहीं"
+   ],
+   "answer": "मेरा गाना अमर है पर शरीर नहीं"
+  },
+  {
+   "id": "h4-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "स्वाभिमान",
+   "instruction": "\"स्वाभिमान\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (आत्मसम्मान)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "सच्चा कलाकार अपने स्वाभिमान के लिए किसी के आगे सिर नहीं झुकाता।",
+   "min_words": 7
+  },
+  {
+   "id": "h4-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "समर्पण",
+   "instruction": "\"बड़ी सफलता के पीछे साधना और समर्पण\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "लता जी का जीवन दिखाता है कि कोई भी बड़ी सफलता वर्षों की साधना और समर्पण से ही मिलती है।",
+   "min_words": 9
+  }
+ ]
+}
+
+--- block #4 [callout] id=ef736898-0e5a-48bf-b7da-8b9a2a875475 ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "खोजबीन — और आगे",
+ "markdown": "और सुनिए-खोजिए:\n\n- लता मंगेशकर का अमर देशभक्ति-गीत **\"ऐ मेरे वतन के लोगो\"** सुनिए।\n- उन्हें जीवन-भर मिले पुरस्कार और सम्मान (भारत रत्न आदि) के बारे में पढ़िए।\n- साक्षात्कारकर्ता **यतींद्र मिश्र** की संगीत पर लिखी किताबें खोजिए।"
+}

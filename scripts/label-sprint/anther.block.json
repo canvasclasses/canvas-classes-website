@@ -1,0 +1,42 @@
+{
+  "_note": "Label Sprint round for anther \u2014 generated anther_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Anther cross-section (microsporangium)",
+  "caption": "Tap each label, then tap where it belongs on the anther cross-section.",
+  "hotspots": [
+    {
+      "id": "7ce0076a-d377-46d4-94ce-86f03bcfba1f",
+      "x": 0.5,
+      "y": 0.05,
+      "label": "Epidermis",
+      "detail": "The outer protective layer of the anther.",
+      "icon": "pin"
+    },
+    {
+      "id": "3e6dde60-8880-4f22-bf26-3d88c3d0f4c7",
+      "x": 0.18,
+      "y": 0.28,
+      "label": "Endothecium",
+      "detail": "A fibrous layer just inside the epidermis that helps the anther split open.",
+      "icon": "pin"
+    },
+    {
+      "id": "efb89a7d-3583-4562-9134-2a770292b290",
+      "x": 0.6,
+      "y": 0.28,
+      "label": "Tapetum",
+      "detail": "The innermost nutritive layer surrounding the pollen sac; nourishes developing pollen.",
+      "icon": "pin"
+    },
+    {
+      "id": "c435765d-281d-4e2f-86bc-05a86e9eae09",
+      "x": 0.5,
+      "y": 0.45,
+      "label": "Pollen grain",
+      "detail": "A microspore developing inside the pollen sac.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "anther cross-section illustration, microsporangium"
+}

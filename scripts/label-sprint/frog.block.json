@@ -1,0 +1,58 @@
+{
+  "_note": "Label Sprint round for frog \u2014 generated frog_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Frog viewed from above (dorsal view)",
+  "caption": "Tap each label, then tap where it belongs on the frog.",
+  "hotspots": [
+    {
+      "id": "e1a18b4a-1ccb-4f73-96d8-5c079520a672",
+      "x": 0.42,
+      "y": 0.15,
+      "label": "Eye",
+      "detail": "Bulging eyes give the frog a wide field of vision.",
+      "icon": "pin"
+    },
+    {
+      "id": "8f3a4567-b093-4f75-b9de-a931894c4455",
+      "x": 0.37,
+      "y": 0.29,
+      "label": "Tympanum",
+      "detail": "The circular external ear membrane, just behind the eye.",
+      "icon": "pin"
+    },
+    {
+      "id": "abaf9ae6-93e4-4b0f-8eef-34ffb4db7530",
+      "x": 0.5,
+      "y": 0.07,
+      "label": "Nostril (naris)",
+      "detail": "Paired external openings used for breathing air.",
+      "icon": "pin"
+    },
+    {
+      "id": "efe76841-3c40-414d-8746-7733265af292",
+      "x": 0.27,
+      "y": 0.24,
+      "label": "Forelimb",
+      "detail": "The shorter front leg, used to prop up the body.",
+      "icon": "pin"
+    },
+    {
+      "id": "f47ab12b-b570-47df-8d2e-68a0b06b3c64",
+      "x": 0.15,
+      "y": 0.65,
+      "label": "Webbed hind foot",
+      "detail": "Broad webbing between the toes aids swimming.",
+      "icon": "pin"
+    },
+    {
+      "id": "1480a554-bbdb-4b3a-8b10-8c599b178e25",
+      "x": 0.35,
+      "y": 0.4,
+      "label": "Dorsolateral fold",
+      "detail": "A ridge of skin running down each side of the back.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "frog from above, dorsal view"
+}

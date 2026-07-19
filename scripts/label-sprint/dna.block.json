@@ -1,0 +1,58 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the DNA double helix (Class 12 Molecular Basis of Inheritance). Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "A segment of the DNA double helix",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "bak",
+      "x": 0.72,
+      "y": 0.34,
+      "label": "Sugar-phosphate backbone",
+      "detail": "The alternating sugar and phosphate units forming the two outer strands of the helix.",
+      "icon": "pin"
+    },
+    {
+      "id": "ade",
+      "x": 0.4,
+      "y": 0.1,
+      "label": "Adenine",
+      "detail": "A purine base; always pairs with thymine via two hydrogen bonds.",
+      "icon": "pin"
+    },
+    {
+      "id": "thy",
+      "x": 0.62,
+      "y": 0.1,
+      "label": "Thymine",
+      "detail": "A pyrimidine base; always pairs with adenine.",
+      "icon": "pin"
+    },
+    {
+      "id": "gua",
+      "x": 0.42,
+      "y": 0.24,
+      "label": "Guanine",
+      "detail": "A purine base; always pairs with cytosine via three hydrogen bonds.",
+      "icon": "pin"
+    },
+    {
+      "id": "cyt",
+      "x": 0.62,
+      "y": 0.24,
+      "label": "Cytosine",
+      "detail": "A pyrimidine base; always pairs with guanine.",
+      "icon": "pin"
+    },
+    {
+      "id": "hbo",
+      "x": 0.5,
+      "y": 0.44,
+      "label": "Hydrogen bonds",
+      "detail": "Weak bonds holding complementary base pairs together, allowing the strands to separate for replication.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational biology illustration of a short segment of a DNA double helix, shown as a clean structural diagram. Show these structures clearly separated and individually distinguishable: the sugar-phosphate backbone of both strands, the four nitrogenous bases (adenine, thymine, guanine, cytosine) as paired rungs, and the hydrogen bonds connecting each base pair. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, a muted palette with each base type a distinct muted color. Calm and flat: no glossy highlights, no neon, no glow, no 3D-render sheen. Composition: a vertical double helix segment, centered and filling the frame, generous even margins. Solid uniform deep-charcoal background, hex #121316, edge to edge. Absolutely no text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark -- the illustration only. Portrait 3:4, high resolution."
+}

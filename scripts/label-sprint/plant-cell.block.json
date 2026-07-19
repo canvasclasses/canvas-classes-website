@@ -1,0 +1,19 @@
+{
+  "_note": "Ready-to-insert interactive_image block for a plant cell. Image: plant-cell_illus.webp (keyed transparent + compressed from the founder's generated PNG, 1448x1086 landscape). Correctly shows all three plant-defining features (cell wall, large central vacuole, chloroplasts) that a prior animal-cell generation lacked -- that animal-cell PNG is earmarked separately, NOT reused here. To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, add this block to the target biology page (Class 11 Cell: The Unit of Life). Hotspots authored + browser-verified against the image on 2026-07-15 -- all 9 placements confirmed live via full playthrough (100% accuracy).",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Structure of a plant cell",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    { "id": "wall",  "x": 0.11, "y": 0.13, "label": "Cell wall",             "detail": "A rigid outer layer made of **cellulose** that gives the cell its shape and support — plant cells have this, animal cells don't.", "icon": "pin" },
+    { "id": "memb",  "x": 0.20, "y": 0.20, "label": "Cell membrane",         "detail": "A thin, selectively permeable layer just inside the cell wall, controlling what enters and leaves the cell.", "icon": "pin" },
+    { "id": "vac",   "x": 0.44, "y": 0.48, "label": "Large central vacuole", "detail": "A large fluid-filled sac that maintains **turgor pressure** and stores water, ions, and waste — much bigger than in animal cells.", "icon": "pin" },
+    { "id": "nuc",   "x": 0.91, "y": 0.20, "label": "Nucleus",               "detail": "The control centre of the cell, containing the DNA, enclosed by a nuclear envelope.", "icon": "pin" },
+    { "id": "nucl",  "x": 0.83, "y": 0.31, "label": "Nucleolus",             "detail": "A dense region inside the nucleus where **ribosomal RNA** is made.", "icon": "pin" },
+    { "id": "chlo",  "x": 0.24, "y": 0.13, "label": "Chloroplast",           "detail": "The site of **photosynthesis**, containing chlorophyll — the feature that makes plant cells green and lets them make their own food.", "icon": "pin" },
+    { "id": "mito",  "x": 0.19, "y": 0.51, "label": "Mitochondrion",         "detail": "The **powerhouse of the cell**, generating ATP through respiration.", "icon": "pin" },
+    { "id": "er",    "x": 0.63, "y": 0.30, "label": "Endoplasmic reticulum", "detail": "A network of membranes involved in protein and lipid synthesis and transport.", "icon": "pin" },
+    { "id": "golgi", "x": 0.70, "y": 0.68, "label": "Golgi apparatus",       "detail": "Modifies, packages, and ships proteins and lipids to their destinations.", "icon": "pin" }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational illustration of a plant cell, cut open to reveal its organelles, standard biology-textbook diagram, semi-realistic painterly style. Rounded-rectangular cell bounded by a thick cell wall with the cell membrane just inside; a large central vacuole occupying much of the middle; a prominent round nucleus (showing a nucleolus) to one side; several green oval chloroplasts; several bean-shaped mitochondria; folded ER near the nucleus; a Golgi apparatus stack; small dot-like ribosomes. Muted palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Landscape 4:3, high resolution."
+}

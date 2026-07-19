@@ -1,0 +1,2260 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 2: क्या लिखूँ?
+book=class9-hindi-ganga chapter=2 pages=8
+
+
+================================================================================
+## PAGE 1 — "परिचय — लेखक से मिलिए"  (slug: parichay-bakshi)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=82b44269-daaf-4fb4-92e4-997de2fe7311 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/82b44269-daaf-4fb4-92e4-997de2fe7311_gen.webp",
+ "alt": "पदुमलाल पुन्नालाल बख्शी",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour bust-portrait of Hindi essayist Padumlal Punnalal Bakshi, early-20th-century central India, simple attire and spectacles, a thoughtful scholarly look, warm lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=1a0fc303-cc31-4d7c-8123-96e43b995c6d ---
+{
+ "prompt": "कभी आपको कोई निबंध या लेख लिखना पड़ा हो और समझ ही न आया हो कि \"क्या लिखूँ, कहाँ से शुरू करूँ\"? उस उलझन को याद कीजिए — यही उलझन इस निबंध का विषय है।",
+ "hint": "किसी ख़ाली पन्ने के सामने बैठने का अनुभव सोचिए।"
+}
+
+--- block #2 [meet_a_scientist] id=285942f0-bf43-4505-b9d9-52320aa5321f ---
+{
+ "name": "पदुमलाल पुन्नालाल बख्शी",
+ "years": "1894–1971",
+ "nationality": "भारतीय — खैरागढ़, छत्तीसगढ़",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of essayist P. P. Bakshi, dark ground.",
+ "contribution": "कुशल आलोचक, कवि, निबंधकार और हास्य-व्यंग्यकार। **निबंध-लेखन** के लिए विशेष रूप से स्मरणीय। प्रमुख रचनाएँ — पंच-पात्र, पद्म-वन, प्रबंध पारिजात, कुछ बिखरे पन्ने (निबंध-संग्रह)। उन्होंने *सरस्वती* और *छाया* पत्रिकाओं का संपादन भी किया।",
+ "connection": "\"क्या लिखूँ?\" में उन्होंने निबंध लिखने की पूरी प्रक्रिया — और उसकी कठिनाई — को बड़े रोचक, आत्मीय ढंग से खोला है।",
+ "fun_detail": "उनके निबंधों में भारतीय और पाश्चात्य (Western) साहित्य के सिद्धांतों का सुंदर मेल देखने को मिलता है।",
+ "learn_more": "निबंध-संग्रह \"कुछ बिखरे पन्ने\" तथा \"पंच-पात्र\"।"
+}
+
+--- block #3 [callout] id=ddd32e90-b83d-40f1-ae6d-03dad2b323eb ---
+{
+ "variant": "india_voice",
+ "title": "आत्मपरक निबंध की शैली",
+ "markdown": "यह एक **आत्मपरक निबंध** है — जहाँ लेखक स्वयं पाठकों से सीधे बातचीत करता है, अपनी उलझन साझा करता है। यही \"मैं तुमसे बात कर रहा हूँ\" वाली शैली निबंध को जीवंत और आत्मीय बना देती है।"
+}
+
+--- block #4 [text] id=0a71674a-445a-494c-9813-1314608998f0 ---
+{
+ "markdown": "इस निबंध का नायक ख़ुद लेखक है, जिसे दो विषयों पर निबंध लिखने हैं — **\"दूर के ढोल सुहावने होते हैं\"** और **\"समाज-सुधार\"**। लिखने से पहले आइए कुछ कठिन शब्द जान लें।"
+}
+
+--- block #5 [vocabulary_lab] id=f572774d-cf93-4f52-b4d0-a5fc3ce8224f ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "इन शब्दों को निबंध में आप मिलेंगे। हर कार्ड पलटिए — सरल हिंदी अर्थ के साथ English मतलब भी।",
+ "cards": [
+  {
+   "id": "d02ed5d0-463c-4466-bd63-720c03fa9920",
+   "word": "यथार्थ",
+   "pronunciation": "ya-thaarth",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सच, असली",
+   "english": "real; the truth",
+   "example": "मन के भाव ही यथार्थ वस्तु हैं, विषय नहीं।",
+   "memory_hook": "यथा + अर्थ।"
+  },
+  {
+   "id": "17d64f43-65d1-4f9f-b855-da416066d4bd",
+   "word": "रूपरेखा",
+   "pronunciation": "roop-re-khaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ढाँचा, खाका",
+   "english": "an outline",
+   "example": "निबंध से पहले उसकी रूपरेखा बनाइए।",
+   "memory_hook": "रूप + रेखा।"
+  },
+  {
+   "id": "32b7f0c7-7f55-4bd2-8c58-b07b5ed6861b",
+   "word": "लोकोक्ति",
+   "pronunciation": "lo-kok-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "लोक-प्रचलित कहावत",
+   "english": "a proverb",
+   "example": "\"दूर के ढोल सुहावने\" एक लोकोक्ति है।",
+   "memory_hook": "लोक + उक्ति।"
+  },
+  {
+   "id": "df2eaeef-7369-4d76-b7dd-50dd0b7cce2b",
+   "word": "कर्कश",
+   "pronunciation": "kar-kash",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "कठोर, बेसुरा",
+   "english": "harsh; jarring",
+   "example": "दूर का ढोल कर्कश नहीं, मधुर लगता है।",
+   "memory_hook": "कानों को चुभने वाला।"
+  },
+  {
+   "id": "e831e712-2ff7-4943-acd0-25e2a2fcff3d",
+   "word": "तरुण",
+   "pronunciation": "ta-run",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "युवा, नौजवान",
+   "english": "a youth; young",
+   "example": "तरुण क्रांति के समर्थक होते हैं।",
+   "memory_hook": "young person।"
+  },
+  {
+   "id": "8645f738-cdc2-45bb-9ba9-c3fc404883a8",
+   "word": "वृद्ध",
+   "pronunciation": "vriddh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बूढ़ा, बुज़ुर्ग",
+   "english": "old; an elder",
+   "example": "वृद्ध अतीत-गौरव के संरक्षक होते हैं।",
+   "memory_hook": "aged elder।"
+  },
+  {
+   "id": "b27cddf5-b11d-40bf-acb8-1974907013bd",
+   "word": "सुधारक",
+   "pronunciation": "su-dhaa-rak",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सुधार करने वाला",
+   "english": "a reformer",
+   "example": "हर युग में सुधारक हुए हैं।",
+   "memory_hook": "सुधार + क।"
+  },
+  {
+   "id": "33ea39bd-520c-493b-9d91-766fdbd39334",
+   "word": "स्वच्छंद",
+   "pronunciation": "swa-chchhand",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "स्वतंत्र, बंधनहीन",
+   "english": "free; spontaneous",
+   "example": "अच्छे निबंध मन की स्वच्छंद रचनाएँ हैं।",
+   "memory_hook": "स्व + छंद।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=a3646c13-7cfd-44f6-b4c1-51ee0fbdfae1 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "40879ca2-9953-4742-887d-520b8e8a466f",
+   "question": "पदुमलाल पुन्नालाल बख्शी किस विधा के लिए विशेष रूप से जाने जाते हैं?",
+   "options": [
+    "केवल छंदबद्ध कविता-लेखन",
+    "निबंध-लेखन",
+    "नाटक और एकांकी-लेखन",
+    "उपन्यास-लेखन"
+   ],
+   "correct_index": 1,
+   "explanation": "वे कुशल निबंधकार के रूप में विशेष रूप से स्मरणीय हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "c744c0ec-3751-4636-ae40-a667aa9b9192",
+   "question": "इस निबंध की शैली कैसी है?",
+   "options": [
+    "पूरी तरह तथ्य-आधारित सूखी रिपोर्ट जैसी",
+    "किसी काल्पनिक रोमांचक कहानी जैसी",
+    "कठिन शास्त्रीय शैली",
+    "आत्मपरक — लेखक पाठक से बात करता है"
+   ],
+   "correct_index": 3,
+   "explanation": "आत्मपरक शैली में लेखक अपनी उलझन साझा करते हुए सीधे पाठक से संवाद करता है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "148f4a8c-a4c5-415b-8a47-2938cd882197",
+   "question": "लेखक को कौन-से दो विषयों पर निबंध लिखने हैं?",
+   "options": [
+    "दूर के ढोल सुहावने; समाज-सुधार",
+    "गाँव की खेती और बढ़ता हुआ व्यापार",
+    "युद्ध की विभीषिका और शांति",
+    "विज्ञान और कला"
+   ],
+   "correct_index": 0,
+   "explanation": "नमिता \"दूर के ढोल सुहावने\" और अमिता \"समाज-सुधार\" विषय पर निबंध चाहती हैं।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "निबंध — भाग १"  (slug: nibandh-bhag-1)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=1b1449bc-778a-44eb-a38e-1092cd402f1b ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/1b1449bc-778a-44eb-a38e-1092cd402f1b_gen.webp",
+ "alt": "ख़ाली पन्ने के सामने लेखक",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a writer sitting cross-legged before a blank page and an inkpot at night, a hat hanging on a wall peg nearby, books scattered around, on a dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [heading] id=197e6e57-0dd1-4198-ab9c-2b9fca792c37 ---
+{
+ "text": "भाग १ — \"क्या लिखूँ?\" की उलझन",
+ "level": 2
+}
+
+--- block #2 [text] id=16dcd333-2301-4107-baa0-472d8eee02f6 ---
+{
+ "markdown": "निबंध की शुरुआत एक विवशता से होती है — \"मुझे आज लिखना ही पड़ेगा।\" लेखक अंग्रेज़ी निबंधकार ए.जी. गार्डिनर की बात याद करता है कि लिखने की एक ख़ास मानसिक स्थिति होती है।"
+}
+
+--- block #3 [narrated_passage] id=24c35edc-45f2-4c86-8e9a-8207c54b3ef3 ---
+{
+ "source_label": "भाग १ · विषय बनाम भाव",
+ "paragraphs": [
+  {
+   "id": "6bf8348d-6d6c-47d4-abb0-e7d0f4d5a314",
+   "sentences": [
+    {
+     "id": "74fdec11-2670-4973-b12f-3cd6e16e2522",
+     "text": "मुझे आज लिखना ही पड़ेगा।",
+     "audio_url": ""
+    },
+    {
+     "id": "8289f9c4-e960-43f6-9e4d-0f6b22191a7d",
+     "text": "हैट टाँगने के लिए कोई भी खूँटी काम दे सकती है। उसी तरह अपने मनोभावों को व्यक्त करने के लिए कोई भी विषय उपयुक्त है।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मनोभाव",
+       "meaning": "मन के भाव, भावनाएँ — feelings; emotions",
+       "pos": "संज्ञा",
+       "example": "चेहरा अक्सर हमारे मनोभाव बता देता है।"
+      },
+      {
+       "word": "उपयुक्त",
+       "meaning": "ठीक, उचित — suitable; apt",
+       "pos": "विशेषण",
+       "example": "इस काम के लिए वही सबसे उपयुक्त व्यक्ति है।"
+      }
+     ]
+    },
+    {
+     "id": "a524082d-f0a3-4ef7-a142-454f9a1b666d",
+     "text": "असली वस्तु है हैट, खूँटी नहीं। इसी तरह मन के भाव ही यथार्थ वस्तु हैं, विषय नहीं।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "यथार्थ",
+       "meaning": "सच्ची, असली — real; the genuine thing",
+       "pos": "विशेषण",
+       "example": "दिखावे से नहीं, यथार्थ काम से पहचान बनती है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "देखो — लेखक की बात गहरी है: निबंध में \"विषय\" तो बस खूँटी है; असली चीज़ है वह भाव जो तुम टाँगना (कहना) चाहते हो। विषय छोटा हो या बड़ा, भाव सच्चा होना चाहिए।"
+  },
+  {
+   "id": "2bf0e271-e722-40e8-981b-a52728ac8d41",
+   "sentences": [
+    {
+     "id": "6a83c0c1-b3c0-437f-bad8-4a25d27c1749",
+     "text": "नमिता का आदेश है कि मैं \"दूर के ढोल सुहावने होते हैं\" इस विषय पर लिखूँ। अमिता का आग्रह है कि मैं समाज-सुधार पर लिखूँ।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "आग्रह",
+       "meaning": "ज़ोर देकर कहना, हठ — insistence; urging",
+       "pos": "संज्ञा",
+       "example": "मित्र के आग्रह पर मैं रुक गया।"
+      }
+     ]
+    },
+    {
+     "id": "72640bdd-90a4-4b67-83b2-10317a21f213",
+     "text": "एक विद्वान का कथन है कि निबंध छोटा होना चाहिए। छोटा निबंध बड़े की अपेक्षा अधिक अच्छा होता है, क्योंकि बड़े निबंध में रचना की सुंदरता नहीं बनी रह सकती।",
+     "audio_url": ""
+    }
+   ]
+  }
+ ]
+}
+
+--- block #4 [comprehension_checkpoint] id=6afa850d-d16e-4587-9c81-2c4da1b4d15e ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "a9e20f4e-74e2-465c-9047-400d8c766fdc",
+   "question": "हैट और खूँटी की तुलना से लेखक क्या समझाना चाहते हैं?",
+   "options": [
+    "खूँटी हैट से अधिक ज़रूरी है",
+    "निबंध में विषय ही सब कुछ है",
+    "भाव असली वस्तु हैं, विषय तो केवल आधार (खूँटी) है",
+    "हैट पहनना ज़रूरी है"
+   ],
+   "correct_index": 2,
+   "explanation": "जैसे हैट असली है और खूँटी केवल टाँगने का साधन, वैसे ही भाव असली हैं और विषय केवल आधार।"
+  }
+ ]
+}
+
+--- block #5 [narrated_passage] id=42b7b304-cc39-4317-9284-b3b7a2a56b70 ---
+{
+ "source_label": "भाग १ · निबंध के दो अंग",
+ "paragraphs": [
+  {
+   "id": "ce4184dd-511a-4818-9ee6-9ccfa4e0cd55",
+   "sentences": [
+    {
+     "id": "d05f5583-4657-4bd4-8901-8f46a696929c",
+     "text": "निबंधशास्त्र के आचार्य का कथन है कि निबंध के दो प्रधान अंग हैं— सामग्री और शैली।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "सामग्री",
+       "meaning": "विषय की बातें/जानकारी — material; content",
+       "pos": "संज्ञा",
+       "example": "भाषण से पहले उसकी सामग्री इकट्ठा करो।"
+      },
+      {
+       "word": "शैली",
+       "meaning": "कहने का ढंग — style; manner",
+       "pos": "संज्ञा",
+       "example": "हर लेखक की अपनी शैली होती है।"
+      }
+     ]
+    },
+    {
+     "id": "ea3dcd5d-a643-4e97-93d9-b3c82a28d6de",
+     "text": "निबंध लिखने के पहले उसकी रूपरेखा बना लेनी चाहिए।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "रूपरेखा",
+       "meaning": "ढाँचा, खाका — an outline; plan",
+       "pos": "संज्ञा",
+       "example": "निबंध से पहले रूपरेखा बना लो।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "लेखक मज़ाक़िया अंदाज़ में मानता है कि वह तो रूपरेखा बना ही नहीं पाता — यहाँ तक कि बड़े लेखकों को भी शीर्षक (title) तक देना कठिन लगता है।"
+  }
+ ]
+}
+
+--- block #6 [reasoning_prompt] id=04ccaf08-23c7-4caa-a975-c4bf5eab736b ---
+{
+ "reasoning_type": "logical",
+ "prompt": "लेखक कहता है कि निबंध में \"विषय\" से ज़्यादा ज़रूरी \"भाव\" है। क्या आप सहमत हैं? अगर भाव सच्चा हो पर विषय साधारण हो, तो भी क्या अच्छा निबंध बन सकता है?",
+ "reveal": "हाँ — सच्चा और गहरा भाव किसी भी साधारण विषय (एक खूँटी, एक पुराना पेड़, बारिश) को भी जीवंत बना देता है, क्योंकि पाठक भाव से जुड़ता है, विषय की \"बड़ाई\" से नहीं। यही कारण है कि आत्मपरक निबंध, जिनमें लेखक की सच्ची अनुभूति होती है, सबसे प्रभावी होते हैं।",
+ "difficulty_level": 3
+}
+
+--- block #7 [inline_quiz] id=da4b295a-f387-4f6a-b458-7658a291787e ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "39954c95-7cce-4b8e-b659-530381b6e226",
+   "question": "निबंध के दो प्रधान अंग कौन-से बताए गए हैं?",
+   "options": [
+    "प्रभावशाली आरंभ और अंत",
+    "छंदबद्ध कविता और गद्य",
+    "सामग्री और शैली",
+    "शीर्षक और चित्र"
+   ],
+   "correct_index": 2,
+   "explanation": "आचार्य के अनुसार निबंध के दो प्रधान अंग हैं — सामग्री और शैली।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "debf4b3b-6e15-4ac4-916b-03c3ef5d71c9",
+   "question": "एक विद्वान के अनुसार अच्छा निबंध कैसा होना चाहिए?",
+   "options": [
+    "जितना अधिक बड़ा और लंबा हो उतना अच्छा",
+    "केवल कठिन तत्सम शब्दों से भरा हुआ",
+    "छोटा — बड़े में सुंदरता नहीं रहती",
+    "बिना किसी विषय के"
+   ],
+   "correct_index": 2,
+   "explanation": "छोटा निबंध बड़े की अपेक्षा अधिक अच्छा होता है, क्योंकि बड़े में रचना की सुंदरता बनी नहीं रह पाती।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "b0b8b3e2-3c5b-4b49-9cd1-5386ca83a4b7",
+   "question": "\"असली वस्तु है हैट, खूँटी नहीं\" — यह किस ओर संकेत करता है?",
+   "options": [
+    "भाव मुख्य है, विषय गौण",
+    "विषय ही मुख्य है और भाव गौण है",
+    "दोनों ही बराबर बेकार हैं",
+    "सबको हैट पहनना सीखना चाहिए"
+   ],
+   "correct_index": 0,
+   "explanation": "भाव ही असली (हैट) है; विषय तो केवल उसे टाँगने की खूँटी — एक साधन मात्र।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "निबंध — भाग २"  (slug: nibandh-bhag-2)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=0273a68e-fcbe-40df-8ca1-df16b5d47361 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/0273a68e-fcbe-40df-8ca1-df16b5d47361_gen.webp",
+ "alt": "दूर के ढोल और बदलता समय",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a distant village drummer on a riverbank at dusk seen from far across water, the sound suggested by faint glowing ripples; on one side a youth looking ahead, on the other an elder looking back. Dark warm ground, soft light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=75c61caf-2fdd-433c-9282-d2188730bf50 ---
+{
+ "markdown": "लेखक मानटेन (Montaigne) की **स्वच्छंद** शैली को पसंद करता है — जहाँ लेखक जो देखा, सुना, अनुभव किया, वही सच्चे मन से लिख देता है। फिर वह अमीर खुसरो की एक मज़ेदार रचना याद करता है।"
+}
+
+--- block #2 [narrated_passage] id=5e406acb-024e-45d8-a660-a4544cbd9237 ---
+{
+ "source_label": "भाग २ · स्वच्छंद शैली और खुसरो",
+ "paragraphs": [
+  {
+   "id": "14b78899-a041-4001-8ddd-adea48aa256d",
+   "sentences": [
+    {
+     "id": "f53f688e-1ab1-4c06-8961-8bf3d398bd84",
+     "text": "ये निबंध तो मन की स्वच्छंद रचनाएँ हैं। उनमें लेखक की सच्ची अनुभूति रहती है, उनमें उसका उल्लास रहता है।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "स्वच्छंद",
+       "meaning": "स्वतंत्र, बंधनहीन — free; unrestrained",
+       "pos": "विशेषण",
+       "example": "मानटेन के निबंध मन की स्वच्छंद रचनाएँ हैं।"
+      },
+      {
+       "word": "अनुभूति",
+       "meaning": "अनुभव, महसूस — feeling; realization",
+       "pos": "संज्ञा",
+       "example": "सच्ची अनुभूति ही कविता को जीवंत बनाती है।"
+      },
+      {
+       "word": "उल्लास",
+       "meaning": "आनंद, उमंग — joy; delight",
+       "pos": "संज्ञा",
+       "example": "त्योहार पर सबके मन में उल्लास था।"
+      }
+     ]
+    },
+    {
+     "id": "cb49bfdc-a8f5-4c67-a3e5-ca3ed29937ad",
+     "text": "अमीर खुसरो प्रतिभावान थे, उन्होंने एक ही पद्य में चारों की इच्छाओं की पूर्ति कर दी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "प्रतिभावान",
+       "meaning": "प्रतिभाशाली, गुणी — talented; gifted",
+       "pos": "विशेषण",
+       "example": "वह बचपन से ही प्रतिभावान छात्र था।"
+      }
+     ]
+    },
+    {
+     "id": "4a0b1513-df38-43df-acce-505e714b515d",
+     "text": "खीर पकाई जतन से, चरखा दिया चला। आया कुत्ता खा गया, तू बैठी ढोल बजा।",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "खुसरो की यह \"अनमेली\" है — असंगत, बेमेल बातों को जोड़कर हँसी पैदा करने वाली रचना। चार औरतों ने खीर, चरखे, कुत्ते और ढोल पर तुक माँगी, और खुसरो ने एक ही दोहे में चारों को जोड़ दिया।"
+  },
+  {
+   "id": "2f7a9115-d7fd-41ae-aee9-049205c33e3e",
+   "sentences": [
+    {
+     "id": "149db16c-0c4e-4bd9-a0e4-847f7072c6f4",
+     "text": "दूर के ढोल सुहावने होते हैं, क्योंकि उनकी कर्कशता दूर तक नहीं पहुँचती।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "कर्कशता",
+       "meaning": "कठोरता, बेसुरापन — harshness",
+       "pos": "संज्ञा",
+       "example": "पास से ढोल की कर्कशता कानों को चुभती है।"
+      }
+     ]
+    },
+    {
+     "id": "7d11f33a-9228-40a2-9bd0-c814b64a59bf",
+     "text": "जो तरुण संसार के जीवन-संग्राम से दूर हैं, उन्हें संसार का चित्र बड़ा ही मनमोहक प्रतीत होता है।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "जीवन-संग्राम",
+       "meaning": "जीवन का संघर्ष — life’s struggle",
+       "pos": "संज्ञा",
+       "example": "हर किसी को जीवन-संग्राम का सामना करना पड़ता है।"
+      },
+      {
+       "word": "मनमोहक",
+       "meaning": "मन मोह लेने वाला — enchanting",
+       "pos": "विशेषण",
+       "example": "दूर का पहाड़ी दृश्य मनमोहक लगता है।"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [comprehension_checkpoint] id=1f9c9bb7-befe-4d66-bb03-378e35b080ab ---
+{
+ "questions": [
+  {
+   "id": "94f59263-e8ac-48b2-b5e3-486d1c23015f",
+   "question": "दूर के ढोल \"सुहावने\" क्यों लगते हैं?",
+   "options": [
+    "वे सोने के बने होते हैं",
+    "उन्हें बड़े कलाकार बजाते हैं",
+    "उनकी कर्कशता (कठोर आवाज़) दूर तक नहीं पहुँचती",
+    "वे बहुत महँगे होते हैं"
+   ],
+   "correct_index": 2,
+   "explanation": "दूरी के कारण ढोल की कठोरता सुनाई नहीं देती, केवल मधुर भाग पहुँचता है — इसलिए वे सुहावने लगते हैं।"
+  }
+ ]
+}
+
+--- block #4 [narrated_passage] id=9b258cba-f66d-4502-abf1-c8aa117a7db7 ---
+{
+ "source_label": "भाग २ · तरुण, वृद्ध और सुधार",
+ "paragraphs": [
+  {
+   "id": "159bfd5a-ce20-483b-ac3a-122425eac058",
+   "sentences": [
+    {
+     "id": "1c3d5fde-d3c7-48e3-97b2-c49ef75b1dcf",
+     "text": "तरुण क्रांति के समर्थक होते हैं और वृद्ध अतीत-गौरव के संरक्षक।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "क्रांति",
+       "meaning": "बड़ा परिवर्तन — revolution; radical change",
+       "pos": "संज्ञा",
+       "example": "नई सोच कभी-कभी क्रांति ले आती है।"
+      },
+      {
+       "word": "संरक्षक",
+       "meaning": "रक्षा/संभाल करने वाला — a protector; guardian",
+       "pos": "संज्ञा",
+       "example": "वृद्ध परंपराओं के संरक्षक होते हैं।"
+      }
+     ]
+    },
+    {
+     "id": "8840c0c3-b9e0-4689-964e-6af557872ecc",
+     "text": "मनुष्य जाति के इतिहास में कोई ऐसा काल ही नहीं हुआ, जब सुधारों की आवश्यकता न हुई हो।",
+     "audio_url": ""
+    },
+    {
+     "id": "a26157de-017d-4e20-95da-c9d1f8573f89",
+     "text": "जो कभी सुधार थे, वही आज दोष हो गए हैं और उन सुधारों का फिर नव सुधार किया जाता है। तभी तो यह जीवन प्रगतिशील माना गया है।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "प्रगतिशील",
+       "meaning": "आगे बढ़ने वाला — progressive",
+       "pos": "विशेषण",
+       "example": "प्रगतिशील समाज पुराने दोष छोड़ता रहता है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "यहाँ लेखक का गहरा विचार है: हर \"सुधार\" एक दिन पुराना पड़कर \"दोष\" बन जाता है, और तब नया सुधार होता है। यही निरंतर बदलाव ही जीवन को \"प्रगतिशील\" बनाता है।"
+  }
+ ]
+}
+
+--- block #5 [image] id=9252c022-e9f2-4bbe-8278-40169276c418 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/9252c022-e9f2-4bbe-8278-40169276c418_gen.webp",
+ "alt": "युवा भविष्य की ओर, वृद्ध अतीत की ओर देखते हुए",
+ "caption": "",
+ "width": "three_quarter",
+ "aspect_ratio": "16:9",
+ "generation_prompt": "Watercolour — a split scene: a young person gazing forward toward a bright horizon and an elderly person looking back fondly at faded memories, joined in the middle. Dark warm ground, soft light. Loose washes, paper grain. No text."
+}
+
+--- block #6 [reasoning_prompt] id=18863a91-d660-4747-a0f8-4bc3cbe72dbc ---
+{
+ "reasoning_type": "logical",
+ "prompt": "लेखक कहता है कि \"जो कभी सुधार थे, वही आज दोष हो गए हैं।\" इसका क्या अर्थ है? कोई एक उदाहरण सोचिए जहाँ पुरानी अच्छी मानी गई बात आज बदलने की ज़रूरत है।",
+ "reveal": "समय के साथ ज़रूरतें बदलती हैं, इसलिए कोई भी व्यवस्था हमेशा \"सही\" नहीं रहती। जैसे — कभी रटकर याद करना अच्छी पढ़ाई मानी जाती थी, पर आज समझकर सीखना ज़्यादा ज़रूरी माना जाता है। यही \"सुधार का फिर सुधार\" समाज को प्रगतिशील बनाए रखता है।",
+ "difficulty_level": 4
+}
+
+--- block #7 [inline_quiz] id=12994db4-b38b-4cb9-b5c6-20022b9ee7c0 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "81b07170-b035-42ee-aaa4-d0c20c606bac",
+   "question": "खुसरो की \"खीर पकाई जतन से...\" किस प्रकार की रचना है?",
+   "options": [
+    "किसी वीर की गंभीर प्रशस्ति-गाथा",
+    "देश के लिए लिखा देशभक्ति गीत",
+    "सुबह की प्रार्थना",
+    "अनमेली — असंगत बातें जोड़ने वाली"
+   ],
+   "correct_index": 3,
+   "explanation": "यह अनमेली है — बेमेल/असंगत वाक्यों को जोड़कर मनोरंजन करने वाली हास्य-व्यंग्य रचना।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "1f683862-4489-4fda-aede-f82af8fe994b",
+   "question": "तरुण और वृद्ध में क्या अंतर बताया गया है?",
+   "options": [
+    "दोनों ही केवल आने वाला भविष्य देखते हैं",
+    "तरुण क्रांति के, वृद्ध अतीत-गौरव के समर्थक",
+    "दोनों ही केवल बीता अतीत देखते हैं",
+    "दोनों में कोई अंतर नहीं"
+   ],
+   "correct_index": 1,
+   "explanation": "युवा बदलाव/क्रांति चाहते हैं, वृद्ध बीते गौरव को सँभालना चाहते हैं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "9b98eb69-8b0e-44a7-afd5-b8f68104c448",
+   "question": "\"जो कभी सुधार थे, वही आज दोष हो गए हैं\" — यह जीवन के किस गुण को दर्शाता है?",
+   "options": [
+    "उसका स्थिर और अपरिवर्तनीय बने रहना",
+    "उसका प्रगतिशील होना",
+    "उसका पूरी तरह निरर्थक हो जाना",
+    "उसका रुक जाना"
+   ],
+   "correct_index": 1,
+   "explanation": "लगातार पुराने को सुधारते रहना ही जीवन को प्रगतिशील बनाता है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "शब्द-संपदा"  (slug: ch2-shabd-sampada)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=ce66b308-fd63-4075-9005-7ff3fb69aaa3 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/ce66b308-fd63-4075-9005-7ff3fb69aaa3_gen.webp",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing amber motes beside an inkpot and quill, dark ground, Madhubani line accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=61d8e4b8-eb60-4f1d-94a3-0624c30c030a ---
+{
+ "markdown": "इस निबंध के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English** मतलब, एक उदाहरण और याद रखने की ट्रिक। पसंद के शब्द **\"+ शब्दकोश में जोड़ें\"** से सहेज लीजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=c8a6df88-5799-437c-bc60-8cc0b47de24c ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: निबंध के मूल शब्द।",
+ "cards": [
+  {
+   "id": "6bc9a5eb-89ba-4936-8d46-ecd8b7a01cc0",
+   "word": "स्फूर्ति",
+   "pronunciation": "sphoor-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "फुरती, उमंग, मन में अचानक उठने वाला उत्साह",
+   "english": "energy; a sudden surge of inspiration",
+   "example": "सुबह की ताज़ी हवा में एक अजीब स्फूर्ति महसूस होती है।",
+   "memory_hook": "\"फुर्ती\" से जुड़ा — energy।"
+  },
+  {
+   "id": "347a5df7-8fb8-46a0-aa8a-884451d39476",
+   "word": "आवेग",
+   "pronunciation": "aa-veg",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मन का वेग, झोंक, बिना सोचे कुछ कर बैठने की प्रेरणा",
+   "english": "a surge of emotion; impulse",
+   "example": "क्रोध के आवेग में उसने कठोर शब्द कह दिए।",
+   "memory_hook": "आ + वेग (speed) = भावों की तेज़ी।"
+  },
+  {
+   "id": "5d469304-db2a-494d-bff2-4e4f912ee951",
+   "word": "यथार्थ",
+   "pronunciation": "ya-thaarth",
+   "audio_url": "",
+   "pos": "संज्ञा/विशेषण",
+   "meaning": "सच, असली, जैसा है वैसा",
+   "english": "real; actual; the truth",
+   "example": "कल्पना अच्छी है, पर यथार्थ का सामना भी ज़रूरी है।",
+   "memory_hook": "यथा (जैसा) + अर्थ = जैसा सचमुच है।"
+  },
+  {
+   "id": "ab23d593-ad6d-4329-ab4a-a2c386636d72",
+   "word": "रहस्य",
+   "pronunciation": "ra-hasya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "गुप्त भेद, मर्म, छिपी बात",
+   "english": "a secret; mystery",
+   "example": "सफलता का रहस्य लगातार मेहनत है।",
+   "memory_hook": "\"राज़\" — hidden secret।"
+  },
+  {
+   "id": "231ee885-875b-4330-a01a-5924929ebe7d",
+   "word": "विज्ञ",
+   "pronunciation": "vigya",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जानकार, समझदार, विद्वान",
+   "english": "learned; expert; wise",
+   "example": "इस विषय के विज्ञ ही सही राय दे सकते हैं।",
+   "memory_hook": "वि + ज्ञ (जानने वाला) = expert।"
+  },
+  {
+   "id": "d3e58ee7-44f0-4d48-b9db-936250dc0dad",
+   "word": "सम्मति",
+   "pronunciation": "sam-mati",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "राय, सहमति, मत",
+   "english": "opinion; consent; advice",
+   "example": "कोई बड़ा निर्णय लेने से पहले सबकी सम्मति ले लो।",
+   "memory_hook": "सम् + मति (बुद्धि) = साझा राय।"
+  },
+  {
+   "id": "1e33d7b4-83ab-473f-bf22-7782ab45584c",
+   "word": "अनुसंधान",
+   "pronunciation": "a-nu-san-dhaan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "खोज, जाँच-पड़ताल, अन्वेषण",
+   "english": "research; investigation",
+   "example": "नई दवा बनाने में वर्षों का अनुसंधान लगता है।",
+   "memory_hook": "अनु + संधान (खोज) = research।"
+  },
+  {
+   "id": "83617fc2-92fd-4087-a99f-4be0b765505a",
+   "word": "विश्वकोश",
+   "pronunciation": "vish-va-kosh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वह ग्रंथ जिसमें सब विषयों का विवरण हो",
+   "english": "an encyclopedia",
+   "example": "किसी भी विषय की जानकारी विश्वकोश में मिल जाती है।",
+   "memory_hook": "विश्व (world) + कोश (ख़ज़ाना) = knowledge-treasury।"
+  },
+  {
+   "id": "343b1605-2112-44e5-8b41-a4b638649176",
+   "word": "दुर्बोध",
+   "pronunciation": "dur-bodh",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जो आसानी से समझ में न आए, गूढ़",
+   "english": "hard to understand; abstruse",
+   "example": "यह कविता इतनी दुर्बोध है कि अर्थ ही पकड़ में नहीं आता।",
+   "memory_hook": "दुर् (कठिन) + बोध (समझ) = hard to grasp।"
+  },
+  {
+   "id": "56133a4c-d844-4e5b-a15b-8214123ce856",
+   "word": "गांभीर्य",
+   "pronunciation": "gaam-bheer-ya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "गंभीरता, गहराई, चित्त की स्थिरता",
+   "english": "gravity; depth; seriousness",
+   "example": "उसकी बातों के गांभीर्य ने सबको चुप करा दिया।",
+   "memory_hook": "\"गंभीर\" का भाववाचक रूप।"
+  },
+  {
+   "id": "b4795549-e950-4620-82a4-e9976c5554d9",
+   "word": "गुत्थी",
+   "pronunciation": "gut-thee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "उलझन, गाँठ, कठिनाई",
+   "english": "a knot; a tangle; a complication",
+   "example": "जासूस ने इस पेचीदा गुत्थी को आख़िर सुलझा लिया।",
+   "memory_hook": "धागे की गाँठ — a tangle।"
+  },
+  {
+   "id": "98e9c763-d9ee-4ef7-9dcf-9ac5cd7d7c61",
+   "word": "अज्ञ",
+   "pronunciation": "agya",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "नासमझ, अनजान, ज्ञानरहित",
+   "english": "ignorant; unaware",
+   "example": "इस विषय में मैं बिलकुल अज्ञ हूँ।",
+   "memory_hook": "अ (नहीं) + ज्ञ (जानने वाला) = not-knowing।"
+  },
+  {
+   "id": "24fc13c2-c871-4a81-806a-19d8d5c8805c",
+   "word": "पद्धति",
+   "pronunciation": "pad-dha-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "तरीक़ा, प्रणाली, परिपाटी",
+   "english": "a method; system; way",
+   "example": "हर शिक्षक की पढ़ाने की अपनी पद्धति होती है।",
+   "memory_hook": "\"पथ\" से — a way/method।"
+  },
+  {
+   "id": "0f3d3461-d197-49e9-8fdb-7b070dbd6f9e",
+   "word": "पाश्चात्य",
+   "pronunciation": "paash-chaa-tya",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पश्चिम का, पश्चिमी",
+   "english": "Western",
+   "example": "लेखक ने भारतीय और पाश्चात्य विचारों का मेल दिखाया।",
+   "memory_hook": "\"पश्चिम\" से — Western।"
+  },
+  {
+   "id": "f9cef80c-0984-4f08-98bd-9503b512091e",
+   "word": "आख्यायिका",
+   "pronunciation": "aakh-yaa-yi-kaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सिलसिलेवार शिक्षाप्रद कल्पित कथा",
+   "english": "a didactic tale; narrative",
+   "example": "पंचतंत्र की हर आख्यायिका कोई सीख देती है।",
+   "memory_hook": "\"आख्यान\" (कथन) से — a tale।"
+  },
+  {
+   "id": "66c0c92a-0a0c-4988-a7ca-7f9a8c941369",
+   "word": "उदात्त",
+   "pronunciation": "u-daatt",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "ऊँचा, महान, श्रेष्ठ, उदार",
+   "english": "lofty; noble; sublime",
+   "example": "गांधी जी के उदात्त विचारों ने पूरे देश को जगाया।",
+   "memory_hook": "उत् (ऊपर) + आत्त = elevated।"
+  },
+  {
+   "id": "16bc835a-2a3e-424f-b61b-1e234e60f2fa",
+   "word": "अभिव्यक्ति",
+   "pronunciation": "a-bhi-vyak-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मन की बात प्रकट करना",
+   "english": "expression",
+   "example": "कला भावनाओं की अभिव्यक्ति का सुंदर माध्यम है।",
+   "memory_hook": "अभि + व्यक्ति (प्रकट) = to express।"
+  },
+  {
+   "id": "7bbb8bf2-dd65-4526-9e41-0f3857a10055",
+   "word": "अनुसरण",
+   "pronunciation": "a-nu-sa-ran",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पीछे चलना, अनुकरण करना",
+   "english": "to follow; emulation",
+   "example": "अच्छे आदर्शों का अनुसरण करना चाहिए।",
+   "memory_hook": "अनु (पीछे) + सरण (चलना) = to follow।"
+  },
+  {
+   "id": "8354e1bb-05c1-4cdd-aa7e-628eaaccbcbf",
+   "word": "समावेश",
+   "pronunciation": "sa-maa-vesh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "शामिल करना, मिलाना, एकत्र होना",
+   "english": "inclusion; incorporation",
+   "example": "इस निबंध में दोनों विषयों का समावेश है।",
+   "memory_hook": "सम् + आवेश = to include।"
+  },
+  {
+   "id": "ec946450-b232-4474-97fb-56fe7c932285",
+   "word": "कोलाहल",
+   "pronunciation": "ko-laa-hal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बहुत लोगों का एक साथ शोर, हंगामा",
+   "english": "uproar; din; clamour",
+   "example": "मेले के कोलाहल में किसी की आवाज़ सुनाई न देती थी।",
+   "memory_hook": "a loud din।"
+  },
+  {
+   "id": "660e2acb-7a95-4377-8fb1-f93c2a5c3c96",
+   "word": "विषाद",
+   "pronunciation": "vi-shaad",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "उदासी, अवसाद",
+   "english": "sadness; gloom",
+   "example": "हार की ख़बर से मन में विषाद भर गया।",
+   "memory_hook": "आह्लाद (खुशी) का उलटा।"
+  },
+  {
+   "id": "c8136990-878a-4734-94e7-cb4c300d0a5b",
+   "word": "कलरव",
+   "pronunciation": "ka-la-rav",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पक्षियों की मधुर ध्वनि, कोमल आवाज़",
+   "english": "a sweet warbling sound",
+   "example": "सुबह बाग़ में चिड़ियों का कलरव गूँज रहा था।",
+   "memory_hook": "मधुर ध्वनि — sweet sound।"
+  },
+  {
+   "id": "7125195e-f7b4-46fb-af85-62ee380b1115",
+   "word": "अंकित",
+   "pronunciation": "an-kit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "लिखा, चित्रित या चिह्नित किया हुआ",
+   "english": "marked; inscribed; depicted",
+   "example": "उसके मन में बचपन का वह दृश्य अंकित है।",
+   "memory_hook": "\"अंक\" (निशान) से — marked।"
+  },
+  {
+   "id": "d083038b-e0ff-456f-901e-10639558b754",
+   "word": "उत्थित",
+   "pronunciation": "ut-thit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "उठा हुआ, उत्पन्न हुआ",
+   "english": "risen; arisen",
+   "example": "मन में स्वयं उत्थित भाव ही सच्ची कविता बनते हैं।",
+   "memory_hook": "उत् (ऊपर) + स्थित = risen।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "2f21ebed-a692-40be-b338-9ad167f3f3e2",
+   "question": "किस शब्द का अर्थ \"जो आसानी से समझ में न आए\" है?",
+   "options": [
+    "दुर्बोध",
+    "उदात्त",
+    "समावेश",
+    "कलरव"
+   ],
+   "correct_index": 0,
+   "explanation": "दुर्बोध = hard to understand, गूढ़।"
+  },
+  {
+   "id": "13bd0a67-1564-45d7-8f6a-c1c6c4082fbb",
+   "question": "\"विश्वकोश\" क्या है?",
+   "options": [
+    "एक प्रकार का ढोल",
+    "पश्चिमी देश",
+    "मधुर ध्वनि",
+    "सब विषयों की जानकारी वाला ग्रंथ"
+   ],
+   "correct_index": 3,
+   "explanation": "विश्वकोश = encyclopedia, सब विषयों का विवरण रखने वाला ग्रंथ।"
+  },
+  {
+   "id": "fb53bcb4-6f83-4e11-8601-1e8e4489f417",
+   "question": "\"कोलाहल\" का अर्थ है —",
+   "options": [
+    "गहरी शांति",
+    "बहुत शोर/हंगामा",
+    "मधुर संगीत",
+    "अँधेरा"
+   ],
+   "correct_index": 1,
+   "explanation": "कोलाहल = uproar/din, बहुत लोगों का शोर।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=d1e2ae78-be79-4ad9-88f4-5ec2debea2ff ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: निबंध से जुड़े और शब्द।",
+ "cards": [
+  {
+   "id": "e87a85c6-deb1-4bfb-9ead-1c4089a3d3f2",
+   "word": "मनोभाव",
+   "pronunciation": "ma-no-bhaav",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मन के भाव, भावनाएँ",
+   "english": "feelings; emotions",
+   "example": "चेहरा अक्सर हमारे मनोभाव बता देता है।",
+   "memory_hook": "मन + भाव।"
+  },
+  {
+   "id": "8f6adc5b-f4d1-4f98-b321-b501b369fd3d",
+   "word": "कर्कश",
+   "pronunciation": "kar-kash",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "कठोर, बेसुरा, कड़ा",
+   "english": "harsh; jarring; grating",
+   "example": "ढोल की कर्कश आवाज़ पास वालों को चुभती है।",
+   "memory_hook": "कानों को चुभने वाला — harsh।"
+  },
+  {
+   "id": "7ed3298b-4ca6-4a7e-b01b-50ddf9a09d25",
+   "word": "स्वच्छंद",
+   "pronunciation": "swa-chchhand",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "स्वतंत्र, बंधनहीन, मनमाना",
+   "english": "free; unrestrained; spontaneous",
+   "example": "मानटेन के निबंध मन की स्वच्छंद रचनाएँ हैं।",
+   "memory_hook": "स्व + छंद (इच्छा) = free।"
+  },
+  {
+   "id": "028dc97d-b488-4b10-b46f-6d236f45cf41",
+   "word": "मनमोहक",
+   "pronunciation": "man-mo-hak",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "मन को मोह लेने वाला, आकर्षक",
+   "english": "enchanting; captivating",
+   "example": "दूर का पहाड़ी दृश्य बड़ा मनमोहक लगता है।",
+   "memory_hook": "मन + मोहक = mind-stealing।"
+  },
+  {
+   "id": "df70371e-4654-4db6-b094-5806a4b6b626",
+   "word": "संरक्षक",
+   "pronunciation": "san-rak-shak",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "रक्षा करने वाला, संभालने वाला",
+   "english": "a protector; guardian",
+   "example": "वृद्ध अतीत-गौरव के संरक्षक होते हैं।",
+   "memory_hook": "सम् + रक्षक = protector।"
+  },
+  {
+   "id": "491ccfb2-3953-4b11-83fe-98dcdb4df3a7",
+   "word": "प्रगतिशील",
+   "pronunciation": "pra-ga-ti-sheel",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "आगे बढ़ने वाला, उन्नति की ओर",
+   "english": "progressive",
+   "example": "प्रगतिशील समाज पुराने दोषों को छोड़ता रहता है।",
+   "memory_hook": "प्रगति (progress) + शील।"
+  },
+  {
+   "id": "dc477f64-0d64-42b5-a1b2-f0008d51283d",
+   "word": "मूल्यांकन",
+   "pronunciation": "mool-yaan-kan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "गुण-दोष/मूल्य आँकना, परखना",
+   "english": "evaluation; appraisal",
+   "example": "लेखक ने सामाजिक संबंधों का तार्किक मूल्यांकन किया।",
+   "memory_hook": "मूल्य + अंकन = to assess value।"
+  },
+  {
+   "id": "05b4c236-34bd-4eff-a6eb-f960579144fe",
+   "word": "अनादि",
+   "pronunciation": "a-naa-di",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जिसका कोई आरंभ न हो",
+   "english": "without beginning; eternal",
+   "example": "समाज-सुधार की चर्चा अनादि काल से चली आ रही है।",
+   "memory_hook": "अन् (नहीं) + आदि (आरंभ) = beginningless।"
+  },
+  {
+   "id": "ed5c8335-c9dc-4642-9bae-856dbd2ad8ca",
+   "word": "रूपरेखा",
+   "pronunciation": "roop-re-khaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ढाँचा, खाका, योजना",
+   "english": "an outline; a sketch/plan",
+   "example": "निबंध लिखने से पहले उसकी रूपरेखा बना लीजिए।",
+   "memory_hook": "रूप + रेखा = outline।"
+  },
+  {
+   "id": "bba9a4a9-60f4-405f-ac8f-f9f9681470be",
+   "word": "लोकोक्ति",
+   "pronunciation": "lo-kok-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "लोक में प्रचलित कहावत",
+   "english": "a proverb; popular saying",
+   "example": "\"दूर के ढोल सुहावने\" एक प्रसिद्ध लोकोक्ति है।",
+   "memory_hook": "लोक (people) + उक्ति (कथन)।"
+  },
+  {
+   "id": "9753b24a-1a13-478f-afb3-e2872f7dd386",
+   "word": "क्षुब्ध",
+   "pronunciation": "kshubdh",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "विचलित, अशांत, खिन्न",
+   "english": "agitated; disturbed",
+   "example": "अन्याय देखकर उसका मन क्षुब्ध हो उठा।",
+   "memory_hook": "shaken/disturbed।"
+  },
+  {
+   "id": "22575ad9-951b-48dc-bc69-3d825c9603d8",
+   "word": "अतीत",
+   "pronunciation": "a-teet",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बीता हुआ समय, गुज़रा कल",
+   "english": "the past",
+   "example": "वृद्धों को अपना अतीत बड़ा सुखद लगता है।",
+   "memory_hook": "gone-by time — the past।"
+  },
+  {
+   "id": "5280a0b3-436d-4c97-8574-6035d1eeb65b",
+   "word": "सुधारक",
+   "pronunciation": "su-dhaa-rak",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सुधार करने वाला",
+   "english": "a reformer",
+   "example": "कबीर और नानक जैसे सुधारक हर युग में हुए।",
+   "memory_hook": "सुधार + क = reformer।"
+  },
+  {
+   "id": "d756109d-94ba-407d-9bbc-e372a1a30e39",
+   "word": "विद्वत्ता",
+   "pronunciation": "vid-vat-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विद्वान होना, पांडित्य, ज्ञान",
+   "english": "erudition; scholarship",
+   "example": "अपनी विद्वत्ता दिखाने के लिए वह कठिन शब्द भरता है।",
+   "memory_hook": "\"विद्वान\" का भाव।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=e6677fc2-2a4e-487e-b056-26c2ae97f8eb ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d471b7fe-c5bd-4256-84c5-c5d8018f06ec",
+   "question": "\"अनादि\" शब्द का अर्थ है —",
+   "options": [
+    "जो बहुत आधुनिक और नया हो",
+    "जो आकार में बहुत छोटा हो",
+    "जो समझने में कठिन हो",
+    "जिसका कोई आरंभ न हो"
+   ],
+   "correct_index": 3,
+   "explanation": "अनादि = बिना आरंभ का, eternal।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "6f3048ed-981c-4df1-81b7-ca4a2c4e4034",
+   "question": "\"उदात्त विचार\" में \"उदात्त\" का अर्थ है —",
+   "options": [
+    "ऊँचे, महान, श्रेष्ठ",
+    "बहुत नीचे और तुच्छ कोटि के",
+    "पुराने और बेकार हो चुके",
+    "कठिन और उलझे हुए"
+   ],
+   "correct_index": 0,
+   "explanation": "उदात्त = lofty/noble, ऊँचे और महान।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "dcd381d2-58b7-4379-b48c-0d11bd62c998",
+   "question": "\"मूल्यांकन करना\" का अर्थ है —",
+   "options": [
+    "किसी की केवल झूठी प्रशंसा करना",
+    "सब कुछ भूल जाना",
+    "गुण-दोष परखकर मूल्य आँकना",
+    "छिपा देना"
+   ],
+   "correct_index": 2,
+   "explanation": "मूल्यांकन = evaluation, किसी चीज़ का गुण-दोष आँकना।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "निबंध लिखने की कला"  (slug: nibandh-ki-kala)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=cf498226-67f6-4d90-b2f2-a865a5d2ddfb ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/cf498226-67f6-4d90-b2f2-a865a5d2ddfb_gen.webp",
+ "alt": "निबंध की रचना-प्रक्रिया",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — abstract depiction of the essay-writing process: a spark of inspiration flowing through stages into flowing Devanagari text, on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=6d25fc58-47f5-4044-92dc-192f97d6c896 ---
+{
+ "markdown": "**निबंध** का शाब्दिक अर्थ है — \"भली-भाँति बँधा हुआ\" (नि + बंध)। यह गद्य की वह विधा है जिसमें लेखक किसी विषय पर अपने अनुभव, विचार और भाव क्रमबद्ध रूप से प्रस्तुत करता है। नीचे निबंध-लेखन के छह चरण देखिए।"
+}
+
+--- block #2 [timeline] id=60852f57-dedf-4a7a-a5a6-475b162ff53c ---
+{
+ "title": "निबंध-लेखन की प्रक्रिया — छह चरण",
+ "orientation": "vertical",
+ "events": [
+  {
+   "id": "2639e9ad-008c-4acb-8398-ff9ee0da7e4d",
+   "label": "१. प्रेरणा",
+   "detail": "मन में कोई भाव या उमंग का उठना — लिखने की इच्छा का जन्म।"
+  },
+  {
+   "id": "029c0377-67dc-4e2b-94d9-1d79ea9596ba",
+   "label": "२. विषय चयन",
+   "detail": "भाव को व्यक्त करने के लिए उपयुक्त विषय चुनना।"
+  },
+  {
+   "id": "550711ec-0a8d-4844-8c58-59166883b59d",
+   "label": "३. सामग्री संग्रह",
+   "detail": "विषय से जुड़ी बातें, विचार और उदाहरण इकट्ठा करना।"
+  },
+  {
+   "id": "0250168d-e134-4c62-ad74-847b41ca5db8",
+   "label": "४. रूपरेखा निर्माण",
+   "detail": "निबंध का ढाँचा/खाका तय करना — क्या पहले, क्या बाद में।"
+  },
+  {
+   "id": "0f2e4d1d-389a-43ed-bfe8-b5f79df8f551",
+   "label": "५. शैली निर्धारण",
+   "detail": "कहने का ढंग तय करना — भाषा में प्रवाह, छोटे-सुसंबद्ध वाक्य।"
+  },
+  {
+   "id": "466aeb6a-d14d-4a63-b056-bf049276c13a",
+   "label": "६. लेखन और समापन",
+   "detail": "निबंध लिखना और एक सार्थक अंत तक पहुँचाना।"
+  }
+ ]
+}
+
+--- block #3 [heading] id=8ff3b51a-d7ba-4f51-92e8-48e0675cbc35 ---
+{
+ "text": "निबंध की भाषा का सौंदर्य",
+ "level": 2
+}
+
+--- block #4 [text] id=2b07d627-4fa9-43d3-a657-b6cfdeed908e ---
+{
+ "markdown": "इस आत्मपरक निबंध में चित्रात्मकता, विरोधाभास और व्यंग्य की झलक मिलती है। नीचे किसी विशेषता पर टैप करें — उसके उदाहरण रेखांकित हो जाएँगे।"
+}
+
+--- block #5 [literary_devices_highlighter] id=af77a4f7-9b50-4b74-bbf7-1127bb7926bd ---
+{
+ "lang": "hindi",
+ "passage": "दूर के ढोल सुहावने होते हैं, क्योंकि उनकी कर्कशता दूर तक नहीं पहुँचती। तरुण क्रांति के समर्थक होते हैं और वृद्ध अतीत-गौरव के संरक्षक। जैसा तुम चाहो।",
+ "devices": [
+  {
+   "id": "cd16378f-906e-4197-a848-302fbca46225",
+   "device": "imagery",
+   "matches": [
+    {
+     "text": "दूर के ढोल सुहावने होते हैं",
+     "explanation": "शब्दों से दूर बजते ढोल का दृश्य और मधुर ध्वनि मन में उतर आती है — चित्रात्मकता।"
+    }
+   ]
+  },
+  {
+   "id": "0b46e417-797b-432e-925c-791588ecb007",
+   "device": "virodhabhas",
+   "matches": [
+    {
+     "text": "तरुण क्रांति के समर्थक होते हैं और वृद्ध अतीत-गौरव के संरक्षक",
+     "explanation": "एक ही वाक्य में दो विरोधी दृष्टियाँ — युवा बनाम वृद्ध — का साथ आना विरोधाभास है।"
+    }
+   ]
+  },
+  {
+   "id": "b536c04a-8046-41cc-bba1-1099c7192ef3",
+   "device": "vyangya",
+   "matches": [
+    {
+     "text": "जैसा तुम चाहो",
+     "explanation": "शेक्सपियर द्वारा नाम न सूझने पर नाटक का यही नाम रख देना — लेखक का हल्का व्यंग्य कि शीर्षक देना कितना कठिन है।"
+    }
+   ]
+  }
+ ]
+}
+
+--- block #6 [worked_example] id=7648600a-1142-433b-b80f-f0424ec7e09d ---
+{
+ "label": "भाव-विस्तार — \"तरुण क्रांति के समर्थक होते हैं और वृद्ध अतीत-गौरव के संरक्षक\"",
+ "variant": "ncert_intext",
+ "problem": "इस पंक्ति का भाव-विस्तार अपने शब्दों में कीजिए (कम-से-कम तीन वाक्य), फिर आदर्श उत्तर देखिए।",
+ "solution": "युवा पीढ़ी में किसी समस्या को लेकर आक्रोश और बदलाव की प्रबल भावना होती है — वह बैठकर बातचीत के बजाय तुरंत निर्णय और क्रांति चाहती है।\n\nइसके विपरीत वृद्ध पीढ़ी अनुभव और परंपरा पर भरोसा करती है — वह बीते समय के गौरव को सँभालकर रखना चाहती है।\n\nइन्हीं दो दृष्टियों के टकराव से वर्तमान सदा बेचैन रहता है, और इसी से समाज में निरंतर सुधार होते रहते हैं।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #7 [inline_quiz] id=685b43f0-df5b-423e-99df-828e86179b46 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "e8f7b783-3624-46b5-88df-cb28222f2d28",
+   "question": "\"निबंध\" शब्द का शाब्दिक अर्थ क्या है?",
+   "options": [
+    "खुला हुआ और इधर-उधर बिखरा हुआ",
+    "बहुत लंबा और उबाऊ लेख",
+    "भली-भाँति बँधा हुआ",
+    "कठिन कविता"
+   ],
+   "correct_index": 2,
+   "explanation": "नि + बंध = भली-भाँति बँधा/गठा हुआ — विचारों का क्रमबद्ध बँधाव।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "d6354588-f116-4165-a0b8-ede11ba5c3f2",
+   "question": "निबंध-लेखन की प्रक्रिया का सही क्रम कौन-सा है?",
+   "options": [
+    "प्रेरणा → विषय → सामग्री → रूपरेखा → शैली → लेखन",
+    "पहले लेखन, फिर प्रेरणा, फिर विषय चयन",
+    "पहले शैली, फिर लेखन, फिर प्रेरणा",
+    "सामग्री → समापन → प्रेरणा"
+   ],
+   "correct_index": 0,
+   "explanation": "पहले प्रेरणा, फिर विषय, सामग्री, रूपरेखा, शैली और अंत में लेखन-समापन।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "8eccde5e-6a58-4a5e-81d8-c3413fc0d16b",
+   "question": "\"तरुण... वृद्ध...\" वाली पंक्ति में कौन-सी विशेषता है?",
+   "options": [
+    "शब्दों का सुंदर अनुप्रास",
+    "बढ़ा-चढ़ाकर कही अतिशयोक्ति",
+    "पंक्ति की तुक",
+    "विरोधाभास"
+   ],
+   "correct_index": 3,
+   "explanation": "युवा बनाम वृद्ध की दो विरोधी दृष्टियों का साथ आना विरोधाभास है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "विषयों से संवाद"  (slug: ch2-vishayon-se-samvad)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=72240f88-9c6d-4c65-9c76-44a18d090685 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/72240f88-9c6d-4c65-9c76-44a18d090685_gen.webp",
+ "alt": "समाज-सुधार की परंपरा",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — silhouettes of Indian social reformers across ages walking forward together toward a rising sun, suggesting continuity of reform. Dark warm ground, subtle dawn light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=0eb1e295-a241-4bf6-b7e0-58261bc4bbbd ---
+{
+ "markdown": "निबंध समाज-सुधार और इतिहास के कई बड़े नामों को छूता है। ये संदर्भ निबंध को गहराई देते हैं।"
+}
+
+--- block #2 [cultural_context_card] id=6ebe0740-77bc-4f54-a3a9-0ffc67a680ef ---
+{
+ "reference": "समाज-सुधारक",
+ "category": "tradition",
+ "short_desc": "समाज की कुरीतियों को दूर कर नई दिशा देने वाले महापुरुष।",
+ "detail": "निबंध में **बुद्ध, महावीर, नागार्जुन, शंकराचार्य, कबीर, नानक, राजा राममोहन राय, स्वामी दयानंद और महात्मा गांधी** जैसे सुधारकों का उल्लेख है। हर युग में ऐसे सुधारक हुए जिन्होंने समाज के दोषों के विरुद्ध आवाज़ उठाई और लोगों को नई राह दिखाई — यही दिखाता है कि सुधार की ज़रूरत हर काल में रही है।",
+ "image_url": ""
+}
+
+--- block #3 [cultural_context_card] id=eefc582b-2f18-4d6c-a173-071998a234be ---
+{
+ "reference": "दूर के ढोल सुहावने होते हैं",
+ "category": "concept",
+ "short_desc": "एक प्रसिद्ध लोकोक्ति — दूर की चीज़ें अधिक आकर्षक लगती हैं।",
+ "detail": "इस लोकोक्ति का अर्थ है कि **जो वस्तु, स्थान या जीवन हमसे दूर है, वह पास की वास्तविकता से अधिक सुंदर प्रतीत होता है** — क्योंकि उसकी कठिनाइयाँ (कर्कशता) हम तक नहीं पहुँचतीं। निबंध इसी मनोवैज्ञानिक सच्चाई को तरुण-वृद्ध और अतीत-भविष्य के उदाहरणों से खोलता है।",
+ "image_url": ""
+}
+
+--- block #4 [theme_explorer] id=a1b49615-4cff-4b35-9006-f1ea8b188fab ---
+{
+ "intro": "निबंध के मुख्य भाव — हर कार्ड पर टैप कीजिए।",
+ "themes": [
+  {
+   "id": "1d17342f-fca7-4a87-8328-7e3a7e61723a",
+   "title": "भाव ही असली है, विषय नहीं",
+   "description": "अच्छे लेखन की जान सच्चा भाव है; विषय तो केवल उसे टाँगने की खूँटी है।",
+   "evidence": [
+    "\"असली वस्तु है हैट, खूँटी नहीं।\"",
+    "\"मन के भाव ही यथार्थ वस्तु हैं, विषय नहीं।\""
+   ],
+   "reflection_prompt": "आपने जो सबसे अच्छा लिखा या कहा, उसमें \"विषय\" बड़ा था या आपका सच्चा भाव? सोचकर लिखिए।"
+  },
+  {
+   "id": "c27e31bf-5893-4e25-af72-b15365051828",
+   "title": "दूरी सुंदरता बढ़ा देती है",
+   "description": "जो दूर है — समय में या स्थान में — वह अधिक सुहावना लगता है, क्योंकि उसकी कठोरता दिखाई नहीं देती।",
+   "evidence": [
+    "\"दूर के ढोल सुहावने होते हैं।\"",
+    "\"वृद्धों को अपने अतीतकाल की स्मृति बड़ी सुखद लगती है।\""
+   ],
+   "reflection_prompt": "क्या आपका कोई पुराना अनुभव अब, दूर से, उस समय से अधिक सुंदर लगता है? क्यों?"
+  },
+  {
+   "id": "a853c9db-f3e3-4cdd-add8-e2f5779c73e3",
+   "title": "सुधार एक निरंतर प्रक्रिया है",
+   "description": "हर युग को सुधार चाहिए; पुराने सुधार समय पाकर दोष बन जाते हैं और फिर नए सुधार होते हैं।",
+   "evidence": [
+    "\"मनुष्य जाति के इतिहास में कोई ऐसा काल ही नहीं हुआ, जब सुधारों की आवश्यकता न हुई हो।\""
+   ],
+   "reflection_prompt": "अपने आस-पास एक ऐसी बात बताइए जिसमें आप सुधार चाहेंगे — और कैसे करेंगे?"
+  }
+ ]
+}
+
+--- block #5 [callout] id=d857ad06-5b48-42bf-b25e-035a8deab23a ---
+{
+ "variant": "literature_in_life",
+ "title": "निबंध और आपका जीवन",
+ "markdown": "अगली बार जब किसी दूर की चीज़ — कोई शहर, कोई नौकरी, किसी और का जीवन — आपको बहुत \"सुहावना\" लगे, तो याद रखिए: शायद आप तक उसकी \"कर्कशता\" नहीं पहुँच रही। पास जाकर ही असली तस्वीर दिखती है।"
+}
+
+--- block #6 [reasoning_prompt] id=7c4fa99a-3ec4-442e-a9af-baa93192f0f4 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "लेखक के अनुसार वृद्ध और तरुण दोनों ही वर्तमान से असंतुष्ट रहते हैं — पर कारण अलग-अलग। दोनों की असंतुष्टि के क्या कारण हो सकते हैं?",
+ "reveal": "तरुण भविष्य को वर्तमान में लाना चाहता है — उसे लगता है बदलाव बहुत धीमा है, इसलिए वर्तमान से असंतुष्ट। वृद्ध अतीत को वर्तमान में देखना चाहता है — उसे लगता है पुराने अच्छे मूल्य खो रहे हैं, इसलिए वह भी असंतुष्ट। एक आगे खींचता है, दूसरा पीछे — और इसी खिंचाव से वर्तमान सदा बदलता रहता है।",
+ "difficulty_level": 4
+}
+
+--- block #7 [inline_quiz] id=730c1e70-a9a1-4aee-a6b5-54d4fa395f99 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "8cb341d0-5ed9-43cb-b94d-29733c7534e8",
+   "question": "निबंध में किन सुधारकों के नाम आए हैं?",
+   "options": [
+    "केवल आधुनिक युग के वैज्ञानिक",
+    "बुद्ध, कबीर, नानक, गांधी आदि",
+    "केवल पुराने राजा-महाराजा",
+    "केवल विदेशी लेखक"
+   ],
+   "correct_index": 1,
+   "explanation": "बुद्ध, महावीर, शंकराचार्य, कबीर, नानक, राममोहन राय, दयानंद, गांधी जैसे सुधारकों का उल्लेख है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "9ff6c70b-708d-4aa6-a016-0b703eced31e",
+   "question": "\"दूर के ढोल सुहावने\" लोकोक्ति का भाव क्या है?",
+   "options": [
+    "ढोल हमेशा कर्कश और बेसुरे होते हैं",
+    "दूर की चीज़ें अधिक आकर्षक लगती हैं",
+    "पास की चीज़ें अधिक सुंदर होती हैं",
+    "ढोल बजाना कठिन है"
+   ],
+   "correct_index": 1,
+   "explanation": "दूरी के कारण कठिनाइयाँ छिप जाती हैं, इसलिए दूर की चीज़ अधिक सुहावनी लगती है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "6b26f2f6-1a94-4945-9ffb-aba6d9f80288",
+   "question": "तरुण और वृद्ध दोनों वर्तमान से असंतुष्ट क्यों रहते हैं?",
+   "options": [
+    "दोनों आने वाले भविष्य से बहुत डरते हैं",
+    "दोनों को वर्तमान का जीवन बहुत पसंद है",
+    "किसी कारण नहीं",
+    "एक भविष्य खींचता है, दूसरा अतीत"
+   ],
+   "correct_index": 3,
+   "explanation": "तरुण भविष्य चाहता है, वृद्ध अतीत — दोनों की दृष्टि वर्तमान से आगे/पीछे है, इसलिए असंतोष।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "सृजन और व्याकरण"  (slug: srijan-vyakaran)
+published=false blocks=10 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=67190d57-27b5-4af7-82d4-528406f90e73 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/67190d57-27b5-4af7-82d4-528406f90e73_gen.webp",
+ "alt": "रचना और शब्द-रचना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open diary, a quill, and two words merging into one (suggesting समास/compound), glowing on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=758c54ce-197d-498c-be5f-46b92a8f52e6 ---
+{
+ "markdown": "अब आपकी बारी। पहले एक लोकोक्ति-आधारित छोटा लेख लिखिए, फिर **समास** (शब्दों का मेल) का अभ्यास कीजिए।"
+}
+
+--- block #2 [writing_scaffold] id=73103455-c9b7-4b4f-9543-d4545ed7c6eb ---
+{
+ "task": "\"आम के आम, गुठलियों के दाम\" लोकोक्ति और \"जैविक खाद की निर्मिति में हमारा प्रयास\" विषय को मिलाकर एक संक्षिप्त लेख लिखिए।",
+ "format": "paragraph",
+ "model_parts": [
+  {
+   "id": "11619003-aaed-44c2-9832-35b0afd868f1",
+   "label": "आरंभ — लोकोक्ति का अर्थ",
+   "text": "\"आम के आम, गुठलियों के दाम\" का अर्थ है — एक ही काम से दोहरा लाभ। जैविक खाद बनाना ठीक ऐसा ही है।",
+   "annotation": "लेख की शुरुआत लोकोक्ति के अर्थ से कीजिए — पाठक तुरंत जुड़ जाता है।"
+  },
+  {
+   "id": "273f7f12-8a01-4464-a572-d026647c2ca0",
+   "label": "विस्तार — दोहरा लाभ",
+   "text": "रसोई और खेत का कचरा फेंकने के बजाय हम उससे जैविक खाद बना सकते हैं। इससे कचरा भी ठिकाने लगता है (आम), और मुफ़्त में बढ़िया खाद भी मिल जाती है (गुठलियों के दाम)। मिट्टी की सेहत सुधरती है और रासायनिक खाद का ख़र्च भी बचता है।",
+   "annotation": "एक ठोस उदाहरण (कचरे से खाद) से लोकोक्ति को जोड़िए — तभी बात असरदार बनती है।"
+  },
+  {
+   "id": "c077d552-5359-40a8-b375-f7d233ca3127",
+   "label": "समापन — संदेश",
+   "text": "इस तरह थोड़े-से प्रयास से हम पर्यावरण और जेब दोनों की रक्षा करते हैं — सचमुच आम के आम, गुठलियों के दाम।",
+   "annotation": "अंत में लोकोक्ति दोहराकर बात को गोल कीजिए — लेख याद रह जाता है।"
+  }
+ ],
+ "tips": [
+  "लोकोक्ति का अर्थ ज़रूर समझाइए।",
+  "एक ठोस उदाहरण दीजिए।",
+  "अंत में संदेश दीजिए।"
+ ]
+}
+
+--- block #3 [heading] id=d468c61d-4710-465a-aace-cc34ac7b2c37 ---
+{
+ "text": "समास — दो शब्द, एक नया शब्द",
+ "level": 2
+}
+
+--- block #4 [text] id=0373f8e3-fac9-4f69-80f3-57e5a09a8974 ---
+{
+ "markdown": "समास में दो (या अधिक) शब्द मिलकर एक नया शब्द बनाते हैं, जैसे **गंगा + जल = गंगाजल**। समास खोलने को **समास-विग्रह** कहते हैं (गंगाजल = गंगा का जल)। नीचे छह प्रमुख भेद देखिए, फिर अभ्यास कीजिए।"
+}
+
+--- block #5 [table] id=47d33808-2356-4712-8763-8e9ee501ac7c ---
+{
+ "caption": "समास के छह प्रमुख भेद",
+ "headers": [
+  "समास",
+  "पहचान",
+  "उदाहरण"
+ ],
+ "rows": [
+  [
+   "तत्पुरुष",
+   "उत्तरपद प्रधान; बीच का परसर्ग लुप्त",
+   "रसोईघर = रसोई के लिए घर"
+  ],
+  [
+   "कर्मधारय",
+   "पूर्वपद विशेषण, उत्तरपद विशेष्य",
+   "नीलकमल = नीला कमल"
+  ],
+  [
+   "द्विगु",
+   "पूर्वपद संख्यावाची; समूह का बोध",
+   "तिरंगा = तीन रंगों का समूह"
+  ],
+  [
+   "बहुव्रीहि",
+   "दोनों पद गौण; किसी तीसरे का बोध",
+   "पीतांबर = पीला अंबर (वस्त्र) वाला — विष्णु"
+  ],
+  [
+   "द्वंद्व",
+   "दोनों पद प्रधान; \"और\" का लोप",
+   "भाई-बहन = भाई और बहन"
+  ],
+  [
+   "अव्ययीभाव",
+   "पूर्वपद अव्यय; पूरा पद क्रिया-विशेषण",
+   "यथाशक्ति = शक्ति के अनुसार"
+  ]
+ ]
+}
+
+--- block #6 [apply_express] id=54f08fc9-9375-4cd9-9b4e-8a179a99dcec ---
+{
+ "title": "व्याकरण व्यायामशाला — समास, उपसर्ग, प्रत्यय",
+ "intro": "शब्द-रचना का अभ्यास कीजिए।",
+ "chapter_number": 2,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h2-gr-01",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "prompt": "\"गंगाजल\" में कौन-सा समास है?",
+   "options": [
+    "तत्पुरुष समास",
+    "द्वंद्व समास",
+    "बहुव्रीहि समास"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "सही — गंगाजल = गंगा का जल; उत्तरपद (जल) प्रधान।",
+    "ग़लत — द्वंद्व में दोनों पद प्रधान होते।",
+    "ग़लत — बहुव्रीहि किसी तीसरे का बोध कराता।"
+   ]
+  },
+  {
+   "id": "h2-gr-02",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "नीलकमल",
+   "instruction": "इस समस्त पद का समास-विग्रह कीजिए।",
+   "answers": [
+    "नीला कमल"
+   ],
+   "rule": "कर्मधारय — पूर्वपद विशेषण \"नीला\", उत्तरपद विशेष्य \"कमल\"।"
+  },
+  {
+   "id": "h2-gr-03",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "माता-पिता",
+   "instruction": "इसका समास-विग्रह कीजिए।",
+   "answers": [
+    "माता और पिता"
+   ],
+   "rule": "द्वंद्व समास — दोनों पद प्रधान, बीच में \"और\" लुप्त।"
+  },
+  {
+   "id": "h2-gr-04",
+   "kind": "word_builder",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "base": "बोध",
+   "affixes": [
+    "दुर्",
+    "सु",
+    "प्र",
+    "अनु"
+   ],
+   "correct": "दुर्",
+   "target": "दुर्बोध",
+   "position": "prefix",
+   "meaning_hint": "जो कठिनाई से समझ आए — abstruse",
+   "explanation": "उपसर्ग \"दुर्\" + बोध = दुर्बोध (जो आसानी से समझ न आए)।"
+  },
+  {
+   "id": "h2-gr-05",
+   "kind": "word_builder",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "base": "सुधार",
+   "affixes": [
+    "क",
+    "ता",
+    "पन",
+    "त्व"
+   ],
+   "correct": "क",
+   "target": "सुधारक",
+   "position": "suffix",
+   "meaning_hint": "सुधार करने वाला — a reformer",
+   "explanation": "प्रत्यय \"क\" + सुधार = सुधारक (करने वाला)।"
+  },
+  {
+   "id": "h2-gr-06",
+   "kind": "fill_blank",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "prompt": "समास-विग्रह कीजिए — \"रसोईघर\" = रसोई के लिए ______",
+   "answers": [
+    [
+     "घर"
+    ]
+   ],
+   "hint": "तत्पुरुष समास।",
+   "explanation": "रसोईघर = रसोई के लिए घर (तत्पुरुष)।"
+  },
+  {
+   "id": "h2-gr-07",
+   "kind": "spot_error",
+   "concept_tag": "grammar",
+   "difficulty": 4,
+   "tokens": [
+    "निबंध",
+    "लिखने",
+    "के",
+    "पहले",
+    "उसका",
+    "रूपरेखा",
+    "बनाओ"
+   ],
+   "error_index": 5,
+   "fix": "रूपरेखा",
+   "fix_options": [
+    "रूपरेखा",
+    "की रूपरेखा",
+    "रूपरेखाएँ"
+   ],
+   "rule": "\"उसका रूपरेखा\" अशुद्ध — \"रूपरेखा\" स्त्रीलिंग है, अतः \"उसकी रूपरेखा\" होगा।"
+  }
+ ]
+}
+
+--- block #7 [heading] id=1524693d-37f8-4f01-ad0d-38a1b0109ff1 ---
+{
+ "text": "भाषा संगम — \"निबंध\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #8 [table] id=f3ed0a9c-9aff-4f8a-9f98-2c683517e948 ---
+{
+ "caption": "\"निबंध\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "निबंध"
+  ],
+  [
+   "संस्कृत",
+   "निबंधः"
+  ],
+  [
+   "पंजाबी",
+   "निबंध"
+  ],
+  [
+   "उर्दू",
+   "मज़मून"
+  ],
+  [
+   "मराठी",
+   "निबंध"
+  ],
+  [
+   "गुजराती",
+   "નિબંધ (निबंध)"
+  ],
+  [
+   "बांग्ला",
+   "প্রবন্ধ (प्रबंध)"
+  ],
+  [
+   "ओडिआ",
+   "ପ୍ରବନ୍ଧ (प्रबंध)"
+  ],
+  [
+   "तेलुगु",
+   "వ్యాసం (व्यासम्)"
+  ],
+  [
+   "तमिल",
+   "கட்டுரை (कट्टुरै)"
+  ],
+  [
+   "कन्नड़",
+   "ಲೇಖನ (लेख)"
+  ],
+  [
+   "मलयालम",
+   "ഉപന്യാസം (उपन्यासम्)"
+  ]
+ ]
+}
+
+--- block #9 [inline_quiz] id=e9404d97-8664-43d6-881c-051282316cb7 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "063bfb96-d1e8-421c-9872-4e628702282c",
+   "question": "\"भाई-बहन\" में कौन-सा समास है?",
+   "options": [
+    "द्वंद्व समास",
+    "तत्पुरुष समास",
+    "बहुव्रीहि समास",
+    "द्विगु समास"
+   ],
+   "correct_index": 0,
+   "explanation": "द्वंद्व — दोनों पद प्रधान, बीच में \"और\" का लोप (भाई और बहन)।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "f6ab401e-5c4f-4160-b5e6-f29abaa3d883",
+   "question": "\"तिरंगा\" (तीन रंगों का समूह) में कौन-सा समास है?",
+   "options": [
+    "कर्मधारय समास",
+    "अव्ययीभाव समास",
+    "द्विगु समास",
+    "द्वंद्व समास"
+   ],
+   "correct_index": 2,
+   "explanation": "द्विगु — पूर्वपद \"ति\" (तीन) संख्यावाची, समूह का बोध।",
+   "difficulty_level": 3
+  },
+  {
+   "id": "892e4ad8-b9ba-48fd-9b4a-50d787cd86ed",
+   "question": "\"दुर्\" + \"बोध\" से कौन-सा शब्द बनता है?",
+   "options": [
+    "सुबोध",
+    "प्रबोध",
+    "दुर्बोध",
+    "अनुबोध"
+   ],
+   "correct_index": 2,
+   "explanation": "उपसर्ग \"दुर्\" + बोध = दुर्बोध।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "अभ्यास — Practice"  (slug: ch2-abhyas)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=2828992c-5aac-48ba-af3c-a009b31d4979 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch2/2828992c-5aac-48ba-af3c-a009b31d4979_gen.webp",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi essay book, a quill and lamp, faint hat-and-peg motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=6751aab9-32ab-451f-ab3b-418582bbd6a7 ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=9ac01743-0748-4979-b0b9-1291124acb9a ---
+{
+ "title": "अध्याय 2 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 2,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h2-pr-01",
+   "question": "इस निबंध के लेखक कौन हैं?",
+   "options": [
+    "मुंशी प्रेमचंद, गोदान के लेखक",
+    "पदुमलाल पुन्नालाल बख्शी",
+    "सूर्यकांत त्रिपाठी निराला",
+    "महादेवी वर्मा"
+   ],
+   "correct_index": 1,
+   "explanation": "निबंध \"क्या लिखूँ?\" के लेखक पदुमलाल पुन्नालाल बख्शी हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h2-pr-02",
+   "question": "लेखक को किन दो विषयों पर निबंध लिखने हैं?",
+   "options": [
+    "खेती के नए तरीक़े और बदलता मौसम",
+    "युद्ध की विभीषिका और व्यापार",
+    "विज्ञान और खेल",
+    "दूर के ढोल सुहावने; समाज-सुधार"
+   ],
+   "correct_index": 3,
+   "explanation": "नमिता \"दूर के ढोल सुहावने\" और अमिता \"समाज-सुधार\" पर निबंध चाहती हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h2-pr-03",
+   "question": "आचार्य के अनुसार निबंध के दो प्रधान अंग कौन-से हैं?",
+   "options": [
+    "सामग्री और शैली",
+    "सुंदर शीर्षक और रंगीन चित्र",
+    "प्रभावी आरंभ और अंत",
+    "छंदबद्ध कविता और गद्य"
+   ],
+   "correct_index": 0,
+   "explanation": "निबंध के दो प्रधान अंग — सामग्री (content) और शैली (style)।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h2-pr-04",
+   "question": "लेखक किस विदेशी निबंधकार की स्वच्छंद शैली को पसंद करता है?",
+   "options": [
+    "नाटककार विलियम शेक्सपियर",
+    "वैज्ञानिक आइज़क न्यूटन",
+    "मानटेन (Montaigne)",
+    "चार्ल्स डार्विन"
+   ],
+   "correct_index": 2,
+   "explanation": "मानटेन की स्वच्छंद, आत्मपरक शैली को लेखक अपनाना चाहता है।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h2-pr-05",
+   "question": "अमीर खुसरो की \"खीर पकाई जतन से...\" किस प्रकार की रचना है?",
+   "options": [
+    "किसी वीर की गंभीर प्रशस्ति-गाथा",
+    "देश के लिए लिखा देशभक्ति गीत",
+    "अनमेली — बेमेल बातों की हास्य रचना",
+    "सुबह-शाम की प्रार्थना"
+   ],
+   "correct_index": 2,
+   "explanation": "यह अनमेली है — असंगत बातों को जोड़कर हँसी पैदा करने वाली रचना।",
+   "concept_tag": "comprehension",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-06",
+   "question": "\"दुर्बोध\" शब्द का अर्थ है —",
+   "options": [
+    "जो आसानी से समझ न आए",
+    "जो पढ़ने में बहुत सरल और आसान हो",
+    "जो आकार में बहुत छोटा हो",
+    "जो देखने में सुंदर हो"
+   ],
+   "correct_index": 0,
+   "explanation": "दुर्बोध = hard to understand, गूढ़।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h2-pr-07",
+   "question": "\"क्षुब्ध\" का सबसे निकट अर्थ है —",
+   "options": [
+    "पूरी तरह शांत और स्थिर",
+    "मन-ही-मन बहुत प्रसन्न",
+    "थका हुआ",
+    "विचलित/अशांत"
+   ],
+   "correct_index": 3,
+   "explanation": "क्षुब्ध = agitated/disturbed, विचलित।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-08",
+   "question": "\"रूपरेखा\" से क्या तात्पर्य है?",
+   "options": [
+    "रंग-बिरंगा सुंदर चित्र",
+    "ढाँचा या खाका",
+    "बहुत लंबा गंभीर भाषण",
+    "कठिन तत्सम शब्द"
+   ],
+   "correct_index": 1,
+   "explanation": "रूपरेखा = an outline/sketch, निबंध का ढाँचा।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h2-pr-09",
+   "question": "\"विश्वकोश\" का अर्थ है —",
+   "options": [
+    "चमड़े से मढ़ा एक प्रकार का बाजा",
+    "सब विषयों का ग्रंथ",
+    "पश्चिम दिशा का कोई देश",
+    "पक्षियों की मधुर ध्वनि"
+   ],
+   "correct_index": 1,
+   "explanation": "विश्वकोश = encyclopedia।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h2-pr-10",
+   "question": "\"निबंध\" शब्द किन दो खंडों से बना है?",
+   "options": [
+    "निब + अंध",
+    "नी + बंध",
+    "नि + बंधन",
+    "नि + बंध"
+   ],
+   "correct_index": 3,
+   "explanation": "नि + बंध = भली-भाँति बँधा हुआ।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-11",
+   "question": "\"गंगाजल\" में कौन-सा समास है?",
+   "options": [
+    "तत्पुरुष",
+    "द्वंद्व",
+    "द्विगु",
+    "बहुव्रीहि"
+   ],
+   "correct_index": 0,
+   "explanation": "गंगाजल = गंगा का जल — तत्पुरुष समास।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-12",
+   "question": "\"माता-पिता\" किस समास का उदाहरण है?",
+   "options": [
+    "कर्मधारय",
+    "अव्ययीभाव",
+    "द्वंद्व",
+    "तत्पुरुष"
+   ],
+   "correct_index": 2,
+   "explanation": "द्वंद्व — दोनों पद प्रधान (माता और पिता)।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-13",
+   "question": "\"सुधार\" में कौन-सा प्रत्यय जोड़ने से \"सुधारक\" बनता है?",
+   "options": [
+    "ता",
+    "पन",
+    "क",
+    "त्व"
+   ],
+   "correct_index": 2,
+   "explanation": "प्रत्यय \"क\" + सुधार = सुधारक।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h2-pr-14",
+   "question": "\"अनादि\" में \"अन्\" है —",
+   "options": [
+    "उपसर्ग",
+    "प्रत्यय",
+    "समास",
+    "क्रिया"
+   ],
+   "correct_index": 0,
+   "explanation": "\"अन्\" उपसर्ग है — आदि (आरंभ) के पहले लगकर \"बिना आरंभ का\" अर्थ देता है।",
+   "concept_tag": "grammar",
+   "difficulty": 4
+  },
+  {
+   "id": "h2-pr-15",
+   "question": "हैट-खूँटी की तुलना से लेखक क्या कहना चाहता है?",
+   "options": [
+    "खूँटी हैट से कहीं अधिक ज़रूरी है",
+    "निबंध में विषय ही सब कुछ होता है",
+    "सबको हैट पहनना सीखना चाहिए",
+    "भाव असली हैं, विषय केवल आधार"
+   ],
+   "correct_index": 3,
+   "explanation": "भाव (हैट) असली है; विषय (खूँटी) केवल उसे टाँगने का साधन।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-16",
+   "question": "दूर के ढोल सुहावने लगने का असली कारण क्या है?",
+   "options": [
+    "वे ढोल असली सोने-चाँदी के बने होते",
+    "दूरी से कठिनाई नहीं दिखती",
+    "उन्हें बड़े-बड़े कलाकार बजाते हैं",
+    "वे बहुत महँगे होते हैं"
+   ],
+   "correct_index": 1,
+   "explanation": "दूरी कठिनाइयों को छिपा देती है, इसलिए दूर की चीज़ सुहावनी लगती है।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-17",
+   "question": "मानटेन की पद्धति लेखक को क्यों भाती है?",
+   "options": [
+    "वह बहुत कठिन और शास्त्रीय नियमों वाली है",
+    "वह अनुभव-आधारित स्वच्छंद लेखन अपनाती है",
+    "वह बिना भाव के केवल तथ्य देती है",
+    "वह केवल लंबे निबंध सिखाती है"
+   ],
+   "correct_index": 1,
+   "explanation": "मानटेन जो देखा-सुना-अनुभव किया वही सच्चे मन से लिखते हैं — यह आत्मीय, स्वच्छंद शैली है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h2-pr-18",
+   "question": "लेखक के अनुसार जीवन \"प्रगतिशील\" क्यों कहलाता है?",
+   "options": [
+    "जीवन कभी नहीं बदलता, सदा एक-सा रहता है",
+    "सुधार की कभी आवश्यकता ही नहीं",
+    "अतीत ही सबसे श्रेष्ठ है",
+    "पुराने सुधार दोष बनते हैं, नए होते रहते हैं"
+   ],
+   "correct_index": 3,
+   "explanation": "निरंतर पुराने को सुधारते रहना ही जीवन को प्रगतिशील बनाता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h2-pr-19",
+   "question": "तरुण और वृद्ध दोनों वर्तमान से असंतुष्ट क्यों रहते हैं?",
+   "options": [
+    "एक भविष्य खींचता है, दूसरा अतीत",
+    "दोनों को वर्तमान का जीवन बहुत भाता है",
+    "दोनों आने वाले भविष्य से बहुत डरते हैं",
+    "किसी ख़ास कारण से नहीं"
+   ],
+   "correct_index": 0,
+   "explanation": "तरुण भविष्य, वृद्ध अतीत की ओर खिंचते हैं — इसलिए दोनों वर्तमान से असंतुष्ट।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h2-pr-20",
+   "question": "इस आत्मपरक निबंध की सबसे बड़ी विशेषता क्या है?",
+   "options": [
+    "बहुत कठिन शास्त्रीय और तत्सम भाषा",
+    "पूरी तरह काल्पनिक एक लंबी कथा",
+    "लेखक का पाठक से सीधा, सच्चा संवाद",
+    "केवल आँकड़े और सूखे तथ्य"
+   ],
+   "correct_index": 2,
+   "explanation": "आत्मपरक शैली में लेखक अपनी सच्ची उलझन और अनुभूति साझा करता है — यही उसे जीवंत बनाती है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h2-pr-21",
+   "question": "लेखक \"क्या लिखूँ?\" प्रश्न से जूझता है — इससे लेखन के बारे में क्या पता चलता है?",
+   "options": [
+    "विषय का चुनाव लेखन की सबसे पहली चुनौती है",
+    "लिखना बहुत आसान काम है",
+    "लिखने के लिए विषय की ज़रूरत नहीं होती",
+    "अच्छा लेखक कभी नहीं सोचता"
+   ],
+   "correct_index": 1,
+   "explanation": "निबंध दिखाता है कि \"क्या और कैसे लिखें\" तय करना ही लेखन का पहला कठिन चरण है।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h2-pr-22",
+   "question": "निबंध के अनुसार अच्छा लेखन किस पर सबसे अधिक निर्भर करता है?",
+   "options": [
+    "अपने अनुभव और सच्ची अनुभूति पर",
+    "बहुत कठिन और भारी-भरकम शब्दों पर",
+    "बहुत लंबे होने पर",
+    "दूसरों की नक़ल पर"
+   ],
+   "correct_index": 0,
+   "explanation": "सच्चा लेखन भीतर के अनुभव और ईमानदार अनुभूति से जन्म लेता है, दिखावे से नहीं।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h2-pr-23",
+   "question": "लेखक का बार-बार रुककर सोचना लेखन-प्रक्रिया के बारे में क्या संकेत देता है?",
+   "options": [
+    "अच्छा लेखन सोच-विचार और परिश्रम माँगता है",
+    "लिखना बिना सोचे हो जाता है",
+    "सोचना लेखन में बाधा है",
+    "जल्दबाज़ी ही अच्छी रचना देती है"
+   ],
+   "correct_index": 2,
+   "explanation": "रुक-रुककर सोचना दिखाता है कि लेखन एक श्रमसाध्य, विचारशील प्रक्रिया है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h2-pr-24",
+   "question": "इस निबंध से एक नए लेखक को सबसे बड़ी सीख क्या मिलती है?",
+   "options": [
+    "अपने आस-पास और अनुभव में ही लिखने को बहुत कुछ है",
+    "लिखने लायक़ कुछ होता ही नहीं",
+    "केवल बड़े और प्रसिद्ध लोग ही कुछ लिख सकते हैं",
+    "विषय हमेशा कठिन होना चाहिए"
+   ],
+   "correct_index": 0,
+   "explanation": "लेखन का विषय दूर नहीं — अपने जीवन और परिवेश में ही भरपूर सामग्री है।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=b7ad9d11-6195-4c18-9699-ca027d01a2e4 ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 2,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h2-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "दूर",
+    "के",
+    "ढोल",
+    "सुहावने",
+    "होते",
+    "हैं"
+   ],
+   "answer": "दूर के ढोल सुहावने होते हैं"
+  },
+  {
+   "id": "h2-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "लोकोक्ति",
+   "instruction": "\"लोकोक्ति\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (कहावत)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "दादी अक्सर बातचीत में कोई-न-कोई पुरानी लोकोक्ति ज़रूर जोड़ देती हैं।",
+   "min_words": 6
+  },
+  {
+   "id": "h2-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "भाव-विस्तार",
+   "instruction": "\"भाव ही असली है, विषय नहीं\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "सच्चा भाव हो तो एक साधारण-सी बारिश पर लिखा निबंध भी दिल छू लेता है।",
+   "min_words": 8
+  }
+ ]
+}
+
+--- block #4 [callout] id=19c61fac-0fe0-46fa-89aa-8d4146979ef9 ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "झरोखे से + खोजबीन",
+ "markdown": "और आगे पढ़िए-खोजिए:\n\n- **झरोखे से:** अज्ञेय का लेख *\"मैं क्यों लिखता हूँ?\"* — लेखक भीतरी विवशता से क्यों लिखता है, इस पर एक और सुंदर दृष्टि।\n- **खोजबीन:** पाठ में आए बाणभट्ट, श्रीहर्ष, अमीर खुसरो, सेनापति, महात्मा गांधी, ए.जी. गार्डिनर, शेक्सपियर और मानटेन के बारे में पुस्तकालय/इंटरनेट से पढ़िए।"
+}

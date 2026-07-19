@@ -11,6 +11,21 @@ interface Props {
   onUpload: UploadFn;
 }
 
+const WIDTH_LABELS: Record<NonNullable<InteractiveImageBlock['width']>, string> = {
+  full:           '100%',
+  five_sixth:     '83%',
+  three_quarter:  '75%',
+  two_third:      '67%',
+  half:           '50%',
+  two_fifth:      '40%',
+  third:          '33%',
+  quarter:        '25%',
+};
+
+const WIDTH_OPTIONS: NonNullable<InteractiveImageBlock['width']>[] = [
+  'full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter',
+];
+
 export default function InteractiveImageEditor({ block, onChange, onUpload }: Props) {
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -71,13 +86,20 @@ export default function InteractiveImageEditor({ block, onChange, onUpload }: Pr
       {block.src && (
         <div>
           <p className="text-xs text-white/40 mb-1">Click on the image to place a hotspot</p>
+          <div className="flex justify-center">
           <div
             ref={imgRef}
-            className="relative w-full cursor-crosshair select-none overflow-hidden rounded-xl border border-white/10"
+            className="relative cursor-crosshair select-none overflow-hidden rounded-xl border border-white/10 max-w-full"
             onClick={addHotspot}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={block.src} alt={block.alt} className="w-full h-auto pointer-events-none" draggable={false} />
+            <img
+              src={block.src}
+              alt={block.alt}
+              className="block pointer-events-none object-contain"
+              style={{ maxHeight: 'min(60vh, 560px)', maxWidth: '100%', width: 'auto', height: 'auto' }}
+              draggable={false}
+            />
             {block.hotspots.map((h, i) => (
               <div
                 key={h.id}
@@ -89,8 +111,28 @@ export default function InteractiveImageEditor({ block, onChange, onUpload }: Pr
               </div>
             ))}
           </div>
+          </div>
         </div>
       )}
+
+      {/* Width selector */}
+      <div>
+        <label className="text-xs text-white/40 mb-1 block">Width</label>
+        <div className="flex flex-wrap gap-2">
+          {WIDTH_OPTIONS.map((w) => (
+            <button key={w} onClick={() => onChange({ width: w })}
+              className={`px-3 py-1 rounded-lg text-xs transition-colors
+                ${(block.width ?? 'full') === w
+                  ? 'bg-orange-500 text-black font-bold'
+                  : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'}`}>
+              {WIDTH_LABELS[w]}
+            </button>
+          ))}
+        </div>
+        <p className="mt-1.5 text-[10px] text-white/30 leading-snug">
+          Caps the block's horizontal footprint. Tall/portrait diagrams are also height-capped automatically.
+        </p>
+      </div>
 
       {/* Alt + Caption */}
       <div className="grid grid-cols-2 gap-2">

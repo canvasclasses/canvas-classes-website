@@ -1,0 +1,66 @@
+{
+  "_note": "Label Sprint round for female-repro \u2014 generated female-repro_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Human female reproductive system, sagittal section",
+  "caption": "Tap each label, then tap where it belongs on the female reproductive system.",
+  "hotspots": [
+    {
+      "id": "af748eed-1da8-43c3-b745-b5d8d3109c07",
+      "x": 0.28,
+      "y": 0.27,
+      "label": "Ovary",
+      "detail": "Produces ova (eggs) and secretes oestrogen and progesterone.",
+      "icon": "pin"
+    },
+    {
+      "id": "367dea25-df7c-4be3-a07d-c5cd551ee7d2",
+      "x": 0.3,
+      "y": 0.14,
+      "label": "Fallopian tube (oviduct)",
+      "detail": "Fringed, funnel-shaped tube that sweeps up the released ovum; site of fertilisation.",
+      "icon": "pin"
+    },
+    {
+      "id": "43153a01-95bd-4a70-861c-c26549ee5014",
+      "x": 0.52,
+      "y": 0.22,
+      "label": "Uterus",
+      "detail": "Muscular, pear-shaped organ where the fertilised egg implants and the fetus develops.",
+      "icon": "pin"
+    },
+    {
+      "id": "5e90671d-d802-4aaf-8129-983d304168dd",
+      "x": 0.53,
+      "y": 0.42,
+      "label": "Cervix",
+      "detail": "The narrow lower end of the uterus, opening into the vagina.",
+      "icon": "pin"
+    },
+    {
+      "id": "e0fdac56-f4b2-4a78-a834-6bec7d2e5e86",
+      "x": 0.52,
+      "y": 0.65,
+      "label": "Vagina",
+      "detail": "The muscular canal leading from the cervix to outside the body.",
+      "icon": "pin"
+    },
+    {
+      "id": "f2c389f0-e659-45ff-a605-d6724e64f63e",
+      "x": 0.28,
+      "y": 0.48,
+      "label": "Urinary bladder",
+      "detail": "Lies in front of the uterus; stores urine.",
+      "icon": "pin"
+    },
+    {
+      "id": "e4b19590-ed9b-4314-9cda-37656dc76b9e",
+      "x": 0.72,
+      "y": 0.48,
+      "label": "Rectum",
+      "detail": "Lies behind the uterus, in front of the sacrum.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "human female reproductive anatomy, mid-sagittal cross-section"
+}

@@ -1,0 +1,185 @@
+'use strict';
+const { v4: uuid } = require('uuid');
+
+module.exports = {
+  slug: 'incomplete-dominance-codominance-and-multiple-alleles',
+  title: 'When Dominance Breaks the Rules — Incomplete Dominance & Codominance',
+  subtitle: "Mendel's tidy 3:1 does not always turn up. Sometimes the heterozygote is a blend, sometimes it shows both parents at once. This page walks the two famous exceptions — the pink snapdragon and the ABO blood groups — and, along the way, tells you what actually makes one allele 'dominant' in the first place.",
+  page_number: 3,
+  page_type: 'lesson',
+  tags: ['incomplete-dominance', 'codominance', 'multiple-alleles', 'abo-blood-groups', 'dominance'],
+  glossary: [
+    { term: 'incomplete dominance', definition: 'A cross where the F1 heterozygote shows a phenotype in between the two parents, not resembling either — like the pink flower from a red and a white snapdragon. Neither allele is completely dominant over the other.' },
+    { term: 'codominance', definition: 'A cross where the F1 shows both parental phenotypes together, fully and separately — like a person with blood group AB carrying both A-type and B-type sugars on their red blood cells.' },
+    { term: 'multiple alleles', definition: 'When a single gene has more than two allele forms in a population (the ABO gene has three: Iᴬ, Iᴮ, i). Any one individual still carries only two of them, so multiple alleles show up only in population studies.' },
+    { term: 'Iᴬ (allele)', definition: 'One allele of the ABO gene I. It adds the A-type sugar to the surface of red blood cells. It is completely dominant over i and codominant with Iᴮ.' },
+    { term: 'Iᴮ (allele)', definition: 'Another allele of the ABO gene I. It adds the B-type sugar to red blood cells. It is completely dominant over i and codominant with Iᴬ.' },
+    { term: 'i (allele)', definition: 'The third ABO allele. It makes no sugar at all, so it produces no A or B marker. It is recessive to both Iᴬ and Iᴮ; only the genotype ii gives blood group O.' },
+    { term: 'dominant allele', definition: 'In molecular terms, the allele that makes a working (functional) gene product — for example a functional enzyme. The recessive allele is the modified copy that makes a non-functional enzyme or none at all.' },
+  ],
+  blocks: [
+    {
+      id: uuid(), type: 'image', order: 0, src: '',
+      alt: 'A dusk garden of snapdragon flowers shading from deep red on the left to soft pink in the middle to white on the right, with faint drifting motifs of red blood cells carrying A and B sugar markers',
+      caption: '', width: 'full', aspect_ratio: '16:5',
+      generation_prompt: "Ultra-wide cinematic banner (16:5 ratio). A quiet dusk garden bed of tall snapdragon (Antirrhinum) flower spikes running left to right, their bloom colour shading smoothly across the frame: deep true-red flowers on the far left, soft pink flowers through the centre, and pure white flowers on the far right. Above and behind the flowers, faint, softly glowing translucent motifs of rounded red blood cells drift in the dusk air, a few of them dotted with tiny A-shaped and B-shaped sugar markers on their surface — subtle, atmospheric, not diagrammatic. Deep dusk light, one warm amber glow low on the horizon tying the scene together. Painterly, atmospheric illustration style, dark naturalistic background throughout (#0a0a0a base tones), no text, no labels, no letters, no diagram elements.",
+    },
+    {
+      id: uuid(), type: 'callout', order: 1, variant: 'fun_fact', title: 'What Blood Can and Cannot Say',
+      markdown: "Here is something a hospital lab can do with one drop of blood. Two parents, both blood group O, can **never** have a baby who turns out to be blood group AB — nature simply does not allow it. And a mother of group B and a father of group A can, between them, produce a child of group **O**, even though neither parent is O. Blood group is one of the cleanest, most testable pieces of inheritance in the whole human body — and it runs on a rule Mendel never described. That rule is **codominance**, and by the end of this page you will be able to work out these family puzzles yourself.",
+    },
+    {
+      id: uuid(), type: 'heading', order: 2, level: 2,
+      text: 'Incomplete Dominance — When the Heterozygote Is a Blend',
+      objective: 'By the end of this you can explain why the snapdragon F2 gives a 1:2:1 phenotype ratio instead of the usual 3:1.',
+    },
+    {
+      id: uuid(), type: 'text', order: 3,
+      markdown: "Mendel's peas gave a clean **3:1** in the F2 because one allele completely hid the other. When scientists repeated his kind of experiment on **other traits in other plants**, they sometimes found the F1 wearing a phenotype that **did not resemble either parent** — it sat right in between the two. That is **incomplete dominance**.\n\nThe classic example is flower colour in the **dog flower (snapdragon, *Antirrhinum* sp.)**. Cross a true-breeding **red-flowered plant (RR)** with a true-breeding **white-flowered plant (rr)**, and the entire F1 (**Rr**) comes out **pink** — not red, not white, but a blend of the two.\n\nNow self-pollinate that pink F1 and watch the F2. You get **1 (RR) Red : 2 (Rr) Pink : 1 (rr) White**. Look carefully at what has and hasn't changed. The **genotype ratio is still exactly 1:2:1** — precisely what any ordinary Mendelian monohybrid cross gives. What has changed is the **phenotype ratio**: it is **1:2:1** too, no longer 3:1. The reason is simple — **R was not completely dominant over r**, so the heterozygote **Rr shows its own pink colour** instead of hiding behind red. With three distinguishable colours for three distinguishable genotypes, phenotype and genotype line up one-to-one.",
+    },
+    {
+      id: uuid(), type: 'interactive_image', order: 4, src: '',
+      alt: 'A genetics cross diagram of red RR and white rr snapdragon parents giving a pink Rr F1, and a Punnett square of the F1 self giving one red, two pink, and one white F2',
+      caption: '📸 Tap each dot to walk the snapdragon cross from parents to the 1:2:1 F2',
+      generation_prompt: "Scientific textbook illustration of a monohybrid cross showing incomplete dominance in snapdragon (Antirrhinum). Flat 2D educational diagram on a dark background (#0a0a0a near-black). Layout top to bottom. TOP ROW: two parent snapdragon flowers side by side — a deep RED flower on the left and a pure WHITE flower on the right, with a small multiplication cross sign between them. MIDDLE: a single downward arrow leading to one PINK snapdragon flower (the F1). BOTTOM: a clean 2x2 Punnett square grid; the four inner cells contain, reading left-to-right top-to-bottom, one deep-RED flower, one PINK flower, one PINK flower, and one WHITE flower, so the square clearly shows one red, two pink, one white. Flowers biologically accurate snapdragon shape. Clean white outlines, thin white leader lines, functional colours only (flower colours red / pink / white as described, everything else white line-art on the dark background). No text, no letters, no numbers baked into the image itself. No photorealism, no cartoon, standard biology textbook illustration style.",
+      hotspots: [
+        { id: uuid(), x: 0.22, y: 0.16, label: 'Red parent (RR)', icon: 'circle',
+          detail: 'A **true-breeding red** snapdragon, genotype **RR**. It makes only R gametes.' },
+        { id: uuid(), x: 0.78, y: 0.16, label: 'White parent (rr)', icon: 'circle',
+          detail: 'A **true-breeding white** snapdragon, genotype **rr**. It makes only r gametes.' },
+        { id: uuid(), x: 0.5, y: 0.45, label: 'F1 (Rr) — pink', icon: 'circle',
+          detail: 'The whole F1 is **pink**, genotype **Rr**. It resembles **neither** parent — the blend is the signature of incomplete dominance. R is not completely dominant over r.' },
+        { id: uuid(), x: 0.32, y: 0.72, label: 'F2 red (RR)', icon: 'circle',
+          detail: 'One quarter of the F2 is **RR → red**. Pure red reappears, proving the alleles never truly blended — they segregated cleanly.' },
+        { id: uuid(), x: 0.6, y: 0.78, label: 'F2 pink (Rr)', icon: 'circle',
+          detail: 'Half the F2 is **Rr → pink**, the heterozygote showing its in-between colour. This is why the phenotype ratio becomes **1:2:1**.' },
+        { id: uuid(), x: 0.82, y: 0.86, label: 'F2 white (rr)', icon: 'circle',
+          detail: 'One quarter is **rr → white**. Genotype ratio **1 RR : 2 Rr : 1 rr** — the normal Mendelian ratio — but now each genotype has its own colour, so the phenotype ratio matches it.' },
+      ],
+    },
+    {
+      id: uuid(), type: 'reasoning_prompt', order: 5, reasoning_type: 'logical',
+      prompt: "In the snapdragon F2, the phenotype ratio is 1 red : 2 pink : 1 white instead of the usual 3:1. What actually caused the ratio to change from 3:1 to 1:2:1?",
+      options: [
+        "R is not completely dominant over r, so the heterozygote Rr shows its own pink colour — three genotypes now give three visible phenotypes",
+        "The genotype ratio itself changed away from the normal Mendelian monohybrid ratio",
+        "A brand-new flower-colour allele appeared for the first time in the F2 generation",
+        "R and r blended permanently in the F1, so the F2 could no longer separate them",
+      ],
+      correct_index: 0,
+      reveal: "The genotype ratio is still the ordinary **1 RR : 2 Rr : 1 rr** — NCERT is explicit that the genotype ratios were exactly as expected in a Mendelian monohybrid cross. What changed is only the **phenotype**: because R is **incompletely dominant**, the heterozygote **Rr looks pink** rather than hiding behind red, so each of the three genotypes shows a different colour and the phenotype ratio becomes 1:2:1. The tempting wrong answer — 'the genotype ratio changed' — is exactly what did NOT happen. No new allele appears, and the alleles do not blend permanently: pure red and pure white flowers reappear in the F2, which proves they segregated cleanly.",
+      difficulty_level: 2,
+    },
+    {
+      id: uuid(), type: 'heading', order: 6, level: 2,
+      text: "So What Actually Makes an Allele 'Dominant'?",
+      objective: 'By the end of this you can explain dominance in molecular terms — a working enzyme versus a broken one — rather than treating it as a magic label.',
+    },
+    {
+      id: uuid(), type: 'text', order: 7,
+      markdown: "Before the second exception, pause on a question the snapdragon forces open: **why** is any allele dominant at all? To answer it, remember what a gene does — **every gene carries the information to express a particular trait**. In a diploid organism there are **two copies of each gene**, a **pair of alleles**, and in a heterozygote those two copies **need not be identical**. One of them may be **modified** — changed in a way that alters the information it carries.\n\nTake a gene that carries the instructions for making an **enzyme**. The **normal (unmodified) allele** produces the **normal enzyme** needed to convert some substrate S. The **modified allele**, in theory, could produce one of three things:\n\n1. the **normal or a less-efficient enzyme**,\n2. a **non-functional enzyme**, or\n3. **no enzyme at all**.\n\nIn the first case the modified allele works just like the normal one, so nothing looks different. But if the modified allele makes a **non-functional enzyme or no enzyme**, then the trait now rests **entirely on the working, unmodified allele**. That unmodified, functioning allele — the one giving the original phenotype — is what we call **dominant**, and the broken, modified allele is the **recessive** one. So the recessive trait appears **because its enzyme is non-functional or missing**. Dominance is not a mysterious power an allele holds over another; it is simply which copy still makes a **working product**.",
+    },
+    {
+      id: uuid(), type: 'heading', order: 8, level: 2,
+      text: 'Codominance & the ABO Blood Groups',
+      objective: 'By the end of this you can write the six ABO genotypes, name the four blood groups they give, and say which alleles are codominant.',
+    },
+    {
+      id: uuid(), type: 'text', order: 9,
+      markdown: "The snapdragon gave a blend. **Codominance** is different: here the F1 **resembles both parents at once** — both alleles express fully and separately, and neither is watered down.\n\nThe textbook example is **ABO blood grouping** in humans, controlled by the gene **I**. The surface of every red blood cell carries **sugar polymers** sticking out, and the *kind* of sugar is set by this gene. Gene I comes in **three alleles**: **Iᴬ, Iᴮ and i**. **Iᴬ** makes one form of the sugar (A), **Iᴮ** makes a slightly different form (B), and **i makes no sugar at all**. Because humans are **diploid**, each person carries **any two** of the three alleles.\n\nNow the logic. **Iᴬ and Iᴮ are both completely dominant over i** — so **Iᴬi shows only A** (because i makes nothing to compete with) and **Iᴮi shows only B**. But when **Iᴬ and Iᴮ turn up together**, there is no masking: **both make their own sugar**, the red cells carry **both A and B markers**, and the person is blood group **AB**. That is codominance — both alleles speaking at the same time.\n\nThis same gene is also the classic case of **multiple alleles**: **three** allele forms (Iᴬ, Iᴮ, i) govern one character, even though any single person holds only two of them. That is why multiple alleles only reveal themselves when you study a **whole population**, not one individual. Three alleles combine into **six genotypes**, which collapse into just **four blood groups** — the table below is the whole system on one grid. Keep it handy, because the next exceptions to Mendel take us into whole chromosomes.",
+    },
+    {
+      id: uuid(), type: 'table', order: 10,
+      caption: 'The genetic basis of ABO blood groups — six genotypes, four phenotypes (NCERT Table 4.2)',
+      headers: ['Genotype', 'Alleles present', 'Blood group (phenotype)'],
+      rows: [
+        ['IᴬIᴬ', 'two Iᴬ', 'A'],
+        ['Iᴬi', 'Iᴬ and i', 'A'],
+        ['IᴮIᴮ', 'two Iᴮ', 'B'],
+        ['Iᴮi', 'Iᴮ and i', 'B'],
+        ['IᴬIᴮ', 'Iᴬ and Iᴮ (codominant)', 'AB'],
+        ['ii', 'two i', 'O'],
+      ],
+    },
+    {
+      id: uuid(), type: 'comparison_card', order: 11, title: 'Incomplete Dominance vs Codominance',
+      columns: [
+        { heading: 'Incomplete Dominance', points: [
+          'F1 heterozygote is an IN-BETWEEN blend — resembles neither parent (red × white snapdragon → pink).',
+          'Neither allele is fully expressed; one is not completely dominant over the other.',
+          'One intermediate product / one blended appearance — you see a single new middle phenotype.',
+          'F2 phenotype ratio = 1:2:1 (equals the genotype ratio), not 3:1.',
+        ] },
+        { heading: 'Codominance', points: [
+          'F1 heterozygote resembles BOTH parents at once (Iᴬ + Iᴮ → blood group AB).',
+          'Both alleles express fully and independently; neither masks the other.',
+          'Both products appear together and separately — A sugar AND B sugar on the same red cells, not a blend.',
+          'Example: ABO blood groups; Iᴬ and Iᴮ are codominant (and both are dominant over i).',
+        ] },
+      ],
+    },
+    {
+      id: uuid(), type: 'reasoning_prompt', order: 12, reasoning_type: 'logical',
+      prompt: "Two parents both have blood group O. Can they ever have a child with blood group AB?",
+      options: [
+        "Yes — because O is really dominant, it can convert into AB in the child",
+        "Yes — if both parents secretly carry a hidden Iᴬ and a hidden Iᴮ allele",
+        "No — a group-O parent is genotype ii and carries no Iᴬ or Iᴮ to pass on, so an AB (IᴬIᴮ) child is impossible",
+        "No — because AB blood can only ever come from two AB parents",
+      ],
+      correct_index: 2,
+      reveal: "Blood group O appears **only** with genotype **ii**, because i makes no sugar and a person shows O only when both alleles are the non-producing i. So each O parent can pass on **nothing but i**, and every child is **ii → group O**. To be **AB** a child needs one **Iᴬ** and one **Iᴮ**, one from each parent — which is impossible when neither parent carries either allele. The trap answer, 'both parents secretly carry Iᴬ or Iᴮ', can't work: Iᴬ and Iᴮ are **dominant over i**, so anyone carrying one would themselves show A, B or AB — not O. And AB does not require two AB parents; for example an A parent and a B parent can produce an AB child.",
+      difficulty_level: 3,
+    },
+    {
+      id: uuid(), type: 'callout', order: 13, variant: 'remember', title: 'Lock These In',
+      markdown: "- **Incomplete dominance:** F1 is an **in-between blend** (snapdragon red × white → **pink**). F2 genotype ratio 1:2:1 **and** phenotype ratio **1:2:1** (not 3:1) — because the heterozygote shows its own colour.\n- **Codominance:** F1 shows **both** parents together (**Iᴬ + Iᴮ → AB**, red cells carry both A and B sugars).\n- **ABO gene I → three alleles Iᴬ, Iᴮ, i → six genotypes → four blood groups.** Only **ii = O**. Iᴬ and Iᴮ are **codominant** with each other and **both dominant over i**.\n- **Multiple alleles** = more than two alleles of one gene in a population; any individual still holds only **two**.\n- **Molecular dominance:** the **dominant** allele makes a **working enzyme**; the **recessive** allele makes a **non-functional enzyme or none at all**.",
+    },
+    {
+      id: uuid(), type: 'callout', order: 14, variant: 'exam_tip', title: 'NEET Exam Insight',
+      markdown: "**Incomplete dominance ratio:** the phenotype ratio flips from 3:1 to **1:2:1** — and NEET loves to ask which ratio changed. The **genotype** ratio stays 1:2:1; only the phenotype ratio 'changed' because it now equals the genotype ratio.\n\n**Snapdragon = *Antirrhinum* = dog flower.** All three names appear in questions for the same plant. Red (RR) × white (rr) → **pink (Rr)** is the line lifted verbatim.\n\n**ABO genotypes:** remember A can be **IᴬIᴬ or Iᴬi**, B can be **IᴮIᴮ or Iᴮi**, AB is **only IᴬIᴮ**, O is **only ii**. Match-the-column of genotype ↔ blood group is a NEET staple.\n\n**Codominance vs incomplete dominance:** AB blood group = **codominance** (both express); pink snapdragon = **incomplete dominance** (a blend). Swapping these two is the commonest trap.\n\n**Classic NEET question:** \"ABO blood grouping is an example of ______.\" → **codominance AND multiple allelism** (the ABO gene shows both at once).",
+    },
+    {
+      id: uuid(), type: 'inline_quiz', order: 15, pass_threshold: 0.67,
+      questions: [
+        {
+          id: uuid(),
+          question: 'A true-breeding red-flowered snapdragon (RR) is crossed with a true-breeding white-flowered one (rr). What is the flower colour of the entire F1?',
+          options: ['Red', 'White', 'Pink', 'Half the plants red and half white'],
+          correct_index: 2,
+          explanation: "R is only incompletely dominant over r, so the heterozygote Rr shows an in-between pink — neither the red of RR nor the white of rr. 'Half red, half white plants' describes two separate colours in a population; incomplete dominance instead gives every F1 plant one blended pink flower.",
+          difficulty_level: 1,
+        },
+        {
+          id: uuid(),
+          question: 'A person has blood group A. Which genotype(s) can they have?',
+          options: ['IᴬIᴬ or Iᴬi', 'Only IᴬIᴬ', 'Only Iᴬi', 'IᴬIᴮ'],
+          correct_index: 0,
+          explanation: "Iᴬ is completely dominant over i, so both IᴬIᴬ and Iᴬi read as blood group A. 'Only IᴬIᴬ' forgets the heterozygote Iᴬi, which is just as much group A. IᴬIᴮ would be group AB (codominance), not A.",
+          difficulty_level: 2,
+        },
+        {
+          id: uuid(),
+          question: 'A father of blood group AB marries a mother of blood group O. Which blood groups are possible in their children?',
+          options: ['Only AB', 'Only O', 'AB and O', 'A and B'],
+          correct_index: 3,
+          explanation: "The AB father (IᴬIᴮ) passes either Iᴬ or Iᴮ; the O mother (ii) can only pass i. So the children are Iᴬi (group A) or Iᴮi (group B) — never AB or O. The classic trap is assuming an AB parent must give an AB child, but each gamete carries only one of the two alleles.",
+          difficulty_level: 3,
+        },
+        {
+          id: uuid(),
+          question: 'Which statement about the F2 of the snapdragon (incomplete dominance) cross is correct?',
+          options: [
+            'Both the genotype and phenotype ratios are 3:1',
+            'The genotype ratio is 1:2:1 and the phenotype ratio is also 1:2:1',
+            'The genotype ratio is 3:1 but the phenotype ratio is 1:2:1',
+            'No red or white flowers ever reappear in the F2',
+          ],
+          correct_index: 1,
+          explanation: "In incomplete dominance the genotype ratio stays the normal Mendelian 1 RR : 2 Rr : 1 rr, and because each genotype now shows its own colour (red, pink, white), the phenotype ratio matches it at 1:2:1. The 3:1 phenotype ratio belongs to complete dominance, and pure red and white flowers DO reappear in the F2 because the alleles segregate cleanly — they never blended.",
+          difficulty_level: 2,
+        },
+      ],
+    },
+  ],
+};

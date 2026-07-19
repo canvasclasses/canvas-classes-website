@@ -11,30 +11,41 @@
  *
  * Stack: three + @react-three/fiber + @react-three/drei (already in apps/student).
  *
- * Model source: a single .glb in R2 (set HEART_MODEL_URL once exported). The
- * geometry comes from Z-Anatomy / BodyParts3D (CC BY-SA — credited in-UI below).
- * We load the UNMODIFIED mesh and do all peel/colour/label work at runtime, which
- * keeps us in attribution-only territory (no modified mesh is ever distributed).
+ * Model source: static .glb in apps/student/public/anatomy/, see HEART_MODEL_URL
+ * for the current asset + its licence. We load the UNMODIFIED mesh and do all
+ * peel/colour/label work at runtime, which keeps us in attribution-only territory
+ * (no modified mesh is ever distributed).
  *
- * ── PHASE B (after Blender export) ────────────────────────────────────────────
- * The HEART_STRUCTURES `match` arrays ARE the naming contract: name the objects
- * in Blender to contain these tokens (e.g. "right_atrium", "aorta", "myocardium")
- * and they auto-bind to layers + labels here. Anything unmatched still renders
- * (under the "Other" layer) so nothing breaks before names are finalised.
+ * ── STRUCTURE NAMING CONTRACT ──────────────────────────────────────────────────
+ * The HEART_STRUCTURES `match` arrays ARE the naming contract: name the MESH
+ * objects in Blender to contain these tokens (e.g. "right_atrium", "aorta",
+ * "myocardium") and they auto-bind to layers + labels here. Anything unmatched
+ * still renders (under the "Other" layer). Tap-to-learn / peel-layers / the
+ * guided blood-flow journey all require at least one matched structure — see
+ * `hasStructures` below, which hides those panels gracefully when none match
+ * (current model: a single unsegmented skinned mesh, see note by the URL).
  */
 
 import { Suspense, useEffect, useMemo, useRef, useState, Component, type ReactNode } from 'react';
 import { Canvas, useThree, useFrame, type ThreeEvent } from '@react-three/fiber';
-import { OrbitControls, useGLTF, Html } from '@react-three/drei';
+import { OrbitControls, useGLTF, useAnimations, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
-// ── Heart model (Z-Anatomy → Blender → glTF) ──────────────────────────────────
+// ── Heart model (Sketchfab "Beating-heart" by jalmer, CC BY 4.0) ──────────────
 // Served as a STATIC file from apps/student/public/anatomy/. Same-origin (no CORS
 // issue — three.js loads models via fetch, which R2's public URL blocks), and a
 // static asset can't hang the way a server-side proxy fetch can. Vercel/Next serve
 // it from the CDN. (The /anatomy-model R2 proxy route still exists for future
 // admin-uploaded models, but the flagship heart uses this robust static path.)
-const HEART_MODEL_URL = '/anatomy/heart-v6.glb';
+//
+// This is a SINGLE skinned mesh driven by an armature (not per-structure meshes
+// like the old Z-Anatomy build), so it plays a real beating animation out of the
+// box — but HEART_STRUCTURES / classifyMesh below currently can't resolve any
+// structure on it (there's nothing named "aorta", "myocardium", etc. at the mesh
+// level, only on the internal bones). Tap-to-learn, peel-layers and the guided
+// blood-flow journey are gated on `hasStructures` and hide themselves until a
+// future pass splits this mesh by bone weight into named regions.
+const HEART_MODEL_URL = '/anatomy/heart-v7.glb';
 
 // Design tokens — must match _agents/workflows/SIMULATION_DESIGN_WORKFLOW.md
 const C = {
@@ -157,13 +168,28 @@ function HeartModel({
   selectedId: string | null;
   highlightId: string | null;
   onSelect: (id: string | null, point: THREE.Vector3 | null) => void;
-  onReady?: (info: { model: THREE.Object3D; present: LayerId[] }) => void;
+  onReady?: (info: { model: THREE.Object3D; present: LayerId[]; hasStructures: boolean }) => void;
 }) {
   const { gl, camera, controls, invalidate } = useThree();
-  const { scene } = useGLTF(url, false); // draco off, meshopt on (gltfpack -cc)
+  const { scene, animations } = useGLTF(url, false); // draco off, meshopt on (gltfpack -cc)
 
   // Clone so per-mesh material edits never bleed into the cached gltf.
   const model = useMemo(() => scene.clone(true), [scene]);
+
+  // Play the model's own beat animation (armature-driven contraction), looping,
+  // as soon as it's ready. useAnimations re-binds cleanly to the cloned scene.
+  // `actions` is a lazily-populated object (drei only instantiates an entry once
+  // it's accessed by name) — Object.values(actions) can come back empty even
+  // when a clip exists, so index by `names[0]` instead of relying on enumeration.
+  const { actions, names } = useAnimations(animations, model as unknown as THREE.Object3D);
+  useEffect(() => {
+    const clip = names[0] ? actions[names[0]] : null;
+    clip?.reset().play();
+    return () => { clip?.stop(); };
+  }, [actions, names]);
+  // The beat is a continuous clip, so the canvas must keep rendering while
+  // mounted — override the parent's frameloop="demand" for this component only.
+  useFrame(() => invalidate());
 
   const meshes = useRef<THREE.Mesh[]>([]);
   const bounds = useRef(new THREE.Box3());
@@ -198,7 +224,8 @@ function HeartModel({
     meshes.current = list;
     bounds.current.setFromObject(model);
     const present = Array.from(new Set(list.map((m) => m.userData.layer as LayerId)));
-    onReadyRef.current?.({ model, present });
+    const hasStructures = list.some((m) => m.userData.structureId != null);
+    onReadyRef.current?.({ model, present, hasStructures });
   }, [model, gl]);
 
   // Frame the camera to the model on load + on REAL canvas resize only (e.g. the
@@ -457,6 +484,7 @@ export default function Heart3DViewer() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [labelPos, setLabelPos] = useState<THREE.Vector3 | null>(null);
   const [present, setPresent] = useState<LayerId[] | null>(null);
+  const [hasStructures, setHasStructures] = useState(true);
   const [model, setModel] = useState<THREE.Object3D | null>(null);
   const [bloodFlow, setBloodFlow] = useState(false);
   const [flowStop, setFlowStop] = useState(0);
@@ -506,7 +534,9 @@ export default function Heart3DViewer() {
         <div>
           <h3 className="text-[15px] font-bold text-white/90">The Human Heart — explore in 3D</h3>
           <p className="text-[11px]" style={{ color: C.textDim }}>
-            Drag to rotate · scroll to zoom · tap any part to learn what it does
+            {hasStructures
+              ? 'Drag to rotate · scroll to zoom · tap any part to learn what it does'
+              : 'Drag to rotate · scroll to zoom · watch it beat'}
           </p>
         </div>
         <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
@@ -538,10 +568,10 @@ export default function Heart3DViewer() {
                     selectedId={selectedId}
                     highlightId={flowStructure ? flowStructure.id : null}
                     onSelect={(id, point) => { setSelectedId(id); setLabelPos(point); }}
-                    onReady={(info) => { setModel(info.model); setPresent(info.present); }}
+                    onReady={(info) => { setModel(info.model); setPresent(info.present); setHasStructures(info.hasStructures); }}
                   />
-                  {model && <BloodFlow model={model} active={bloodFlow} from={flowFrom} stop={flowStop} animKey={animKey} />}
-                  {selected && labelPos && (
+                  {hasStructures && model && <BloodFlow model={model} active={bloodFlow} from={flowFrom} stop={flowStop} animKey={animKey} />}
+                  {hasStructures && selected && labelPos && (
                     <Html position={[labelPos.x, labelPos.y, labelPos.z]} occlude center
                       style={{ pointerEvents: 'none' }}>
                       <div className="px-2 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap"
@@ -561,7 +591,7 @@ export default function Heart3DViewer() {
           )}
 
           {/* Guided blood-flow caption — big, right over the action */}
-          {hasModel && flowStructure && (
+          {hasModel && hasStructures && flowStructure && (
             <div className="absolute inset-x-0 bottom-0 p-4"
               style={{ background: 'linear-gradient(to top, rgba(5,6,12,0.96), rgba(5,6,12,0))', pointerEvents: 'none' }}>
               <div className="flex items-center gap-2 mb-1.5">
@@ -582,37 +612,39 @@ export default function Heart3DViewer() {
         {/* Controls */}
         <div className="flex flex-col gap-3">
           {/* Layers */}
-          <div className="rounded-xl p-3" style={{ background: C.card, border: `1px solid ${C.border}` }}>
-            <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: C.indigoLt }}>
-              Peel the layers
-            </p>
-            <div className="flex flex-col gap-2">
-              {HEART_LAYERS.filter((l) => !present || present.includes(l.id)).map((l) => {
-                const st = layers[l.id];
-                return (
-                  <div key={l.id}>
-                    <button
-                      onClick={() => toggleLayer(l.id)}
-                      className="w-full flex items-center gap-2 text-left text-[12px] font-medium transition-colors"
-                      style={{ color: st.on ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.35)' }}
-                    >
-                      <span className="inline-block w-3 h-3 rounded-sm shrink-0"
-                        style={{ background: st.on ? l.tint : 'transparent', border: `1.5px solid ${l.tint}` }} />
-                      {l.label}
-                    </button>
-                    {st.on && (
-                      <input
-                        type="range" min={0.15} max={1} step={0.05} value={st.opacity}
-                        onChange={(e) => setOpacity(l.id, parseFloat(e.target.value))}
-                        className="w-full mt-1 accent-indigo-400 h-1"
-                        aria-label={`${l.label} opacity`}
-                      />
-                    )}
-                  </div>
-                );
-              })}
+          {hasStructures && (
+            <div className="rounded-xl p-3" style={{ background: C.card, border: `1px solid ${C.border}` }}>
+              <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: C.indigoLt }}>
+                Peel the layers
+              </p>
+              <div className="flex flex-col gap-2">
+                {HEART_LAYERS.filter((l) => !present || present.includes(l.id)).map((l) => {
+                  const st = layers[l.id];
+                  return (
+                    <div key={l.id}>
+                      <button
+                        onClick={() => toggleLayer(l.id)}
+                        className="w-full flex items-center gap-2 text-left text-[12px] font-medium transition-colors"
+                        style={{ color: st.on ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.35)' }}
+                      >
+                        <span className="inline-block w-3 h-3 rounded-sm shrink-0"
+                          style={{ background: st.on ? l.tint : 'transparent', border: `1.5px solid ${l.tint}` }} />
+                        {l.label}
+                      </button>
+                      {st.on && (
+                        <input
+                          type="range" min={0.15} max={1} step={0.05} value={st.opacity}
+                          onChange={(e) => setOpacity(l.id, parseFloat(e.target.value))}
+                          className="w-full mt-1 accent-indigo-400 h-1"
+                          aria-label={`${l.label} opacity`}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Cross-section */}
           <div className="rounded-xl p-3" style={{ background: C.card, border: `1px solid ${C.border}` }}>
@@ -639,6 +671,7 @@ export default function Heart3DViewer() {
           </div>
 
           {/* Blood flow — "follow a drop of blood" */}
+          {hasStructures && (
           <div className="rounded-xl p-3" style={{ background: C.card, border: `1px solid ${C.border}` }}>
             <button
               onClick={() => (bloodFlow ? setBloodFlow(false) : startFlow())}
@@ -669,11 +702,12 @@ export default function Heart3DViewer() {
               </p>
             )}
           </div>
+          )}
         </div>
       </div>
 
       {/* The circuit — a clickable sequence of the whole journey, below the sim */}
-      {hasModel && (
+      {hasModel && hasStructures && (
         <div className="mx-3 mb-3 rounded-xl px-3 py-3" style={{ background: C.card, border: `1px solid ${C.border}` }}>
           <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: C.indigoLt }}>
             The circuit — tap a step to jump there
@@ -708,26 +742,28 @@ export default function Heart3DViewer() {
       )}
 
       {/* Selected-structure detail panel */}
-      <div className="mx-3 mb-3 rounded-xl px-4 py-3 min-h-[64px]"
-        style={{ background: C.input, border: `1px solid ${C.border}` }}>
-        {selected ? (
-          <>
-            <p className="text-[13px] font-bold" style={{ color: C.indigoXlt }}>{selected.label}</p>
-            <p className="text-[12.5px] leading-relaxed mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>
-              {selected.blurb}
+      {hasStructures && (
+        <div className="mx-3 mb-3 rounded-xl px-4 py-3 min-h-[64px]"
+          style={{ background: C.input, border: `1px solid ${C.border}` }}>
+          {selected ? (
+            <>
+              <p className="text-[13px] font-bold" style={{ color: C.indigoXlt }}>{selected.label}</p>
+              <p className="text-[12.5px] leading-relaxed mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                {selected.blurb}
+              </p>
+            </>
+          ) : (
+            <p className="text-[12px]" style={{ color: C.textDim }}>
+              Tap any structure on the model to read what it does.
             </p>
-          </>
-        ) : (
-          <p className="text-[12px]" style={{ color: C.textDim }}>
-            Tap any structure on the model to read what it does.
-          </p>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
-      {/* CC BY-SA attribution — required by the model licence (kept in-UI) */}
+      {/* CC BY attribution — required by the model licence (kept in-UI) */}
       <p className="px-4 pb-3 text-[9.5px] leading-snug" style={{ color: 'rgba(255,255,255,0.28)' }}>
-        3D model: BodyParts3D © The Database Center for Life Science (CC BY-SA 2.1 Japan) ·
-        Z-Anatomy — the libre 3D atlas of anatomy (CC BY-SA 4.0).
+        3D model: "Beating-heart" by jalmer (Dreamwasabducted), licensed under Creative Commons
+        Attribution 4.0 (CC BY 4.0) — sketchfab.com/3d-models/beating-heart-d9845afb1ee64ad094adc96320c67d98.
       </p>
     </div>
   );

@@ -1,0 +1,50 @@
+{
+  "_note": "Label Sprint round for pollen \u2014 generated pollen_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Pollen grain structure",
+  "caption": "Tap each label, then tap where it belongs on the pollen grain.",
+  "hotspots": [
+    {
+      "id": "d8772890-1064-43a6-a124-9b589d52243e",
+      "x": 0.5,
+      "y": 0.04,
+      "label": "Exine",
+      "detail": "The tough, patterned outer wall of the pollen grain.",
+      "icon": "pin"
+    },
+    {
+      "id": "54a29651-bcff-4b28-a1d9-dfc54ab1ad00",
+      "x": 0.5,
+      "y": 0.16,
+      "label": "Intine",
+      "detail": "The thin, smooth inner wall just beneath the exine.",
+      "icon": "pin"
+    },
+    {
+      "id": "363cf6c2-6a4e-451a-b62e-6a5e8bcafd79",
+      "x": 0.2,
+      "y": 0.52,
+      "label": "Germ pore",
+      "detail": "A thinned area in the wall where the pollen tube will emerge.",
+      "icon": "pin"
+    },
+    {
+      "id": "6864093a-ed17-4358-8056-80825ca734cd",
+      "x": 0.58,
+      "y": 0.32,
+      "label": "Tube cell",
+      "detail": "The larger cell that will grow into the pollen tube.",
+      "icon": "pin"
+    },
+    {
+      "id": "aed25ef7-fd86-4df4-9b66-6ad9902a25ac",
+      "x": 0.68,
+      "y": 0.7,
+      "label": "Generative cell",
+      "detail": "The smaller cell nestled inside the tube cell; divides to form two sperm cells.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "pollen grain, 3D detail cutaway"
+}

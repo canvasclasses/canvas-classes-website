@@ -18,6 +18,8 @@ const DEVICE_LABEL: Record<LiteraryDevice, string> = {
   virodhabhas: 'Paradox',
   samvadatmakta: 'Dialogue',
   sandeh: 'Suspense',
+  padavritti: 'Repetition',
+  refrain: 'Refrain',
 };
 
 // Devanagari labels used when block.lang === 'hindi' (काव्य अलंकार + गद्य features).
@@ -35,6 +37,8 @@ const DEVICE_LABEL_HI: Record<LiteraryDevice, string> = {
   virodhabhas: 'विरोधाभास',
   samvadatmakta: 'संवादात्मकता',
   sandeh: 'संदेह',
+  padavritti: 'पदावृत्ति',
+  refrain: 'टेक',
 };
 
 const DEVICE_COLOR: Record<LiteraryDevice, string> = {
@@ -51,6 +55,8 @@ const DEVICE_COLOR: Record<LiteraryDevice, string> = {
   virodhabhas: '#2dd4bf',
   samvadatmakta: '#818cf8',
   sandeh: '#facc15',
+  padavritti: '#e879f9',
+  refrain: '#4ade80',
 };
 
 export default function LiteraryDevicesHighlighterRenderer({ block, hinglish }: { block: LiteraryDevicesHighlighterBlock; hinglish?: boolean }) {

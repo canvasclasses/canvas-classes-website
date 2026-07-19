@@ -1,0 +1,2646 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 3: संवादहीन
+book=class9-hindi-ganga chapter=3 pages=10
+
+
+================================================================================
+## PAGE 1 — "परिचय — लेखक से मिलिए"  (slug: ch3-parichay-shekhar-joshi)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=a5699ebd-d5e8-4c37-a84f-db866d78bf33 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/a5699ebd-d5e8-4c37-a84f-db866d78bf33_gen.webp",
+ "alt": "शेखर जोशी",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour bust-portrait of Hindi short-story writer Shekhar Joshi, an elderly kind face, simple attire, warm lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=aed1e973-3a23-4fe4-b399-c906b26a6f5f ---
+{
+ "prompt": "कभी आपने किसी बुज़ुर्ग को अकेले रहते देखा है — जिसके बच्चे दूर शहर में बस गए हों? उनका दिन कैसे बीतता होगा? और अगर उनका इकलौता साथी कोई पालतू पंछी या जानवर हो, तो उसका छिन जाना उनके लिए क्या होगा?",
+ "hint": "अपने मोहल्ले के किसी अकेले बुज़ुर्ग के बारे में सोचिए।"
+}
+
+--- block #2 [meet_a_scientist] id=a4f6547f-3f24-4489-8fce-fb66551eae0b ---
+{
+ "name": "शेखर जोशी",
+ "years": "1932–2022",
+ "nationality": "भारतीय — अल्मोड़ा, उत्तराखंड",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of writer Shekhar Joshi, dark ground.",
+ "contribution": "आधुनिक हिंदी कहानी के सशक्त हस्ताक्षर। पहला कहानी-संग्रह **कोसी का घटवार** (1958)। अन्य रचनाएँ — साथ के लोग, दाज्यू, हलवाहा, मेरा पहाड़ आदि। उन्होंने ग्रामीण-शहरी मध्यवर्गीय जीवन-मूल्यों और मज़दूरों के जीवन-संघर्ष को प्रमुखता से उभारा।",
+ "connection": "\"संवादहीन\" में उन्होंने एक अकेली वृद्ध स्त्री और उसके तोते के रिश्ते के सहारे आधुनिक जीवन के अकेलेपन और संवादहीनता को बड़ी संवेदना से चित्रित किया है।",
+ "fun_detail": "उन्हें \"महावीर प्रसाद द्विवेदी पुरस्कार\", \"साहित्य भूषण सम्मान\" और \"मैथिलीशरण गुप्त सम्मान\" से सम्मानित किया गया।",
+ "learn_more": "कहानी-संग्रह \"कोसी का घटवार\" और \"शेखर जोशी कथा समग्र\"।"
+}
+
+--- block #3 [callout] id=9c030024-3c5b-4f28-87c0-c81e20d8d467 ---
+{
+ "variant": "india_voice",
+ "title": "ग्रामीण जीवन के कथाकार",
+ "markdown": "शेखर जोशी की कहानियाँ पहाड़ और गाँव के सामान्य लोगों — मज़दूर, बुज़ुर्ग, स्त्रियाँ — के मन को छूती हैं। उनकी भाषा **लोकधर्मी** (बोल-चाल की, सहज) है, जो गाँव के जीवन को सीधे आपके सामने ला खड़ा करती है।"
+}
+
+--- block #4 [text] id=99a1ac2e-d960-4cfb-a96e-e06d4bd48c88 ---
+{
+ "markdown": "इस कहानी के दो मुख्य पात्र हैं — **ताई** (एक अकेली वृद्ध स्त्री) और **मिट्टू** (उनका पहाड़ी तोता)। पढ़ने से पहले कुछ कठिन शब्द जान लें।"
+}
+
+--- block #5 [vocabulary_lab] id=17fcbf98-ad7b-4783-9e1c-88b58eaafc3d ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "कहानी में आने वाले शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "86e08b31-6fda-4838-bcbe-5b60a247a594",
+   "word": "खंडहर",
+   "pronunciation": "khand-har",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "टूटा-फूटा सूना भवन",
+   "english": "a ruin",
+   "example": "भरा-पूरा घर अब सूना खंडहर था।",
+   "memory_hook": "खंड (टुकड़े)।"
+  },
+  {
+   "id": "7687c7aa-d7f8-4034-a94f-81195ad216d1",
+   "word": "सूनापन",
+   "pronunciation": "soo-naa-pan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अकेलापन, ख़ालीपन",
+   "english": "emptiness; loneliness",
+   "example": "घर का सूनापन ताई को काटता था।",
+   "memory_hook": "सूना + पन।"
+  },
+  {
+   "id": "05f6fe6b-af86-4dcf-a3d9-af8bb6944a89",
+   "word": "ममता",
+   "pronunciation": "mam-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "माँ का स्नेह",
+   "english": "maternal love",
+   "example": "सारी ममता मिट्टू पर बरस पड़ी।",
+   "memory_hook": "\"मम\" से।"
+  },
+  {
+   "id": "73759427-f27d-46fc-9511-be4ead4d3fb3",
+   "word": "वियोग",
+   "pronunciation": "vi-yog",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "जुदाई, बिछड़ना",
+   "english": "separation",
+   "example": "मिट्टू का वियोग ताई सह न पातीं।",
+   "memory_hook": "वि + योग।"
+  },
+  {
+   "id": "d2510e1f-68f4-470f-8c73-763143e4f6c4",
+   "word": "एवजी",
+   "pronunciation": "ev-jee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "स्थानापन्न, बदले वाला",
+   "english": "a substitute",
+   "example": "एवजी मिट्टू चुप रहा।",
+   "memory_hook": "in place of।"
+  },
+  {
+   "id": "efc88e3f-7ba4-4eba-af32-e4e9aa86d4c8",
+   "word": "प्रायश्चित",
+   "pronunciation": "praa-yash-chit",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पाप का पश्चाताप-कर्म",
+   "english": "atonement",
+   "example": "पिंजरा खोलकर वे प्रायश्चित करना चाहते थे।",
+   "memory_hook": "पाप धोना।"
+  },
+  {
+   "id": "df084a9a-7a98-41f8-ad91-c0fbd32f9ec9",
+   "word": "संवादहीन",
+   "pronunciation": "san-vaad-heen",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बातचीत से रहित, मौन",
+   "english": "uncommunicative",
+   "example": "ताई का जीवन संवादहीन हो गया।",
+   "memory_hook": "संवाद + हीन।"
+  },
+  {
+   "id": "56c06302-fb99-4aa0-8c1e-5e11200940a5",
+   "word": "पलायन",
+   "pronunciation": "pa-laa-yan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "घर छोड़कर जाना",
+   "english": "migration",
+   "example": "गाँव से शहर पलायन बढ़ रहा है।",
+   "memory_hook": "भागना।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=ccf4ece9-6b54-4218-bfed-167eb8e601e8 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "5bea712a-c610-491a-8368-1a28e90965e0",
+   "question": "शेखर जोशी का पहला प्रसिद्ध कहानी-संग्रह कौन-सा है?",
+   "options": [
+    "मेरा ओलिया गाँव की कथाएँ",
+    "कोसी का घटवार",
+    "साथ के लोग और दाज्यू",
+    "मेरा पहाड़"
+   ],
+   "correct_index": 1,
+   "explanation": "उनका पहला कहानी-संग्रह \"कोसी का घटवार\" (1958) है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "268656a5-ea67-4a5c-8add-d5f7f659d355",
+   "question": "\"संवादहीन\" कहानी मुख्यतः किस भाव की कहानी है?",
+   "options": [
+    "युद्ध और वीरता के रोमांच",
+    "व्यापार और धन के लालच",
+    "विज्ञान के चमत्कार",
+    "अकेलेपन की संवेदना"
+   ],
+   "correct_index": 3,
+   "explanation": "यह एक अकेली वृद्ध स्त्री के अकेलेपन की संवेदनशील कहानी है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "17de8e05-7e27-4485-9c90-3e30203cb255",
+   "question": "कहानी के दो मुख्य पात्र कौन हैं?",
+   "options": [
+    "ताई और मिट्टू",
+    "जगन मास्टर और गनपत",
+    "मास्टराइन और गनपत",
+    "दो पड़ोसी बच्चे"
+   ],
+   "correct_index": 0,
+   "explanation": "मुख्य पात्र हैं ताई (वृद्ध स्त्री) और मिट्टू (उनका तोता)।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "कहानी — भाग १"  (slug: ch3-kahani-bhag-1)
+published=false blocks=9 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=3b025074-5234-4573-be11-92443991af34 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/3b025074-5234-4573-be11-92443991af34_gen.webp",
+ "alt": "ताई और उनका तोता मिट्टू",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an elderly woman in a sari sitting in the courtyard of a faded grand old house, a green parrot in a cage on a stool beside her, a flower garden and a brass water pot nearby, warm morning light on a dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [heading] id=2b77ae69-e594-484b-8e9f-1cc10c734f18 ---
+{
+ "text": "भाग १ — ताई, मिट्टू और सूना बड़ा घर",
+ "level": 2
+}
+
+--- block #2 [text] id=b50b49ed-6c4d-433d-bd1d-ec9b47044fc2 ---
+{
+ "markdown": "कहानी एक अकेली वृद्धा \"ताई\" से शुरू होती है, जो गाँव के बीच एक सूने बड़े घर में अपने तोते मिट्टू के साथ रहती हैं। दोनों एक-दूसरे का सहारा हैं।"
+}
+
+--- block #3 [narrated_passage] id=32cbc133-be1e-4e1d-bf9d-19ccd77caa40 ---
+{
+ "source_label": "भाग १ · ताई और मिट्टू",
+ "paragraphs": [
+  {
+   "id": "485c3ba6-9aad-42e7-b573-e99baa11e66a",
+   "sentences": [
+    {
+     "id": "8e16e84c-906d-474b-95b5-c4b30f2698dc",
+     "text": "गहरी साँस लेकर ताई कहतीं, \"भगवान! कैसे नैया पार लगेगी?\" और बंद पिंजड़े में अपने पंखों को फड़फड़ाता, उछल-कूद मचाता मिट्टू उत्तर देता, \"राम-राम कहो, सीताराम कहो।\"",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "नैया पार लगना",
+       "meaning": "जीवन की कठिनाई से उबरना — to see life through (lit. boat reaching shore)",
+       "pos": "मुहावरा",
+       "example": "इतनी मुश्किलों में भगवान ही नैया पार लगाएँगे।"
+      },
+      {
+       "word": "फड़फड़ाता",
+       "meaning": "पंख ज़ोर-ज़ोर से हिलाता — fluttering",
+       "pos": "क्रिया",
+       "example": "पिंजरे में पंछी पंख फड़फड़ाता रहा।"
+      }
+     ]
+    },
+    {
+     "id": "70720c3f-cf57-4351-88e4-74b545c2d10c",
+     "text": "अब ये ही दो प्राणी गाँव के बीच में स्थित बड़े घर के उस सूने खंडहर में एक-दूसरे को सहारा देने के लिए रह गए थे।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "खंडहर",
+       "meaning": "टूटा-फूटा सूना भवन — a ruin",
+       "pos": "संज्ञा",
+       "example": "पुरानी हवेली अब खंडहर में बदल चुकी थी।"
+      }
+     ]
+    },
+    {
+     "id": "b3f72117-c244-47e8-b217-5592029680b4",
+     "text": "बहू-बेटे गाँव का मोह छोड़कर शहरों के होकर रह गए। बेटियाँ अपने-अपने हाथ पीले कराकर अपनी गृहस्थी में रम गईं।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मोह",
+       "meaning": "लगाव, ममता — attachment",
+       "pos": "संज्ञा",
+       "example": "घर का मोह छोड़ना आसान नहीं होता।"
+      },
+      {
+       "word": "हाथ पीले करना",
+       "meaning": "विवाह कर देना — to get (a daughter) married",
+       "pos": "मुहावरा",
+       "example": "बेटी के हाथ पीले करके माँ-बाप निश्चिंत हुए।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "देखो — कहानी की पृष्ठभूमि \"पलायन\" है: बच्चे शहर चले गए, और भरा-पूरा घर अकेली ताई के लिए \"सूना खंडहर\" बन गया। यह आज के गाँवों का सच्चा दर्द है।"
+  },
+  {
+   "id": "abcdf329-600c-4476-bf12-2d50bafb33ea",
+   "sentences": [
+    {
+     "id": "e6530469-06bf-4e7b-b890-430ab7b11373",
+     "text": "भला हो गनपत का, जिसने ताई के सूनेपन को सहारा दे दिया था, वह न जाने कहाँ से एक प्यारा-सा पहाड़ी तोता ले आया था। ताई की सारी ममता मिट्टू पर बरस पड़ी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "सूनापन",
+       "meaning": "अकेलापन — loneliness; emptiness",
+       "pos": "संज्ञा",
+       "example": "मिट्टू ने ताई के सूनेपन को भर दिया।"
+      },
+      {
+       "word": "ममता",
+       "meaning": "माँ-जैसा स्नेह — maternal love",
+       "pos": "संज्ञा",
+       "example": "सारी ममता मिट्टू पर उमड़ पड़ी।"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+--- block #4 [image] id=d0ccfdd6-d3c2-4669-b9d1-c94aac220a8d ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/d0ccfdd6-d3c2-4669-b9d1-c94aac220a8d_gen.webp",
+ "alt": "ताई आँगन में बैठीं, पास पिंजरे में हरा तोता",
+ "caption": "",
+ "width": "three_quarter",
+ "aspect_ratio": "16:9",
+ "generation_prompt": "Watercolour — an old woman seated in a sunny courtyard with a green parrot in a cage on a low stool, flowers and a tiled-roof house behind, on a dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #5 [comprehension_checkpoint] id=6a543fe0-bf15-40d9-b963-905b4dc6aa3e ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "564eb709-b844-4fae-bf6a-5f48fa18e576",
+   "question": "ताई के बड़े घर को \"सूना खंडहर\" क्यों कहा गया है?",
+   "options": [
+    "भरा-पूरा परिवार बिखर गया, सब शहर/गृहस्थी में चले गए",
+    "घर सचमुच गिर चुका था",
+    "घर में भूत रहते थे",
+    "घर बहुत छोटा था"
+   ],
+   "correct_index": 0,
+   "explanation": "पूत-परिवार सब दूर चले गए; भरे-पूरे घर का अकेलापन ही उसे \"सूना खंडहर\" बनाता है।"
+  }
+ ]
+}
+
+--- block #6 [narrated_passage] id=43feff9c-0d22-4abd-859b-08f6d026ceaf ---
+{
+ "source_label": "भाग १ · प्रेम-भरा संवाद",
+ "paragraphs": [
+  {
+   "id": "fa28d207-ca33-46eb-9084-2e90bb6db977",
+   "sentences": [
+    {
+     "id": "433e1f51-c6c8-431b-b749-b7448f11eb04",
+     "text": "सुबह पौ फटते ही मिट्टू अपना पाठ शुरू कर देते— \"हर हर गंगे! सीताराम बोल! मिट्टू राम राम!\" ताई अचकचाकर उठ बैठतीं। लाड़ से मिट्टू को निहारकर आशीष देतीं— \"जीते रहो बेटा, जुग-जुग जिओ।\"",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "पौ फटना",
+       "meaning": "सवेरा होना — daybreak",
+       "pos": "मुहावरा",
+       "example": "पौ फटते ही चिड़ियाँ चहचहाने लगीं।"
+      },
+      {
+       "word": "अचकचाकर",
+       "meaning": "चौंककर, हड़बड़ाकर — startled",
+       "pos": "क्रिया-विशेषण",
+       "example": "आहट सुनकर वह अचकचाकर उठ बैठा।"
+      },
+      {
+       "word": "निहारकर",
+       "meaning": "प्यार से देखकर — gazing fondly",
+       "pos": "क्रिया",
+       "example": "माँ बच्चे को निहारकर मुस्कुराई।"
+      }
+     ]
+    },
+    {
+     "id": "7a1ccb9b-488a-4c6d-a866-5afb85ae646c",
+     "text": "ताई पूछतीं, \"मिट्टू! अब कैसे कटेगी?\" और नौजवान मिट्टू ताई के बुढ़ापे का सहारा बनकर दम-खम के साथ उन्हें दिलासा देते— \"कटेगी! कटेगी!! कटेगी!!!\"",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "दिलासा",
+       "meaning": "सांत्वना, तसल्ली — consolation",
+       "pos": "संज्ञा",
+       "example": "मिट्टू की \"कटेगी!\" रट ताई को दिलासा देती थी।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "कितना सुंदर — एक तोता बुढ़िया को \"हिम्मत रखो, कट जाएगी\" का दिलासा दे रहा है। यही उनका रोज़ का प्रेम-भरा संवाद है, जो आगे छिन जाएगा।"
+  }
+ ]
+}
+
+--- block #7 [reasoning_prompt] id=0f8c09a0-595a-4232-a47f-331700756630 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "ताई और मिट्टू का संबंध सिर्फ़ \"मालिक और पालतू\" का नहीं है — लेखक इसे माँ-बेटे जैसा क्यों दिखाते हैं? इससे कहानी में क्या जुड़ता है?",
+ "reveal": "ताई के अपने बच्चे दूर चले गए, इसलिए उनकी अधूरी ममता और संवाद की भूख मिट्टू पर उतर आती है — वह उसे \"बेटा\" कहती हैं, खाना बचाकर रखती हैं, बात करती हैं। यह रिश्ता दिखाता है कि इंसान को सबसे ज़्यादा ज़रूरत किसी से \"बात करने\" और अपनापन बाँटने की है — और यही छिनने पर अकेलापन सबसे गहरा घाव बन जाता है।",
+ "difficulty_level": 3
+}
+
+--- block #8 [inline_quiz] id=7e278470-94e4-4806-b07a-b4e7a48c6a0e ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "688a644f-65f2-4bd4-9e40-592b1e5faa98",
+   "question": "ताई के पास मिट्टू को कौन लाया था?",
+   "options": [
+    "जगन मास्टर ख़ुद",
+    "उनके शहर वाले बेटे",
+    "गनपत",
+    "मास्टराइन"
+   ],
+   "correct_index": 2,
+   "explanation": "गनपत न जाने कहाँ से एक प्यारा-सा पहाड़ी तोता ले आया था।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "a13940f4-ee5d-4dbb-a4d4-7fb7fd57f780",
+   "question": "ताई का भरा-पूरा घर सूना क्यों हो गया?",
+   "options": [
+    "एक बार घर में भीषण आग लग गई थी",
+    "सब लोग बीमार पड़ गए",
+    "बहू-बेटे शहर बस गए, बेटियाँ ब्याह दी गईं",
+    "ताई ने सबको निकाल दिया"
+   ],
+   "correct_index": 2,
+   "explanation": "पलायन के कारण — बेटे शहर के होकर रह गए, बेटियाँ अपनी गृहस्थी में चली गईं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "f1f079d2-7c3c-43f3-a745-2c3c625a298e",
+   "question": "\"मिट्टू! अब कैसे कटेगी?\" — \"कटेगी! कटेगी!!\" इस संवाद से क्या झलकता है?",
+   "options": [
+    "मिट्टू ताई के बुढ़ापे का दिलासा-भरा सहारा है",
+    "मिट्टू किसी बात पर ताई से नाराज़ है",
+    "मिट्टू भूखा है",
+    "मिट्टू उड़ना चाहता है"
+   ],
+   "correct_index": 0,
+   "explanation": "मिट्टू \"हिम्मत रखो, कट जाएगी\" का दिलासा देकर ताई का सहारा बनता है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "कहानी — भाग २"  (slug: ch3-kahani-bhag-2)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=5a54dfdb-9b21-404f-9729-d29c03d13592 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/5a54dfdb-9b21-404f-9729-d29c03d13592_gen.webp",
+ "alt": "जगन मास्टर और खुला पिंजरा",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a man standing under a tree at dusk reaching up with both arms as a green parrot flies free toward other birds in the foliage, an open empty cage on the ground. Dark warm ground, soft light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=1c0e9a11-7297-4b3e-ab1c-a1f205457e50 ---
+{
+ "markdown": "ताई कुंभ-स्नान के लिए प्रयागराज जाती हैं और मिट्टू को **जगन मास्टर की घरवाली** के पास छोड़ जाती हैं। जगन मास्टर स्वतंत्र विचारों के आदमी हैं — और यहीं कहानी मोड़ लेती है।"
+}
+
+--- block #2 [narrated_passage] id=6559204f-a411-4546-8791-f1158fdedf21 ---
+{
+ "source_label": "भाग २ · आदर्श और आज़ादी",
+ "paragraphs": [
+  {
+   "id": "2575ddcb-f871-4d2b-84d6-6c4e838d075b",
+   "sentences": [
+    {
+     "id": "fff4a279-d4cd-44b5-9b8b-3600d805cdc8",
+     "text": "जगन मास्टर दूसरे मिजाज के आदमी थे। स्वतंत्र विचारों के आदमी थे। दूसरों की स्वतंत्रता पर बाधा नहीं डालना चाहते थे। पिंजड़े में बंद मिट्टू को देखकर उन्हें बेचैनी होने लगती।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मिजाज",
+       "meaning": "स्वभाव, तबीयत — temperament",
+       "pos": "संज्ञा",
+       "example": "जगन मास्टर दूसरे मिजाज के आदमी थे।"
+      },
+      {
+       "word": "बेचैनी",
+       "meaning": "व्याकुलता, अशांति — restlessness",
+       "pos": "संज्ञा",
+       "example": "बंद पंछी को देख उन्हें बेचैनी होती।"
+      }
+     ]
+    },
+    {
+     "id": "ae84f186-c2c9-4c47-87c1-eb2764385b8e",
+     "text": "जब-जब मिट्टू को देखते, अपनी पत्नी की बुद्धि पर तरस खाते और अपने आप को भी दोषी अनुभव करते।",
+     "audio_url": ""
+    },
+    {
+     "id": "41fdb438-f9e4-4352-a1dc-77f739378eb1",
+     "text": "उन्होंने एक दिन कमरा बंदकर मिट्टू के पिंजरे को ज़मीन पर रखा और उसका दरवाज़ा खोल दिया, ताकि उसे खुली हवा में आने का मौका देकर अपने पाप का थोड़ा प्रायश्चित कर लें।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "प्रायश्चित",
+       "meaning": "पाप का पश्चाताप-कर्म — atonement",
+       "pos": "संज्ञा",
+       "example": "पिंजरा खोलकर वे प्रायश्चित करना चाहते थे।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "ध्यान दो — जगन मास्टर \"आदर्शवादी\" हैं: उन्हें किसी को क़ैद में देखना अखरता है। पर ध्यान रखना — हर आदर्श का असली जीवन में नतीजा वैसा ही अच्छा हो, ज़रूरी नहीं।"
+  },
+  {
+   "id": "77d0bc53-00c3-469d-b5f9-f6abf6653256",
+   "sentences": [
+    {
+     "id": "a0b041f4-9ca7-4bdb-b9e3-51257e8e63de",
+     "text": "मिट्टू अब पिंजरे में रहने के इतने आदी हो चुके थे कि उन्होंने बाहर आने की कोई इच्छा नहीं प्रकट की।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "आदी",
+       "meaning": "अभ्यस्त, टेव पड़ी हुई — habituated; used to",
+       "pos": "विशेषण",
+       "example": "वह देर से उठने का आदी हो गया था।"
+      }
+     ]
+    },
+    {
+     "id": "3a5d4a90-eea8-425f-8947-ec6c16e68478",
+     "text": "पर एक दिन मिट्टू की नज़र खुले रोशनदान पर पड़ी। मिट्टू ने तिरछी आँख से रोशनदान के बाहर की दुनिया की ओर देखा और ये गए और ये गए! वो गए!!",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "रोशनदान",
+       "meaning": "दीवार में हवा-रोशनी का झरोखा — a ventilator; skylight",
+       "pos": "संज्ञा",
+       "example": "मिट्टू रोशनदान से बाहर उड़ गया।"
+      },
+      {
+       "word": "तिरछी आँख से",
+       "meaning": "कनखियों से, बग़ल से — with a sidelong glance",
+       "pos": "मुहावरा",
+       "example": "उसने तिरछी आँख से दरवाज़े की ओर देखा।"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [image] id=3ef42b91-7f3e-45cc-9c6d-1306e052ab30 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/3ef42b91-7f3e-45cc-9c6d-1306e052ab30_gen.webp",
+ "alt": "आदर्शवादी जगन मास्टर के हाथों से तोता उड़ गया",
+ "caption": "",
+ "width": "three_quarter",
+ "aspect_ratio": "16:9",
+ "generation_prompt": "Watercolour — a man in a dhoti running between trees with arms raised, calling after a green parrot hopping from branch to branch, sweat on his face. Dark warm ground, soft light. Loose washes, paper grain. No text."
+}
+
+--- block #4 [comprehension_checkpoint] id=38b6a30a-0604-4099-8bb0-7f8f6b3a8cd5 ---
+{
+ "questions": [
+  {
+   "id": "7aa7c204-9564-4dd1-af7a-8cd9dc21a53a",
+   "question": "जगन मास्टर ने मिट्टू का पिंजरा क्यों खोला?",
+   "options": [
+    "मिट्टू बीमार था",
+    "ताई ने ऐसा कहा था",
+    "पिंजरा साफ़ करना था",
+    "वे किसी को क़ैद में देखना ग़लत मानते थे — स्वतंत्रता देना चाहते थे"
+   ],
+   "correct_index": 3,
+   "explanation": "स्वतंत्र विचारों के जगन मास्टर बंद मिट्टू को देख बेचैन रहते; आज़ादी देकर \"प्रायश्चित\" करना चाहते थे।"
+  }
+ ]
+}
+
+--- block #5 [reasoning_prompt] id=a2062e42-bba1-454b-843d-2ca77a18f686 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "जगन मास्टर की नीयत अच्छी थी — वे मिट्टू को आज़ादी देना चाहते थे। फिर भी इसका नतीजा ताई के लिए दुखद हुआ। इससे \"आदर्श\" और \"यथार्थ\" के बारे में क्या सीख मिलती है?",
+ "reveal": "अच्छी नीयत और ऊँचा आदर्श (आज़ादी) हमेशा हर किसी के लिए अच्छा नतीजा नहीं देते — असली जीवन उलझा हुआ होता है। जगन मास्टर ने केवल \"पंछी की आज़ादी\" सोची, पर \"ताई के अकेलेपन\" को नहीं। आदर्श को अपनाते समय दूसरों पर उसके असली असर को भी सोचना ज़रूरी है — यही आदर्श और यथार्थ का द्वंद्व है।",
+ "difficulty_level": 4
+}
+
+--- block #6 [inline_quiz] id=b4cbe1f4-49f3-46d5-85df-f2396c299a43 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "fe102444-6eaa-4605-ad9a-810a53d12927",
+   "question": "जगन मास्टर कैसे विचारों के आदमी थे?",
+   "options": [
+    "अपने स्वभाव से बहुत लालची और स्वार्थी",
+    "डरपोक और आलसी",
+    "क्रूर और निर्दयी",
+    "स्वतंत्र विचारों के, आज़ादी को महत्त्व देने वाले"
+   ],
+   "correct_index": 3,
+   "explanation": "वे स्वतंत्र विचारों के थे और किसी की स्वतंत्रता में बाधा नहीं चाहते थे।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "64d2216b-dffd-444e-bad2-b29853b94eec",
+   "question": "पिंजरा खुला होने पर भी मिट्टू ने पहले बाहर आने की इच्छा क्यों नहीं की?",
+   "options": [
+    "उसे बाहर की खुली दुनिया का डर नहीं था",
+    "वह पिंजरे में रहने का इतना आदी हो चुका था",
+    "वह सो रहा था",
+    "दरवाज़ा बहुत छोटा था"
+   ],
+   "correct_index": 1,
+   "explanation": "लंबे समय की क़ैद ने उसे पिंजरे का आदी बना दिया था — आज़ादी पहले अजनबी लगी।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "d84ad9d6-ebc4-4d43-af96-a7bf9f017f12",
+   "question": "जगन मास्टर के अच्छे इरादे का दुखद परिणाम क्या दर्शाता है?",
+   "options": [
+    "आज़ादी हमेशा बुरी है",
+    "आदर्श और यथार्थ में अक्सर टकराव होता है",
+    "पंछी कभी पाले ही नहीं जाने चाहिए",
+    "मास्टर मूर्ख था"
+   ],
+   "correct_index": 1,
+   "explanation": "अच्छी नीयत का भी असली जीवन में नतीजा उलटा हो सकता है — यही आदर्श बनाम यथार्थ है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "कहानी — भाग ३"  (slug: ch3-kahani-bhag-3)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=3a2ac8a0-7386-4d8e-8896-96f37d2d975d ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/3a2ac8a0-7386-4d8e-8896-96f37d2d975d_gen.webp",
+ "alt": "लौटी ताई और अजनबी एवजी मिट्टू",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an old woman reaching toward a caged green parrot that stares away blankly, while in a thought-bubble her real parrot flies free among mango trees. Dark warm ground, melancholy soft light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=b8ca0b84-ed9e-4927-b42e-226d29587899 ---
+{
+ "markdown": "मिट्टू के उड़ जाने से गाँव में हड़कंप मच जाता है। ताई के दुख की आशंका से, गनपत एक उपाय सुझाते हैं — मिट्टू जैसा ही **एक दूसरा (एवजी) तोता** ले आया जाए।"
+}
+
+--- block #2 [narrated_passage] id=8d455899-2da2-4042-9ded-6ab49405494d ---
+{
+ "source_label": "भाग ३ · एवजी मिट्टू और संवादहीन अंत",
+ "paragraphs": [
+  {
+   "id": "b2196379-517f-4047-bbcf-3c0f0e644a81",
+   "sentences": [
+    {
+     "id": "5794acb6-7be9-40b2-9582-81db67ffcf8d",
+     "text": "बहुत सोच-विचार के बाद आख़िर गनपत ने ही एक सुझाव दिया कि मिट्टू की ही सूरत-शक्ल का एक दूसरा तोता ले आया जाए, ताकि ताई को भ्रम में रखा जा सके।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "एवजी",
+       "meaning": "स्थानापन्न, बदले वाला — a substitute",
+       "pos": "विशेषण",
+       "example": "एवजी तोता असली मिट्टू की जगह रखा गया।"
+      },
+      {
+       "word": "भ्रम",
+       "meaning": "ग़लतफ़हमी, धोखा — an illusion; false belief",
+       "pos": "संज्ञा",
+       "example": "ताई को भ्रम में रखने के लिए नया तोता लाया गया।"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "6d2fab47-a17c-4bda-ba3f-0b3e99d2f66c",
+   "sentences": [
+    {
+     "id": "78c6f1d4-0285-4791-aca0-62afa309dfa4",
+     "text": "ताई कुंभ से लौटकर सीधे जगन मास्टर के दरवाज़े पहुँचीं। ताई सोच रही थीं कि उन्हें देखते ही मिट्टू \"राम राम सीताराम\" की रट लगाकर आसमान सिर पर उठा लेगा, पिंजड़े में कूद-फाँद मचाकर तूफ़ान खड़ा कर देगा।",
+     "audio_url": ""
+    },
+    {
+     "id": "7abc2c0e-4f39-49c5-9195-3dee596ad58d",
+     "text": "लेकिन वहाँ बैठे एवजी मिट्टू ने उन्हें देखकर कोई हरकत नहीं की, वह केवल इधर-उधर ताकता रहा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "हरकत",
+       "meaning": "हलचल, क्रिया — movement; reaction",
+       "pos": "संज्ञा",
+       "example": "नया तोता बिना किसी हरकत के बैठा रहा।"
+      }
+     ]
+    },
+    {
+     "id": "37581fe1-0770-46c4-bacc-34ef1c12580c",
+     "text": "ताई अपने मिट्टू को गुहार कर थक गईं लेकिन उनके सूनेपन का साथी न जाने किन अमराइयों में घूम रहा होगा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "गुहार",
+       "meaning": "पुकार, बुलावा — a call; plea",
+       "pos": "संज्ञा",
+       "example": "ताई बार-बार मिट्टू को गुहार लगाती रहीं।"
+      },
+      {
+       "word": "अमराइयों",
+       "meaning": "आम के बग़ीचे (अमराई) — mango groves",
+       "pos": "संज्ञा",
+       "example": "असली मिट्टू किन्हीं अमराइयों में उड़ रहा था।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "यही कहानी का मर्म है — ताई को धोखे में रखने के लिए तोता तो बदल दिया गया, पर \"संवाद\" नहीं लौटाया जा सका। नया तोता उन्हें पहचानता ही नहीं। ताई का जीवन अब सचमुच \"संवादहीन\" हो गया।"
+  }
+ ]
+}
+
+--- block #3 [comprehension_checkpoint] id=1a90f309-58a9-4ac6-a33d-1357cd1bb541 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "7e1358c1-b40f-4c78-8da0-0de845fb6e15",
+   "question": "गाँव वालों ने ताई के लिए \"एवजी मिट्टू\" क्यों लाने का सोचा?",
+   "options": [
+    "उन्हें तोते बहुत पसंद थे",
+    "ताई को सच्चाई से लगने वाले सदमे से बचाने के लिए",
+    "मिट्टू को सज़ा देने के लिए",
+    "जगन मास्टर के कहने पर"
+   ],
+   "correct_index": 1,
+   "explanation": "असली मिट्टू के खोने पर ताई के गहरे दुख की आशंका से, उन्हें भ्रम में रखने के लिए हमशक्ल तोता लाया गया।"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=c31fadda-5617-47e1-a9a0-41049cba7144 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "कहानी का शीर्षक \"संवादहीन\" किसके लिए सबसे सार्थक है — ताई, जगन मास्टर, मिट्टू, या नया तोता? कारण सहित सोचिए।",
+ "reveal": "सबसे अधिक \"संवादहीन\" ताई हो जाती हैं — उनका इकलौता \"बात करने वाला\" साथी चला गया, और नया तोता उन्हें पहचानता तक नहीं, चुप रहता है। पर गहराई में देखें तो यह पूरे आधुनिक जीवन की संवादहीनता है — जहाँ बच्चे दूर हैं, अपनों से बात नहीं, और रिश्ते \"एवजी\" (नक़ली विकल्प) से भरने की कोशिश की जाती है, पर सच्चा संवाद लौटता नहीं।",
+ "difficulty_level": 4
+}
+
+--- block #5 [inline_quiz] id=f3ab217c-8f79-4ac1-8a29-2591b351f3d8 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "29c582bb-ddfd-4e03-beeb-b9185881662a",
+   "question": "ताई के लौटने पर एवजी मिट्टू ने क्या किया?",
+   "options": [
+    "\"राम राम सीताराम\" की ज़ोर से रट लगा दी",
+    "पिंजरे में तूफ़ान खड़ा कर दिया",
+    "उड़कर ताई के कंधे पर बैठ गया",
+    "कोई हरकत नहीं की, बस इधर-उधर ताकता रहा"
+   ],
+   "correct_index": 3,
+   "explanation": "नया तोता ताई को पहचानता ही नहीं था, इसलिए चुपचाप इधर-उधर ताकता रहा।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "9346be8e-dcf3-49aa-9a24-5d69c6a5ddfa",
+   "question": "\"संवादहीन\" शीर्षक कहानी के अंत में क्या दर्शाता है?",
+   "options": [
+    "ताई के जीवन से सच्चा संवाद/साथी छिन जाना",
+    "अंत में ताई का बहुत बातूनी हो जाना",
+    "गाँव में मेला लगना",
+    "मिट्टू का लौट आना"
+   ],
+   "correct_index": 0,
+   "explanation": "जिससे ताई दिन-भर बातें करती थीं, वही चला गया — उनका जीवन संवाद से रहित (संवादहीन) हो गया।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "e8448a12-488b-4829-b2dd-e3bb830acd71",
+   "question": "असली मिट्टू को \"एवजी\" तोते से बदलने की कोशिश किस गहरी बात की ओर इशारा करती है?",
+   "options": [
+    "देखने में दुनिया के सभी तोते एक जैसे होते हैं",
+    "धोखा देना अच्छा है",
+    "नक़ली विकल्प सच्चे रिश्ते/संवाद की जगह नहीं ले सकते",
+    "ताई बहुत भोली थीं"
+   ],
+   "correct_index": 2,
+   "explanation": "तोता बदला जा सका, पर सच्चा संवाद नहीं लौटा — नक़ल असल की जगह नहीं ले पाती।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "शब्द-संपदा"  (slug: ch3-shabd-sampada)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=2751154b-fa18-467c-86cb-db41e9405c9c ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/2751154b-fa18-467c-86cb-db41e9405c9c_gen.webp",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a small bird cage silhouette, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=359a09ca-311d-4d2d-b5ea-497669e4f0a5 ---
+{
+ "markdown": "इस कहानी के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और याद रखने की ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=163c9d9b-64fa-487c-8247-851a3f0c2079 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: कहानी के मूल शब्द।",
+ "cards": [
+  {
+   "id": "94da1b1f-2eb6-4630-90dc-67c906d51a51",
+   "word": "खंडहर",
+   "pronunciation": "khand-har",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "टूटा-फूटा, सूना पुराना भवन",
+   "english": "a ruin",
+   "example": "कभी का भरा-पूरा बड़ा घर अब सूना खंडहर बन गया था।",
+   "memory_hook": "खंड (टुकड़े) — a ruin।"
+  },
+  {
+   "id": "c14a8f7e-54ab-4f93-bbf6-1f07d611d00e",
+   "word": "सूनापन",
+   "pronunciation": "soo-naa-pan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अकेलापन, ख़ालीपन",
+   "english": "emptiness; loneliness",
+   "example": "बच्चों के जाने के बाद घर का सूनापन ताई को काटने को दौड़ता।",
+   "memory_hook": "\"सूना\" (empty) + पन।"
+  },
+  {
+   "id": "6ecde41c-aeab-400d-8f17-efa26f5953a3",
+   "word": "ममता",
+   "pronunciation": "mam-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "माँ का स्नेह, वात्सल्य",
+   "english": "maternal love; tenderness",
+   "example": "ताई की सारी ममता अब मिट्टू पर बरसती थी।",
+   "memory_hook": "\"मम\" (मेरा) से — motherly love।"
+  },
+  {
+   "id": "0ab71f18-1177-4dda-83c3-77b0f63c70c6",
+   "word": "पलायन",
+   "pronunciation": "pa-laa-yan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "घर/स्थान छोड़कर चले जाना",
+   "english": "migration; flight",
+   "example": "गाँवों से शहरों की ओर पलायन एक बड़ी समस्या है।",
+   "memory_hook": "भाग जाना — to flee/migrate।"
+  },
+  {
+   "id": "fd0dcfbe-4c07-4696-8cfc-7a0b09244759",
+   "word": "दिलासा",
+   "pronunciation": "di-laa-saa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सांत्वना, तसल्ली",
+   "english": "consolation; reassurance",
+   "example": "मिट्टू \"कटेगी!\" कहकर ताई को दिलासा देता था।",
+   "memory_hook": "दिल को तसल्ली — to console।"
+  },
+  {
+   "id": "59f47886-255c-4cad-8c62-4dc863057f4b",
+   "word": "गुहार",
+   "pronunciation": "gu-haar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पुकार, मदद के लिए आवाज़",
+   "english": "a call; a plea",
+   "example": "ताई अपने मिट्टू को गुहार कर थक गईं।",
+   "memory_hook": "पुकारना — a loud call।"
+  },
+  {
+   "id": "e39cea53-1674-4eab-9f3d-dc9652cf2667",
+   "word": "तकाजा",
+   "pronunciation": "ta-kaa-zaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बार-बार माँगना, आवश्यकता",
+   "english": "an insistent demand",
+   "example": "मिट्टू के वक्त-बेवक्त के तकाजों के लिए ताई रोटी बचाकर रखतीं।",
+   "memory_hook": "उर्दू — repeated demand।"
+  },
+  {
+   "id": "c639a636-c615-442a-810b-179c13700404",
+   "word": "कुशाग्र",
+   "pronunciation": "ku-shaagr",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "तीव्र बुद्धि वाला, तीक्ष्ण",
+   "english": "sharp; keen (intellect)",
+   "example": "कुशाग्र बुद्धि छात्र की तरह मिट्टू पाठ दुहरा देता।",
+   "memory_hook": "कुश (घास) की नोक जैसा तीखा।"
+  },
+  {
+   "id": "07080fff-57cc-4d60-8326-5c10cf80b68c",
+   "word": "निहाल",
+   "pronunciation": "ni-haal",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बहुत प्रसन्न, तृप्त",
+   "english": "overjoyed; gratified",
+   "example": "मिट्टू की बातें सुनकर ताई निहाल हो जातीं।",
+   "memory_hook": "फ़ारसी — deeply pleased।"
+  },
+  {
+   "id": "24ddfd27-43f6-4c11-a39a-badf93b10946",
+   "word": "तुनकमिजाज",
+   "pronunciation": "tu-nak-mi-zaaj",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "चिड़चिड़ा, छोटी बात पर नाराज़",
+   "english": "short-tempered; touchy",
+   "example": "ज़मींदार साहब बड़े तुनकमिजाज थे।",
+   "memory_hook": "तुनक (झटका) + मिजाज (mood)।"
+  },
+  {
+   "id": "feecd037-2616-4722-b4cf-a428bdc15235",
+   "word": "वियोग",
+   "pronunciation": "vi-yog",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बिछड़ना, जुदाई",
+   "english": "separation; parting",
+   "example": "ताई घड़ी-भर का भी मिट्टू का वियोग सह न पातीं।",
+   "memory_hook": "वि + योग = un-joining।"
+  },
+  {
+   "id": "7a3f2e92-6ffb-4459-8bfd-a1430ce632e4",
+   "word": "साँकल",
+   "pronunciation": "saan-kal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दरवाज़े की ज़ंजीर/सिकड़ी",
+   "english": "a door-chain/latch",
+   "example": "जाते समय ताई दस बार खिड़की-दरवाज़ों की साँकलें टोहकर देखतीं।",
+   "memory_hook": "door latch।"
+  },
+  {
+   "id": "93754676-2b5a-436a-9179-bc8bb561ff3b",
+   "word": "टोह",
+   "pronunciation": "toh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "खोज, पता, देखभाल",
+   "english": "a search; checking",
+   "example": "चोर ने पहले घर की टोह ली।",
+   "memory_hook": "to scout/check।"
+  },
+  {
+   "id": "7417258f-d089-4891-9d39-b73ec76c4752",
+   "word": "देहरी",
+   "pronunciation": "deh-ree",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दरवाज़े की चौखट की नीचे की लकड़ी",
+   "english": "a threshold",
+   "example": "दिलासा देकर ताई देहरी से पाँव बाहर निकालतीं।",
+   "memory_hook": "घर की दहलीज़ — threshold।"
+  },
+  {
+   "id": "a6a9c7a1-8ca5-4d79-801b-97f62730d150",
+   "word": "मिजाज",
+   "pronunciation": "mi-zaaj",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "स्वभाव, तबीयत",
+   "english": "temperament; mood",
+   "example": "जगन मास्टर दूसरे मिजाज के आदमी थे।",
+   "memory_hook": "nature/mood।"
+  },
+  {
+   "id": "adb8a7f2-5b5d-4091-8a4e-a5c1606e4c3c",
+   "word": "प्रायश्चित",
+   "pronunciation": "praa-yash-chit",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पाप का मार्जन, पश्चाताप-कर्म",
+   "english": "atonement; penance",
+   "example": "पिंजरा खोलकर जगन मास्टर अपने पाप का प्रायश्चित करना चाहते थे।",
+   "memory_hook": "पाप धोने का कर्म।"
+  },
+  {
+   "id": "7fe83890-4a8e-467a-98f6-fb5933ba084c",
+   "word": "कौतूहलवश",
+   "pronunciation": "kau-too-hal-vash",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "उत्सुकता के कारण",
+   "english": "out of curiosity",
+   "example": "कौतूहलवश मिट्टू रोशनदान की ओर बढ़ा।",
+   "memory_hook": "कौतूहल (curiosity) + वश।"
+  },
+  {
+   "id": "f6df6ff0-2f2b-4865-9098-a4ffce426333",
+   "word": "मशगूल",
+   "pronunciation": "mash-gool",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "किसी काम में लीन/व्यस्त",
+   "english": "engrossed; busy",
+   "example": "मिट्टू अपने पंख तौलने में मशगूल रहा।",
+   "memory_hook": "उर्दू — absorbed।"
+  },
+  {
+   "id": "a731eb92-1be1-4d1c-85ea-4c80805cb614",
+   "word": "एवजी",
+   "pronunciation": "ev-jee",
+   "audio_url": "",
+   "pos": "संज्ञा/विशेषण",
+   "meaning": "बदले में काम करने वाला, स्थानापन्न",
+   "english": "a substitute; stand-in",
+   "example": "एवजी मिट्टू ने ताई को देखकर कोई हरकत न की।",
+   "memory_hook": "in-place-of — substitute।"
+  },
+  {
+   "id": "aa045915-a7b9-459f-b5bc-eadf48b63158",
+   "word": "अर्जन",
+   "pronunciation": "ar-jan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कमाना, संग्रह करना",
+   "english": "earning; acquisition",
+   "example": "पुण्य-अर्जन के लिए लोग कुंभ-स्नान जाते हैं।",
+   "memory_hook": "\"अर्जित\" से — to earn।"
+  },
+  {
+   "id": "411f4669-17c5-40e9-866c-dcdfcbe58ef9",
+   "word": "रोबीला",
+   "pronunciation": "ro-bee-laa",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "प्रभावशाली, रौबदार",
+   "english": "imposing; impressive",
+   "example": "ज़मींदार साहब का रोबीला चेहरा सबको याद था।",
+   "memory_hook": "रौब (awe) वाला।"
+  },
+  {
+   "id": "5947c237-67f7-47d9-91b0-bd009329aad6",
+   "word": "प्रसंग",
+   "pronunciation": "pra-sang",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "संदर्भ, प्रकरण",
+   "english": "context; an episode",
+   "example": "एक-एक चेहरा ताई को नए-नए प्रसंगों की याद दिला देता।",
+   "memory_hook": "context/topic।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "adea5645-dd18-45e3-b6ca-1ff819f0b394",
+   "question": "किस शब्द का अर्थ \"बदले में काम करने वाला, स्थानापन्न\" है?",
+   "options": [
+    "रोबीला",
+    "एवजी",
+    "निहाल",
+    "प्रसंग"
+   ],
+   "correct_index": 1,
+   "explanation": "एवजी = a substitute/stand-in।"
+  },
+  {
+   "id": "a1596b14-b80a-4347-9e46-eed06d64b48f",
+   "question": "\"प्रायश्चित\" का अर्थ है —",
+   "options": [
+    "बहुत बड़ा उत्सव",
+    "गहरी नींद",
+    "तेज़ दौड़",
+    "पाप का पश्चाताप-कर्म"
+   ],
+   "correct_index": 3,
+   "explanation": "प्रायश्चित = atonement/penance।"
+  },
+  {
+   "id": "35a16848-7ee1-416b-b27f-1d7a6bae6546",
+   "question": "\"तुनकमिजाज\" व्यक्ति कैसा होता है?",
+   "options": [
+    "छोटी बात पर नाराज़ होने वाला",
+    "हमेशा शांत और सहनशील",
+    "बहुत उदार और दानी",
+    "बहुत आलसी"
+   ],
+   "correct_index": 0,
+   "explanation": "तुनकमिजाज = short-tempered/touchy।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=164aa07e-9c6e-4b9d-a8fe-d60ae6bb0990 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: कहानी से जुड़े और शब्द।",
+ "cards": [
+  {
+   "id": "11d0dc8f-2f99-4620-b90c-418ca3f007b5",
+   "word": "धर्म-संकट",
+   "pronunciation": "dharm-san-kat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दुविधा, कठिन नैतिक निर्णय",
+   "english": "a moral dilemma",
+   "example": "मिट्टू को साथ ले जाएँ या नहीं — ताई धर्म-संकट में पड़ गईं।",
+   "memory_hook": "धर्म + संकट = duty-crisis।"
+  },
+  {
+   "id": "cf6d9fa8-e64e-41f0-a84c-f83ded0a91b8",
+   "word": "पशोपेश",
+   "pronunciation": "pa-sho-pesh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दुविधा, उहापोह",
+   "english": "indecision; quandary",
+   "example": "टिकट का पैसा तो था, पर सुरक्षा को लेकर ताई पशोपेश में थीं।",
+   "memory_hook": "फ़ारसी — back-and-forth doubt।"
+  },
+  {
+   "id": "c5f762f2-b769-4003-bc83-1ac5341777e6",
+   "word": "अनहोनी",
+   "pronunciation": "an-ho-nee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "न होने वाली/अप्रत्याशित घटना",
+   "english": "an unexpected mishap",
+   "example": "जगन मास्टर के घर वह अनहोनी हो गई।",
+   "memory_hook": "अन् + होनी = un-happening।"
+  },
+  {
+   "id": "65e5381b-19b9-4a79-872d-e1711f7eba03",
+   "word": "आशंका",
+   "pronunciation": "aa-shan-kaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "भय, संदेह",
+   "english": "apprehension; fear",
+   "example": "इस घटना ने गाँव के मन में गहरी आशंका को जन्म दे दिया।",
+   "memory_hook": "fear of what may come।"
+  },
+  {
+   "id": "bb5a73cd-b0e5-4d95-a047-fb3c918cd0b9",
+   "word": "यातना",
+   "pronunciation": "yaa-ta-naa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कष्ट, पीड़ा",
+   "english": "torment; suffering",
+   "example": "पिंजरे में बंद मिट्टू की यातना जगन मास्टर से सही न जाती।",
+   "memory_hook": "deep suffering।"
+  },
+  {
+   "id": "eb81a395-e346-4934-873a-8291a96973f7",
+   "word": "आदर्शवादी",
+   "pronunciation": "aa-darsh-vaa-dee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "ऊँचे सिद्धांतों पर चलने वाला",
+   "english": "idealistic",
+   "example": "आदर्शवादी जगन मास्टर के हाथों सभी तोते उड़ गए।",
+   "memory_hook": "आदर्श (ideal) + वादी।"
+  },
+  {
+   "id": "e900744b-b67d-494e-83d3-a2c03624c93f",
+   "word": "यथार्थ",
+   "pronunciation": "ya-thaarth",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वास्तविकता, सच",
+   "english": "reality",
+   "example": "आदर्श और यथार्थ के बीच का द्वंद्व इस कहानी की जान है।",
+   "memory_hook": "जैसा सचमुच है।"
+  },
+  {
+   "id": "a8241601-42ac-4582-8dd6-270243f34dd3",
+   "word": "संवादहीन",
+   "pronunciation": "san-vaad-heen",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बातचीत से रहित, मौन",
+   "english": "without dialogue; uncommunicative",
+   "example": "मिट्टू के जाने पर ताई का जीवन संवादहीन हो गया।",
+   "memory_hook": "संवाद + हीन = dialogue-less।"
+  },
+  {
+   "id": "2b2d5246-8df9-46fa-9277-84bd449c6255",
+   "word": "विसंगति",
+   "pronunciation": "vi-san-ga-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बेमेलपन, गड़बड़ी",
+   "english": "incongruity; anomaly",
+   "example": "कहानी जीवन की कई विसंगतियों को उजागर करती है।",
+   "memory_hook": "वि + संगति = mis-match।"
+  },
+  {
+   "id": "67da3118-c7c9-497d-9867-d85fcea64295",
+   "word": "अमराई",
+   "pronunciation": "am-raa-ee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आम का बग़ीचा",
+   "english": "a mango grove",
+   "example": "ताई का साथी न जाने किन अमराइयों में घूम रहा होगा।",
+   "memory_hook": "\"आम्र\" (आम) से — mango grove।"
+  },
+  {
+   "id": "83b1b137-523e-4890-9014-e7eba0cbfef4",
+   "word": "वैभव",
+   "pronunciation": "vai-bhav",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "समृद्धि, ठाठ-बाट",
+   "english": "splendour; affluence",
+   "example": "ताई ने बड़े घर के वैभव के दिन भी देखे थे।",
+   "memory_hook": "wealth/grandeur।"
+  },
+  {
+   "id": "23d8a124-021a-417b-be70-5f8c8aa38ccb",
+   "word": "ढोर",
+   "pronunciation": "dhor",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पालतू पशु, चौपाया",
+   "english": "cattle; livestock",
+   "example": "कभी बड़े घर में गाय-ढोर सब थे।",
+   "memory_hook": "cattle।"
+  },
+  {
+   "id": "d5258738-cc2a-491a-8ac0-efbc6c313e39",
+   "word": "सत्ता",
+   "pronunciation": "sat-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अधिकार, प्रभुत्व, अस्तित्व",
+   "english": "power; authority",
+   "example": "ज़मींदार साहब की सत्ता के बीते दिनों की गाथा ताई सुनातीं।",
+   "memory_hook": "power/existence।"
+  },
+  {
+   "id": "9c3b77e2-3732-4a68-8fd0-38db3747e960",
+   "word": "पौ फटना",
+   "pronunciation": "pau-phat-naa",
+   "audio_url": "",
+   "pos": "मुहावरा/क्रिया",
+   "meaning": "सवेरा होना",
+   "english": "daybreak",
+   "example": "पौ फटते ही पेड़ों में चिड़ियाँ चहचहाने लगतीं।",
+   "memory_hook": "dawn breaking।"
+  },
+  {
+   "id": "071bda85-39f0-4f27-8090-df40560f543d",
+   "word": "वियोग",
+   "pronunciation": "ve-yog",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "जुदाई, बिछोह",
+   "english": "separation",
+   "example": "मिट्टू के वियोग में ताई बेचैन रहतीं।",
+   "memory_hook": "parting।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=4d4af8c9-8c43-4798-ac60-8fb3898e2d1c ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "2536398b-066e-4be8-9341-0fd5bc705c24",
+   "question": "\"संवादहीन\" शब्द का अर्थ है —",
+   "options": [
+    "बहुत ही बातूनी और मुखर",
+    "सुंदर और सजीला",
+    "बातचीत से रहित, मौन",
+    "क्रोधी"
+   ],
+   "correct_index": 2,
+   "explanation": "संवादहीन = बातचीत से रहित (uncommunicative)।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "566c50a3-ec0e-45a1-a6eb-99e86df98e26",
+   "question": "\"पलायन\" का सबसे सही अर्थ है —",
+   "options": [
+    "घर/स्थान छोड़कर चले जाना",
+    "किसी नई जगह जाकर बस जाना",
+    "त्योहार मनाना",
+    "धन कमाना"
+   ],
+   "correct_index": 0,
+   "explanation": "पलायन = migration/flight, घर छोड़कर जाना।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "5403958d-b7af-401d-93dd-985cc5d7988d",
+   "question": "\"धर्म-संकट\" किस स्थिति को कहते हैं?",
+   "options": [
+    "किसी धर्म से जुड़ा कोई बड़ा त्योहार",
+    "पूजा-पाठ",
+    "धन की हानि",
+    "दुविधा — कठिन नैतिक निर्णय की स्थिति"
+   ],
+   "correct_index": 3,
+   "explanation": "धर्म-संकट = a moral dilemma, करूँ-न-करूँ की उलझन।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "पात्र और भाव-यात्रा"  (slug: ch3-patra-bhav)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=b07fbd28-52e2-43c8-acc2-548c89eac2bf ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/b07fbd28-52e2-43c8-acc2-548c89eac2bf_gen.webp",
+ "alt": "कहानी के पात्र",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a quiet composition of an old woman, a green parrot, and a thoughtful schoolteacher, suggested as faded portraits on a dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=7997b57d-aa97-4941-90e4-8ba2f2064cfb ---
+{
+ "markdown": "कहानी के पात्रों को पहचानिए और देखिए कि ताई का **भाव** कैसे बदलता है — अपनापन से उल्लास, फिर आशंका, और अंत में गहरा अकेलापन।"
+}
+
+--- block #2 [character_map] id=c3f721af-4f62-4022-b0f8-14197e640052 ---
+{
+ "title": "संवादहीन के पात्र",
+ "characters": [
+  {
+   "id": "tai",
+   "name": "ताई",
+   "role": "मुख्य पात्र",
+   "bio": "अकेली वृद्ध स्त्री, जिसके बच्चे शहर बस गए। मिट्टू ही उनका सहारा और संवाद का केंद्र है।",
+   "traits": [
+    "ममतामयी",
+    "अकेली",
+    "तेज़ स्वभाव"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": "Watercolour portrait of an elderly woman in a sari, dark ground."
+  },
+  {
+   "id": "mittu",
+   "name": "मिट्टू",
+   "role": "मुख्य पात्र",
+   "bio": "ताई का प्यारा पहाड़ी तोता — कुशाग्र, बातूनी; ताई के अकेलेपन का साथी और ममता का केंद्र।",
+   "traits": [
+    "कुशाग्र",
+    "बातूनी",
+    "स्नेही"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": "Watercolour portrait of a green hill-parrot, dark ground."
+  },
+  {
+   "id": "jagan",
+   "name": "जगन मास्टर",
+   "role": "सहायक पात्र",
+   "bio": "स्वतंत्र, आदर्शवादी विचारों के अध्यापक; किसी को क़ैद में नहीं देख सकते — मिट्टू को आज़ाद कर बैठते हैं।",
+   "traits": [
+    "आदर्शवादी",
+    "संवेदनशील",
+    "धुन का पक्का"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": ""
+  },
+  {
+   "id": "masterain",
+   "name": "मास्टराइन",
+   "role": "सहायक पात्र",
+   "bio": "जगन मास्टर की पत्नी (नाम नहीं दिया गया); ताई के लौटने तक मिट्टू को सँभालने को राज़ी होती हैं।",
+   "traits": [
+    "दयालु",
+    "सहयोगी"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": ""
+  },
+  {
+   "id": "ganpat",
+   "name": "गनपत",
+   "role": "सहायक पात्र",
+   "bio": "जो ताई के लिए मिट्टू लाया; बाद में एवजी तोता लाने का सुझाव भी देता है।",
+   "traits": [
+    "सहायक",
+    "व्यावहारिक"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": ""
+  }
+ ],
+ "relationships": [
+  {
+   "from": "tai",
+   "to": "mittu",
+   "label": "माँ-जैसा स्नेह"
+  },
+  {
+   "from": "mittu",
+   "to": "tai",
+   "label": "सहारा व दिलासा"
+  },
+  {
+   "from": "jagan",
+   "to": "mittu",
+   "label": "आज़ादी देने वाला"
+  },
+  {
+   "from": "masterain",
+   "to": "mittu",
+   "label": "देखभाल"
+  },
+  {
+   "from": "ganpat",
+   "to": "tai",
+   "label": "सहायक"
+  }
+ ]
+}
+
+--- block #3 [heading] id=fd591162-f36f-4acd-b7af-bef2d22aebc8 ---
+{
+ "text": "भाव-यात्रा — ताई का मन",
+ "level": 2
+}
+
+--- block #4 [tone_meter] id=800eb88f-9069-446e-a577-defb1fc40efe ---
+{
+ "segments": [
+  {
+   "id": "347ee95a-b1bd-4dd1-b42c-cd80b82d9280",
+   "excerpt": "ताई की सारी ममता मिट्टू पर बरस पड़ी।",
+   "emotion": "ममता",
+   "intensity": 3,
+   "note": "मिट्टू के आने से जीवन में स्नेह लौटता है।"
+  },
+  {
+   "id": "d142412f-89b8-49c1-a683-fd8d5069dc69",
+   "excerpt": "मिट्टू! अब कैसे कटेगी? — कटेगी! कटेगी!!",
+   "emotion": "आश्वस्ति",
+   "intensity": 4,
+   "note": "मिट्टू का दिलासा — सुख और भरोसे का चरम।"
+  },
+  {
+   "id": "305291e7-020e-44a4-8409-eb6153c6772d",
+   "excerpt": "विदा के दिन ताई की आँसुओं की धार रुके न रुकती।",
+   "emotion": "वियोग",
+   "intensity": 4,
+   "note": "कुंभ जाते समय मिट्टू से बिछड़ने का दुख।"
+  },
+  {
+   "id": "74855c16-508d-48ec-bf65-e25e68f8e8ad",
+   "excerpt": "इस अनहोनी घटना ने एक गहरी आशंका को जन्म दे दिया।",
+   "emotion": "आशंका",
+   "intensity": 4,
+   "note": "मिट्टू के उड़ने पर गाँव में भय छा जाता है।"
+  },
+  {
+   "id": "4582bd31-3511-44d0-a332-907313872ff5",
+   "excerpt": "एवजी मिट्टू ने उन्हें देखकर कोई हरकत नहीं की।",
+   "emotion": "विषाद",
+   "intensity": 5,
+   "note": "पहचान न मिलने पर ताई का गहरा सदमा।"
+  },
+  {
+   "id": "f98c42d9-a836-42ef-bade-79782d5d3892",
+   "excerpt": "उनके सूनेपन का साथी न जाने किन अमराइयों में घूम रहा होगा।",
+   "emotion": "सूनापन",
+   "intensity": 5,
+   "note": "अंत — पूर्ण संवादहीनता और अकेलापन।"
+  }
+ ]
+}
+
+--- block #5 [comparison_card] id=d7796fb6-2d30-404f-aeb5-cccb31804243 ---
+{
+ "title": "ताई का संसार — पहले और अब",
+ "columns": [
+  {
+   "heading": "पहले (मिट्टू के साथ)",
+   "color": "#34d399",
+   "points": [
+    "दिन-भर प्रेम-भरा संवाद",
+    "सुबह \"हर हर गंगे\" से जागना",
+    "ममता बाँटने का सहारा",
+    "सूना घर रौनक में बदला"
+   ]
+  },
+  {
+   "heading": "अब (एवजी तोते के साथ)",
+   "color": "#f87171",
+   "points": [
+    "कोई पहचान नहीं, चुप्पी",
+    "गुहार का कोई उत्तर नहीं",
+    "अधूरी, धोखे की भरपाई",
+    "सच्चा अकेलापन — संवादहीन"
+   ]
+  }
+ ]
+}
+
+--- block #6 [reasoning_prompt] id=ec9b5382-17ab-429c-973c-1c162ae91f39 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "ताई का तेज़ (कभी-कभी चिड़चिड़ा) स्वभाव भी कहानी में दिखाया गया है — वे मिट्टू को \"मर जा!\" तक कह देती हैं। यह \"खीझ\" उनके मिट्टू-प्रेम के विरुद्ध नहीं जाती, बल्कि उसे और सच्चा बनाती है। कैसे?",
+ "reveal": "सच्चे, गहरे रिश्तों में नोक-झोंक और खीझ स्वाभाविक है — जैसे माँ-बच्चे में। ताई का \"मर जा!\" गुस्सा नहीं, अपनेपन की वह छूट है जो केवल बहुत क़रीबी से ली जाती है; अगले ही पल \"मान-मनौवल\" होकर प्रेम लौट आता है। यही दिखाता है कि उनका रिश्ता बनावटी नहीं, बिलकुल असली था — और इसीलिए उसका छिनना इतना गहरा दुख देता है।",
+ "difficulty_level": 4
+}
+
+--- block #7 [inline_quiz] id=ddb7bc04-2829-4611-ab20-80e1cd8405cc ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "679b1405-dfd6-464a-a823-671b2b9ad302",
+   "question": "कहानी में मिट्टू को कौन लाया था और बाद में एवजी तोते का सुझाव किसने दिया?",
+   "options": [
+    "मिट्टू जगन लाया, सुझाव ताई का",
+    "दोनों ही काम गनपत ने किए",
+    "मिट्टू मास्टराइन लाई",
+    "मिट्टू बेटे लाए"
+   ],
+   "correct_index": 1,
+   "explanation": "गनपत ही मिट्टू लाया था और बाद में एवजी तोते का सुझाव भी उसी ने दिया।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "00bf9747-65ff-4ee5-8d3e-04328c36fc2d",
+   "question": "ताई की भाव-यात्रा का सही क्रम कौन-सा है?",
+   "options": [
+    "सूनापन → ममता → उल्लास",
+    "ममता → वियोग → आशंका → सूनापन",
+    "आशंका → ममता → उल्लास → भय",
+    "विषाद → उल्लास → ममता"
+   ],
+   "correct_index": 1,
+   "explanation": "मिट्टू के साथ ममता-सुख, फिर विदा का वियोग, उड़ने पर आशंका, और अंत में गहरा सूनापन।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "fdfa622e-7925-4fdf-8ff1-136562b801cd",
+   "question": "ताई का \"मर जा!\" कहकर खीझना उनके मिट्टू-प्रेम को झुठलाता नहीं, बल्कि क्यों और सच्चा बनाता है?",
+   "options": [
+    "क्योंकि वे मिट्टू से नफ़रत करती थीं",
+    "क्योंकि मिट्टू बुरा था",
+    "क्योंकि वे भुलक्कड़ थीं",
+    "गहरे रिश्तों में नोक-झोंक स्वाभाविक होती है"
+   ],
+   "correct_index": 3,
+   "explanation": "अपनेपन की छूट से ही ऐसी खीझ निकलती है; अगले पल प्रेम लौट आता है — रिश्ता असली है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "कहानी का सौंदर्य"  (slug: ch3-kahani-ka-saundarya)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=eab02f28-3549-44b0-b919-705611112791 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/eab02f28-3549-44b0-b919-705611112791_gen.webp",
+ "alt": "कहानी की भाषा का सौंदर्य",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — abstract storytelling motif: a quill and flowing Devanagari turning into a parrot and a village scene, glowing on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=44f5c346-8d5e-4001-baec-39237a195af3 ---
+{
+ "markdown": "शेखर जोशी की भाषा में चित्रात्मकता, संवादात्मकता, पुनरुक्ति और लोकधर्मी सहजता है। नीचे किसी विशेषता पर टैप करें — उसके उदाहरण रेखांकित हो जाएँगे।"
+}
+
+--- block #2 [literary_devices_highlighter] id=9c0faa76-afad-4a19-a8d6-824156973d73 ---
+{
+ "lang": "hindi",
+ "passage": "मिट्टू एक डाल से दूसरी डाल पर, एक पेड़ से दूसरे पेड़ पर अपने पंख तौलने में मशगूल रहे। \"राम-राम कहो, सीताराम कहो।\" \"कटेगी! कटेगी!! कटेगी!!!\" भगवान! कैसे नैया पार लगेगी?",
+ "devices": [
+  {
+   "id": "519a087c-b7b0-46d3-a8e8-38a84ef1b177",
+   "device": "imagery",
+   "matches": [
+    {
+     "text": "मिट्टू एक डाल से दूसरी डाल पर, एक पेड़ से दूसरे पेड़ पर अपने पंख तौलने में मशगूल रहे",
+     "explanation": "शब्दों से आँखों के सामने उड़ते, आज़ाद मिट्टू का जीवंत दृश्य खिंच जाता है — चित्रात्मकता।"
+    }
+   ]
+  },
+  {
+   "id": "aef1a56c-a847-4d93-a8ca-eacc74c25333",
+   "device": "samvadatmakta",
+   "matches": [
+    {
+     "text": "\"राम-राम कहो, सीताराम कहो।\"",
+     "explanation": "पात्रों की बातचीत/संवाद से कथा आगे बढ़ती है — संवादात्मकता।"
+    }
+   ]
+  },
+  {
+   "id": "5f18a3dc-f3cb-48f8-bc54-0b69b7a8a73b",
+   "device": "hyperbole",
+   "matches": [
+    {
+     "text": "कैसे नैया पार लगेगी",
+     "explanation": "जीवन की कठिनाई को \"नैया पार लगना\" जैसे बड़े रूपक से कहना — भाव की तीव्रता।"
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [table] id=f315f262-efe7-4a88-af1b-a5ca4d26397b ---
+{
+ "caption": "कहानी का सौंदर्य — एक नज़र में",
+ "headers": [
+  "विशेषता",
+  "अर्थ",
+  "उदाहरण"
+ ],
+ "rows": [
+  [
+   "चित्रात्मकता",
+   "शब्दों से जीवंत दृश्य बनाना",
+   "मिट्टू एक डाल से दूसरी डाल पर पंख तौलने में मशगूल।"
+  ],
+  [
+   "संवादात्मकता",
+   "बातचीत से कथा आगे बढ़ना",
+   "\"राम-राम कहो, सीताराम कहो।\""
+  ],
+  [
+   "पुनरुक्ति",
+   "शब्द दोहराकर भाव की तीव्रता",
+   "\"कटेगी! कटेगी!! कटेगी!!!\""
+  ],
+  [
+   "अतिशयोक्ति",
+   "बढ़ा-चढ़ाकर कहना",
+   "रेलगाड़ी में उसका भी टिकट लगेगा।"
+  ],
+  [
+   "लोकधर्मी भाषा",
+   "ग्रामीण, बोल-चाल की सहज भाषा",
+   "भगवान! कैसे नैया पार लगेगी?"
+  ],
+  [
+   "प्रश्नोत्तर शैली",
+   "पात्रों का प्रश्न पूछना",
+   "\"मिट्टू! अब कैसे कटेगी?\""
+  ]
+ ]
+}
+
+--- block #4 [heading] id=bc9d1d84-9b6d-4f12-be21-dc72c9bf420b ---
+{
+ "text": "कहानी का अंत — किस श्रेणी में?",
+ "level": 2
+}
+
+--- block #5 [worked_example] id=66fe60d2-a009-49e7-b3a6-e9a638fd98c8 ---
+{
+ "label": "\"संवादहीन\" का अंत किस प्रकार का है?",
+ "variant": "ncert_intext",
+ "problem": "कहानी का अंत कई प्रकार का हो सकता है — सुखांत, दुखांत, मुक्त अंत, अप्रत्याशित, यथार्थवादी, प्रेरणात्मक, व्यंग्यात्मक। \"संवादहीन\" का अंत किस श्रेणी में आता है? सोचिए, फिर उत्तर देखिए।",
+ "solution": "\"संवादहीन\" का अंत मुख्यतः **दुखांत** और **यथार्थवादी** है — ताई अपने साथी को खोकर सचमुच अकेली रह जाती हैं, और यह दुख असली जीवन जैसा सच्चा लगता है।\n\nइसे कुछ हद तक **मुक्त अंत** भी कह सकते हैं — कहानी हमें सोचने के लिए छोड़ देती है: क्या ताई कभी जान पाएँगी? क्या नक़ली विकल्प कभी असली संवाद की भरपाई कर सकता है? लेखक उत्तर नहीं देता — पाठक को सोचने देता है।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #6 [inline_quiz] id=87154199-76a2-42a6-9b4a-73a698c6752f ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f8261ca4-887d-496b-84b9-ce6f9a0d79ea",
+   "question": "\"कटेगी! कटेगी!! कटेगी!!!\" में कौन-सी विशेषता है?",
+   "options": [
+    "पुनरुक्ति — शब्द दोहराकर भाव की तीव्रता",
+    "सुंदर उपमा",
+    "एक ही वर्ण की आवृत्ति, अनुप्रास",
+    "पंक्ति की तुक"
+   ],
+   "correct_index": 0,
+   "explanation": "एक ही शब्द को बार-बार दोहराना पुनरुक्ति है, जो भाव को तीव्र करती है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "04b76441-d3fe-4984-9709-19d1616b7aeb",
+   "question": "\"भगवान! कैसे नैया पार लगेगी?\" — यह किस विशेषता का उदाहरण है?",
+   "options": [
+    "बहुत कठिन तत्सम-प्रधान भाषा",
+    "विदेशी शब्दावली",
+    "लोकधर्मी (बोल-चाल की) भाषा",
+    "गणितीय भाषा"
+   ],
+   "correct_index": 2,
+   "explanation": "गाँव की सहज, बोल-चाल की भाषा को लोकधर्मी भाषा कहते हैं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "9d0050df-a845-4ad8-9e65-0238db2ab2e5",
+   "question": "\"संवादहीन\" का अंत मुख्यतः किस श्रेणी में आता है?",
+   "options": [
+    "हँसी-ख़ुशी का सुखांत",
+    "रोमांचक अप्रत्याशित विजय",
+    "दुखांत व यथार्थवादी",
+    "प्रेरणात्मक जीत"
+   ],
+   "correct_index": 2,
+   "explanation": "ताई अकेली रह जाती हैं और यह दुख जीवन जैसा सच्चा लगता है — दुखांत व यथार्थवादी।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "विषयों से संवाद"  (slug: ch3-vishayon-se-samvad)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=5953e407-788c-4e71-92ba-10ff5739a4c1 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/5953e407-788c-4e71-92ba-10ff5739a4c1_gen.webp",
+ "alt": "अकेलापन और पलायन",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an empty village house at dusk with a distant city skyline glowing far away, one lit window, suggesting migration and loneliness. Dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=b5ff9e2f-c354-405f-bd11-a7142d0b4ca9 ---
+{
+ "markdown": "यह कहानी आज के जीवन की कई सच्चाइयों को छूती है — अकेलापन, पलायन, स्त्री की अनदेखी पहचान, और तीर्थ-परंपरा।"
+}
+
+--- block #2 [cultural_context_card] id=032f6e13-da4a-4f27-95bb-c913652bcbea ---
+{
+ "reference": "कुंभ-स्नान",
+ "category": "tradition",
+ "short_desc": "प्रयागराज आदि में लगने वाला विशाल धार्मिक स्नान-मेला।",
+ "detail": "गंगा-यमुना-सरस्वती के संगम (प्रयागराज) पर लगने वाले **कुंभ** में करोड़ों श्रद्धालु पुण्य-अर्जन के लिए स्नान करने जाते हैं। कहानी में ताई इसी कुंभ-स्नान के लिए जाती हैं — और इसी यात्रा के दौरान वह \"अनहोनी\" घटती है जो उनके जीवन को बदल देती है।",
+ "image_url": ""
+}
+
+--- block #3 [cultural_context_card] id=117c1bbe-021d-4ab6-b771-a17484c53dc4 ---
+{
+ "reference": "मास्टराइन — नाम के बिना पहचान",
+ "category": "concept",
+ "short_desc": "जगन मास्टर की पत्नी का कहानी में कोई नाम नहीं — बस \"मास्टराइन\"।",
+ "detail": "कहानी में एक स्त्री-पात्र का अपना नाम तक नहीं — वह केवल **\"जगन मास्टर की घरवाली / मास्टराइन\"** है। यह हमारे समाज की एक बड़ी सच्चाई की ओर इशारा करता है: स्त्री की पहचान अक्सर उसके पति/परिवार से जोड़कर ही देखी जाती है, उसका अपना नाम पीछे छूट जाता है।",
+ "image_url": ""
+}
+
+--- block #4 [theme_explorer] id=ce00de4d-6891-4c59-9c03-f68ae78f35fd ---
+{
+ "intro": "कहानी के मुख्य भाव — हर कार्ड पर टैप कीजिए।",
+ "themes": [
+  {
+   "id": "5673ec79-5fde-4683-86d1-98dad46aae0d",
+   "title": "अकेलापन और संवादहीनता",
+   "description": "भरे-पूरे जीवन के बाद का अकेलापन सबसे गहरा घाव है; इंसान को सबसे ज़्यादा \"बात करने वाले\" की ज़रूरत है।",
+   "evidence": [
+    "\"अब ये ही दो प्राणी... एक-दूसरे को सहारा देने के लिए रह गए थे।\"",
+    "\"उनके सूनेपन का साथी न जाने किन अमराइयों में घूम रहा होगा।\""
+   ],
+   "reflection_prompt": "अपने आस-पास किसी अकेले व्यक्ति से आप किस तरह \"संवाद\" जोड़ सकते हैं? एक छोटा-सा कदम सोचिए।"
+  },
+  {
+   "id": "a61be316-c460-4b71-b34f-db7b4b941ef8",
+   "title": "पलायन — गाँव का सूनापन",
+   "description": "रोज़गार के लिए युवाओं का शहर जाना गाँवों और बुज़ुर्गों को अकेला कर देता है।",
+   "evidence": [
+    "\"बहू-बेटे गाँव का मोह छोड़कर शहरों के होकर रह गए।\""
+   ],
+   "reflection_prompt": "आपके गाँव/मोहल्ले में क्या लोग रोज़गार के लिए दूर जाते हैं? इसका परिवारों पर क्या असर पड़ता है?"
+  },
+  {
+   "id": "54ad4f53-0043-412f-a4d4-38ef535b5d23",
+   "title": "आदर्श बनाम यथार्थ",
+   "description": "ऊँचे आदर्श (आज़ादी) का असली जीवन में नतीजा हमेशा अच्छा नहीं होता; दूसरों पर असर भी सोचना चाहिए।",
+   "evidence": [
+    "\"आदर्शवादी जगन मास्टर के हाथों सभी तोते उड़ गए।\""
+   ],
+   "reflection_prompt": "कोई ऐसा मौक़ा सोचिए जब किसी की \"अच्छी नीयत\" का नतीजा उलटा निकला हो। उससे क्या सीख मिली?"
+  }
+ ]
+}
+
+--- block #5 [callout] id=88299faf-3348-4bc7-8709-30650958dc8f ---
+{
+ "variant": "literature_in_life",
+ "title": "कहानी और आपका जीवन",
+ "markdown": "घर के किसी बुज़ुर्ग से आज थोड़ी देर सिर्फ़ \"बात\" कीजिए — कोई काम नहीं, बस संवाद। ताई की कहानी याद दिलाती है कि अपनों के लिए हमारी आवाज़, हमारा साथ ही सबसे बड़ा सहारा है।"
+}
+
+--- block #6 [reasoning_prompt] id=ec3a3675-9782-470f-a66a-dff560dede0d ---
+{
+ "reasoning_type": "logical",
+ "prompt": "कहानी में जगन मास्टर की पत्नी का कोई नाम नहीं — वह केवल \"मास्टराइन\" है। लेखक ने ऐसा क्यों किया होगा, और यह किस सामाजिक सच्चाई की ओर इशारा करता है?",
+ "reveal": "यह जान-बूझकर किया गया लगता है — ताकि पाठक का ध्यान उस सच्चाई पर जाए कि समाज में स्त्री की अपनी स्वतंत्र पहचान अक्सर मिटा दी जाती है; उसे \"किसी की पत्नी/बहू/माँ\" के रूप में ही जाना जाता है। नाम न देकर लेखक चुपचाप यह सवाल उठाते हैं कि क्या स्त्री की अपनी पहचान का कोई मूल्य नहीं?",
+ "difficulty_level": 4
+}
+
+--- block #7 [inline_quiz] id=725efb1b-d79c-45cd-8738-a373b2106f47 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f88cdb25-a871-4848-bef7-e40d58caaf8a",
+   "question": "ताई किस धार्मिक आयोजन के लिए प्रयागराज जाती हैं?",
+   "options": [
+    "कुंभ-स्नान",
+    "गाँव का छोटा मेला",
+    "किसी की शादी",
+    "फ़सल का त्योहार"
+   ],
+   "correct_index": 0,
+   "explanation": "ताई पुण्य-अर्जन के लिए कुंभ-स्नान हेतु प्रयागराज जाती हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "f6050e8c-8167-4ff1-94d3-d746005127bb",
+   "question": "जगन मास्टर की पत्नी को कहानी में किस नाम से जाना जाता है?",
+   "options": [
+    "उसका नाम सुशीला बताया गया है",
+    "गंगा",
+    "कमला",
+    "सिर्फ़ \"मास्टराइन\" — अपना नाम नहीं"
+   ],
+   "correct_index": 3,
+   "explanation": "उसका अपना नाम नहीं दिया गया — केवल \"जगन मास्टर की घरवाली/मास्टराइन\"।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "70637838-5119-4fe8-92a9-f45925a7b21f",
+   "question": "\"मास्टराइन\" का नाम न देकर लेखक किस सामाजिक सच्चाई की ओर इशारा करते हैं?",
+   "options": [
+    "उस पुराने ज़माने में स्त्रियों के अपने नाम ही नहीं होते थे",
+    "स्त्री की पहचान अक्सर पति/परिवार से ही जुड़ी रह जाती है",
+    "नाम याद रखना कठिन है",
+    "मास्टराइन महत्वहीन थी"
+   ],
+   "correct_index": 1,
+   "explanation": "नाम न देकर लेखक यह सवाल उठाते हैं कि स्त्री की अपनी स्वतंत्र पहचान क्यों मिट जाती है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 9 — "सृजन और व्याकरण"  (slug: ch3-srijan-vyakaran)
+published=false blocks=10 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=0d54b333-10b2-4366-b346-3f39ebfbddc6 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/0d54b333-10b2-4366-b346-3f39ebfbddc6_gen.webp",
+ "alt": "रचना और वाक्य-रचना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a \"lost parrot\" poster pinned to a tree, a quill and notebook nearby, glowing on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=441225f1-800d-4347-8264-2f56ee645484 ---
+{
+ "markdown": "अब आपकी बारी। पहले एक \"खोया-पाया\" विज्ञापन लिखिए, फिर **वाक्य के भेद** (अर्थ के आधार पर) और मुहावरों का अभ्यास कीजिए।"
+}
+
+--- block #2 [writing_scaffold] id=d80c14b8-6936-4a53-9c94-2dc53457bfb0 ---
+{
+ "task": "कल्पना कीजिए कि जगन मास्टर ने मिट्टू की खोज के लिए एक \"खोया-पाया\" विज्ञापन छपवाया है। अपनी कल्पना से वह विज्ञापन बनाइए।",
+ "format": "notice",
+ "model_parts": [
+  {
+   "id": "a5c2343c-0fee-4f6c-a0f2-322bae355cd8",
+   "label": "शीर्षक",
+   "text": "खोया — प्यारा पहाड़ी तोता \"मिट्टू\"",
+   "annotation": "विज्ञापन का शीर्षक बड़ा और स्पष्ट हो — एक नज़र में बात समझ आ जाए।"
+  },
+  {
+   "id": "0ccfef8f-2225-4b30-8362-7b9310c6448e",
+   "label": "विवरण",
+   "text": "हरे रंग का पहाड़ी तोता, लाल चोंच; \"राम-राम कहो\", \"हर हर गंगे\" बोलता है। दिनांक — गत बुधवार को जगन मास्टर के घर (गाँव — रामपुर) से रोशनदान से उड़ गया।",
+   "annotation": "पहचान की ख़ास बातें (रंग, बोली, कब-कहाँ से खोया) ज़रूर लिखिए — तभी कोई पहचान पाएगा।"
+  },
+  {
+   "id": "247f0977-3458-4144-9582-e6a1cd24373c",
+   "label": "संपर्क व पुरस्कार",
+   "text": "जो भी इसकी सही सूचना देगा या इसे लौटाएगा, उसे उचित पुरस्कार दिया जाएगा। संपर्क — जगन मास्टर, रामपुर।",
+   "annotation": "अंत में संपर्क-सूचना और पुरस्कार का उल्लेख कीजिए — इससे लोग मदद को प्रेरित होते हैं।"
+  }
+ ],
+ "tips": [
+  "शीर्षक स्पष्ट रखिए।",
+  "पहचान की ख़ास बातें दीजिए।",
+  "संपर्क-सूचना ज़रूर दीजिए।"
+ ]
+}
+
+--- block #3 [heading] id=861f9ec8-0a28-4164-9573-adcd33d09dbf ---
+{
+ "text": "वाक्य के भेद — अर्थ के आधार पर",
+ "level": 2
+}
+
+--- block #4 [text] id=2aa3bb3a-2d9e-4029-bfb6-2d4714c8e10f ---
+{
+ "markdown": "अर्थ के आधार पर वाक्य के आठ भेद होते हैं। नीचे तालिका देखिए, फिर पहचानने का अभ्यास कीजिए।"
+}
+
+--- block #5 [table] id=15b46ea3-14dd-4a41-8d62-0d5baea64197 ---
+{
+ "caption": "वाक्य के आठ भेद (अर्थ के आधार पर)",
+ "headers": [
+  "भेद",
+  "पहचान",
+  "उदाहरण"
+ ],
+ "rows": [
+  [
+   "विधानवाचक",
+   "कोई बात बताने वाला",
+   "जगन मास्टर ने पिंजरे का दरवाज़ा खोल दिया।"
+  ],
+  [
+   "निषेधवाचक",
+   "न होने/मना करने का भाव",
+   "मिट्टू ने कोई हरकत नहीं की।"
+  ],
+  [
+   "प्रश्नवाचक",
+   "कुछ पूछने वाला",
+   "मिट्टू! अब कैसे कटेगी?"
+  ],
+  [
+   "विस्मयादिबोधक",
+   "आश्चर्य/हर्ष/दुख प्रकट करने वाला",
+   "ये गए और ये गए! वो गए!!"
+  ],
+  [
+   "आज्ञावाचक",
+   "आदेश/आग्रह का भाव",
+   "राम-राम कहो, सीताराम कहो।"
+  ],
+  [
+   "इच्छावाचक",
+   "आशा/इच्छा/आशीर्वाद",
+   "जीते रहो बेटा, जुग-जुग जिओ!"
+  ],
+  [
+   "संदेहवाचक",
+   "शंका/अनिश्चय",
+   "न जाने किन अमराइयों में घूम रहा होगा।"
+  ],
+  [
+   "संकेतवाचक",
+   "एक बात दूसरी पर निर्भर",
+   "जब खेती-बाड़ी नहीं, तो नौकर-चाकर किस दम पर टिकते!"
+  ]
+ ]
+}
+
+--- block #6 [apply_express] id=c4c236e3-f5e5-4ed7-b0f0-bf61ede88c20 ---
+{
+ "title": "व्याकरण व्यायामशाला — वाक्य के भेद, शब्द-युग्म",
+ "intro": "पहचानने और बनाने का अभ्यास कीजिए।",
+ "chapter_number": 3,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h3-gr-01",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "\"मिट्टू! अब कैसे कटेगी?\" — यह कौन-सा वाक्य है?",
+   "options": [
+    "प्रश्नवाचक वाक्य",
+    "विधानवाचक वाक्य",
+    "आज्ञावाचक वाक्य"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "सही — इसमें कुछ पूछा जा रहा है।",
+    "ग़लत — विधानवाचक कोई बात बताता है।",
+    "ग़लत — आज्ञावाचक में आदेश होता है।"
+   ]
+  },
+  {
+   "id": "h3-gr-02",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "prompt": "\"जीते रहो बेटा, जुग-जुग जिओ!\" — यह किस भेद का वाक्य है?",
+   "options": [
+    "प्रश्नवाचक वाक्य",
+    "निषेधवाचक वाक्य",
+    "इच्छावाचक वाक्य"
+   ],
+   "correct_index": 2,
+   "option_reasons": [
+    "ग़लत — कोई प्रश्न नहीं।",
+    "ग़लत — कोई निषेध नहीं।",
+    "सही — इसमें आशीर्वाद/इच्छा प्रकट होती है।"
+   ]
+  },
+  {
+   "id": "h3-gr-03",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "prompt": "\"मिट्टू ने कोई हरकत नहीं की।\" — यह कौन-सा वाक्य है?",
+   "options": [
+    "विधानवाचक वाक्य",
+    "विस्मयादिबोधक वाक्य",
+    "निषेधवाचक वाक्य"
+   ],
+   "correct_index": 2,
+   "option_reasons": [
+    "ग़लत — यहाँ निषेध है।",
+    "ग़लत — कोई विस्मय/आश्चर्य नहीं।",
+    "सही — \"नहीं की\" से न होने का भाव।"
+   ]
+  },
+  {
+   "id": "h3-gr-04",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "मिट्टू उड़ गया।",
+   "instruction": "इस विधानवाचक वाक्य को प्रश्नवाचक वाक्य में बदलिए।",
+   "answers": [
+    "क्या मिट्टू उड़ गया?",
+    "मिट्टू उड़ गया क्या?"
+   ],
+   "hint": "\"क्या\" जोड़िए और प्रश्नचिह्न लगाइए।",
+   "rule": "विधानवाचक → प्रश्नवाचक: आरंभ में \"क्या\" + अंत में \"?\"।"
+  },
+  {
+   "id": "h3-gr-05",
+   "kind": "fill_blank",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "शब्द-युग्म पूरा कीजिए (विपरीतार्थक) — \"दिन-______\"",
+   "answers": [
+    [
+     "रात"
+    ]
+   ],
+   "hint": "दिन का उलटा।",
+   "explanation": "विपरीतार्थक शब्द-युग्म — दिन-रात।"
+  },
+  {
+   "id": "h3-gr-06",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "source": "वक्त",
+   "instruction": "इस शब्द से एक शब्द-युग्म बनाइए (पाठ से)।",
+   "answers": [
+    "वक्त-बेवक्त"
+   ],
+   "rule": "पाठ में आया शब्द-युग्म — \"वक्त-बेवक्त\" (समय-असमय)।"
+  },
+  {
+   "id": "h3-gr-07",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "अपने मुँह मियाँ मिट्ठू बनना",
+   "instruction": "इस मुहावरे (जिसमें \"मिट्ठू/तोता\" है) का प्रयोग करते हुए वाक्य बनाइए।",
+   "rubric": [
+    "मुहावरे का प्रयोग किया",
+    "अर्थ सही (अपनी ही तारीफ़ करना)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "हर बात में अपनी ही तारीफ़ करने वाला अपने मुँह मियाँ मिट्ठू बनता रहता है।",
+   "min_words": 7
+  }
+ ]
+}
+
+--- block #7 [heading] id=85d243cc-2ec3-4ca5-913f-3fbd396d863d ---
+{
+ "text": "भाषा संगम — \"तोता\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #8 [table] id=60bee090-5031-4ed5-b0bd-54827171d91d ---
+{
+ "caption": "\"तोता\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "तोता"
+  ],
+  [
+   "संस्कृत",
+   "शुकः"
+  ],
+  [
+   "पंजाबी",
+   "तोता"
+  ],
+  [
+   "मराठी",
+   "पोपट"
+  ],
+  [
+   "गुजराती",
+   "પોપટ (पोपट)"
+  ],
+  [
+   "नेपाली",
+   "सुगा"
+  ],
+  [
+   "बांग्ला",
+   "টিয়া (टिया)"
+  ],
+  [
+   "ओडिआ",
+   "शुक"
+  ],
+  [
+   "तेलुगु",
+   "చిలుక (चिलुक)"
+  ],
+  [
+   "तमिल",
+   "கிளி (किळि)"
+  ],
+  [
+   "कन्नड़",
+   "ಗಿಳಿ (गिळि)"
+  ],
+  [
+   "मलयालम",
+   "തത്ത (तत्त)"
+  ]
+ ]
+}
+
+--- block #9 [inline_quiz] id=e1b95757-4f84-4f3a-84ec-ba3816e5472c ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "80c925ee-5b2f-4617-87c3-467668807855",
+   "question": "\"राम-राम कहो, सीताराम कहो।\" — यह किस भेद का वाक्य है?",
+   "options": [
+    "प्रश्नवाचक वाक्य",
+    "आज्ञावाचक वाक्य",
+    "संदेहवाचक वाक्य",
+    "विधानवाचक वाक्य"
+   ],
+   "correct_index": 1,
+   "explanation": "इसमें \"कहो\" — आदेश/आग्रह का भाव है, अतः आज्ञावाचक।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "152e54a0-9152-4f10-a0c0-5c7f683172ff",
+   "question": "\"न जाने किन अमराइयों में घूम रहा होगा।\" — यह कौन-सा वाक्य है?",
+   "options": [
+    "विधानवाचक वाक्य",
+    "आज्ञावाचक वाक्य",
+    "इच्छावाचक वाक्य",
+    "संदेहवाचक वाक्य"
+   ],
+   "correct_index": 3,
+   "explanation": "\"न जाने... होगा\" से शंका/अनिश्चय झलकता है — संदेहवाचक।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "97b61664-2264-43fd-a5c7-a9ed119b9fef",
+   "question": "\"दिन-रात\" किस प्रकार का शब्द-युग्म है?",
+   "options": [
+    "विपरीतार्थक",
+    "पुनरुक्त",
+    "समानार्थक",
+    "सजातीय"
+   ],
+   "correct_index": 0,
+   "explanation": "दिन और रात उलटे अर्थ के हैं — विपरीतार्थक शब्द-युग्म।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 10 — "अभ्यास — Practice"  (slug: ch3-abhyas)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=4830491a-bd86-48c2-bb6f-0702313fe50b ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch3/4830491a-bd86-48c2-bb6f-0702313fe50b_gen.webp",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi story book, a quill and lamp, a faint parrot-cage motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=0a55258b-34b6-4196-93fa-0a10096c8b97 ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ, और अंत में \"तोता\" शब्द भारतीय भाषाओं में देखिए।"
+}
+
+--- block #2 [chapter_practice] id=252221f5-dfad-47df-b5ce-9e169ed8334d ---
+{
+ "title": "अध्याय 3 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 3,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h3-pr-01",
+   "question": "कहानी के दो मुख्य पात्र कौन हैं?",
+   "options": [
+    "जगन मास्टर और गनपत दोनों",
+    "ताई और मिट्टू",
+    "मास्टराइन और एवजी तोता",
+    "दो पड़ोसी बच्चे"
+   ],
+   "correct_index": 1,
+   "explanation": "मुख्य पात्र हैं ताई और उनका तोता मिट्टू।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h3-pr-02",
+   "question": "ताई के पास मिट्टू को कौन लाया था?",
+   "options": [
+    "जगन मास्टर ख़ुद",
+    "शहर वाले बेटे",
+    "मास्टराइन",
+    "गनपत"
+   ],
+   "correct_index": 3,
+   "explanation": "गनपत एक प्यारा-सा पहाड़ी तोता ले आया था।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h3-pr-03",
+   "question": "ताई किस धार्मिक आयोजन के लिए प्रयागराज गईं?",
+   "options": [
+    "कुंभ-स्नान",
+    "गाँव का बड़ा मेला",
+    "किसी रिश्तेदार की शादी",
+    "फ़सल का त्योहार"
+   ],
+   "correct_index": 0,
+   "explanation": "ताई कुंभ-स्नान के लिए प्रयागराज गईं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h3-pr-04",
+   "question": "जगन मास्टर ने मिट्टू का पिंजरा क्यों खोला?",
+   "options": [
+    "मिट्टू बीमार था, इलाज के लिए",
+    "पिंजरा भीतर से साफ़ करने को",
+    "स्वतंत्रता देने के आदर्श से",
+    "ताई के कहने पर"
+   ],
+   "correct_index": 2,
+   "explanation": "स्वतंत्र विचारों के जगन मास्टर बंद पंछी को देख बेचैन रहते; आज़ादी देकर प्रायश्चित चाहते थे।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h3-pr-05",
+   "question": "ताई के लौटने पर एवजी मिट्टू ने क्या किया?",
+   "options": [
+    "ज़ोर-ज़ोर से \"राम राम सीताराम\" की रट लगाई",
+    "पिंजरे में कूद-फाँदकर तूफ़ान खड़ा कर दिया",
+    "कोई हरकत नहीं की, बस ताकता रहा",
+    "उड़कर ताई के कंधे पर जा बैठा"
+   ],
+   "correct_index": 2,
+   "explanation": "नया तोता ताई को पहचानता ही न था, इसलिए चुपचाप ताकता रहा।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h3-pr-06",
+   "question": "\"एवजी\" शब्द का अर्थ है —",
+   "options": [
+    "स्थानापन्न, बदले वाला",
+    "मन-ही-मन बहुत प्रसन्न",
+    "छोटी बात पर चिड़चिड़ा",
+    "गहरी नींद"
+   ],
+   "correct_index": 0,
+   "explanation": "एवजी = a substitute/stand-in।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h3-pr-07",
+   "question": "\"प्रायश्चित\" का सबसे सही अर्थ है —",
+   "options": [
+    "किसी का बहुत बड़ा उत्सव",
+    "मन का गहरा अकेलापन",
+    "बहुत तेज़ दौड़",
+    "पाप का पश्चाताप-कर्म"
+   ],
+   "correct_index": 3,
+   "explanation": "प्रायश्चित = atonement/penance।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h3-pr-08",
+   "question": "\"तुनकमिजाज\" व्यक्ति कैसा होता है?",
+   "options": [
+    "सदा शांत और सहनशील रहने वाला",
+    "छोटी बात पर नाराज़ होने वाला",
+    "बहुत उदार और दान देने वाला",
+    "बहुत मेहनती"
+   ],
+   "correct_index": 1,
+   "explanation": "तुनकमिजाज = short-tempered/touchy।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h3-pr-09",
+   "question": "\"संवादहीन\" का अर्थ है —",
+   "options": [
+    "हर समय बहुत बातूनी और मुखर",
+    "बातचीत से रहित, मौन",
+    "देखने में सुंदर और सजीला",
+    "स्वभाव से क्रोधी और उग्र"
+   ],
+   "correct_index": 1,
+   "explanation": "संवादहीन = uncommunicative, बातचीत से रहित।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h3-pr-10",
+   "question": "\"मिट्टू! अब कैसे कटेगी?\" — यह अर्थ के आधार पर कौन-सा वाक्य है?",
+   "options": [
+    "आज्ञावाचक वाक्य",
+    "निषेधवाचक वाक्य",
+    "इच्छावाचक वाक्य",
+    "प्रश्नवाचक"
+   ],
+   "correct_index": 3,
+   "explanation": "इसमें कुछ पूछा जा रहा है — प्रश्नवाचक वाक्य।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h3-pr-11",
+   "question": "\"मिट्टू ने कोई हरकत नहीं की।\" — कौन-सा वाक्य है?",
+   "options": [
+    "निषेधवाचक",
+    "विधानवाचक वाक्य",
+    "प्रश्नवाचक वाक्य",
+    "आज्ञावाचक वाक्य"
+   ],
+   "correct_index": 0,
+   "explanation": "\"नहीं की\" — न होने का भाव — निषेधवाचक वाक्य।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h3-pr-12",
+   "question": "\"जीते रहो बेटा, जुग-जुग जिओ!\" — कौन-सा वाक्य है?",
+   "options": [
+    "संदेहवाचक वाक्य",
+    "संकेतवाचक वाक्य",
+    "इच्छावाचक",
+    "विधानवाचक वाक्य"
+   ],
+   "correct_index": 2,
+   "explanation": "आशीर्वाद/इच्छा प्रकट करने वाला — इच्छावाचक वाक्य।",
+   "concept_tag": "grammar",
+   "difficulty": 4
+  },
+  {
+   "id": "h3-pr-13",
+   "question": "\"दिन-रात\" किस प्रकार का शब्द-युग्म है?",
+   "options": [
+    "पुनरुक्त शब्द-युग्म",
+    "समानार्थक शब्द-युग्म",
+    "विपरीतार्थक",
+    "सजातीय शब्द-युग्म"
+   ],
+   "correct_index": 2,
+   "explanation": "उलटे अर्थ — विपरीतार्थक शब्द-युग्म।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h3-pr-14",
+   "question": "\"अपने मुँह मियाँ मिट्ठू बनना\" मुहावरे का अर्थ है —",
+   "options": [
+    "अपनी ही तारीफ़ करना",
+    "किसी से बहुत मीठा बोलना",
+    "अचानक चुप हो जाना",
+    "घर में तोता पालना"
+   ],
+   "correct_index": 0,
+   "explanation": "इस मुहावरे का अर्थ है अपनी प्रशंसा स्वयं करना।",
+   "concept_tag": "grammar",
+   "difficulty": 4
+  },
+  {
+   "id": "h3-pr-15",
+   "question": "ताई और मिट्टू का संबंध किस भाव को दर्शाता है?",
+   "options": [
+    "केवल लाभ-हानि का सौदा",
+    "आपसी भय और क्रोध",
+    "थोड़ी-सी जिज्ञासा",
+    "ममता और स्नेह"
+   ],
+   "correct_index": 3,
+   "explanation": "अपने बच्चों से दूर ताई की अधूरी ममता मिट्टू पर उतरती है — माँ-बेटे जैसा स्नेह।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h3-pr-16",
+   "question": "जगन मास्टर का पिंजरा खोलना किस मूल्य/भाव का संकेत है?",
+   "options": [
+    "अपने भले का लालच और स्वार्थ",
+    "करुणा और आज़ादी का आदर्श",
+    "मन में बैठा भय और कायरता",
+    "क्रूरता और निर्दयता"
+   ],
+   "correct_index": 1,
+   "explanation": "किसी को क़ैद में न देखने की करुणा और स्वतंत्रता का आदर्श उन्हें पिंजरा खोलने को प्रेरित करता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h3-pr-17",
+   "question": "जगन मास्टर के अच्छे इरादे का दुखद नतीजा क्या दर्शाता है?",
+   "options": [
+    "कि पंछी कभी पालने ही नहीं चाहिए",
+    "आदर्श और यथार्थ का टकराव",
+    "कि आज़ादी देना हमेशा बुरा है",
+    "कि मास्टर मूर्ख था"
+   ],
+   "correct_index": 1,
+   "explanation": "अच्छी नीयत का भी असली जीवन में उलटा नतीजा हो सकता है — आदर्श बनाम यथार्थ।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h3-pr-18",
+   "question": "शीर्षक \"संवादहीन\" अंत में किसके लिए सबसे सार्थक है?",
+   "options": [
+    "जगन मास्टर — जो बहुत बातें करते थे",
+    "गनपत — जो हमेशा चुप ही रहता था",
+    "नया तोता — जो बहुत ख़ुश था",
+    "ताई — जिनसे साथी छिन गया"
+   ],
+   "correct_index": 3,
+   "explanation": "ताई का इकलौता \"बात करने वाला\" साथी चला गया; उनका जीवन संवादहीन हो गया।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h3-pr-19",
+   "question": "\"मास्टराइन\" का नाम न देना किस सामाजिक विसंगति की ओर इशारा करता है?",
+   "options": [
+    "स्त्री की पहचान परिवार में खो जाना",
+    "कि गाँवों में लोगों के नाम नहीं रखे जाते",
+    "कि मास्टराइन एक महत्वहीन पात्र थी",
+    "लेखक की भूल"
+   ],
+   "correct_index": 0,
+   "explanation": "नाम न देकर लेखक दिखाते हैं कि स्त्री की अपनी स्वतंत्र पहचान अक्सर मिटा दी जाती है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h3-pr-20",
+   "question": "कहानी मानव-समाज की किस विसंगति को सबसे गहराई से उजागर करती है?",
+   "options": [
+    "लोगों की अत्यधिक कर्मठता",
+    "समाज में फैला अंधविश्वास",
+    "अकेलापन और संवादहीनता",
+    "धन की फ़िज़ूलख़र्ची"
+   ],
+   "correct_index": 2,
+   "explanation": "पलायन के बाद का अकेलापन और सच्चे संवाद का अभाव ही कहानी का केंद्रीय भाव है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h3-pr-21",
+   "question": "कहानी का शीर्षक \"संवादहीन\" होना ताई के जीवन के बारे में क्या कहता है?",
+   "options": [
+    "भरे-पूरे घर में भी वह सच्चे संवाद को तरस गई",
+    "वह किसी से बात करना ही नहीं चाहती थी",
+    "उसे बोलना नहीं आता था",
+    "घर में बहुत शोर रहता था"
+   ],
+   "correct_index": 1,
+   "explanation": "\"संवादहीन\" यानी अपनों के बीच भी सच्ची बातचीत का अभाव — ताई का अकेलापन।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h3-pr-22",
+   "question": "मिट्टू (पक्षी) ताई के लिए क्यों इतना महत्वपूर्ण हो जाता है?",
+   "options": [
+    "वही उसके अकेलेपन का एकमात्र सहारा बन जाता है",
+    "वह बहुत महँगा पक्षी था",
+    "वह घर की रखवाली करने में बहुत काम आता था",
+    "वह बहुत सुंदर बोलता था"
+   ],
+   "correct_index": 0,
+   "explanation": "अपनों से संवाद न मिलने पर ताई अपना स्नेह मिट्टू पर उँडेल देती है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h3-pr-23",
+   "question": "कहानी आज के \"एकल परिवार\" और बुज़ुर्गों के बारे में क्या चेतावनी देती है?",
+   "options": [
+    "व्यस्तता में अपनों को समय न देना अकेलापन पैदा करता है",
+    "बुज़ुर्गों को पक्षी पाल लेने चाहिए",
+    "बड़े परिवार हमेशा बुरे होते हैं",
+    "बातचीत की कोई ज़रूरत नहीं"
+   ],
+   "correct_index": 2,
+   "explanation": "कहानी याद दिलाती है कि रिश्ते समय और सच्चे संवाद से ही जीवित रहते हैं।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h3-pr-24",
+   "question": "नक़ली/बनावटी सहारे (जैसे केवल पक्षी या टी.वी.) असली रिश्तों की जगह क्यों नहीं ले सकते?",
+   "options": [
+    "उनमें आपसी समझ और सच्चा भावनात्मक जुड़ाव नहीं होता",
+    "वे जेब पर बहुत महँगे और बोझिल पड़ते हैं",
+    "वे जल्दी टूट जाते हैं",
+    "उन्हें सँभालना कठिन है"
+   ],
+   "correct_index": 0,
+   "explanation": "सच्चे रिश्ते दो-तरफ़ा समझ और भाव माँगते हैं, जो किसी विकल्प से नहीं मिलते।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=de8c3d2e-b67f-4281-9757-4c5b7fbb6f1c ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 3,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h3-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "ताई",
+    "और",
+    "मिट्टू",
+    "एक-दूसरे",
+    "का",
+    "सहारा",
+    "थे"
+   ],
+   "answer": "ताई और मिट्टू एक-दूसरे का सहारा थे"
+  },
+  {
+   "id": "h3-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "सूनापन",
+   "instruction": "\"सूनापन\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (अकेलापन)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "त्योहार के बाद मेहमानों के लौट जाने पर घर का सूनापन और गहरा लगने लगा।",
+   "min_words": 7
+  },
+  {
+   "id": "h3-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "संवादहीनता",
+   "instruction": "\"आज के जीवन में संवादहीनता\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "एक ही घर में रहते हुए भी, फ़ोन में डूबे रहने से आज परिवारों में संवादहीनता बढ़ती जा रही है।",
+   "min_words": 8
+  }
+ ]
+}
+
+--- block #4 [callout] id=9295ab15-350b-4153-a059-1120a447eee3 ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "खोजबीन — और आगे",
+ "markdown": "और पढ़िए-खोजिए:\n\n- कथाकार **शेखर जोशी** का जीवन और उनकी अन्य कहानियाँ (कोसी का घटवार, दाज्यू)।\n- तोते (पहाड़ी तोता/शुक) के बारे में रोचक जानकारी।\n- सोचिए — और किन कहानियों में पशु-पक्षी इंसानी रिश्तों का आईना बने हैं?"
+}

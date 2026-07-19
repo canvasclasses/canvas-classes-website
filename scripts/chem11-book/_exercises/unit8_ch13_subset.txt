@@ -1,0 +1,48 @@
+NCERT Class 11 Chemistry — Unit 8: Organic Chemistry — Some Basic Principles and Techniques
+SUBSET ONLY: exercises 8.18–8.35 (founder-confirmed scope — these are the only Unit 8 exercises
+that match what Live Book Ch.13 "Practical Organic Chemistry" actually teaches: purification
+techniques, qualitative analysis, quantitative analysis. Exercises 8.1–8.17 and 8.36–8.40 are
+GOC topics — hybridisation, nomenclature, isomerism, reaction mechanisms — that belong to the
+not-yet-built Ch.10 "GOC" and are OUT OF SCOPE for this page.)
+source_label should read "NCERT 8.x" (the real NCERT unit number).
+NOTE: No official NCERT "selected answers" exist for Unit 8 — derive and verify every answer
+yourself against the chapter's own content (Ch.13 pages: sublimation, crystallisation,
+distillation, fractional distillation, special distillation techniques, differential extraction,
+chromatography, qualitative analysis, and the four quantitative-estimation pages).
+
+8.18 Give a brief description of the principles of the following techniques taking an example in each case.
+(a) Crystallisation (b) Distillation (c) Chromatography
+
+8.19 Describe the method, which can be used to separate two compounds with different solubilities in a solvent S.
+
+8.20 What is the difference between distillation, distillation under reduced pressure and steam distillation?
+
+8.21 Discuss the chemistry of Lassaigne's test.
+
+8.22 Differentiate between the principle of estimation of nitrogen in an organic compound by (i) Dumas method and (ii) Kjeldahl's method.
+
+8.23 Discuss the principle of estimation of halogens, sulphur and phosphorus present in an organic compound.
+
+8.24 Explain the principle of paper chromatography.
+
+8.25 Why is nitric acid added to sodium extract before adding silver nitrate for testing halogens?
+
+8.26 Explain the reason for the fusion of an organic compound with metallic sodium for testing nitrogen, sulphur and halogens.
+
+8.27 Name a suitable technique of separation of the components from a mixture of calcium sulphate and camphor.
+
+8.28 Explain, why an organic liquid vaporises at a temperature below its boiling point in its steam distillation?
+
+8.29 Will CCl4 give white precipitate of AgCl on heating it with silver nitrate? Give reason for your answer.
+
+8.30 Why is a solution of potassium hydroxide used to absorb carbon dioxide evolved during the estimation of carbon present in an organic compound?
+
+8.31 Why is it necessary to use acetic acid and not sulphuric acid for acidification of sodium extract for testing sulphur by lead acetate test?
+
+8.32 An organic compound contains 69% carbon and 4.8% hydrogen, the remainder being oxygen. Calculate the masses of carbon dioxide and water produced when 0.20 g of this substance is subjected to complete combustion.
+
+8.33 A sample of 0.50 g of an organic compound was treated according to Kjeldahl's method. The ammonia evolved was absorbed in 50 ml of 0.5 M H2SO4. The residual acid required 60 mL of 0.5 M solution of NaOH for neutralisation. Find the percentage composition of nitrogen in the compound.
+
+8.34 0.3780 g of an organic chloro compound gave 0.5740 g of silver chloride in Carius estimation. Calculate the percentage of chlorine present in the compound.
+
+8.35 In the estimation of sulphur by Carius method, 0.468 g of an organic sulphur compound afforded 0.668 g of barium sulphate. Find out the percentage of sulphur in the given compound.

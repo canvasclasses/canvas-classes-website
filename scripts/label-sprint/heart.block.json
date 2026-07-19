@@ -1,0 +1,90 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the human heart (frontal/coronal cross-section). Image: heart_illus.webp (keyed transparent + compressed, cropped-tight per the 2026-07-15 prepare_illustration.py fix). To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, and add this block to the target biology page (Class 11 Body Fluids and Circulation). Hotspots authored + browser-verified live in the bio-deck.html prototype, including after the 2026-07-15 crop/coordinate correction pass -- this file was the one missing .block.json flagged during that session (image + hotspots were done, the JSON spec just hadn't been written yet).",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The human heart, frontal cross-section",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "aorta",
+      "x": 0.4338,
+      "y": 0.1101,
+      "label": "Aorta",
+      "detail": "The body's largest artery — carries oxygenated blood from the left ventricle out to the whole body.",
+      "icon": "pin"
+    },
+    {
+      "id": "svc",
+      "x": 0.2027,
+      "y": 0.1301,
+      "label": "Superior vena cava",
+      "detail": "Returns deoxygenated blood from the upper body into the right atrium.",
+      "icon": "pin"
+    },
+    {
+      "id": "pa",
+      "x": 0.6019,
+      "y": 0.2101,
+      "label": "Pulmonary artery",
+      "detail": "Carries deoxygenated blood from the right ventricle to the lungs — the only artery carrying deoxygenated blood.",
+      "icon": "pin"
+    },
+    {
+      "id": "ra",
+      "x": 0.1922,
+      "y": 0.4003,
+      "label": "Right atrium",
+      "detail": "Receives deoxygenated blood from the body via the venae cavae.",
+      "icon": "pin"
+    },
+    {
+      "id": "la",
+      "x": 0.7279,
+      "y": 0.3803,
+      "label": "Left atrium",
+      "detail": "Receives oxygenated blood from the lungs via the pulmonary veins.",
+      "icon": "pin"
+    },
+    {
+      "id": "tri",
+      "x": 0.2132,
+      "y": 0.5404,
+      "label": "Tricuspid valve",
+      "detail": "Between the right atrium and right ventricle; has **three** cusps.",
+      "icon": "pin"
+    },
+    {
+      "id": "mit",
+      "x": 0.6229,
+      "y": 0.5204,
+      "label": "Bicuspid (mitral) valve",
+      "detail": "Between the left atrium and left ventricle; has **two** cusps.",
+      "icon": "pin"
+    },
+    {
+      "id": "rv",
+      "x": 0.2658,
+      "y": 0.7105,
+      "label": "Right ventricle",
+      "detail": "Pumps deoxygenated blood into the pulmonary artery, toward the lungs.",
+      "icon": "pin"
+    },
+    {
+      "id": "lv",
+      "x": 0.6439,
+      "y": 0.7305,
+      "label": "Left ventricle",
+      "detail": "Pumps oxygenated blood into the aorta, out to the whole body. Has the **thickest wall** of all four chambers.",
+      "icon": "pin"
+    },
+    {
+      "id": "sep",
+      "x": 0.4443,
+      "y": 0.7005,
+      "label": "Interventricular septum",
+      "detail": "The muscular wall separating the left and right ventricles, keeping oxygenated and deoxygenated blood from mixing.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational illustration of the human heart in frontal (coronal) cross-section, standard biology-textbook layout, semi-realistic painterly style. Show clearly separated: aorta, superior vena cava, pulmonary artery, right atrium, left atrium, tricuspid valve, bicuspid (mitral) valve, right ventricle, left ventricle, interventricular septum. Muted anatomical palette (crimson for oxygenated, slate blue for deoxygenated). Flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Portrait 3:4, high resolution."
+}

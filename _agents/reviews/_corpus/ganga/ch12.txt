@@ -1,0 +1,2177 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 12: घर की याद
+book=class9-hindi-ganga chapter=12 pages=8
+
+
+================================================================================
+## PAGE 1 — "परिचय — कवि से मिलिए"  (slug: ch12-parichay)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=47857e8f-981e-4dfa-af3b-e074be534717 ---
+{
+ "src": "",
+ "alt": "जेल की कोठरी में घर की याद",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a lone young man sitting in a bare prison cell looking through a barred window at falling rain, a faraway home glowing in his mind. Melancholy warm light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=b43e0e15-dcda-4616-80e9-621bea40e025 ---
+{
+ "prompt": "कल्पना कीजिए — आप अपने घर से बहुत दूर हैं, बाहर ज़ोर की बारिश हो रही है, और आपको घर के हर सदस्य की याद आ रही है। आप दुखी हैं, पर नहीं चाहते कि घरवाले आपकी तकलीफ़ जानकर रोएँ — इसलिए कहलवाते हैं \"मैं तो मज़े में हूँ!\" सोचिए — अपनों को दुख से बचाने के लिए अपना दर्द छिपाना — क्या यह प्रेम का सबसे बड़ा रूप है?",
+ "hint": "किसी ऐसे पल को याद कीजिए जब आपने अपनों को दुखी न करने के लिए अपनी तकलीफ़ छिपाई हो।"
+}
+
+--- block #2 [meet_a_scientist] id=528a769f-3f40-43c1-9d38-b6e9ed49e4e5 ---
+{
+ "name": "भवानीप्रसाद मिश्र",
+ "years": "1913–1985",
+ "nationality": "भारतीय — होशंगाबाद (नर्मदापुरम), मध्य प्रदेश",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of poet Bhavani Prasad Mishra, a gentle aged face, dark ground.",
+ "contribution": "साहित्य के साथ-साथ **स्वाधीनता आंदोलन** में सक्रिय कवि। प्रमुख रचनाएँ — गीत-फ़रोश, ख़ुशबू के शिलालेख, चकित है दुख, **बुनी हुई रस्सी** (इस पर **साहित्य अकादमी पुरस्कार** मिला), गांधी-पंचशती। उन्होंने संपूर्ण गांधी वाङ्मय का भी संपादन किया।",
+ "connection": "\"घर की याद\" उन्होंने **1942 के भारत छोड़ो आंदोलन** के दौरान **जेल में रहते हुए** लिखी थी (उन्हें तीन वर्ष का कारावास मिला)। बारिश के दिनों में जेल से अपने परिवार को एक-एक कर याद करते हुए यह कविता बनी।",
+ "fun_detail": "कविता में कवि सावन के बादल को \"संदेशवाहक\" बनाकर घर संदेश भेजते हैं — और आग्रह करते हैं कि उनकी जेल की तकलीफ़ घरवालों को न बताना, बस सांत्वना देना।",
+ "learn_more": "कविता-संग्रह \"गीत-फ़रोश\" और \"बुनी हुई रस्सी\"।"
+}
+
+--- block #3 [callout] id=e896944f-6693-4624-a8d5-a8f4e475fda7 ---
+{
+ "variant": "india_voice",
+ "title": "जेल से लिखी एक चिट्ठी-सी कविता",
+ "markdown": "यह कविता एक **भावात्मक स्मृति-गीत** है — सरल, लोकभाषा की सहज भाषा में, मानो कवि सीधे अपने मन से बात कर रहा हो। इसमें **संबोधन** (सावन को पुकारना) और **ध्वन्यात्मक शब्द** (झरा-झर, थर-थर, सर-सर) हैं जो बारिश और भावों को जीवंत कर देते हैं। यह हमारी \"गंगा\" पुस्तक की **अंतिम कविता** है।"
+}
+
+--- block #4 [text] id=7478da1a-c866-4ab1-8208-d0a340157efb ---
+{
+ "markdown": "इस कोमल कविता को पढ़ने से पहले कुछ शब्द जान लें — फिर कवि का हर भाव सीधे दिल तक पहुँचेगा।"
+}
+
+--- block #5 [vocabulary_lab] id=bde0e3ce-54fc-4305-b2a0-8ea546c0361c ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "कविता के शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "d771045b-91cc-41d6-b60c-1c9f55131924",
+   "word": "परिताप",
+   "pronunciation": "pa-ri-taap",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अत्यधिक दुख",
+   "english": "great sorrow",
+   "example": "हाय रे परिताप के घर!",
+   "memory_hook": "परि+ताप।"
+  },
+  {
+   "id": "5cb0ccbd-a7f9-4e49-aa4e-719f5dc19b2e",
+   "word": "वज्र",
+   "pronunciation": "vajr",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बहुत कठोर",
+   "english": "adamant; hard",
+   "example": "वज्र-भुज (कठोर भुजाएँ)।",
+   "memory_hook": "thunderbolt।"
+  },
+  {
+   "id": "8857ab8d-adb2-42f5-b651-f15dd3c8d116",
+   "word": "नवनीत",
+   "pronunciation": "nav-neet",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ताज़ा मक्खन",
+   "english": "fresh butter",
+   "example": "नवनीत-सा कोमल उर।",
+   "memory_hook": "butter।"
+  },
+  {
+   "id": "e6917aa1-15a0-4c65-81fa-6719a72414f9",
+   "word": "उर",
+   "pronunciation": "ur",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हृदय",
+   "english": "the heart",
+   "example": "नवनीत-सा उर।",
+   "memory_hook": "heart।"
+  },
+  {
+   "id": "c5226ae8-ff54-4efd-8e77-1b92ecc4f320",
+   "word": "अभागा",
+   "pronunciation": "a-bhaa-gaa",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "भाग्यहीन",
+   "english": "unfortunate",
+   "example": "पाँचवाँ मैं हूँ अभागा।",
+   "memory_hook": "अ+भाग्य।"
+  },
+  {
+   "id": "a0f2fe62-1842-4782-9256-3a3c309996b6",
+   "word": "सावन",
+   "pronunciation": "saa-van",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वर्षा का महीना",
+   "english": "the monsoon",
+   "example": "हे सजीले हरे सावन।",
+   "memory_hook": "the rains।"
+  },
+  {
+   "id": "82987fd7-bb22-4260-b46c-6f4ea65349e1",
+   "word": "विरस",
+   "pronunciation": "vi-ras",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "नीरस, अप्रिय",
+   "english": "joyless",
+   "example": "सब विरस है।",
+   "memory_hook": "वि+रस।"
+  },
+  {
+   "id": "9eb0ac11-43b3-4756-8709-2d8ecdcbe9f1",
+   "word": "कातना",
+   "pronunciation": "kaat-naa",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "धागा बनाना (चरखा)",
+   "english": "to spin",
+   "example": "कातने में व्यस्त हूँ।",
+   "memory_hook": "to spin।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=cbc1bcc4-ef08-4ee3-9449-934f6b91c30a ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "c5454b16-71e3-477b-b11f-6373bb290806",
+   "question": "भवानीप्रसाद मिश्र ने यह कविता कहाँ और कब लिखी?",
+   "options": [
+    "विदेश में, यात्रा के समय",
+    "जेल में, 1942 के भारत छोड़ो आंदोलन के दौरान",
+    "अपने पुश्तैनी गाँव में, बचपन के दिनों में",
+    "समुद्र-तट पर, छुट्टियों में"
+   ],
+   "correct_index": 1,
+   "explanation": "उन्होंने यह कविता 1942 के आंदोलन में जेल (कारावास) में रहते हुए लिखी।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "cba00675-26a2-44ac-8ca9-f42eeff532bc",
+   "question": "इस कविता की केंद्रीय संवेदना (मुख्य भाव) क्या है?",
+   "options": [
+    "युद्ध का रोमांच",
+    "प्रकृति की सुंदरता और उसका व्यापार",
+    "धन का लालच",
+    "घर/परिवार की याद और अकेलेपन की पीड़ा"
+   ],
+   "correct_index": 3,
+   "explanation": "कारावास में परिवार की स्मृति और घर की याद ही इस कविता की केंद्रीय संवेदना है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "c9e0ce88-73a2-47c0-b49e-c2852f797598",
+   "question": "कवि किसे \"संदेशवाहक\" बनाकर घर संदेश भेजते हैं?",
+   "options": [
+    "सावन के बादल को",
+    "एक पक्षी को",
+    "एक नदी को",
+    "हवा को"
+   ],
+   "correct_index": 0,
+   "explanation": "कवि सावन के बादल को संदेशवाहक बनाकर परिवार तक संदेश भेजते हैं।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "कविता — भाग १ (बारिश और घर की याद)"  (slug: ch12-kavita-bhag-1)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=de89f8d3-43d5-453d-a916-3d148e2f03a5 ---
+{
+ "src": "",
+ "alt": "बारिश और घर की याद",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — relentless rain over a barred window, while a warm family home with siblings and a mother glows in memory beyond. Melancholy warm light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [heading] id=b3218011-9846-4785-a9bb-4c52d7b99152 ---
+{
+ "text": "भाग १ — पानी गिरता है, घर याद आता है",
+ "level": 2
+}
+
+--- block #2 [text] id=383f57ea-41d3-4255-bf06-20590e7a4d80 ---
+{
+ "markdown": "लगातार बरसते पानी के साथ कवि का मन घर की यादों से घिरने लगता है — भाई-बहन, और सबसे पहले माँ। हर पंक्ति पर टैप कर अर्थ देखिए।"
+}
+
+--- block #3 [narrated_passage] id=36114509-f0ce-4b41-8031-1833ad848fb2 ---
+{
+ "source_label": "घर की याद · बारिश और परिवार",
+ "paragraphs": [
+  {
+   "id": "88238180-030a-47c3-b020-139a29eb458a",
+   "sentences": [
+    {
+     "id": "ec7c0fba-0f88-4c76-82a3-80644d86e74b",
+     "text": "आज पानी गिर रहा है, बहुत पानी गिर रहा है,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "बहुत पानी गिर रहा",
+       "meaning": "मूसलाधार वर्षा हो रही है — heavy rain is falling",
+       "pos": "पद",
+       "example": "लगातार तेज़ बारिश हो रही है।"
+      }
+     ]
+    },
+    {
+     "id": "7ef6b248-1a44-46cc-b81d-2d210d0b3818",
+     "text": "रात-भर गिरता रहा है, प्राण मन घिरता रहा है,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "प्राण मन घिरता",
+       "meaning": "मन-प्राण (यादों से) घिरते रहे — heart enveloped by memories",
+       "pos": "पद",
+       "example": "बारिश के साथ मन यादों से घिरता गया।"
+      }
+     ]
+    },
+    {
+     "id": "0b1509f4-2c64-4920-be17-4d7d06a5c9cc",
+     "text": "बहुत पानी गिर रहा है, घर नज़र में तिर रहा है,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "घर नज़र में तिर रहा",
+       "meaning": "घर आँखों के सामने तैर रहा है — home floating before my eyes",
+       "pos": "पद",
+       "example": "दूर का घर आँखों में तैरने लगा।"
+      }
+     ]
+    },
+    {
+     "id": "d58ca3ff-fffd-4a24-bfd5-d29a0fb801ef",
+     "text": "घर कि घर में चार भाई, मायके में बहिन आई,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मायके में बहिन आई",
+       "meaning": "बहन मायके (बाप के घर) आई है — sister has come to her parental home",
+       "pos": "पद",
+       "example": "सब भाई-बहन घर में जुड़े हैं।"
+      }
+     ]
+    },
+    {
+     "id": "2e80f504-50c6-4f6e-a67e-54c4e392ac93",
+     "text": "बहिन आई बाप के घर, हाय रे परिताप के घर!",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "परिताप के घर",
+       "meaning": "दुख-भरे घर — the grief-laden home",
+       "pos": "पद",
+       "example": "कवि के बिना घर में दुख छाया है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "देखो — बाहर मूसलाधार बारिश है, और हर बूँद के साथ कवि का मन घर से और घिरता जाता है। दूर का घर आँखों में \"तैरने\" लगता है — जहाँ चार भाई हैं, बहन मायके आई है, पर कवि ख़ुद नहीं है, इसलिए वह घर \"परिताप\" (दुख) का घर लगता है।"
+  },
+  {
+   "id": "d708517b-28a8-4ddf-986b-fac0e1360317",
+   "sentences": [
+    {
+     "id": "c14edc77-3283-45ae-a447-ecc3cb369134",
+     "text": "और माँ बिन-पढ़ी मेरी, दुख में वह गढ़ी मेरी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "बिन-पढ़ी... दुख में गढ़ी",
+       "meaning": "अनपढ़ माँ, जो दुख में ढली है — my unlettered mother, shaped by sorrow",
+       "pos": "पद",
+       "example": "माँ अनपढ़ है, पर दुख सहना जानती है।"
+      }
+     ]
+    },
+    {
+     "id": "e44b6468-5ba8-4570-9dce-8e7f1a7f6544",
+     "text": "माँ कि जिसकी गोद में सिर, रख लिया तो दुख नहीं फिर,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "गोद में सिर... दुख नहीं",
+       "meaning": "जिसकी गोद में सिर रखते ही दुख मिट जाए — head on whose lap ends all grief",
+       "pos": "पद",
+       "example": "माँ की गोद सबसे बड़ी शांति है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "फिर सबसे पहले याद आती है माँ — अनपढ़, पर दुख सहने में पक्की। कवि कहता है — माँ की गोद में सिर रखते ही सारा दुख मिट जाता है। यह माँ के निःस्वार्थ प्रेम और भावनात्मक मज़बूती का सुंदर चित्र है।"
+  }
+ ]
+}
+
+--- block #4 [comprehension_checkpoint] id=3098a0b7-1a6a-420b-9e40-ed81ef0c41f7 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "1296d307-10d8-46fc-bdba-557475e1aef3",
+   "question": "कवि अपने घर को \"परिताप के घर\" क्यों कहता है?",
+   "options": [
+    "क्योंकि घर बहुत पुराना है",
+    "क्योंकि घर में झगड़ा है",
+    "क्योंकि कवि (पाँचवाँ बेटा) जेल में है, और उसके बिना घर में दुख छाया है",
+    "क्योंकि घर ग़रीब है"
+   ],
+   "correct_index": 2,
+   "explanation": "सब भाई-बहन जुड़े हैं पर कवि जेल में है — उसकी अनुपस्थिति से घर में दुख (परिताप) छाया है।"
+  }
+ ]
+}
+
+--- block #5 [inline_quiz] id=82be17da-0527-4520-93c9-94fb38110d82 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "b95f748c-62d1-4ce7-a09d-509490429c2a",
+   "question": "बारिश के साथ कवि के मन में क्या होता है?",
+   "options": [
+    "वह सो जाता है",
+    "वह मन-ही-मन बहुत ख़ुश हो जाता है",
+    "घर और परिवार की यादें घिर आती हैं",
+    "उसे भूख लगती है"
+   ],
+   "correct_index": 2,
+   "explanation": "\"प्राण मन घिरता रहा है... घर नज़र में तिर रहा है\" — बारिश यादों को जगा देती है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "10357637-ab82-4a44-8288-1b172762644e",
+   "question": "कविता में माँ की कैसी छवि उभरती है?",
+   "options": [
+    "बहुत पढ़ी-लिखी पर स्वभाव से बहुत कठोर",
+    "कमज़ोर और निष्क्रिय",
+    "अनपढ़ पर स्नेहमयी और (दुख सहने में) दृढ़",
+    "धनी और घमंडी"
+   ],
+   "correct_index": 2,
+   "explanation": "\"बिन-पढ़ी... दुख में गढ़ी\" — माँ अनपढ़ है पर स्नेहमयी और दुख सहने में दृढ़।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "91bd8140-cec2-4d26-95c9-dbb37f684b9e",
+   "question": "\"माँ कि जिसकी गोद में सिर, रख लिया तो दुख नहीं फिर\" से क्या भाव है?",
+   "options": [
+    "माँ की गोद/स्नेह सबसे बड़ी शांति और आश्रय है",
+    "माँ बहुत सोती है",
+    "माँ बच्चों का दुख-दर्द नहीं समझ पाती",
+    "माँ दूर रहती है"
+   ],
+   "correct_index": 0,
+   "explanation": "माँ की गोद में सिर रखते ही दुख मिट जाना — माँ का निःस्वार्थ स्नेह सबसे बड़ा आश्रय है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "कविता — भाग २ (पिता का चित्र)"  (slug: ch12-kavita-bhag-2)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=efde1b5d-c642-4116-9d4f-13ac8dc9f737 ---
+{
+ "src": "",
+ "alt": "पिता — कठोर भुजाएँ, कोमल हृदय",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a strong yet gentle old father figure, mighty arms but a tender smile, surrounded by glimpses of exercise, the Gita, and laughter. Warm light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=e95dd75c-1979-46a4-bcf4-97f01dde7e09 ---
+{
+ "markdown": "अब कवि पिता को याद करता है — जो बाहर से वज्र-से कठोर और बहादुर हैं, पर भीतर से मक्खन-से कोमल। और फिर याद आता है कि पिता उस \"पाँचवें बेटे\" (कवि) के लिए कितना तरसते होंगे। हर पंक्ति पर टैप कीजिए।"
+}
+
+--- block #2 [narrated_passage] id=f10e452b-bdd0-4856-8db4-9fbabeac7735 ---
+{
+ "source_label": "घर की याद · पिता",
+ "paragraphs": [
+  {
+   "id": "5c6a8391-52bd-431a-a7c3-0454613992d7",
+   "sentences": [
+    {
+     "id": "47cdfbad-6f90-4da5-a8f5-f5c3b0fb5648",
+     "text": "पिताजी भोले बहादुर, वज्र-भुज नवनीत-सा उर,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "वज्र-भुज नवनीत-सा उर",
+       "meaning": "वज्र-सी भुजाएँ, पर मक्खन-सा कोमल हृदय — thunderbolt arms, butter-soft heart",
+       "pos": "रूपक/उपमा",
+       "example": "पिता बाहर से कठोर-बलवान, भीतर से बहुत कोमल।"
+      }
+     ]
+    },
+    {
+     "id": "321103cf-71f7-4a7f-9214-5dee468ede4a",
+     "text": "पिताजी जिनको बुढ़ापा, एक क्षण भी नहीं व्यापा,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "बुढ़ापा... नहीं व्यापा",
+       "meaning": "बुढ़ापा छू तक नहीं गया — old age never touched them",
+       "pos": "पद",
+       "example": "पिता बुढ़ापे में भी जवान-से जोशीले हैं।"
+      }
+     ]
+    },
+    {
+     "id": "eaf373dc-81f2-4eb7-a1c2-f6a466617f84",
+     "text": "मौत के आगे न हिचकें, शेर के आगे न बिचकें,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मौत... शेर के आगे न",
+       "meaning": "मौत या शेर से भी न डरें — fearless before death or a lion",
+       "pos": "पद",
+       "example": "पिता बेहद निडर और बहादुर हैं।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "यह कविता का सबसे प्रसिद्ध चित्र है — \"वज्र-भुज नवनीत-सा उर\"। पिता की भुजाएँ वज्र (बहुत कठोर/बलवान) जैसी हैं, पर हृदय नवनीत (ताज़ा मक्खन) जैसा कोमल। बुढ़ापा उन्हें छू तक नहीं गया — वे अब भी दौड़ते, खिलखिलाते, मौत और शेर से भी न डरने वाले निडर हैं। यह बहुआयामी (कठोर भी, कोमल भी) चरित्र है।"
+  },
+  {
+   "id": "5face027-6d1d-4968-a82b-e68a71164e26",
+   "sentences": [
+    {
+     "id": "bcfeb897-8372-4520-93bf-3489006b92f3",
+     "text": "पाँचवाँ मैं हूँ अभागा, जिसे सोने पर सुहागा,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "पाँचवाँ मैं... अभागा",
+       "meaning": "मैं अभागा पाँचवाँ (बेटा), जिसे पिता \"सोने पे सुहागा\" कहते थे — I, the luckless fifth son",
+       "pos": "पद",
+       "example": "कवि स्वयं वह पाँचवाँ बेटा है जो अब जेल में है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "फिर कवि ख़ुद को याद करता है — \"पाँचवाँ मैं हूँ अभागा\" — वह अभागा पाँचवाँ बेटा, जिसे पिता \"सोने पे सुहागा\" कहकर सबसे ज़्यादा प्यार करते थे, पर जो आज जेल में है। कवि कल्पना करता है कि पिता उसका नाम लेकर रो पड़े होंगे।"
+  }
+ ]
+}
+
+--- block #3 [comprehension_checkpoint] id=52b829b0-5126-4832-9299-7a866d36e4f7 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "8bd76674-6065-4108-8d3e-b277f3417e32",
+   "question": "\"वज्र-भुज नवनीत-सा उर\" से पिता का कैसा चरित्र उभरता है?",
+   "options": [
+    "पूरी तरह कठोर और निर्दयी",
+    "पूरी तरह कमज़ोर",
+    "बाहर से वज्र-सा कठोर/बलवान, भीतर से मक्खन-सा कोमल",
+    "बहुत डरपोक"
+   ],
+   "correct_index": 2,
+   "explanation": "भुजाएँ वज्र-सी (बल), पर हृदय नवनीत-सा (कोमलता) — पिता का बहुआयामी, कठोर-कोमल चरित्र।"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=91152d66-7892-4bc1-9223-4178ae65af7f ---
+{
+ "reasoning_type": "logical",
+ "prompt": "कवि पिता के चरित्र में दो विपरीत बातें एक साथ दिखाता है — वज्र-सी कठोर भुजाएँ और मक्खन-सा कोमल हृदय; मौत से न डरने वाला साहस और पाँचवें बेटे के लिए बहते आँसू। यह \"बहुआयामी\" चित्रण पिता को कैसा इंसान बनाता है?",
+ "reveal": "यह विरोधी गुणों का मेल पिता को एक **पूर्ण, सच्चा इंसान** बना देता है — कोई एकतरफ़ा \"केवल कठोर\" या \"केवल कोमल\" चरित्र नहीं। उनकी **वज्र-भुजाएँ और निडरता** उन्हें बहादुर और मज़बूत दिखाती हैं; उनका **नवनीत-सा हृदय और बेटे के लिए आँसू** उन्हें गहरा संवेदनशील और प्रेमी पिता बनाते हैं। असली ताक़त यही है — कि कोई बहुत मज़बूत होकर भी अपनों के लिए उतना ही कोमल हो। इसीलिए पिता का यह चित्र इतना जीवंत और प्रिय लगता है।",
+ "difficulty_level": 4
+}
+
+--- block #5 [inline_quiz] id=49fcedb8-e5ca-407a-a7b5-48948324e76d ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f5d932a9-d778-4646-aaac-ff8093be9374",
+   "question": "कविता में पिता के बुढ़ापे के बारे में क्या कहा गया है?",
+   "options": [
+    "वे अब बहुत बूढ़े और बिलकुल कमज़ोर हो चुके हैं",
+    "वे बीमार रहते हैं",
+    "वे चल नहीं सकते",
+    "बुढ़ापा उन्हें छू तक नहीं गया — वे अब भी जोशीले हैं"
+   ],
+   "correct_index": 3,
+   "explanation": "\"बुढ़ापा एक क्षण भी नहीं व्यापा\" — पिता अब भी दौड़ते-खिलखिलाते जोशीले हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "247fd31c-8be2-448c-9d14-e9c4af6a066e",
+   "question": "कवि अपने को \"अभागा पाँचवाँ\" क्यों कहता है?",
+   "options": [
+    "क्योंकि वह जीवन में कुछ भी पढ़-लिख नहीं सका",
+    "क्योंकि सबसे प्यारा होकर भी वह जेल में है, परिवार से दूर",
+    "क्योंकि वह सबसे छोटा है",
+    "क्योंकि वह बीमार है"
+   ],
+   "correct_index": 1,
+   "explanation": "पिता का सबसे लाड़ला \"सोने पे सुहागा\" बेटा होकर भी आज जेल में परिवार से दूर है — इसलिए \"अभागा\"।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "573fd003-8874-4d12-8bbf-1c26c8c843b7",
+   "question": "पिता का चरित्र \"बहुआयामी\" क्यों कहा जा सकता है?",
+   "options": [
+    "वे हर हाल में बस केवल कठोर ही रहते हैं",
+    "उनमें कठोरता-कोमलता, साहस-संवेदना सब एक साथ हैं",
+    "वे केवल कोमल हैं",
+    "उनका कोई गुण नहीं"
+   ],
+   "correct_index": 1,
+   "explanation": "वज्र-भुज (बल) + नवनीत-उर (कोमलता) + निडरता + बेटे के लिए आँसू — अनेक पक्ष एक साथ।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "कविता — भाग ३ (सावन को संदेश)"  (slug: ch12-kavita-bhag-3)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=c470e925-2a6f-40cf-8fbd-4af2b04056a2 ---
+{
+ "src": "",
+ "alt": "सावन के बादल — संदेशवाहक",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — monsoon clouds carrying a tender message across the sky toward a distant home, a reaching hand toward the window. Soft warm light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=0dbd7887-1e8a-472f-b98a-dbed2be68306 ---
+{
+ "markdown": "अब कविता का सबसे मार्मिक मोड़ — कवि सावन के बादल को संदेशवाहक बनाकर घर संदेश भेजता है, पर अपनी असली पीड़ा छिपाकर। हर पंक्ति पर टैप कीजिए।"
+}
+
+--- block #2 [narrated_passage] id=cae15699-9585-43a9-a5dd-360212f78203 ---
+{
+ "source_label": "घर की याद · सावन को संदेश",
+ "paragraphs": [
+  {
+   "id": "c8664347-de16-4a9f-87a2-2fa5884f7ce5",
+   "sentences": [
+    {
+     "id": "ff1be659-1db0-4919-a6fe-331cee42cd8f",
+     "text": "हे सजीले हरे सावन, हे कि मेरे पुण्य पावन,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "हे सजीले हरे सावन",
+       "meaning": "हे सुंदर हरे सावन! (सावन को संबोधन) — O lovely green monsoon!",
+       "pos": "संबोधन",
+       "example": "कवि सावन के बादल को संदेशवाहक बनाता है।"
+      }
+     ]
+    },
+    {
+     "id": "c2bca1d5-8556-46f3-957e-6d155ec3b462",
+     "text": "मैं मज़े में हूँ सही है, घर नहीं हूँ बस यही है,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मैं मज़े में... बस यही है",
+       "meaning": "मैं ठीक हूँ, बस घर पर नहीं हूँ — I am fine, only not home",
+       "pos": "पद",
+       "example": "कवि कहलवाना चाहता है कि वह ठीक है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "कवि सावन को पुकारता है (संबोधन) — \"हे सजीले हरे सावन!\" — और संदेश देता है कि घरवालों से कहना \"मैं मज़े में हूँ, बस घर पर नहीं हूँ।\" वह नहीं चाहता कि वे उसके लिए तरसें या रोएँ।"
+  },
+  {
+   "id": "e71ba003-0f47-47db-95b3-db953768b223",
+   "sentences": [
+    {
+     "id": "c54723cf-7426-4354-90e9-835bd6e81554",
+     "text": "किंतु उनसे यह न कहना, उन्हें देते धीर रहना,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "यह न कहना... धीर रहना",
+       "meaning": "पर असली दुख मत बताना, उन्हें धीरज देना — don’t tell them my pain; console them",
+       "pos": "पद",
+       "example": "कवि अपनी पीड़ा परिवार से छिपाना चाहता है।"
+      }
+     ]
+    },
+    {
+     "id": "8409cd2c-81c5-488a-8a6d-d3f0bb428803",
+     "text": "और कहना मस्त हूँ मैं, कातने में व्यस्त हूँ मैं,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मस्त... कातने में व्यस्त",
+       "meaning": "कहना कि मैं ख़ुश हूँ, चरखा कातने में लगा हूँ — say I am content, busy spinning",
+       "pos": "पद",
+       "example": "गांधीवादी चरखा — पीड़ा छिपाकर \"मस्त\" होने का संदेश।"
+      }
+     ]
+    },
+    {
+     "id": "cf44db2a-7739-4229-9f57-7ee4bec989ae",
+     "text": "यों न कहना अस्त हूँ मैं।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "यों न कहना अस्त हूँ",
+       "meaning": "यह मत कहना कि मैं टूट/डूब गया हूँ — do not say I am broken",
+       "pos": "पद",
+       "example": "अपनी टूटन कभी मत बताना।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "यहाँ कविता का सबसे कोमल भाव है — \"पर असली दुख उनसे मत कहना, उन्हें धीरज देना। कहना कि मैं पढ़-लिख रहा हूँ, चरखा कातने में मस्त-व्यस्त हूँ — यह मत कहना कि मैं टूट (अस्त हो) गया हूँ।\" कवि अपनी पूरी पीड़ा अपनों को दुख से बचाने के लिए छिपा लेता है। यही प्रेम और त्याग का सबसे ऊँचा रूप है।"
+  }
+ ]
+}
+
+--- block #3 [heading] id=6b74f5dc-e775-466f-92bf-32f0f1eead90 ---
+{
+ "text": "कविता की भाव-यात्रा",
+ "level": 2
+}
+
+--- block #4 [tone_meter] id=0d222056-6436-44ba-844f-5d6efb48797b ---
+{
+ "segments": [
+  {
+   "id": "21486182-9eb2-4a14-84c2-b6077192881d",
+   "excerpt": "आज पानी गिर रहा है... प्राण मन घिरता",
+   "emotion": "विरह/उदासी",
+   "intensity": 4,
+   "note": "बारिश के साथ अकेलेपन की पीड़ा।"
+  },
+  {
+   "id": "c8af3497-4729-4b18-866c-e07cdd461e94",
+   "excerpt": "माँ कि जिसकी गोद में सिर",
+   "emotion": "स्नेह-स्मृति",
+   "intensity": 3,
+   "note": "माँ की कोमल याद से थोड़ी शांति।"
+  },
+  {
+   "id": "396d03ce-dcd9-4135-90a0-0d01fa8290ba",
+   "excerpt": "वज्र-भुज नवनीत-सा उर",
+   "emotion": "गर्व-कोमलता",
+   "intensity": 4,
+   "note": "पिता का जोशीला, कोमल चित्र।"
+  },
+  {
+   "id": "c037161e-7e09-4783-954b-946383f7ad38",
+   "excerpt": "मैं मज़े में हूँ सही है",
+   "emotion": "छिपी पीड़ा",
+   "intensity": 5,
+   "note": "दुख छिपाकर \"मैं ठीक हूँ\" का संदेश।"
+  },
+  {
+   "id": "9cbce593-28c5-4d1e-a237-3da03d9fa465",
+   "excerpt": "उन्हें देते धीर रहना... यों न कहना अस्त हूँ",
+   "emotion": "संयम/त्याग",
+   "intensity": 5,
+   "note": "अपनों को बचाने के लिए पीड़ा का त्यागपूर्ण समर्पण।"
+  }
+ ]
+}
+
+--- block #5 [comprehension_checkpoint] id=fc872959-f420-47d2-85f7-b79bdbee0c77 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "3daea686-4626-4754-8da7-da14aaa28bf1",
+   "question": "कवि सावन से अपनी असली पीड़ा घरवालों को न बताने को क्यों कहता है?",
+   "options": [
+    "ताकि परिवार उसके लिए दुखी होकर न रोए — वह उन्हें कष्ट से बचाना चाहता है",
+    "क्योंकि उसे पीड़ा नहीं है",
+    "क्योंकि वह नाराज़ है",
+    "क्योंकि वह भूल गया है"
+   ],
+   "correct_index": 0,
+   "explanation": "कवि अपनी तकलीफ़ छिपाकर \"मैं मस्त हूँ\" कहलवाता है ताकि अपने प्रियजन उसके लिए तरसें/रोएँ नहीं — यही उसका त्यागपूर्ण प्रेम है।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=355d0219-5abc-4b8d-837c-ea3a27778930 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "c2a06c54-f04d-4684-84cd-0eadc409ada4",
+   "question": "कवि घरवालों से क्या कहलवाना चाहता है?",
+   "options": [
+    "कि वह बहुत दुखी है",
+    "कि वह बीमार है",
+    "कि वह बहुत जल्दी ही घर वापस लौटकर आ रहा है",
+    "कि वह मज़े में है, पढ़-लिख और कातने में व्यस्त है"
+   ],
+   "correct_index": 3,
+   "explanation": "\"मस्त हूँ मैं, कातने में व्यस्त हूँ मैं\" — वह अपनी पीड़ा छिपाकर ख़ुश होने का संदेश भेजता है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "6fe7e1d3-db26-41f5-af2b-86d7dc3aa768",
+   "question": "\"और कहना मस्त हूँ मैं\" — यह कवि का ऐसा कहना किस ओर संकेत करता है?",
+   "options": [
+    "वह अपने दुख को परिजनों से छिपाना चाहता है",
+    "वह सचमुच बहुत ख़ुश है",
+    "वह अपने घर-परिवार के प्रति उदासीन है",
+    "वह प्रकृति से प्रसन्न है"
+   ],
+   "correct_index": 0,
+   "explanation": "भीतर पीड़ा है, पर \"मस्त हूँ\" कहलवाना — दुख को अपनों से छिपाने का प्रयास।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "a93f63df-3604-4ea9-8715-5b30f47c92d2",
+   "question": "इस कविता में कवि का सबसे बड़ा \"त्याग\" क्या है?",
+   "options": [
+    "घर-परिवार के लिए बहुत सारा धन कमाना",
+    "जेल से भाग जाना",
+    "अपनों को दुख से बचाने के लिए अपनी पीड़ा छिपा लेना",
+    "सावन को रोक देना"
+   ],
+   "correct_index": 2,
+   "explanation": "अपनी सारी तकलीफ़ अंदर दबाकर परिवार को सांत्वना भेजना — यही उसका त्यागपूर्ण प्रेम है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "शब्द-संपदा"  (slug: ch12-shabd-sampada)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=8e541655-5974-4611-92c8-972b70e5b101 ---
+{
+ "src": "",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a rain-and-home motif, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=695b9814-2ad3-40ee-9695-df01859ae9e3 ---
+{
+ "markdown": "इस भावपूर्ण कविता के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=857075cc-af38-4d1e-9c41-f1c64d41027e ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: कविता के मूल शब्द।",
+ "cards": [
+  {
+   "id": "2b8d6e1d-b773-4270-8ff1-0bf6c5a415d7",
+   "word": "परिताप",
+   "pronunciation": "pa-ri-taap",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अत्यधिक दुख, ताप",
+   "english": "great sorrow; anguish",
+   "example": "\"हाय रे परिताप के घर!\"",
+   "memory_hook": "परि + ताप = deep heat/grief।"
+  },
+  {
+   "id": "e66d3706-a2d4-4d05-9dce-8a2ac6ce4ab1",
+   "word": "चतुर्दिक्",
+   "pronunciation": "cha-tur-dik",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "चारों ओर, चौँखूट",
+   "english": "on all sides",
+   "example": "\"घर चतुर्दिक् घिर रहा है।\"",
+   "memory_hook": "चतुर् (चार) + दिक् (दिशा)।"
+  },
+  {
+   "id": "573a3f20-51a2-4f33-b3ed-e45fb5337d65",
+   "word": "वज्र",
+   "pronunciation": "vajr",
+   "audio_url": "",
+   "pos": "संज्ञा/विशेषण",
+   "meaning": "बहुत कठोर (जिस पर कोई प्रभाव न पड़े)",
+   "english": "adamant; thunderbolt-hard",
+   "example": "\"वज्र-भुज नवनीत-सा उर।\" (वज्र-सी भुजाएँ)।",
+   "memory_hook": "thunderbolt।"
+  },
+  {
+   "id": "c13a820d-67af-4e57-b36c-fd8f9710157a",
+   "word": "नवनीत",
+   "pronunciation": "nav-neet",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ताज़ा मक्खन",
+   "english": "fresh butter",
+   "example": "\"...नवनीत-सा उर।\" (मक्खन-सा कोमल हृदय)।",
+   "memory_hook": "butter।"
+  },
+  {
+   "id": "1c0c8575-93e6-4749-92e5-85512e617704",
+   "word": "उर",
+   "pronunciation": "ur",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हृदय, मन",
+   "english": "the heart",
+   "example": "\"वज्र-भुज नवनीत-सा उर।\"",
+   "memory_hook": "the heart।"
+  },
+  {
+   "id": "de08f0cf-7762-4021-b8df-aa8cbd6b4fd7",
+   "word": "झंझा",
+   "pronunciation": "jhan-jhaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "तेज़ हवा, आँधी, तूफ़ान",
+   "english": "a storm; gale",
+   "example": "\"काम में झंझा लरजता।\"",
+   "memory_hook": "a storm।"
+  },
+  {
+   "id": "d36f3e4e-01f7-44e3-b7f9-861f3f3515e6",
+   "word": "लरजना",
+   "pronunciation": "la-raj-naa",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "काँपना, हिलना",
+   "english": "to tremble; quiver",
+   "example": "काम करते समय झंझा-सी लरजती (काँपती) शक्ति।",
+   "memory_hook": "to tremble।"
+  },
+  {
+   "id": "5a325dbd-6416-43fc-b538-92ca6270dc68",
+   "word": "मूठ",
+   "pronunciation": "mooth",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मुट्ठी-भर; दस्ता",
+   "english": "a handful; a hilt",
+   "example": "\"मूठ उनकी मिला लेकर।\"",
+   "memory_hook": "a fistful।"
+  },
+  {
+   "id": "a89a7f55-d43c-4061-9af8-fb3a6ce35012",
+   "word": "अभागा",
+   "pronunciation": "a-bhaa-gaa",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "भाग्यहीन",
+   "english": "unfortunate",
+   "example": "\"पाँचवाँ मैं हूँ अभागा।\"",
+   "memory_hook": "अ + भाग्य।"
+  },
+  {
+   "id": "a9fd6772-28b3-4dbc-83a5-13beca73821f",
+   "word": "धीर",
+   "pronunciation": "dheer",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "विचलित न होने वाला, गंभीर",
+   "english": "steadfast; composed",
+   "example": "\"उन्हें देते धीर रहना।\" (धीरज देना)।",
+   "memory_hook": "composed।"
+  },
+  {
+   "id": "0854ec73-35ab-4a59-a505-58a1a8f9651b",
+   "word": "क्षितिज",
+   "pronunciation": "kshi-tij",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "धरती-आकाश का मिलन-स्थान",
+   "english": "the horizon",
+   "example": "\"क्षितिज पर जैसे जड़े हैं।\"",
+   "memory_hook": "horizon।"
+  },
+  {
+   "id": "ff9567e0-7b11-4acf-a04e-9c4b7e172c3b",
+   "word": "तृषा",
+   "pronunciation": "tri-shaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "तीव्र इच्छा, प्यास",
+   "english": "a deep longing; thirst",
+   "example": "\"किसलिए इतनी तृषा रे!\"",
+   "memory_hook": "thirst/longing।"
+  },
+  {
+   "id": "69f377e3-72ed-43ed-abf9-b6cf8629f1c9",
+   "word": "अश्रु",
+   "pronunciation": "ash-ru",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आँसू",
+   "english": "tears",
+   "example": "\"अश्रु सिंचित हास तेरे!\"",
+   "memory_hook": "tears।"
+  },
+  {
+   "id": "f13c4e26-9729-450c-b479-5df9da6594e7",
+   "word": "हास",
+   "pronunciation": "haas",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हँसी, प्रसन्नता",
+   "english": "laughter; joy",
+   "example": "\"अश्रु सिंचित हास तेरे!\" (आँसुओं में भीगी हँसी)।",
+   "memory_hook": "laughter।"
+  },
+  {
+   "id": "59b6db3b-3f44-4f5c-9410-1299e4800a73",
+   "word": "क्लेश",
+   "pronunciation": "klesh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दुख, पीड़ा",
+   "english": "pain; affliction",
+   "example": "\"दे रहा है क्लेश मुझको।\"",
+   "memory_hook": "affliction।"
+  },
+  {
+   "id": "4c756f38-b6ad-4bc1-ad1a-b6f48e68fffa",
+   "word": "बड़",
+   "pronunciation": "bad",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बरगद, वट वृक्ष",
+   "english": "the banyan tree",
+   "example": "\"मन कि बड़ का झाड़ जैसे।\"",
+   "memory_hook": "banyan।"
+  },
+  {
+   "id": "fe8735b3-858a-4ddc-aa1a-d39e7dc3e5fa",
+   "word": "विरस",
+   "pronunciation": "vi-ras",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "नीरस, अप्रिय",
+   "english": "joyless; insipid",
+   "example": "\"इसी बस से सब विरस है।\"",
+   "memory_hook": "वि + रस = without joy।"
+  },
+  {
+   "id": "6945a202-0999-4638-84d9-29ed154db5e2",
+   "word": "कातना",
+   "pronunciation": "kaat-naa",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "सूत/धागा बनाना (चरखे पर)",
+   "english": "to spin (thread)",
+   "example": "\"कातने में व्यस्त हूँ मैं।\" (गांधी-चरखा)।",
+   "memory_hook": "to spin।"
+  },
+  {
+   "id": "b1ef8d86-d0bd-419e-b381-0c01762abb1c",
+   "word": "अस्त",
+   "pronunciation": "ast",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "डूबा हुआ, समाप्त",
+   "english": "set; ended",
+   "example": "\"यों न कहना अस्त हूँ मैं।\"",
+   "memory_hook": "set/ended।"
+  },
+  {
+   "id": "bdc3ed98-ea53-4fe4-8f0e-728a00e58751",
+   "word": "तिरना",
+   "pronunciation": "tir-naa",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "तैरना, उतरना",
+   "english": "to float",
+   "example": "\"घर नज़र में तिर रहा है।\"",
+   "memory_hook": "to float।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "2f07f970-7982-49a3-ab95-6461b40b9cae",
+   "question": "\"वज्र\" का अर्थ है —",
+   "options": [
+    "बहुत कोमल",
+    "बहुत कठोर",
+    "बहुत छोटा",
+    "बहुत मीठा"
+   ],
+   "correct_index": 1,
+   "explanation": "वज्र = adamant/very hard (thunderbolt-hard)।"
+  },
+  {
+   "id": "f1d39c01-7349-41e3-9e61-c676f9de4dac",
+   "question": "\"नवनीत\" का अर्थ है —",
+   "options": [
+    "नया कपड़ा",
+    "ताज़ा मक्खन",
+    "नई किताब",
+    "ठंडा पानी"
+   ],
+   "correct_index": 1,
+   "explanation": "नवनीत = fresh butter — कोमलता का प्रतीक।"
+  },
+  {
+   "id": "9a452316-1a18-4c26-8639-2ce76639abac",
+   "question": "\"अभागा\" का अर्थ है —",
+   "options": [
+    "भाग्यशाली",
+    "बलवान",
+    "धनी",
+    "भाग्यहीन"
+   ],
+   "correct_index": 3,
+   "explanation": "अभागा = unfortunate, अ + भाग्य।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=f5cb56a0-8368-4ef3-96b8-1287e077a6ac ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: भाव और काव्य-कला से जुड़े शब्द।",
+ "cards": [
+  {
+   "id": "bd5801fe-f03d-4627-8b19-48bbdaf37e6b",
+   "word": "सावन",
+   "pronunciation": "saa-van",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वर्षा का महीना (श्रावण)",
+   "english": "the monsoon month (Sawan)",
+   "example": "\"हे सजीले हरे सावन।\"",
+   "memory_hook": "the rains।"
+  },
+  {
+   "id": "af8434e5-a49f-418d-b532-e671ef5c5915",
+   "word": "सजीला",
+   "pronunciation": "sa-jee-laa",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "सुंदर सजा हुआ, सलोना",
+   "english": "adorned; lovely",
+   "example": "\"हे सजीले हरे सावन।\"",
+   "memory_hook": "adorned।"
+  },
+  {
+   "id": "e402e469-b26d-4057-8875-f61d2922c3bc",
+   "word": "पावन",
+   "pronunciation": "paa-van",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पवित्र",
+   "english": "sacred; holy",
+   "example": "\"हे कि मेरे पुण्य पावन।\"",
+   "memory_hook": "sacred।"
+  },
+  {
+   "id": "d7acbb64-3b8a-4b2b-898f-8b2e37023441",
+   "word": "पूर",
+   "pronunciation": "poor",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "भरपूर, बाढ़",
+   "english": "flood; abundance",
+   "example": "\"घर ख़ुशी का पूर है जो।\" (ख़ुशियों से भरपूर)।",
+   "memory_hook": "flood of।"
+  },
+  {
+   "id": "6cabfbd2-4197-4e36-9b1c-fb42c4d03a29",
+   "word": "घनेरा",
+   "pronunciation": "gha-ne-raa",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "गाढ़ा, घना",
+   "english": "dense; thick",
+   "example": "\"बादल की अँधेरी है अभी तक भी घनेरी।\"",
+   "memory_hook": "dense।"
+  },
+  {
+   "id": "75c48adc-7257-4207-b6d1-f2fcf7335d03",
+   "word": "कारावास",
+   "pronunciation": "kaa-raa-vaas",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "जेल, बंदीगृह",
+   "english": "imprisonment",
+   "example": "कवि ने यह कविता कारावास में लिखी।",
+   "memory_hook": "prison।"
+  },
+  {
+   "id": "0e706976-7f8e-4490-8126-30f8c9b2d305",
+   "word": "स्मृति",
+   "pronunciation": "smri-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "याद",
+   "english": "a memory",
+   "example": "घर की स्मृति इस कविता का केंद्रीय भाव है।",
+   "memory_hook": "a memory।"
+  },
+  {
+   "id": "3e466212-cc73-425d-bd80-1ae7e8549457",
+   "word": "संबोधन",
+   "pronunciation": "sam-bo-dhan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "किसी को पुकारना/संबोधित करना",
+   "english": "addressing (someone)",
+   "example": "\"हे सजीले हरे सावन\" — सावन को संबोधन।",
+   "memory_hook": "addressing।"
+  },
+  {
+   "id": "00c2072f-d2ce-4bb8-8bf5-5e7ec1df15f1",
+   "word": "ध्वन्यात्मक",
+   "pronunciation": "dhvan-yaat-mak",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "ध्वनि वाला (नाद-सौंदर्य)",
+   "english": "onomatopoeic; sound-rich",
+   "example": "\"झरा-झर, थर-थर\" ध्वन्यात्मक शब्द हैं।",
+   "memory_hook": "\"ध्वनि\" से।"
+  },
+  {
+   "id": "106e4627-82ce-4ecc-afc8-a2e086927c89",
+   "word": "बिंब",
+   "pronunciation": "bimb",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मन में बनने वाला चित्र",
+   "english": "an image",
+   "example": "कविता में घर के सुंदर दृश्य-बिंब हैं।",
+   "memory_hook": "an image।"
+  },
+  {
+   "id": "3f00c136-6b3c-4aeb-bd1f-d617cf897aa1",
+   "word": "स्नेह-धारा",
+   "pronunciation": "sneh-dhaa-raa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "प्रेम की निरंतर धारा",
+   "english": "a stream of affection",
+   "example": "माँ की स्नेह-धारा का यहाँ तक भी पसारा।",
+   "memory_hook": "flow of love।"
+  },
+  {
+   "id": "d00fa94b-faf6-481e-bdba-077b6a17a9a4",
+   "word": "त्याग",
+   "pronunciation": "tyaag",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बलिदान, छोड़ देना",
+   "english": "sacrifice",
+   "example": "स्वतंत्रता सेनानी का घर-त्याग बड़ा त्याग था।",
+   "memory_hook": "sacrifice।"
+  },
+  {
+   "id": "c2e5d9a6-1433-4cca-b041-7d65631e6142",
+   "word": "संयम",
+   "pronunciation": "san-yam",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आत्म-नियंत्रण",
+   "english": "self-restraint",
+   "example": "कवि अपनी पीड़ा संयम से छिपा लेता है।",
+   "memory_hook": "restraint।"
+  },
+  {
+   "id": "070123e1-a2e5-4cc3-942c-c2b00acefe2f",
+   "word": "बहुआयामी",
+   "pronunciation": "bahu-aa-yaa-mee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "अनेक पक्षों वाला",
+   "english": "multi-faceted",
+   "example": "पिता का चरित्र बहुआयामी है — कठोर भी, कोमल भी।",
+   "memory_hook": "बहु + आयाम।"
+  },
+  {
+   "id": "2b9f066c-6911-4afe-bf89-dbe3586c011d",
+   "word": "उमग",
+   "pronunciation": "u-mag",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "उल्लास, जोश, आकांक्षा",
+   "english": "joy; ardour",
+   "example": "पिता में बुढ़ापे में भी जीवन की उमग है।",
+   "memory_hook": "joy/zeal।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=775d28af-2900-46d3-9e43-c801348f866f ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d4666245-e6b2-4476-b252-633db8b9f2e3",
+   "question": "\"उर\" का अर्थ है —",
+   "options": [
+    "हाथ",
+    "आँख",
+    "हृदय",
+    "पैर"
+   ],
+   "correct_index": 2,
+   "explanation": "उर = the heart।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "42a7a37c-e392-4e16-96c8-089c63287ef9",
+   "question": "\"ध्वन्यात्मक\" शब्द किसे कहते हैं?",
+   "options": [
+    "ध्वनि का अनुभव कराने वाले शब्द (झरा-झर, सर-सर)",
+    "अर्थ में बहुत ही कठिन और भारी-भरकम शब्द",
+    "विदेशी शब्द",
+    "गिनती के शब्द"
+   ],
+   "correct_index": 0,
+   "explanation": "ध्वन्यात्मक = onomatopoeic, ध्वनि-सौंदर्य वाले शब्द (झरा-झर, थर-थर)।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "2bf898fb-aa77-41ad-b429-133c60876ace",
+   "question": "\"विरस\" का अर्थ है —",
+   "options": [
+    "बहुत रसीला",
+    "बहुत सुंदर",
+    "बहुत बड़ा",
+    "नीरस, अप्रिय"
+   ],
+   "correct_index": 3,
+   "explanation": "विरस = joyless/insipid, वि + रस।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "कविता का सौंदर्य"  (slug: ch12-kavita-saundarya)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=1c93b7f7-cb2a-4c5d-84af-920473e5f66c ---
+{
+ "src": "",
+ "alt": "कविता का सौंदर्य",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — Devanagari verse turning into images of falling rain, trembling leaves and a calling cloud, sound-waves rippling, on a dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=77c233a3-4d79-4c3b-8954-95ebe91f9bad ---
+{
+ "markdown": "इस कविता का सौंदर्य उसकी **ध्वन्यात्मकता (नाद-सौंदर्य)**, **दृश्य-बिंबों**, **संबोधन** और **दोहराव** में है। पहले भावों की यात्रा देखिए, फिर अलंकार।"
+}
+
+--- block #2 [timeline] id=5fc395c8-ecbf-4595-bbb0-aa5fd25ac834 ---
+{
+ "title": "कविता की संरचना — भावों की यात्रा",
+ "orientation": "vertical",
+ "events": [
+  {
+   "id": "023ae658-a3bf-408b-9720-2310a7527cc4",
+   "label": "बारिश का गिरना",
+   "detail": "मूसलाधार पानी — और उसके साथ मन का यादों से घिरना।"
+  },
+  {
+   "id": "2cd3bfb7-3ba4-46c4-84e6-962f007b9498",
+   "label": "घर की याद",
+   "detail": "दूर का घर आँखों में तैरने लगता है; भाई-बहन की याद।"
+  },
+  {
+   "id": "6289081b-e99e-42ad-b615-5e72310302ba",
+   "label": "माँ की स्मृति",
+   "detail": "अनपढ़ पर स्नेहमयी माँ; गोद में सिर रखते ही दुख का मिटना।"
+  },
+  {
+   "id": "6bc1dc1c-91ca-4332-ac88-3cb7b1af9390",
+   "label": "पिता का चित्र",
+   "detail": "वज्र-भुज नवनीत-सा उर — कठोर पर कोमल, निडर पिता।"
+  },
+  {
+   "id": "4af78b50-7a25-4cbb-abbf-26da7c47e0bd",
+   "label": "पाँचवें (कवि) की याद",
+   "detail": "सबसे लाड़ला बेटा आज जेल में — पिता का रोना।"
+  },
+  {
+   "id": "8023b1b8-93cd-44ad-9fc3-ee2c44b69aaa",
+   "label": "सावन को संदेश",
+   "detail": "बादल को संदेशवाहक बनाकर \"मैं मज़े में हूँ\" का संदेश — पीड़ा का त्यागपूर्ण छिपाव।"
+  }
+ ]
+}
+
+--- block #3 [heading] id=07e20758-c02d-4457-ae83-75727646f7f0 ---
+{
+ "text": "कविता का सौंदर्य — अलंकार और ध्वनि",
+ "level": 2
+}
+
+--- block #4 [text] id=016dd4d2-b44f-498e-a8d0-c073b84694e0 ---
+{
+ "markdown": "नीचे किसी विशेषता पर टैप करें — उसके उदाहरण रेखांकित हो जाएँगे।"
+}
+
+--- block #5 [literary_devices_highlighter] id=8b0a2b21-fe89-4e74-a601-3927ebbcbd99 ---
+{
+ "lang": "hindi",
+ "passage": "गिर रहा पानी झरा-झर, हिल रहे पत्ते हरा-हर, बह रही है हवा सर-सर, काँपते हैं प्राण थर-थर। वज्र-भुज नवनीत-सा उर। हे सजीले हरे सावन।",
+ "devices": [
+  {
+   "id": "59cc8806-806a-4133-b8f0-35f9321dfa32",
+   "device": "alliteration",
+   "matches": [
+    {
+     "text": "झरा-झर... हरा-हर... सर-सर... थर-थर",
+     "explanation": "पानी, पत्ते, हवा और प्राण की ध्वनियों को \"झरा-झर, सर-सर, थर-थर\" से दिखाना — ध्वन्यात्मकता और अनुप्रास का नाद-सौंदर्य।"
+    }
+   ]
+  },
+  {
+   "id": "019d0373-8e4a-4b11-81e3-b1ec7d757ba1",
+   "device": "metaphor",
+   "matches": [
+    {
+     "text": "वज्र-भुज",
+     "explanation": "भुजाओं को सीधे \"वज्र\" कह देना (अभेद) — रूपक अलंकार।"
+    }
+   ]
+  },
+  {
+   "id": "f2772643-0db0-49a3-a0ca-e8cee7071678",
+   "device": "simile",
+   "matches": [
+    {
+     "text": "नवनीत-सा उर",
+     "explanation": "हृदय की कोमलता को \"नवनीत (मक्खन) के समान\" बताना — \"सा\" से तुलना, उपमा अलंकार।"
+    }
+   ]
+  },
+  {
+   "id": "e260b7ac-eb1b-4844-aa2e-7cc3f7e97b0e",
+   "device": "apostrophe",
+   "matches": [
+    {
+     "text": "हे सजीले हरे सावन",
+     "explanation": "निर्जीव \"सावन\" को मनुष्य-सा पुकारना/संबोधित करना — संबोधन (और मानवीकरण)।"
+    }
+   ]
+  }
+ ]
+}
+
+--- block #6 [worked_example] id=6cca7597-b0f5-44f9-9f55-9efebf6669b0 ---
+{
+ "label": "\"झरा-झर, थर-थर, सर-सर\" जैसे शब्द कविता में क्या जादू करते हैं?",
+ "variant": "ncert_intext",
+ "problem": "कविता में \"झरा-झर\" (पानी), \"सर-सर\" (हवा), \"थर-थर\" (काँपना) जैसे शब्द आते हैं। ये क्या काम करते हैं? सोचिए, फिर उत्तर देखिए।",
+ "solution": "ये **ध्वन्यात्मक शब्द (onomatopoeia)** हैं — जो अपनी ध्वनि से ही उस चीज़ का अनुभव करा देते हैं।\n\n\"झरा-झर\" सुनते ही झमाझम बारिश सुनाई देती है; \"सर-सर\" से हवा बहती महसूस होती है; \"थर-थर\" से काँपना दिख जाता है। इन शब्दों से कविता में **नाद-सौंदर्य** (ध्वनि की सुंदरता) और जीवंतता आ जाती है — पाठक सिर्फ़ पढ़ता नहीं, दृश्य को **सुनता और महसूस** करता है। यही इस लोकभाषा-सहज कविता की बड़ी ताक़त है।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #7 [inline_quiz] id=01559f4b-d486-4b72-975c-97a52b1f046c ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "fe2ccd0c-6d02-431b-bdf9-8b5448b9327f",
+   "question": "\"झरा-झर, सर-सर, थर-थर\" जैसे शब्द किस प्रकार के हैं?",
+   "options": [
+    "विदेशी शब्द",
+    "ध्वन्यात्मक (ध्वनि का अनुभव कराने वाले)",
+    "गिनती के शब्द",
+    "अर्थ में बहुत कठिन तत्सम शब्द"
+   ],
+   "correct_index": 1,
+   "explanation": "ये ध्वन्यात्मक शब्द हैं — अपनी ध्वनि से दृश्य का अनुभव कराते हैं (नाद-सौंदर्य)।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "097f995a-21bb-4448-9bf1-60417c608372",
+   "question": "\"वज्र-भुज\" में कौन-सा अलंकार है?",
+   "options": [
+    "अनुप्रास",
+    "रूपक (भुजा = वज्र)",
+    "बढ़ा-चढ़ाकर कहना, अतिशयोक्ति",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 1,
+   "explanation": "भुजाओं को सीधे \"वज्र\" कह देना (अभेद) — रूपक।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "9bb67551-fffe-4382-acc5-976ebb33362c",
+   "question": "\"हे सजीले हरे सावन\" में सावन को पुकारना कौन-सी विशेषता है?",
+   "options": [
+    "समानता दिखाने वाली उपमा",
+    "समास",
+    "तुक",
+    "संबोधन (और मानवीकरण)"
+   ],
+   "correct_index": 3,
+   "explanation": "निर्जीव सावन को मनुष्य-सा पुकारना — संबोधन व मानवीकरण।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "विषय और व्याकरण"  (slug: ch12-vishay-vyakaran)
+published=false blocks=10 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=aec5bea5-16a2-4300-9539-2b09497c2715 ---
+{
+ "src": "",
+ "alt": "घर — भावनाओं का केंद्र",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm family home glowing as the heart of belonging, with a tree of family members, on a dark warm ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=4e6e2cab-1d63-458e-9eb7-3a084b4e4ec1 ---
+{
+ "markdown": "यह कविता \"घर\" को सिर्फ़ एक इमारत नहीं, बल्कि **भावनाओं और रिश्तों का केंद्र** दिखाती है। पहले एक विचार देखिए, फिर भाषा का अभ्यास।"
+}
+
+--- block #2 [cultural_context_card] id=723880cd-8766-4a49-9271-7d260303f801 ---
+{
+ "reference": "घर — एक भौतिक स्थान से बढ़कर",
+ "category": "concept",
+ "short_desc": "घर ईंट-पत्थर नहीं, अपनों के प्रेम और रिश्तों का केंद्र है।",
+ "detail": "कविता में \"घर\" एक भौतिक मकान से बढ़कर **भावनाओं और संबंधों का केंद्र** है — जहाँ माँ की गोद, पिता का प्यार, भाई-बहन का साथ है। इसीलिए जेल में बैठे कवि को \"घर\" की इतनी तीव्र याद आती है — उसे ईंट-गारे की नहीं, अपनों की कमी खलती है। आज जब **संयुक्त परिवार** घटकर **एकल परिवार** बन रहे हैं, यह कविता याद दिलाती है कि घर की असली ख़ुशी रिश्तों के जुड़ाव में है, न कि उसके आकार में।",
+ "image_url": ""
+}
+
+--- block #3 [heading] id=25d66eea-1dd7-487b-8d40-ddb1a292499a ---
+{
+ "text": "व्याकरण — क्षेत्रीय शब्द और व्याकरणिक पहचान",
+ "level": 2
+}
+
+--- block #4 [text] id=2959f2ae-857c-4b9b-9205-cf00ca1a3bf8 ---
+{
+ "markdown": "कविता में कवि ने **क्षेत्रीय/स्थानीय शब्दों** का सहज प्रयोग किया है (जैसे — चुआ, छिन, फलानी, बड़)। और हर शब्द की एक **व्याकरणिक पहचान** होती है — संज्ञा, सर्वनाम, विशेषण या क्रिया। नीचे अभ्यास कीजिए।"
+}
+
+--- block #5 [table] id=c89ef467-49b9-4732-a8c4-0e8be3395f5c ---
+{
+ "caption": "कविता के क्षेत्रीय शब्द",
+ "headers": [
+  "क्षेत्रीय शब्द",
+  "मानक हिंदी अर्थ"
+ ],
+ "rows": [
+  [
+   "छिन",
+   "क्षण (a moment)"
+  ],
+  [
+   "चुआ",
+   "छू लिया / चुरा लिया (touched/stole)"
+  ],
+  [
+   "फलानी/फलाना",
+   "कोई अमुक (a certain one)"
+  ],
+  [
+   "बड़",
+   "बरगद/वट (the banyan)"
+  ],
+  [
+   "नद्दी",
+   "नदी (a river)"
+  ]
+ ]
+}
+
+--- block #6 [apply_express] id=22dddc3c-eb86-41dc-8097-59a57992d0d2 ---
+{
+ "title": "व्याकरण व्यायामशाला — व्याकरणिक पहचान व क्षेत्रीय शब्द",
+ "intro": "शब्द-भेद पहचानने और प्रयोग का अभ्यास कीजिए।",
+ "chapter_number": 12,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h12-gr-01",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "\"बहुत पानी गिर रहा है\" — इसमें \"पानी\" शब्द क्या है?",
+   "options": [
+    "संज्ञा",
+    "सर्वनाम",
+    "विशेषण",
+    "क्रिया"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "सही — \"पानी\" एक वस्तु का नाम (संज्ञा) है।",
+    "ग़लत।",
+    "ग़लत — \"बहुत\" विशेषण है।",
+    "ग़लत — \"गिर रहा है\" क्रिया है।"
+   ]
+  },
+  {
+   "id": "h12-gr-02",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "\"बहुत पानी गिर रहा है\" — इसमें \"बहुत\" शब्द क्या है?",
+   "options": [
+    "संज्ञा",
+    "सर्वनाम",
+    "विशेषण",
+    "क्रिया"
+   ],
+   "correct_index": 2,
+   "option_reasons": [
+    "ग़लत।",
+    "ग़लत।",
+    "सही — \"बहुत\" पानी की मात्रा बताता है, अतः विशेषण।",
+    "ग़लत।"
+   ]
+  },
+  {
+   "id": "h12-gr-03",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "prompt": "\"खुले सिर नंगे बदन वह\" — इसमें \"वह\" शब्द क्या है?",
+   "options": [
+    "संज्ञा",
+    "विशेषण",
+    "सर्वनाम",
+    "क्रिया"
+   ],
+   "correct_index": 2,
+   "option_reasons": [
+    "ग़लत।",
+    "ग़लत।",
+    "सही — \"वह\" संज्ञा (पिता) के बदले आया है, अतः सर्वनाम।",
+    "ग़लत।"
+   ]
+  },
+  {
+   "id": "h12-gr-04",
+   "kind": "fill_blank",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2,
+   "prompt": "क्षेत्रीय शब्द का अर्थ भरिए — \"छिन\" का मानक हिंदी रूप है ______ (a moment)।",
+   "answers": [
+    [
+     "क्षण"
+    ]
+   ],
+   "hint": "पल वाला शब्द।",
+   "explanation": "क्षेत्रीय \"छिन\" = मानक हिंदी \"क्षण\" (a moment)।"
+  },
+  {
+   "id": "h12-gr-05",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "स्मृति",
+   "instruction": "\"स्मृति\" (याद) शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (याद)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "बारिश की हर बूँद कवि के मन में घर की मीठी स्मृति जगा देती थी।",
+   "min_words": 7
+  },
+  {
+   "id": "h12-gr-06",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "दुख छिपाना",
+   "instruction": "\"अपनों को दुखी न करने के लिए अपना दर्द छिपाना भी एक तरह का प्रेम है\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "कवि की तरह कई बार माता-पिता भी अपनी तकलीफ़ें बच्चों से छिपा लेते हैं ताकि बच्चे चिंता न करें — यही निःस्वार्थ प्रेम है।",
+   "min_words": 10
+  }
+ ]
+}
+
+--- block #7 [heading] id=2a5207e3-50c6-4923-8141-c2a094649b9b ---
+{
+ "text": "भाषा संगम — \"घर\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #8 [table] id=10a98948-1a43-438c-9ec8-4ad514c51a00 ---
+{
+ "caption": "\"घर\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "मकान/गृह/घर"
+  ],
+  [
+   "संस्कृत",
+   "गृहम्"
+  ],
+  [
+   "पंजाबी",
+   "घर"
+  ],
+  [
+   "उर्दू",
+   "घर"
+  ],
+  [
+   "मराठी",
+   "घर"
+  ],
+  [
+   "गुजराती",
+   "ઘર (घर)"
+  ],
+  [
+   "बांग्ला",
+   "বাড়ি (बाड़ी)"
+  ],
+  [
+   "नेपाली",
+   "घर"
+  ],
+  [
+   "ओडिआ",
+   "ଘର (घर)"
+  ],
+  [
+   "तेलुगु",
+   "ఇల్లు (इल्लु)"
+  ],
+  [
+   "तमिल",
+   "வீடு (वीडु)"
+  ],
+  [
+   "कन्नड़",
+   "ಮನೆ (मने)"
+  ]
+ ]
+}
+
+--- block #9 [inline_quiz] id=6e4ec7cd-dd05-4ff6-9518-5f3bf1333733 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "93695a2e-4bdb-4415-b401-c7de8e9c5a07",
+   "question": "कविता में \"घर\" किसका प्रतीक है?",
+   "options": [
+    "भावनाओं और रिश्तों के केंद्र का",
+    "केवल ईंट-पत्थर की इमारत का",
+    "एक बाज़ार का",
+    "एक किले का"
+   ],
+   "correct_index": 0,
+   "explanation": "घर यहाँ अपनों के प्रेम और रिश्तों का केंद्र है — एक भौतिक स्थान से बढ़कर।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "997cbe8c-3e4a-4fc7-8c41-4ebab7a485b7",
+   "question": "\"बहुत पानी गिर रहा है\" में \"गिर रहा है\" शब्द क्या है?",
+   "options": [
+    "संज्ञा",
+    "सर्वनाम",
+    "क्रिया",
+    "विशेषण"
+   ],
+   "correct_index": 2,
+   "explanation": "\"गिर रहा है\" काम/क्रिया बताता है — अतः क्रिया।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "9f2aeb50-2fd1-471c-8f80-23b6f9f484d0",
+   "question": "क्षेत्रीय शब्द \"छिन\" का मानक हिंदी रूप है —",
+   "options": [
+    "छीन",
+    "चिह्न",
+    "क्षण",
+    "छत"
+   ],
+   "correct_index": 2,
+   "explanation": "क्षेत्रीय \"छिन\" = \"क्षण\" (a moment)।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "अभ्यास — Practice"  (slug: ch12-abhyas)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=45004b67-7374-47f1-9648-fe4d03dc1cfb ---
+{
+ "src": "",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi poetry book, a quill and lamp, a faint rain-and-home motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=0ba7a7d3-0d2a-49d2-b0e6-4a73a1723ee0 ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=edf82235-19f1-41fb-be6a-d8cb1ec4f456 ---
+{
+ "title": "अध्याय 12 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 12,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h12-pr-01",
+   "question": "इस कविता के रचयिता कौन हैं?",
+   "options": [
+    "सुभद्रा कुमारी चौहान",
+    "भवानीप्रसाद मिश्र",
+    "निराला जी",
+    "तुलसीदास"
+   ],
+   "correct_index": 1,
+   "explanation": "\"घर की याद\" भवानीप्रसाद मिश्र की रचना है।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h12-pr-02",
+   "question": "कवि ने यह कविता कहाँ और क्यों लिखी?",
+   "options": [
+    "विदेश से, मित्र के लिए",
+    "गाँव से, खेती पर",
+    "यात्रा से, किसी संबंधी के लिए",
+    "जेल से, परिवार की याद में"
+   ],
+   "correct_index": 3,
+   "explanation": "1942 के आंदोलन में जेल में रहते हुए, परिवार की स्मृति में लिखी।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h12-pr-03",
+   "question": "कवि किसे संदेशवाहक बनाकर घर संदेश भेजता है?",
+   "options": [
+    "सावन के बादल को",
+    "आसमान में उड़ते एक पक्षी को",
+    "बहती हुई ठंडी हवा को",
+    "एक नदी को"
+   ],
+   "correct_index": 0,
+   "explanation": "कवि सावन के बादल को संदेशवाहक बनाता है।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h12-pr-04",
+   "question": "कविता में माँ की कैसी छवि उभरती है?",
+   "options": [
+    "स्वभाव से कठोर और निष्क्रिय",
+    "घमंडी और बहुत धनी",
+    "स्नेहमयी और दुख में दृढ़",
+    "उदासीन और दूर"
+   ],
+   "correct_index": 2,
+   "explanation": "\"बिन-पढ़ी... दुख में गढ़ी\" — स्नेहमयी और दृढ़ माँ।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h12-pr-05",
+   "question": "कवि घरवालों से क्या कहलवाना चाहता है?",
+   "options": [
+    "कि वह वहाँ बहुत दुखी है",
+    "कि वह बीमार पड़ा है",
+    "कि वह मज़े में और व्यस्त है",
+    "कि वह लौट रहा है"
+   ],
+   "correct_index": 2,
+   "explanation": "\"मस्त हूँ मैं, कातने में व्यस्त हूँ मैं\" — पीड़ा छिपाकर।",
+   "concept_tag": "comprehension",
+   "difficulty": 3
+  },
+  {
+   "id": "h12-pr-06",
+   "question": "\"वज्र\" शब्द का अर्थ है —",
+   "options": [
+    "बहुत कठोर",
+    "बहुत ही कोमल",
+    "बहुत ही मीठा",
+    "बहुत छोटा"
+   ],
+   "correct_index": 0,
+   "explanation": "वज्र = adamant/very hard।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h12-pr-07",
+   "question": "\"नवनीत\" का अर्थ है —",
+   "options": [
+    "बिलकुल नया कपड़ा",
+    "ठंडा-ठंडा पानी",
+    "नई किताब",
+    "ताज़ा मक्खन"
+   ],
+   "correct_index": 3,
+   "explanation": "नवनीत = fresh butter।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h12-pr-08",
+   "question": "\"उर\" का अर्थ है —",
+   "options": [
+    "दायाँ हाथ",
+    "हृदय",
+    "दोनों आँख",
+    "पैर"
+   ],
+   "correct_index": 1,
+   "explanation": "उर = the heart।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 1
+  },
+  {
+   "id": "h12-pr-09",
+   "question": "\"परिताप\" का सबसे सही अर्थ है —",
+   "options": [
+    "मन की गहरी ख़ुशी",
+    "अत्यधिक दुख",
+    "पेट की तेज़ भूख",
+    "गहरी नींद"
+   ],
+   "correct_index": 1,
+   "explanation": "परिताप = great sorrow/anguish।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h12-pr-10",
+   "question": "\"झरा-झर, सर-सर, थर-थर\" किस प्रकार के शब्द हैं?",
+   "options": [
+    "विदेशी मूल के",
+    "संख्या बताने वाले",
+    "तत्सम",
+    "ध्वन्यात्मक"
+   ],
+   "correct_index": 3,
+   "explanation": "ध्वनि का अनुभव कराने वाले — ध्वन्यात्मक शब्द।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h12-pr-11",
+   "question": "\"वज्र-भुज\" में कौन-सा अलंकार है?",
+   "options": [
+    "रूपक",
+    "उपमा",
+    "अनुप्रास",
+    "अतिशयोक्ति"
+   ],
+   "correct_index": 0,
+   "explanation": "भुजा को सीधे \"वज्र\" कहना — रूपक।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h12-pr-12",
+   "question": "\"नवनीत-सा उर\" में कौन-सा अलंकार है?",
+   "options": [
+    "रूपक",
+    "अनुप्रास",
+    "उपमा",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 2,
+   "explanation": "\"सा\" से तुलना — उपमा अलंकार।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h12-pr-13",
+   "question": "\"बहुत पानी गिर रहा है\" में \"पानी\" शब्द क्या है?",
+   "options": [
+    "विशेषण",
+    "सर्वनाम",
+    "संज्ञा",
+    "क्रिया"
+   ],
+   "correct_index": 2,
+   "explanation": "वस्तु का नाम — संज्ञा।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h12-pr-14",
+   "question": "क्षेत्रीय शब्द \"छिन\" का मानक हिंदी रूप है —",
+   "options": [
+    "क्षण",
+    "छीन",
+    "छत",
+    "चिह्न"
+   ],
+   "correct_index": 0,
+   "explanation": "\"छिन\" = \"क्षण\" (a moment)।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h12-pr-15",
+   "question": "\"वज्र-भुज नवनीत-सा उर\" से पिता की कैसी छवि बनती है?",
+   "options": [
+    "पूरी तरह कठोर और निर्दयी",
+    "पूरी तरह कमज़ोर और दुर्बल",
+    "बहुत डरपोक",
+    "बाहर से कठोर, भीतर से कोमल"
+   ],
+   "correct_index": 3,
+   "explanation": "वज्र-भुज (बल) + नवनीत-उर (कोमलता) — कठोर पर कोमल, बहुआयामी।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h12-pr-16",
+   "question": "कवि स्वयं को \"अभागा पाँचवाँ\" क्यों कहता है?",
+   "options": [
+    "वह जीवन में पढ़ ही नहीं सका",
+    "सबसे लाड़ला होकर भी जेल में दूर है",
+    "वह घर में सबसे छोटा है",
+    "वह बीमार है"
+   ],
+   "correct_index": 1,
+   "explanation": "पिता का \"सोने पे सुहागा\" लाड़ला बेटा होकर भी आज जेल में दूर है।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h12-pr-17",
+   "question": "\"और कहना मस्त हूँ मैं\" कथन किस ओर संकेत करता है?",
+   "options": [
+    "कवि सचमुच बहुत ही ख़ुश है",
+    "अपने दुख को परिजनों से छिपाना",
+    "घर के प्रति गहरी उदासीनता",
+    "प्रकृति-प्रेम"
+   ],
+   "correct_index": 1,
+   "explanation": "भीतर पीड़ा, पर \"मस्त हूँ\" — दुख को अपनों से छिपाना।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h12-pr-18",
+   "question": "कवि सावन से अपनी असली पीड़ा घरवालों को न बताने को क्यों कहता है?",
+   "options": [
+    "क्योंकि उसे कोई पीड़ा ही नहीं है",
+    "क्योंकि वह परिवार से नाराज़ है",
+    "क्योंकि वह भूल गया",
+    "ताकि परिवार उसके लिए न रोए"
+   ],
+   "correct_index": 3,
+   "explanation": "अपनों को कष्ट से बचाने के लिए वह अपनी पीड़ा छिपाता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h12-pr-19",
+   "question": "इस कविता में कवि का सबसे बड़ा \"त्याग\" क्या है?",
+   "options": [
+    "अपनों के लिए अपनी पीड़ा छिपा लेना",
+    "घर-परिवार के लिए ख़ूब धन कमाना",
+    "जेल से किसी तरह भाग जाना",
+    "सावन रोक देना"
+   ],
+   "correct_index": 0,
+   "explanation": "सारी तकलीफ़ दबाकर परिवार को सांत्वना भेजना — त्यागपूर्ण प्रेम।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h12-pr-20",
+   "question": "इस पूरी कविता का केंद्रीय भाव क्या है?",
+   "options": [
+    "युद्ध के मैदान की अद्भुत वीरता-गाथा",
+    "प्रकृति का बड़ा व्यापार",
+    "घर की याद, परिवार-प्रेम व अकेलापन",
+    "धन का लालच"
+   ],
+   "correct_index": 2,
+   "explanation": "कारावास में घर/परिवार की याद, गहरा प्रेम और अकेलेपन की पीड़ा।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h12-pr-21",
+   "question": "जेल में बैठा कवि घर के हर सदस्य को एक-एक कर क्यों याद करता है?",
+   "options": [
+    "दूरी और अकेलापन हर रिश्ते की कमी को गहरा कर देते हैं",
+    "उसे और कोई काम नहीं था",
+    "वह सबसे नाराज़ था",
+    "वह नाम भूल रहा था"
+   ],
+   "correct_index": 1,
+   "explanation": "कारावास का अकेलापन हर अपने की याद को और तीव्र कर देता है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h12-pr-22",
+   "question": "\"वज्र-भुज नवनीत-सा उर\" में दो विपरीत बातें एक साथ रखकर कवि पिता को कैसा दिखाता है?",
+   "options": [
+    "बाहर से बलवान, भीतर से कोमल — एक पूर्ण, सच्चा इंसान",
+    "भीतर से भी पूरी तरह कठोर और निर्दयी इंसान",
+    "बहुत कमज़ोर और डरपोक",
+    "बहुत आलसी"
+   ],
+   "correct_index": 0,
+   "explanation": "कठोरता और कोमलता का मेल पिता को एकतरफ़ा नहीं, एक जीवंत-पूर्ण इंसान बनाता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 5
+  },
+  {
+   "id": "h12-pr-23",
+   "question": "कवि का अपनी पीड़ा छिपाकर \"मैं मज़े में हूँ\" कहलवाना किस भाव का सबसे ऊँचा रूप है?",
+   "options": [
+    "अपनों को दुख से बचाने वाले निःस्वार्थ प्रेम का",
+    "झूठ बोलने की आदत का",
+    "घमंड का",
+    "उदासीनता का"
+   ],
+   "correct_index": 2,
+   "explanation": "अपनी तकलीफ़ दबाकर अपनों को बचाना — यही त्यागपूर्ण, निःस्वार्थ प्रेम का चरम है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h12-pr-24",
+   "question": "सावन के बादल को संदेशवाहक बनाना कविता को किस तरह और सुंदर बना देता है?",
+   "options": [
+    "प्रकृति और मन के भाव एक-दूसरे में घुल-मिल जाते हैं",
+    "इससे पूरी कविता उलझी और कठिन हो जाती है",
+    "इसका कोई अर्थ नहीं",
+    "बादल संदेश नहीं ले जाते"
+   ],
+   "correct_index": 0,
+   "explanation": "बादल को दूत बनाकर कवि प्रकृति और अपने भीतर के भाव को एक कोमल चित्र में जोड़ देता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=13f68788-72b4-4c60-9600-71b2b5704867 ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 12,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h12-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "वज्र-भुज",
+    "नवनीत-सा",
+    "उर",
+    "पिताजी",
+    "भोले",
+    "बहादुर"
+   ],
+   "answer": "पिताजी भोले बहादुर वज्र-भुज नवनीत-सा उर"
+  },
+  {
+   "id": "h12-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "स्नेह",
+   "instruction": "\"स्नेह\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (प्रेम)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "माँ के स्नेह की छाँव में बड़ी से बड़ी तकलीफ़ भी छोटी लगने लगती है।",
+   "min_words": 7
+  },
+  {
+   "id": "h12-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "घर का अर्थ",
+   "instruction": "\"घर सिर्फ़ इमारत नहीं, अपनों का साथ है\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "घर की असली ख़ुशी उसकी दीवारों में नहीं, बल्कि उसमें रहने वाले अपनों के प्यार और साथ में होती है।",
+   "min_words": 10
+  }
+ ]
+}
+
+--- block #4 [callout] id=1b8934ac-639a-4709-882a-d47b27d9072e ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "झरोखे से + खोजबीन — और \"गंगा\" का समापन",
+ "markdown": "और पढ़िए-महसूस कीजिए:\n\n- **साथ-साथ पढ़ें:** रामनरेश त्रिपाठी की कविता *\"तब याद तुम्हारी आती है\"* — प्रकृति के हर सुंदर पल में किसी अपने की याद।\n- **खोजबीन:** घर-परिवार और बिछोह की अन्य कविताएँ खोजकर पढ़िए; प्रकृति को संदेशवाहक बनाने के और उदाहरण ढूँढिए।\n\nयह **\"गंगा\" का अंतिम पाठ** है — पूरी पुस्तक का सफ़र पूरा हुआ। 🪔"
+}

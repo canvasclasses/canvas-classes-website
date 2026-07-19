@@ -1,0 +1,18 @@
+{
+  "_note": "Ready-to-insert interactive_image block for a motor neuron. Image: motor-neuron_illus.webp (keyed transparent + compressed from the founder's generated PNG, 1147x860). To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, and add this block to the target biology page. Once published it powers both the inline 'Test yourself' Label Sprint and the book's Bio Deck. Hotspots authored + browser-verified against the image on 2026-07-13.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Structure of a motor neuron",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    { "id": "dendrites",   "x": 0.13, "y": 0.22, "label": "Dendrites",          "detail": "Short, branched projections that **receive** signals from other neurons and carry them **toward** the cell body.", "icon": "pin" },
+    { "id": "soma",        "x": 0.20, "y": 0.53, "label": "Cell body (soma)",   "detail": "Contains the nucleus and cytoplasm and integrates incoming signals. Also called the **cyton** or perikaryon.", "icon": "pin" },
+    { "id": "nucleus",     "x": 0.26, "y": 0.43, "label": "Nucleus",            "detail": "The control centre of the cell body, housing the neuron's DNA.", "icon": "pin" },
+    { "id": "axon",        "x": 0.40, "y": 0.49, "label": "Axon",               "detail": "The single long fibre that carries the nerve impulse **away** from the cell body.", "icon": "pin" },
+    { "id": "myelin",      "x": 0.47, "y": 0.56, "label": "Myelin sheath",      "detail": "A fatty **insulating** layer around the axon that speeds up impulse conduction.", "icon": "pin" },
+    { "id": "node",        "x": 0.60, "y": 0.55, "label": "Node of Ranvier",    "detail": "A gap between myelin segments where the impulse **jumps ahead** (saltatory conduction), making it faster.", "icon": "pin" },
+    { "id": "schwann",     "x": 0.78, "y": 0.47, "label": "Schwann cell",       "detail": "The cell that wraps around the axon to form **one segment** of the myelin sheath (in the PNS).", "icon": "pin" },
+    { "id": "terminals",   "x": 0.87, "y": 0.82, "label": "Axon terminals",     "detail": "The branched endings (synaptic knobs) that pass the signal to the **next** neuron or a muscle.", "icon": "pin" }
+  ],
+  "generation_prompt": "A clean modern educational anatomy illustration of a motor neuron, shown as a labelled structural diagram. Show: cell body (soma), nucleus, dendrites, axon, myelin sheath, nodes of Ranvier, Schwann cell, axon terminals. Semi-realistic textbook style, muted palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Landscape 4:3, high resolution."
+}

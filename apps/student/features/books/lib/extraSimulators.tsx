@@ -20,6 +20,24 @@ const MuscularSystemViewer = dynamic(() => import('@/features/anatomy/MuscularSy
 const VSEPRSimulator = dynamic(() => import('@/app/inorganic-chemistry-hub/VSEPRSimulator'), { ssr: false });
 const BondAngleSimulator = dynamic(() => import('@/app/inorganic-chemistry-hub/BondAngleSimulator'), { ssr: false });
 
+// "First iteration" Class 11 Biology sweep (2026-07-15) — thin SimpleModelViewer
+// wrappers, see SimpleModelViewers.tsx for the shared engine + per-model credit.
+const CoronavirusViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.CoronavirusViewer), { ssr: false });
+const SeaStarViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.SeaStarViewer), { ssr: false });
+const FlowerAnatomyViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.FlowerAnatomyViewer), { ssr: false });
+const RootStructureViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.RootStructureViewer), { ssr: false });
+const FrogAnatomyViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.FrogAnatomyViewer), { ssr: false });
+const AnimalCellViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.AnimalCellViewer), { ssr: false });
+const PlantCellViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.PlantCellViewer), { ssr: false });
+const MitochondriaViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.MitochondriaViewer), { ssr: false });
+const LysosomeViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.LysosomeViewer), { ssr: false });
+const DNAHelixViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.DNAHelixViewer), { ssr: false });
+const LungsViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.LungsViewer), { ssr: false });
+const NephronViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.NephronViewer), { ssr: false });
+const NeuronViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.NeuronViewer), { ssr: false });
+const BrainViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.BrainViewer), { ssr: false });
+const PancreasViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewers').then((m) => m.PancreasViewer), { ssr: false });
+
 export const EXTRA_SIMULATORS: ExtraSimulators = {
   'atomic-models': AtomicModels,
   'heart-3d': Heart3DViewer,
@@ -28,4 +46,19 @@ export const EXTRA_SIMULATORS: ExtraSimulators = {
   'muscular-system': MuscularSystemViewer,
   'vsepr-shape-lab': VSEPRSimulator,
   'bond-angle-explorer': BondAngleSimulator,
+  'coronavirus-3d': CoronavirusViewer,
+  'sea-star-3d': SeaStarViewer,
+  'flower-anatomy-3d': FlowerAnatomyViewer,
+  'root-structure-3d': RootStructureViewer,
+  'frog-anatomy-3d': FrogAnatomyViewer,
+  'animal-cell-3d': AnimalCellViewer,
+  'plant-cell-3d': PlantCellViewer,
+  'mitochondria-3d': MitochondriaViewer,
+  'lysosome-3d': LysosomeViewer,
+  'dna-helix': DNAHelixViewer,
+  'lungs-3d': LungsViewer,
+  'nephron-3d': NephronViewer,
+  'neuron-3d': NeuronViewer,
+  'brain-3d': BrainViewer,
+  'pancreas-3d': PancreasViewer,
 };

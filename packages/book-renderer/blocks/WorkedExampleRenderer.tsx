@@ -58,14 +58,17 @@ function parseLabel(
 
 // ── Markdown component overrides ───────────────────────────────────────────
 const mdComponents = {
+  // Font size/leading matched to the standard body paragraph (TextBlockRenderer's
+  // p = text-[17px] leading-[1.65]) so the question/solution text reads at the same
+  // size as the rest of the page instead of a smaller, denser size.
   p: ({ children }: { children?: React.ReactNode }) => (
-    <p className="text-[15px] leading-[1.7] text-white/85 my-2.5">{children}</p>
+    <p className="text-[17px] leading-[1.65] text-white/85 my-2.5">{children}</p>
   ),
   strong: ({ children }: { children?: React.ReactNode }) => (
     <strong className="font-semibold text-white">{children}</strong>
   ),
   em: ({ children }: { children?: React.ReactNode }) => (
-    <em className="not-italic text-white/55 text-[13px]">{children}</em>
+    <em className="not-italic text-white/55 text-[15px]">{children}</em>
   ),
   ul: ({ children }: { children?: React.ReactNode }) => (
     <ul className="my-2 pl-5 space-y-1 list-disc marker:text-white/30">{children}</ul>
@@ -74,7 +77,7 @@ const mdComponents = {
     <ol className="my-2 pl-5 space-y-1 list-decimal marker:text-white/40">{children}</ol>
   ),
   li: ({ children }: { children?: React.ReactNode }) => (
-    <li className="text-[15px] leading-[1.7] text-white/80">{children}</li>
+    <li className="text-[17px] leading-[1.65] text-white/80">{children}</li>
   ),
 };
 
@@ -88,16 +91,19 @@ export default function WorkedExampleRenderer({ block }: Props) {
   );
 
   const isNcert = block.variant === 'ncert_intext';
-  // Blue accent for NCERT examples, amber for solved/exam-PYQ examples.
-  const accent = isNcert ? '#60a5fa' : '#fbbf24';
+  // Blue accent for NCERT examples, a muted amber for solved/exam-PYQ examples — dialed
+  // down from the original #fbbf24 (amber-400) to match the softened amber-200/80 body
+  // highlight, so the amber reads as one consistent colour across the page.
+  const accent = isNcert ? '#60a5fa' : '#dba846';
 
   return (
     <div
       className="my-8 rounded-r-xl pl-6 pr-5 py-5"
       style={{
         borderLeft: `3px solid ${accent}`,
-        // Subtle wash that originates at the accent line and fades to the right.
-        background: `linear-gradient(to right, ${accent}1A 0%, ${accent}0A 30%, ${accent}00 75%)`,
+        // Subtle wash that originates at the accent line and fades to the right —
+        // dialed down further (was 1A/0A, ~10%/4% alpha) so the tint is quieter.
+        background: `linear-gradient(to right, ${accent}12 0%, ${accent}08 30%, ${accent}00 75%)`,
       }}
     >
       {/* Header row: label + subtitle + badge */}

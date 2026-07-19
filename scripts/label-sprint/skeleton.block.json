@@ -1,0 +1,74 @@
+{
+  "_note": "Label Sprint round for skeleton \u2014 generated skeleton_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Front view of the human skeleton",
+  "caption": "Tap each label, then tap where it belongs on the skeleton.",
+  "hotspots": [
+    {
+      "id": "5fc15714-c004-4637-a348-ba7d76021a51",
+      "x": 0.5,
+      "y": 0.08,
+      "label": "Skull",
+      "detail": "Encases and protects the brain; the mandible is its only movable bone.",
+      "icon": "pin"
+    },
+    {
+      "id": "7fc87139-7173-4528-ad81-b014d08c7205",
+      "x": 0.5,
+      "y": 0.22,
+      "label": "Rib cage (thoracic cage)",
+      "detail": "12 pairs of ribs protecting the heart and lungs.",
+      "icon": "pin"
+    },
+    {
+      "id": "f031c3ff-e453-4bd3-ab34-0841e7608432",
+      "x": 0.5,
+      "y": 0.33,
+      "label": "Vertebral column",
+      "detail": "Chain of vertebrae from neck to pelvis; houses the spinal cord.",
+      "icon": "pin"
+    },
+    {
+      "id": "7c0a14d6-dce1-4518-b90b-01e65d3561bd",
+      "x": 0.36,
+      "y": 0.28,
+      "label": "Humerus",
+      "detail": "The long bone of the upper arm.",
+      "icon": "pin"
+    },
+    {
+      "id": "a394da7f-9884-4efd-9f31-9ff9d1a66f27",
+      "x": 0.5,
+      "y": 0.42,
+      "label": "Pelvis (hip girdle)",
+      "detail": "Connects the vertebral column to the lower limbs.",
+      "icon": "pin"
+    },
+    {
+      "id": "cdada3aa-051b-4882-9425-060fa27994c9",
+      "x": 0.42,
+      "y": 0.58,
+      "label": "Femur",
+      "detail": "The longest and strongest bone in the body \u2014 the thigh bone.",
+      "icon": "pin"
+    },
+    {
+      "id": "3b5bda72-97af-4705-bc38-447d8d9a1b1a",
+      "x": 0.42,
+      "y": 0.78,
+      "label": "Tibia and fibula",
+      "detail": "The two bones of the lower leg, below the knee.",
+      "icon": "pin"
+    },
+    {
+      "id": "0ff7c9e6-15fe-4e9b-9176-edf5f2388741",
+      "x": 0.28,
+      "y": 0.5,
+      "label": "Carpals and phalanges",
+      "detail": "The small bones of the wrist and fingers.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "human skeleton illustration, front view"
+}

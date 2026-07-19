@@ -673,6 +673,12 @@ export default function BookWorkspace() {
                       blocks,
                       reading_time_min: currentPage.reading_time_min,
                       hinglish_blocks: currentPage.hinglish_blocks,
+                      // Drives the hover/tap glossary definitions in the prose.
+                      // This preview builds a page LITERAL rather than passing
+                      // `currentPage` through, so every page-level field the
+                      // renderer reads has to be added here explicitly or it
+                      // silently doesn't render.
+                      glossary: currentPage.glossary,
                     }}
                     hinglishOverride={
                       currentPage.hinglish_blocks && currentPage.hinglish_blocks.length > 0

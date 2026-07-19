@@ -10,10 +10,14 @@ import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@can
 import { computePageReadiness } from '@canvas/data/books/readiness';
 import { snapshotBookPageVersion } from '@canvas/data/books/page-protection';
 
+// MUST stay in sync with CalloutBlockSchema.variant in
+// packages/data/books/schemas.ts. If it drifts (misses a valid variant), a
+// callout carrying that variant gets silently downgraded to 'note' on save.
 const VALID_CALLOUT_VARIANTS = new Set([
   'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
   'threads_of_curiosity', 'bridging_science', 'india_science',
   'what_if', 'quest_continues', 'ready_to_go_beyond',
+  'india_voice', 'literature_in_life', 'voices_that_inspire', 'evidence_pack',
 ]);
 
 /**
@@ -53,6 +57,15 @@ function stripNulls<T>(value: T): T {
  *  • Strips `null`-valued keys (deep) so they don't trip Zod's `.optional()`
  *  • Assigns a UUID if `id` is missing or not a string
  *  • Resets an invalid callout `variant` to 'note'
+ *  • Defaults a missing/non-string `alt` on `image` blocks (and each `gallery`
+ *    item) to `''` — both `ImageBlockSchema.alt` and `GalleryItemSchema.alt`
+ *    are REQUIRED strings, not `.optional()`, so a legacy block with no `alt`
+ *    at all (pre-dating the field) fails Zod on every future save — even one
+ *    editing a completely unrelated field like `aspect_ratio` on that same
+ *    page. Found 2026-07-11: 85 pages (all of Class 11 Chemistry Ch.6/Ch.7 +
+ *    much of Class 12 Ch.4/Ch.5) had this gap, surfacing as an opaque
+ *    "Invalid block payload" on any edit to those pages, plus a Next.js
+ *    "Image is missing required alt property" console warning at render time.
  *
  * This lets old DB data self-heal on the next save rather than blocking
  * every subsequent edit with a Zod validation error.
@@ -71,6 +84,70 @@ function sanitizeBlock(b: Record<string, unknown>): Record<string, unknown> {
     b.variant = 'note';
   }
 
+  if (b.type === 'image' && typeof b.alt !== 'string') {
+    b.alt = '';
+  }
+
+  if (b.type === 'gallery' && Array.isArray(b.items)) {
+    b.items = (b.items as unknown[]).map((it) => {
+      if (typeof it !== 'object' || it === null) return it;
+      const item = { ...(it as Record<string, unknown>) };
+      if (typeof item.alt !== 'string') item.alt = '';
+      return item;
+    });
+  }
+
+  // worked_example.reveal_mode is a required enum; legacy blocks authored before
+  // the field existed have it undefined. Default to the workflow's standard.
+  if (b.type === 'worked_example' && b.reveal_mode !== 'always_visible' && b.reveal_mode !== 'tap_to_reveal') {
+    b.reveal_mode = 'tap_to_reveal';
+  }
+
+  // inline_quiz.pass_threshold is a required number; derive it from the question
+  // count when missing (1 q → 1.0, 2–3 → 0.67, else → 0.6) per §3.6.
+  if (b.type === 'inline_quiz' && typeof b.pass_threshold !== 'number') {
+    const n = Array.isArray(b.questions) ? b.questions.length : 0;
+    b.pass_threshold = n <= 1 ? 1 : n <= 3 ? 0.67 : 0.6;
+  }
+
+  // reasoning_prompt: heal the legacy reveal/difficulty_level swap (a number in
+  // `reveal`, the explanation text in `difficulty_level`) and any reasoning_type
+  // outside the enum (e.g. 'causal') → 'logical'.
+  if (b.type === 'reasoning_prompt') {
+    if (typeof b.reveal === 'number' && typeof b.difficulty_level === 'string') {
+      const text = b.difficulty_level as string;
+      let level = b.reveal as number;
+      if (level < 1) level = 1;
+      if (level > 5) level = 5;
+      b.reveal = text;
+      b.difficulty_level = level;
+    }
+    const REASONING_TYPES = new Set(['logical', 'spatial', 'quantitative', 'analogical']);
+    if (typeof b.reasoning_type !== 'string' || !REASONING_TYPES.has(b.reasoning_type as string)) {
+      b.reasoning_type = 'logical';
+    }
+  }
+
+  // simulation.prediction.reveal_after must be a string when present; a legacy
+  // boolean (e.g. `true`) carries no explanation — drop it so the prediction
+  // (prompt + options) stays valid and the reveal section simply hides.
+  if (b.type === 'simulation' && b.prediction && typeof b.prediction === 'object') {
+    const pred = b.prediction as Record<string, unknown>;
+    if ('reveal_after' in pred && typeof pred.reveal_after !== 'string') {
+      delete pred.reveal_after;
+    }
+  }
+
+  // timeline events need a string id each (schema-required); assign one if missing.
+  if (b.type === 'timeline' && Array.isArray(b.events)) {
+    b.events = (b.events as unknown[]).map((e) => {
+      if (typeof e !== 'object' || e === null) return e;
+      const ev = { ...(e as Record<string, unknown>) };
+      if (typeof ev.id !== 'string' || !ev.id) ev.id = randomUUID();
+      return ev;
+    });
+  }
+
   return b;
 }
 
@@ -79,17 +156,22 @@ function sanitizeBlock(b: Record<string, unknown>): Record<string, unknown> {
  * and sanitises every block before Zod validation runs.
  */
 function sanitizeBlocks(blocks: unknown[]): unknown[] {
-  return blocks.map((block) => {
+  return blocks.map((block, i) => {
     if (typeof block !== 'object' || block === null) return block;
     const b = sanitizeBlock({ ...(block as Record<string, unknown>) });
+
+    // `order` is a required number; default a missing one to the array position.
+    if (typeof b.order !== 'number') b.order = i;
 
     // Recurse into section columns (sections cannot nest further)
     if (b.type === 'section' && Array.isArray(b.columns)) {
       b.columns = (b.columns as unknown[][]).map((col) => {
         if (!Array.isArray(col)) return col;
-        return col.map((child) => {
+        return col.map((child, j) => {
           if (typeof child !== 'object' || child === null) return child;
-          return sanitizeBlock({ ...(child as Record<string, unknown>) });
+          const c = sanitizeBlock({ ...(child as Record<string, unknown>) });
+          if (typeof c.order !== 'number') c.order = j;
+          return c;
         });
       });
     }

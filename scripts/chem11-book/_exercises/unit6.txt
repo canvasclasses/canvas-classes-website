@@ -1,0 +1,308 @@
+NCERT Class 11 Chemistry — Unit 6: Equilibrium — EXERCISES
+This unit maps to TWO Live Book chapters, split at 6.34/6.35 (founder-confirmed):
+- 6.1–6.34 (gas-phase chemical equilibrium: Kc, Kp, Le Chatelier) → Live Book Ch.6 "Chemical Equilibrium"
+- 6.35–6.73 (acid-base, pH, ionization constants, buffers, solubility product) → Live Book Ch.7 "Ionic Equilibrium"
+source_label for BOTH chapters should still read "NCERT 6.x" (the real NCERT unit number).
+
+=== PART A: 6.1–6.34 → Ch.6 "Chemical Equilibrium" ===
+
+6.1 A liquid is in equilibrium with its vapour in a sealed container at a fixed temperature. The volume of the container is suddenly increased.
+a) What is the initial effect of the change on vapour pressure?
+b) How do rates of evaporation and condensation change initially?
+c) What happens when equilibrium is restored finally and what will be the final vapour pressure?
+
+6.2 What is Kc for the following equilibrium when the equilibrium concentration of each substance is: [SO2]= 0.60M, [O2] = 0.82M and [SO3] = 1.90M ?
+2SO2(g) + O2(g) ⇌ 2SO3(g)
+
+6.3 At a certain temperature and total pressure of 10^5 Pa, iodine vapour contains 40% by volume of I atoms
+I2(g) ⇌ 2I(g)
+Calculate Kp for the equilibrium.
+
+6.4 Write the expression for the equilibrium constant, Kc for each of the following reactions:
+(i) 2NOCl(g) ⇌ 2NO(g) + Cl2(g)
+(ii) 2Cu(NO3)2(s) ⇌ 2CuO(s) + 4NO2(g) + O2(g)
+(iii) CH3COOC2H5(aq) + H2O(l) ⇌ CH3COOH(aq) + C2H5OH(aq)
+(iv) Fe3+(aq) + 3OH-(aq) ⇌ Fe(OH)3(s)
+(v) I2(s) + 5F2 ⇌ 2IF5
+
+6.5 Find out the value of Kc for each of the following equilibria from the value of Kp:
+(i) 2NOCl(g) ⇌ 2NO(g) + Cl2(g); Kp= 1.8 × 10^-2 at 500 K
+(ii) CaCO3(s) ⇌ CaO(s) + CO2(g); Kp= 167 at 1073 K
+
+6.6 For the following equilibrium, Kc= 6.3 × 10^14 at 1000 K
+NO(g) + O3(g) ⇌ NO2(g) + O2(g)
+Both the forward and reverse reactions in the equilibrium are elementary bimolecular reactions. What is Kc, for the reverse reaction?
+
+6.7 Explain why pure liquids and solids can be ignored while writing the equilibrium constant expression?
+
+6.8 Reaction between N2 and O2 takes place as follows:
+2N2(g) + O2(g) ⇌ 2N2O(g)
+If a mixture of 0.482 mol N2 and 0.933 mol of O2 is placed in a 10 L reaction vessel and allowed to form N2O at a temperature for which Kc= 2.0 × 10^-37, determine the composition of equilibrium mixture.
+
+6.9 Nitric oxide reacts with Br2 and gives nitrosyl bromide as per reaction given below:
+2NO(g) + Br2(g) ⇌ 2NOBr(g)
+When 0.087 mol of NO and 0.0437 mol of Br2 are mixed in a closed container at constant temperature, 0.0518 mol of NOBr is obtained at equilibrium. Calculate equilibrium amount of NO and Br2.
+
+6.10 At 450K, Kp= 2.0 × 10^10/bar for the given reaction at equilibrium.
+2SO2(g)+O2(g) ⇌ 2SO3(g)
+What is Kc at this temperature?
+
+6.11 A sample of HI(g) is placed in flask at a pressure of 0.2 atm. At equilibrium the partial pressure of HI(g) is 0.04 atm. What is Kp for the given equilibrium?
+2HI(g) ⇌ H2(g) + I2(g)
+
+6.12 A mixture of 1.57 mol of N2, 1.92 mol of H2 and 8.13 mol of NH3 is introduced into a 20 L reaction vessel at 500 K. At this temperature, the equilibrium constant, Kc for the reaction N2(g) + 3H2(g) ⇌ 2NH3(g) is 1.7 × 10^2. Is the reaction mixture at equilibrium? If not, what is the direction of the net reaction?
+
+6.13 The equilibrium constant expression for a gas reaction is,
+Kc = [NH3]^4[O2]^5 / [NO]^4[H2O]^6
+Write the balanced chemical equation corresponding to this expression.
+
+6.14 One mole of H2O and one mole of CO are taken in 10 L vessel and heated to 725 K. At equilibrium 40% of water (by mass) reacts with CO according to the equation,
+H2O(g) + CO(g) ⇌ H2(g) + CO2(g)
+Calculate the equilibrium constant for the reaction.
+
+6.15 At 700 K, equilibrium constant for the reaction:
+H2(g) + I2(g) ⇌ 2HI(g)
+is 54.8. If 0.5 mol L-1 of HI(g) is present at equilibrium at 700 K, what are the concentration of H2(g) and I2(g) assuming that we initially started with HI(g) and allowed it to reach equilibrium at 700K?
+
+6.16 What is the equilibrium concentration of each of the substances in the equilibrium when the initial concentration of ICl was 0.78 M?
+2ICl(g) ⇌ I2(g) + Cl2(g); Kc= 0.14
+
+6.17 Kp = 0.04 atm at 899 K for the equilibrium shown below. What is the equilibrium concentration of C2H6 when it is placed in a flask at 4.0 atm pressure and allowed to come to equilibrium?
+C2H6(g) ⇌ C2H4(g) + H2(g)
+
+6.18 Ethyl acetate is formed by the reaction between ethanol and acetic acid and the equilibrium is represented as:
+CH3COOH(l) + C2H5OH(l) ⇌ CH3COOC2H5(l) + H2O(l)
+(i) Write the concentration ratio (reaction quotient), Qc, for this reaction (note: water is not in excess and is not a solvent in this reaction)
+(ii) At 293 K, if one starts with 1.00 mol of acetic acid and 0.18 mol of ethanol, there is 0.171 mol of ethyl acetate in the final equilibrium mixture. Calculate the equilibrium constant.
+(iii) Starting with 0.5 mol of ethanol and 1.0 mol of acetic acid and maintaining it at 293 K, 0.214 mol of ethyl acetate is found after sometime. Has equilibrium been reached?
+
+6.19 A sample of pure PCl5 was introduced into an evacuated vessel at 473 K. After equilibrium was attained, concentration of PCl5 was found to be 0.5 × 10^-1 mol L-1. If value of Kc is 8.3 × 10^-3, what are the concentrations of PCl3 and Cl2 at equilibrium?
+PCl5(g) ⇌ PCl3(g) + Cl2(g)
+
+6.20 One of the reaction that takes place in producing steel from iron ore is the reduction of iron(II) oxide by carbon monoxide to give iron metal and CO2.
+FeO(s) + CO(g) ⇌ Fe(s) + CO2(g); Kp= 0.265 atm at 1050K
+What are the equilibrium partial pressures of CO and CO2 at 1050 K if the initial partial pressures are: pCO= 1.4 atm and pCO2 = 0.80 atm?
+
+6.21 Equilibrium constant, Kc for the reaction
+N2(g) + 3H2(g) ⇌ 2NH3(g) at 500 K is 0.061
+At a particular time, the analysis shows that composition of the reaction mixture is 3.0 mol L-1 N2, 2.0 mol L-1 H2 and 0.5 mol L-1 NH3. Is the reaction at equilibrium? If not in which direction does the reaction tend to proceed to reach equilibrium?
+
+6.22 Bromine monochloride, BrCl decomposes into bromine and chlorine and reaches the equilibrium:
+2BrCl(g) ⇌ Br2(g) + Cl2(g)
+for which Kc= 32 at 500 K. If initially pure BrCl is present at a concentration of 3.3 × 10^-3 mol L-1, what is its molar concentration in the mixture at equilibrium?
+
+6.23 At 1127 K and 1 atm pressure, a gaseous mixture of CO and CO2 in equilibrium with soild carbon has 90.55% CO by mass
+C(s) + CO2(g) ⇌ 2CO(g)
+Calculate Kc for this reaction at the above temperature.
+
+6.24 Calculate a) ΔG° and b) the equilibrium constant for the formation of NO2 from NO and O2 at 298K
+NO(g) + 1/2 O2(g) ⇌ NO2(g)
+where
+ΔfG°(NO2) = 52.0 kJ/mol
+ΔfG°(NO) = 87.0 kJ/mol
+ΔfG°(O2) = 0 kJ/mol
+
+6.25 Does the number of moles of reaction products increase, decrease or remain same when each of the following equilibria is subjected to a decrease in pressure by increasing the volume?
+(a) PCl5(g) ⇌ PCl3(g) + Cl2(g)
+(b) CaO(s) + CO2(g) ⇌ CaCO3(s)
+(c) 3Fe(s) + 4H2O(g) ⇌ Fe3O4(s) + 4H2(g)
+
+6.26 Which of the following reactions will get affected by increasing the pressure? Also, mention whether change will cause the reaction to go into forward or backward direction.
+(i) COCl2(g) ⇌ CO(g) + Cl2(g)
+(ii) CH4(g) + 2S2(g) ⇌ CS2(g) + 2H2S(g)
+(iii) CO2(g) + C(s) ⇌ 2CO(g)
+(iv) 2H2(g) + CO(g) ⇌ CH3OH(g)
+(v) CaCO3(s) ⇌ CaO(s) + CO2(g)
+(vi) 4NH3(g) + 5O2(g) ⇌ 4NO(g) + 6H2O(g)
+
+6.27 The equilibrium constant for the following reaction is 1.6 ×10^5 at 1024K
+H2(g) + Br2(g) ⇌ 2HBr(g)
+Find the equilibrium pressure of all gases if 10.0 bar of HBr is introduced into a sealed container at 1024K.
+
+6.28 Dihydrogen gas is obtained from natural gas by partial oxidation with steam as per following endothermic reaction:
+CH4(g) + H2O(g) ⇌ CO(g) + 3H2(g)
+(a) Write as expression for Kp for the above reaction.
+(b) How will the values of Kp and composition of equilibrium mixture be affected by
+(i) increasing the pressure
+(ii) increasing the temperature
+(iii) using a catalyst?
+
+6.29 Describe the effect of:
+a) addition of H2
+b) addition of CH3OH
+c) removal of CO
+d) removal of CH3OH
+on the equilibrium of the reaction:
+2H2(g) + CO(g) ⇌ CH3OH(g)
+
+6.30 At 473 K, equilibrium constant Kc for decomposition of phosphorus pentachloride, PCl5 is 8.3 ×10^-3. If decomposition is depicted as,
+PCl5(g) ⇌ PCl3(g) + Cl2(g), ΔrH° = 124.0 kJ mol-1
+a) write an expression for Kc for the reaction.
+b) what is the value of Kc for the reverse reaction at the same temperature?
+c) what would be the effect on Kc if (i) more PCl5 is added (ii) pressure is increased (iii) the temperature is increased?
+
+6.31 Dihydrogen gas used in Haber's process is produced by reacting methane from natural gas with high temperature steam. The first stage of two stage reaction involves the formation of CO and H2. In second stage, CO formed in first stage is reacted with more steam in water gas shift reaction,
+CO(g) + H2O(g) ⇌ CO2(g) + H2(g)
+If a reaction vessel at 400 °C is charged with an equimolar mixture of CO and steam such that pco = pH2O = 4.0 bar, what will be the partial pressure of H2 at equilibrium? Kp= 10.1 at 400°C
+
+6.32 Predict which of the following reaction will have appreciable concentration of reactants and products:
+a) Cl2(g) ⇌ 2Cl(g) Kc = 5×10^-39
+b) Cl2(g) + 2NO(g) ⇌ 2NOCl(g) Kc = 3.7 × 10^8
+c) Cl2(g) + 2NO2(g) ⇌ 2NO2Cl(g) Kc = 1.8
+
+6.33 The value of Kc for the reaction 3O2(g) ⇌ 2O3(g) is 2.0 ×10^-50 at 25°C. If the equilibrium concentration of O2 in air at 25°C is 1.6 ×10^-2, what is the concentration of O3?
+
+6.34 The reaction, CO(g) + 3H2(g) ⇌ CH4(g) + H2O(g) is at equilibrium at 1300 K in a 1L flask. It also contain 0.30 mol of CO, 0.10 mol of H2 and 0.02 mol of H2O and an unknown amount of CH4 in the flask. Determine the concentration of CH4 in the mixture. The equilibrium constant, Kc for the reaction at the given temperature is 3.90.
+
+=== PART B: 6.35–6.73 → Ch.7 "Ionic Equilibrium" ===
+
+6.35 What is meant by the conjugate acid-base pair? Find the conjugate acid/base for the following species:
+HNO2, CN-, HClO4, F-, OH-, CO3^2-, and S2-
+
+6.36 Which of the followings are Lewis acids? H2O, BF3, H+, and NH4+
+
+6.37 What will be the conjugate bases for the Brönsted acids: HF, H2SO4 and HCO3-?
+
+6.38 Write the conjugate acids for the following Brönsted bases: NH2-, NH3 and HCOO-.
+
+6.39 The species: H2O, HCO3-, HSO4- and NH3 can act both as Brönsted acids and bases. For each case give the corresponding conjugate acid and base.
+
+6.40 Classify the following species into Lewis acids and Lewis bases and show how these act as Lewis acid/base: (a) OH- (b) F- (c) H+ (d) BCl3.
+
+6.41 The concentration of hydrogen ion in a sample of soft drink is 3.8 × 10^-3 M. What is its pH?
+
+6.42 The pH of a sample of vinegar is 3.76. Calculate the concentration of hydrogen ion in it.
+
+6.43 The ionization constant of HF, HCOOH and HCN at 298K are 6.8 × 10^-4, 1.8 × 10^-4 and 4.8 × 10^-9 respectively. Calculate the ionization constants of the corresponding conjugate base.
+
+6.44 The ionization constant of phenol is 1.0 × 10^-10. What is the concentration of phenolate ion in 0.05 M solution of phenol? What will be its degree of ionization if the solution is also 0.01M in sodium phenolate?
+
+6.45 The first ionization constant of H2S is 9.1 × 10^-8. Calculate the concentration of HS- ion in its 0.1M solution. How will this concentration be affected if the solution is 0.1M in HCl also? If the second dissociation constant of H2S is 1.2 × 10^-13, calculate the concentration of S2- under both conditions.
+
+6.46 The ionization constant of acetic acid is 1.74 × 10^-5. Calculate the degree of dissociation of acetic acid in its 0.05 M solution. Calculate the concentration of acetate ion in the solution and its pH.
+
+6.47 It has been found that the pH of a 0.01M solution of an organic acid is 4.15. Calculate the concentration of the anion, the ionization constant of the acid and its pKa.
+
+6.48 Assuming complete dissociation, calculate the pH of the following solutions: (a) 0.003 M HCl (b) 0.005 M NaOH (c) 0.002 M HBr (d) 0.002 M KOH
+
+6.49 Calculate the pH of the following solutions:
+a) 2 g of TlOH dissolved in water to give 2 litre of solution.
+b) 0.3 g of Ca(OH)2 dissolved in water to give 500 mL of solution.
+c) 0.3 g of NaOH dissolved in water to give 200 mL of solution.
+d) 1mL of 13.6 M HCl is diluted with water to give 1 litre of solution.
+
+6.50 The degree of ionization of a 0.1M bromoacetic acid solution is 0.132. Calculate the pH of the solution and the pKa of bromoacetic acid.
+
+6.51 The pH of 0.005M codeine (C18H21NO3) solution is 9.95. Calculate its ionization constant and pKb.
+
+6.52 What is the pH of 0.001M aniline solution? The ionization constant of aniline can be taken from Table 6.7. Calculate the degree of ionization of aniline in the solution. Also calculate the ionization constant of the conjugate acid of aniline.
+
+6.53 Calculate the degree of ionization of 0.05M acetic acid if its pKa value is 4.74. How is the degree of dissociation affected when its solution also contains (a) 0.01M (b) 0.1M in HCl?
+
+6.54 The ionization constant of dimethylamine is 5.4 × 10^-4. Calculate its degree of ionization in its 0.02M solution. What percentage of dimethylamine is ionized if the solution is also 0.1M in NaOH?
+
+6.55 Calculate the hydrogen ion concentration in the following biological fluids whose pH are given below:
+(a) Human muscle-fluid, 6.83 (b) Human stomach fluid, 1.2
+(c) Human blood, 7.38 (d) Human saliva, 6.4.
+
+6.56 The pH of milk, black coffee, tomato juice, lemon juice and egg white are 6.8, 5.0, 4.2, 2.2 and 7.8 respectively. Calculate corresponding hydrogen ion concentration in each.
+
+6.57 If 0.561 g of KOH is dissolved in water to give 200 mL of solution at 298 K. Calculate the concentrations of potassium, hydrogen and hydroxyl ions. What is its pH?
+
+6.58 The solubility of Sr(OH)2 at 298 K is 19.23 g/L of solution. Calculate the concentrations of strontium and hydroxyl ions and the pH of the solution.
+
+6.59 The ionization constant of propanoic acid is 1.32 × 10^-5. Calculate the degree of ionization of the acid in its 0.05M solution and also its pH. What will be its degree of ionization if the solution is 0.01M in HCl also?
+
+6.60 The pH of 0.1M solution of cyanic acid (HCNO) is 2.34. Calculate the ionization constant of the acid and its degree of ionization in the solution.
+
+6.61 The ionization constant of nitrous acid is 4.5 × 10^-4. Calculate the pH of 0.04 M sodium nitrite solution and also its degree of hydrolysis.
+
+6.62 A 0.02M solution of pyridinium hydrochloride has pH = 3.44. Calculate the ionization constant of pyridine.
+
+6.63 Predict if the solutions of the following salts are neutral, acidic or basic: NaCl, KBr, NaCN, NH4NO3, NaNO2 and KF
+
+6.64 The ionization constant of chloroacetic acid is 1.35 × 10^-3. What will be the pH of 0.1M acid and its 0.1M sodium salt solution?
+
+6.65 Ionic product of water at 310K is 2.7 × 10^-14. What is the pH of neutral water at this temperature?
+
+6.66 Calculate the pH of the resultant mixtures: a) 10 mL of 0.2M Ca(OH)2 + 25 mL of 0.1M HCl b) 10 mL of 0.01M H2SO4 + 10 mL of 0.01M Ca(OH)2 c) 10 mL of 0.1M H2SO4 + 10 mL of 0.1M KOH
+
+6.67 Determine the solubilities of silver chromate, barium chromate, ferric hydroxide, lead chloride and mercurous iodide at 298K from their solubility product constants given in Table 6.9. Determine also the molarities of individual ions.
+
+6.68 The solubility product constant of Ag2CrO4 and AgBr are 1.1 × 10^-12 and 5.0 × 10^-13 respectively. Calculate the ratio of the molarities of their saturated solutions.
+
+6.69 Equal volumes of 0.002 M solutions of sodium iodate and cupric chlorate are mixed together. Will it lead to precipitation of copper iodate? (For cupric iodate Ksp = 7.4 × 10^-8).
+
+6.70 The ionization constant of benzoic acid is 6.46 × 10^-5 and Ksp for silver benzoate is 2.5 × 10^-13. How many times is silver benzoate more soluble in a buffer of pH 3.19 compared to its solubility in pure water?
+
+6.71 What is the maximum concentration of equimolar solutions of ferrous sulphate and sodium sulphide so that when mixed in equal volumes, there is no precipitation of iron sulphide? (For iron sulphide, Ksp = 6.3 × 10^-18).
+
+6.72 What is the minimum volume of water required to dissolve 1g of calcium sulphate at 298 K? (For calcium sulphate, Ksp is 9.1 × 10^-6).
+
+6.73 The concentration of sulphide ion in 0.1M HCl solution saturated with hydrogen sulphide is 1.0 × 10^-19 M. If 10 mL of this is added to 5 mL of 0.04 M solution of the following: FeSO4, MnCl2, ZnCl2 and CdCl2, in which of these solutions precipitation will take place?
+
+--- NCERT OFFICIAL SELECTED ANSWERS for 6.1–6.34 (cross-check only, re-derive the full working yourself) ---
+6.2 12.229
+6.3 2.67 × 10^4
+6.5 (i) 4.33 × 10^-4 (ii) 1.90
+6.6 1.59 × 10^-15
+6.8 [N2] = 0.0482 molL-1, [O2] = 0.0933 molL-1, [N2O] = 6.6 × 10^-21 molL-1
+6.9 0.0352 mol of NO and 0.0178 mol of Br2
+6.10 7.47 × 10^11 M-1
+6.11 4.0
+6.12 Qc = 2.379 × 10^3. No, reaction is not at equilibrium.
+6.14 0.44
+6.15 0.068 molL-1 each of H2 and I2
+6.16 [I2] = [Cl2] = 0.167 M, [ICl] = 0.446 M
+6.17 [C2H6]eq = 3.62 atm
+6.18 (i) Qc = [CH3COOC2H5][H2O] / [CH3COOH][C2H5OH] (ii) Kc = 3.92 (iii) value of Qc is less than Kc therefore equilibrium is not attained.
+6.19 0.02 molL-1 for both PCl3 and Cl2.
+6.20 [PCO] = 1.739 atm, [PCO2] = 0.461 atm.
+6.21 No, the reaction proceeds to form more products.
+6.22 3 × 10^-4 molL-1
+6.23 0.149
+6.24 a) –35.0 kJ, b) 1.365 × 10^6
+6.27 [PH2]eq = [PBr2]eq = 2.5 × 10^-2 bar, [PHBr] = 10.0 bar
+6.30 b) 120.48
+6.31 [H2]eq = 0.96 bar
+6.33 2.86 × 10^-28 M
+6.34 5.85×10^-2
+
+--- NCERT OFFICIAL SELECTED ANSWERS for 6.35–6.73 (cross-check only, re-derive the full working yourself) ---
+6.35 In the order given (HNO2, CN-, HClO4, F-, OH-, CO3^2-, S2-), the conjugates are: NO2-, HCN, ClO4-, HF, H2O, HCO3-, HS-
+6.36 BF3, H+, NH4+ are Lewis acids
+6.37 F-, HSO4-, CO3^2-
+6.38 NH3, NH4+, HCOOH
+6.41 2.42
+6.42 1.7 × 10^-4 M
+6.43 F- = 1.5 × 10^-11, HCOO- = 5.6 × 10^-11, CN- = 2.08 × 10^-6
+6.44 [phenolate ion] = 2.2 × 10^-6, α = 4.47 × 10^-5, α in sodium phenolate = 10^-8
+6.45 [HS-] = 9.54 × 10^-5, in 0.1M HCl [HS-] = 9.1 × 10^-8 M, [S2-] = 1.2 × 10^-13 M, in 0.1M HCl [S2-] = 1.09 × 10^-19 M
+6.46 [Ac-] = 0.00093, pH = 3.03
+6.47 [A-] = 7.08 × 10^-5 M, Ka = 5.08 × 10^-7, pKa = 6.29
+6.48 a) 2.52 b) 11.70 c) 2.70 d) 11.30
+6.49 a) 11.65 b) 12.21 c) 12.57
+6.50 pH = 1.88, pKa = 2.70
+6.51 Kb = 1.6 × 10^-6, pKb = 5.8
+6.52 α = 6.53 × 10^-4, Ka = 2.35 × 10^-5
+6.53 a) 0.0018 b) 0.00018
+6.54 α = 0.0054
+6.55 a) 1.48 × 10^-7 M b) 0.063 c) 4.17 × 10^-8 M d) 3.98 × 10^-7
+6.56 a) 1.5 × 10^-7 M b) 10^-5 M c) 6.31 × 10^-5 M d) 6.31 × 10^-3 M
+6.57 [K+] = [OH-] = 0.05M, [H+] = 2.0 × 10^-13 M
+6.58 [Sr2+] = 0.1581M, [OH-] = 0.3162M, pH = 13.50
+6.59 α = 1.63 × 10^-2, pH = 3.09. In presence of 0.01M HCl, α = 1.32 × 10^-3
+6.60 Ka = 2.09 × 10^-4 and degree of ionization = 0.0457
+6.61 pH = 7.97. Degree of hydrolysis = 2.36 × 10^-5
+6.62 Kb = 1.5 × 10^-9
+6.63 NaCl, KBr solutions are neutral, NaCN, NaNO2 and KF solutions are basic and NH4NO3 solution is acidic.
+6.64 (a) pH of acid solution = 1.9 (b) pH of its salt solution = 7.9
+6.65 pH = 6.78
+6.66 a) 12.6 b) 7.00 c) 1.3
+6.67 Silver chromate S = 0.65 × 10^-4 M; Molarity of Ag+ = 1.30 × 10^-4 M; Molarity of CrO4^2- = 0.65 × 10^-4 M. Barium Chromate S = 1.1 × 10^-5 M; Molarity of Ba2+ and CrO4^2- each is 1.1 × 10^-5 M. Ferric Hydroxide S = 1.39 × 10^-10 M; Molarity of Fe3+ = 1.39 × 10^-10 M; Molarity of OH- = 4.17 × 10^-10 M. Lead Chloride S = 1.59 × 10^-2 M; Molarity of Pb2+ = 1.59 × 10^-2 M; Molarity of Cl- = 3.18 × 10^-2 M. Mercurous Iodide S = 2.24 × 10^-10 M; Molarity of Hg2^2+ = 2.24 × 10^-10 M and molarity of I- = 4.48 × 10^-10 M
+6.68 Silver chromate is more soluble, and the ratio of their molarities = 91.9
+6.69 No precipitate
+6.70 Silver benzoate is 3.317 times more soluble at lower pH
+6.71 The highest (maximum) molarity for no precipitation is 2.5 × 10^-9 M
+6.72 2.43 litre of water
+6.73 Precipitation will take place in cadmium chloride solution

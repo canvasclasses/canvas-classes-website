@@ -1,0 +1,152 @@
+[
+  {
+    "file": "ceq_b2_01.png",
+    "n": 17,
+    "page": 8,
+    "slug": "reaction-quotient-q-direction",
+    "pageId": "557224db-63e1-4da0-8c40-ce8ced152527",
+    "blockId": "8f3f4d8f-acf3-46aa-8fc7-753f40180600",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_02.png",
+    "n": 18,
+    "page": 9,
+    "slug": "characteristics-and-manipulating-equilibria",
+    "pageId": "6a69349b-94cd-4d0c-b207-2f8e241e3de9",
+    "blockId": "54ad739b-51e1-4977-822e-f64bb86bab17",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_03.png",
+    "n": 19,
+    "page": 9,
+    "slug": "characteristics-and-manipulating-equilibria",
+    "pageId": "6a69349b-94cd-4d0c-b207-2f8e241e3de9",
+    "blockId": "3e399c85-493b-4e10-b2b3-191ef6336df4",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_04.png",
+    "n": 20,
+    "page": 10,
+    "slug": "equilibrium-constant-and-gibbs-energy",
+    "pageId": "001eeeb1-68bf-43f6-a909-d438380e9880",
+    "blockId": "cdd43a57-a2d6-478a-8c91-10b17d49aef6",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_05.png",
+    "n": 21,
+    "page": 10,
+    "slug": "equilibrium-constant-and-gibbs-energy",
+    "pageId": "001eeeb1-68bf-43f6-a909-d438380e9880",
+    "blockId": "b87195a1-0b75-4877-ae8f-db1302aa92fa",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_06.png",
+    "n": 22,
+    "page": 11,
+    "slug": "degree-of-dissociation-and-ice-method",
+    "pageId": "7d288c5a-0c3d-4c04-b094-2a2c9b49d822",
+    "blockId": "52c4b76e-6347-4682-8e5c-68a2911fedd1",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_07.png",
+    "n": 23,
+    "page": 11,
+    "slug": "degree-of-dissociation-and-ice-method",
+    "pageId": "7d288c5a-0c3d-4c04-b094-2a2c9b49d822",
+    "blockId": "1e9a6751-d740-41f0-8fec-967889f7568c",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_08.png",
+    "n": 24,
+    "page": 12,
+    "slug": "vapour-density-and-dissociation",
+    "pageId": "fe33ebe0-461c-49ea-9e93-3d09cf137a51",
+    "blockId": "9c77f90d-a096-4f6f-857f-740692fce0db",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_09.png",
+    "n": 25,
+    "page": 12,
+    "slug": "vapour-density-and-dissociation",
+    "pageId": "fe33ebe0-461c-49ea-9e93-3d09cf137a51",
+    "blockId": "44a6fc1e-def0-4bc2-bf6f-44a6692b37a2",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_10.png",
+    "n": 26,
+    "page": 13,
+    "slug": "le-chatelier-principle-concentration",
+    "pageId": "456ca8c1-68ab-4164-870e-68993a8789dd",
+    "blockId": "3578f916-b235-485a-a2c7-a5757a18468b",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_11.png",
+    "n": 27,
+    "page": 13,
+    "slug": "le-chatelier-principle-concentration",
+    "pageId": "456ca8c1-68ab-4164-870e-68993a8789dd",
+    "blockId": "31cf46e5-6828-42ce-9ff5-fa3dfc57314e",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_12.png",
+    "n": 28,
+    "page": 14,
+    "slug": "le-chatelier-pressure-volume-inert-gas",
+    "pageId": "82ab827c-23f3-4836-94d1-ed73c16fb149",
+    "blockId": "f718667b-5781-467f-bef9-ecf04b1b0282",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_13.png",
+    "n": 29,
+    "page": 14,
+    "slug": "le-chatelier-pressure-volume-inert-gas",
+    "pageId": "82ab827c-23f3-4836-94d1-ed73c16fb149",
+    "blockId": "9cde35e9-adc3-4c83-8c5f-9ddf3d7b47d5",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_14.png",
+    "n": 30,
+    "page": 15,
+    "slug": "le-chatelier-temperature-and-catalyst",
+    "pageId": "86864526-ed8c-49b9-8a39-08c0198c7bbb",
+    "blockId": "ca1ba827-a9c6-4790-8c72-a02936b3a06b",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ceq_b2_15.png",
+    "n": 31,
+    "page": 15,
+    "slug": "le-chatelier-temperature-and-catalyst",
+    "pageId": "86864526-ed8c-49b9-8a39-08c0198c7bbb",
+    "blockId": "b420da5c-1974-422f-9941-580a92af3fa3",
+    "field": "src",
+    "lang": "en"
+  }
+]

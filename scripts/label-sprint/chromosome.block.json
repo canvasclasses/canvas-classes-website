@@ -1,0 +1,50 @@
+{
+  "_note": "Label Sprint round for chromosome \u2014 generated chromosome_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Duplicated chromosome structure",
+  "caption": "Tap each label, then tap where it belongs on the chromosome.",
+  "hotspots": [
+    {
+      "id": "1144cae1-6e81-4000-a33b-e387af82f6f4",
+      "x": 0.5,
+      "y": 0.42,
+      "label": "Centromere",
+      "detail": "The constricted region joining the two sister chromatids.",
+      "icon": "pin"
+    },
+    {
+      "id": "ebbe6fcd-8b48-499d-ba63-33cec8b0d611",
+      "x": 0.24,
+      "y": 0.05,
+      "label": "Telomere",
+      "detail": "The protective cap at each end of a chromatid.",
+      "icon": "pin"
+    },
+    {
+      "id": "0d668275-9329-4082-8478-3182bc9628ba",
+      "x": 0.22,
+      "y": 0.25,
+      "label": "Sister chromatid",
+      "detail": "One of two identical copies of the chromosome, joined at the centromere.",
+      "icon": "pin"
+    },
+    {
+      "id": "89d43725-6e80-48f3-a68b-1074d0507192",
+      "x": 0.8,
+      "y": 0.25,
+      "label": "Sister chromatid",
+      "detail": "The other identical copy, joined to its twin at the centromere.",
+      "icon": "pin"
+    },
+    {
+      "id": "4771c032-522c-4962-b5d6-431b3114174e",
+      "x": 0.24,
+      "y": 0.75,
+      "label": "Chromatid arm",
+      "detail": "One of the two arms extending from the centromere.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "chromosome structure illustration"
+}

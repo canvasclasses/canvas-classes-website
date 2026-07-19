@@ -1,0 +1,3925 @@
+# Kaveri — Class 9 English (NCERT) — Chapter 5: The World of Limitless Possibilities
+book=class9-english-kaveri chapter=5 pages=17
+
+
+================================================================================
+## PAGE 1 — "Before You Read: Ability Beyond Disability"  (slug: unit-5-reflect-and-respond-paralympics)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=03aeccaa-b317-4d93-b938-d19bf54b4aac ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/03aeccaa-b317-4d93-b938-d19bf54b4aac_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A para-archer drawing a bow with focused determination, a stadium glowing behind",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A young Indian para-archer drawing a bow with intense focus and calm determination, a softly glowing stadium and a target behind. Strength, grace, and concentration. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [curiosity_prompt] id=c9df55d2-8528-44f0-a360-b36a2781885f ---
+{
+ "prompt": "Imagine you are seventeen and you draw a bow not with your arms — because you were born without them — but with your feet and shoulder, and you hit the gold. That is **Sheetal Devi**, an Indian para-archer who won the Arjuna Award in January 2024. When you watch someone do what 'cannot be done', what shifts inside you? Does the word *disability* still mean what you thought it meant?",
+ "hint": "Don't think about pity. Think about skill, training, and willpower — the same things any champion has.",
+ "reveal": "This unit is about the **Paralympics** and **Special Olympics** — and the athletes who turn what the world calls a 'limitation' into a kind of strength most of us never reach. The first text is an interview with one of India's greatest para-athletes. By the end, you may stop seeing 'disability' and start seeing *ability beyond disability*."
+}
+
+--- block #2 [callout] id=98b1daa5-d542-4056-a43a-386538672920 ---
+{
+ "variant": "fun_fact",
+ "title": "India at the Paralympics",
+ "markdown": "India made its Paralympics debut in **1968**, and won its first medal — in **swimming** — in **1972**. Since then, Indian para-athletes have won a growing haul of medals and honours. The athlete you're about to meet, **Dr. Deepa Malik**, became **India's first-ever woman to win a Paralympic medal** (silver in shot-put, Rio 2016) — and has been honoured with the **Khel Ratna**, the **Arjuna Award**, and the **Padma Shri**."
+}
+
+--- block #3 [text] id=76184ebd-7cba-4b2f-8c48-d7c543eb80ea ---
+{
+ "markdown": "This chapter is an **interview** — a real conversation, in question-and-answer form, with a real person. Before you read, here are the words that carry its message of strength."
+}
+
+--- block #4 [vocabulary_lab] id=36cafaeb-2687-40da-8c3d-9e5127204372 ---
+{
+ "mode": "flashcards",
+ "intro": "Eight words from the interview. Tap each to flip.",
+ "cards": [
+  {
+   "id": "632a130a-ed2c-4ae0-bd0f-59114efdf11f",
+   "word": "resilience",
+   "pos": "noun",
+   "pronunciation": "rih-ZIL-ee-unss",
+   "meaning": "the ability to recover quickly from difficulty",
+   "hindi": "लचीलापन / सहनशक्ति",
+   "example": "Her resilience turned a tragedy into a new beginning."
+  },
+  {
+   "id": "b21574d5-1238-4cb2-8132-a4352e232e45",
+   "word": "quell",
+   "pos": "verb",
+   "pronunciation": "KWEL",
+   "meaning": "to put an end to; to overcome",
+   "hindi": "दबाना / शांत करना",
+   "example": "The Paralympics quell stereotypes about disability."
+  },
+  {
+   "id": "27e32b6c-f12a-4718-83bb-e8e2ff01f531",
+   "word": "squander",
+   "pos": "verb",
+   "pronunciation": "SKWON-dur",
+   "meaning": "to waste (time, money, or a chance)",
+   "hindi": "बर्बाद करना",
+   "example": "She refused to squander her life in regret."
+  },
+  {
+   "id": "8d000a95-43d4-42d0-b644-dea5dbc99f1b",
+   "word": "remorse",
+   "pos": "noun",
+   "pronunciation": "rih-MORSS",
+   "meaning": "deep regret",
+   "hindi": "पश्चाताप",
+   "example": "She could live in remorse, or transform her life."
+  },
+  {
+   "id": "4cf5c19b-ede9-4613-b5a9-219bb15508f1",
+   "word": "indelible",
+   "pos": "adjective",
+   "pronunciation": "in-DEL-uh-bul",
+   "meaning": "permanent; impossible to remove or forget",
+   "hindi": "अमिट",
+   "example": "She left an indelible mark on aspiring athletes."
+  },
+  {
+   "id": "f7067d79-4cc2-4c6f-983b-caf59c6a19e8",
+   "word": "fortitude",
+   "pos": "noun",
+   "pronunciation": "FOR-tih-tyood",
+   "meaning": "courage and strength in facing hardship",
+   "hindi": "धैर्य / दृढ़ता",
+   "example": "Her fortitude turned obstacles into stepping stones."
+  },
+  {
+   "id": "ea0abed1-f6f3-4fcc-a2fd-22d74e9c8df8",
+   "word": "accolades",
+   "pos": "noun",
+   "pronunciation": "AK-uh-laydz",
+   "meaning": "praise and honours; awards",
+   "hindi": "सम्मान / प्रशंसा",
+   "example": "The accolades showered on her were well deserved."
+  },
+  {
+   "id": "630c461c-942e-4185-9ebe-e8d973b478d6",
+   "word": "inclusivity",
+   "pos": "noun",
+   "pronunciation": "in-kloo-SIV-ih-tee",
+   "meaning": "including everyone and treating all equally",
+   "hindi": "समावेशिता",
+   "example": "She became a voice for inclusivity and accessibility."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "721f4df5-80f9-42c5-b2de-16c7164034a0",
+   "question": "*Resilience* is the ability to:",
+   "options": [
+    "give up easily",
+    "recover quickly from difficulty",
+    "win every time",
+    "avoid all problems"
+   ],
+   "correct_index": 1,
+   "explanation": "*Resilience* is bouncing back from hardship — the central quality of every athlete in this unit."
+  },
+  {
+   "id": "b25e38b4-a9d1-4b5c-8441-07969b32359a",
+   "question": "To *squander* something is to:",
+   "options": [
+    "protect it",
+    "waste it",
+    "share it",
+    "earn it"
+   ],
+   "correct_index": 1,
+   "explanation": "*Squander* = to waste. Dr. Malik chose NOT to squander her life in regret."
+  },
+  {
+   "id": "baf7f474-adfc-4529-b5e7-4b20ea49f414",
+   "question": "An *indelible* mark is one that:",
+   "options": [
+    "fades quickly",
+    "is permanent and cannot be removed or forgotten",
+    "is invisible",
+    "is small"
+   ],
+   "correct_index": 1,
+   "explanation": "*Indelible* = permanent, unforgettable — like the inspiration she has left on others."
+  }
+ ]
+}
+
+--- block #5 [inline_quiz] id=bb79824c-c00c-4d51-bd50-5d5365df4f63 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "e774a5f8-5d1f-4db7-9d68-6b8d67b6b2fe",
+   "question": "Who is Sheetal Devi?",
+   "options": [
+    "A Paralympic swimmer who trains in Haryana",
+    "An Indian para-archer and 2024 Arjuna awardee",
+    "A para-athletics coach who once guided Dr. Malik",
+    "A physiotherapist who works with disabled athletes"
+   ],
+   "correct_index": 1,
+   "explanation": "Sheetal Devi is an Indian para-archer, honoured with the Arjuna Award in January 2024 — the page's opening example of ability beyond disability.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "b2357f12-30f2-4119-a50b-f6215ae51739",
+   "question": "When did India make its Paralympics debut, and when did it win its first medal?",
+   "options": [
+    "Debut in 1948, then first medal in 1950",
+    "Debut in 2000, then first medal in 2004",
+    "Debut in 1972, then first medal in 1980",
+    "Debut in 1968, then first medal in 1972"
+   ],
+   "correct_index": 3,
+   "explanation": "India debuted at the Paralympics in 1968 and won its first medal, in swimming, in 1972.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "34a1f078-ae1d-474a-bd5a-6207b27982ea",
+   "question": "The chapter's first piece is an interview rather than a story or essay. Why does that form suit a subject like Dr. Malik?",
+   "options": [
+    "Because it lets her speak in her own exact words",
+    "Because a narrator describes her life from the outside",
+    "Because it is shaped as verse with rhyme and rhythm",
+    "Because it opens and closes like a personal letter"
+   ],
+   "correct_index": 0,
+   "explanation": "An interview is non-fiction in question-and-answer form. Hearing Dr. Malik in her own words gives directness and trust that a narrated story or essay about her could not match.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "Part I — Two Choices"  (slug: unit-5-reading-part-1-two-choices)
+published=true blocks=7 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=de49d9a3-99d0-41a0-a937-743c3fd1058b ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/de49d9a3-99d0-41a0-a937-743c3fd1058b_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A determined woman athlete in a wheelchair raising a shot-put, a podium and medal glowing behind",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A strong, determined Indian woman athlete in a sports wheelchair, raising a shot-put with powerful focus, a softly glowing stadium and a silver medal suggested behind her. Triumph born of struggle. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [heading] id=255b6486-346c-435d-aef2-a74bea60f3a6 ---
+{
+ "level": 2,
+ "text": "Part I — The interview begins"
+}
+
+--- block #2 [text] id=eef226db-c5d3-4d6c-bac8-7294b7b8ce1d ---
+{
+ "markdown": "The interviewer asks **Dr. Deepa Malik** — listed among the world's ten most inspirational women para-athletes — how she 'braved the odds' to become who she is. Her answer is the heart of the chapter. Read it slowly."
+}
+
+--- block #3 [narrated_passage] id=f06087f4-2be4-4fea-bcb2-7cda7e166010 ---
+{
+ "source_label": "Reading for Meaning · Part I (Dr. Malik answers)",
+ "paragraphs": [
+  {
+   "id": "2b783125-c3d1-4c54-9aeb-4483e2203bb6",
+   "sentences": [
+    {
+     "id": "d213b7a2-b2bf-41cc-8b7f-3f6085beb963",
+     "text": "I was 29, an awful tragedy struck me when I was diagnosed with spine tumour.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "diagnosed",
+       "meaning": "identified as having an illness",
+       "pos": "verb",
+       "hindi": "रोग की पहचान हुई",
+       "example": "The doctor diagnosed my little brother with dengue after the blood test."
+      },
+      {
+       "word": "tumour",
+       "meaning": "an abnormal growth in the body",
+       "pos": "noun",
+       "hindi": "गाँठ / ट्यूमर",
+       "example": "The scan showed a small tumour growing near my uncle's stomach."
+      }
+     ]
+    },
+    {
+     "id": "e0df3cda-cff2-4753-b2db-c3d1da4dae7e",
+     "text": "I underwent a surgery, but misfortune raised its ugly head again.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "underwent",
+       "meaning": "went through (an experience or operation)",
+       "pos": "verb",
+       "hindi": "से गुज़री",
+       "example": "My grandmother underwent a knee operation and now walks without any pain."
+      }
+     ]
+    },
+    {
+     "id": "3d511874-ef05-4483-ad39-f8ec5181870a",
+     "text": "The doctors declared that I would be bound to a wheelchair for the rest of my life, as I was paralysed waist down.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "paralysed",
+       "meaning": "unable to move part of the body",
+       "pos": "adjective",
+       "hindi": "लकवाग्रस्त",
+       "example": "After the accident, his left arm was paralysed and could not move at all."
+      }
+     ]
+    },
+    {
+     "id": "57dc0faa-2f22-4783-a122-5333f2c6a734",
+     "text": "I had two choices — squander my life in remorse or transform it to a world of limitless possibilities.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "squander",
+       "meaning": "to waste",
+       "pos": "verb",
+       "hindi": "बर्बाद करना",
+       "example": "Do not squander your pocket money on snacks before the school trip."
+      },
+      {
+       "word": "remorse",
+       "meaning": "deep regret",
+       "pos": "noun",
+       "hindi": "पश्चाताप",
+       "example": "He felt deep remorse after shouting at his mother over a small thing."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Yeh chapter ka dil hai. 29 saal ki umar mein Deepa Malik ko spine tumour hua. Surgery hui, par doctors ne keh diya — kamar se neeche lakwa, zindagi bhar wheelchair. Is mod pe unke saamne do raaste the: poori zindagi pachhtaave mein bita do, ya use ek 'world of limitless possibilities' mein badal do. Title yahin se aaya. Aur unhone doosra raasta chuna — yahi poore chapter ki seekh hai."
+  },
+  {
+   "id": "7252a46a-f960-4694-9beb-e7d6e5213f84",
+   "sentences": [
+    {
+     "id": "8d63de5f-fe9e-42fc-8804-0f4d3b490bd3",
+     "text": "I love sports and had been a swimmer too, so I decided to switch to para-athletics.",
+     "audio_url": ""
+    },
+    {
+     "id": "234ae802-6bd3-4c9d-9f63-9b9c17221eff",
+     "text": "This is how my Paralympics journey began.",
+     "audio_url": ""
+    },
+    {
+     "id": "f1cf2907-07b7-4235-be4f-584bf464a821",
+     "text": "My breakthrough moment came in the 2016 Rio Paralympic Games, when I secured the silver medal in the shot-put event.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "breakthrough",
+       "meaning": "a sudden, important advance or success",
+       "pos": "noun",
+       "hindi": "बड़ी सफलता",
+       "example": "Solving that tough sum was a real breakthrough for me in maths."
+      }
+     ]
+    },
+    {
+     "id": "7df725f4-1bae-4f7b-83dc-aa9430aa4ec2",
+     "text": "In hindsight, I feel it was a moment of personal victory and a step forward in changing perceptions.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "in hindsight",
+       "meaning": "looking back, understanding something afterwards",
+       "pos": "phrase",
+       "hindi": "पीछे मुड़कर देखने पर",
+       "example": "In hindsight, I should have started revising a week before the exam."
+      },
+      {
+       "word": "perceptions",
+       "meaning": "the way people see or understand things",
+       "pos": "noun",
+       "hindi": "धारणाएँ",
+       "example": "Travelling to a new city changed my perceptions about people from other states."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Deepa pehle se swimmer thi, sports se pyaar tha — to unhone para-athletics chuni. 2016 Rio Paralympics mein shot-put mein silver medal jeeta — yeh unka 'breakthrough moment' tha. Par dhyaan do woh ise sirf personal jeet nahi, 'changing perceptions' (logon ki soch badalne) ka kadam maanti hain. Ek medal sirf medal nahi — woh poore samaaj ki soch ko hila deta hai."
+  }
+ ]
+}
+
+--- block #4 [comprehension_checkpoint] id=a6f6a597-3f37-4b1a-ad65-b3522301d3c2 ---
+{
+ "intro": "Pause and check.",
+ "questions": [
+  {
+   "id": "bdc7ba0c-100f-46b2-8a8a-9f49f133c24c",
+   "question": "What were the 'two choices' Dr. Malik faced after her surgery?",
+   "options": [
+    "To swim or to run",
+    "To squander her life in remorse, OR to transform it into 'a world of limitless possibilities'",
+    "To stay in India or move abroad",
+    "To become a doctor or an athlete"
+   ],
+   "correct_index": 1,
+   "explanation": "Faced with lifelong paralysis, she saw two paths: waste her life in regret, or transform it. She chose transformation — and the chapter's title comes from her words."
+  },
+  {
+   "id": "eaa5051b-c4f6-4173-9320-add7cc8bd896",
+   "question": "What was her 'breakthrough moment'?",
+   "options": [
+    "Her surgery",
+    "Winning the silver medal in shot-put at the 2016 Rio Paralympic Games",
+    "Learning to swim",
+    "Receiving the Padma Shri"
+   ],
+   "correct_index": 1,
+   "explanation": "The Rio 2016 silver was her breakthrough — a personal victory and, in her words, 'a step forward in changing perceptions' about disability."
+  }
+ ]
+}
+
+--- block #5 [reasoning_prompt] id=040d5359-4ce2-4d1a-b480-1f319e3d3a18 ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "Dr. Malik says she had 'two choices — squander my life in remorse or transform it.' The facts of her situation (paralysis, a wheelchair) did not change. So what *exactly* was the choice she made — and does this kind of choice belong only to people facing a tragedy as big as hers?",
+ "reveal": "The choice was not about her *circumstances* — those were fixed — but about her *response* to them. She could not change the paralysis; she could only choose what to *do* with the life she still had. This is one of the most powerful ideas a person can grasp: between what happens to us and how we respond, there is always a gap, and in that gap lies our freedom. And no — this choice is not only for people facing great tragedy. Every setback, large or small (a failed exam, a lost match, a disappointment), offers the same fork: sink into 'remorse', or transform it into something. Her advice later in the interview — 'every setback is an opportunity to prove your strength' — is meant for *everyone*, which is exactly why this interview is in your textbook."
+}
+
+--- block #6 [inline_quiz] id=509b262a-0409-4c52-adbb-92493eba47d4 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "cd42b8c4-3241-41ff-bbb1-eade9f796075",
+   "question": "How was Dr. Malik able to switch to para-athletics 'comfortably'?",
+   "options": [
+    "She felt she had been left with no other choice",
+    "Her doctors instructed her to take athletics up",
+    "She already loved sport and had been a swimmer",
+    "She had trained hard as an athlete since childhood"
+   ],
+   "correct_index": 2,
+   "explanation": "Her existing love of sport and her swimming background made the switch to para-athletics a natural step, not a leap into the unknown.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "ca401e72-bb2e-4765-8ef2-7aa497080678",
+   "question": "The phrase 'in hindsight' shows that the speaker is being:",
+   "options": [
+    "curious, wondering what might happen next to her",
+    "angry about the way things had turned out for her",
+    "reflective, seeing the moment's meaning later",
+    "uncertain about the difficult choice she had made"
+   ],
+   "correct_index": 2,
+   "explanation": "*In hindsight* means looking back with later understanding — a reflective stance. She now sees the Rio medal as more than a personal win.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "0e3271c3-b422-4f85-8ff4-02f9231a4ea8",
+   "question": "What does Dr. Malik mean by 'changing perceptions'?",
+   "options": [
+    "Changing how society views disability",
+    "Changing the particular sport she competes in",
+    "Changing the opinion she holds of her own ability",
+    "Changing the kind of medal she hopes to win next"
+   ],
+   "correct_index": 0,
+   "explanation": "She sees her victory as shifting society's view of what people with disabilities can do — the heart of her mission, not a change to her sport, opinion, or medal.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "Part II — Ability Beyond Disability"  (slug: unit-5-reading-part-2-ability-beyond-disability)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=6603828e-fb1d-43e6-9ab8-45d1b8d09bae ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/6603828e-fb1d-43e6-9ab8-45d1b8d09bae_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A crowd watching para-athletes compete, faces shifting from doubt to awe",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A stadium crowd watching para-athletes compete with strength and grace, the watching faces shifting from doubt to awe and admiration. A sense of preconceptions breaking down. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [heading] id=6e72c80f-801f-462d-8033-97367f5f38f1 ---
+{
+ "level": 2,
+ "text": "Part II — Firsts, challenges, and a new way of seeing"
+}
+
+--- block #2 [text] id=7f6995ea-f909-4a88-a354-2fce501e5fb5 ---
+{
+ "markdown": "The interviewer notes Dr. Malik's astonishing list of 'firsts' — India's first woman to win an Asian Games athletics medal, India's first female Paralympics medallist. She is asked what these mean to her, what challenges she faced, and how sport can change society."
+}
+
+--- block #3 [narrated_passage] id=e15c5475-2c33-4ca1-a593-ba4e529d3cf5 ---
+{
+ "source_label": "Reading for Meaning · Part II (accomplishments & challenges)",
+ "paragraphs": [
+  {
+   "id": "fe6f8453-52d2-4a3a-a59d-35fdff72e43d",
+   "sentences": [
+    {
+     "id": "060355f8-941e-4ab7-9094-0c750b91401d",
+     "text": "I truly appreciate these accolades that have been showered on me.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "accolades",
+       "meaning": "praise and honours",
+       "pos": "noun",
+       "hindi": "सम्मान",
+       "example": "Our school choir received many accolades after winning the district competition."
+      }
+     ]
+    },
+    {
+     "id": "44a67fd7-b672-483b-924d-a08537a4bd5d",
+     "text": "These achievements are a testimony to my belief that physical limitations don't define one's potential.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "testimony",
+       "meaning": "proof; clear evidence",
+       "pos": "noun",
+       "hindi": "प्रमाण",
+       "example": "His neat handwriting is a testimony to the hours he spends practising."
+      },
+      {
+       "word": "potential",
+       "meaning": "what one is capable of becoming or achieving",
+       "pos": "noun",
+       "hindi": "क्षमता",
+       "example": "Our coach believes Rohan has the potential to play for the state team."
+      }
+     ]
+    },
+    {
+     "id": "ba1e04ee-d1a7-46bb-bcdb-13efd24e1ace",
+     "text": "Moreover, I'm a proponent of the school of thought, 'ability beyond disability'.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "proponent",
+       "meaning": "a supporter of an idea",
+       "pos": "noun",
+       "hindi": "समर्थक",
+       "example": "My father is a strong proponent of reading the newspaper every morning."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Deepa ke 'firsts' ki list lambi hai — par woh inhe sirf medal nahi maanti. Unke liye yeh ek baat ka saboot hai: 'physical limitations don't define one's potential' — shaareerik seemaayein tumhari kshamta tay nahi kartin. Aur unka mool-mantra: 'ability beyond disability' — viklaangta ke paar, kshamta. Yeh chaar shabd poore chapter ka saar hain."
+  },
+  {
+   "id": "2c0b7aa8-2056-4f0b-ab21-04af81bd7bb3",
+   "sentences": [
+    {
+     "id": "8ecbf600-893e-417e-8818-ffd863d111ee",
+     "text": "One of the significant challenges for me was societal perceptions.",
+     "audio_url": ""
+    },
+    {
+     "id": "023ad1ba-4d8e-483e-9fbd-d722faa139e2",
+     "text": "People often underestimated my abilities.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "underestimated",
+       "meaning": "thought less of than is true",
+       "pos": "verb",
+       "hindi": "कम आँका",
+       "example": "Everyone underestimated the new boy until he topped the science test."
+      }
+     ]
+    },
+    {
+     "id": "2fe2c0bb-4d99-4155-8a49-f21d9006f2a5",
+     "text": "Overcoming this required not only physical strength but also mental resilience.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "resilience",
+       "meaning": "the ability to recover from difficulty",
+       "pos": "noun",
+       "hindi": "सहनशक्ति",
+       "example": "She showed great resilience by studying harder after failing her first test."
+      }
+     ]
+    },
+    {
+     "id": "72219b6c-0df9-4f85-83cf-2752d2f32ad7",
+     "text": "I embraced challenges as opportunities to prove my capabilities.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "embraced",
+       "meaning": "accepted willingly",
+       "pos": "verb",
+       "hindi": "सहर्ष स्वीकारा",
+       "example": "Our class embraced the idea of planting trees in the school garden."
+      }
+     ]
+    },
+    {
+     "id": "1bb10f42-07d0-46bf-8c78-312c5f15b34f",
+     "text": "The support of my family, coupled with my fortitude, allowed me to turn obstacles into stepping stones.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "fortitude",
+       "meaning": "courage in facing hardship",
+       "pos": "noun",
+       "hindi": "दृढ़ता",
+       "example": "It took real fortitude for him to keep walking to school during the floods."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Sabse bada challenge sharir nahi tha — 'societal perceptions' tha, log unki kshamta ko kam aankte the. Isse jeetne ke liye sirf taakat nahi, 'mental resilience' chahiye thi. Unhone har challenge ko mauka maana — apni kshamta saabit karne ka. Aur parivaar ka saath + apni dridhta = 'obstacles into stepping stones' (rukaavaton ko seedhi banaana). Yeh phrase yaad rakho — exam mein bhi aata hai, zindagi mein bhi."
+  },
+  {
+   "id": "4c0c492f-3d64-4e89-8e99-48e0dd81c85a",
+   "sentences": [
+    {
+     "id": "182d6889-bd79-43ca-8ff9-38d3c4d9a3c5",
+     "text": "Honestly, I feel sports, especially Paralympics, have the extraordinary ability to challenge stereotypes and change attitudes towards disability.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "stereotypes",
+       "meaning": "fixed, oversimplified ideas about a group",
+       "pos": "noun",
+       "hindi": "रूढ़िवादी धारणाएँ",
+       "example": "My sister breaks stereotypes by being the best cricketer in our colony."
+      }
+     ]
+    },
+    {
+     "id": "871cfbaa-8ada-4298-97a2-35ec11f3caad",
+     "text": "When people witness the strength, skill, and competitive spirit of para-athletes, it breaks down preconceived notions.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "preconceived notions",
+       "meaning": "opinions formed before knowing the truth",
+       "pos": "phrase",
+       "hindi": "पूर्वधारणाएँ",
+       "example": "My preconceived notions about the new teacher vanished after her first lesson."
+      }
+     ]
+    },
+    {
+     "id": "b5c4b372-8a00-4354-9fed-3f45a5a8764b",
+     "text": "It has made me realise that individuals with disabilities can be as capable, if not more than their able-bodied counterparts.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "counterparts",
+       "meaning": "people in a matching position",
+       "pos": "noun",
+       "hindi": "समकक्ष",
+       "example": "The girls' team played just as well as their counterparts in the boys' team."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Deepa ka maanna hai sports — khaaskar Paralympics — mein logon ki soch badalne ki taakat hai. Jab log para-athletes ki strength, skill aur josh dekhte hain, to unki purani galat dharnaayein toot jaati hain. Aur Deepa khud maan chuki hain: viklaang log able-bodied logon jitne — balki kabhi unse zyada — kshamtavaan ho sakte hain."
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=4166e7d1-48e0-4388-903a-f2f22569904e ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "Dr. Malik says her biggest challenge was not physical — it was **societal perceptions**: 'people often underestimated my abilities.' Why might the *attitudes of others* be a harder obstacle to overcome than a physical disability itself?",
+ "reveal": "A physical limitation is a fact you can train around, adapt to, and work with — it is, in a sense, *honest*. But other people's low expectations are a constantly moving wall: they shape what opportunities you're given, whether you're picked, funded, believed in, or even allowed to try. You can lift weights to build strength; you cannot lift away a stranger's prejudice. Worse, being underestimated again and again can plant doubt *inside* you. That is why Dr. Malik says overcoming it needed 'mental resilience' as much as physical strength — and why her medals matter beyond sport: each one chips at the wall of low expectation, making the path easier for the next person. The disability was hers to manage; the prejudice was society's to fix — and she took on both."
+}
+
+--- block #5 [inline_quiz] id=c769d253-3d67-4351-8acc-15d8e3b87a0a ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "a0e0ad2f-71be-4a95-80d0-cb6766087462",
+   "question": "What does Dr. Malik mean by 'ability beyond disability'?",
+   "options": [
+    "That a disability should simply be set aside",
+    "That every athlete is, in some way, disabled",
+    "That ability counts for more than playing sport",
+    "That real potential reaches past physical limits"
+   ],
+   "correct_index": 3,
+   "explanation": "Her motto: physical limitations don't define potential — there is real, often extraordinary ability *beyond* the disability.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "05958838-bbb7-456c-a1c5-6c2a0e1544b7",
+   "question": "What was Dr. Malik's biggest challenge?",
+   "options": [
+    "Her physical paralysis after the spinal surgery",
+    "Society's low expectations of her",
+    "The shortage of proper para-sports equipment",
+    "The struggle of first learning how to swim"
+   ],
+   "correct_index": 1,
+   "explanation": "She names 'societal perceptions' as her significant challenge — others' low expectations, which needed mental resilience to overcome.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "e6fa645f-b8df-4da9-b1f7-f9a659375633",
+   "question": "How does Dr. Malik say the Paralympics changes society?",
+   "options": [
+    "By bringing in money and large sponsorships",
+    "By showing crowds the skill of para-athletes",
+    "By gradually taking the place of the Olympics",
+    "By simply being broadcast widely on television"
+   ],
+   "correct_index": 1,
+   "explanation": "Seeing para-athletes compete with strength, skill, and spirit breaks down fixed, false ideas about disability — changing attitudes.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "Part III — Every Setback an Opportunity"  (slug: unit-5-reading-part-3-every-setback)
+published=true blocks=7 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=44a759b7-d456-412f-849d-2d9d58d0ba3e ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/44a759b7-d456-412f-849d-2d9d58d0ba3e_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "An athlete-mentor speaking to a group of young students, some in wheelchairs, in a sunlit hall",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A confident woman athlete-mentor speaking warmly to a group of young students, some seated in wheelchairs, in a sunlit school hall, sports equipment around. A sense of empowerment passing on. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [heading] id=19ecf0ad-2dc1-4957-bd62-c8e45e2b2a6f ---
+{
+ "level": 2,
+ "text": "Part III — Beyond the medals"
+}
+
+--- block #2 [text] id=1b6496f8-cba6-4bb3-a0d5-2bda5d6fa718 ---
+{
+ "markdown": "Asked about her work beyond sport, Dr. Malik describes her **advocacy** — her mission to make society fairer for people with disabilities. Then comes her advice, the lines you should carry out of this chapter."
+}
+
+--- block #3 [narrated_passage] id=9508a743-bc82-472a-bf4b-829df71f43c5 ---
+{
+ "source_label": "Reading for Meaning · Part III (advocacy & advice)",
+ "paragraphs": [
+  {
+   "id": "ccb9c287-ffe8-4c1b-8d27-70f2d68d019a",
+   "sentences": [
+    {
+     "id": "9c3d992a-455a-4f4b-9b19-0343c5305de1",
+     "text": "Advocacy is integral to my mission.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "advocacy",
+       "meaning": "public support for a cause",
+       "pos": "noun",
+       "hindi": "पैरवी / समर्थन",
+       "example": "Her advocacy for clean drinking water convinced the village to repair the well."
+      },
+      {
+       "word": "integral",
+       "meaning": "essential; a necessary part",
+       "pos": "adjective",
+       "hindi": "अभिन्न",
+       "example": "Practice is an integral part of becoming good at the tabla."
+      }
+     ]
+    },
+    {
+     "id": "fa61e186-e35e-4a0e-9878-74391f7dd878",
+     "text": "I strongly believe in working for the cause of strengthening the emotional health of persons with challenges and empowering women through outdoor sports and adventure activities.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "empowering",
+       "meaning": "giving power or confidence to",
+       "pos": "verb",
+       "hindi": "सशक्त बनाना",
+       "example": "Learning to cycle alone to school felt empowering for my younger cousin."
+      }
+     ]
+    },
+    {
+     "id": "e4786dd8-63bb-46cd-8b84-059b89d60edf",
+     "text": "I believe youth is the voice of tomorrow.",
+     "audio_url": ""
+    },
+    {
+     "id": "9cdd9c14-b3ba-44a5-b579-d01828f244e7",
+     "text": "My goal is to contribute to create a society where everyone, regardless of ability, is treated with dignity and given a fair chance to succeed.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "dignity",
+       "meaning": "the right to be valued and respected",
+       "pos": "noun",
+       "hindi": "गरिमा",
+       "example": "Every worker, from the cleaner to the manager, deserves to be treated with dignity."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Medal jeet ke Deepa ruki nahi — unhone ek mission banaya. Woh viklaang logon ki emotional health, mahilaon ko outdoor sports se sashakt banana, aur garib para-athletes ko equipment dena — yeh sab karti hain. Unka maanna hai 'youth is the voice of tomorrow' (yuva hi kal ki aawaz hain), isliye woh schools-colleges mein jaati hain. Unka lakshya: ek aisa samaaj jahan har koi, chahe uski kshamta kuch bhi ho, garima aur barabar mauka paaye."
+  },
+  {
+   "id": "5e372b27-b952-42e6-a886-83ce4503ebcb",
+   "sentences": [
+    {
+     "id": "2671f418-0abf-41c0-9736-b68038c737fa",
+     "text": "I would say, every setback is an opportunity to prove your strength.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "setback",
+       "meaning": "a problem that delays or reverses progress",
+       "pos": "noun",
+       "hindi": "बाधा / झटका",
+       "example": "Losing the semi-final was a setback, but the team trained even harder."
+      }
+     ]
+    },
+    {
+     "id": "15602907-c7ad-4e47-a4cf-bd9bdaf204ad",
+     "text": "Surround yourself with a support system, believe in yourself, and let your journey inspire others.",
+     "audio_url": ""
+    },
+    {
+     "id": "4fcb5f64-3045-4294-b570-7a64dbdd16a6",
+     "text": "Remember, disability is not a limitation; it's a unique strength waiting to be unleashed.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "unleashed",
+       "meaning": "released (something powerful)",
+       "pos": "verb",
+       "hindi": "मुक्त किया गया",
+       "example": "Once she got the basketball, she unleashed a burst of speed down the court."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Aur yeh rahi Deepa ki sabse badi seekh — har student ke liye, chahe woh athlete ho ya na ho: 'every setback is an opportunity to prove your strength' (har rukavat tumhari taakat saabit karne ka mauka hai). Apne aas-paas support rakho, khud pe vishwas karo, aur apni journey se doosron ko prerit karo. Aur antim line — yaad rakhne layak: 'disability is not a limitation; it's a unique strength waiting to be unleashed.' Viklaangta seema nahi — ek anokhi taakat hai jo bahar aane ka intezaar kar rahi hai."
+  }
+ ]
+}
+
+--- block #4 [comprehension_checkpoint] id=93669fe8-f681-49d7-a031-a8e2e63f4a84 ---
+{
+ "intro": "Pause and check.",
+ "questions": [
+  {
+   "id": "749db6f5-5f87-4799-9bc7-6b2572491639",
+   "question": "What two causes does Dr. Malik support through her advocacy?",
+   "options": [
+    "Building stadiums and selling equipment",
+    "Strengthening the emotional health of persons with challenges, and empowering women through outdoor sports (also: supporting poorer para-athletes with equipment)",
+    "Only her own training",
+    "Television and films"
+   ],
+   "correct_index": 1,
+   "explanation": "Her advocacy includes emotional health for persons with challenges, empowering women through sport and adventure, and supporting para-athletes from poorer backgrounds with equipment."
+  },
+  {
+   "id": "e7a21bb3-8832-4182-b0a2-94d0de2694ce",
+   "question": "What is Dr. Malik's final advice for anyone facing setbacks?",
+   "options": [
+    "Give up and try something easier",
+    "Every setback is an opportunity to prove your strength — build a support system, believe in yourself, and inspire others; disability is a unique strength waiting to be unleashed",
+    "Avoid all challenges",
+    "Only athletes can succeed"
+   ],
+   "correct_index": 1,
+   "explanation": "Her advice is for everyone: treat setbacks as opportunities, lean on support, believe in yourself — and see disability not as a limit but as a strength to be unleashed."
+  }
+ ]
+}
+
+--- block #5 [reasoning_prompt] id=5f8ca561-95af-41bb-9bb6-a1a9076fd505 ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "Dr. Malik says, 'every setback is an opportunity to prove your strength.' This is advice for *everyone*, not only athletes or people with disabilities. Think of one setback in your own life. Honestly — was it *only* a loss, or did it also hand you an opportunity you might have missed if it hadn't happened?",
+ "reveal": "Most real setbacks are *both* at once — a genuine loss *and* a hidden door. A failed exam can be the push that finally teaches you how to study; a lost friendship can show you what you actually value; missing one opportunity can free you for a better one you'd never have looked for. This isn't about pretending bad things are good — Dr. Malik never pretends paralysis was a gift. It's about refusing to let the setback be the *end of the sentence*. The strength she means isn't the absence of pain; it's the decision to keep writing the story after the painful part. The honest answer to this prompt is personal — but almost everyone, looking back, can find at least one setback that, handled well, became a beginning."
+}
+
+--- block #6 [inline_quiz] id=af1608f3-2497-455a-85ca-c2470b2fe22a ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "36fdbd47-6e79-4e13-940c-416c630cb535",
+   "question": "Why does Dr. Malik run advocacy sessions in schools and colleges?",
+   "options": [
+    "To sell tickets for her upcoming events",
+    "Because she is paid a fee for each appearance",
+    "To find and recruit new athletes for her team",
+    "Because the young can reshape attitudes"
+   ],
+   "correct_index": 3,
+   "explanation": "She invests in youth because they will shape tomorrow's attitudes — 'youth is the voice of tomorrow', and awareness planted early can build a fairer society.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "efb985d8-6044-41e0-b53a-6bd97875a487",
+   "question": "What is Dr. Malik's goal for society?",
+   "options": [
+    "That all are met with dignity and a fair chance",
+    "That every single citizen takes up a sport",
+    "That disability is one day wiped out altogether",
+    "That only the strongest among us get to succeed"
+   ],
+   "correct_index": 0,
+   "explanation": "Her vision is dignity and a fair chance for all — inclusivity, not pity.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "89411b9c-86af-4a52-b04e-f8f57e715a21",
+   "question": "'Disability is not a limitation; it's a unique strength waiting to be unleashed.' This line is meant for:",
+   "options": [
+    "only para-athletes who compete and win medals",
+    "only the doctors who treat disabled patients",
+    "everyone, as a new way to view difficulty",
+    "only women who face barriers in the world of sport"
+   ],
+   "correct_index": 2,
+   "explanation": "Like 'every setback is an opportunity', this is a universal reframing — a way of thinking offered to every reader, not just athletes.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "The Ideas That Drive the Interview"  (slug: unit-5-key-ideas-limitless-possibilities)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=e7d56a81-37f1-4619-98ec-1e8804e8d76f ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/e7d56a81-37f1-4619-98ec-1e8804e8d76f_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A single open road climbing toward a bright horizon, a wheelchair track turning into a path of light",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A single open road climbing toward a bright dawn horizon, the marks of a wheelchair's path turning into a trail of warm light leading upward and outward — limitless possibility. Hopeful, expansive, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=a357b66c-1fdb-4666-9b99-c423f936ae1d ---
+{
+ "markdown": "An interview is more than one person's story — it carries ideas meant for *you*. Tap each to explore what Dr. Malik is really teaching."
+}
+
+--- block #2 [theme_explorer] id=eeb3c9b0-eaf2-4442-ac63-8a273df395e7 ---
+{
+ "intro": "Three ideas at the heart of the interview.",
+ "themes": [
+  {
+   "id": "b1d0fb8c-d9f8-4ed9-b331-300c24d3ba62",
+   "title": "Ability beyond disability",
+   "description": "The central idea: physical limitations do not define a person's potential. What looks like a limit can hide an extraordinary, unique strength.",
+   "evidence": [
+    "'physical limitations don't define one's potential'",
+    "'disability is not a limitation; it's a unique strength waiting to be unleashed'"
+   ],
+   "reflection_prompt": "Think of an ability you have that has nothing to do with your body — patience, humour, focus, kindness. Why might that matter as much as physical strength?",
+   "description_hinglish": "Central idea yeh hai: sharir ki kami kisi insaan ki kabiliyat tay nahi karti. Jo cheez ek limit lagti hai, uske peeche ek alag, khaas taakat chhupi ho sakti hai.",
+   "reflection_prompt_hinglish": "Apni koi ek ability socho jiska sharir se koi lena-dena nahi hai — sabar, hansi-mazaak, dhyaan, ya dayalu hona. Yeh sharir ki taakat jitni hi zaroori kyun ho sakti hai?"
+  },
+  {
+   "id": "776a668e-c2a3-40c6-949e-b4ff16a8e598",
+   "title": "Every setback is an opportunity",
+   "description": "Between what happens to us and how we respond lies a choice. Dr. Malik turned the worst news of her life into a 'world of limitless possibilities' — and says everyone can do the same with their own setbacks.",
+   "evidence": [
+    "'I had two choices — squander my life in remorse or transform it'",
+    "'every setback is an opportunity to prove your strength'"
+   ],
+   "reflection_prompt": "Name one setback you've faced. If you treated it as 'an opportunity to prove your strength', what is one thing you could do next?",
+   "description_hinglish": "Humare saath jo hota hai aur hum uspe kaise react karte hain, in dono ke beech ek choice hoti hai. Dr. Malik ne apni zindagi ki sabse buri khabar ko ek 'world of limitless possibilities' bana diya — aur kehti hain ki har koi apne setbacks ke saath yahi kar sakta hai.",
+   "reflection_prompt_hinglish": "Apna ek setback batao jiska tumne saamna kiya. Agar tum use 'apni taakat saabit karne ka mauka' maano, to aage ek kaam kaunsa kar sakte ho?"
+  },
+  {
+   "id": "f9127b85-1c7c-4453-bc29-3b7e37f238d3",
+   "title": "Winning changes how the world sees",
+   "description": "Her medals matter beyond sport: each one breaks a stereotype and makes the path easier for the next person. Personal victory becomes social change.",
+   "evidence": [
+    "'a step forward in changing perceptions'",
+    "'When people witness the strength, skill, and competitive spirit of para-athletes, it breaks down preconceived notions'"
+   ],
+   "reflection_prompt": "Can one person's success really change how a whole society thinks? Give one example — from sport, science, or anywhere — where it has.",
+   "description_hinglish": "Unke medals sirf khel se badi cheez hain: har ek medal kisi stereotype ko todta hai aur agle insaan ke liye raasta aasaan banata hai. Ek vyakti ki jeet samaj ka badlaav ban jaati hai.",
+   "reflection_prompt_hinglish": "Kya sach mein ek insaan ki kaamyaabi poore samaj ki soch badal sakti hai? Ek udaharan do — khel, science, ya kahin se bhi — jahan aisa hua ho."
+  }
+ ]
+}
+
+--- block #3 [callout] id=215c044b-bd50-4867-ad5b-a5291d190966 ---
+{
+ "variant": "literature_in_life",
+ "title": "Inclusion is everyone’s work",
+ "markdown": "Dr. Malik's dream — 'a society where everyone, regardless of ability, is treated with dignity and given a fair chance' — is called **inclusion**. It isn't only about ramps and wheelchairs (though **accessibility** matters hugely). It's about *expectations*: whether we assume a person with a disability can study, work, compete, lead — or whether we quietly count them out. India is slowly building this: accessible buildings, inclusive schools, reserved opportunities, and changing laws. But the biggest change happens in ordinary moments — when *you* include rather than exclude, expect rather than pity. The interview asks you to be part of that change.",
+ "markdown_hinglish": "Dr. Malik ka sapna — 'a society where everyone, regardless of ability, is treated with dignity and given a fair chance' — isi ko **inclusion** kehte hain. Yeh sirf ramps aur wheelchairs ki baat nahi hai (waise **accessibility** bahut maayne rakhti hai). Yeh *expectations* ki baat hai: kya hum maan lete hain ki ek disability waala insaan padh sakta hai, kaam kar sakta hai, compete kar sakta hai, lead kar sakta hai — ya hum chupke se use chhod dete hain. India dheere-dheere yeh bana raha hai: accessible buildings, inclusive schools, reserved mauke, aur badalte kanoon. Lekin sabse bada badlaav rozmarra ke chhote palon mein hota hai — jab *tum* shaamil karte ho, alag nahi karte; ummeed rakhte ho, taras nahi khaate. Yeh interview tumse kehta hai ki us badlaav ka hissa bano."
+}
+
+--- block #4 [reasoning_prompt] id=889c2563-f2f3-4ec7-8456-06e2c9baef00 ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 2,
+ "prompt": "This text is an **interview**, not a story or an essay. What can the interview format do — hearing a real person answer real questions in their own words — that a normal essay *about* Dr. Malik could not?",
+ "reveal": "An essay would *tell* you about Dr. Malik from the outside; the interview lets you hear her *own voice* — her exact words, her tone, her way of framing her life ('two choices', 'ability beyond disability'). That directness builds trust and intimacy: you feel you're meeting her, not reading a report. The Q&A form also lets her be *human* — reflective, humble, occasionally funny — in a way a formal essay flattens. And because the questions are ones *you* might ask ('how did you brave the odds? what advice do you have?'), her answers feel addressed to you personally. The format is the message: a real person, speaking for herself, is far harder to underestimate than a paragraph about her — which is exactly the point of a chapter about not underestimating people."
+}
+
+--- block #5 [inline_quiz] id=1f6d5411-fd28-4edb-9434-a3b3d0afc271 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "0c42d8ff-12e6-4a27-ad6d-03fb193f06a9",
+   "question": "What is the central idea of the interview?",
+   "options": [
+    "That taking part in sport is enjoyable",
+    "That winning medals is what truly matters most",
+    "That physical limits do not define potential",
+    "That India ought to host the Paralympic Games"
+   ],
+   "correct_index": 2,
+   "explanation": "'Ability beyond disability' is Dr. Malik's core belief and the chapter's central idea.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "1074d021-767b-40ff-a3dd-037a47c0fd39",
+   "question": "Why do Dr. Malik's medals matter 'beyond sport'?",
+   "options": [
+    "Each one breaks a stereotype",
+    "They are worth a considerable sum of money",
+    "They are pleasing, handsome objects to display",
+    "They are made of real and genuine gold"
+   ],
+   "correct_index": 0,
+   "explanation": "Her wins shift public perception, making the path easier for others — personal victory becomes social change.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "95007b89-98ea-4dd7-994e-c96294235bf2",
+   "question": "What can the interview FORMAT do that an essay about her could not?",
+   "options": [
+    "It makes the whole account considerably shorter",
+    "It adds nothing an essay could not also offer",
+    "It allows photographs to be printed beside it",
+    "It lets us meet her in her own words"
+   ],
+   "correct_index": 3,
+   "explanation": "First-person Q&A gives directness and humanity — you encounter the real person in her own words, building trust and intimacy that an essay about her cannot.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "Read Closely: Fact, Opinion, Cause, Effect"  (slug: unit-5-working-with-text-limitless-possibilities)
+published=true blocks=10 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=d39c5637-c797-407a-89d9-8e376d273eb7 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/d39c5637-c797-407a-89d9-8e376d273eb7_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A reader's notebook with a fact-table and arrows linking causes to effects, warm desk light",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). An open notebook showing a neat fact-table and small arrows linking 'cause' boxes to 'effect' boxes, a medal used as a paperweight, warm desk light. Glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=d1567c8e-bd30-4147-b25e-a013a91fb554 ---
+{
+ "markdown": "Reading non-fiction well means two things: gathering the **facts** accurately, and seeing the **relationships** between ideas — *fact vs opinion*, and *cause vs effect*. Attempt each, then tap **Show solution**."
+}
+
+--- block #2 [comprehension_checkpoint] id=079b1f80-ad5d-43bf-8e40-254f7b1708e7 ---
+{
+ "intro": "The fact table — what does the interview actually tell us?",
+ "questions": [
+  {
+   "id": "0ce35b3d-e4f5-4681-b73a-7957c261da77",
+   "question": "At what age was Dr. Malik diagnosed with a spinal tumour, and what was the result of her surgery?",
+   "options": [
+    "At 19; she recovered fully",
+    "At 29; she was left paralysed waist-down and bound to a wheelchair",
+    "At 40; she lost her sight",
+    "At 29; she became a swimmer"
+   ],
+   "correct_index": 1,
+   "explanation": "She was 29 at diagnosis; after surgery, the doctors declared she would be paralysed waist-down and use a wheelchair for life. From there, she chose transformation."
+  },
+  {
+   "id": "0114437c-a0d0-4937-81cb-ba3aa242edde",
+   "question": "What was her first successful Paralympic event, and what medal did she win?",
+   "options": [
+    "Swimming, gold",
+    "Shot-put at the 2016 Rio Paralympics, silver",
+    "Archery, bronze",
+    "Running, gold"
+   ],
+   "correct_index": 1,
+   "explanation": "Her breakthrough was the silver medal in shot-put at the 2016 Rio Paralympic Games — making her India's first woman Paralympic medallist."
+  }
+ ]
+}
+
+--- block #3 [text] id=ea57d60e-9730-4dae-bfa2-83d6c9afcde4 ---
+{
+ "markdown": "**Fact or opinion? Cause or effect?** A *fact* can be proved; an *opinion* is a belief. A *cause* makes something happen; an *effect* is the result. Test yourself below."
+}
+
+--- block #4 [comprehension_checkpoint] id=22915cf3-62b6-4fe8-a7ed-a03aa44ca323 ---
+{
+ "intro": "Decide the relationship between each pair.",
+ "questions": [
+  {
+   "id": "bc56106d-96c4-45bc-bf6b-5ed2c4a83e49",
+   "question": "(i) 'In the 2016 Rio Games, I secured the silver medal in shot-put.' (ii) 'I feel it was a moment of personal victory.' — These two sentences are an example of:",
+   "options": [
+    "cause and effect",
+    "fact and opinion (the first can be proved; the second is a personal belief)",
+    "two facts",
+    "two opinions"
+   ],
+   "correct_index": 1,
+   "explanation": "The medal is a checkable FACT; 'I feel it was a personal victory' is an OPINION (a belief). So: fact–opinion."
+  },
+  {
+   "id": "6a714c68-b8df-4574-9075-48d1e0e4af47",
+   "question": "(i) 'I was diagnosed with a tumour in my spine.' (ii) 'I had a surgery and was told I'd be bound to a wheelchair.' — These show:",
+   "options": [
+    "fact and opinion",
+    "cause and effect (the tumour led to the surgery and its outcome)",
+    "two opinions",
+    "no relationship"
+   ],
+   "correct_index": 1,
+   "explanation": "The tumour (cause) led to the surgery and the paralysis (effect). So: cause–effect."
+  }
+ ]
+}
+
+--- block #5 [worked_example] id=5cbbf960-cfcf-43a2-a280-5780bc094889 ---
+{
+ "label": "Extract 1 · \"two choices\"",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "On the 'two choices' passage: (i) Why can her decision be likened to a caterpillar becoming a butterfly? (ii) Why could she switch to para-athletics comfortably? (iii) Why does she call Rio 2016 a 'breakthrough moment'? (iv) 'In hindsight' shows the speaker is — curious, reflective, determined, or courageous? (v) Name one perception she might have changed.",
+ "solution": "**(i)** Like a caterpillar that transforms into a butterfly, she underwent a complete, beautiful transformation — from a woman told she was 'bound to a wheelchair' into a celebrated champion. Something that seemed an ending became a new and freer form of life.\n\n**(ii)** Because she **already loved sports and had been a swimmer** — so moving into para-athletics built on skills and passion she already had.\n\n**(iii)** Because the Rio silver was her **first Paralympic medal** — a turning point that announced her arrival on the world stage and began changing how people saw disability.\n\n**(iv)** **Reflective** — 'in hindsight' means looking back and understanding the meaning of an event afterwards.\n\n**(v)** Any reasonable one: the perception that **people with disabilities cannot be elite athletes / cannot win on a world stage / are to be pitied rather than admired.** Her medal challenged all of these."
+}
+
+--- block #6 [worked_example] id=b609582f-7911-40bb-b814-856222160d9c ---
+{
+ "label": "Extract 2 · \"a new lease of life\"",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "On the 'sports challenge stereotypes' passage: (i) Which words describe the speaker's tone — appreciative & optimistic, or moralistic & defensive? (ii) Complete the analogy: ability : potential :: preconceived notions : ___. (iii) True/False: Paralympics both showcases abilities AND questions stereotypes. (iv) What does 'helped me push boundaries' tell us about her? (v) Which phrase shows she transformed her life?",
+ "solution": "**(i)** **Appreciative and optimistic** (option A and D). She is grateful and hopeful, not moralistic or defensive.\n\n**(ii)** *ability : potential :: preconceived notions : **stereotypes***. (Ability and potential are near-synonyms; preconceived notions and stereotypes are near-synonyms.)\n\n**(iii)** **True.** Paralympics showcases para-athletes' remarkable abilities AND breaks down stereotypes about disability — both at once.\n\n**(iv)** It tells us she is **ambitious and ever-growing** — never satisfied with limits, always reaching beyond what others (and perhaps she herself) once thought possible.\n\n**(v)** **'a new lease of life'** — the phrase that shows Paralympics gave her a fresh, transformed life."
+}
+
+--- block #7 [worked_example] id=c7221803-ee75-4cef-b8fe-fc8961def18b ---
+{
+ "label": "Q3 & Q4",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "Q3: Justify the title 'The World of Limitless Possibilities' with reference to Dr. Malik. Q4: 'Every setback is an opportunity to prove your strength.' How is this a life lesson for everyone, not just sportspersons?",
+ "solution": "**Q3:** The title comes from Dr. Malik's own words — faced with paralysis, she chose to 'transform [her life] to a world of limitless possibilities.' Her life proves the title: from a wheelchair-bound patient to a record-breaking, multiple-award-winning champion and advocate. By refusing to let her body set the limits of her life, she showed that the possibilities open to a person are **far larger than their physical circumstances** — exactly what the title claims.\n\n**Q4:** Everyone faces setbacks — failed exams, lost matches, rejections, disappointments. The lesson is universal because it is about **response, not circumstance**: a setback can be the end of effort, or the start of a stronger one. Treating each one as 'an opportunity to prove your strength' turns problems into practice for resilience. You don't need a medal or a disability to use this — only the willingness to keep going after something goes wrong."
+}
+
+--- block #8 [reasoning_prompt] id=e9b5b928-4bdd-40e0-85b6-a0b2696f6dc8 ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "Question 5 asks how Dr. Malik being named one of the world's 10 most inspirational *women* para-athletes connects to **gender equality** in sport. Why does it matter, for girls everywhere, that the person breaking these barriers is a *woman*?",
+ "reveal": "Representation changes what feels possible. When a girl — especially one facing extra obstacles — sees a *woman* at the very top of a demanding sport, the message lands differently than it would from a man: *someone like me did this, so the door is open to me too.* Dr. Malik faced a *double* barrier — disability *and* gender — in a world where women's sport, and especially women's para-sport, has long been under-funded and under-watched. Her 'firsts' don't just prove disability is no limit; they prove that **a woman with a disability can lead the field** — quietly dismantling two prejudices at once. Every girl who hears her story inherits a slightly larger sense of what she's allowed to want. That is why representation at the top is not a luxury but a force for equality."
+}
+
+--- block #9 [inline_quiz] id=34b10ae6-1c64-4089-befb-29514cc778c0 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d87d1a20-d8b9-4b47-9307-df6b5bac44ab",
+   "question": "'I won the silver medal' vs 'I feel it was a personal victory' is an example of:",
+   "options": [
+    "a cause set beside its resulting effect",
+    "a fact set beside an opinion",
+    "two plain facts placed one after another",
+    "a question followed at once by its answer"
+   ],
+   "correct_index": 1,
+   "explanation": "The medal is a provable fact; 'I feel it was a personal victory' is a personal belief — an opinion.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "bf09f234-a859-4937-97a2-47e2dc5283ee",
+   "question": "Complete the analogy: ability : potential :: preconceived notions : ___",
+   "options": [
+    "medals",
+    "stereotypes",
+    "wheelchairs",
+    "swimming"
+   ],
+   "correct_index": 1,
+   "explanation": "Ability ≈ potential; preconceived notions ≈ stereotypes. Both pairs are near-synonyms.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "1c33dc08-252f-4c5b-bab0-0fd16be3cb7e",
+   "question": "Why is 'every setback is an opportunity' a lesson for EVERYONE?",
+   "options": [
+    "Because each one of us takes part in sport",
+    "Because everyone is, in the end, sure to win medals",
+    "Because the lesson really applies to athletes alone",
+    "Because it is about how we meet difficulty"
+   ],
+   "correct_index": 3,
+   "explanation": "The lesson is about response, not circumstance — anyone facing any setback can choose to treat it as a chance to prove their strength.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "Phrases, Modals, and Reporting an Interview"  (slug: unit-5-vocabulary-modals-and-reported-speech)
+published=true blocks=12 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=674053a9-a8fe-44fe-b1b8-6e4e2b544955 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/674053a9-a8fe-44fe-b1b8-6e4e2b544955_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "Word-cards for could, should, would arranged like stepping stones across water",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). Smooth stepping-stone shapes across calm dark water, each stone softly lettered as a single small word (could, should, would, can), suggesting modal verbs as stepping stones. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=d423d25d-dad0-4123-81a4-1420af35e8bd ---
+{
+ "markdown": "The interview is full of strong **phrases** worth owning. Then we'll meet the **modal auxiliaries** — small verbs (*can, could, should, would, must, may*) that change a sentence's meaning — and finish by turning the interview into **reported speech**."
+}
+
+--- block #2 [heading] id=b6bfffd4-35fa-4591-9cbc-45ada5decd7b ---
+{
+ "level": 2,
+ "text": "Phrases that carry strength"
+}
+
+--- block #3 [vocabulary_lab] id=2cd974ee-a5d2-4920-8cf7-d773c9a1533d ---
+{
+ "mode": "idioms",
+ "intro": "Five phrases from the interview. Each says something a single word cannot.",
+ "cards": [
+  {
+   "id": "64b4eed0-21da-497a-a0a2-d5d9fdea51a8",
+   "word": "defy the odds",
+   "pos": "phrase",
+   "pronunciation": "dih-FY the ODZ",
+   "meaning": "to succeed when most people expect failure",
+   "hindi": "असंभव को संभव करना",
+   "example": "Para-athletes defy the odds every time they compete."
+  },
+  {
+   "id": "1947d3a4-3736-4cad-84eb-bd2141b1fc26",
+   "word": "a new lease of life",
+   "pos": "phrase",
+   "pronunciation": "a new LEES of LYFE",
+   "meaning": "a fresh start; renewed energy and purpose",
+   "hindi": "नया जीवन",
+   "example": "Paralympics gave Dr. Malik a new lease of life."
+  },
+  {
+   "id": "a7ff342d-e41c-451b-89d3-3ca2a94b7ffd",
+   "word": "in hindsight",
+   "pos": "phrase",
+   "pronunciation": "in HYND-syte",
+   "meaning": "understanding something only after it has happened",
+   "hindi": "पीछे मुड़कर देखने पर",
+   "example": "In hindsight, the setback was the start of something greater."
+  },
+  {
+   "id": "f83fd05a-35e8-480d-b533-77952b1679f0",
+   "word": "breakthrough moment",
+   "pos": "phrase",
+   "pronunciation": "BRAYK-throo MOH-munt",
+   "meaning": "a time of sudden, important success or discovery",
+   "hindi": "निर्णायक सफलता का पल",
+   "example": "The Rio silver was her breakthrough moment."
+  },
+  {
+   "id": "8eca9d1b-9e8c-4ce5-8105-030b466b3752",
+   "word": "turn obstacles into stepping stones",
+   "pos": "phrase",
+   "pronunciation": "— ",
+   "meaning": "to use difficulties as a way to move forward",
+   "hindi": "बाधाओं को सीढ़ी बनाना",
+   "example": "Her fortitude turned obstacles into stepping stones."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "bbcdd365-9e41-4a33-a34f-38bc476f491b",
+   "question": "To *defy the odds* means to:",
+   "options": [
+    "lose badly",
+    "succeed when most people expect failure",
+    "refuse to compete",
+    "follow the rules"
+   ],
+   "correct_index": 1,
+   "explanation": "*Defy the odds* = to succeed against expectations — exactly what para-athletes do."
+  },
+  {
+   "id": "67ec8cff-44b8-4097-a9e7-d21bd66cac73",
+   "question": "If something gives you 'a new lease of life', it gives you:",
+   "options": [
+    "a new house",
+    "a fresh start, renewed energy and purpose",
+    "a new job only",
+    "more money"
+   ],
+   "correct_index": 1,
+   "explanation": "*A new lease of life* = a renewed, energised fresh start — as Paralympics was for Dr. Malik."
+  }
+ ]
+}
+
+--- block #4 [heading] id=7598b6ae-9170-4baa-a002-55c12a847284 ---
+{
+ "level": 2,
+ "text": "Modal auxiliaries — small words, big jobs"
+}
+
+--- block #5 [text] id=7e7629a8-8ce7-4569-82e7-bfd8a6b6e095 ---
+{
+ "markdown": "**Modal auxiliaries** are helping verbs that add meaning to the main verb: *can, could, may, might, shall, should, will, would, must.* The same modal can do **different jobs** depending on the situation:\n\n- **could** → possibility (*it could rain*), past ability (*she could swim as a child*), polite request (*could you help?*), suggestion (*we could try*)\n- **should** → advice (*you should rest*), probability (*they should be here by now*)\n- **would** → past habit (*he would walk daily*), polite request (*would you wait?*)\n- **must** → obligation (*you must register*), strong certainty (*she must be tired*)\n\nThe trick is to read the **situation**, not just the word."
+}
+
+--- block #6 [comprehension_checkpoint] id=622aaa8e-8763-4439-8983-c541b803a35b ---
+{
+ "intro": "What job is the modal doing here?",
+ "questions": [
+  {
+   "id": "e9bd9188-483c-40a7-8376-73f47056c830",
+   "question": "'I should give it my best shot.' — Here *should* expresses:",
+   "options": [
+    "possibility",
+    "obligation / what is the right thing to do (advice to oneself)",
+    "a past habit",
+    "impossibility"
+   ],
+   "correct_index": 1,
+   "explanation": "*Should* here expresses obligation/advice — the sense of 'it is right that I do this'."
+  },
+  {
+   "id": "ddabf7c2-89f7-4010-a9ed-44567e81ac03",
+   "question": "'I knew if I tried, I would win.' — Here *would* expresses:",
+   "options": [
+    "a polite request",
+    "a prediction / expected result",
+    "a past habit",
+    "permission"
+   ],
+   "correct_index": 1,
+   "explanation": "*Would* here predicts an expected outcome — 'I would win' = the result she foresaw."
+  },
+  {
+   "id": "2eea0bdc-810e-4f68-87e4-e90f6ca13ef0",
+   "question": "'She could swim well as a child.' — Here *could* expresses:",
+   "options": [
+    "a request",
+    "past ability",
+    "obligation",
+    "impossibility"
+   ],
+   "correct_index": 1,
+   "explanation": "*Could* here = past ability — something she was able to do in the past."
+  }
+ ]
+}
+
+--- block #7 [heading] id=9bcaefc6-0425-4f56-ac87-254e6ed6dc02 ---
+{
+ "level": 2,
+ "text": "Reporting the interview"
+}
+
+--- block #8 [text] id=1333c285-a0aa-48b2-9cfb-afc0c6d48808 ---
+{
+ "markdown": "You met **reported speech** in the last unit. An interview is the perfect place to practise it. **Direct:** *Dr. Malik said, \"I love sports.\"* → **Reported:** *Dr. Malik said that she loved sports.* Remember the steps: add a reporting verb (*said/told*), add **that**, remove the quotation marks, **backshift the tense**, and **change the pronouns**."
+}
+
+--- block #9 [comprehension_checkpoint] id=e8441b9a-41e4-4ef8-8e35-bfcfca6f99e3 ---
+{
+ "intro": "Turn each line of the interview into reported speech.",
+ "questions": [
+  {
+   "id": "2a82ccf5-ad3b-4b8c-9cd4-07ee39a065a0",
+   "question": "Direct: Dr. Malik said, \"I love sports and had been a swimmer too.\" → Reported:",
+   "options": [
+    "Dr. Malik said that I love sports and had been a swimmer too.",
+    "Dr. Malik said that she loved sports and had been a swimmer too.",
+    "Dr. Malik says she loves sports and had been a swimmer.",
+    "Dr. Malik said she love sports and was a swimmer."
+   ],
+   "correct_index": 1,
+   "explanation": "I → she, love → loved (backshift); 'had been' (already past perfect) stays. 'Dr. Malik said that SHE LOVED sports and HAD BEEN a swimmer too.'"
+  },
+  {
+   "id": "530821fb-8426-401b-8078-7210f8e96687",
+   "question": "Direct: The interviewer said, \"You have been listed as one of the ten most inspirational women para-athletes.\" → Reported:",
+   "options": [
+    "The interviewer said that you have been listed…",
+    "The interviewer said that she had been listed as one of the ten most inspirational women para-athletes.",
+    "The interviewer says she has been listed…",
+    "The interviewer said she is listed…"
+   ],
+   "correct_index": 1,
+   "explanation": "you → she, have been → had been: 'The interviewer said that SHE HAD BEEN listed as one of the ten most inspirational women para-athletes.'"
+  },
+  {
+   "id": "3b1b045f-7972-4a98-b1cb-d149f8b07f96",
+   "question": "Direct: Dr. Malik said, \"Youth is the voice of tomorrow.\" → Reported (a general truth):",
+   "options": [
+    "Dr. Malik said that youth was the voice of tomorrow.",
+    "Dr. Malik said that youth is the voice of tomorrow.",
+    "Both are acceptable — a general/timeless truth often keeps the present tense",
+    "Dr. Malik says youth is the voice."
+   ],
+   "correct_index": 2,
+   "explanation": "For a universal/timeless truth, English often KEEPS the present tense ('youth IS the voice of tomorrow'), though backshifting to 'was' is also accepted. A nice nuance of reported speech."
+  }
+ ]
+}
+
+--- block #10 [apply_express] id=9919e07f-1286-4582-8175-a979f15205f6 ---
+{
+ "title": "Grammar Gym — Modals & Reporting",
+ "intro": "Dr. Malik *can* compete, *must* train, *might* win. Modals are tiny words carrying big shades of meaning — ability, obligation, possibility. Choose the right one, and report what was said.",
+ "chapter_number": 5,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "kind": "form_select",
+   "difficulty": 1,
+   "prompt": "When she was five, she **____** swim across the village pond.",
+   "options": [
+    "could",
+    "can",
+    "must",
+    "should"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "could = past ability (was able to, back then).",
+    "can is present ability — but this is about the past.",
+    "must is obligation, not ability.",
+    "should is advice, not ability."
+   ],
+   "explanation": "could is the past of can for ability: 'when she was five, she could swim'.",
+   "id": "ch5-gram-01",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "form_select",
+   "difficulty": 2,
+   "prompt": "An athlete **____** train daily — there is no way around it if she wants to win.",
+   "options": [
+    "must",
+    "might",
+    "could",
+    "may"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "must = strong obligation/necessity ('no way around it').",
+    "might = small possibility, far too weak here.",
+    "could = ability/possibility, not necessity.",
+    "may = permission or possibility, not necessity."
+   ],
+   "explanation": "must carries the strongest necessity. The phrase 'no way around it' demands it.",
+   "id": "ch5-gram-02",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "form_select",
+   "difficulty": 2,
+   "prompt": "It is cloudy; the race **____** be delayed. Nobody is sure yet.",
+   "options": [
+    "might",
+    "must",
+    "will",
+    "cannot"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "might = uncertain possibility, matching 'nobody is sure'.",
+    "must claims near-certainty, which contradicts the doubt.",
+    "will is a firm prediction, too strong.",
+    "cannot denies the possibility entirely."
+   ],
+   "explanation": "might/may signal possibility under doubt. The uncertainty cue points to might.",
+   "id": "ch5-gram-03",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "transform",
+   "difficulty": 2,
+   "source": "The reporter asked, 'Do you train every day?'",
+   "instruction": "Report this yes/no question using 'if'.",
+   "answers": [
+    "The reporter asked if she trained every day.",
+    "The reporter asked whether she trained every day.",
+    "The reporter asked if she trained every day",
+    "The reporter asked whether she trained every day"
+   ],
+   "rule": "Report a yes/no question with if/whether and statement order; 'do you train' → 'she trained'.",
+   "explanation": "Yes/no question → 'asked if she trained every day' (if + statement order, backshifted).",
+   "id": "ch5-gram-04",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "spot_error",
+   "difficulty": 3,
+   "tokens": [
+    "She",
+    "said",
+    "she",
+    "can",
+    "lift",
+    "the",
+    "weight",
+    "easily",
+    "."
+   ],
+   "error_index": 3,
+   "fix": "could",
+   "fix_options": [
+    "could",
+    "can",
+    "will"
+   ],
+   "rule": "In reported speech the modal can backshifts to could: 'She said she could lift …'.",
+   "explanation": "Modals backshift too: can → could, will → would, may → might.",
+   "id": "ch5-gram-05",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "form_select",
+   "difficulty": 3,
+   "prompt": "Polite request in an interview: '**____** you tell us about your first medal?'",
+   "options": [
+    "Could",
+    "Must",
+    "Should",
+    "Can"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Could is the most polite, tentative request form.",
+    "Must would be an order, not a request.",
+    "Should gives advice, not a request.",
+    "Can works but is less formal/polite than Could."
+   ],
+   "explanation": "Could you …? is the courteous request form — softer than Can you …?",
+   "id": "ch5-gram-06",
+   "concept_tag": "grammar"
+  }
+ ]
+}
+
+--- block #11 [inline_quiz] id=dd1207d4-6590-4975-9d45-317a222f856e ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "bf135b9b-e2d9-4af2-b091-de6bd4c14023",
+   "question": "A *modal auxiliary* is:",
+   "options": [
+    "a helping verb that shades the meaning",
+    "a noun that names a person, place or thing",
+    "a mark of punctuation used within a sentence",
+    "an adjective that describes or qualifies a noun"
+   ],
+   "correct_index": 0,
+   "explanation": "Modals (can/could/should/would/must) are helping verbs that colour the main verb with meanings such as possibility, obligation, ability, or advice.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "b731b961-9848-4d47-87e7-d953caeb0832",
+   "question": "In 'you should rest', *should* expresses:",
+   "options": [
+    "past ability",
+    "a request",
+    "advice",
+    "impossibility"
+   ],
+   "correct_index": 2,
+   "explanation": "*Should* here gives advice — the recommended or right course of action.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "1fd1b6d7-2aeb-4c11-8c0e-c861360c897d",
+   "question": "When you turn direct speech into reported speech, which change best captures what actually happens to the words?",
+   "options": [
+    "You keep the wording exactly as it first stood",
+    "You add a further pair of quotation marks around it",
+    "You backshift the tense and shift the pronouns",
+    "You change every verb you find into the future tense"
+   ],
+   "correct_index": 2,
+   "explanation": "The core steps: add a reporting verb + 'that', drop the quotes, backshift the tense, and adjust the pronouns (and time/place words).",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "Ask and Announce"  (slug: unit-5-speaking-and-writing-notice)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=bb48ab66-d6b7-48dd-b686-5aa38cca0458 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/bb48ab66-d6b7-48dd-b686-5aa38cca0458_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A student holding a microphone interviewing a school sports coach, a notice board behind them",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A student holding a small microphone and a notebook, interviewing a school sports coach who gestures warmly, a school notice-board with a bordered notice pinned behind them. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=d148ef30-19d2-4bf5-8fb0-277ba6b60045 ---
+{
+ "markdown": "Two real-world English skills here: **conducting an interview** (asking good questions and listening), and writing a **notice** — the short, boxed announcement every school runs on."
+}
+
+--- block #2 [pronunciation_drill] id=b2057071-d41b-4f48-b83a-391d2e92b435 ---
+{
+ "intro": "Five words from this chapter. Tap to hear; read aloud twice.",
+ "words": [
+  {
+   "id": "0b520406-3ce1-4cf7-89e5-dc1f8a2c0d3a",
+   "word": "resilience",
+   "syllables": "rih-ZIL-ee-unss",
+   "ipa": "rɪˈzɪl.i.əns",
+   "context_sentence": "Overcoming this required mental resilience.",
+   "common_mistake": "Stress the SECOND syllable: rih-ZIL-ee-unss. Don't say 'REE-zil-yens'."
+  },
+  {
+   "id": "4abee023-d5a5-4bed-999f-70d9df89759d",
+   "word": "Paralympics",
+   "syllables": "pair-uh-LIM-piks",
+   "ipa": "ˌpær.əˈlɪm.pɪks",
+   "context_sentence": "Her Paralympics journey began in 2016.",
+   "common_mistake": "It's 'para' + 'lympics' (from 'parallel' + 'Olympics'), NOT 'para-Olympics'. Say pair-uh-LIM-piks."
+  },
+  {
+   "id": "d529ed09-07dd-4064-a524-9b1935fa0cba",
+   "word": "fortitude",
+   "syllables": "FOR-tih-tyood",
+   "ipa": "ˈfɔː.tɪ.tʃuːd",
+   "context_sentence": "Her fortitude turned obstacles into stepping stones.",
+   "common_mistake": "Stress the FIRST syllable: FOR-tih-tyood."
+  },
+  {
+   "id": "7923babf-8dd7-4716-ac41-3cfd3c2e905d",
+   "word": "accolades",
+   "syllables": "AK-uh-laydz",
+   "ipa": "ˈæk.ə.leɪdz",
+   "context_sentence": "The accolades showered on her were deserved.",
+   "common_mistake": "Stress the FIRST syllable: AK-uh-laydz. The ending is 'laydz', not 'lads'."
+  },
+  {
+   "id": "4c0cd6d8-7513-4b32-8f87-daa1d26a7fbd",
+   "word": "inclusivity",
+   "syllables": "in-kloo-SIV-ih-tee",
+   "ipa": "ˌɪn.kluːˈsɪv.ə.ti",
+   "context_sentence": "She is a voice for inclusivity.",
+   "common_mistake": "Stress the third syllable: in-kloo-SIV-ih-tee."
+  }
+ ]
+}
+
+--- block #3 [dialogue_role_play] id=ce0b9294-5ab7-4001-8848-239c7e9af3e7 ---
+{
+ "mode": "debate",
+ "scene_description": "Conduct your own interview. In pairs, one is the school Sports Captain or Coach, the other is the interviewer. Use the question-frames below to run a real interview — then swap roles. A good interviewer asks open questions and LISTENS before asking the next one.",
+ "characters": [
+  {
+   "id": "interviewer",
+   "name": "The Interviewer",
+   "color": "sky"
+  },
+  {
+   "id": "guest",
+   "name": "Sports Captain / Coach",
+   "color": "emerald"
+  }
+ ],
+ "lines": [],
+ "debate_frames": {
+  "for": [
+   "Thank you for your time. Could you tell us a little about your role?",
+   "What first drew you to sport / to coaching?",
+   "What has been your proudest moment so far?",
+   "What is the hardest challenge you've faced, and how did you handle it?",
+   "What advice would you give to students who want to take sport seriously?"
+  ],
+  "against": [
+   "(As the guest) Answer warmly and honestly, in two or three sentences.",
+   "Give one specific example or story, not just a general answer.",
+   "If you don't understand a question, ask the interviewer to rephrase it.",
+   "End by thanking the interviewer and offering one final thought.",
+   "Listen for a follow-up — a good interview is a conversation, not a quiz."
+  ]
+ }
+}
+
+--- block #4 [writing_scaffold] id=6feebc43-899b-4d57-86a5-6647c84f79c3 ---
+{
+ "task": "The Sports Club of your school is organising an Inter-school Athletic Meet. As the Sports Captain, draft a NOTICE in not more than 50 words asking interested students to register for selection in different events. Include all necessary details, inside a box.",
+ "format": "notice",
+ "model_parts": [
+  {
+   "id": "9433db1e-a097-4cde-ad3d-6907b9b3a340",
+   "label": "Organisation name & the word NOTICE",
+   "text": "GREENFIELD PUBLIC SCHOOL\nSPORTS CLUB\nN O T I C E",
+   "annotation": "A notice always opens with the school/organisation name, then the word NOTICE in bold capitals (often spaced out). This tells the reader instantly what kind of document it is. The whole notice sits inside a box/border."
+  },
+  {
+   "id": "ae2eb36e-58f0-49ee-b6c3-b6bf8ae7fa91",
+   "label": "Date & a clear heading",
+   "text": "5 June 2026\nINTER-SCHOOL ATHLETIC MEET — REGISTER NOW",
+   "annotation": "Put the date on the left. Then a short, bold heading that names the event and the action wanted ('REGISTER NOW'). The heading does the work of grabbing attention."
+  },
+  {
+   "id": "25ce2a38-1ba8-4e2e-bf24-effbb93921d4",
+   "label": "The body — who, what, when, where, how",
+   "text": "All students keen to represent the school at the Inter-school Athletic Meet are invited to register for selection trials. Events: 100 m, 200 m, long jump, relay, and shot-put. Trials: 12 June 2026, 8 a.m., School Ground. Register with your class teacher by 10 June.",
+   "annotation": "The body answers the reader's questions in as few words as possible: WHAT (register for trials), WHICH events, WHEN and WHERE the trials are, and HOW to register (with a deadline). Every word earns its place — you have only ~50."
+  },
+  {
+   "id": "9538e939-0f73-41c5-b966-177915d8b226",
+   "label": "Signature block",
+   "text": "Aarav Mehta\nSports Captain",
+   "annotation": "End with the writer's name and designation (Sports Captain) — this gives the notice authority. No 'yours faithfully' — a notice is not a letter."
+  }
+ ],
+ "tips": [
+  "Stay within ~50 words. A notice is scanned in seconds, not read at leisure.",
+  "Draw a BOX around the whole notice — it's part of the format and the marks.",
+  "Cover who, what, when, where, and how-to-register — with a clear deadline.",
+  "No salutation or 'yours sincerely' — a notice is an announcement, not a letter."
+ ]
+}
+
+--- block #5 [inline_quiz] id=aa17da0d-f0aa-4293-9972-43de6b6987ad ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "4d024fc9-4c62-4a94-bdcc-cc2357caa7ea",
+   "question": "Which of these does a NOTICE always include?",
+   "options": [
+    "A heading, a date, the details and a signature",
+    "A warm greeting such as 'Dear friend' at the top",
+    "A long descriptive story about the occasion",
+    "A polite closing line reading 'Yours sincerely'"
+   ],
+   "correct_index": 0,
+   "explanation": "A notice has a fixed boxed format: organisation name, the word NOTICE, date, heading, details, and the writer's name and designation. It is not a letter, so no salutation or 'yours sincerely'.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "9d6c9134-3b64-4e3d-9143-46cb4551638a",
+   "question": "About how long should a notice be?",
+   "options": [
+    "At least 200 words to cover every detail",
+    "A full page, so that nothing is ever left out",
+    "As long as the writer happens to wish it to be",
+    "Around 50 words"
+   ],
+   "correct_index": 3,
+   "explanation": "A notice is read in seconds. Keep it to about 50 words, covering only the essentials.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "2c47f0aa-80df-4435-8bfb-095074e2efae",
+   "question": "What makes someone a GOOD interviewer?",
+   "options": [
+    "Speaking for most of the conversation themselves",
+    "Listening closely before the next question",
+    "Reading out each prepared question without a pause",
+    "Cutting in often to keep the talk moving along"
+   ],
+   "correct_index": 1,
+   "explanation": "Good interviewing is mostly listening — open questions and genuine follow-ups turn a list of questions into a real conversation, not a quiz.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 9 — "Dr. Deepa Malik & the Story of the Paralympics"  (slug: unit-5-about-deepa-malik-and-paralympics)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=17a6b549-a604-4ce1-b26c-13bb7729441a ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/17a6b549-a604-4ce1-b26c-13bb7729441a_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A triumphant woman athlete with a medal, arms raised, a Paralympic flame glowing behind",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A triumphant Indian woman athlete in a wheelchair, arms raised in victory with a medal around her neck, a softly glowing stadium flame and flags behind her. Joyful, proud, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=50aa2a27-029f-4b26-b68c-b54e1a92796a ---
+{
+ "markdown": "The voice you've been reading belongs to a real, living legend — and the Games she competes in have their own remarkable origin story."
+}
+
+--- block #2 [meet_a_scientist] id=c41bc624-f005-449a-a708-362e69146df8 ---
+{
+ "name": "Dr. Deepa Malik",
+ "years": "1970–present",
+ "nationality": "Indian",
+ "portrait_prompt": "Watercolour bust-portrait painting of Dr. Deepa Malik, a strong, smiling Indian woman para-athlete with short dark hair and warm confident eyes, a medal at her neck. Soft warm light glowing against a dark neutral background. Dignified and joyful. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+ "portrait_src": "",
+ "contribution": "A trailblazing Indian para-athlete. She became **India's first woman to win a medal at the Paralympic Games** — a **silver in shot-put at Rio 2016**. She has also won medals across athletics events and been **India's first woman para-athlete to win an Asian Games medal**. She has been honoured with the **Khel Ratna** (India's highest sporting award), the **Arjuna Award**, and the **Padma Shri**.",
+ "connection": "Everything in the interview is her real story: the spinal tumour at 29, the paralysis, the choice to 'transform' her life, the Rio silver, and her mission of advocacy. She didn't just compete — she went on to lead, serving as President of the **Paralympic Committee of India** and tirelessly championing 'ability beyond disability'.",
+ "fun_detail": "Before her sporting fame, Dr. Malik ran a restaurant and took up adventure sports — she has driven, swum, and biked across extraordinary challenges, even featuring in record books for feats like a sub-zero river swim and long motor-drives. She often says she 'collects firsts' — turning each one into proof that limits are made to be pushed.",
+ "learn_more": "Look up the Paralympic Committee of India, and Dr. Malik's own talks and interviews online — her message of 'ability beyond disability' runs through all of them."
+}
+
+--- block #3 [cultural_context_card] id=03f965de-bd52-4632-b41d-4056c74eafb5 ---
+{
+ "reference": "The origin of the Paralympics",
+ "category": "event",
+ "short_desc": "The Games began in 1948 as a small sports competition for injured war veterans — and grew into a global movement.",
+ "detail": "The Paralympics trace back to **1948**, when **Sir Ludwig Guttmann**, a doctor in England, organised a sports competition for **war veterans with spinal-cord injuries** — the **Stoke Mandeville Games**. He believed sport could heal both body and spirit. The first official Paralympic Games were held in **Rome in 1960**. Today the Paralympics are split into **Summer and Winter Games**, and since the late twentieth century they are held in the **same host city as the Olympics**, shortly after them. From a handful of injured soldiers to thousands of elite athletes — a movement that changed how the world sees disability.",
+ "image_url": "",
+ "image_prompt": "Watercolour painting of an early sports competition for wheelchair athletes on a grassy English field in the late 1940s, a doctor watching with quiet pride, vintage atmosphere. Warm, historic, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+ "detail_hinglish": "Paralympics ki shuruaat **1948** se jurti hai, jab **Sir Ludwig Guttmann**, England ke ek doctor, ne **war veterans with spinal-cord injuries** ke liye ek sports competition rakha — **Stoke Mandeville Games**. Unka maanna tha ki khel sharir aur man dono ko theek kar sakta hai. Pehle official Paralympic Games **Rome mein 1960** mein hue. Aaj Paralympics **Summer aur Winter Games** mein bate hue hain, aur bees-vi sadi ke aakhir se yeh **Olympics ke usi host city** mein, unke thodi der baad hote hain. Mutthi bhar zakhmi sainikon se lekar hazaaron elite athletes tak — ek aisa movement jisne badal diya ki duniya disability ko kaise dekhti hai."
+}
+
+--- block #4 [callout] id=8d4c12ca-dbe6-4598-a5b3-faa14cc790f8 ---
+{
+ "variant": "india_voice",
+ "title": "India's growing Paralympic story",
+ "markdown": "Dr. Malik is one of a rising tide of Indian para-champions. Names worth knowing: **Murlikant Petkar** (India's first Paralympic gold, swimming, 1972), **Devendra Jhajharia** (multiple javelin golds), **Avani Lekhara** (shooting gold, Tokyo 2020), **Sumit Antil** (javelin world-record holder), and **Sheetal Devi** (the armless para-archer from this chapter's opening). India's Paralympic medal tally has climbed sharply in recent Games. Each athlete carries the same message Dr. Malik gave you: *ability beyond disability* — and each makes the path wider for the next."
+}
+
+--- block #5 [inline_quiz] id=45bdf09b-f282-4cf9-90fe-ca6569b551cc ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "9a35a13a-df5f-4fa4-9c6b-40020fbedd70",
+   "question": "What historic 'first' did Dr. Deepa Malik achieve?",
+   "options": [
+    "She was the first Indian to win an Olympic gold",
+    "She was the first Indian woman to win Paralympic silver",
+    "She was the first woman to play Test cricket for India",
+    "She was the first Indian to qualify as a sports doctor"
+   ],
+   "correct_index": 1,
+   "explanation": "Dr. Malik became India's first woman to win a Paralympic medal — a silver in shot-put at Rio 2016 — among a long list of 'firsts'.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "3ec0aecd-9952-4662-aa35-bbed465bfc33",
+   "question": "How did the Paralympics begin?",
+   "options": [
+    "As a film festival once held across Europe",
+    "As a single event within the ancient Olympics",
+    "As a contest first staged in Rome in the year 2016",
+    "As 1948 games for injured war veterans"
+   ],
+   "correct_index": 3,
+   "explanation": "Sir Ludwig Guttmann started the Stoke Mandeville Games in 1948 for war veterans with spinal injuries; the first official Paralympics were held in Rome in 1960.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "1aa22e41-2ff2-4310-96e6-12cae42c9bfc",
+   "question": "What message connects Dr. Malik and all the Indian para-champions named on this page?",
+   "options": [
+    "That each champion widens the path for the next",
+    "That the world of sport belongs to the able-bodied",
+    "That winning a medal is really a rather easy thing",
+    "That only women are able to become para-athletes"
+   ],
+   "correct_index": 0,
+   "explanation": "From Petkar to Sheetal Devi, each athlete embodies 'ability beyond disability' and widens the path for those who follow.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 10 — "Before You Read: When Winning Means Something Else"  (slug: unit-5-reflect-and-respond-nine-gold-medals)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=455fe60f-4bed-4635-842d-fe194d5ff7a7 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/455fe60f-4bed-4635-842d-fe194d5ff7a7_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "Nine young runners walking hand in hand toward a finish line, a banner above, a cheering crowd",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). Nine young runners of different sizes walking hand in hand in a row toward a finish line, beaming, a banner overhead, a crowd rising to its feet around them. Joyful, moving, full of warmth, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [curiosity_prompt] id=28d4b42f-9149-42f6-b185-6d6558463af1 ---
+{
+ "prompt": "Imagine you're winning a race you've trained months for. Ten metres ahead is the finish line, the gold medal, the moment you've dreamed of. Then you hear, behind you, another runner fall — and cry out. Do you run on to your gold… or do you stop and go back? Be honest with yourself. What would you actually do?",
+ "hint": "There's no shame in either answer — the point is to notice how hard the choice is, and what it asks of you.",
+ "reveal": "The poem you're about to read is about runners who faced exactly this — and what they chose changed the meaning of the word 'winning'. It's a true-spirited tale from the **Special Olympics**, where the medal turns out to be the smallest part of the victory."
+}
+
+--- block #2 [callout] id=76853201-9671-47b3-8ead-43860eb91630 ---
+{
+ "variant": "fun_fact",
+ "title": "Three Games — what’s the difference?",
+ "markdown": "It's easy to mix these up — they are **three different things**:\n\n- **Olympics** — the world's elite Games for able-bodied athletes.\n- **Paralympics** — elite, high-performance Games for athletes with physical, visual, or intellectual disabilities (Dr. Malik's world). The focus is *top competition*.\n- **Special Olympics** — Games mainly for people with **intellectual disabilities**, where the focus is **participation, joy, and inclusion for all**, not only winning. *Every* athlete is celebrated.\n\nThe last unit's interview was about the **Paralympics**. This poem is about the **Special Olympics** — and its different spirit is the whole point."
+}
+
+--- block #3 [text] id=eab71836-301d-4762-b368-8fdbc247fd03 ---
+{
+ "markdown": "Before the poem, three words that look similar but are not the same — and knowing the difference will make you a kinder, clearer thinker."
+}
+
+--- block #4 [vocabulary_lab] id=0a9012bf-417d-46e6-a9af-38ff9398541f ---
+{
+ "mode": "flashcards",
+ "intro": "Sympathy, empathy, compassion — three steps deeper into caring.",
+ "cards": [
+  {
+   "id": "58c51ad0-0e69-4de6-a07f-d37e1a17a1dd",
+   "word": "sympathy",
+   "pos": "noun",
+   "pronunciation": "SIM-puh-thee",
+   "meaning": "feeling sorry for the trouble another person is in, from the outside",
+   "hindi": "सहानुभूति",
+   "example": "'I'm so sorry for what's happening to you' — that is sympathy."
+  },
+  {
+   "id": "92d50aed-89e5-4711-9b61-f710c1752aa1",
+   "word": "empathy",
+   "pos": "noun",
+   "pronunciation": "EM-puh-thee",
+   "meaning": "understanding and sharing what another person feels, as if from inside",
+   "hindi": "समानुभूति",
+   "example": "'I can imagine how you feel, and I understand why' — that is empathy."
+  },
+  {
+   "id": "38ed27e8-72c7-4942-b4f0-b97e9d6a777d",
+   "word": "compassion",
+   "pos": "noun",
+   "pronunciation": "kum-PASH-un",
+   "meaning": "empathy PLUS the will to act and help",
+   "hindi": "करुणा",
+   "example": "'I understand, and I'll stay with you so you're not alone' — that is compassion."
+  },
+  {
+   "id": "582569c7-5ee9-48ee-b7c2-0531e3a7a65c",
+   "word": "anguish",
+   "pos": "noun",
+   "pronunciation": "ANG-gwish",
+   "meaning": "severe pain or suffering of mind",
+   "hindi": "व्यथा / पीड़ा",
+   "example": "He gave a cry of frustration and anguish."
+  },
+  {
+   "id": "a40a80a2-d903-4f24-a481-3f78e92d1a02",
+   "word": "resolved",
+   "pos": "adjective",
+   "pronunciation": "rih-ZOLVD",
+   "meaning": "firmly determined",
+   "hindi": "दृढ़ संकल्पित",
+   "example": "Nine resolved athletes waited at the starting line."
+  },
+  {
+   "id": "e9e19095-682d-47e2-8e11-eddf67d97984",
+   "word": "ovation",
+   "pos": "noun",
+   "pronunciation": "oh-VAY-shun",
+   "meaning": "enthusiastic applause from a crowd",
+   "hindi": "जयघोष / तालियाँ",
+   "example": "The crowd rose in a standing ovation."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "0a67777b-0a03-469c-a0e9-7e7194676cbc",
+   "question": "What is the difference between sympathy and empathy?",
+   "options": [
+    "They are the same",
+    "Sympathy is feeling sorry from the outside; empathy is understanding and sharing the feeling as if from inside",
+    "Empathy is weaker than sympathy",
+    "Sympathy means helping"
+   ],
+   "correct_index": 1,
+   "explanation": "Sympathy = feeling sorry FOR someone. Empathy = feeling WITH them, understanding from inside. Empathy goes deeper."
+  },
+  {
+   "id": "ec67427b-8d43-4e2e-8d37-fd55648bbd93",
+   "question": "*Compassion* adds what to empathy?",
+   "options": [
+    "nothing",
+    "the will to ACT and help — empathy plus action",
+    "more sadness",
+    "distance"
+   ],
+   "correct_index": 1,
+   "explanation": "Compassion = empathy + action. You don't only understand the person's pain; you do something about it — exactly what the runners do in the poem."
+  }
+ ]
+}
+
+--- block #5 [inline_quiz] id=fdd755cd-7981-473e-9b25-d0df8398db32 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "8baffdc8-b205-41e0-9f15-08c547cd7f54",
+   "question": "What is the Special Olympics mainly about?",
+   "options": [
+    "Fierce, elite competition for able-bodied athletes",
+    "A contest staged purely for winter sports events",
+    "Joy, inclusion and the pride of taking part",
+    "An event that is, in effect, the same as the Olympics"
+   ],
+   "correct_index": 2,
+   "explanation": "The Special Olympics focuses on participation, inclusion, and the joy of taking part — mainly for people with intellectual disabilities — not only on winning. That spirit is the poem's whole point.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "7d501e0a-84df-450f-bbb8-85e3413205fe",
+   "question": "Which is the deepest form of caring, according to the page?",
+   "options": [
+    "sympathy, which means feeling sorry for another",
+    "empathy, which means sharing in another's feeling",
+    "compassion, which adds helping action",
+    "they are, in truth, all of one equal depth"
+   ],
+   "correct_index": 2,
+   "explanation": "Compassion goes furthest: it adds ACTION to understanding. The runners feel the boy's pain (empathy) and go back to help (compassion).",
+   "difficulty_level": 2
+  },
+  {
+   "id": "e37c0848-e773-446c-a3e6-4056d17fe788",
+   "question": "The Paralympics and the Special Olympics are:",
+   "options": [
+    "two movements with different aims",
+    "the very same event known by two different names",
+    "contests both meant only for swimmers to enter",
+    "two events both held alongside the main Olympics"
+   ],
+   "correct_index": 0,
+   "explanation": "They are distinct: the Paralympics emphasises elite competition (including physical disabilities); the Special Olympics centres participation and inclusion, mainly for intellectual disabilities.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 11 — "Nine Gold Medals"  (slug: unit-5-poem-nine-gold-medals)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=2aea1c45-586b-4306-85dd-2597220eee08 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/2aea1c45-586b-4306-85dd-2597220eee08_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A running track with starting blocks, nine runners poised, a tense bright moment before the gun",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A running track at a sports meet, nine young runners of different sizes poised in their starting blocks, tense and ready, a bright charged moment just before the starting gun. Anticipation in the air, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=2f66b6e4-e7ad-4cc7-8cd0-1c2de1bd5b34 ---
+{
+ "markdown": "The full poem is below — eight short stanzas that tell a story. **Tap any line to hear it.** Read it once just for the story; the turn comes in stanzas 5 and 6, and it will surprise you only if you've forgotten what kind of Games this is."
+}
+
+--- block #2 [narrated_passage] id=ec095d67-2953-4f0f-a1c4-d0035e592684 ---
+{
+ "source_label": "Reading for Appreciation — Nine Gold Medals (David Roth)",
+ "paragraphs": [
+  {
+   "id": "f8fc1e35-8b7e-4d0c-8950-7a589d0128e3",
+   "sentences": [
+    {
+     "id": "1840acf5-f362-41d7-aa72-e8352bcfcb0a",
+     "text": "The athletes had come from all over the country / To run for the gold, for the silver, and bronze.",
+     "audio_url": ""
+    },
+    {
+     "id": "b7250cb9-1852-41a2-bd3a-d028e84a754f",
+     "text": "Many weeks and months of training / All coming down to these games.",
+     "audio_url": ""
+    },
+    {
+     "id": "64eeabdc-3a57-4dfc-95e6-c34cd146a5fe",
+     "text": "The spectators gathered around the old field / To cheer on all the young women and men.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "spectators",
+       "meaning": "people watching an event",
+       "pos": "noun",
+       "hindi": "दर्शक",
+       "example": "Thousands of spectators filled the stadium to watch the school sports day final."
+      }
+     ]
+    },
+    {
+     "id": "8d14b300-c197-4b2c-8c79-978db5db5dea",
+     "text": "The final event of the day was approaching / Excitement was high to begin.",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "Pehle do stanzas mahaul banate hain. Athletes poore desh se aaye hain — gold, silver, bronze ke liye. Mahino ki training, sab aaj ke din pe tiki. Darshak field ke charon or jama hain. Din ka aakhri event aane wala hai, aur josh chरम pe hai. Yeh ek normal race ki tarah shuru hota hai."
+  },
+  {
+   "id": "e5cdf9f9-8ece-4c6f-ad6d-67325058a394",
+   "sentences": [
+    {
+     "id": "0d3c8794-c8f8-48ec-a8e5-8f611003a92c",
+     "text": "The blocks were all lined up for those who would use them / The hundred-yard dash and the race to be run.",
+     "audio_url": ""
+    },
+    {
+     "id": "de61330f-aacc-4aaf-ab17-fe5b5eed5708",
+     "text": "These were nine resolved athletes in the back of the starting line / Poised for the sound of the gun.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "resolved",
+       "meaning": "firmly determined",
+       "pos": "adjective",
+       "hindi": "दृढ़",
+       "example": "She was resolved to wake up at five every day to finish her project."
+      },
+      {
+       "word": "poised",
+       "meaning": "ready and balanced, about to act",
+       "pos": "adjective",
+       "hindi": "तैयार / सम्भले हुए",
+       "example": "The bowler stood poised at the top of his run, ready to deliver."
+      }
+     ]
+    },
+    {
+     "id": "ea586ad2-6f69-4574-ad41-cbcbbff526c3",
+     "text": "The signal was given, the pistol exploded / And so did the runners all charging ahead.",
+     "audio_url": ""
+    },
+    {
+     "id": "dc2c2d76-27e5-46ca-8476-1050174b0ddd",
+     "text": "But the smallest among them, he stumbled and staggered / And fell to the asphalt instead.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "stumbled",
+       "meaning": "tripped and almost fell",
+       "pos": "verb",
+       "hindi": "लड़खड़ाया",
+       "example": "He stumbled over a stone while running to catch the school bus."
+      },
+      {
+       "word": "staggered",
+       "meaning": "walked or moved unsteadily",
+       "pos": "verb",
+       "hindi": "डगमगाया",
+       "example": "After the long cricket match in the sun, he staggered home feeling dizzy."
+      },
+      {
+       "word": "asphalt",
+       "meaning": "the hard black surface of a track or road",
+       "pos": "noun",
+       "hindi": "डामर / पक्की सतह",
+       "example": "The cricket ball bounced strangely on the cracked asphalt of our lane."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Race shuru hoti hai — pistol 'exploded' (goli chali), runners daud pade. Par sabse chhota athlete ladkhadaya, dagmagaya, aur asphalt pe gir gaya. Yahan tak kahani dukhd lagti hai — ek bachche ka sapna toot raha hai. Par asli kahani abhi shuru hone wali hai."
+  },
+  {
+   "id": "784042d4-e924-4f5a-88eb-0da4efce764c",
+   "sentences": [
+    {
+     "id": "8f3d682d-6f51-49fb-9947-8605df048041",
+     "text": "He gave out a cry of frustration and anguish / His dreams and his efforts dashed in the dirt.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "anguish",
+       "meaning": "severe mental pain",
+       "pos": "noun",
+       "hindi": "व्यथा",
+       "example": "She watched in anguish as her science model broke just before the fair."
+      },
+      {
+       "word": "dashed",
+       "meaning": "destroyed; thrown down",
+       "pos": "verb",
+       "hindi": "चकनाचूर",
+       "example": "His hopes of topping the class were dashed by one careless mistake."
+      }
+     ]
+    },
+    {
+     "id": "c80d6853-7d83-4f2d-b232-25ce6a7bd9bd",
+     "text": "The eight other runners pulled up on their heels / The ones who had trained for so long to compete.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "pulled up on their heels",
+       "meaning": "stopped running suddenly",
+       "pos": "phrase",
+       "hindi": "अचानक रुक गए",
+       "example": "The cyclists pulled up on their heels when a cow wandered onto the road."
+      }
+     ]
+    },
+    {
+     "id": "c45a39a4-b69e-4d3b-ba52-83f6ce787486",
+     "text": "One by one they all turned round and went back to help him / And brought the young boy to his feet.",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "Aur yeh raha woh mod jo poori kahani badal deta hai. Gira hua bachcha dard aur niraasha se cheekhta hai — uske sapne mitti mein. Par baaki aath runners — jinhone mahino training ki thi jeetne ke liye — woh ruk jaate hain. Ek-ek karke sab peechhe mudte hain, us bachche ki madad karte hain, use uthate hain. Apni jeet chhod ke. Yahi empathy se compassion ban-na hai — samajhna nahi, kuch karna."
+  },
+  {
+   "id": "e62760f9-c322-45e2-9338-702b64483830",
+   "sentences": [
+    {
+     "id": "fa506cb8-b1d9-4619-9f61-cd6cf62166f6",
+     "text": "Then all the nine runners joined hands and continued / The hundred-yard dash now reduced to a walk.",
+     "audio_url": ""
+    },
+    {
+     "id": "2a673b3a-86ca-48c6-946a-14d0063a5b8a",
+     "text": "And a banner above that said 'Special Olympics' / Could not have been more on the mark.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "on the mark",
+       "meaning": "exactly right; accurate",
+       "pos": "phrase",
+       "hindi": "बिल्कुल सही",
+       "example": "Her guess about the quiz answer was right on the mark."
+      }
+     ]
+    },
+    {
+     "id": "60fc8377-7323-4881-933b-4fb1453da31a",
+     "text": "That's how the race ended, with nine gold medals / They came to the finish line holding hands still.",
+     "audio_url": ""
+    },
+    {
+     "id": "f48feffe-b53e-45e5-8564-d13fb90d541b",
+     "text": "And a standing ovation and nine beaming faces / Said more than these words ever will.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "standing ovation",
+       "meaning": "applause where people stand up to honour someone",
+       "pos": "phrase",
+       "hindi": "खड़े होकर तालियाँ",
+       "example": "The whole hall gave the young dancer a standing ovation after her performance."
+      },
+      {
+       "word": "beaming",
+       "meaning": "smiling broadly with joy",
+       "pos": "adjective",
+       "hindi": "दमकते हुए",
+       "example": "She came home beaming after scoring the winning goal for her team."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Antim do stanzas. Nau runners haath pakad ke saath chalte hain — daud ab ek 'walk' ban gayi. Upar laga banner 'Special Olympics' kehta hai — aur is pal se zyada sahi woh banner kabhi nahi tha. Race khatam hoti hai — nau gold medals ke saath. Sab saath, haath thaame, finish line par. Darshak khade ho ke taaliyan bajate hain, nau damakte chehre — jo in shabdon se kahin zyada keh dete hain. Jeet ki paribhasha hi badal gayi."
+  }
+ ]
+}
+
+--- block #3 [tone_meter] id=5fa16b97-bf9b-4096-8fab-1990ab095b6a ---
+{
+ "segments": [
+  {
+   "id": "87058719-c625-4b95-803c-2b6a251ebe14",
+   "excerpt": "Many weeks and months of training all coming down to these games.",
+   "emotion": "anticipation",
+   "intensity": 3,
+   "note": "The opening is ordinary excitement — a big race, months of training, a hopeful crowd. Nothing unusual yet.",
+   "note_hinglish": "Shuruaat ek aam jaldi-josh ki hai — ek badi race, mahinon ki training, ek ummeed bhari bheed. Abhi tak kuch alag nahi hua."
+  },
+  {
+   "id": "ecae18c9-eb45-45ef-a251-c26f20ecbb1e",
+   "excerpt": "Poised for the sound of the gun.",
+   "emotion": "tension",
+   "intensity": 4,
+   "note": "The held breath at the starting line — every muscle ready, the race about to begin.",
+   "note_hinglish": "Starting line par rukti hui saans — har muscle taiyaar, race bas shuru hone waali."
+  },
+  {
+   "id": "36ab62d8-6635-4326-b740-1133b87a0fd3",
+   "excerpt": "And fell to the asphalt instead.",
+   "emotion": "dismay",
+   "intensity": 4,
+   "note": "A sudden drop — the smallest runner falls. The mood darkens; a dream seems to break.",
+   "note_hinglish": "Achanak ek girna — sabse chhota runner gir jaata hai. Maahaul gehra ho jaata hai; ek sapna tootta hua lagta hai."
+  },
+  {
+   "id": "24c07fdd-bd36-4eef-a362-e7ddcfbb636d",
+   "excerpt": "His dreams and his efforts dashed in the dirt.",
+   "emotion": "anguish",
+   "intensity": 5,
+   "note": "The lowest point — the boy's cry, his hopes 'dashed in the dirt'. Pure pain.",
+   "note_hinglish": "Sabse neeche ka pal — ladke ki cheekh, uski ummeedein 'dashed in the dirt'. Sirf dard."
+  },
+  {
+   "id": "9c424099-c4d7-4482-8ff7-af1e03470650",
+   "excerpt": "One by one they all turned round and went back to help him.",
+   "emotion": "tenderness",
+   "intensity": 5,
+   "note": "The turn. Compassion overtakes competition. The emotional heart of the poem.",
+   "note_hinglish": "Mod aata hai. Karuna competition par haavi ho jaati hai. Poem ka emotional dil yahi hai."
+  },
+  {
+   "id": "b127dce6-f96e-4b2f-943e-cfc545e763a7",
+   "excerpt": "The hundred-yard dash now reduced to a walk.",
+   "emotion": "quiet joy",
+   "intensity": 4,
+   "note": "The race transformed — speed surrendered for solidarity. A gentle, glowing warmth.",
+   "note_hinglish": "Race badal jaati hai — speed chhod kar saath dena chun liya gaya. Ek halki, chamakti garmaahat."
+  },
+  {
+   "id": "d1c32014-70b6-4485-9ec8-4b0835230a74",
+   "excerpt": "A standing ovation and nine beaming faces.",
+   "emotion": "triumph",
+   "intensity": 5,
+   "note": "The peak — a different kind of victory, applauded by all. Joy that outshines any medal.",
+   "note_hinglish": "Sabse uncha pal — ek alag tarah ki jeet, jise sab taaliyon se sarahte hain. Aisi khushi jo kisi bhi medal se zyada chamakti hai."
+  }
+ ]
+}
+
+--- block #4 [comprehension_checkpoint] id=2f78e182-55d2-4b1e-8fc8-64889bb2a664 ---
+{
+ "intro": "Match each stanza to its gist (which stanza number?).",
+ "questions": [
+  {
+   "id": "de71b286-a563-41f3-8095-eedb95821af9",
+   "question": "Which stanza describes the eight athletes STOPPING to help the fallen boy?",
+   "options": [
+    "Stanza 2",
+    "Stanza 4",
+    "Stanza 6",
+    "Stanza 8"
+   ],
+   "correct_index": 2,
+   "explanation": "Stanza 6: 'The eight other runners pulled up on their heels… went back to help him… brought the young boy to his feet.' This is the turning point."
+  },
+  {
+   "id": "3684f5ab-15ae-4f29-9233-02e9ab24290a",
+   "question": "Which stanza shows the race ENDING with all nine winning gold, holding hands?",
+   "options": [
+    "Stanza 8",
+    "Stanza 1",
+    "Stanza 5",
+    "Stanza 3"
+   ],
+   "correct_index": 0,
+   "explanation": "Stanza 8: 'That's how the race ended, with nine gold medals… holding hands still… a standing ovation and nine beaming faces.'"
+  }
+ ]
+}
+
+--- block #5 [inline_quiz] id=b3ac34a6-577d-4249-ab6e-1a120eb94f94 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d8ad567f-2b1a-4983-9f5b-8595acfa08d2",
+   "question": "What happens at the start of the race?",
+   "options": [
+    "All nine of the runners finish the race together",
+    "Heavy rain starts to pour down onto the track",
+    "The officials decide to call the whole race off",
+    "The smallest runner stumbles and falls"
+   ],
+   "correct_index": 3,
+   "explanation": "As the runners charge ahead, the smallest stumbles, staggers, and falls to the track, crying out in anguish — the moment that tests every other runner.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "643bcd91-2fae-452a-b1b3-240cf0210dfa",
+   "question": "What do the other eight runners do?",
+   "options": [
+    "They run on ahead and finish to win the race",
+    "They turn back and walk him to the line",
+    "They laugh and point at the boy who has fallen",
+    "They shout out for help and then keep running"
+   ],
+   "correct_index": 1,
+   "explanation": "They give up their own race to help him — stopping, turning back one by one, helping him up, and finishing together, all nine, hand in hand.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "3c7f887b-68ce-41c2-a8eb-c5aacbf68045",
+   "question": "Why does the banner reading 'Special Olympics' feel 'more on the mark' than ever?",
+   "options": [
+    "Because the banner had only just been repainted",
+    "Because the runners lived out its true spirit",
+    "Because the banner happened to be unusually large",
+    "Because it simply named the right event correctly"
+   ],
+   "correct_index": 1,
+   "explanation": "The Special Olympics is about participation, dignity, and togetherness. The runners' choice embodied that spirit exactly — so the banner 'could not have been more on the mark'.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 12 — "How the Poem Tells Its Story"  (slug: unit-5-poem-devices-and-turning-point)
+published=true blocks=7 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=38600a2e-13e6-4f7f-a913-95878ba718c4 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/38600a2e-13e6-4f7f-a913-95878ba718c4_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A single runner reaching back a hand to a fallen one on the track, the decisive moment",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A close, decisive moment: a young runner stopping and reaching back to offer a hand to a fallen, crying competitor on the track, both lit warmly. The instant compassion wins over competition. Glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=6cc31741-5ddf-40e3-9561-5957916ce1e5 ---
+{
+ "markdown": "A storytelling poem like this works through **sound** and **image**. Use the highlighter to find its devices, then work through the appreciation questions."
+}
+
+--- block #2 [literary_devices_highlighter] id=0236a61d-b0e3-4cd9-b53c-5d2529a25492 ---
+{
+ "passage": "The athletes had come from all over the country To run for the gold, for the silver, and bronze. Many weeks and months of training all coming down to these games. The spectators gathered around the old field to cheer on all the young women and men. The final event of the day was approaching; excitement was high to begin. The blocks were all lined up for those who would use them, the hundred-yard dash and the race to be run. These were nine resolved athletes in the back of the starting line poised for the sound of the gun. The signal was given, the pistol exploded, and so did the runners all charging ahead. But the smallest among them, he stumbled and staggered and fell to the asphalt instead. He gave out a cry of frustration and anguish, his dreams and his efforts dashed in the dirt. The eight other runners pulled up on their heels; one by one they all turned round and went back to help him and brought the young boy to his feet. Then all the nine runners joined hands and continued, the hundred-yard dash now reduced to a walk. That's how the race ended, with nine gold medals; they came to the finish line holding hands still. And a standing ovation and nine beaming faces said more than these words ever will.",
+ "devices": [
+  {
+   "id": "d6e79c77-474e-4a4c-9d35-d32aebf7ef3c",
+   "device": "alliteration",
+   "matches": [
+    {
+     "text": "stumbled and staggered",
+     "explanation": "The 's' sound repeats in *stumbled* and *staggered* — and the very sound feels unsteady, mimicking the boy's loss of balance.",
+     "explanation_hinglish": "'s' ki aawaz *stumbled* aur *staggered* mein dohraati hai — aur yeh aawaz hi ladkhadaati hui mehsoos hoti hai, jaise ladke ka balance bigad raha ho. Ise alliteration kehte hain."
+    },
+    {
+     "text": "dashed in the dirt",
+     "explanation": "The hard 'd' repeats in *dashed* and *dirt* — a heavy, falling sound that matches the crushing of his hopes.",
+     "explanation_hinglish": "Kadi 'd' ki aawaz *dashed* aur *dirt* mein dohraati hai — ek bhaari, girti hui aawaz jo uski ummeedon ke tootne se mel khaati hai. Yeh alliteration hai."
+    }
+   ]
+  },
+  {
+   "id": "ca5dad6d-3033-43f1-ba40-fd7579ef76c5",
+   "device": "imagery",
+   "matches": [
+    {
+     "text": "fell to the asphalt",
+     "explanation": "Visual + physical imagery — you see and almost feel the hard fall onto the track surface.",
+     "explanation_hinglish": "Visual aur physical imagery — tum dekh paate ho aur lagbhag mehsoos karte ho woh kadi track par girna."
+    },
+    {
+     "text": "nine beaming faces",
+     "explanation": "Visual imagery of joy — nine broadly smiling faces, the glowing final picture of the poem.",
+     "explanation_hinglish": "Khushi ki visual imagery — nau chaude muskuraate chehre, poem ki chamakti aakhri tasveer."
+    },
+    {
+     "text": "joined hands and continued",
+     "explanation": "A vivid image of solidarity — nine runners linked, moving together, that you can picture instantly.",
+     "explanation_hinglish": "Ekjut hone ki ek saaf imagery — nau runners ek doosre se jude, saath chalte hue, jise tum turant aankhon mein dekh sakte ho."
+    }
+   ]
+  },
+  {
+   "id": "386eae6d-f232-4a37-a7ea-da1689303d1b",
+   "device": "onomatopoeia",
+   "matches": [
+    {
+     "text": "the pistol exploded",
+     "explanation": "*Exploded* echoes the sharp, loud bang of the starting pistol — a word whose sound suggests the sound it names.",
+     "explanation_hinglish": "*Exploded* starting pistol ki teekhi, tez dhamaak ki aawaz ko goonjta hai — ek aisa shabd jiski aawaz wahi cheez bayaan karti hai jiska woh naam hai. Ise onomatopoeia kehte hain."
+    }
+   ]
+  },
+  {
+   "id": "a2436e30-0035-44a7-95bc-60553667662e",
+   "device": "symbolism",
+   "matches": [
+    {
+     "text": "the hundred-yard dash now reduced to a walk",
+     "explanation": "The race slowing from a sprint to a walk SYMBOLISES the choice of togetherness over competition — speed given up for solidarity.",
+     "explanation_hinglish": "Race ka sprint se walk tak dheema hona symbolism hai — competition ke upar saath dene ki choice ka; speed chhod kar ekjuti ko chuna gaya."
+    },
+    {
+     "text": "nine gold medals",
+     "explanation": "Nine golds (where a race gives only one) symbolise that ALL of them won — by a measure greater than speed: kindness.",
+     "explanation_hinglish": "Nau gold (jab race sirf ek deti hai) symbolism hai is baat ka ki un sabne jeeta — speed se badi ek cheez se: dayalu hona."
+    }
+   ]
+  },
+  {
+   "id": "77bad3e2-e284-463c-a32c-e83790fc3550",
+   "device": "rhyme",
+   "matches": [
+    {
+     "text": "And fell to the asphalt instead.",
+     "explanation": "The poem rhymes on the 2nd and 4th lines of each stanza (ahead / instead). This steady, song-like rhyme suits a poem that began life as a folk song.",
+     "explanation_hinglish": "Poem har stanza ki doosri aur chauthi line par rhyme karti hai (ahead / instead). Yeh steady, geet jaisi rhyme us poem ke liye theek baithti hai jo apni shuruaat mein ek folk song thi."
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [worked_example] id=6e18627f-27f9-4a79-a33d-fe6e59104100 ---
+{
+ "label": "Imagery, alliteration & tone",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "(i) Give two examples of alliteration. (ii) Give three examples of visual imagery. (iii) Give one example of auditory imagery. (iv) How does the use of imagery make the poem more appealing? (v) How does the poet's tone change from beginning to end?",
+ "solution": "**(i) Alliteration:** *'stumbled and staggered'* and *'dashed in the dirt'* (also acceptable: 'beaming faces' — wait, not alliterative; use 'gold… games', 'finish line').\n\n**(ii) Visual imagery:** *'fell to the asphalt'*; *'joined hands'*; *'nine beaming faces'* (also: 'the blocks were all lined up', 'a standing ovation').\n\n**(iii) Auditory imagery:** *'the pistol exploded'* (also: *'a cry of frustration and anguish'*, *'the sound of the gun'*).\n\n**(iv)** The imagery lets the reader **see and hear the race as if present** — the fall, the cry, the linked hands, the cheering crowd. By making the scene vivid and concrete, the poet makes us *feel* the emotion (the shock of the fall, the warmth of the rescue) rather than just being told about it. That emotional involvement is what makes the poem moving and memorable.\n\n**(v)** The tone moves from **ordinary excitement → tension → dismay and anguish (the fall) → tenderness (the runners turn back) → quiet joy and triumph (the shared finish)**. It travels from the thrill of competition to the deeper warmth of compassion — and ends higher than it began."
+}
+
+--- block #4 [worked_example] id=e30e8f91-e1bc-4175-b17d-ab32a19b7b52 ---
+{
+ "label": "The turning point & the walk",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "(i) What does 'pulled up on their heels' mean? (ii) Would you consider the runners' choice a turning point? Why? (iii) What does the transformation of the dash into a walk symbolise? (iv) Why were all nine given gold medals?",
+ "solution": "**(i)** *'Pulled up on their heels'* means the runners **stopped running suddenly** — checked their sprint mid-stride.\n\n**(ii)** **Yes — it is THE turning point of the poem.** Up to that moment it is an ordinary, even sad, race (a boy falls, dreams 'dashed'). The instant the eight runners turn back, the poem's whole meaning changes: it stops being about *winning* and becomes about *humanity*. Everything moving and memorable flows from this choice.\n\n**(iii)** The dash 'reduced to a walk' symbolises the deliberate **surrender of competition for solidarity** — they give up speed (and personal victory) so that no one is left behind. The slowing down is, paradoxically, the poem's highest moment.\n\n**(iv)** All nine 'won' because, by the truest measure, **all nine were victorious** — they showed the courage and compassion the Special Olympics celebrates. The medal honours not the fastest legs but the biggest hearts; in that contest, every one of them came first."
+}
+
+--- block #5 [reasoning_prompt] id=ef68f984-6723-4afe-87fc-7bb61a149889 ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "In an ordinary race, the eight runners who stopped would be called *losers* — they gave up the gold. The poem calls them *winners*, with nine gold medals. Which definition of 'winning' is right? Can BOTH be true at the same time?",
+ "reveal": "Both are true — because there were really *two races* happening. By the **rules of athletics**, the runners lost: they surrendered the timed race and any one of them might have won gold. By the **measure the poem cares about** — character, compassion, the Special Olympics spirit — they won completely, which is why the poem grants them nine golds. The poem isn't saying competition is bad or that times don't matter; it's saying there is a *higher* contest running alongside every ordinary one, and that what you do when someone falls reveals who you really are. The deepest 'win' in the poem isn't crossing a line first — it's the kind of person you turn out to be when winning is on the line. That is a victory no stopwatch can measure, and it's the one the standing ovation is for."
+}
+
+--- block #6 [inline_quiz] id=5565fc0d-bbd0-4156-ae12-7ef44b99d9eb ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "a97f1d1e-33c8-42aa-94f5-7de27047ea41",
+   "question": "'The pistol exploded' is an example of which device?",
+   "options": [
+    "metaphor",
+    "personification",
+    "simile",
+    "onomatopoeia"
+   ],
+   "correct_index": 3,
+   "explanation": "*Exploded* imitates the loud sound it names — onomatopoeia, conveying the sharp crack of the starting pistol.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "8220a6a1-a142-4b75-858c-8d7b5175495c",
+   "question": "What does the dash 'reduced to a walk' symbolise?",
+   "options": [
+    "A chosen togetherness over competition",
+    "It shows that the runners had grown weary",
+    "It shows the race had simply gone on too long",
+    "Nothing of any particular or lasting meaning"
+   ],
+   "correct_index": 0,
+   "explanation": "Slowing from sprint to walk symbolises the deliberate choice of solidarity and compassion over personal victory — no one left behind.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "be4f6be5-305f-4834-81d9-a6aa04e0a872",
+   "question": "How does the poet's tone change across the poem?",
+   "options": [
+    "It holds one steady mood from start to finish",
+    "It grows steadily angrier as the race goes on",
+    "It dips at the fall, then lifts into warmth",
+    "It turns colder and bleaker towards the close"
+   ],
+   "correct_index": 2,
+   "explanation": "The tone travels from the thrill of competition, down to the anguish of the fall, then up into tenderness and quiet joy through the act of compassion — ending higher than it began.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 13 — "What It Really Means to Win"  (slug: unit-5-poem-themes-meaning-of-winning)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=83aaf9de-ca1b-414b-8e6c-478ce51e2fe1 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/83aaf9de-ca1b-414b-8e6c-478ce51e2fe1_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "Nine medals on one ribbon, or nine joined hands raised together in triumph",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). Nine joined hands raised together in shared triumph against a soft glowing sky, or nine gold medals hung side by side on one long ribbon. Warm, uplifting, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=2f57b1d8-3c2b-46c0-8ff0-36c4322871d5 ---
+{
+ "markdown": "This small, true-spirited poem carries some of the largest ideas in the unit. Tap each theme to explore it."
+}
+
+--- block #2 [theme_explorer] id=400b5e04-c047-4142-9518-69b3bdd8a4d7 ---
+{
+ "intro": "Three themes from a single race.",
+ "themes": [
+  {
+   "id": "acba9d82-02e2-4a87-802e-0380b048d464",
+   "title": "True victory is shared",
+   "description": "The poem redefines winning. The runners 'lose' the race by athletics' rules but win something greater — and the poem awards all nine gold. The deepest victory is one no one is left out of.",
+   "evidence": [
+    "'That's how the race ended, with nine gold medals'",
+    "'they came to the finish line holding hands still'"
+   ],
+   "reflection_prompt": "Think of a time you 'lost' something but gained something better by how you handled it. Which mattered more in the end?",
+   "description_hinglish": "Yeh poem jeet ko naye sire se samjhaati hai. Runners athletics ke niyamon ke hisaab se race 'haar' jaate hain, par usse badi kuch cheez jeet lete hain — aur poem sabhi nau ko gold deti hai. Sabse gehri jeet wahi hai jismein koi peeche nahi chhoda jaata.",
+   "reflection_prompt_hinglish": "Aisa koi pal socho jab tumne kuch 'khoya' lekin apne behave karne ke tareeke se usse behtar kuch paaya. Aakhir mein kaunsi cheez zyada maayne rakhti thi?"
+  },
+  {
+   "id": "f3f0a721-6d7a-4388-92ac-325195e9df86",
+   "title": "Compassion over competition",
+   "description": "Faced with a choice between their own gold and a fallen boy, the eight runners choose the boy. Compassion (empathy + action) outweighs months of training and the dream of winning.",
+   "evidence": [
+    "'The eight other runners pulled up on their heels'",
+    "'One by one they all turned round and went back to help him'"
+   ],
+   "reflection_prompt": "When have you seen someone choose kindness over winning? What did it cost them — and what did it give them?",
+   "description_hinglish": "Apne gold aur ek gire hue ladke ke beech choose karne par, aath runners ladke ko chunte hain. Karuna (empathy + action) mahinon ki training aur jeetne ke sapne se bhaari padti hai.",
+   "reflection_prompt_hinglish": "Kab tumne kisi ko jeet ke upar dayalu hona chunte dekha? Iski keemat kya chukaani padi — aur isne use kya diya?"
+  },
+  {
+   "id": "d9e5452f-6d9a-4137-8fc7-99d1fd293c3b",
+   "title": "Everyone belongs",
+   "description": "The Special Olympics spirit is inclusion — no one runs alone, no one is left behind. The poem makes the smallest, fallen runner the centre of everyone's care.",
+   "evidence": [
+    "'the hundred-yard dash now reduced to a walk'",
+    "'a banner above that said \"Special Olympics\" / Could not have been more on the mark'"
+   ],
+   "reflection_prompt": "In your class or team, who is most often 'left behind'? What is one small thing you could do this week to include them?",
+   "description_hinglish": "Special Olympics ki bhaavna inclusion hai — koi akela nahi daudta, koi peeche nahi chhoda jaata. Poem sabse chhote, gire hue runner ko sabki dekhbhaal ke beech mein rakhti hai.",
+   "reflection_prompt_hinglish": "Apni class ya team mein, sabse zyada 'peeche' kaun chhoot jaata hai? Is hafte ek chhoti cheez kaunsi kar sakte ho jisse use shaamil kiya jaaye?"
+  }
+ ]
+}
+
+--- block #3 [callout] id=d2cc503f-33c8-4617-b1bc-3e675542a4f9 ---
+{
+ "variant": "literature_in_life",
+ "title": "The two texts, one big idea",
+ "markdown": "Look at how the unit's two halves answer each other:\n\n- **The interview (Dr. Deepa Malik):** *ability beyond disability* — a champion redefines what a body can achieve, turning setback into strength.\n- **The poem (Nine Gold Medals):** *compassion beyond competition* — athletes redefine what winning means, turning a race into an act of love.\n\nBoth take something the world measures narrowly — *ability*, *winning* — and reveal a larger, truer version of it. Together they ask you to widen your own definitions: of what a person can do, and of what it really means to come first.",
+ "markdown_hinglish": "Dekho is unit ke do hisse ek doosre ko kaise jawab dete hain:\n\n- **The interview (Dr. Deepa Malik):** *ability beyond disability* — ek champion naye sire se batata hai ki ek sharir kya kar sakta hai, setback ko taakat mein badalte hue.\n- **The poem (Nine Gold Medals):** *compassion beyond competition* — athletes naye sire se batate hain ki jeetna kya hai, ek race ko pyaar ke ek act mein badalte hue.\n\nDono ek aisi cheez lete hain jise duniya tang nazariye se naapti hai — *ability*, *winning* — aur uska ek bada, sacha roop saamne laate hain. Saath milkar yeh tumse kehte hain ki apni khud ki definitions ko chauda karo: ek insaan kya kar sakta hai, aur sach mein pehle aane ka matlab kya hota hai."
+}
+
+--- block #4 [reasoning_prompt] id=6c836fcd-d74b-4263-b078-b926e5d5a484 ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "Some people might argue the runners did the 'wrong' thing — that in real competition, you owe it to yourself and your training to run your own race and win. Is there a situation where running on would be the *right* choice? Where is the line between admirable compassion and avoiding your own challenge?",
+ "reveal": "This is a genuinely hard question, and thoughtful people disagree. A case for *running on*: in elite sport, fairness and effort matter, and an athlete who has trained for years has a right — even a duty to teammates, coaches, and country — to compete fully; stopping for every mishap could make competition meaningless. A case for *stopping* (as the poem chooses): when a fellow human is in real distress and the 'prize' is small beside their suffering, compassion rightly wins — and in the *Special Olympics* especially, the whole purpose is inclusion, not records. The line probably falls around two questions: *how serious is the other person's need?* and *what are these particular Games for?* The poem's runners answered both clearly — a child in anguish, at Games built on togetherness — which is why their choice feels not just kind but exactly right. In a different race, with different stakes, a different answer might be defensible. The value of the question is that it makes you decide *what your own definition of winning is* — before the moment arrives."
+}
+
+--- block #5 [inline_quiz] id=695559c4-b4bf-4723-9fd8-de5d67d55f53 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "5e0fc48c-0506-498b-8863-cd975bffafb0",
+   "question": "What is the poem's main message?",
+   "options": [
+    "That you must always run as fast as you can",
+    "That sport can be a genuinely dangerous thing",
+    "That shared compassion outweighs winning",
+    "That only the very fastest people deserve medals"
+   ],
+   "correct_index": 2,
+   "explanation": "The poem redefines winning: the runners' compassion and inclusion are the real victory, which is why all nine receive gold.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "8888cce9-208f-46c8-bfc7-cec197f7c8ca",
+   "question": "How do the unit's two texts answer each other?",
+   "options": [
+    "Both widen a narrow measure of worth",
+    "They flatly contradict and oppose one another",
+    "They share nothing in common with each other",
+    "Both of them turn out, in the end, to be about swimming"
+   ],
+   "correct_index": 0,
+   "explanation": "The interview is 'ability beyond disability'; the poem is 'compassion beyond competition' — both reveal a larger, truer version of what the world measures narrowly.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "0ac0faee-05e8-4aa1-9e3d-a9dc38b90976",
+   "question": "The 'standing ovation and nine beaming faces' that 'said more than these words ever will' shows that:",
+   "options": [
+    "that the crowd watching had grown rather bored",
+    "that the poem itself had ended far too quickly",
+    "that the runners were left feeling embarrassed",
+    "that some goodness runs deeper than words"
+   ],
+   "correct_index": 3,
+   "explanation": "The poet admits the scene's meaning exceeds language — the joy and the applause speak more powerfully than any words could. A humble, moving close.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 14 — "Words That Belong Together"  (slug: unit-5-poem-vocabulary-collocations)
+published=true blocks=5 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=fa772b29-0557-47b1-880a-7024f347b4e4 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/fa772b29-0557-47b1-880a-7024f347b4e4_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "Pairs of word-cards (adjective + noun) clicking together like puzzle pieces",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). Pairs of soft word-cards on a dark surface fitting together like puzzle pieces — an adjective card joining a noun card — suggesting words that naturally belong together. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=2ae40a2c-79a0-45e0-8f3a-6ad28997070f ---
+{
+ "markdown": "The poem says *'standing ovation'* and *'beaming faces'* — not *'sitting ovation'* or *'shining faces'*. These are **collocations**: word-partners that habitually go together. You met them in Unit 3; here we focus on **adjective + noun** pairs. Knowing them is the difference between English that sounds natural and English that sounds translated."
+}
+
+--- block #2 [vocabulary_lab] id=a5ad41e3-975f-4259-9525-580cd152ec55 ---
+{
+ "mode": "flashcards",
+ "intro": "Adjective + noun collocations. Notice WHICH adjective each noun prefers.",
+ "cards": [
+  {
+   "id": "57ce2661-c8a6-4954-bbd9-18a08905c958",
+   "word": "standing ovation",
+   "pos": "collocation",
+   "pronunciation": "STAN-ding oh-VAY-shun",
+   "meaning": "applause given while standing up, to honour someone",
+   "hindi": "खड़े होकर तालियाँ",
+   "example": "The crowd gave the nine runners a standing ovation."
+  },
+  {
+   "id": "5cad9992-6d38-4bbf-bbdc-a5852d687f0f",
+   "word": "beaming faces",
+   "pos": "collocation",
+   "pronunciation": "BEEM-ing FAY-siz",
+   "meaning": "broadly, joyfully smiling faces",
+   "hindi": "दमकते चेहरे",
+   "example": "Nine beaming faces crossed the finish line."
+  },
+  {
+   "id": "86a2a6ab-0ead-4326-908e-b9ddebd23c10",
+   "word": "big decision",
+   "pos": "collocation",
+   "pronunciation": "big dih-SIZH-un",
+   "meaning": "an important choice (we say BIG, not large, decision)",
+   "hindi": "बड़ा फ़ैसला",
+   "example": "Stopping to help was a big decision."
+  },
+  {
+   "id": "12dcbe96-c242-4fdf-a12c-7e2a6ce75632",
+   "word": "heavy rain",
+   "pos": "collocation",
+   "pronunciation": "HEV-ee RAYN",
+   "meaning": "a lot of rain (we say HEAVY, not big, rain)",
+   "hindi": "भारी बारिश",
+   "example": "Heavy rain delayed the next event."
+  },
+  {
+   "id": "5d666e8f-f1ad-48e5-a932-b88a997c9b72",
+   "word": "strong coffee",
+   "pos": "collocation",
+   "pronunciation": "strong KOF-ee",
+   "meaning": "powerful coffee (we say STRONG, not powerful, coffee)",
+   "hindi": "कड़क कॉफ़ी",
+   "example": "The coach drank strong coffee before the meet."
+  },
+  {
+   "id": "1ded63cb-54fa-47ba-ac64-671cdb3c992b",
+   "word": "great courage",
+   "pos": "collocation",
+   "pronunciation": "grayt KUR-ij",
+   "meaning": "a lot of courage (we say GREAT, not big, courage)",
+   "hindi": "अदम्य साहस",
+   "example": "The fallen boy showed great courage."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "0f775847-ab19-4c48-b15a-005c83c327ff",
+   "question": "Which is the natural collocation?",
+   "options": [
+    "a sitting ovation",
+    "a standing ovation",
+    "a large ovation",
+    "a heavy ovation"
+   ],
+   "correct_index": 1,
+   "explanation": "*Standing ovation* is the fixed pair — the audience stands to applaud. The others sound wrong to a native ear."
+  },
+  {
+   "id": "404136f0-2d2f-4ac1-bfc3-900e76152753",
+   "question": "We say ____ rain, not ____ rain.",
+   "options": [
+    "big / heavy",
+    "heavy / big",
+    "strong / heavy",
+    "great / heavy"
+   ],
+   "correct_index": 1,
+   "explanation": "HEAVY rain, not big rain. Each noun 'prefers' a particular adjective — that's collocation."
+  },
+  {
+   "id": "9a308811-9721-4528-893c-fd67688e3823",
+   "question": "Which adjective collocates with 'courage'?",
+   "options": [
+    "big",
+    "heavy",
+    "great",
+    "strong"
+   ],
+   "correct_index": 2,
+   "explanation": "*Great courage* is the natural pair (also 'tremendous courage'). Not 'big courage' or 'heavy courage'."
+  }
+ ]
+}
+
+--- block #3 [comprehension_checkpoint] id=a332f4a2-4c21-436f-8d21-df225bdefcb5 ---
+{
+ "intro": "Pick the adjective that collocates best.",
+ "questions": [
+  {
+   "id": "3ea53c9f-b025-4f1d-a6cb-fb58e591b51a",
+   "question": "The fall caused a ____ disappointment for the boy.",
+   "options": [
+    "big",
+    "tall",
+    "loud",
+    "wide"
+   ],
+   "correct_index": 0,
+   "explanation": "*Big disappointment* is the natural collocation. (Also 'great' / 'huge' disappointment.) Not tall/loud/wide."
+  },
+  {
+   "id": "d8bd612c-e72f-486e-a959-dac9a351315e",
+   "question": "The runners made a ____ effort to help him.",
+   "options": [
+    "heavy",
+    "great",
+    "thick",
+    "wide"
+   ],
+   "correct_index": 1,
+   "explanation": "*Great effort* (or 'huge'/'tremendous' effort) is natural. Not heavy/thick/wide effort."
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=dc2aa84b-8199-4adf-8982-547be788feac ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "2d1be906-bb67-45d0-b1fa-1184645e44eb",
+   "question": "A *collocation* is:",
+   "options": [
+    "a settled rule of English grammar",
+    "words that habitually go together",
+    "a particular mark of punctuation",
+    "a recognised and named kind of poem"
+   ],
+   "correct_index": 1,
+   "explanation": "Collocations are natural word-partnerships, like 'standing ovation'. Knowing them makes your English sound fluent and correct.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "c7357e8a-bd4b-403e-a43b-4012f3171509",
+   "question": "Which adjective–noun pair from the poem is a collocation?",
+   "options": [
+    "green ovation",
+    "beaming faces",
+    "loud medals",
+    "tall race"
+   ],
+   "correct_index": 1,
+   "explanation": "*Beaming faces* (and 'standing ovation') are the poem's collocations — adjective and noun pairs that belong together.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "464d27b2-2fff-4b1b-92b1-79d5efd6f364",
+   "question": "Why are collocations worth learning?",
+   "options": [
+    "They are not, in truth, really worth the effort",
+    "They make your sentences a good deal longer",
+    "They form one particular and named kind of rhyme",
+    "They make your English sound natural"
+   ],
+   "correct_index": 3,
+   "explanation": "Using the expected pairings (strong coffee, heavy rain, great courage) is what makes English sound fluent and natural rather than translated.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 15 — "Talk About Kindness, Write About It"  (slug: unit-5-poem-speaking-and-writing)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=6c9a0da1-915d-424b-878b-3727c139bdbc ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/6c9a0da1-915d-424b-878b-3727c139bdbc_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A student helping another who has dropped their books in a school corridor, others pausing to notice",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A school corridor where one student kneels to help another who has dropped a pile of books, a few others pausing to notice and smile. An everyday act of kindness. Warm light glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=06559cdd-da0c-459c-a8eb-bd7f3fa2d7b1 ---
+{
+ "markdown": "First, a few words to say aloud. Then talk about what empathy looks like in *action* — and finally, write a short true (or imagined) story about a moment of kindness, the way the poem tells one."
+}
+
+--- block #2 [pronunciation_drill] id=491ac67d-d617-4c81-bce0-545f0a11e589 ---
+{
+ "intro": "Four words from the poem. Tap to hear; read aloud twice.",
+ "words": [
+  {
+   "id": "818a0761-20b4-4901-9eac-e44fdf75fb88",
+   "word": "asphalt",
+   "syllables": "ASS-falt",
+   "ipa": "ˈæs.fɔːlt",
+   "context_sentence": "He fell to the asphalt instead.",
+   "common_mistake": "Say ASS-falt, not 'ash-falt'. It's the hard black surface of a road or track."
+  },
+  {
+   "id": "9b4e029e-42ac-45e1-99c4-8cbbe2e95906",
+   "word": "anguish",
+   "syllables": "ANG-gwish",
+   "ipa": "ˈæŋ.ɡwɪʃ",
+   "context_sentence": "A cry of frustration and anguish.",
+   "common_mistake": "The middle is 'gw': ANG-gwish, not 'an-goo-ish'."
+  },
+  {
+   "id": "65a596c1-6ee1-41d1-9290-85939798ea1f",
+   "word": "ovation",
+   "syllables": "oh-VAY-shun",
+   "ipa": "əʊˈveɪ.ʃən",
+   "context_sentence": "The crowd rose in a standing ovation.",
+   "common_mistake": "Stress the middle: oh-VAY-shun. Not 'OV-ay-shun'."
+  },
+  {
+   "id": "da70183a-6cc1-4ced-8392-b5cf1f7d5a7d",
+   "word": "resolved",
+   "syllables": "rih-ZOLVD",
+   "ipa": "rɪˈzɒlvd",
+   "context_sentence": "Nine resolved athletes waited.",
+   "common_mistake": "One quick syllable at the end: rih-ZOLVD. The '-ed' is just a 'd' sound, not 'ed'."
+  }
+ ]
+}
+
+--- block #3 [dialogue_role_play] id=b6808013-0b53-4fe5-8e46-4b4ecbd5b079 ---
+{
+ "mode": "debate",
+ "scene_description": "A discussion, not a debate to win. In pairs, talk about empathy and compassion in everyday life. One person raises a situation; the other responds with what compassion (empathy + action) would look like. Then swap. Use the frames below.",
+ "characters": [
+  {
+   "id": "a",
+   "name": "Partner A",
+   "color": "sky"
+  },
+  {
+   "id": "b",
+   "name": "Partner B",
+   "color": "emerald"
+  }
+ ],
+ "lines": [],
+ "debate_frames": {
+  "for": [
+   "Here's a situation I've seen: …",
+   "I think the empathetic thing to feel here would be…",
+   "But compassion would mean actually doing this:…",
+   "One small action that would really help is…"
+  ],
+  "against": [
+   "I can imagine how that person must feel because…",
+   "The difference between just feeling sorry and truly helping is…",
+   "If I were there, the kind thing to DO would be…",
+   "A time I wish I had acted with more compassion was…"
+  ]
+ }
+}
+
+--- block #4 [writing_scaffold] id=4aa23ec9-df94-4f63-8c6a-5ea959d00ca7 ---
+{
+ "task": "Write a short narrative (about 100–120 words) describing a real or imagined moment of kindness or compassion you witnessed or were part of — the way 'Nine Gold Medals' tells the story of one moment. Build to the moment of kindness, and end on its effect.",
+ "format": "paragraph",
+ "model_parts": [
+  {
+   "id": "f2439c73-41c2-40f2-aadb-b126d0408416",
+   "label": "Set the scene",
+   "text": "It was the last period on sports day, and the inter-house relay was everything. Our house was trailing badly when Meera, our fastest runner, took the final baton — our last hope of catching up.",
+   "annotation": "Open by setting the scene and the stakes, just as the poem does ('the final event of the day was approaching'). Give the reader something to care about before the turning point comes."
+  },
+  {
+   "id": "d7f0cd06-3b88-43c8-9db3-845e7926c9e8",
+   "label": "The moment things go wrong",
+   "text": "Ten metres in, a boy from the last-place house clipped a hurdle and went down hard, his knee scraping the track. He didn't get up. The crowd's cheering faltered into an uneasy hush.",
+   "annotation": "Bring in the problem — the fall, the trouble. Use a sensory detail (the scraped knee, the hush) to make it real. This is your 'he stumbled and staggered and fell to the asphalt' moment."
+  },
+  {
+   "id": "430ad5d8-57ac-436b-9e39-e857c644a959",
+   "label": "The act of kindness",
+   "text": "Meera was already past him, sprinting for the win. But she slowed, looked back — and stopped. She jogged to the boy, pulled him up, and walked him to the side before finishing last. We didn't win the relay.",
+   "annotation": "This is the heart — the choice. Show the character giving something up for someone else (just as the runners give up gold). Don't over-explain her feelings; let the action speak, as the poem does."
+  },
+  {
+   "id": "4e90348d-8dc3-40c6-beb4-a2830bb90a91",
+   "label": "The effect — end on it",
+   "text": "But when Meera crossed the line, our whole house was on its feet, cheering louder than any winning team that day. I learned that afternoon that there are two finish lines, and the one that matters most has nothing to do with coming first.",
+   "annotation": "End on the EFFECT and the meaning — the 'standing ovation' moment. A short reflection ('two finish lines') turns your story into something the reader takes away, exactly like the poem's quiet last line."
+  }
+ ],
+ "tips": [
+  "Build to the moment of kindness — set the scene and the stakes first.",
+  "Show the choice through ACTION, not explanation (let the deed speak).",
+  "Use one or two sharp sensory details to make it real.",
+  "End on the effect and meaning — your version of the 'standing ovation'."
+ ]
+}
+
+--- block #5 [inline_quiz] id=f2583c44-7bd8-4c42-8a11-ceeb224be2c2 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "776b57c3-6fa4-48df-aab5-868e3fe1fde0",
+   "question": "In a kindness narrative, the best way to show a character's compassion is to:",
+   "options": [
+    "show it through the action they choose",
+    "explain all of their feelings in careful detail",
+    "list out each of their many good qualities",
+    "tell the reader plainly that they are kind"
+   ],
+   "correct_index": 0,
+   "explanation": "Show, don't tell. The runners' compassion is shown by what they DO (turning back, helping) — far more powerful than stating it.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "33255e91-42fb-462d-9872-a8be94a820e6",
+   "question": "*Asphalt* is pronounced:",
+   "options": [
+    "ash-falt",
+    "as-PHALT",
+    "ASS-falt",
+    "a-salt"
+   ],
+   "correct_index": 2,
+   "explanation": "ASS-falt — the hard black surface of a road or running track.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "4e55cdb6-8a59-461f-aed1-27e9eff2e9aa",
+   "question": "How should a kindness narrative end, following the poem's model?",
+   "options": [
+    "abruptly, breaking off with no real ending at all",
+    "with a long, careful list of stated lessons",
+    "on the effect and meaning of the kind act",
+    "by simply repeating the opening lines once more"
+   ],
+   "correct_index": 2,
+   "explanation": "End on the effect — the warmth, the applause, the meaning — just as the poem ends on the ovation and beaming faces, its 'standing ovation' moment.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 16 — "David Roth & the Bigger Finish Line"  (slug: unit-5-about-david-roth-and-unit-close)
+published=true blocks=5 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=883b2892-1065-42b5-954b-b14b92792a23 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch5/883b2892-1065-42b5-954b-b14b92792a23_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A folk singer with an acoustic guitar performing warmly to a small attentive audience",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A warm, gentle folk singer-songwriter with an acoustic guitar, performing to a small attentive audience in soft amber stage light, an air of storytelling and heart. Glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=5da16995-e7fe-48af-b0d0-fb65d1753e09 ---
+{
+ "markdown": "*Nine Gold Medals* was written as a **song** before it was a poem. Its writer, **David Roth**, is an American folk singer-songwriter known for gentle, story-telling songs about kindness, community, and the goodness in ordinary people."
+}
+
+--- block #2 [meet_a_scientist] id=88840702-a57a-48ae-bace-02b7e18749b7 ---
+{
+ "name": "David Roth",
+ "years": "Contemporary American singer-songwriter",
+ "nationality": "American",
+ "portrait_prompt": "Watercolour bust-portrait painting of a warm, thoughtful contemporary American folk singer-songwriter holding an acoustic guitar, kind eyes, a gentle smile. Soft warm light glowing against a dark neutral background. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+ "portrait_src": "",
+ "contribution": "An American **folk singer-songwriter** whose songs are known for their warmth, humour, and deep humanity. He often writes about kindness, courage, and community — the quiet heroism of ordinary people. **_Nine Gold Medals_** is among his best-loved songs, retelling the spirit of a real-life moment of sportsmanship at the Special Olympics.",
+ "connection": "Because *Nine Gold Medals* began as a song, it carries a song's qualities — a steady rhyme (on the 2nd and 4th lines), a refrain-like rhythm, and a clear, moving story that builds to one shining moment. Roth's gift is making a small act of kindness feel as large and memorable as any anthem.",
+ "fun_detail": "Songs like this travel the world far beyond their writer — *Nine Gold Medals* is now sung in schools and gatherings across many countries, often by people who don't know who wrote it. That is the mark of a true folk song: it stops belonging to one person and becomes everyone's. (Notice how this echoes the village council's idea back in Unit 2 — that some things 'do not belong to any individual'.)",
+ "learn_more": "Search for David Roth's recording of *Nine Gold Medals* online — hearing it sung shows how naturally the poem becomes a song."
+}
+
+--- block #3 [callout] id=80e3785e-5a3c-4472-893a-7316c73e6c4c ---
+{
+ "variant": "literature_in_life",
+ "title": "The whole unit in one breath",
+ "markdown": "Step back and see what Unit 5 has done. Two texts, one widening idea — **the limits the world puts on people are smaller than the people themselves.**\n\n- **The interview (Dr. Deepa Malik):** *ability beyond disability* — a body's limits do not fix a life's possibilities. Turn every setback into strength.\n- **The poem (Nine Gold Medals):** *compassion beyond competition* — winning is bigger than coming first. Sometimes the truest victory is the one you share.\n\nThe unit is called *The World of Limitless Possibilities* — and both texts prove the title from a different side. One says *you* are capable of more than others assume; the other says *we* are capable of more kindness than competition allows. Carry both out into your life: expect more of yourself, and offer more to others.",
+ "markdown_hinglish": "Ek kadam peeche hatkar dekho ki Unit 5 ne kya kiya hai. Do texts, ek chaudi hoti hui soch — **duniya log par jo limits lagati hai, woh khud un logon se chhoti hain.**\n\n- **The interview (Dr. Deepa Malik):** *ability beyond disability* — sharir ki limits ek zindagi ki possibilities tay nahi karti. Har setback ko taakat mein badlo.\n- **The poem (Nine Gold Medals):** *compassion beyond competition* — jeet pehle aane se badi cheez hai. Kabhi-kabhi sabse sachi jeet wahi hoti hai jo tum baant lete ho.\n\nUnit ka naam hai *The World of Limitless Possibilities* — aur dono texts is title ko ek alag taraf se saabit karte hain. Ek kehta hai ki *tum* utna kar sakte ho jitna doosre sochte bhi nahi; doosra kehta hai ki *hum* competition ki ijaazat se zyada dayalu ho sakte hain. Dono ko apni zindagi mein saath le jaao: apne aap se zyada ummeed rakho, aur doosron ko zyada do."
+}
+
+--- block #4 [inline_quiz] id=ec29f4c9-7cbf-4562-8bfd-cb50ee9ed2c7 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "237f95b5-9192-4433-b674-460c682fcccf",
+   "question": "What was 'Nine Gold Medals' originally written as?",
+   "options": [
+    "A folk song",
+    "A newspaper report",
+    "A public speech",
+    "A short novel"
+   ],
+   "correct_index": 0,
+   "explanation": "It began as a folk song by singer-songwriter David Roth — which is why it has a steady rhyme and song-like rhythm.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "19ee558a-afd0-45fc-9081-10621cf77453",
+   "question": "What is the mark of a 'true folk song', as the page describes it?",
+   "options": [
+    "It runs to a very considerable length",
+    "It is always written and sung in Hindi",
+    "It wins a great many prizes and awards",
+    "It becomes everyone's to sing"
+   ],
+   "correct_index": 3,
+   "explanation": "A true folk song stops belonging to one person and becomes shared property — sung widely, often by people who don't know who wrote it.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "50bc7c56-d2eb-4871-bd88-580714a950f7",
+   "question": "What single idea ties the two texts of Unit 5 together?",
+   "options": [
+    "That playing competitive sport can be dangerous",
+    "That people are larger than their limits",
+    "That medals are valuable and prized possessions",
+    "That, in the end, only the winners truly matter"
+   ],
+   "correct_index": 1,
+   "explanation": "Both texts prove the title 'limitless possibilities' — the interview widens our sense of what a person can DO, the poem of what winning can MEAN. The limits the world sets are smaller than the people themselves.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 17 — "Practice & Mastery"  (slug: ch5-practice-mastery)
+published=true blocks=4 reading_time=?min
+================================================================================
+
+--- block #0 [heading] id=43b08cca-8799-421b-9c8f-4e891a156e6f ---
+{
+ "level": 1,
+ "text": "Practice & Mastery"
+}
+
+--- block #1 [text] id=c14eb685-6801-4534-acb5-e5674bd50079 ---
+{
+ "markdown": "This is where reading turns into knowing. Dr. Deepa Malik's interview and David Roth's poem both ask the same quiet question — what does it really mean to win. Work through a mixed set that draws on the story, the poem, the vocabulary, and the grammar focus of this chapter — modals and reported speech — then prove it all in the Apply and Express challenges."
+}
+
+--- block #2 [chapter_practice] id=49969a25-57cf-4f2c-8f36-97a2beb421d7 ---
+{
+ "title": "Chapter 5 Practice",
+ "intro": null,
+ "chapter_number": 5,
+ "session_size": 10,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "ch5-pr-01",
+   "question": "A spine tumour left Deepa Malik paralysed below the waist, yet she went on to win medals in swimming, athletics and biking. What does this arc most reveal about her?",
+   "options": [
+    "That she was lucky her doctors caught and treated the tumour so early and so well",
+    "That she treats obstacles as stepping stones, refusing to let disability define her limits",
+    "That she had secretly trained as a top athlete long before the tumour ever struck",
+    "That she came to resent the very sports that had once injured her growing body"
+   ],
+   "correct_index": 1,
+   "explanation": "Building a champion's life after paralysis shows an outlook that turns setbacks into springboards — the chapter's central idea of what it truly means to 'win'.",
+   "concept_tag": "inference",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-02",
+   "question": "According to the interview, what were the two choices Dr. Malik felt she faced after her paralysis?",
+   "options": [
+    "To return to competitive swimming or take up the shot-put",
+    "To stay silent about it or to speak openly to the press",
+    "To accept other people's pity or reject all their help",
+    "To waste her life in regret or remake it into possibility"
+   ],
+   "correct_index": 3,
+   "explanation": "She describes the choice as squandering her life in remorse or transforming it into a world of limitless possibilities.",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-03",
+   "question": "Which achievement does Dr. Malik call her breakthrough moment?",
+   "options": [
+    "The silver medal in shot-put at the 2016 Rio Games",
+    "Her very first competitive swimming race as a teenager",
+    "Her public appointment as an advocate for disabled women",
+    "The day her spine tumour was first diagnosed"
+   ],
+   "correct_index": 0,
+   "explanation": "She names the 2016 Rio silver in shot-put as her breakthrough moment.",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "ch5-pr-04",
+   "question": "In the interview, what does Dr. Malik say her medals achieve beyond personal success?",
+   "options": [
+    "They guarantee her financial security",
+    "They prove she is faster than able-bodied athletes",
+    "They help change perceptions about disability",
+    "They settle once and for all that she is the best swimmer"
+   ],
+   "correct_index": 2,
+   "explanation": "She calls the medal a step forward in changing perceptions, linking personal victory to social change.",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-05",
+   "question": "In the poem, what happens to the smallest of the nine runners just after the race begins?",
+   "options": [
+    "He sprints ahead of the others",
+    "He refuses to leave the starting blocks",
+    "He stumbles and falls to the asphalt",
+    "He stops to wait for the slowest runner"
+   ],
+   "correct_index": 2,
+   "explanation": "The poem says the smallest among them stumbled, staggered and fell to the asphalt.",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "ch5-pr-06",
+   "question": "How do the eight other runners respond when the small boy falls?",
+   "options": [
+    "They turn back and help him to his feet",
+    "They slow down but finish the race first",
+    "They call for the officials to help him",
+    "They keep running and win their medals as planned"
+   ],
+   "correct_index": 0,
+   "explanation": "One by one they turn round, go back to help him and bring the young boy to his feet.",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "ch5-pr-07",
+   "question": "How does the poem describe the way the race finally ends?",
+   "options": [
+    "The small boy is carried over the finish line by the fastest winner",
+    "The race is stopped by officials and run again the following day",
+    "The small boy crosses the line alone while the others cheer",
+    "The nine runners cross the line holding hands, to applause"
+   ],
+   "correct_index": 3,
+   "explanation": "The poem ends with all nine reaching the finish line holding hands, met by a standing ovation and nine beaming faces.",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-08",
+   "question": "Dr. Malik says overcoming society's low expectations needed mental resilience. In this context, resilience most nearly means the ability to",
+   "options": [
+    "win each and every event she entered",
+    "recover and keep going after hardship",
+    "remember her past clearly and in detail",
+    "train her body harder than anyone else"
+   ],
+   "correct_index": 1,
+   "explanation": "Resilience is the capacity to recover quickly from difficulty and carry on.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-09",
+   "question": "She says the support of her family, coupled with her fortitude, let her turn obstacles into stepping stones. Here fortitude means",
+   "options": [
+    "good fortune that arrives purely by chance",
+    "courage and strength in facing hardship",
+    "wealth that is built up over many long years",
+    "patience to wait quietly for things to improve"
+   ],
+   "correct_index": 1,
+   "explanation": "Fortitude is strength of mind that lets a person endure difficulty bravely.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-10",
+   "question": "Dr. Malik says she truly appreciates the accolades showered on her. The word accolades refers to",
+   "options": [
+    "physical injuries she suffered",
+    "the rules of para-athletics",
+    "harsh criticisms aimed at her",
+    "honours and public praise"
+   ],
+   "correct_index": 3,
+   "explanation": "Accolades are awards, honours and praise given in recognition of achievement.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-11",
+   "question": "Rather than squander her life in remorse, she chose to rebuild it. To squander something is to",
+   "options": [
+    "waste it carelessly",
+    "share it generously",
+    "guard it closely",
+    "invest it wisely for the future"
+   ],
+   "correct_index": 0,
+   "explanation": "To squander is to waste time, money or an opportunity carelessly.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-12",
+   "question": "When the fallen boy gives out a cry of frustration and anguish, the word anguish suggests",
+   "options": [
+    "mild surprise at the sudden noise",
+    "quiet pride in his brave effort",
+    "severe pain and distress of mind",
+    "sudden anger at the other runners"
+   ],
+   "correct_index": 2,
+   "explanation": "Anguish is intense suffering of the mind, far stronger than ordinary disappointment.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-13",
+   "question": "Choose the sentence where the modal correctly shows obligation, as in a duty with no real choice.",
+   "options": [
+    "A para-athlete may train with discipline to compete at this level",
+    "A para-athlete could train with discipline to compete at this level",
+    "A para-athlete must train with discipline to compete at this level",
+    "A para-athlete should train with discipline to compete at this level"
+   ],
+   "correct_index": 2,
+   "explanation": "Must expresses strong obligation or necessity; may and could only suggest permission or possibility.",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-14",
+   "question": "Dr. Malik says, 'Before the surgery I could swim for hours.' The modal could here expresses",
+   "options": [
+    "a past ability",
+    "a present obligation",
+    "a polite request",
+    "a future possibility"
+   ],
+   "correct_index": 0,
+   "explanation": "Could is the past form of can used for an ability someone had in the past.",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-15",
+   "question": "Which sentence uses a modal to make a polite request?",
+   "options": [
+    "You must now tell me all about your training routine.",
+    "She might one day tell me about her training routine.",
+    "You should tell me about your training routine.",
+    "Could you tell me about your training routine?"
+   ],
+   "correct_index": 3,
+   "explanation": "Could you is the standard polite way to make a request; must is an order and might is a guess.",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "ch5-pr-16",
+   "question": "Report this question correctly: The interviewer asked, 'Do you train every day?'",
+   "options": [
+    "The interviewer asked her do you train every single day",
+    "The interviewer asked whether she trained every day",
+    "The interviewer asked that she now trains every single day",
+    "The interviewer asked if she trains every day"
+   ],
+   "correct_index": 1,
+   "explanation": "A reported yes/no question uses if or whether, drops the quotation marks, shifts you to she and train to trained.",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-17",
+   "question": "Dr. Malik said, 'I can turn obstacles into stepping stones.' Reported correctly, this becomes",
+   "options": [
+    "She said she can turn obstacles into stepping stones",
+    "She said she could turn obstacles into stepping stones",
+    "She said that can she turn obstacles into stepping stones",
+    "She said she would turn obstacles into stepping stones"
+   ],
+   "correct_index": 1,
+   "explanation": "In reported speech the present modal can shifts back to its past form could.",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-18",
+   "question": "Dr. Malik draws a line between sympathy and the kind of regard para-athletes actually want. Which reading best fits her view?",
+   "options": [
+    "She believes para-athletes should never be praised or honoured at all",
+    "She thinks only able-bodied audiences can truly understand any sport",
+    "She prefers quiet sympathy to loud public applause",
+    "She wants people to recognise ability and offer respect, not pity"
+   ],
+   "correct_index": 3,
+   "explanation": "Her whole argument is that disability is a strength, so she seeks respect for ability rather than pity.",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-19",
+   "question": "Inclusion and accessibility are related but different. Which option best captures the difference the chapter draws out?",
+   "options": [
+    "Accessibility removes the physical barriers; inclusion means everyone belongs",
+    "Inclusion and accessibility are two words that mean exactly the same thing",
+    "Accessibility is only about winning medals while inclusion is about hard training",
+    "Inclusion removes the ramps and rules while accessibility is a feeling of belonging"
+   ],
+   "correct_index": 0,
+   "explanation": "Accessibility clears practical obstacles, such as ramps and rules, while inclusion is the deeper sense that no one is left out.",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "ch5-pr-20",
+   "question": "By athletics' rules the eight runners lose the race. What does the poem suggest they win instead?",
+   "options": [
+    "A much faster finishing time than they had ever managed before",
+    "The right to run the very same race once again at a later date",
+    "A shared victory of compassion that the rules cannot measure",
+    "A cash prize handed out by the grateful officials"
+   ],
+   "correct_index": 2,
+   "explanation": "The poem awards all nine gold, redefining victory as something shared and moral rather than first across the line.",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-21",
+   "question": "The title Nine Gold Medals is given to a race that, by the rulebook, had no single winner. The title is best read as saying",
+   "options": [
+    "the race officials must have made an error in scoring the race",
+    "a gold medal is always worth far more than silver or bronze",
+    "everyone who chose kindness over winning was a true champion",
+    "nine separate races were run to decide the real winner"
+   ],
+   "correct_index": 2,
+   "explanation": "The nine medals stand for the idea that each runner's choice to help made all of them winners.",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-22",
+   "question": "Dr. Malik says, 'Disability is not a limitation; it's a unique strength waiting to be unleashed.' This statement is best read as",
+   "options": [
+    "an invitation to see hidden potential where others see only limits",
+    "a flat claim that disability brings no real difficulty to a person at all",
+    "advice to keep one's personal struggles completely private and unspoken",
+    "a warning that only a few rare people can ever overcome a disability"
+   ],
+   "correct_index": 0,
+   "explanation": "She reframes limitation as latent strength, urging the reader to look past the obvious limit to the potential beneath.",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "ch5-pr-23",
+   "question": "Dr. Malik notes that people often underestimated her abilities. We can infer that, early on, she had to",
+   "options": [
+    "give up all of her advocacy work in order to focus only on sport",
+    "depend entirely on other people for her courage and encouragement",
+    "hide her disability so that rivals would not underestimate her",
+    "prove herself against doubt as well as train her body"
+   ],
+   "correct_index": 3,
+   "explanation": "If society doubted her, then beating those low expectations was a second battle alongside the physical one.",
+   "concept_tag": "inference",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-24",
+   "question": "From the runners' choice in the poem, we can infer that, for them, the meaning of the race",
+   "options": [
+    "was decided entirely by their coaches",
+    "mattered more than the medal it offered",
+    "depended on how fast the boy could recover",
+    "lay in setting a new record for the crowd"
+   ],
+   "correct_index": 1,
+   "explanation": "Giving up months of training to help a rival shows they valued the spirit of the race above the prize.",
+   "concept_tag": "inference",
+   "difficulty": 3
+  },
+  {
+   "id": "ch5-pr-25",
+   "question": "The crowd rises in a standing ovation only after the race is reduced to a walk. We can infer that the spectators",
+   "options": [
+    "were quietly disappointed that no new record had been set",
+    "valued the runners' compassion more than raw speed",
+    "had fully expected the fallen boy to be disqualified",
+    "rose only to honour the single fastest runner of the day"
+   ],
+   "correct_index": 1,
+   "explanation": "People stand to honour something they admire; here it is the kindness shown, not the winning time.",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "ch5-pr-26",
+   "question": "Dr. Malik links her own medals to making the path easier for the next person. We can infer she sees her success as",
+   "options": [
+    "a private result she would much rather keep quietly to herself",
+    "clear proof that natural talent matters far more than effort",
+    "a reward earned by her family rather than by herself",
+    "a door she opens for others, not just a personal reward"
+   ],
+   "correct_index": 3,
+   "explanation": "By saying each win changes perceptions, she frames her achievement as clearing the way for those who follow.",
+   "concept_tag": "inference",
+   "difficulty": 3
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=4bb6918a-503b-4e05-a592-5bdfb33f5802 ---
+{
+ "title": "Apply & Express",
+ "intro": null,
+ "chapter_number": 5,
+ "challenges": [
+  {
+   "id": "ch5-ae-01",
+   "concept_tag": "vocab_in_context",
+   "kind": "fill_blank",
+   "prompt": "Overcoming society's low expectations needed not only physical strength but also mental ____ , the power to recover and keep going after every hardship.",
+   "answers": [
+    [
+     "resilience"
+    ]
+   ],
+   "choices": [
+    "resilience",
+    "reluctance",
+    "resentment",
+    "restlessness"
+   ],
+   "hint": "An abstract noun beginning with r — the quality of bouncing back",
+   "difficulty": 2,
+   "explanation": "Resilience is the ability to recover quickly from difficulty, exactly the quality the sentence describes."
+  },
+  {
+   "id": "ch5-ae-02",
+   "concept_tag": "vocab_in_context",
+   "kind": "fill_blank",
+   "prompt": "The support of her family, coupled with her own ____ , let Dr. Malik turn obstacles into stepping stones.",
+   "answers": [
+    [
+     "fortitude"
+    ]
+   ],
+   "choices": [
+    "fortitude",
+    "fortune",
+    "gratitude",
+    "solitude"
+   ],
+   "hint": "Courage and strength in facing hardship — starts with f",
+   "difficulty": 2,
+   "explanation": "Fortitude is steady courage in the face of difficulty, the inner quality paired with family support."
+  },
+  {
+   "id": "ch5-ae-03",
+   "concept_tag": "comprehension",
+   "kind": "predict_word",
+   "prompt": "Predict the missing word from the interview.",
+   "lead": "Every setback is an opportunity to prove your",
+   "answers": [
+    "strength"
+   ],
+   "full_line": "Every setback is an opportunity to prove your strength.",
+   "difficulty": 2,
+   "explanation": "Dr. Malik closes by saying every setback is an opportunity to prove your strength."
+  },
+  {
+   "id": "ch5-ae-04",
+   "concept_tag": "comprehension",
+   "kind": "predict_word",
+   "prompt": "Predict the missing word from the poem.",
+   "lead": "That's how the race ended, with nine gold",
+   "answers": [
+    "medals"
+   ],
+   "full_line": "That's how the race ended, with nine gold medals.",
+   "difficulty": 2,
+   "explanation": "The line gives the poem its title — the race ends with nine gold medals."
+  },
+  {
+   "id": "ch5-ae-05",
+   "concept_tag": "vocab_in_context",
+   "kind": "word_builder",
+   "prompt": "Build the abstract noun that names treating everyone equally and leaving no one out.",
+   "base": "inclusive",
+   "affixes": [
+    "-ity",
+    "-ness",
+    "-ment"
+   ],
+   "correct": "-ity",
+   "target": "inclusivity",
+   "position": "suffix",
+   "meaning_hint": "The quality of including everyone and treating all fairly",
+   "difficulty": 2,
+   "explanation": "Adding the suffix -ity to inclusive gives inclusivity, the noun the chapter uses for an inclusive spirit."
+  },
+  {
+   "id": "ch5-ae-06",
+   "concept_tag": "vocab_in_context",
+   "kind": "word_builder",
+   "prompt": "Build the noun that names a deep, lasting regret over something one has done.",
+   "base": "remorse",
+   "affixes": [
+    "re-",
+    "-ful",
+    "-less"
+   ],
+   "correct": "-ful",
+   "target": "remorseful",
+   "position": "suffix",
+   "meaning_hint": "Filled with deep regret",
+   "difficulty": 3,
+   "explanation": "Adding -ful to remorse gives remorseful, describing someone full of deep regret — the state Dr. Malik chose not to stay in."
+  },
+  {
+   "id": "ch5-ae-07",
+   "concept_tag": "vocab_in_context",
+   "kind": "sentence_compose",
+   "word": "resilience",
+   "instruction": "Write one sentence of your own using the word resilience to describe a person who recovered from a setback.",
+   "rubric": [
+    "Uses the word resilience correctly",
+    "Shows recovery after a difficulty",
+    "Is a complete, correctly punctuated sentence"
+   ],
+   "model_answer": "After failing the test twice, she showed real resilience and passed it on her third attempt.",
+   "min_words": 6,
+   "difficulty": 3,
+   "explanation": "A good answer uses resilience to mean bouncing back from hardship, as the chapter does."
+  },
+  {
+   "id": "ch5-ae-08",
+   "concept_tag": "vocab_in_context",
+   "kind": "sentence_compose",
+   "word": "compassion",
+   "instruction": "Write one sentence using the word compassion that captures why the eight runners turned back for the fallen boy.",
+   "rubric": [
+    "Uses the word compassion correctly",
+    "Connects feeling with action to help",
+    "Is a complete, correctly punctuated sentence"
+   ],
+   "model_answer": "Out of compassion the runners stopped racing and lifted the fallen boy to his feet.",
+   "min_words": 6,
+   "difficulty": 3,
+   "explanation": "Compassion is empathy joined with action, which is exactly what the runners showed."
+  },
+  {
+   "id": "ch5-ae-09",
+   "concept_tag": "comprehension",
+   "kind": "unscramble",
+   "prompt": "Rearrange the words to rebuild the line from the poem.",
+   "tokens": [
+    "One",
+    "by",
+    "one",
+    "they",
+    "turned",
+    "round",
+    "to",
+    "help",
+    "him"
+   ],
+   "answer": "One by one they turned round to help him",
+   "difficulty": 2,
+   "explanation": "The poem describes the runners turning back one by one to help the fallen boy."
+  },
+  {
+   "id": "ch5-ae-10",
+   "concept_tag": "comprehension",
+   "kind": "unscramble",
+   "prompt": "Rearrange the words to rebuild Dr. Malik's closing idea.",
+   "tokens": [
+    "Disability",
+    "is",
+    "not",
+    "a",
+    "limitation",
+    "but",
+    "a",
+    "strength"
+   ],
+   "answer": "Disability is not a limitation but a strength",
+   "difficulty": 3,
+   "explanation": "This captures her final message that disability is a unique strength rather than a limit."
+  },
+  {
+   "id": "ch5-ae-11",
+   "concept_tag": "grammar",
+   "kind": "transform",
+   "source": "The reporter asked, 'Do you train daily?'",
+   "instruction": "Report the question using 'if' or 'whether'",
+   "answers": [
+    "The reporter asked if she trained daily.",
+    "The reporter asked whether she trained daily."
+   ],
+   "rule": "A reported yes/no question uses if or whether, drops the quotation marks and question mark, and shifts the verb back one tense (train becomes trained).",
+   "difficulty": 3,
+   "explanation": "The direct question becomes a statement introduced by if or whether, with do dropped and train shifted to trained."
+  },
+  {
+   "id": "ch5-ae-12",
+   "concept_tag": "grammar",
+   "kind": "transform",
+   "source": "Dr. Malik said, 'I can defy the odds.'",
+   "instruction": "Change to reported speech",
+   "answers": [
+    "Dr. Malik said that she could defy the odds.",
+    "Dr. Malik said she could defy the odds."
+   ],
+   "rule": "In reported speech the present modal can shifts to its past form could, and I changes to she.",
+   "difficulty": 3,
+   "explanation": "Can becomes could and the pronoun I becomes she when the statement is reported."
+  },
+  {
+   "id": "ch5-ae-13",
+   "concept_tag": "grammar",
+   "kind": "spot_error",
+   "prompt": "One word in this reported sentence is wrong. Tap it and choose the correct modal.",
+   "tokens": [
+    "She",
+    "said",
+    "she",
+    "can",
+    "swim",
+    "for",
+    "hours",
+    "before",
+    "the",
+    "surgery"
+   ],
+   "error_index": 3,
+   "fix": "could",
+   "fix_options": [
+    "could",
+    "can",
+    "must"
+   ],
+   "rule": "When the reporting verb is in the past (said), a present modal like can must shift back to its past form could.",
+   "difficulty": 3,
+   "explanation": "After said, can becomes could to keep the tense consistent in reported speech."
+  },
+  {
+   "id": "ch5-ae-14",
+   "concept_tag": "grammar",
+   "kind": "spot_error",
+   "prompt": "One word in this sentence uses the wrong modal. Tap it and pick the right one.",
+   "tokens": [
+    "An",
+    "athlete",
+    "may",
+    "train",
+    "every",
+    "day",
+    "there",
+    "is",
+    "no",
+    "choice"
+   ],
+   "error_index": 2,
+   "fix": "must",
+   "fix_options": [
+    "must",
+    "could",
+    "might"
+   ],
+   "rule": "When there is no choice, the sentence expresses obligation, which needs must, not the permission or possibility modals may, could or might.",
+   "difficulty": 3,
+   "explanation": "There is no choice signals obligation, so the correct modal is must rather than may."
+  },
+  {
+   "id": "ch5-ae-15",
+   "concept_tag": "grammar",
+   "kind": "form_select",
+   "prompt": "A para-athlete ____ train daily; at this level there is simply no choice.",
+   "options": [
+    "must",
+    "might",
+    "could"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Correct — must expresses strong obligation, matching there is no choice.",
+    "Wrong — might only suggests a possibility, not a duty.",
+    "Wrong — could suggests ability or a polite option, not necessity."
+   ],
+   "difficulty": 2,
+   "explanation": "Must is the modal of obligation, which fits a situation with no choice."
+  },
+  {
+   "id": "ch5-ae-16",
+   "concept_tag": "grammar",
+   "kind": "form_select",
+   "prompt": "____ you tell me a little about your training routine, please?",
+   "options": [
+    "Could",
+    "Must",
+    "Should"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Correct — could makes a polite request.",
+    "Wrong — must turns the request into an order.",
+    "Wrong — should gives advice rather than asking politely."
+   ],
+   "difficulty": 2,
+   "explanation": "Could you is the standard polite way to make a request in an interview."
+  },
+  {
+   "id": "ch5-ae-17",
+   "concept_tag": "grammar",
+   "kind": "form_select",
+   "prompt": "Before her surgery, Dr. Malik ____ swim for hours without tiring.",
+   "options": [
+    "could",
+    "must",
+    "should"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Correct — could expresses a past ability.",
+    "Wrong — must expresses obligation, not ability.",
+    "Wrong — should expresses advice, not a past skill."
+   ],
+   "difficulty": 2,
+   "explanation": "Could is the modal that expresses an ability someone had in the past."
+  },
+  {
+   "id": "ch5-ae-18",
+   "concept_tag": "vocab_in_context",
+   "kind": "word_match",
+   "instruction": "Match each word from the chapter to its meaning.",
+   "pairs": [
+    {
+     "left": "resilience",
+     "right": "the power to recover and keep going after hardship"
+    },
+    {
+     "left": "fortitude",
+     "right": "courage and strength in facing difficulty"
+    },
+    {
+     "left": "accolades",
+     "right": "honours and public praise"
+    },
+    {
+     "left": "squander",
+     "right": "to waste something carelessly"
+    },
+    {
+     "left": "anguish",
+     "right": "severe pain and distress of mind"
+    }
+   ],
+   "difficulty": 3,
+   "explanation": "These five words from Dr. Malik's interview and the poem are paired with their meanings as used in the chapter."
+  }
+ ]
+}

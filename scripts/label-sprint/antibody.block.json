@@ -1,0 +1,58 @@
+{
+  "_note": "Label Sprint round for antibody \u2014 generated antibody_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Antibody (immunoglobulin) structure",
+  "caption": "Tap each label, then tap where it belongs on the antibody.",
+  "hotspots": [
+    {
+      "id": "45e5c98f-d711-4451-9c2b-9aab13606859",
+      "x": 0.15,
+      "y": 0.12,
+      "label": "Antigen-binding site",
+      "detail": "The variable tip of each arm that recognises and binds a specific antigen.",
+      "icon": "pin"
+    },
+    {
+      "id": "0fd1d337-4466-4ef2-b6f4-e0e2a378aa4b",
+      "x": 0.2,
+      "y": 0.25,
+      "label": "Light chain",
+      "detail": "The shorter polypeptide chain, present only in the upper arms.",
+      "icon": "pin"
+    },
+    {
+      "id": "b99f7ca5-c81b-417f-b0d5-75b72b995904",
+      "x": 0.5,
+      "y": 0.55,
+      "label": "Heavy chain",
+      "detail": "The longer polypeptide chain, running through both arms and the stem.",
+      "icon": "pin"
+    },
+    {
+      "id": "09def994-f4b6-46b7-abfe-4d4d23731816",
+      "x": 0.5,
+      "y": 0.4,
+      "label": "Hinge region",
+      "detail": "The flexible junction where the two arms meet the stem.",
+      "icon": "pin"
+    },
+    {
+      "id": "c43937fb-7168-49a2-a41c-6348a5104e04",
+      "x": 0.5,
+      "y": 0.68,
+      "label": "Disulfide bond",
+      "detail": "Covalent -S-S- links holding the heavy and light chains together.",
+      "icon": "pin"
+    },
+    {
+      "id": "2e2bb3f1-3928-4b80-a658-1b9352bc5da9",
+      "x": 0.5,
+      "y": 0.87,
+      "label": "Fc region (constant region)",
+      "detail": "The stem of the Y; binds to immune cell receptors.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "3D molecular structure of an antibody"
+}

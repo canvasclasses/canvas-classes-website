@@ -8,7 +8,9 @@
     ".": "./index.ts",
     "./PageRenderer": "./PageRenderer.tsx",
     "./BlockRenderer": "./BlockRenderer.tsx",
+    "./blocks/InteractiveImageBlockRenderer": "./blocks/InteractiveImageBlockRenderer.tsx",
     "./simulators-context": "./simulators-context.tsx",
+    "./glossary-context": "./glossary-context.tsx",
     "./simulations/vector-lab": "./blocks/simulations/vector-lab/VectorLabSim.tsx",
     "./vault-context": "./vault-context.tsx",
     "./book-context": "./book-context.tsx"
@@ -23,7 +25,8 @@
     "rehype-raw": "^7.0.0",
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.1",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "unist-util-visit": "^5.0.0"
   },
   "peerDependencies": {
     "framer-motion": "*",
