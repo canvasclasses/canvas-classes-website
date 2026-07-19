@@ -111,6 +111,7 @@ const InteractiveImageBlockSchema = BaseBlockSchema.extend({
   hotspots: z.array(HotspotSchema),
   caption: z.string().optional(),
   generation_prompt: z.string().optional(),
+  width: z.enum(['full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter']).optional(),
 });
 
 const VideoBlockSchema = BaseBlockSchema.extend({

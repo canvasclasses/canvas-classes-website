@@ -129,6 +129,10 @@ export interface InteractiveImageBlock extends BaseBlock {
   // AI generation spec for the base diagram, shown as a copyable placeholder
   // while src is empty (BOOK_PAGE_WORKFLOW §3.13). Preserved on save.
   generation_prompt?: string;
+  // Block-level width preset — same options/meaning as ImageBlock['width'].
+  // Optional; renderer defaults to 'full'. A tall/portrait diagram is
+  // additionally height-capped by the renderer regardless of this setting.
+  width?: 'full' | 'five_sixth' | 'three_quarter' | 'two_third' | 'half' | 'two_fifth' | 'third' | 'quarter';
 }
 
 // 5. VIDEO — short lecture clip
@@ -1184,6 +1188,14 @@ export type ContentBlock =
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
 
+/** One technical term this page introduces, plus its plain-English definition. */
+export interface GlossaryEntry {
+  /** The term as it appears in the prose, e.g. "sporopollenin". Matched case-insensitively. */
+  term: string;
+  /** 1–2 plain sentences. Shown in the hover/tap popover. */
+  definition: string;
+}
+
 export interface BookPage {
   _id: string;
   book_id: string;
@@ -1200,6 +1212,24 @@ export interface BookPage {
    * When this array is empty or absent, the Hinglish toggle is hidden entirely.
    */
   hinglish_blocks?: TextBlock[];
+  /**
+   * Per-page glossary of the technical terms this page introduces. Authored by
+   * the book page-module contracts (see the PAGE_MODULE_CONTRACT.md files under
+   * `scripts/bio-book/` and `scripts/bio-book12/`).
+   *
+   * Consumed by the reader as **hover/tap definitions**: PageRenderer injects this
+   * into `GlossaryProvider`, and TextBlockRenderer underlines the first occurrence
+   * of each term in the prose and shows its definition in a popover. A
+   * terminology-dense subject read by second-language students gets a
+   * zero-navigation-cost lookup — comprehension, accessibility and localisation
+   * in one feature.
+   *
+   * NOTE (2026-07-16): this field existed on ~1,754 authored entries across the two
+   * Biology books for months while being absent from this type AND from the Zod
+   * schema, so nothing rendered it and nothing flagged it. If you add a page-level
+   * field, add it here too, or it silently becomes dead data.
+   */
+  glossary?: GlossaryEntry[];
   tags?: string[];       // Links to Crucible taxonomy tags
   created_at: Date;
   updated_at: Date;

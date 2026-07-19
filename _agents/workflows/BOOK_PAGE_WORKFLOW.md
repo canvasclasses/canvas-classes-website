@@ -663,6 +663,16 @@ For biology pages (anatomy, histology, organ systems, developmental biology), an
 
 **Rule:** Every biology page on Class 9 should have at least one of `interactive_image`, `comparison_card`, or `timeline` — these are the equivalents of "simulation" for the biology track.
 
+### 3.13.2 `interactive_image` in quiz mode — "Label Sprint" (biology revision game)
+
+The `interactive_image` block doubles as the **Label Sprint** revision game: instead of tapping a labelled dot to *reveal* detail, the student is given the label and must *recall* where it goes on the diagram — tap-to-place, against a timer, feeding the spaced-repetition deck. Same data, different mode (recall instead of reveal). This is biology's answer to retention/memorisation, where a `simulation` would add nothing.
+
+- **Same schema, no new block type.** A Label Sprint round is an `interactive_image` block's `src` + `hotspots[]` (0–1 coords). Do not invent a bespoke format.
+- **Image sourcing is a hard framework, not trial-and-error** — never hand-draw organ SVGs. Two paths: (A) a generated **illustration PNG** (PRIMARY — prefer a cross-section; exposes valves/septum/interiors), keyed to transparency + compressed via `scripts/label-sprint/prepare_illustration.py`; (B) a **3D render** of an existing `apps/student/public/anatomy/*.glb` (FALLBACK, surface only) via `scripts/label-sprint/render_organ.py`, which auto-projects a hotspot per named mesh.
+- **Placement:** inline on the organ page (first encounter) · end-of-chapter challenge (consolidation) · book-level "Bio Deck" launcher (the spaced-repetition home). The deck is the spine; every round feeds it.
+
+**Full ruleset (prompt template, keying/compression, hotspot authoring, placement): [`LABEL_SPRINT_WORKFLOW.md`](LABEL_SPRINT_WORKFLOW.md).**
+
 ---
 
 ### 3.14 Biology Image-Style Standards (Class 9 Tissues, Reproduction, Diversity, Earth as a System)
@@ -1587,6 +1597,8 @@ A chapter must never begin cold on page 1. Each chapter opens with a dedicated *
 > - `subtitle` = the 1–2-sentence "why this chapter matters" intro;
 > - `blocks`: **(1)** a full-bleed hero `image` block (`aspect_ratio:'21:9'`, `width:'full'`, `src:''` + a §3.4.2 `generation_prompt`), and **(2)** an optional `text` block whose markdown is a `- bullet` list → rendered as the "What you'll master" outcomes.
 > Then **prepend the opener's `_id` to that chapter's `chapters[].page_ids`**. The journey map, per-page badges (sims / worked-examples / checks), totals and reading-time are computed by the route — never authored. Reader files: `ChapterOpener.tsx`, the `/class-11/chemistry/[pageSlug]` route (journey computation), `BookReader.tsx` (detection + opener excluded from progress/sidebar). The opener is reachable at its slug; linking it from the grade/TOC landing is a follow-up.
+
+> **Backfill / bulk generator (2026-07-10):** `scripts/build_all_chapter_openers.js` creates a solid draft opener for **every** content chapter across **all** books that lacks one — hero (placeholder + subject-tailored 21:9 prompt) + a `subtitle` "promise" derived from the best in-language source on the chapter (first-lesson subtitle → chapter `description` → first-lesson curiosity hook → first text). Idempotent, additive, sets `published` from whether the chapter has ≥1 published lesson, and sits the opener at `min(lesson page_number) − 1` (unique on the `(book,chapter,page_number)` index, sorts first). It deliberately omits the "What you'll master" bullets (they'd duplicate the auto-journey) — those are a per-book hand-polish. As of 2026-07-10 **all 73 content chapters across all Live Books have an opener.** New chapters still author their own per this §15.1.
 
 ### 15.2 Per-section objective — orient before you teach
 

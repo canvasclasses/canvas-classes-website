@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, GraduationCap } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -44,54 +44,79 @@ function CalloutImage({ block }: { block: CalloutBlock }) {
 }
 
 // ─── Exam Tip ─────────────────────────────────────────────────────────────────
-// Card-style with amber accent. Each paragraph renders as a bullet row.
+// Neutral card, collapsed by default — the amber glow background/border read as
+// "neon" and the tip was always forced open even for students who didn't want it.
+// Now: no amber wash (small amber accents only, for identity), and the body only
+// renders once the student taps to expand it.
+//
+// Header redesign (2026-07): the old header said "JEE / NEET Exam Insight" as the
+// title AND repeated "JEE / NEET" again in the pill beside it — the same phrase
+// twice in one row. Now the title is exam-agnostic wording ("Exam Insight" by
+// default, author-overridable via block.title) and the pill is the ONLY place the
+// exam name appears. The generic ✦ sparkle is replaced with a graduation-cap icon
+// in a soft badge circle, so the row reads as "exam content" at a glance without
+// needing the word "exam" twice either.
 function ExamTipCallout({ block }: { block: CalloutBlock }) {
-  return (
-    <div className="my-6 lg:my-0 rounded-xl border border-amber-400/25 bg-amber-400/[0.06] overflow-hidden">
+  const [expanded, setExpanded] = useState(false);
 
-      {/* Header */}
-      <div className="px-5 py-3 border-b border-amber-400/15 flex items-center gap-2.5">
-        <span className="text-amber-300 text-[15px] leading-none">✦</span>
-        <span className="text-[12px] font-bold tracking-[0.1em] uppercase text-amber-300 flex-1">
-          {block.title ?? 'JEE / NEET Exam Insight'}
+  return (
+    <div className="my-6 lg:my-0 rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden">
+
+      {/* Header — always visible, toggles the body */}
+      <button
+        type="button"
+        onClick={() => setExpanded(v => !v)}
+        aria-expanded={expanded}
+        className="w-full px-4 py-3 flex items-center gap-2.5 text-left hover:bg-white/[0.02] transition-colors"
+      >
+        <span className="shrink-0 w-7 h-7 rounded-full bg-amber-300/10 flex items-center justify-center">
+          <GraduationCap size={14} className="text-amber-300/80" />
+        </span>
+        <span className="text-[12px] font-bold tracking-[0.1em] uppercase text-amber-300/80 flex-1">
+          {block.title ?? 'Quick Recap'}
         </span>
         <span className="text-[10px] font-semibold tracking-[0.12em] uppercase
-          text-amber-400/60 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/15">
+          text-white/40 bg-white/[0.04] px-2 py-0.5 rounded-full border border-white/10 shrink-0">
           JEE / NEET
         </span>
-      </div>
+        {expanded
+          ? <ChevronUp size={15} className="text-white/30 shrink-0" />
+          : <ChevronDown size={15} className="text-white/30 shrink-0" />}
+      </button>
 
-      {/* Body — each paragraph becomes a bullet row */}
-      <div className="px-5 py-4">
-        <ReactMarkdown
-          remarkPlugins={[remarkMath]}
-          rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
-          components={{
-            p: ({ children }) => (
-              <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/72 mb-2.5 last:mb-0">
-                <span className="text-amber-300/50 mt-[4px] shrink-0 text-[8px]">◆</span>
-                <span>{children}</span>
-              </div>
-            ),
-            ul: ({ children }) => <ul className="space-y-2">{children}</ul>,
-            li: ({ children }) => (
-              <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/72">
-                <span className="text-amber-300/50 mt-[4px] shrink-0 text-[8px]">◆</span>
-                <span>{children}</span>
-              </div>
-            ),
-            strong: ({ children }) => (
-              <strong className="font-semibold text-amber-200">{children}</strong>
-            ),
-            em: ({ children }) => (
-              <em className="italic text-white/55">{children}</em>
-            ),
-          }}
-        >
-          {block.markdown}
-        </ReactMarkdown>
-        <CalloutImage block={block} />
-      </div>
+      {/* Body — each paragraph becomes a bullet row. Hidden until expanded. */}
+      {expanded && (
+        <div className="px-5 pb-4 pt-3 border-t border-white/8">
+          <ReactMarkdown
+            remarkPlugins={[remarkMath]}
+            rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
+            components={{
+              p: ({ children }) => (
+                <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/72 mb-2.5 last:mb-0">
+                  <span className="text-amber-300/40 mt-[4px] shrink-0 text-[8px]">◆</span>
+                  <span>{children}</span>
+                </div>
+              ),
+              ul: ({ children }) => <ul className="space-y-2">{children}</ul>,
+              li: ({ children }) => (
+                <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/72">
+                  <span className="text-amber-300/40 mt-[4px] shrink-0 text-[8px]">◆</span>
+                  <span>{children}</span>
+                </div>
+              ),
+              strong: ({ children }) => (
+                <strong className="font-semibold text-amber-200/80">{children}</strong>
+              ),
+              em: ({ children }) => (
+                <em className="italic text-white/55">{children}</em>
+              ),
+            }}
+          >
+            {block.markdown}
+          </ReactMarkdown>
+          <CalloutImage block={block} />
+        </div>
+      )}
     </div>
   );
 }
@@ -127,7 +152,7 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
         components={{
           // Sanskrit / large header
           h3: ({ children }) => (
-            <h3 className="text-[21px] font-bold text-amber-200 leading-[1.55] mt-2 mb-3">
+            <h3 className="text-[21px] font-bold text-amber-200/80 leading-[1.55] mt-2 mb-3">
               {children}
             </h3>
           ),
@@ -155,7 +180,7 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
           ),
           // Bold — amber highlight, pops off the white/82 body
           strong: ({ children }) => (
-            <strong className="font-semibold text-amber-200 not-italic">
+            <strong className="font-semibold text-amber-200/80 not-italic">
               {children}
             </strong>
           ),

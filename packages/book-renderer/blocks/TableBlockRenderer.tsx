@@ -17,7 +17,7 @@ function CellContent({ text }: { text: string }) {
       components={{
         p: ({ children }) => <span>{children}</span>,
         strong: ({ children }) => (
-          <strong className="font-semibold text-amber-200">{children}</strong>
+          <strong className="font-semibold text-amber-200/80">{children}</strong>
         ),
         em: ({ children }) => <em className="italic text-white/65">{children}</em>,
         code: ({ children }) => (

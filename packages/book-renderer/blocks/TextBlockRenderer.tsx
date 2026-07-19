@@ -9,9 +9,12 @@ import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
+import { useMemo } from 'react';
 import { TextBlock } from '@canvas/data/types/books';
 import type { Components } from 'react-markdown';
+import type { PluggableList, Pluggable } from 'unified';
 import { useFigureRefs, resolveFigureRefs } from '../figure-refs-context';
+import { useGlossary, rehypeGlossary, GlossaryTerm } from '../glossary-context';
 
 /**
  * Inline image layout presets — selected via the markdown title attribute.
@@ -48,7 +51,7 @@ const components: Components = {
     </h3>
   ),
   strong: ({ children }) => (
-    <strong className="font-semibold text-amber-200">{children}</strong>
+    <strong className="font-semibold text-amber-200/80">{children}</strong>
   ),
   em: ({ children }) => (
     <em className="italic text-white/75">{children}</em>
@@ -182,12 +185,41 @@ const components: Components = {
 
 export default function TextBlockRenderer({ block }: { block: TextBlock }) {
   const figureRefs = useFigureRefs();
+  const glossary = useGlossary();
+
+  // rehypeGlossary runs AFTER rehype-katex so formulas are already elements and
+  // its own text nodes are skipped — see the SKIP_TAGS note in glossary-context.
+  // No glossary → the plugin isn't added at all, so this is a true no-op.
+  const rehypePlugins = useMemo<PluggableList>(() => {
+    const base: PluggableList = [[rehypeKatex, REHYPE_KATEX_OPTIONS], rehypeRaw];
+    if (!glossary.length) return base;
+    // `[plugin, ...params]` must be a tuple, not an inferred union array.
+    return [...base, [rehypeGlossary, glossary] as unknown as Pluggable];
+  }, [glossary]);
+
+  // Merge the glossary element mapping into the shared component overrides.
+  // `glossary-term` is emitted only by rehypeGlossary.
+  const mergedComponents = useMemo(
+    () => ({
+      ...components,
+      'glossary-term': ({ node, children }: { node?: { properties?: Record<string, unknown> }; children?: React.ReactNode }) => (
+        <GlossaryTerm
+          term={String(node?.properties?.dataTerm ?? '')}
+          definition={String(node?.properties?.dataDefinition ?? '')}
+        >
+          {children}
+        </GlossaryTerm>
+      ),
+    }),
+    []
+  );
+
   return (
     <div className="max-w-none">
       <ReactMarkdown
         remarkPlugins={[remarkMath, remarkGfm, remarkBreaks]}
-        rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS], rehypeRaw]}
-        components={components}
+        rehypePlugins={rehypePlugins}
+        components={mergedComponents as Components}
       >
         {resolveFigureRefs(block.markdown, figureRefs)}
       </ReactMarkdown>

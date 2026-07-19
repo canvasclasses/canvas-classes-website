@@ -189,11 +189,17 @@ function textOf(b: AnyBlock): string[] {
   return out;
 }
 
-/** True unless a string has an odd number of `$` (unclosed math) or uses `$$`. */
+/**
+ * True unless a string looks like it has broken math: `$$` used (banned per
+ * CLAUDE.md §4), or an odd number of `$` *while also* containing a LaTeX command
+ * (`\frac`, `\Delta`, …) — the odd-$ alone is ignored so a literal `$` in prose
+ * (currency, "the $5 note") is not mistaken for unclosed math.
+ */
 function latexOk(s: string): boolean {
   if (s.includes('$$')) return false;
   const dollars = (s.match(/\$/g) || []).length;
-  return dollars % 2 === 0;
+  if (dollars % 2 === 0) return true;
+  return !/\\[a-zA-Z]/.test(s); // odd $ but no LaTeX command → treat as literal, not math
 }
 
 // ─── Main engine ─────────────────────────────────────────────────────────────
@@ -239,17 +245,20 @@ export function computePageReadiness(
 
   const hasHinglish = asArray(page.hinglish_blocks).length > 0;
 
-  // ── Hard blockers (must clear before publish) ──
+  // ── Hard blockers (must clear before publish — substantive gaps only) ──
   const blockers: string[] = [];
   if (!hasContent) blockers.push('No real content (stub page)');
-  if (!structureValid) blockers.push('Invalid block structure');
-  if (!latexValid) blockers.push('LaTeX errors (unclosed $ or $$ used)');
   if (pendingImages > 0)
     blockers.push(`${pendingImages} image${pendingImages > 1 ? 's' : ''} pending`);
   if (!hasQuiz && !isChapterOpener) blockers.push('No quiz / checkpoint block');
 
   // ── Soft warnings (worth a look, not publish-blocking) ──
+  // Schema/LaTeX live here, not in blockers: a strict-Zod miss is usually drift
+  // (a null caption, an unlisted callout variant) on a page that renders fine —
+  // a lint nit to fix at leisure, not a reason a finished chapter can't ship.
   const warnings: string[] = [];
+  if (!structureValid) warnings.push('Block schema warning');
+  if (!latexValid) warnings.push('LaTeX warning ($$ or unclosed $)');
   if (pendingAudio > 0)
     warnings.push(`${pendingAudio} audio clip${pendingAudio > 1 ? 's' : ''} not recorded`);
   if (!hasReasoning && !isChapterOpener) warnings.push('No reasoning block');

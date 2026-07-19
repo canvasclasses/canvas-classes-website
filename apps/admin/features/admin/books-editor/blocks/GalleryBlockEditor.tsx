@@ -7,8 +7,8 @@ import { UploadFn } from '../BookWorkspace';
 
 interface Props { block: GalleryBlock; onChange: (p: Partial<GalleryBlock>) => void; onUpload: UploadFn; }
 
-const ASPECT_OPTIONS: { value: NonNullable<GalleryBlock['aspect_ratio']> | 'default'; label: string }[] = [
-  { value: 'default', label: '3 : 2 (default)' },
+const ASPECT_OPTIONS: { value: NonNullable<GalleryBlock['aspect_ratio']> | 'natural'; label: string }[] = [
+  { value: 'natural', label: 'Natural' },
   { value: '16:9', label: '16 : 9' },
   { value: '4:3', label: '4 : 3' },
   { value: '1:1', label: '1 : 1' },
@@ -64,10 +64,10 @@ export default function GalleryBlockEditor({ block, onChange, onUpload }: Props)
         <label className="text-xs text-white/40 mb-1 block">Frame aspect ratio (all slides share it)</label>
         <div className="flex flex-wrap gap-2">
           {ASPECT_OPTIONS.map(({ value, label }) => {
-            const current = block.aspect_ratio ?? 'default';
+            const current = block.aspect_ratio ?? 'natural';
             return (
               <button key={value}
-                onClick={() => onChange({ aspect_ratio: value === 'default' ? undefined : value as GalleryBlock['aspect_ratio'] })}
+                onClick={() => onChange({ aspect_ratio: value === 'natural' ? undefined : value as GalleryBlock['aspect_ratio'] })}
                 className={`px-3 py-1 rounded-lg text-xs transition-colors
                   ${current === value ? 'bg-violet-500 text-white font-bold' : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'}`}>
                 {label}

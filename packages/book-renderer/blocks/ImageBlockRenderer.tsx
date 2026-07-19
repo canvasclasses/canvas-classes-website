@@ -69,7 +69,7 @@ const sideTextComponents: Components = {
     <p className="text-[17px] leading-[1.65] text-white/82 my-2.5 first:mt-0 last:mb-0">{children}</p>
   ),
   strong: ({ children }) => (
-    <strong className="font-semibold text-amber-200">{children}</strong>
+    <strong className="font-semibold text-amber-200/80">{children}</strong>
   ),
   em: ({ children }) => (
     <em className="italic text-white/75">{children}</em>
