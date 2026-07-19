@@ -110,6 +110,51 @@ const shortName = (u) => String(u).split('/').pop();
 
 const SHRINK_THRESHOLD = 0.25; // >25% reading-time drop is flagged as content loss
 
+// ─── The enum guard ──────────────────────────────────────────────────────────
+// Mirrors the enum fields on ImageBlockSchema / GalleryBlockSchema in
+// packages/data/books/schemas.ts — keep in sync if those enums change.
+//
+// WHY THIS EXISTS: a 2026-07 incident wrote aspect_ratio: '3:4' (not a valid
+// enum value — only '4:3' landscape exists) straight into Mongo via a raw
+// script, bypassing the admin API route's Zod validation entirely. The bad
+// value sat silent for weeks, then blocked an unrelated admin-editor save the
+// moment a full-blocks save revalidated every block on that page. Scripts
+// using this gateway are the last line of defense before that class of bug
+// reaches the DB — catch it here, at write time, not weeks later downstream.
+const KNOWN_ENUMS = {
+  image: {
+    aspect_ratio: ['16:9', '16:5', '4:3', '3:2', '1:1', '21:9'],
+    width: ['full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter'],
+    align: ['center', 'left', 'right'],
+  },
+  gallery: {
+    aspect_ratio: ['16:9', '16:5', '4:3', '3:2', '1:1', '21:9'],
+    width: ['full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter'],
+  },
+};
+function checkKnownEnums(blocks) {
+  const errors = [];
+  const visit = (b, loc) => {
+    if (!b || typeof b !== 'object') return;
+    const rules = KNOWN_ENUMS[b.type];
+    if (rules) {
+      for (const [field, allowed] of Object.entries(rules)) {
+        const val = b[field];
+        if (val !== undefined && val !== null && !allowed.includes(val)) {
+          errors.push(`${loc} (${b.type} ${b.id || '?'}): ${field}="${val}" is not one of [${allowed.join(', ')}]`);
+        }
+      }
+    }
+    if (b.type === 'section' && Array.isArray(b.columns)) {
+      b.columns.forEach((col, ci) => {
+        if (Array.isArray(col)) col.forEach((child, cj) => visit(child, `${loc}.columns[${ci}][${cj}]`));
+      });
+    }
+  };
+  (blocks || []).forEach((b, i) => visit(b, `blocks[${i}]`));
+  return errors;
+}
+
 // ─── The content-loss guard ─────────────────────────────────────────────────
 function diffPage(oldBlocks, newBlocks) {
   const oldIds = collectBlockIds(oldBlocks), newIds = collectBlockIds(newBlocks);
@@ -151,6 +196,15 @@ async function snapshotVersion(db, page, reason, author) {
 async function savePage(db, selector, newBlocks, opts = {}) {
   const { author = 'script', summary = '', allowContentLoss = false, lossReason = '', dryRun = false, extraSet = {} } = opts;
   if (!Array.isArray(newBlocks)) throw new Error('book-writer.savePage: newBlocks must be an array');
+
+  const enumErrors = checkKnownEnums(newBlocks);
+  if (enumErrors.length) {
+    throw new Error(
+      `book-writer.savePage: refusing to write invalid enum value(s):\n  ${enumErrors.join('\n  ')}\n` +
+      `Fix the value or omit the field (undefined is valid) — do not write a value outside the allowed set.`
+    );
+  }
+
   const pages = db.collection('book_pages');
   const query = selector.pageId ? { _id: selector.pageId } : { slug: selector.slug };
   const cur = await pages.findOne(query);

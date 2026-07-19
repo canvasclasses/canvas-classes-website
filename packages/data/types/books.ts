@@ -887,6 +887,9 @@ export interface GalleryBlock extends BaseBlock {
   type: 'gallery';
   items: GalleryItem[];
   aspect_ratio?: '16:9' | '16:5' | '4:3' | '3:2' | '1:1' | '21:9';
+  // Overall carousel size as a fraction of the column — same presets/meaning as
+  // ImageBlock['width'] (100/83/75/67/50/40/33/25%). Absent → full width.
+  width?: 'full' | 'five_sixth' | 'three_quarter' | 'two_third' | 'half' | 'two_fifth' | 'third' | 'quarter';
   figure_key?: string;      // §16 — a gallery is one numbered figure (panels a/b/c)
   figure_number?: string;
 }

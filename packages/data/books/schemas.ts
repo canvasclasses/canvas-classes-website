@@ -100,6 +100,7 @@ const GalleryBlockSchema = BaseBlockSchema.extend({
   type: z.literal('gallery'),
   items: z.array(GalleryItemSchema),
   aspect_ratio: z.enum(['16:9', '16:5', '4:3', '3:2', '1:1', '21:9']).optional(),
+  width: z.enum(['full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter']).optional(),
   figure_key: z.string().optional(),
   figure_number: z.string().optional(),
 });

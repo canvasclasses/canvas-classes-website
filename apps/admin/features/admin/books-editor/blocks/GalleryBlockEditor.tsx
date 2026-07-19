@@ -16,6 +16,15 @@ const ASPECT_OPTIONS: { value: NonNullable<GalleryBlock['aspect_ratio']> | 'natu
   { value: '21:9', label: '21 : 9' },
 ];
 
+// Overall carousel size — same presets as the single Image block.
+const WIDTH_LABELS: Record<NonNullable<GalleryBlock['width']>, string> = {
+  full: '100%', five_sixth: '83%', three_quarter: '75%', two_third: '67%',
+  half: '50%', two_fifth: '40%', third: '33%', quarter: '25%',
+};
+const WIDTH_OPTIONS: NonNullable<GalleryBlock['width']>[] = [
+  'full', 'five_sixth', 'three_quarter', 'two_third', 'half', 'two_fifth', 'third', 'quarter',
+];
+
 export default function GalleryBlockEditor({ block, onChange, onUpload }: Props) {
   const items = block.items ?? [];
   const [uploadingIdx, setUploadingIdx] = useState<number | null>(null);
@@ -71,6 +80,23 @@ export default function GalleryBlockEditor({ block, onChange, onUpload }: Props)
                 className={`px-3 py-1 rounded-lg text-xs transition-colors
                   ${current === value ? 'bg-violet-500 text-white font-bold' : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'}`}>
                 {label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Width — overall carousel size */}
+      <div>
+        <label className="text-xs text-white/40 mb-1 block">Width</label>
+        <div className="flex flex-wrap gap-2">
+          {WIDTH_OPTIONS.map((w) => {
+            const current = block.width ?? 'full';
+            return (
+              <button key={w} onClick={() => onChange({ width: w === 'full' ? undefined : w })}
+                className={`px-3 py-1 rounded-lg text-xs transition-colors
+                  ${current === w ? 'bg-orange-500 text-black font-bold' : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'}`}>
+                {WIDTH_LABELS[w]}
               </button>
             );
           })}

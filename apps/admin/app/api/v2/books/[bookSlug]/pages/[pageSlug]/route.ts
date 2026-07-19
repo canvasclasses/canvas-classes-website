@@ -20,6 +20,10 @@ const VALID_CALLOUT_VARIANTS = new Set([
   'india_voice', 'literature_in_life', 'voices_that_inspire', 'evidence_pack',
 ]);
 
+// Mirrors the `aspect_ratio` enum on ImageBlockSchema / GalleryBlockSchema in
+// packages/data/books/schemas.ts — keep in sync if that enum changes.
+const VALID_ASPECT_RATIOS = new Set(['16:9', '16:5', '4:3', '3:2', '1:1', '21:9']);
+
 /**
  * Recursively drops object keys whose value is `null`, returning a cleaned copy.
  * Array elements and their order are preserved (we recurse into them but never
@@ -57,6 +61,7 @@ function stripNulls<T>(value: T): T {
  *  • Strips `null`-valued keys (deep) so they don't trip Zod's `.optional()`
  *  • Assigns a UUID if `id` is missing or not a string
  *  • Resets an invalid callout `variant` to 'note'
+ *  • Clears an invalid image/gallery `aspect_ratio` (falls back to natural sizing)
  *  • Defaults a missing/non-string `alt` on `image` blocks (and each `gallery`
  *    item) to `''` — both `ImageBlockSchema.alt` and `GalleryItemSchema.alt`
  *    are REQUIRED strings, not `.optional()`, so a legacy block with no `alt`
@@ -68,7 +73,12 @@ function stripNulls<T>(value: T): T {
  *    "Image is missing required alt property" console warning at render time.
  *
  * This lets old DB data self-heal on the next save rather than blocking
- * every subsequent edit with a Zod validation error.
+ * every subsequent edit with a Zod validation error. Added after a 2026-07
+ * incident: a raw script wrote aspect_ratio: '3:4' (not a valid enum value —
+ * only '4:3' landscape exists) directly to Mongo, bypassing Zod. That single
+ * bad block sat silent for weeks, then blocked an unrelated edit on the same
+ * page the moment a full-blocks save revalidated every block. `stripNulls`
+ * alone didn't catch it because the value wasn't null, just invalid.
  */
 function sanitizeBlock(b: Record<string, unknown>): Record<string, unknown> {
   b = stripNulls(b);
@@ -146,6 +156,14 @@ function sanitizeBlock(b: Record<string, unknown>): Record<string, unknown> {
       if (typeof ev.id !== 'string' || !ev.id) ev.id = randomUUID();
       return ev;
     });
+  }
+
+  if (
+    (b.type === 'image' || b.type === 'gallery') &&
+    b.aspect_ratio !== undefined &&
+    !VALID_ASPECT_RATIOS.has(b.aspect_ratio as string)
+  ) {
+    delete b.aspect_ratio;
   }
 
   return b;

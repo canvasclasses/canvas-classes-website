@@ -16,6 +16,19 @@ const ASPECT_CLASS: Record<NonNullable<GalleryBlock['aspect_ratio']>, string> = 
   '21:9': 'aspect-[21/9]',
 };
 
+// Overall carousel size — mirrors ImageBlockRenderer's fullRowWidthClass so a
+// gallery scales exactly like a single image (centred when narrower than full).
+const WIDTH_CLASS: Record<NonNullable<GalleryBlock['width']>, string> = {
+  full:           'w-full',
+  five_sixth:     'w-5/6 mx-auto',
+  three_quarter:  'w-3/4 mx-auto',
+  two_third:      'w-2/3 mx-auto',
+  half:           'w-1/2 mx-auto',
+  two_fifth:      'w-2/5 mx-auto',
+  third:          'w-1/3 mx-auto',
+  quarter:        'w-1/4 mx-auto',
+};
+
 // Real photos vary wildly in shape. When the block doesn't pin an explicit
 // aspect_ratio, size the carousel to the CURRENT slide's own natural ratio
 // (clamped so a stray portrait/panorama can't turn the carousel into a
@@ -50,8 +63,10 @@ export default function GalleryBlockRenderer({ block }: { block: GalleryBlock })
     ? undefined
     : { aspectRatio: String(currentRatio ? Math.min(MAX_RATIO, Math.max(MIN_RATIO, currentRatio)) : FALLBACK_RATIO) };
 
+  const widthClass = WIDTH_CLASS[block.width ?? 'full'];
+
   return (
-    <figure className="my-5 w-full">
+    <figure className={`my-5 ${widthClass}`}>
       <div
         className={`relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black/20 transition-[aspect-ratio] duration-300 ${aspectClass}`}
         style={containerStyle}
