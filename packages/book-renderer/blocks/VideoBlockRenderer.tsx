@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Play, ChevronDown, ChevronUp } from 'lucide-react';
 import { VideoBlock } from '@canvas/data/types/books';
+import YouTubePlayer from './_YouTubePlayer';
 
 // YouTube requires the `origin` parameter in the embed URL to identify
 // the embedding site, and rejects the embed ("This content is blocked")
@@ -100,13 +101,13 @@ export default function VideoBlockRenderer({
             />
           )}
           {block.provider === 'youtube_nocookie' && (
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(block.src)}?rel=0&modestbranding=1&autoplay=1&enablejsapi=1&origin=${encodeURIComponent(embedOrigin)}`}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              referrerPolicy="strict-origin-when-cross-origin"
-              title={block.caption ?? 'Video explanation'}
+            // Distraction-free custom player: hides YouTube's chrome + end-screen
+            // grid and intercepts clicks so students can't slip out to youtube.com
+            // mid-study. See _YouTubePlayer.tsx for the postMessage-based control.
+            <YouTubePlayer
+              videoId={extractYouTubeId(block.src)}
+              title={block.caption}
+              origin={embedOrigin}
             />
           )}
         </div>
