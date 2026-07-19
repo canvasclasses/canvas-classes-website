@@ -1,0 +1,66 @@
+{
+  "_note": "Label Sprint round for stem \u2014 generated stem_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Cross-section of a dicot stem",
+  "caption": "Tap each label, then tap where it belongs on the stem cross-section.",
+  "hotspots": [
+    {
+      "id": "ffd858c2-5c19-4a77-931f-f88e99794d8a",
+      "x": 0.5,
+      "y": 0.11,
+      "label": "Epidermis",
+      "detail": "Single outer protective layer of the stem.",
+      "icon": "pin"
+    },
+    {
+      "id": "f327e317-02cc-4240-99e0-8112e9833662",
+      "x": 0.22,
+      "y": 0.2,
+      "label": "Cortex",
+      "detail": "Ground tissue zone between the epidermis and the ring of vascular bundles.",
+      "icon": "pin"
+    },
+    {
+      "id": "c2a224c7-6bd1-4fe6-8949-d0eb281961d9",
+      "x": 0.31,
+      "y": 0.285,
+      "label": "Endodermis",
+      "detail": "Innermost cortex layer, forming a starch sheath around the vascular bundles.",
+      "icon": "pin"
+    },
+    {
+      "id": "387a59ec-f465-4f89-8c37-b65d7034ad13",
+      "x": 0.66,
+      "y": 0.62,
+      "label": "Pericycle",
+      "detail": "Sclerenchymatous cap lying just outside each vascular bundle.",
+      "icon": "pin"
+    },
+    {
+      "id": "798939a1-0bca-4e0f-af78-b928a3e770af",
+      "x": 0.36,
+      "y": 0.3,
+      "label": "Phloem",
+      "detail": "Outer part of each vascular bundle; transports food.",
+      "icon": "pin"
+    },
+    {
+      "id": "86626780-6aa7-457f-9978-302fd919a537",
+      "x": 0.44,
+      "y": 0.36,
+      "label": "Xylem",
+      "detail": "Inner, triangular part of each vascular bundle; conducts water \u2014 endarch (facing inward) in stems.",
+      "icon": "pin"
+    },
+    {
+      "id": "1c6fd6cd-fb23-4679-9c74-c312ac817f5a",
+      "x": 0.5,
+      "y": 0.5,
+      "label": "Pith",
+      "detail": "Large central zone of parenchyma for storage.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "dicot stem cross-section illustration"
+}

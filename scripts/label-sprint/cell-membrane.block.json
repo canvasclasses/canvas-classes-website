@@ -1,0 +1,58 @@
+{
+  "_note": "Label Sprint round for cell-membrane \u2014 generated cell-membrane_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Cell membrane \u2014 fluid mosaic model",
+  "caption": "Tap each label, then tap where it belongs on the cell membrane.",
+  "hotspots": [
+    {
+      "id": "a14408c5-5e9b-44f5-aa9b-ba592ad1a4f4",
+      "x": 0.02,
+      "y": 0.4,
+      "label": "Phospholipid head",
+      "detail": "The hydrophilic (water-loving) part, facing outward on both surfaces.",
+      "icon": "pin"
+    },
+    {
+      "id": "997d9817-66ad-45b7-80a0-87174975dc78",
+      "x": 0.05,
+      "y": 0.48,
+      "label": "Phospholipid tail",
+      "detail": "The hydrophobic (water-fearing) fatty-acid tails, facing inward.",
+      "icon": "pin"
+    },
+    {
+      "id": "d81f0793-03ed-48ce-a683-5161f179cea8",
+      "x": 0.34,
+      "y": 0.42,
+      "label": "Integral (channel) protein",
+      "detail": "Spans the whole bilayer; forms a pore for ions/molecules to cross.",
+      "icon": "pin"
+    },
+    {
+      "id": "0586c100-f358-4f9e-a415-4581ab13fdfc",
+      "x": 0.62,
+      "y": 0.17,
+      "label": "Glycoprotein",
+      "detail": "A protein with a branched carbohydrate chain attached, used in cell recognition.",
+      "icon": "pin"
+    },
+    {
+      "id": "df1b313d-958a-4b61-b12a-16fc18354c42",
+      "x": 0.63,
+      "y": 0.68,
+      "label": "Peripheral protein",
+      "detail": "Attached loosely to one face of the membrane, not spanning it.",
+      "icon": "pin"
+    },
+    {
+      "id": "18d1e197-7eb5-4784-b430-d75d4f5ee4d9",
+      "x": 0.47,
+      "y": 0.47,
+      "label": "Cholesterol",
+      "detail": "Small molecules wedged between the fatty-acid tails; stabilise membrane fluidity.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "cell membrane cross-section in 3D, fluid mosaic model"
+}

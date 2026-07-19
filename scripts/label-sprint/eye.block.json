@@ -1,0 +1,90 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the human eye (horizontal section). Image: eye_illus.webp (keyed transparent + compressed from the founder's generated PNG, 1448x1086 landscape). To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, and add this block to the target biology page (Class 11 Neural Control and Coordination -- sense organs). Hotspots authored + browser-verified against the image on 2026-07-15 -- all 10 placements confirmed live, including the tightest cluster in the whole library (cornea/iris/pupil/lens/ciliary body, all in the front-of-eye region) with a 5-combo streak and no pill-overlap. COORDINATES CORRECTED 2026-07-15 (f): prepare_illustration.py was fixed to crop transparent canvas padding before resizing (was previously only resizing, leaving unused margin around the subject) -- this image was regenerated tighter, and every hotspot fraction below was recomputed via an exact affine transform (not re-eyeballed) from the old to the new crop box. Re-verified live in the browser after the fix.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The human eye, horizontal section",
+  "caption": "\ud83d\udcf8 Tap each dot to explore \u2014 or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "cornea",
+      "x": 0.1165,
+      "y": 0.2547,
+      "label": "Cornea",
+      "detail": "The transparent front layer that does most of the eye's light-focusing.",
+      "icon": "pin"
+    },
+    {
+      "id": "iris",
+      "x": 0.1496,
+      "y": 0.3556,
+      "label": "Iris",
+      "detail": "The coloured muscular ring that controls how much light enters by adjusting the pupil's size.",
+      "icon": "pin"
+    },
+    {
+      "id": "pupil",
+      "x": 0.1718,
+      "y": 0.4665,
+      "label": "Pupil",
+      "detail": "The opening in the centre of the iris through which light enters the eye.",
+      "icon": "pin"
+    },
+    {
+      "id": "lens",
+      "x": 0.2491,
+      "y": 0.3253,
+      "label": "Lens",
+      "detail": "A transparent biconvex structure that fine-tunes focusing, changing shape via the ciliary muscles (accommodation).",
+      "icon": "pin"
+    },
+    {
+      "id": "cil",
+      "x": 0.216,
+      "y": 0.1942,
+      "label": "Ciliary body",
+      "detail": "Holds the lens in place and contains the muscles that change the lens's shape for **accommodation**.",
+      "icon": "pin"
+    },
+    {
+      "id": "sclera",
+      "x": 0.4039,
+      "y": 0.0632,
+      "label": "Sclera",
+      "detail": "The tough white outer coat that gives the eyeball its shape and protects it.",
+      "icon": "pin"
+    },
+    {
+      "id": "chor",
+      "x": 0.4039,
+      "y": 0.9102,
+      "label": "Choroid",
+      "detail": "A pigmented, blood-vessel-rich layer between the sclera and retina that nourishes the eye and absorbs stray light.",
+      "icon": "pin"
+    },
+    {
+      "id": "retina",
+      "x": 0.4591,
+      "y": 0.3556,
+      "label": "Retina",
+      "detail": "The innermost light-sensitive layer containing rods and cones, where light is converted into nerve signals.",
+      "icon": "pin"
+    },
+    {
+      "id": "blind",
+      "x": 0.6802,
+      "y": 0.5068,
+      "label": "Blind spot",
+      "detail": "The point where the optic nerve exits the retina \u2014 has **no photoreceptors**, so it can't detect light.",
+      "icon": "pin"
+    },
+    {
+      "id": "nerve",
+      "x": 0.8792,
+      "y": 0.527,
+      "label": "Optic nerve",
+      "detail": "Carries visual signals from the retina to the brain.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational illustration of a horizontal section of the human eye, standard biology-textbook layout, semi-realistic painterly style. Show clearly separated: cornea, iris, pupil, lens, ciliary body, retina, optic nerve, sclera, choroid, and the blind spot (optic disc) where the nerve exits. Muted palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Landscape 4:3, high resolution."
+}

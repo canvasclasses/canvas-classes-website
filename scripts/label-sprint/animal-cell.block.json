@@ -1,0 +1,82 @@
+{
+  "_note": "Ready-to-insert interactive_image block for a generalized animal cell (Class 11 Cell: Unit of Life). Direct pairing with the plant-cell round already shipped. Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "A generalized animal cell, cutaway view",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "mem",
+      "x": 0.9,
+      "y": 0.48,
+      "label": "Cell membrane",
+      "detail": "The selectively permeable boundary enclosing the cell's contents.",
+      "icon": "pin"
+    },
+    {
+      "id": "nuc",
+      "x": 0.3,
+      "y": 0.16,
+      "label": "Nucleus",
+      "detail": "Contains the cell's DNA; controls all cellular activities.",
+      "icon": "pin"
+    },
+    {
+      "id": "nol",
+      "x": 0.44,
+      "y": 0.29,
+      "label": "Nucleolus",
+      "detail": "A dense region inside the nucleus where ribosomal RNA is made.",
+      "icon": "pin"
+    },
+    {
+      "id": "rer",
+      "x": 0.24,
+      "y": 0.48,
+      "label": "Endoplasmic reticulum",
+      "detail": "A network of membranes involved in protein and lipid synthesis and transport.",
+      "icon": "pin"
+    },
+    {
+      "id": "gol",
+      "x": 0.68,
+      "y": 0.58,
+      "label": "Golgi apparatus",
+      "detail": "Modifies, sorts, and packages proteins and lipids for delivery.",
+      "icon": "pin"
+    },
+    {
+      "id": "mit",
+      "x": 0.74,
+      "y": 0.16,
+      "label": "Mitochondrion",
+      "detail": "The **powerhouse of the cell** — generates ATP through cellular respiration.",
+      "icon": "pin"
+    },
+    {
+      "id": "cen",
+      "x": 0.37,
+      "y": 0.68,
+      "label": "Centrioles",
+      "detail": "Paired cylindrical structures that organise the spindle fibres during cell division.",
+      "icon": "pin"
+    },
+    {
+      "id": "lys",
+      "x": 0.24,
+      "y": 0.8,
+      "label": "Lysosome",
+      "detail": "Contains digestive enzymes that break down waste material and cell debris.",
+      "icon": "pin"
+    },
+    {
+      "id": "cyt",
+      "x": 0.85,
+      "y": 0.8,
+      "label": "Cytoplasm",
+      "detail": "The jelly-like fluid filling the cell, holding all the organelles in place.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational anatomy illustration of a generalized animal cell, shown as a cutaway cross-section revealing its internal organelles. Show these structures clearly separated and individually distinguishable: cell membrane, nucleus with nucleolus and chromatin, rough and smooth endoplasmic reticulum, Golgi apparatus, mitochondria, ribosomes, lysosomes, centrioles, and cytoplasm. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, a muted natural palette (soft blues, teals, warm pinks for organelles). Calm and flat: no glossy highlights, no neon, no glow, no 3D-render sheen. Composition: a single rounded animal cell, centered and filling the frame, generous even margins. Solid uniform deep-charcoal background, hex #121316, edge to edge. Absolutely no text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark -- the illustration only. Portrait 3:4, high resolution."
+}

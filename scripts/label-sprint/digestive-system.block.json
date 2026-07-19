@@ -1,0 +1,74 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the human digestive system. Image: digestive-system_illus.webp (keyed transparent + compressed from the founder's generated PNG, 1086x1448 portrait; the faint grey body silhouette was kept for context, only the true black background was keyed out). To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, and add this block to the target biology page (Class 11 Digestion and Absorption). Hotspots authored + browser-verified against the image on 2026-07-15; RE-VERIFIED and coordinates corrected 2026-07-15 (b) after founder feedback that the diagram rendered too small and the stomach pin sat at its edge rather than its visual centre -- see LABEL_SPRINT_WORKFLOW.md for the sizing-architecture fix that caused the undersize (Label Sprint's diagram now sizes via CSS max-height/object-fit like the production interactive_image renderer, not a fixed JS pixel box). All 8 placements re-confirmed live at the corrected coordinates, including the liver/gall-bladder/stomach/pancreas cluster with no pill-overlap. COORDINATES CORRECTED 2026-07-15 (f): prepare_illustration.py was fixed to crop transparent canvas padding before resizing (was previously only resizing, leaving unused margin around the subject) -- this image was regenerated tighter, and every hotspot fraction below was recomputed via an exact affine transform (not re-eyeballed) from the old to the new crop box. Re-verified live in the browser after the fix.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The human digestive system",
+  "caption": "\ud83d\udcf8 Tap each dot to explore \u2014 or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "mouth",
+      "x": 0.371,
+      "y": 0.07,
+      "label": "Mouth (buccal cavity)",
+      "detail": "Where digestion **begins** \u2014 teeth mechanically break down food and saliva starts digesting starch.",
+      "icon": "pin"
+    },
+    {
+      "id": "oeso",
+      "x": 0.4914,
+      "y": 0.2702,
+      "label": "Oesophagus",
+      "detail": "A muscular tube that carries swallowed food to the stomach via **peristalsis** (wave-like contractions).",
+      "icon": "pin"
+    },
+    {
+      "id": "liver",
+      "x": 0.3209,
+      "y": 0.4503,
+      "label": "Liver",
+      "detail": "The largest gland in the body; produces **bile**, which emulsifies fats for digestion.",
+      "icon": "pin"
+    },
+    {
+      "id": "gall",
+      "x": 0.371,
+      "y": 0.5604,
+      "label": "Gall bladder",
+      "detail": "A small sac that **stores and concentrates** bile from the liver, releasing it into the small intestine when needed.",
+      "icon": "pin"
+    },
+    {
+      "id": "stom",
+      "x": 0.6017,
+      "y": 0.4903,
+      "label": "Stomach",
+      "detail": "A J-shaped muscular sac that churns food and secretes **gastric juice** (HCl + pepsin) to digest proteins.",
+      "icon": "pin"
+    },
+    {
+      "id": "panc",
+      "x": 0.5616,
+      "y": 0.6004,
+      "label": "Pancreas",
+      "detail": "Secretes **pancreatic juice** (enzymes for proteins, fats, carbohydrates) into the small intestine; also makes insulin.",
+      "icon": "pin"
+    },
+    {
+      "id": "smint",
+      "x": 0.4613,
+      "y": 0.6805,
+      "label": "Small intestine",
+      "detail": "The main site of **digestion and absorption** of nutrients, lined with villi to maximise surface area.",
+      "icon": "pin"
+    },
+    {
+      "id": "lgint",
+      "x": 0.4914,
+      "y": 0.8806,
+      "label": "Large intestine",
+      "detail": "Absorbs **water and salts** from undigested food, forming and storing faecal matter before elimination.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational illustration of the human digestive system in the standard biology-textbook layout, semi-realistic painterly style, within a faint simple body-torso silhouette. Mouth/buccal cavity at top leading into oesophagus down the midline; J-shaped stomach in the upper abdomen; liver overlapping the upper abdomen with gall bladder tucked beneath; pancreas behind/below the stomach; small intestine as coils filling the centre; large intestine framing around the outside; rectum and anus at the bottom. Each organ clearly separated, muted anatomical palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Portrait 3:4, high resolution."
+}

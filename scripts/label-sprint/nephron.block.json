@@ -1,0 +1,19 @@
+{
+  "_note": "Ready-to-insert interactive_image block for a nephron (with blood supply). Image: nephron_illus.webp (keyed transparent + compressed from the founder's generated PNG, 880x880 square). Founder verified this diagram against standard references (canonical layout: single clean loop of Henle, straight collecting duct — the earlier 3D attempt was rejected as non-standard). To ship: upload the webp to R2 via the books asset-upload route, put the URL in `src`, add this block to the target biology page (Class 11 Excretory Products / kidney). Hotspots authored + browser-verified against the image on 2026-07-13.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Structure of a nephron with its blood supply",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    { "id": "glomerulus", "x": 0.23, "y": 0.16, "label": "Glomerulus",                 "detail": "A tuft of capillaries where blood is **filtered** under high pressure; sits inside Bowman's capsule.", "icon": "pin" },
+    { "id": "bowmans",    "x": 0.14, "y": 0.21, "label": "Bowman's capsule",           "detail": "The double-walled cup that surrounds the glomerulus and **collects the filtrate**. Together they form the **Malpighian/renal corpuscle**.", "icon": "pin" },
+    { "id": "afferent",   "x": 0.08, "y": 0.10, "label": "Afferent arteriole",         "detail": "Brings blood **into** the glomerulus. It is **wider** than the efferent arteriole, which keeps filtration pressure high.", "icon": "pin" },
+    { "id": "pct",        "x": 0.41, "y": 0.20, "label": "Proximal convoluted tubule", "detail": "The first coiled tubule after the capsule. **Most reabsorption** happens here (glucose, amino acids, most water and salts).", "icon": "pin" },
+    { "id": "dct",        "x": 0.70, "y": 0.19, "label": "Distal convoluted tubule",   "detail": "The coiled tubule before the collecting duct; fine-tunes **salt and water** balance (under ADH/aldosterone).", "icon": "pin" },
+    { "id": "loop",       "x": 0.52, "y": 0.89, "label": "Loop of Henle",              "detail": "The hairpin loop (descending + ascending limbs) that sets up the **concentration gradient** in the medulla to conserve water.", "icon": "pin" },
+    { "id": "collecting", "x": 0.89, "y": 0.50, "label": "Collecting duct",            "detail": "Carries urine from several nephrons toward the pelvis; **final water reabsorption** happens here under ADH.", "icon": "pin" },
+    { "id": "peritubular","x": 0.59, "y": 0.28, "label": "Peritubular capillaries",    "detail": "The capillary network wrapping the convoluted tubules that **reabsorbs** the useful substances back into the blood.", "icon": "pin" },
+    { "id": "vasarecta",  "x": 0.63, "y": 0.60, "label": "Vasa recta",                 "detail": "The straight capillaries running alongside the loop of Henle that **maintain** the medullary gradient.", "icon": "pin" }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational illustration of a single human nephron with its blood supply, in the standard biology-textbook schematic layout, semi-realistic painterly style. Bowman's capsule + glomerulus top-left; afferent (thicker) + efferent arterioles; proximal convoluted tubule coiling near top-left; a single narrow loop of Henle descending, hairpin U-turn, ascending; distal convoluted tubule top-right; one straight collecting duct down the right (not a branching tree); peritubular capillaries around the tubules and straight vasa recta beside the loop, red arterial / blue venous. Muted palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Portrait/square, high resolution."
+}

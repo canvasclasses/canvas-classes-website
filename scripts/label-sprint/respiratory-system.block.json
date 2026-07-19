@@ -1,0 +1,19 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the human respiratory system. Image: respiratory-system_illus.webp (keyed transparent + compressed from the founder's generated PNG, 1448x1086 portrait). Note: the body-silhouette pixels in this particular generation were darker/more uneven than the digestive-system image, so the keyed webp shows a faint, slightly textured grey silhouette when viewed on a white background -- but it blends in cleanly on the app's actual dark reading background (#121316), confirmed by browser screenshot. To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, and add this block to the target biology page (Class 11 Breathing and Exchange of Gases). Hotspots authored + browser-verified against the image on 2026-07-15 (all 9 placements confirmed live, including the trachea/bronchi/bronchioles cluster with no pill-overlap).",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The human respiratory system",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    { "id": "nasal",   "x": 0.35, "y": 0.08, "label": "Nasal cavity", "detail": "Warms, moistens, and filters incoming air; lined with mucus and fine hairs.", "icon": "pin" },
+    { "id": "pharynx", "x": 0.36, "y": 0.19, "label": "Pharynx",      "detail": "The shared passage for both air and food, connecting the nasal/oral cavities to the larynx.", "icon": "pin" },
+    { "id": "larynx",  "x": 0.45, "y": 0.30, "label": "Larynx",       "detail": "The **voice box** — contains the vocal cords and guards the entrance to the trachea.", "icon": "pin" },
+    { "id": "trach",   "x": 0.47, "y": 0.45, "label": "Trachea",      "detail": "The windpipe — a cartilage-ringed tube carrying air to the bronchi.", "icon": "pin" },
+    { "id": "bronchi", "x": 0.53, "y": 0.58, "label": "Bronchi",      "detail": "The two main branches of the trachea, one entering each lung.", "icon": "pin" },
+    { "id": "bronchio","x": 0.66, "y": 0.50, "label": "Bronchioles",  "detail": "The fine branching airways inside the lung that lead to the alveoli.", "icon": "pin" },
+    { "id": "lung",    "x": 0.28, "y": 0.55, "label": "Lungs",        "detail": "The paired organs of gas exchange, made of millions of alveoli.", "icon": "pin" },
+    { "id": "alveoli", "x": 0.68, "y": 0.76, "label": "Alveoli",      "detail": "Tiny grape-like air sacs, the actual site of **gas exchange** with the blood.", "icon": "pin" },
+    { "id": "diaph",   "x": 0.45, "y": 0.93, "label": "Diaphragm",    "detail": "The dome-shaped muscle below the lungs that drives breathing by contracting and relaxing.", "icon": "pin" }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational illustration of the human respiratory system from the nasal cavity to the lungs, standard biology-textbook layout within a faint body-torso silhouette, semi-realistic painterly style, with one lung cut open to show branching airways. Show clearly separated: nasal cavity, pharynx, larynx, trachea, bronchi, bronchioles, lungs, alveoli, diaphragm. Muted palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Portrait 3:4, high resolution."
+}

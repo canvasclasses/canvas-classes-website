@@ -1,0 +1,58 @@
+{
+  "_note": "Ready-to-insert interactive_image block for a chloroplast (Class 11 Cell: Unit of Life / pairs with Photosynthesis chapter). Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "A chloroplast, cutaway cross-section",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "out",
+      "x": 0.46,
+      "y": 0.13,
+      "label": "Outer membrane",
+      "detail": "The smooth outer boundary of the chloroplast's double-membrane envelope.",
+      "icon": "pin"
+    },
+    {
+      "id": "inn",
+      "x": 0.46,
+      "y": 0.19,
+      "label": "Inner membrane",
+      "detail": "The inner layer of the envelope, controlling what enters and leaves the chloroplast.",
+      "icon": "pin"
+    },
+    {
+      "id": "str",
+      "x": 0.5,
+      "y": 0.73,
+      "label": "Stroma",
+      "detail": "The fluid matrix surrounding the grana, where the dark reactions of photosynthesis occur.",
+      "icon": "pin"
+    },
+    {
+      "id": "gra",
+      "x": 0.35,
+      "y": 0.4,
+      "label": "Grana",
+      "detail": "Stacks of thylakoid discs where the light reactions of photosynthesis take place.",
+      "icon": "pin"
+    },
+    {
+      "id": "thy",
+      "x": 0.8,
+      "y": 0.52,
+      "label": "Thylakoid",
+      "detail": "A single flattened membrane sac within a granum; contains chlorophyll for light absorption.",
+      "icon": "pin"
+    },
+    {
+      "id": "lam",
+      "x": 0.5,
+      "y": 0.35,
+      "label": "Stroma lamellae",
+      "detail": "Membranous channels connecting neighbouring grana stacks.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational biology illustration of a chloroplast, shown as a cutaway cross-section revealing its internal structure. Show these structures clearly separated and individually distinguishable: outer membrane, inner membrane, stroma, grana (stacks of thylakoids), an individual thylakoid, and stroma lamellae connecting grana. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, a muted green palette. Calm and flat: no glossy highlights, no neon, no glow, no 3D-render sheen. Composition: a single oval chloroplast, centered and filling the frame, generous even margins. Solid uniform deep-charcoal background, hex #121316, edge to edge. Absolutely no text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark -- the illustration only. Landscape 4:3, high resolution."
+}

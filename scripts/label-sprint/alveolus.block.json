@@ -1,0 +1,58 @@
+{
+  "_note": "Ready-to-insert interactive_image block for an alveolus (Class 11 Breathing and Exchange of Gases -- pairs with the respiratory-system round already shipped). Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "A lung alveolus during gas exchange",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "sac",
+      "x": 0.2,
+      "y": 0.35,
+      "label": "Alveolar sac",
+      "detail": "A cluster of alveoli at the end of the smallest airways, greatly increasing surface area for gas exchange.",
+      "icon": "pin"
+    },
+    {
+      "id": "alv",
+      "x": 0.62,
+      "y": 0.45,
+      "label": "Alveolus wall",
+      "detail": "A single layer of thin epithelial cells that allows fast diffusion of gases.",
+      "icon": "pin"
+    },
+    {
+      "id": "cap",
+      "x": 0.42,
+      "y": 0.58,
+      "label": "Capillary network",
+      "detail": "A dense mesh of tiny blood vessels wrapping every alveolus, maximising gas exchange.",
+      "icon": "pin"
+    },
+    {
+      "id": "rbc",
+      "x": 0.8,
+      "y": 0.78,
+      "label": "Red blood cells",
+      "detail": "Carry oxygen picked up from the alveolus and release carbon dioxide into it.",
+      "icon": "pin"
+    },
+    {
+      "id": "art",
+      "x": 0.6,
+      "y": 0.04,
+      "label": "Pulmonary arteriole",
+      "detail": "Brings deoxygenated blood to the capillary bed around the alveolus.",
+      "icon": "pin"
+    },
+    {
+      "id": "ven",
+      "x": 0.66,
+      "y": 0.02,
+      "label": "Pulmonary venule",
+      "detail": "Carries newly oxygenated blood away from the alveolus toward the heart.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational anatomy illustration of a lung alveolus (air sac) during gas exchange, shown as a close-up cutaway cross-section. Show these structures clearly separated and individually distinguishable: the alveolar sac cluster, a single alveolus with its thin single-layer wall, the surrounding capillary network wrapped around it, and red blood cells inside the capillary. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, a muted anatomical palette (pink alveolar tissue, muted crimson and slate-blue for the capillary blood). Calm and flat: no glossy highlights, no neon, no glow, no 3D-render sheen. Composition: centered and filling the frame, generous even margins. Solid uniform deep-charcoal background, hex #121316, edge to edge. Absolutely no text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark -- the illustration only. Landscape 4:3, high resolution."
+}

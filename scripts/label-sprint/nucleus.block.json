@@ -1,0 +1,50 @@
+{
+  "_note": "Ready-to-insert interactive_image block for a cell nucleus (Class 11 Cell: Unit of Life -- completes the organelle cluster with plant/animal cell). Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "A cell nucleus, cutaway view",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "env",
+      "x": 0.2,
+      "y": 0.25,
+      "label": "Nuclear envelope",
+      "detail": "A double membrane enclosing the nucleus, separating it from the cytoplasm.",
+      "icon": "pin"
+    },
+    {
+      "id": "por",
+      "x": 0.15,
+      "y": 0.45,
+      "label": "Nuclear pore",
+      "detail": "An opening in the envelope that regulates movement of molecules in and out of the nucleus.",
+      "icon": "pin"
+    },
+    {
+      "id": "nol",
+      "x": 0.62,
+      "y": 0.42,
+      "label": "Nucleolus",
+      "detail": "A dense body inside the nucleus where ribosomal RNA is synthesised.",
+      "icon": "pin"
+    },
+    {
+      "id": "chr",
+      "x": 0.55,
+      "y": 0.68,
+      "label": "Chromatin",
+      "detail": "Thread-like DNA-protein complex that condenses into chromosomes during cell division.",
+      "icon": "pin"
+    },
+    {
+      "id": "pla",
+      "x": 0.68,
+      "y": 0.2,
+      "label": "Nucleoplasm",
+      "detail": "The fluid matrix filling the interior of the nucleus.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational biology illustration of a cell nucleus, shown as a cutaway cross-section revealing its internal structure. Show these structures clearly separated and individually distinguishable: nuclear envelope (double membrane), nuclear pores, nucleolus, chromatin strands, and nucleoplasm. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, a muted purple-blue palette. Calm and flat: no glossy highlights, no neon, no glow, no 3D-render sheen. Composition: a single rounded nucleus, centered and filling the frame, generous even margins. Solid uniform deep-charcoal background, hex #121316, edge to edge. Absolutely no text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark -- the illustration only. Portrait 3:4, high resolution."
+}

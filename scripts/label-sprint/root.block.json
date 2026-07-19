@@ -1,0 +1,58 @@
+{
+  "_note": "Label Sprint round for root \u2014 generated root_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Cross-section of a dicot root",
+  "caption": "Tap each label, then tap where it belongs on the root cross-section.",
+  "hotspots": [
+    {
+      "id": "c55474e2-31d6-4eaf-8613-4b8d4cc309f7",
+      "x": 0.5,
+      "y": 0.065,
+      "label": "Epiblema (piliferous layer)",
+      "detail": "Outermost layer of the root; bears root hairs that absorb water.",
+      "icon": "pin"
+    },
+    {
+      "id": "1b643038-99f3-4412-b528-999178f98042",
+      "x": 0.2,
+      "y": 0.2,
+      "label": "Cortex",
+      "detail": "Wide zone of parenchyma cells between the epiblema and endodermis.",
+      "icon": "pin"
+    },
+    {
+      "id": "8d1c0598-5388-4f43-99a2-2ff7fc3a7334",
+      "x": 0.34,
+      "y": 0.29,
+      "label": "Endodermis",
+      "detail": "Innermost cortex layer with the Casparian strip; controls water entry into the stele.",
+      "icon": "pin"
+    },
+    {
+      "id": "dbf7bffa-c24d-4cde-b0c6-2f6f3280f0af",
+      "x": 0.5,
+      "y": 0.555,
+      "label": "Pericycle",
+      "detail": "A layer just inside the endodermis; gives rise to lateral roots.",
+      "icon": "pin"
+    },
+    {
+      "id": "00694e4f-5636-43a6-9a4c-576093b458b9",
+      "x": 0.5,
+      "y": 0.33,
+      "label": "Xylem",
+      "detail": "Star-shaped conducting tissue at the centre that carries water upward \u2014 exarch (facing outward) in roots.",
+      "icon": "pin"
+    },
+    {
+      "id": "da8d3580-754a-4741-a2ed-bf13975e33b7",
+      "x": 0.61,
+      "y": 0.39,
+      "label": "Phloem",
+      "detail": "Patches lying between the arms of the xylem star; transport food.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "dicot root cross-section illustration"
+}

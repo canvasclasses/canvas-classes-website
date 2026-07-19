@@ -1,0 +1,42 @@
+{
+  "_note": "Label Sprint round for golgi \u2014 generated golgi_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Golgi apparatus with cisternae and vesicles",
+  "caption": "Tap each label, then tap where it belongs on the Golgi apparatus.",
+  "hotspots": [
+    {
+      "id": "1fb9b815-db8b-44bb-aa92-72f5ca246c0c",
+      "x": 0.5,
+      "y": 0.2,
+      "label": "Cis face",
+      "detail": "The forming face, nearest the endoplasmic reticulum; receives incoming vesicles.",
+      "icon": "pin"
+    },
+    {
+      "id": "8b3a0d7e-d265-4dd2-9b80-3f836207ccbc",
+      "x": 0.5,
+      "y": 0.45,
+      "label": "Cisterna",
+      "detail": "One of the stacked, flattened membranous sacs that make up the Golgi body.",
+      "icon": "pin"
+    },
+    {
+      "id": "859f762d-6fcd-4ac0-af0c-37a6efe2029f",
+      "x": 0.5,
+      "y": 0.74,
+      "label": "Trans face",
+      "detail": "The maturing face, facing the plasma membrane; ships out finished vesicles.",
+      "icon": "pin"
+    },
+    {
+      "id": "9a9ed406-a1fc-40ad-ba45-8ae7ccdeceb0",
+      "x": 0.15,
+      "y": 0.6,
+      "label": "Transport vesicle",
+      "detail": "A small membrane sac budding off to carry proteins to their destination.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "Golgi apparatus, 3D detail showing internal structure"
+}

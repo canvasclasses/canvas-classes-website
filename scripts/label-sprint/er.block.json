@@ -1,0 +1,42 @@
+{
+  "_note": "Label Sprint round for er \u2014 generated er_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Endoplasmic reticulum network",
+  "caption": "Tap each label, then tap where it belongs on the endoplasmic reticulum.",
+  "hotspots": [
+    {
+      "id": "a6a22da9-0c4b-4fc9-b226-2fff70965d07",
+      "x": 0.14,
+      "y": 0.14,
+      "label": "Nuclear envelope",
+      "detail": "The double membrane enclosing the nucleus, continuous with the ER.",
+      "icon": "pin"
+    },
+    {
+      "id": "2b092cc7-30a4-43e5-9df0-5d36ca7f348c",
+      "x": 0.35,
+      "y": 0.32,
+      "label": "Rough endoplasmic reticulum",
+      "detail": "A stack of flattened sacs studded with ribosomes; synthesises proteins.",
+      "icon": "pin"
+    },
+    {
+      "id": "05576698-29e5-4255-94ac-37f6904e11ba",
+      "x": 0.3,
+      "y": 0.48,
+      "label": "Ribosome",
+      "detail": "A small granule on the rough ER surface where proteins are assembled.",
+      "icon": "pin"
+    },
+    {
+      "id": "fd5ee07a-591a-40d1-afdf-0b0eefa8950f",
+      "x": 0.72,
+      "y": 0.55,
+      "label": "Smooth endoplasmic reticulum",
+      "detail": "A tubular network with no ribosomes; makes lipids and detoxifies.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "endoplasmic reticulum, 3D detail, rough and smooth regions"
+}

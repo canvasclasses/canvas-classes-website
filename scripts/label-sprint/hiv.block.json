@@ -1,0 +1,58 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the HIV retrovirus (Class 12 Human Health and Disease). Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The HIV retrovirus, cutaway cross-section",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "env",
+      "x": 0.15,
+      "y": 0.35,
+      "label": "Viral envelope",
+      "detail": "The outer lipid membrane, stolen from the host cell, that encloses the virus.",
+      "icon": "pin"
+    },
+    {
+      "id": "spk",
+      "x": 0.5,
+      "y": 0.06,
+      "label": "Glycoprotein spike",
+      "detail": "Studs the envelope and binds to receptors on host immune cells (CD4 T-cells) to begin infection.",
+      "icon": "pin"
+    },
+    {
+      "id": "mat",
+      "x": 0.18,
+      "y": 0.5,
+      "label": "Matrix protein",
+      "detail": "A protein layer just beneath the envelope that gives the virus its structural shape.",
+      "icon": "pin"
+    },
+    {
+      "id": "cap",
+      "x": 0.35,
+      "y": 0.25,
+      "label": "Capsid",
+      "detail": "The cone-shaped protein shell (core) that protects the viral RNA genome.",
+      "icon": "pin"
+    },
+    {
+      "id": "rna",
+      "x": 0.48,
+      "y": 0.35,
+      "label": "RNA genome",
+      "detail": "The virus's genetic material, carried as two single strands of RNA.",
+      "icon": "pin"
+    },
+    {
+      "id": "rte",
+      "x": 0.35,
+      "y": 0.62,
+      "label": "Reverse transcriptase",
+      "detail": "An enzyme that converts the viral RNA into DNA once inside a host cell.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational biology illustration of the HIV retrovirus, shown as a cutaway cross-section revealing its internal structure. Show these structures clearly separated and individually distinguishable: the outer viral envelope, glycoprotein spikes studding the envelope, the matrix protein layer beneath the envelope, the cone-shaped capsid (core), the RNA genome strands inside the capsid, and reverse transcriptase enzyme molecules. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, a muted palette. Calm and flat: no glossy highlights, no neon, no glow, no 3D-render sheen. Composition: a single round virus particle, centered and filling the frame, generous even margins. Solid uniform deep-charcoal background, hex #121316, edge to edge. Absolutely no text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark -- the illustration only. Portrait 3:4, high resolution."
+}

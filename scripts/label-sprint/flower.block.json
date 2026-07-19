@@ -1,0 +1,82 @@
+{
+  "_note": "Ready-to-insert interactive_image block for a flower (longitudinal section). Image: flower_illus.webp (keyed transparent + compressed from the founder's generated PNG, 1456x1090ish landscape). To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, and add this block to the target biology page (Class 11 Sexual Reproduction in Flowering Plants). Hotspots authored + browser-verified against the image on 2026-07-15 (all placements confirmed live, including the tight anther/filament/stigma cluster with no pill-overlap, 3-combo streak). COORDINATES CORRECTED 2026-07-15 (f): prepare_illustration.py was fixed to crop transparent canvas padding before resizing (was previously only resizing, leaving unused margin around the subject) -- this image was regenerated tighter, and every hotspot fraction below was recomputed via an exact affine transform (not re-eyeballed) from the old to the new crop box. Re-verified live in the browser after the fix.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "A flower in longitudinal section",
+  "caption": "\ud83d\udcf8 Tap each dot to explore \u2014 or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "petal",
+      "x": 0.7985,
+      "y": 0.195,
+      "label": "Petal",
+      "detail": "Often brightly coloured to **attract pollinators**; together the petals form the corolla.",
+      "icon": "pin"
+    },
+    {
+      "id": "sepal",
+      "x": 0.1513,
+      "y": 0.6786,
+      "label": "Sepal",
+      "detail": "The outermost, usually green, whorl that protects the flower bud before it opens.",
+      "icon": "pin"
+    },
+    {
+      "id": "anther",
+      "x": 0.6165,
+      "y": 0.2353,
+      "label": "Anther",
+      "detail": "The pollen-producing sac at the tip of the stamen.",
+      "icon": "pin"
+    },
+    {
+      "id": "fil",
+      "x": 0.5962,
+      "y": 0.3965,
+      "label": "Filament",
+      "detail": "The thin stalk that holds the anther up; together they form the **stamen**, the male part of the flower.",
+      "icon": "pin"
+    },
+    {
+      "id": "stigma",
+      "x": 0.5052,
+      "y": 0.1547,
+      "label": "Stigma",
+      "detail": "The sticky tip of the pistil that **receives pollen**.",
+      "icon": "pin"
+    },
+    {
+      "id": "style",
+      "x": 0.5052,
+      "y": 0.336,
+      "label": "Style",
+      "detail": "The tube connecting the stigma to the ovary, through which the pollen tube grows.",
+      "icon": "pin"
+    },
+    {
+      "id": "ovary",
+      "x": 0.4344,
+      "y": 0.5174,
+      "label": "Ovary",
+      "detail": "The swollen base of the pistil containing the ovules; develops into the **fruit** after fertilisation.",
+      "icon": "pin"
+    },
+    {
+      "id": "ovule",
+      "x": 0.5356,
+      "y": 0.6181,
+      "label": "Ovule",
+      "detail": "Contains the egg cell; develops into a **seed** after fertilisation.",
+      "icon": "pin"
+    },
+    {
+      "id": "thal2",
+      "x": 0.4951,
+      "y": 0.8498,
+      "label": "Thalamus (receptacle)",
+      "detail": "The swollen tip of the flower stalk where all the floral whorls (sepals, petals, stamens, pistil) attach.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational botanical illustration of a typical flower cut in longitudinal section, standard biology-textbook layout, semi-realistic painterly style. Show clearly separated: sepal, petal, anther, filament, stigma, style, ovary, ovule, thalamus (receptacle). Muted palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Landscape 4:3, high resolution."
+}

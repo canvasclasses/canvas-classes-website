@@ -1,0 +1,50 @@
+{
+  "_note": "Label Sprint round for ovule \u2014 generated ovule_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Ovule cross-section (megasporangium)",
+  "caption": "Tap each label, then tap where it belongs on the ovule.",
+  "hotspots": [
+    {
+      "id": "9a8b981d-d6d5-4607-b493-080aecb24247",
+      "x": 0.2,
+      "y": 0.8,
+      "label": "Funiculus",
+      "detail": "The stalk that attaches the ovule to the placenta.",
+      "icon": "pin"
+    },
+    {
+      "id": "b2e4a612-edec-4c4b-9d91-6e0f432e8db3",
+      "x": 0.24,
+      "y": 0.35,
+      "label": "Integument",
+      "detail": "The protective outer layer(s) that will develop into the seed coat.",
+      "icon": "pin"
+    },
+    {
+      "id": "1145e94e-024f-443c-8796-88b2fb9c3734",
+      "x": 0.62,
+      "y": 0.1,
+      "label": "Micropyle",
+      "detail": "A small opening at the tip, formed by the integuments, through which the pollen tube enters.",
+      "icon": "pin"
+    },
+    {
+      "id": "0dcebf91-1297-4fcd-a16d-1219f7e35293",
+      "x": 0.55,
+      "y": 0.25,
+      "label": "Nucellus",
+      "detail": "The tissue mass enclosed by the integuments, surrounding the embryo sac.",
+      "icon": "pin"
+    },
+    {
+      "id": "f60eacc3-fcbd-4e2b-95dd-2d910f3654ea",
+      "x": 0.53,
+      "y": 0.62,
+      "label": "Embryo sac",
+      "detail": "The megagametophyte containing the egg cell, where fertilisation occurs.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "ovule cross-section illustration, megasporangium"
+}

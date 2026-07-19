@@ -1,0 +1,50 @@
+{
+  "_note": "Label Sprint round for excretory \u2014 generated excretory_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Human excretory system \u2014 kidneys, ureters, and bladder",
+  "caption": "Tap each label, then tap where it belongs on the excretory system.",
+  "hotspots": [
+    {
+      "id": "8d0229b4-2955-4811-9ab7-4668660781b0",
+      "x": 0.62,
+      "y": 0.31,
+      "label": "Kidney",
+      "detail": "Filters blood to form urine; bean-shaped, one on each side of the spine.",
+      "icon": "pin"
+    },
+    {
+      "id": "e5d2272e-bb6c-452e-9dee-1799d7a7e31c",
+      "x": 0.5,
+      "y": 0.26,
+      "label": "Renal artery and vein",
+      "detail": "Carry blood to and from each kidney.",
+      "icon": "pin"
+    },
+    {
+      "id": "76f255e1-b2f7-4886-99c6-5357f441e8ac",
+      "x": 0.6,
+      "y": 0.42,
+      "label": "Ureter",
+      "detail": "The tube that carries urine from each kidney down to the bladder.",
+      "icon": "pin"
+    },
+    {
+      "id": "93d44f82-f8fa-4821-9bf5-2fd8abcf8389",
+      "x": 0.5,
+      "y": 0.51,
+      "label": "Urinary bladder",
+      "detail": "A muscular sac that stores urine until it is released.",
+      "icon": "pin"
+    },
+    {
+      "id": "e6e454a6-02cf-424a-8af3-725bb6817392",
+      "x": 0.5,
+      "y": 0.6,
+      "label": "Urethra",
+      "detail": "The tube that carries urine out of the bladder to outside the body.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "human excretory system, kidneys ureters bladder, body silhouette"
+}

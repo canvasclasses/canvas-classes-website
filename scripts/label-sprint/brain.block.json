@@ -1,0 +1,82 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the human brain (mid-sagittal section). Image: brain_illus.webp (keyed transparent + compressed from the founder's generated PNG, 1448x1086 landscape). To ship: upload the webp to R2 via the books asset-upload route, put the returned URL in `src`, and add this block to the target biology page (Class 11 Neural Control and Coordination). Hotspots authored + browser-verified against the image on 2026-07-15 (all 9 placements confirmed live, including the tight thalamus/hypothalamus/midbrain/pons cluster with no pill-overlap -- a 4-combo streak was hit placing all four back to back). COORDINATES CORRECTED 2026-07-15 (f): prepare_illustration.py was fixed to crop transparent canvas padding before resizing (was previously only resizing, leaving unused margin around the subject) -- this image was regenerated tighter, and every hotspot fraction below was recomputed via an exact affine transform (not re-eyeballed) from the old to the new crop box. Re-verified live in the browser after the fix.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The human brain, mid-sagittal section",
+  "caption": "\ud83d\udcf8 Tap each dot to explore \u2014 or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "cereb",
+      "x": 0.19,
+      "y": 0.1202,
+      "label": "Cerebrum",
+      "detail": "The largest part of the brain, responsible for voluntary actions, thought, memory, and interpreting sensory input.",
+      "icon": "pin"
+    },
+    {
+      "id": "cc",
+      "x": 0.4011,
+      "y": 0.2805,
+      "label": "Corpus callosum",
+      "detail": "A thick band of nerve fibres connecting the left and right cerebral hemispheres, allowing them to communicate.",
+      "icon": "pin"
+    },
+    {
+      "id": "thal",
+      "x": 0.4678,
+      "y": 0.3807,
+      "label": "Thalamus",
+      "detail": "The brain's **relay station** \u2014 routes almost all sensory information to the cerebral cortex.",
+      "icon": "pin"
+    },
+    {
+      "id": "hypo",
+      "x": 0.39,
+      "y": 0.4709,
+      "label": "Hypothalamus",
+      "detail": "Regulates body temperature, hunger, thirst, and controls the pituitary gland via hormones.",
+      "icon": "pin"
+    },
+    {
+      "id": "pit",
+      "x": 0.3345,
+      "y": 0.6211,
+      "label": "Pituitary gland",
+      "detail": "The **master gland** \u2014 hangs from the hypothalamus on a stalk and controls most other endocrine glands.",
+      "icon": "pin"
+    },
+    {
+      "id": "mid",
+      "x": 0.49,
+      "y": 0.4809,
+      "label": "Midbrain",
+      "detail": "Connects the forebrain to the hindbrain; involved in visual and auditory reflexes.",
+      "icon": "pin"
+    },
+    {
+      "id": "pons",
+      "x": 0.5123,
+      "y": 0.5811,
+      "label": "Pons",
+      "detail": "Relays signals between the cerebrum and cerebellum and helps regulate breathing.",
+      "icon": "pin"
+    },
+    {
+      "id": "med",
+      "x": 0.5901,
+      "y": 0.8015,
+      "label": "Medulla oblongata",
+      "detail": "Controls **involuntary** vital functions \u2014 heartbeat, breathing, blood pressure. Continuous with the spinal cord.",
+      "icon": "pin"
+    },
+    {
+      "id": "cbl",
+      "x": 0.7456,
+      "y": 0.6011,
+      "label": "Cerebellum",
+      "detail": "Coordinates balance, posture, and fine voluntary muscle movement. Its branching internal pattern is called the **arbor vitae**.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean anatomically accurate educational illustration of the human brain in mid-sagittal (longitudinal) section, side profile, standard biology-textbook layout, semi-realistic painterly style. Show clearly separated: cerebrum (folded outer surface), corpus callosum, thalamus, hypothalamus, pituitary gland (on its stalk), midbrain, pons, medulla oblongata, and the cerebellum with its characteristic branching arbor vitae pattern. Muted palette, flat, solid deep-charcoal background #121316, no text/labels/numbers/leader lines. Landscape 4:3, high resolution."
+}

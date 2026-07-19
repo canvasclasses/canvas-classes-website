@@ -1,0 +1,66 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the male reproductive system (Class 12 Human Reproduction). Generated via a rephrased clinical-textbook prompt after the original explicit-anatomy-worded prompt was silently blocked by ChatGPT's image content policy twice in a row (see LABEL_SPRINT_ORGAN_LIST.md progress notes, 2026-07-15). Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The human male reproductive system, mid-sagittal cross-section",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "tes",
+      "x": 0.3,
+      "y": 0.78,
+      "label": "Testis",
+      "detail": "Produces sperm and testosterone.",
+      "icon": "pin"
+    },
+    {
+      "id": "epi",
+      "x": 0.38,
+      "y": 0.78,
+      "label": "Epididymis",
+      "detail": "A coiled tube where sperm mature and are stored.",
+      "icon": "pin"
+    },
+    {
+      "id": "vas",
+      "x": 0.42,
+      "y": 0.55,
+      "label": "Vas deferens",
+      "detail": "A muscular duct that carries mature sperm from the epididymis toward the urethra.",
+      "icon": "pin"
+    },
+    {
+      "id": "sem",
+      "x": 0.62,
+      "y": 0.48,
+      "label": "Seminal vesicle",
+      "detail": "Secretes a fructose-rich fluid that nourishes sperm and forms part of semen.",
+      "icon": "pin"
+    },
+    {
+      "id": "pro",
+      "x": 0.53,
+      "y": 0.42,
+      "label": "Prostate gland",
+      "detail": "Secretes a milky fluid that activates sperm and adds to semen volume.",
+      "icon": "pin"
+    },
+    {
+      "id": "ure",
+      "x": 0.2,
+      "y": 0.65,
+      "label": "Urethra",
+      "detail": "A shared duct carrying both urine and semen out through the penis.",
+      "icon": "pin"
+    },
+    {
+      "id": "pen",
+      "x": 0.15,
+      "y": 0.78,
+      "label": "Penis",
+      "detail": "The external organ through which semen (and urine) is expelled.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational textbook illustration of the human male urogenital anatomy in mid-sagittal cross-section, in the style of an NCERT biology diagram. Show clearly separated: testis, epididymis, vas deferens, seminal vesicle, prostate gland, urethra, and the external organ, drawn in a clinical, non-explicit, schematic textbook style. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, muted anatomical palette, flat, no glossy highlights, no neon, no glow. Solid uniform deep-charcoal background, hex #121316, edge to edge. No text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark. Portrait 3:4, high resolution."
+}

@@ -1,0 +1,58 @@
+{
+  "_note": "Label Sprint round for bacteriophage \u2014 generated bacteriophage_illus.webp, cropped/keyed dark mode.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "Bacteriophage (T-phage) structure",
+  "caption": "Tap each label, then tap where it belongs on the bacteriophage.",
+  "hotspots": [
+    {
+      "id": "190bde2d-4f9b-4085-b1ac-ebb979fa15fe",
+      "x": 0.3,
+      "y": 0.1,
+      "label": "Head (capsid)",
+      "detail": "The polyhedral protein coat enclosing the viral genetic material.",
+      "icon": "pin"
+    },
+    {
+      "id": "ea2aea37-4bc9-4e41-ba35-a190d08d25d0",
+      "x": 0.5,
+      "y": 0.18,
+      "label": "DNA (genetic material)",
+      "detail": "The tightly coiled viral genome packed inside the head.",
+      "icon": "pin"
+    },
+    {
+      "id": "725a2e72-ef12-4dfe-a87d-e50c0b5a8cce",
+      "x": 0.5,
+      "y": 0.38,
+      "label": "Collar",
+      "detail": "A narrow neck connecting the head to the tail.",
+      "icon": "pin"
+    },
+    {
+      "id": "40e1bbf1-2e4e-4c9b-8384-72ebceb8dd25",
+      "x": 0.5,
+      "y": 0.55,
+      "label": "Sheath",
+      "detail": "The contractile protein tube of the tail; contracts to inject DNA.",
+      "icon": "pin"
+    },
+    {
+      "id": "eabf559f-6b38-4507-b06e-abbde72c7417",
+      "x": 0.5,
+      "y": 0.72,
+      "label": "Base plate",
+      "detail": "The hexagonal plate at the base of the tail, anchoring the tail fibres.",
+      "icon": "pin"
+    },
+    {
+      "id": "54d7e3dd-9f02-441f-8c91-50d1e4100e86",
+      "x": 0.15,
+      "y": 0.85,
+      "label": "Tail fibres",
+      "detail": "Thin projections that attach the phage to a bacterial cell surface.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "bacteriophage cross-section illustration"
+}

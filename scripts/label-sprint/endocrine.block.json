@@ -1,0 +1,82 @@
+{
+  "_note": "Ready-to-insert interactive_image block for the endocrine glands whole-body map (Class 11 Chemical Coordination and Integration). Image keyed via prepare_illustration.py's new 'white' background mode (added 2026-07-15) -- the source PNG had an opaque white background despite the prompt asking for solid deep-charcoal #121316 (visible live in ChatGPT's UI as dark, but the downloaded raster was flattened onto white). Hotspots authored by visual inspection of the cropped/keyed webp, NOT yet browser-verified live -- recommend a quick pass in the prototype to confirm tap-target placement before shipping, especially any nested/adjacent structures.",
+  "type": "interactive_image",
+  "src": "",
+  "alt": "The human endocrine system, whole-body location map",
+  "caption": "📸 Tap each dot to explore — or hit 'Test yourself' to play Label Sprint",
+  "hotspots": [
+    {
+      "id": "hyp",
+      "x": 0.46,
+      "y": 0.1,
+      "label": "Hypothalamus",
+      "detail": "Links the nervous and endocrine systems; controls the pituitary gland via hormones.",
+      "icon": "pin"
+    },
+    {
+      "id": "pit",
+      "x": 0.47,
+      "y": 0.13,
+      "label": "Pituitary gland",
+      "detail": "The **master gland** — hangs from the hypothalamus and controls most other endocrine glands.",
+      "icon": "pin"
+    },
+    {
+      "id": "pin",
+      "x": 0.52,
+      "y": 0.1,
+      "label": "Pineal gland",
+      "detail": "Secretes melatonin, regulating sleep-wake cycles.",
+      "icon": "pin"
+    },
+    {
+      "id": "thy",
+      "x": 0.48,
+      "y": 0.28,
+      "label": "Thyroid gland",
+      "detail": "Butterfly-shaped gland in the neck; secretes thyroxine, regulating metabolic rate.",
+      "icon": "pin"
+    },
+    {
+      "id": "par",
+      "x": 0.51,
+      "y": 0.25,
+      "label": "Parathyroid glands",
+      "detail": "Small glands embedded in the thyroid; regulate blood calcium levels.",
+      "icon": "pin"
+    },
+    {
+      "id": "thm",
+      "x": 0.5,
+      "y": 0.38,
+      "label": "Thymus",
+      "detail": "Produces hormones important for the development of the immune system, especially in childhood.",
+      "icon": "pin"
+    },
+    {
+      "id": "adr",
+      "x": 0.38,
+      "y": 0.55,
+      "label": "Adrenal gland",
+      "detail": "Sits atop each kidney; secretes adrenaline and cortisol for stress response.",
+      "icon": "pin"
+    },
+    {
+      "id": "pan",
+      "x": 0.5,
+      "y": 0.6,
+      "label": "Pancreas",
+      "detail": "Secretes insulin and glucagon, regulating blood glucose levels.",
+      "icon": "pin"
+    },
+    {
+      "id": "gon",
+      "x": 0.5,
+      "y": 0.87,
+      "label": "Gonads",
+      "detail": "Testes or ovaries; secrete sex hormones controlling reproductive development.",
+      "icon": "pin"
+    }
+  ],
+  "generation_prompt": "A clean modern educational anatomy illustration of the human body's endocrine system, shown as a front-facing outline of a human figure with internal glands visible through a subtle transparent silhouette. Show these structures clearly separated and individually distinguishable: hypothalamus, pituitary gland, pineal gland, thyroid gland, parathyroid glands, thymus, adrenal glands (one above each kidney), pancreas, and the gonads. Style: semi-realistic medical-textbook illustration, soft even studio lighting, smooth clean surfaces, a muted anatomical palette, faint pale outline for the body silhouette. Calm and flat: no glossy highlights, no neon, no glow, no 3D-render sheen. Composition: a single centered upright human figure, front view, generous even margins. Solid uniform deep-charcoal background, hex #121316, edge to edge. Absolutely no text, no labels, no numbers, no letters, no leader lines, no arrows, no legend, no watermark -- the illustration only. Portrait 3:4, high resolution."
+}
