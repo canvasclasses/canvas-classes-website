@@ -1,0 +1,1998 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 10: भारति, जय, विजयकरे!
+book=class9-hindi-ganga chapter=10 pages=7
+
+
+================================================================================
+## PAGE 1 — "परिचय — कवि से मिलिए"  (slug: ch10-parichay)
+published=false blocks=7 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=33e6489b-2a10-4443-8a43-0e9992a4a446 ---
+{
+ "src": "",
+ "alt": "सूर्यकांत त्रिपाठी निराला",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour bust-portrait of poet Suryakant Tripathi Nirala, a strong bearded face with intense eyes, warm lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=2c69db27-eefc-47ef-81d8-36d11133ca15 ---
+{
+ "prompt": "अगर आपको अपने देश \"भारत\" को एक जीवित व्यक्ति — एक देवी या देवता — के रूप में कल्पना करनी हो, तो आप उसका मुकुट किसे बनाएँगे, हार किसे, और वस्त्र किसे? सोचिए — भारत की कौन-सी प्राकृतिक चीज़ें उसका \"गहना\" बन सकती हैं?",
+ "hint": "भारत के पहाड़, नदियाँ, जंगल, फूल — इन्हें \"आभूषण\" की तरह सोचिए।"
+}
+
+--- block #2 [meet_a_scientist] id=60aaaf25-41ca-4bb4-a0ce-e7f82cc561df ---
+{
+ "name": "सूर्यकांत त्रिपाठी 'निराला'",
+ "years": "1899–1961",
+ "nationality": "भारतीय — गढ़ाकोला (उन्नाव), उत्तर प्रदेश",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of poet Nirala, bearded, intense, dark ground.",
+ "contribution": "**छायावाद** के प्रमुख कवि — जिन्होंने हिंदी में सबसे पहले **मुक्त छंद (free verse)** का प्रयोग किया। प्रमुख काव्य — **अनामिका**, परिमल, गीतिका, कुकुरमुत्ता, नए पत्ते। उनकी रचनाओं में दार्शनिकता, विद्रोह, क्रांति, प्रेम और प्रकृति का विराट चित्र है।",
+ "connection": "\"भारति, जय, विजयकरे!\" में निराला भारत को एक देवी (भारतमाता/सरस्वती) के रूप में देखते हैं, जिसके आभूषण उसकी अपनी प्रकृति है — हिमालय मुकुट, गंगा हार, वन-लता वस्त्र।",
+ "fun_detail": "उन्होंने औपचारिक शिक्षा केवल नौवीं तक पाई, पर स्वाध्याय (self-study) से संस्कृत, बांग्ला और अंग्रेज़ी का गहरा ज्ञान अर्जित किया। उपेक्षितों के प्रति उनकी गहरी सहानुभूति थी।",
+ "learn_more": "काव्य-संग्रह \"अनामिका\" और कविता \"वर दे, वीणावादिनि वर दे!\"।"
+}
+
+--- block #3 [callout] id=01d6bf54-075c-4aed-8ca1-2cd572fd842a ---
+{
+ "variant": "india_voice",
+ "title": "छायावाद और मुक्त छंद",
+ "markdown": "**छायावाद** हिंदी कविता का वह युग है जिसमें कल्पना, प्रकृति-सौंदर्य, सूक्ष्म भाव और रहस्य की प्रधानता रही। निराला ने **मुक्त छंद** चलाया — यानी ऐसी कविता जो तुक और मात्रा के कठोर बंधन से मुक्त हो। यह कविता **संस्कृतनिष्ठ और समासयुक्त** (compound-rich) भाषा में है — इसलिए शब्द गहरे और भव्य लगते हैं।"
+}
+
+--- block #4 [text] id=0a93de6f-0437-4875-b1dd-9492191b3edc ---
+{
+ "markdown": "इस कविता में भारत एक **चेतन सत्ता (देवी)** है। पढ़ने से पहले इसके संस्कृतनिष्ठ शब्द जान लें — फिर हर पंक्ति का भव्य चित्र आँखों के सामने खुल जाएगा।"
+}
+
+--- block #5 [vocabulary_lab] id=a278a7e6-56cc-440c-8454-9136f21696c3 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "कविता के शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "e96a57b3-804b-4c4a-9c64-6311c612a3f8",
+   "word": "भारति",
+   "pronunciation": "bhaa-ra-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सरस्वती/भारतमाता",
+   "english": "Goddess Bharati",
+   "example": "भारति की जय हो!",
+   "memory_hook": "सरस्वती/भारतमाता।"
+  },
+  {
+   "id": "fad7d11d-b96b-497b-a21f-454c47e9a85b",
+   "word": "कनक",
+   "pronunciation": "ka-nak",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सोना",
+   "english": "gold",
+   "example": "कनक जैसी फसलें।",
+   "memory_hook": "gold।"
+  },
+  {
+   "id": "209471a4-eec7-435b-930a-f0677bd47d01",
+   "word": "शस्य",
+   "pronunciation": "shas-ya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "फसल, अन्न",
+   "english": "crops; grain",
+   "example": "कनक-शस्य = सोने जैसी फसलें।",
+   "memory_hook": "crops।"
+  },
+  {
+   "id": "630b1637-546d-4d2f-ba7b-76e0c1408bfe",
+   "word": "शतदल",
+   "pronunciation": "shat-dal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कमल",
+   "english": "the lotus",
+   "example": "चरणों का शतदल (कमल)।",
+   "memory_hook": "सौ दल = कमल।"
+  },
+  {
+   "id": "1a980936-e917-455b-83c5-02fb5a1c8783",
+   "word": "धवल",
+   "pronunciation": "dha-val",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "श्वेत, उजला",
+   "english": "white; bright",
+   "example": "गंगा की धवल धारा।",
+   "memory_hook": "white।"
+  },
+  {
+   "id": "5e95d32d-a7b0-4eac-9cd2-d5c5f8ecd965",
+   "word": "शुभ्र",
+   "pronunciation": "shubhr",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "उज्ज्वल, श्वेत",
+   "english": "bright-white",
+   "example": "मुकुट शुभ्र हिम।",
+   "memory_hook": "bright।"
+  },
+  {
+   "id": "edd30e28-e4fa-42dc-9a7f-deff530e81e5",
+   "word": "प्रणव",
+   "pronunciation": "pra-nav",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ओम्, ओंकार",
+   "english": "the sacred Om",
+   "example": "प्राण प्रणव ओंकार।",
+   "memory_hook": "the Om।"
+  },
+  {
+   "id": "4c719847-d6af-4ce3-bc14-6548df1296a0",
+   "word": "शतमुख",
+   "pronunciation": "shat-mukh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सौ मुख",
+   "english": "a hundred mouths",
+   "example": "शतमुख-शतरव।",
+   "memory_hook": "शत+मुख।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=af5e5f62-4065-4658-8a42-faa90dfe12e2 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "fcbfd3f8-69a7-4f19-8a61-e609bd53394d",
+   "question": "निराला हिंदी कविता के किस युग के प्रमुख कवि हैं?",
+   "options": [
+    "भक्तिकाल",
+    "छायावाद",
+    "रीतिकाल",
+    "वीरगाथा काल"
+   ],
+   "correct_index": 1,
+   "explanation": "निराला छायावाद के प्रमुख कवि हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "f12e7d07-e818-4bdc-b6da-abb9b172bb5e",
+   "question": "निराला ने हिंदी में सबसे पहले किसका प्रयोग किया?",
+   "options": [
+    "दोहा",
+    "चौपाई",
+    "अंग्रेज़ी काव्य का सॉनेट छंद",
+    "मुक्त छंद (free verse)"
+   ],
+   "correct_index": 3,
+   "explanation": "छायावादी कवियों में निराला ने सबसे पहले मुक्त छंद का प्रयोग किया।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "0999dfa5-d1a1-4ecb-8360-1ee45c87643c",
+   "question": "इस कविता में भारत को किस रूप में प्रस्तुत किया गया है?",
+   "options": [
+    "एक चेतन सत्ता (देवी) के रूप में",
+    "एक भौगोलिक मानचित्र के रूप में",
+    "एक कारख़ाने के रूप में",
+    "एक बाज़ार के रूप में"
+   ],
+   "correct_index": 0,
+   "explanation": "भारत को एक देवी (भारतमाता/भारति) के रूप में देखा गया है, जिसके आभूषण उसकी प्रकृति है।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "कविता — भारति, जय, विजयकरे!"  (slug: ch10-kavita)
+published=false blocks=7 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=c2437a17-9aa5-4085-9c48-cc7a094e9d72 ---
+{
+ "src": "",
+ "alt": "प्रकृति की देवी भारत",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — India personified as a serene goddess whose crown is the snowy Himalayas, necklace the white Ganga, robe the forests, while the sea washes her feet, golden crop-fields and lotuses around. Dark warm luminous ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=05a60ae4-7cea-44c1-b8bd-1e4ed68fbee0 ---
+{
+ "markdown": "इस छोटी पर भव्य कविता में निराला भारत को देवी रूप में सजाते हैं — हर पंक्ति में एक प्राकृतिक आभूषण। हर पंक्ति पर टैप कर अर्थ खोलिए।"
+}
+
+--- block #2 [narrated_passage] id=517c58b9-6f21-4cfe-8e99-d088f0679921 ---
+{
+ "source_label": "भारति, जय, विजयकरे! · निराला",
+ "paragraphs": [
+  {
+   "id": "07d4cdcc-bae7-4d97-9e17-360f1344fa21",
+   "sentences": [
+    {
+     "id": "fe3da2d6-54d3-419a-b6fc-f56760fe4daf",
+     "text": "भारति, जय, विजयकरे!",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "विजयकरे",
+       "meaning": "विजय देने वाली — bestower of victory",
+       "pos": "विशेषण",
+       "example": "हे विजय देने वाली भारति, तुम्हारी जय हो!"
+      }
+     ]
+    },
+    {
+     "id": "472e6104-8f76-4be1-bdb7-814881bc30b4",
+     "text": "कनक-शस्य-कमलधरे!",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "कनक-शस्य-कमलधरे",
+       "meaning": "सोने जैसी फसलें और कमल धारण करने वाली — bearer of golden crops and lotus",
+       "pos": "समस्त पद",
+       "example": "भारत की कृषि-संपन्नता और सौंदर्य का प्रतीक।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "आरंभ में ही कवि \"भारति, जय, विजयकरे!\" कहकर भारत की विजय की कामना करते हैं और उसे \"कनक-शस्य-कमलधरे\" — सोने जैसी फसलें और कमल धारण करने वाली — कहकर उसकी कृषि-संपन्नता और सौंदर्य की प्रशंसा करते हैं।"
+  },
+  {
+   "id": "ff6b75b9-9b88-4e50-9188-d5036aab84b6",
+   "sentences": [
+    {
+     "id": "fc70799a-67f6-43c8-9de9-1ec5225f9b52",
+     "text": "लंका पदतल शतदल,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "लंका पदतल शतदल",
+       "meaning": "लंका जिसके चरण-कमल (पदतल) के नीचे है — Lanka beneath her lotus-feet",
+       "pos": "पद",
+       "example": "दक्षिण में लंका तक उसका विस्तार।"
+      }
+     ]
+    },
+    {
+     "id": "cbd605ca-7620-42b4-a182-6345dbd067ae",
+     "text": "गर्जितोर्मि सागर-जल",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "गर्जितोर्मि",
+       "meaning": "गरजती लहरें — roaring waves",
+       "pos": "समस्त पद",
+       "example": "गरजती लहरों वाला सागर-जल।"
+      }
+     ]
+    },
+    {
+     "id": "9c470643-7af3-4d0c-8fca-775ab4aec387",
+     "text": "धोता शुचि चरण युगल",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "धोता शुचि चरण युगल",
+       "meaning": "सागर उसके पवित्र दोनों चरण धोता है — the sea washes her two sacred feet",
+       "pos": "पद",
+       "example": "समुद्र चरण धोता है — मानवीकरण।"
+      }
+     ]
+    },
+    {
+     "id": "ee41f1ca-9e87-462f-8376-d66af34862ab",
+     "text": "तरु-तृण-वन-लता वसन,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "तरु-तृण-वन-लता वसन",
+       "meaning": "पेड़-घास-वन-लता ही उसके वस्त्र — trees, grass, forests are her garments",
+       "pos": "समस्त पद",
+       "example": "प्रकृति ही भारत के वस्त्र।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "देखो — दक्षिण में लंका तक भारत का विस्तार है, और गरजती लहरों वाला सागर उसके \"पवित्र चरण\" धोता है। यानी समुद्र भी देवी-रूपी भारत के चरण पखारता है — यह सुंदर मानवीकरण है।"
+  },
+  {
+   "id": "359c092a-ed59-4b66-9752-7cac1cca2f0e",
+   "sentences": [
+    {
+     "id": "aa9b8cf1-8909-4fd6-a626-346bdc20e09e",
+     "text": "अंचल में खचित सुमन;",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "अंचल में खचित सुमन",
+       "meaning": "आँचल में जड़े हुए फूल — flowers studded on her hem",
+       "pos": "पद",
+       "example": "फूल उसके आँचल के आभूषण।"
+      }
+     ]
+    },
+    {
+     "id": "0519e85b-b7a0-4cc0-afb5-5e0d88dd1d7e",
+     "text": "गंगा ज्योतिर्जल-कण",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "गंगा ज्योतिर्जल-कण",
+       "meaning": "गंगा के प्रकाशमय जल-कण — Ganga’s luminous water-drops",
+       "pos": "समस्त पद",
+       "example": "गंगा की धवल धारा।"
+      }
+     ]
+    },
+    {
+     "id": "496dc820-8836-47d6-9df9-42f014073caa",
+     "text": "धवल धार हार गले।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "धवल धार हार गले",
+       "meaning": "श्वेत धारा गले का हार — the white stream is a necklace at her throat",
+       "pos": "रूपक",
+       "example": "गंगा उसके गले का हार।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "अब आभूषण: पेड़-घास-वन-लता उसके वस्त्र हैं, आँचल में फूल जड़े हैं, और गंगा की श्वेत (धवल) चमकती धारा उसके गले का हार है। प्रकृति ही भारत के गहने बन जाती है।"
+  },
+  {
+   "id": "aa2adae5-0310-45d6-9ce1-33f78b6101d8",
+   "sentences": [
+    {
+     "id": "bda39614-1276-407b-9672-a6acb2c009c7",
+     "text": "मुकुट शुभ्र हिम-तुषार,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मुकुट शुभ्र हिम-तुषार",
+       "meaning": "श्वेत बर्फ़ (हिमालय) उसका मुकुट — the white Himalayan snow is her crown",
+       "pos": "रूपक",
+       "example": "हिमालय भारत का मुकुट।"
+      }
+     ]
+    },
+    {
+     "id": "318d8559-9062-46ba-a7a2-4c57e1aa41c5",
+     "text": "प्राण प्रणव ओंकार,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "प्राण प्रणव ओंकार",
+       "meaning": "ओम् की ध्वनि उसके प्राण — the Om-sound is her life-breath",
+       "pos": "पद",
+       "example": "भारत के प्राण ओंकार में।"
+      }
+     ]
+    },
+    {
+     "id": "9929793f-f975-405c-b383-19905b1558cf",
+     "text": "ध्वनित दिशाएँ उदार,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "ध्वनित दिशाएँ उदार",
+       "meaning": "उदार दिशाएँ (ओम् से) गूँज रही हैं — the generous directions resound",
+       "pos": "पद",
+       "example": "सब दिशाएँ ओम् से गूँजती हैं।"
+      }
+     ]
+    },
+    {
+     "id": "7f0da068-b51a-450e-972a-9dc4305be1cf",
+     "text": "शतमुख-शतरव-मुखरे!",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "शतमुख-शतरव-मुखरे",
+       "meaning": "सौ मुखों की सौ ध्वनियों से मुखरित — vocal with a hundred mouths and sounds",
+       "pos": "समस्त पद",
+       "example": "भारत की विविधता — सौ स्वर एक साथ।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "अंत में सबसे भव्य चित्र — हिमालय की श्वेत बर्फ़ उसका मुकुट है, ओम् की ध्वनि उसके प्राण, और सौ मुखों की सौ ध्वनियों से सब दिशाएँ गूँज रही हैं — यानी भारत की अनेकता, विविधता और ज्ञान-परंपरा का गुणगान।"
+  }
+ ]
+}
+
+--- block #3 [heading] id=d3448e2d-69b8-4fcd-b390-ef57bf23d9e6 ---
+{
+ "text": "कविता की भाव-यात्रा",
+ "level": 2
+}
+
+--- block #4 [tone_meter] id=32ed1bd5-57ac-4bd1-a5be-c10beec39dad ---
+{
+ "segments": [
+  {
+   "id": "767f317b-3b03-4d08-ad04-e9df3385fbc7",
+   "excerpt": "भारति, जय, विजयकरे!",
+   "emotion": "गौरव",
+   "intensity": 5,
+   "note": "विजय की कामना के साथ देशगौरव का उद्घोष।"
+  },
+  {
+   "id": "f855c31f-e338-4a9e-bf97-a2152c9f5165",
+   "excerpt": "कनक-शस्य-कमलधरे!",
+   "emotion": "समृद्धि",
+   "intensity": 4,
+   "note": "कृषि-संपन्नता और सौंदर्य की प्रशंसा।"
+  },
+  {
+   "id": "cb85ae06-1b34-4112-af3d-0fd20902ff63",
+   "excerpt": "धोता शुचि चरण युगल",
+   "emotion": "भव्यता",
+   "intensity": 4,
+   "note": "सागर भी देवी के चरण पखारता है।"
+  },
+  {
+   "id": "9004a4b1-f2e6-452b-94e9-dd17cb3c1d33",
+   "excerpt": "धवल धार हार गले",
+   "emotion": "सौंदर्य",
+   "intensity": 4,
+   "note": "गंगा का हार — प्रकृति आभूषण बन गई।"
+  },
+  {
+   "id": "1f27279c-ed6a-484a-97b9-b6bdefb2cade",
+   "excerpt": "शतमुख-शतरव-मुखरे!",
+   "emotion": "विविधता-उल्लास",
+   "intensity": 5,
+   "note": "सौ स्वर — भारत की अनेकता का चरम गुणगान।"
+  }
+ ]
+}
+
+--- block #5 [comprehension_checkpoint] id=f49b3bce-d7b3-4c39-b317-1d75f656e162 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "d704c569-857c-435c-8b0d-76300105a3b5",
+   "question": "कविता में हिमालय, गंगा और वन-लता को क्या बताया गया है?",
+   "options": [
+    "दूर के पहाड़ और नदियाँ भर",
+    "देवी-रूपी भारत के आभूषण/वस्त्र (मुकुट, हार, वसन)",
+    "युद्ध के हथियार",
+    "खेती के साधन"
+   ],
+   "correct_index": 1,
+   "explanation": "हिमालय = मुकुट, गंगा = हार, वन-लता = वस्त्र — भारत की प्रकृति उसके आभूषण बन जाती है।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=61744238-1384-486e-8cd6-b7f0ab243fbe ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f6dbbb41-a701-4121-b518-0783b1f24c38",
+   "question": "\"कनक-शस्य-कमलधरे\" पंक्ति भारत की किस विशेषता की ओर संकेत करती है?",
+   "options": [
+    "सैन्य शक्ति",
+    "बहुत तेज़ औद्योगिक विकास",
+    "कृषि (धन-धान्य) संपन्नता",
+    "खनिज पदार्थ"
+   ],
+   "correct_index": 2,
+   "explanation": "सोने जैसी फसलें (कनक-शस्य) भारत की कृषि-समृद्धि का प्रतीक हैं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "3970011d-c4a2-43ca-a2c4-f574d751fdff",
+   "question": "\"मुकुट शुभ्र हिम-तुषार\" में हिमालय को भारत का मुकुट क्यों कहा गया?",
+   "options": [
+    "वह बहुत दूर है",
+    "क्योंकि वहाँ पर हर साल बहुत ज़्यादा बर्फ़ गिरती रहती है",
+    "वह सबसे ऊँचा है और भारत के \"सिर\" पर श्वेत ताज-सा सजा है",
+    "वह बहुत ठंडा है"
+   ],
+   "correct_index": 2,
+   "explanation": "हिमालय भारत के उत्तर में सबसे ऊँचा है — श्वेत बर्फ़ से ढका, मानो भारत के सिर पर सजा भव्य मुकुट।",
+   "difficulty_level": 3
+  },
+  {
+   "id": "fda80f00-33c7-423c-a7a3-a9407c8509f1",
+   "question": "\"शतमुख-शतरव-मुखरे\" किस बात का प्रतीक है?",
+   "options": [
+    "भारत की विविधता — सौ स्वर/भाषाएँ/संस्कृतियाँ एक साथ",
+    "चारों ओर एक साथ मचा हुआ बहुत ज़्यादा शोर",
+    "सौ नदियाँ",
+    "सौ पहाड़"
+   ],
+   "correct_index": 0,
+   "explanation": "सौ मुखों की सौ ध्वनियाँ — भारत की अनेकता में एकता और सांस्कृतिक विविधता का प्रतीक।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "शब्द-संपदा"  (slug: ch10-shabd-sampada)
+published=false blocks=5 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=5dc31c26-7c2a-4c1d-9a6c-6a99759d4b4a ---
+{
+ "src": "",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a lotus-and-mountain motif, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=b79b883a-8476-44d3-b708-4703e4f616c7 ---
+{
+ "markdown": "इस संस्कृतनिष्ठ कविता के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=9b18afa8-2f68-4c28-96d3-04528c7baba6 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: कविता के मूल शब्द।",
+ "cards": [
+  {
+   "id": "fc7152cd-ca4e-47f6-bb07-59bf5c6b2256",
+   "word": "भारति",
+   "pronunciation": "bhaa-ra-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सरस्वती/भारतमाता (वाणी की देवी)",
+   "english": "Goddess Bharati (Saraswati / Mother India)",
+   "example": "\"भारति, जय, विजयकरे!\"",
+   "memory_hook": "सरस्वती/भारतमाता।"
+  },
+  {
+   "id": "c9577c1d-78a4-4928-b38b-a2fabd665106",
+   "word": "कनक",
+   "pronunciation": "ka-nak",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सोना",
+   "english": "gold",
+   "example": "\"कनक-शस्य...\" सोने जैसी फसलें।",
+   "memory_hook": "gold।"
+  },
+  {
+   "id": "1750410a-377e-4942-87bc-504f1c07cbbe",
+   "word": "शस्य",
+   "pronunciation": "shas-ya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "फसल, अन्न, धान्य",
+   "english": "crops; grain",
+   "example": "कनक-शस्य = सोने जैसी फसलें।",
+   "memory_hook": "crops।"
+  },
+  {
+   "id": "95917b52-e462-4b57-940c-1e4703ae6dc6",
+   "word": "कमलधरे",
+   "pronunciation": "ka-mal-dha-re",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "कमल धारण करने वाली",
+   "english": "lotus-bearing",
+   "example": "\"कनक-शस्य-कमलधरे!\" (हे कमल धारण करने वाली)।",
+   "memory_hook": "कमल + धरे।"
+  },
+  {
+   "id": "f823322f-352d-4c19-bb13-d1e4d46183f5",
+   "word": "पदतल",
+   "pronunciation": "pad-tal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पैरों के नीचे, तलवा",
+   "english": "beneath the feet; sole",
+   "example": "\"लंका पदतल शतदल।\" (लंका उसके चरणों का कमल)।",
+   "memory_hook": "पद + तल।"
+  },
+  {
+   "id": "21cf4df3-2160-4814-95a5-a3ae8f3f28d7",
+   "word": "शतदल",
+   "pronunciation": "shat-dal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कमल (सौ पंखुड़ियों वाला)",
+   "english": "the lotus",
+   "example": "\"लंका पदतल शतदल।\"",
+   "memory_hook": "सौ दल वाला = कमल।"
+  },
+  {
+   "id": "f2c3b696-6728-47ff-a49e-29cb0d705e2f",
+   "word": "गर्जितोर्मि",
+   "pronunciation": "gar-ji-tor-mi",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "गरजती लहरें",
+   "english": "roaring waves",
+   "example": "\"गर्जितोर्मि सागर-जल।\"",
+   "memory_hook": "गर्जित + ऊर्मि (लहर)।"
+  },
+  {
+   "id": "9e51c79f-210d-43f5-baf3-cb383e619792",
+   "word": "शुचि",
+   "pronunciation": "shu-chi",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पवित्र, शुद्ध, श्वेत",
+   "english": "pure; sacred",
+   "example": "\"धोता शुचि चरण युगल।\" (पवित्र चरण)।",
+   "memory_hook": "pure।"
+  },
+  {
+   "id": "4920cdb5-6bd3-4df9-8002-abf4278cb413",
+   "word": "युगल",
+   "pronunciation": "yu-gal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "जोड़ा, युग्म",
+   "english": "a pair",
+   "example": "\"शुचि चरण युगल\" — दोनों पवित्र चरण।",
+   "memory_hook": "a pair।"
+  },
+  {
+   "id": "5168f626-b75f-4261-92cb-03eb95a5f9df",
+   "word": "स्तव",
+   "pronunciation": "stav",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "स्तुति, प्रशंसा, स्तोत्र",
+   "english": "praise; a hymn",
+   "example": "\"स्तव कर बहु-अर्थ-भरे!\"",
+   "memory_hook": "a hymn।"
+  },
+  {
+   "id": "b9e40486-f7e6-46dd-8f1c-1fd9f2b23470",
+   "word": "तरु",
+   "pronunciation": "ta-ru",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वृक्ष, पेड़",
+   "english": "a tree",
+   "example": "\"तरु-तृण-वन-लता वसन।\"",
+   "memory_hook": "a tree।"
+  },
+  {
+   "id": "e6bddaaf-6228-4f3a-bc30-796a5b3a8742",
+   "word": "तृण",
+   "pronunciation": "trin",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "घास, तिनका",
+   "english": "grass; a blade",
+   "example": "तरु-तृण = पेड़ और घास।",
+   "memory_hook": "grass।"
+  },
+  {
+   "id": "e1b8fd41-236a-4b16-9b6d-6f0a50a9e15f",
+   "word": "वसन",
+   "pronunciation": "va-san",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वस्त्र, आवरण",
+   "english": "a garment; robe",
+   "example": "\"...लता वसन।\" (वन-लता ही उसके वस्त्र)।",
+   "memory_hook": "a garment।"
+  },
+  {
+   "id": "93fc509a-9530-4fb4-b219-50d65a98901f",
+   "word": "अंचल",
+   "pronunciation": "an-chal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आँचल, किनारा, प्रांत",
+   "english": "the hem/border; a region",
+   "example": "\"अंचल में खचित सुमन।\" (आँचल में जड़े फूल)।",
+   "memory_hook": "border/region।"
+  },
+  {
+   "id": "e481d8a1-83c3-433b-8094-0e367444fd61",
+   "word": "खचित",
+   "pronunciation": "kha-chit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जड़ा हुआ, अंकित",
+   "english": "studded; inlaid",
+   "example": "\"अंचल में खचित सुमन।\"",
+   "memory_hook": "studded।"
+  },
+  {
+   "id": "7be50920-c8fb-4689-9d52-a5b5e2cb1a11",
+   "word": "सुमन",
+   "pronunciation": "su-man",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "फूल, पुष्प",
+   "english": "a flower",
+   "example": "आँचल में खचित (जड़े) सुमन (फूल)।",
+   "memory_hook": "a flower।"
+  },
+  {
+   "id": "425127da-8cf1-4e5b-9a1c-a9b195830745",
+   "word": "ज्योतिर्जल",
+   "pronunciation": "jyo-tir-jal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "प्रकाश-भरा जल",
+   "english": "light-filled water",
+   "example": "\"गंगा ज्योतिर्जल-कण।\"",
+   "memory_hook": "ज्योति + जल।"
+  },
+  {
+   "id": "36a1545a-9c0a-425f-974c-ccd15cb006bd",
+   "word": "धवल",
+   "pronunciation": "dha-val",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "श्वेत, उजला, निर्मल",
+   "english": "white; bright",
+   "example": "\"धवल धार हार गले।\" (गंगा की श्वेत धारा गले का हार)।",
+   "memory_hook": "white।"
+  },
+  {
+   "id": "e23592ec-cdd6-4777-880a-96083bf1f109",
+   "word": "मुकुट",
+   "pronunciation": "mu-kut",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ताज",
+   "english": "a crown",
+   "example": "\"मुकुट शुभ्र हिम-तुषार।\" (हिमालय की बर्फ़ उसका मुकुट)।",
+   "memory_hook": "a crown।"
+  },
+  {
+   "id": "2e4fd5a3-806a-440c-bc30-7ac9d3ae4eb1",
+   "word": "शुभ्र",
+   "pronunciation": "shubhr",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "उज्ज्वल, श्वेत, चमकीला",
+   "english": "bright; white",
+   "example": "\"मुकुट शुभ्र हिम-तुषार।\"",
+   "memory_hook": "bright-white।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "7d171763-346b-44aa-a88b-771ccab5f0de",
+   "question": "\"शस्य\" शब्द का अर्थ है —",
+   "options": [
+    "सोने का गहना",
+    "समुद्र",
+    "पहाड़",
+    "फसल, अन्न"
+   ],
+   "correct_index": 3,
+   "explanation": "शस्य = crops/grain, फसल-अन्न।"
+  },
+  {
+   "id": "8f66e694-96de-4340-81ad-1f3f16000bef",
+   "question": "\"शतदल\" किसे कहते हैं?",
+   "options": [
+    "कमल",
+    "सौ पहाड़",
+    "सौ नदियाँ",
+    "सौ फूलों का गुच्छा"
+   ],
+   "correct_index": 0,
+   "explanation": "शतदल (सौ पंखुड़ियों वाला) = कमल।"
+  },
+  {
+   "id": "06c78852-8fa4-4235-acfe-a11f96af253e",
+   "question": "\"धवल\" का अर्थ है —",
+   "options": [
+    "काला",
+    "लाल",
+    "श्वेत, उजला",
+    "हरा"
+   ],
+   "correct_index": 2,
+   "explanation": "धवल = white/bright, श्वेत।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=03661018-6a7d-4bfd-a955-e4bf3ebe651d ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: कविता और काव्य-कला से जुड़े शब्द।",
+ "cards": [
+  {
+   "id": "91b10cd3-2746-437e-af13-c697a8ff9b65",
+   "word": "हिम-तुषार",
+   "pronunciation": "him-tu-shaar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बर्फ़, हिम-कण, ओस",
+   "english": "snow; frost",
+   "example": "हिमालय की हिम-तुषार (बर्फ़) भारत का मुकुट है।",
+   "memory_hook": "snow/frost।"
+  },
+  {
+   "id": "6ede9a8d-232e-47b5-ab29-40eebdd30911",
+   "word": "प्राण",
+   "pronunciation": "praan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "साँस, जीवन, वायु",
+   "english": "life-breath; life",
+   "example": "\"प्राण प्रणव ओंकार।\"",
+   "memory_hook": "life-breath।"
+  },
+  {
+   "id": "0168220a-2e9c-45d6-bd77-3f0ab5cfdc69",
+   "word": "प्रणव",
+   "pronunciation": "pra-nav",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ओंकार, ओम्",
+   "english": "the sacred Om",
+   "example": "भारत के प्राण ओम् (प्रणव) की ध्वनि हैं।",
+   "memory_hook": "the Om।"
+  },
+  {
+   "id": "bbc09fc8-a8a4-4f9e-b6c9-072a7512ab41",
+   "word": "ओंकार",
+   "pronunciation": "on-kaar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "'ओम्' मंत्र, आरंभ",
+   "english": "the syllable Om",
+   "example": "\"प्राण प्रणव ओंकार।\"",
+   "memory_hook": "the Om।"
+  },
+  {
+   "id": "43d5cef4-3b38-4ef9-baa9-b29ab5fc45ee",
+   "word": "उदार",
+   "pronunciation": "u-daar",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "दानशील, दयालु, विशाल",
+   "english": "generous; magnanimous",
+   "example": "\"ध्वनित दिशाएँ उदार।\" (उदार दिशाएँ गूँज रही हैं)।",
+   "memory_hook": "generous।"
+  },
+  {
+   "id": "42a44437-f076-4f7f-b422-6da4cded0a53",
+   "word": "ध्वनित",
+   "pronunciation": "dhva-nit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "गूँजती हुई",
+   "english": "resounding",
+   "example": "दिशाएँ ओम् से ध्वनित (गूँजित) हैं।",
+   "memory_hook": "\"ध्वनि\" से।"
+  },
+  {
+   "id": "68832a78-6ab8-4ca1-8cf9-eae1155bf4e4",
+   "word": "शतमुख",
+   "pronunciation": "shat-mukh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सौ मुख",
+   "english": "a hundred mouths",
+   "example": "\"शतमुख-शतरव-मुखरे!\"",
+   "memory_hook": "शत (सौ) + मुख।"
+  },
+  {
+   "id": "bab65a68-3e8f-4a66-b0c3-a60f4aac0b61",
+   "word": "शतरव",
+   "pronunciation": "shat-rav",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सौ ध्वनियाँ, शोर",
+   "english": "a hundred sounds",
+   "example": "शतमुख-शतरव = सौ मुखों की सौ ध्वनियाँ।",
+   "memory_hook": "शत + रव (ध्वनि)।"
+  },
+  {
+   "id": "8bc0b6dd-b9f2-4521-bd71-568e9243e546",
+   "word": "मुखर",
+   "pronunciation": "mu-khar",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बोलता/गूँजता हुआ, शब्द करता",
+   "english": "sonorous; vocal",
+   "example": "\"...शतरव-मुखरे!\" (सौ ध्वनियों से मुखरित)।",
+   "memory_hook": "vocal/loud।"
+  },
+  {
+   "id": "ed0524ad-d60d-4fb2-9466-aac3531d8e4b",
+   "word": "मानवीकरण",
+   "pronunciation": "maan-vee-ka-ran",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "निर्जीव को मनुष्य-सा दिखाना",
+   "english": "personification",
+   "example": "भारत को देवी (मनुष्य) रूप में दिखाना मानवीकरण है।",
+   "memory_hook": "personification।"
+  },
+  {
+   "id": "51027b29-02c9-4dac-83d5-fdf3e4c1b8e1",
+   "word": "छायावाद",
+   "pronunciation": "chhaa-yaa-vaad",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हिंदी काव्य का एक युग (कल्पना-प्रकृति प्रधान)",
+   "english": "the Chhayavad (Romantic) era",
+   "example": "निराला छायावाद के प्रमुख कवि हैं।",
+   "memory_hook": "Romantic era।"
+  },
+  {
+   "id": "aa9bd4e0-6dae-4447-8095-86524e7651d1",
+   "word": "मुक्त छंद",
+   "pronunciation": "mukt-chhand",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बंधन-रहित छंद",
+   "english": "free verse",
+   "example": "निराला ने पहले मुक्त छंद का प्रयोग किया।",
+   "memory_hook": "free verse।"
+  },
+  {
+   "id": "2ec1c9b1-5e90-40e2-a2a7-52c1e4206542",
+   "word": "समस्त पद",
+   "pronunciation": "sa-mast-pad",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "समास से बना एक शब्द",
+   "english": "a compound word",
+   "example": "\"कनक-शस्य\" एक समस्त पद है।",
+   "memory_hook": "compound word।"
+  },
+  {
+   "id": "055f2bfe-df5a-4e0a-bf02-627468a7ee5c",
+   "word": "संस्कृतनिष्ठ",
+   "pronunciation": "sans-krit-nishth",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "संस्कृत-प्रधान (भाषा)",
+   "english": "Sanskrit-rich",
+   "example": "यह कविता संस्कृतनिष्ठ भाषा में है।",
+   "memory_hook": "Sanskrit-based।"
+  },
+  {
+   "id": "76ab2133-ef18-4e7e-8b1f-f02710198e07",
+   "word": "संपन्नता",
+   "pronunciation": "sam-pan-na-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "समृद्धि, धन-धान्य",
+   "english": "prosperity; abundance",
+   "example": "\"कनक-शस्य\" भारत की कृषि-संपन्नता दिखाता है।",
+   "memory_hook": "prosperity।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=6132ab60-2cb6-4d00-a893-226b9bcd3946 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "08dba110-4dee-4dea-9bff-98573e3bfc66",
+   "question": "\"प्रणव/ओंकार\" किसे कहते हैं?",
+   "options": [
+    "एक नदी",
+    "कोई एक बहुत ऊँचा पहाड़",
+    "एक फूल",
+    "'ओम्' मंत्र की ध्वनि"
+   ],
+   "correct_index": 3,
+   "explanation": "प्रणव/ओंकार = the sacred Om syllable।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "bb88c418-0537-49b7-9339-9eca8d2420b2",
+   "question": "\"शतमुख-शतरव\" का अर्थ है —",
+   "options": [
+    "कोई एक बहुत तेज़ आवाज़",
+    "सौ मुखों की सौ ध्वनियाँ",
+    "गहरी चुप्पी",
+    "एक मीठा गीत"
+   ],
+   "correct_index": 1,
+   "explanation": "शत (सौ) मुख + शत रव (ध्वनि) — विविधता का प्रतीक।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "e3010527-c758-4662-b5ed-3495a7ba4a9a",
+   "question": "\"मानवीकरण\" अलंकार किसे कहते हैं?",
+   "options": [
+    "शब्द दोहराना",
+    "निर्जीव/प्रकृति को मनुष्य-सा दिखाना",
+    "किसी बात को बढ़ा-चढ़ाकर कहना",
+    "समानता दिखाना"
+   ],
+   "correct_index": 1,
+   "explanation": "मानवीकरण = personification, जैसे \"सागर चरण धोता है\"।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "कविता का सौंदर्य"  (slug: ch10-kavita-saundarya)
+published=false blocks=6 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=e08dea73-781d-4e1a-b704-b58d25ac5f93 ---
+{
+ "src": "",
+ "alt": "काव्य का सौंदर्य",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — Devanagari verse turning into images of a crown, a necklace and a robe made of mountains, river and forests, glowing on a dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=d979c715-ccf3-4f9f-85fe-1c2cad1e2ab6 ---
+{
+ "markdown": "निराला की यह कविता **मानवीकरण** (प्रकृति को मनुष्य-सा दिखाना), **अलंकार** और **समासयुक्त संस्कृतनिष्ठ भाषा** से सजी है। नीचे किसी विशेषता पर टैप करें।"
+}
+
+--- block #2 [literary_devices_highlighter] id=aa01df50-2d71-423b-9676-9c85c7b27296 ---
+{
+ "lang": "hindi",
+ "passage": "धोता शुचि चरण युगल। मुकुट शुभ्र हिम-तुषार। धवल धार हार गले। शतमुख-शतरव-मुखरे।",
+ "devices": [
+  {
+   "id": "fa73901f-69af-4773-94ba-2ac0f47953d0",
+   "device": "personification",
+   "matches": [
+    {
+     "text": "धोता शुचि चरण युगल",
+     "explanation": "सागर का देवी-रूपी भारत के \"पवित्र चरण धोना\" — निर्जीव सागर को मनुष्य-सा दिखाना, मानवीकरण।"
+    }
+   ]
+  },
+  {
+   "id": "22d4c91c-7681-4b4e-bf2e-f33df44b126a",
+   "device": "metaphor",
+   "matches": [
+    {
+     "text": "मुकुट शुभ्र हिम-तुषार",
+     "explanation": "हिमालय की बर्फ़ को सीधे \"मुकुट\" कह देना (अभेद) — रूपक अलंकार।"
+    },
+    {
+     "text": "धवल धार हार गले",
+     "explanation": "गंगा की धारा को सीधे \"हार\" कह देना — रूपक अलंकार।"
+    }
+   ]
+  },
+  {
+   "id": "57eff9d5-aec5-44fd-9592-30bc26c507dd",
+   "device": "alliteration",
+   "matches": [
+    {
+     "text": "शतमुख-शतरव-मुखरे",
+     "explanation": "\"श\"/\"म\" वर्णों की बार-बार आवृत्ति — अनुप्रास अलंकार।"
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [table] id=cb40540c-77d7-4884-9e46-282756bb6247 ---
+{
+ "caption": "कविता की विशेषताएँ",
+ "headers": [
+  "विशेषता",
+  "उदाहरण"
+ ],
+ "rows": [
+  [
+   "प्रकृति का मानवीकरण",
+   "सागर \"चरण धोता है\"; हिमालय \"मुकुट\"।"
+  ],
+  [
+   "आलंकारिक प्रयोग",
+   "रूपक — \"धवल धार हार गले\"।"
+  ],
+  [
+   "समस्त/सामासिक पद",
+   "कनक-शस्य, ज्योतिर्जल, शतमुख-शतरव।"
+  ],
+  [
+   "संस्कृतनिष्ठ भाषा",
+   "शुचि, शुभ्र, प्रणव, धवल, स्तव।"
+  ],
+  [
+   "चित्रात्मकता",
+   "भारतभूमि का मनोरम चित्र आँखों के सामने।"
+  ]
+ ]
+}
+
+--- block #4 [worked_example] id=14ed30f6-4313-4d37-96c1-b3f791205a88 ---
+{
+ "label": "कविता में \"मानवीकरण\" कैसे काम करता है?",
+ "variant": "ncert_intext",
+ "problem": "कविता में बार-बार प्रकृति को मनुष्य-सा (देवी-सा) दिखाया गया है। यह \"मानवीकरण\" कविता में क्या जादू पैदा करता है? सोचिए, फिर उत्तर देखिए।",
+ "solution": "**मानवीकरण** का अर्थ है — निर्जीव वस्तु या प्रकृति को मनुष्य की तरह भाव और क्रिया करते दिखाना।\n\nइस कविता में पूरा भारत एक **जीवित देवी** बन जाता है: सागर उसके चरण \"धोता\" है, हिमालय उसका \"मुकुट\", गंगा उसका \"हार\", वन-लता उसके \"वस्त्र\"। इससे भारत एक सूखा भौगोलिक नक़्शा नहीं रहता — वह एक **पूज्य, भव्य और जीवंत माँ/देवी** बन जाता है, जिससे पाठक के मन में गहरा प्रेम और सम्मान (देशभक्ति) जाग उठता है। यही मानवीकरण का जादू है।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #5 [inline_quiz] id=c319d58c-e7fe-4c73-9dad-f7d86f1cbc3f ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "ceca7d25-1458-489f-82fb-b29d813a46ea",
+   "question": "\"धोता शुचि चरण युगल\" (सागर चरण धोता है) में कौन-सा अलंकार है?",
+   "options": [
+    "अतिशयोक्ति",
+    "अनुप्रास",
+    "तुक",
+    "मानवीकरण"
+   ],
+   "correct_index": 3,
+   "explanation": "निर्जीव सागर को मनुष्य-सा (चरण धोते) दिखाना — मानवीकरण।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "5c973243-c7ba-49f9-97bd-e6265c037ed5",
+   "question": "\"मुकुट शुभ्र हिम-तुषार\" में कौन-सा अलंकार है?",
+   "options": [
+    "रूपक (हिमालय = मुकुट)",
+    "समानता दिखाने वाली उपमा",
+    "अनुप्रास",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 0,
+   "explanation": "हिमालय की बर्फ़ को सीधे \"मुकुट\" कहना (अभेद) — रूपक अलंकार।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "6d706720-0152-409e-b440-cc53392f0fc1",
+   "question": "मानवीकरण से भारत की छवि कैसी बन जाती है?",
+   "options": [
+    "एक सूखे-से भौगोलिक नक़्शे की",
+    "एक कारख़ाने की",
+    "एक जीवंत, पूज्य देवी/माँ की",
+    "एक बाज़ार की"
+   ],
+   "correct_index": 2,
+   "explanation": "भारत एक भव्य, जीवंत देवी बन जाता है — जिससे प्रेम और सम्मान जागता है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "विषयों से संवाद"  (slug: ch10-vishayon-se-samvad)
+published=false blocks=7 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=f68c57e0-c336-4640-8832-ff226d4c2206 ---
+{
+ "src": "",
+ "alt": "एक भारत, श्रेष्ठ भारत",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a tapestry of Indian landscapes — Himalayas, Ganga, forests, fields — united under one warm dawn, suggesting unity in diversity. Dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=de710268-97a1-45f0-a383-cc027d2f1dd3 ---
+{
+ "markdown": "यह कविता देशप्रेम के साथ-साथ प्रकृति-संरक्षण और \"एक भारत, श्रेष्ठ भारत\" का संदेश भी देती है।"
+}
+
+--- block #2 [cultural_context_card] id=3dac999d-c1e3-4b7c-923c-3832dfd8ec60 ---
+{
+ "reference": "एक भारत, श्रेष्ठ भारत",
+ "category": "concept",
+ "short_desc": "अनेकता में एकता — विविध भाषा, पर्व, संस्कृति वाला एक भारत।",
+ "detail": "कविता की पंक्ति **\"शतमुख-शतरव-मुखरे\"** (सौ मुखों की सौ ध्वनियाँ) भारत की **विविधता में एकता** को साकार करती है — अनेक भाषाएँ, पर्व, रीति-रिवाज और संस्कृतियाँ, पर सब मिलकर **एक भारत**। यही \"एक भारत, श्रेष्ठ भारत\" की भावना है — कि हमारी विविधता ही हमारी सबसे बड़ी ताक़त है, कमज़ोरी नहीं।",
+ "image_url": ""
+}
+
+--- block #3 [theme_explorer] id=c048f488-5bf8-48cb-ab65-2040260a7fb9 ---
+{
+ "intro": "कविता के मुख्य भाव — हर कार्ड पर टैप कीजिए।",
+ "themes": [
+  {
+   "id": "60130169-75f7-4c0a-b14a-d781ecd8f71d",
+   "title": "देशप्रेम और राष्ट्रीयता",
+   "description": "भारत को देवी मानकर उसकी जय और गौरव का उद्घोष।",
+   "evidence": [
+    "\"भारति, जय, विजयकरे!\"",
+    "\"प्राण प्रणव ओंकार।\""
+   ],
+   "reflection_prompt": "अपने देश के लिए गर्व का कोई एक कारण लिखिए — और उसे और बढ़ाने के लिए आप क्या करेंगे?"
+  },
+  {
+   "id": "3af849c1-cd1e-4b72-8aa3-faa6d82db636",
+   "title": "प्रकृति ही भारत का सौंदर्य",
+   "description": "हिमालय, गंगा, वन-लता — भारत की प्रकृति ही उसका असली आभूषण है।",
+   "evidence": [
+    "\"मुकुट शुभ्र हिम-तुषार।\"",
+    "\"गंगा... धवल धार हार गले।\""
+   ],
+   "reflection_prompt": "अगर प्रकृति भारत का \"गहना\" है, तो प्रदूषण/गंदगी क्या है? इसे रोकने के लिए आप क्या कर सकते हैं?"
+  },
+  {
+   "id": "a54e7772-9d60-4e77-87ab-1f1fd9189f4a",
+   "title": "विविधता में एकता",
+   "description": "अनेक भाषा-संस्कृति, पर एक भारत — विविधता ही शक्ति है।",
+   "evidence": [
+    "\"शतमुख-शतरव-मुखरे!\""
+   ],
+   "reflection_prompt": "अपनी कक्षा/मोहल्ले की \"विविधता\" (अलग भाषा, खान-पान, त्योहार) को आप एकता में कैसे बदल सकते हैं?"
+  }
+ ]
+}
+
+--- block #4 [callout] id=cd3b9956-587d-4289-8a16-9ec5cc181056 ---
+{
+ "variant": "literature_in_life",
+ "title": "कविता और आपका जीवन",
+ "markdown": "अगर हिमालय भारत का मुकुट और गंगा उसका हार है, तो उन्हें गंदा करना अपनी \"माँ के गहने\" तोड़ने जैसा है। पेड़ न काटना, नदी में कचरा न डालना — यही इस कविता की सच्ची देशभक्ति है।"
+}
+
+--- block #5 [reasoning_prompt] id=7837f953-3b0f-4502-adc7-b42afd3ce6f9 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "यह कविता स्वतंत्रता-पूर्व लिखी गई, जब भारत के \"शक्ति-बोध\" और गौरव को जगाना ज़रूरी था। आज, स्वतंत्र भारत में, बढ़ते प्रदूषण और जलवायु-परिवर्तन के बीच इस कविता का संदेश और भी क्यों ज़रूरी हो गया है?",
+ "reveal": "कविता भारत की प्रकृति (हिमालय, गंगा, वन) को उसका \"आभूषण\" और \"शरीर\" बताती है। आज वही आभूषण ख़तरे में हैं — हिमालय के ग्लेशियर पिघल रहे हैं, गंगा प्रदूषित है, वन घट रहे हैं। इसलिए कविता का संदेश अब दोगुना ज़रूरी है: देशभक्ति सिर्फ़ \"जय\" बोलना नहीं, बल्कि भारत की प्रकृति की रक्षा करना है। अगर हम उसके \"मुकुट\" और \"हार\" को बचा लें, तभी सच्चे अर्थ में \"भारति, जय\" सार्थक होगा — प्रकृति का संरक्षण ही आज की सबसे बड़ी देशभक्ति है।",
+ "difficulty_level": 5
+}
+
+--- block #6 [inline_quiz] id=0d927dd2-633b-4ec0-ac3c-1383e0995c53 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "42658a8c-b7ac-425f-ab5f-01c7dc36107f",
+   "question": "इस कविता में कवि की मुख्यतः कौन-सी भावना अभिव्यक्त हुई है?",
+   "options": [
+    "व्यापार-धंधे का लालच",
+    "युद्ध का रोमांच",
+    "देशप्रेम और राष्ट्रीयता",
+    "व्यक्तिगत दुख"
+   ],
+   "correct_index": 2,
+   "explanation": "भारत को देवी मानकर उसका गौरव-गान — गहरा देशप्रेम और राष्ट्रीयता।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "c509b90e-48ac-4eb8-ab8d-f6d9c0756a26",
+   "question": "कविता के अनुसार भारत का असली सौंदर्य/आभूषण क्या है?",
+   "options": [
+    "उसकी प्रकृति (हिमालय, गंगा, वन)",
+    "उसके बड़े-बड़े नए कारख़ाने",
+    "उसका धन",
+    "उसके बाज़ार"
+   ],
+   "correct_index": 0,
+   "explanation": "हिमालय मुकुट, गंगा हार, वन-लता वस्त्र — प्रकृति ही भारत का आभूषण है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "d6899534-7ff3-4dd4-b9d4-3911971cefd6",
+   "question": "आज इस कविता का संदेश और ज़रूरी क्यों है?",
+   "options": [
+    "क्योंकि यह कविता आज के ज़माने में बहुत पुरानी पड़ चुकी है",
+    "क्योंकि भाषा कठिन है",
+    "क्योंकि भारत बड़ा है",
+    "क्योंकि भारत के प्राकृतिक \"आभूषण\" (हिमालय/गंगा/वन) ख़तरे में हैं"
+   ],
+   "correct_index": 3,
+   "explanation": "प्रदूषण-जलवायु से वही प्रकृति ख़तरे में है — इसलिए उसकी रक्षा ही आज की देशभक्ति है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "व्याकरण — समास"  (slug: ch10-vyakaran)
+published=false blocks=7 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=dc54825b-cee8-4ca3-b8c8-646cb761072a ---
+{
+ "src": "",
+ "alt": "समास — शब्दों का मेल",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — two words merging into one glowing compound word, with verse motifs, on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=7a429c21-12ca-4056-bf80-575d6654148b ---
+{
+ "markdown": "यह कविता **समास** (दो शब्दों के मेल से बने शब्द) से भरी है — कनक-शस्य, ज्योतिर्जल, शतमुख। समास खोलने को **समास-विग्रह** कहते हैं। नीचे अभ्यास कीजिए।"
+}
+
+--- block #2 [table] id=666902a6-6483-49c4-adae-fcde2572585a ---
+{
+ "caption": "कविता के समस्त पद और उनका विग्रह",
+ "headers": [
+  "समस्त पद",
+  "समास-विग्रह"
+ ],
+ "rows": [
+  [
+   "कनक-शस्य",
+   "कनक (सोने) जैसी शस्य (फसल)"
+  ],
+  [
+   "कमलधरे",
+   "कमल को धारण करने वाली"
+  ],
+  [
+   "शतदल",
+   "सौ दल (पंखुड़ियों) वाला — कमल"
+  ],
+  [
+   "ज्योतिर्जल",
+   "ज्योति (प्रकाश) से युक्त जल"
+  ],
+  [
+   "सागरजल",
+   "सागर का जल"
+  ],
+  [
+   "शतमुख",
+   "सौ मुख"
+  ]
+ ]
+}
+
+--- block #3 [apply_express] id=a5b236ba-7eca-4263-bc43-6ca2f3db58f4 ---
+{
+ "title": "व्याकरण व्यायामशाला — समास",
+ "intro": "समास-विग्रह और पहचान का अभ्यास कीजिए।",
+ "chapter_number": 10,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h10-gr-01",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "सागरजल",
+   "instruction": "इस समस्त पद का समास-विग्रह कीजिए।",
+   "answers": [
+    "सागर का जल"
+   ],
+   "rule": "तत्पुरुष — सागर का जल।"
+  },
+  {
+   "id": "h10-gr-02",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "शतदल",
+   "instruction": "इस समस्त पद का समास-विग्रह कीजिए (अर्थ — कमल)।",
+   "answers": [
+    "सौ दल वाला",
+    "सौ दलों वाला"
+   ],
+   "rule": "सौ दल (पंखुड़ियों) वाला = कमल।"
+  },
+  {
+   "id": "h10-gr-03",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "prompt": "\"शतमुख\" (सौ मुख) में पूर्वपद \"शत\" किस प्रकार का है?",
+   "options": [
+    "विशेषण (कर्मधारय)",
+    "क्रिया",
+    "अव्यय",
+    "संख्यावाची (द्विगु समास)"
+   ],
+   "correct_index": 3,
+   "option_reasons": [
+    "ग़लत।",
+    "ग़लत।",
+    "ग़लत।",
+    "सही — \"शत\" (सौ) संख्यावाची है — द्विगु समास।"
+   ]
+  },
+  {
+   "id": "h10-gr-04",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "ज्योतिर्जल",
+   "instruction": "इस समस्त पद का विग्रह कीजिए।",
+   "answers": [
+    "ज्योति से युक्त जल",
+    "ज्योति वाला जल"
+   ],
+   "rule": "ज्योति (प्रकाश) से युक्त जल।"
+  },
+  {
+   "id": "h10-gr-05",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "मानवीकरण",
+   "instruction": "\"मानवीकरण\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (प्रकृति को मनुष्य-सा दिखाना)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "कविता में \"हवा गुनगुनाती है\" कहना मानवीकरण का एक सुंदर उदाहरण है।",
+   "min_words": 7
+  },
+  {
+   "id": "h10-gr-06",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "प्रकृति-संरक्षण",
+   "instruction": "\"प्रकृति की रक्षा ही सच्ची देशभक्ति है\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "पेड़ बचाना और नदियों को साफ़ रखना भी उतनी ही बड़ी देशभक्ति है जितनी सीमा पर देश की रक्षा करना।",
+   "min_words": 9
+  }
+ ]
+}
+
+--- block #4 [heading] id=f3637cf5-9b8c-4d9b-afbe-829da1256b24 ---
+{
+ "text": "भाषा संगम — \"शस्य/उपज\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #5 [table] id=f664f508-577c-425b-a419-dc5eedc9389c ---
+{
+ "caption": "\"उपज (शस्य/फसल)\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "उपज/पैदावार"
+  ],
+  [
+   "संस्कृत",
+   "शस्यम्"
+  ],
+  [
+   "पंजाबी",
+   "पैदावार"
+  ],
+  [
+   "उर्दू",
+   "पैदावार"
+  ],
+  [
+   "मराठी",
+   "पीक"
+  ],
+  [
+   "गुजराती",
+   "ઊપજ (ऊपज)"
+  ],
+  [
+   "बांग्ला",
+   "ফসল (फसल)"
+  ],
+  [
+   "नेपाली",
+   "फसल"
+  ],
+  [
+   "ओडिआ",
+   "ଫସଲ (फसल)"
+  ],
+  [
+   "तेलुगु",
+   "పంట (पंट)"
+  ],
+  [
+   "तमिल",
+   "விளைச்சல் (विळैच्चल)"
+  ],
+  [
+   "कन्नड़",
+   "ಬೆಳೆ (बेळे)"
+  ]
+ ]
+}
+
+--- block #6 [inline_quiz] id=b7e9ddce-5486-492c-b8a0-9332e426ba95 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "8fbbae0e-5d66-4f57-aab9-2b241e1b571d",
+   "question": "\"सागरजल\" का समास-विग्रह क्या होगा?",
+   "options": [
+    "सागर और जल",
+    "सागर का जल",
+    "सागर जैसा जल",
+    "सागर में जल"
+   ],
+   "correct_index": 1,
+   "explanation": "सागरजल = सागर का जल (तत्पुरुष समास)।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "0889f26b-9bf7-48bc-983b-908d2723d503",
+   "question": "\"शतमुख\" में \"शत\" (सौ) किस प्रकार का पद है?",
+   "options": [
+    "विशेषण (कर्मधारय)",
+    "संख्यावाची (द्विगु)",
+    "क्रिया",
+    "अव्यय"
+   ],
+   "correct_index": 1,
+   "explanation": "\"शत\" (सौ) संख्यावाची है — यह द्विगु समास का उदाहरण है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "14cedf61-c33c-4728-be51-809f7d3e243e",
+   "question": "\"ज्योतिर्जल\" का विग्रह है —",
+   "options": [
+    "ज्योति और जल",
+    "ज्योति में जल",
+    "जल जैसी ज्योति",
+    "ज्योति से युक्त जल"
+   ],
+   "correct_index": 3,
+   "explanation": "ज्योतिर्जल = ज्योति (प्रकाश) से युक्त जल।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "अभ्यास — Practice"  (slug: ch10-abhyas)
+published=false blocks=5 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=4ef94dc7-5a36-464d-8ee1-a3573c5ff910 ---
+{
+ "src": "",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi poetry book, a quill and lamp, a faint mountain-and-river motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=e723ff8c-df75-44d0-ae23-80a565bba2ec ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=46dce4fa-c9e6-4433-a198-9436689ea689 ---
+{
+ "title": "अध्याय 10 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 10,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h10-pr-01",
+   "question": "इस कविता के रचयिता कौन हैं?",
+   "options": [
+    "गोस्वामी तुलसीदास जी",
+    "सूर्यकांत त्रिपाठी 'निराला'",
+    "भक्त-संत रैदास",
+    "कवयित्री सुभद्रा कुमारी चौहान"
+   ],
+   "correct_index": 1,
+   "explanation": "कविता 'भारति, जय, विजयकरे!' निराला की है।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h10-pr-02",
+   "question": "निराला किस काव्य-युग के प्रमुख कवि हैं?",
+   "options": [
+    "भक्तिकाल",
+    "रीतिकाल",
+    "आदिकाल",
+    "छायावाद"
+   ],
+   "correct_index": 3,
+   "explanation": "निराला छायावाद के प्रमुख कवि हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h10-pr-03",
+   "question": "इस कविता में भारत को किस रूप में देखा गया है?",
+   "options": [
+    "एक देवी (चेतन सत्ता) के रूप में",
+    "केवल एक भौगोलिक मानचित्र के रूप में",
+    "एक बड़े कारख़ाने के रूप में",
+    "एक बाज़ार के रूप में"
+   ],
+   "correct_index": 0,
+   "explanation": "भारत को देवी (भारतमाता/भारति) के रूप में, जिसके आभूषण प्रकृति है।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h10-pr-04",
+   "question": "कविता में हिमालय को भारत का क्या बताया गया है?",
+   "options": [
+    "गले में पहना हुआ हार",
+    "तन पर लिपटे वस्त्र",
+    "मुकुट (ताज)",
+    "चरण"
+   ],
+   "correct_index": 2,
+   "explanation": "\"मुकुट शुभ्र हिम-तुषार\" — हिमालय भारत का श्वेत मुकुट।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h10-pr-05",
+   "question": "कविता में गंगा को भारत का क्या बताया गया है?",
+   "options": [
+    "सिर पर सजा हुआ मुकुट",
+    "पैरों के नीचे का तलवा",
+    "गले का धवल (श्वेत) हार",
+    "हाथ का कंगन"
+   ],
+   "correct_index": 2,
+   "explanation": "\"गंगा... धवल धार हार गले\" — गंगा भारत के गले का हार।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h10-pr-06",
+   "question": "\"शस्य\" शब्द का अर्थ है —",
+   "options": [
+    "फसल, अन्न",
+    "सोने का गहना",
+    "गहरा समुद्र",
+    "ऊँचा पहाड़"
+   ],
+   "correct_index": 0,
+   "explanation": "शस्य = crops/grain।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h10-pr-07",
+   "question": "\"शतदल\" किसे कहते हैं?",
+   "options": [
+    "सौ ऊँचे पहाड़",
+    "सौ बहती नदियाँ",
+    "सौ फूलों का गुच्छा",
+    "कमल"
+   ],
+   "correct_index": 3,
+   "explanation": "शतदल (सौ पंखुड़ियों वाला) = कमल।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h10-pr-08",
+   "question": "\"धवल\" का सबसे सही अर्थ है —",
+   "options": [
+    "गहरा काला रंग",
+    "श्वेत, उजला",
+    "चमकीला लाल रंग",
+    "हरा-भरा"
+   ],
+   "correct_index": 1,
+   "explanation": "धवल = white/bright।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h10-pr-09",
+   "question": "\"प्रणव/ओंकार\" से क्या तात्पर्य है?",
+   "options": [
+    "कोई एक पवित्र बहती नदी",
+    "'ओम्' मंत्र की पवित्र ध्वनि",
+    "कोई एक ऊँचा पर्वत",
+    "एक सुंदर फूल"
+   ],
+   "correct_index": 1,
+   "explanation": "प्रणव/ओंकार = the sacred Om।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h10-pr-10",
+   "question": "\"धोता शुचि चरण युगल\" (सागर चरण धोता है) में कौन-सा अलंकार है?",
+   "options": [
+    "अतिशयोक्ति",
+    "अनुप्रास",
+    "तुक",
+    "मानवीकरण"
+   ],
+   "correct_index": 3,
+   "explanation": "निर्जीव सागर को मनुष्य-सा दिखाना — मानवीकरण।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h10-pr-11",
+   "question": "\"मुकुट शुभ्र हिम-तुषार\" (हिमालय = मुकुट) में कौन-सा अलंकार है?",
+   "options": [
+    "रूपक",
+    "उपमा",
+    "अनुप्रास",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 0,
+   "explanation": "हिमालय को सीधे \"मुकुट\" कहना (अभेद) — रूपक।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h10-pr-12",
+   "question": "\"शतमुख-शतरव-मुखरे\" में कौन-सा अलंकार है?",
+   "options": [
+    "उपमा",
+    "रूपक",
+    "अनुप्रास",
+    "अतिशयोक्ति"
+   ],
+   "correct_index": 2,
+   "explanation": "\"श\"/\"म\" वर्णों की आवृत्ति — अनुप्रास।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h10-pr-13",
+   "question": "\"सागरजल\" का समास-विग्रह क्या है?",
+   "options": [
+    "सागर और जल",
+    "सागर जैसा जल",
+    "सागर का जल",
+    "सागर में जल"
+   ],
+   "correct_index": 2,
+   "explanation": "सागरजल = सागर का जल (तत्पुरुष)।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h10-pr-14",
+   "question": "\"शतमुख\" में \"शत\" किस प्रकार का पद है?",
+   "options": [
+    "संख्यावाची (द्विगु समास)",
+    "गुण बताने वाला विशेषण",
+    "कोई क्रिया",
+    "अव्यय"
+   ],
+   "correct_index": 0,
+   "explanation": "\"शत\" (सौ) संख्यावाची — द्विगु समास।",
+   "concept_tag": "grammar",
+   "difficulty": 4
+  },
+  {
+   "id": "h10-pr-15",
+   "question": "\"कनक-शस्य-कमलधरे\" पंक्ति भारत की किस विशेषता की ओर संकेत करती है?",
+   "options": [
+    "भारत की विशाल सैन्य शक्ति",
+    "भारत का औद्योगिक विकास",
+    "खनिज भंडार",
+    "कृषि (धन-धान्य) संपन्नता"
+   ],
+   "correct_index": 3,
+   "explanation": "सोने जैसी फसलें — भारत की कृषि-समृद्धि।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h10-pr-16",
+   "question": "\"मुकुट शुभ्र हिम-तुषार\" में हिमालय को मुकुट क्यों कहा गया?",
+   "options": [
+    "वह भारत से बहुत दूर उत्तर में स्थित है",
+    "वह सबसे ऊँचा, भारत के सिर पर श्वेत ताज-सा है",
+    "क्योंकि वहाँ बर्फ़ गिरती है",
+    "वह बहुत ठंडा है"
+   ],
+   "correct_index": 1,
+   "explanation": "हिमालय भारत के उत्तर में सबसे ऊँचा — श्वेत बर्फ़ से ढका भव्य मुकुट।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h10-pr-17",
+   "question": "\"शतमुख-शतरव-मुखरे\" किस संकल्पना को साकार करता है?",
+   "options": [
+    "बहुत ज़्यादा कानफोड़ू शोर",
+    "एक भारत — विविधता में एकता",
+    "सौ अलग-अलग बहती नदियाँ",
+    "सौ ऊँचे पहाड़"
+   ],
+   "correct_index": 1,
+   "explanation": "सौ स्वर/भाषाएँ/संस्कृतियाँ, पर एक भारत — विविधता में एकता।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h10-pr-18",
+   "question": "भारत के वस्त्रों में वन-लता और गले में गंगा-धारा चित्रित कर कवि किस चेतना का संदेश देते हैं?",
+   "options": [
+    "व्यापार और लाभ की होड़",
+    "युद्ध और हिंसा का रोमांच",
+    "धन का लालच",
+    "राष्ट्रीयता और देशप्रेम"
+   ],
+   "correct_index": 3,
+   "explanation": "प्रकृति को भारत का आभूषण बताकर कवि गहरी राष्ट्रीयता/देशप्रेम जगाते हैं।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h10-pr-19",
+   "question": "मानवीकरण के प्रयोग से भारत की छवि कैसी बन जाती है?",
+   "options": [
+    "एक जीवंत, पूज्य देवी/माँ की",
+    "केवल एक सूखे भौगोलिक नक़्शे की",
+    "एक टूटे-फूटे खंडहर की",
+    "एक मशीन की"
+   ],
+   "correct_index": 0,
+   "explanation": "प्रकृति-आभूषणों से सजी देवी — जिससे प्रेम और सम्मान जागता है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h10-pr-20",
+   "question": "कविता की भाषा-शैली किस विशेषता से संपन्न है?",
+   "options": [
+    "सरल बोल-चाल की रोज़मर्रा भाषा",
+    "हास्य-व्यंग्य से भरी भाषा",
+    "संस्कृतनिष्ठ और समासयुक्त",
+    "संवादात्मक"
+   ],
+   "correct_index": 2,
+   "explanation": "गहरे संस्कृत शब्द और समस्त पद — संस्कृतनिष्ठ, समासयुक्त भाषा।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h10-pr-21",
+   "question": "निराला भारत को निर्जीव नक़्शा नहीं, एक जीवित देवी क्यों दिखाते हैं?",
+   "options": [
+    "ताकि पाठक के मन में देश के लिए प्रेम और श्रद्धा जागे",
+    "क्योंकि नक़्शा बनाना कठिन था",
+    "क्योंकि देवी का चित्र सुंदर लगता है",
+    "क्योंकि भूगोल नीरस है"
+   ],
+   "correct_index": 1,
+   "explanation": "मानवीकरण से भारत पूज्य, जीवंत माँ बन जाता है — जिससे गहरा देशप्रेम उमड़ता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 5
+  },
+  {
+   "id": "h10-pr-22",
+   "question": "हिमालय को मुकुट और गंगा को हार बताने का गहरा संदेश क्या है?",
+   "options": [
+    "भारत का असली गौरव उसकी प्रकृति है, इसकी रक्षा करो",
+    "पहाड़ और नदियाँ तो केवल बाहरी सजावट हैं",
+    "भारत बहुत ठंडा देश है",
+    "गहने ही सब कुछ हैं"
+   ],
+   "correct_index": 0,
+   "explanation": "प्रकृति को आभूषण कहकर कवि उसकी रक्षा (पर्यावरण-चेतना) की ओर भी ले जाते हैं।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h10-pr-23",
+   "question": "\"शतमुख-शतरव-मुखरे\" आज के \"एक भारत, श्रेष्ठ भारत\" से कैसे जुड़ता है?",
+   "options": [
+    "अनेक भाषाएँ-संस्कृतियाँ, फिर भी एक भारत — विविधता में एकता",
+    "भारत में बहुत शोर है",
+    "सौ नदियाँ बहती हैं",
+    "भारत बहुत बड़ा है"
+   ],
+   "correct_index": 2,
+   "explanation": "सौ स्वरों का एक साथ गूँजना भारत की अनेकता-में-एकता का प्रतीक है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h10-pr-24",
+   "question": "स्वतंत्रता-पूर्व लिखी यह कविता आज पर्यावरण की दृष्टि से और ज़रूरी क्यों है?",
+   "options": [
+    "भारत के \"आभूषण\" — हिमालय, गंगा, वन — आज ख़तरे में हैं",
+    "क्योंकि कविता पुरानी है",
+    "क्योंकि भाषा कठिन है",
+    "इसका आज के हमारे समय से कोई नाता ही नहीं है"
+   ],
+   "correct_index": 0,
+   "explanation": "प्रदूषण-जलवायु से वही प्रकृति संकट में है — इसलिए कविता का संदेश आज दोगुना ज़रूरी है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=a2a31dcb-6d14-489f-a28d-16608ca2072e ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 10,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h10-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "भारति",
+    "जय",
+    "विजयकरे",
+    "कनक",
+    "शस्य",
+    "कमलधरे"
+   ],
+   "answer": "भारति जय विजयकरे कनक शस्य कमलधरे"
+  },
+  {
+   "id": "h10-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "राष्ट्रीयता",
+   "instruction": "\"राष्ट्रीयता\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (देशभक्ति)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "सच्ची राष्ट्रीयता अपने देश की प्रकृति और संस्कृति दोनों की रक्षा करने में है।",
+   "min_words": 7
+  },
+  {
+   "id": "h10-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "भारत का सौंदर्य",
+   "instruction": "अपने राज्य/क्षेत्र की किसी एक प्राकृतिक सुंदरता को \"भारत का आभूषण\" बताते हुए एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपने क्षेत्र की बात",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "जैसे निराला हिमालय को मुकुट कहते हैं, वैसे ही मेरे क्षेत्र के हरे-भरे खेत भी भारत-माता के सुनहरे आँचल का एक सुंदर हिस्सा हैं।",
+   "min_words": 10
+  }
+ ]
+}
+
+--- block #4 [callout] id=f703bfa4-2f76-42b0-ac82-e91103e45e38 ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "झरोखे से + खोजबीन",
+ "markdown": "और पढ़िए-सुनिए:\n\n- **झरोखे से:** मैथिलीशरण गुप्त की कविता *\"जय जय भारतमाता\"* — भारत का एक और मनोरम गुणगान।\n- **खोजबीन:** निराला की संस्कृतनिष्ठ कविता *\"वर दे, वीणावादिनि वर दे!\"* खोजकर पढ़िए।\n- अन्य देशप्रेम की कविताएँ खोजकर कक्षा में सुनाइए।"
+}

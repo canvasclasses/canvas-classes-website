@@ -1,0 +1,2283 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 11: झाँसी की रानी
+book=class9-hindi-ganga chapter=11 pages=8
+
+
+================================================================================
+## PAGE 1 — "परिचय — कवयित्री से मिलिए"  (slug: ch11-parichay)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=c5c0bf5a-33ff-4897-883b-3781898ddf30 ---
+{
+ "src": "",
+ "alt": "रानी लक्ष्मीबाई — झाँसी की रानी",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a fearless warrior queen on a white horse, sword raised, child tied to her back, charging against a dawn sky, patriotic and heroic. Warm dramatic light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=dc44abef-3c94-4100-8522-0d42e2c517b6 ---
+{
+ "prompt": "क्या आपने कभी किसी ऐसे इंसान के बारे में सुना है जिसने अपनी जान देकर भी हार नहीं मानी — और मरकर भी अमर हो गया? रानी लक्ष्मीबाई सिर्फ़ 23 साल की उम्र में अंग्रेज़ों से लड़ते हुए शहीद हुईं। सोचिए — कौन-सी चीज़ किसी को इतना निडर बना देती है कि वह मौत से भी न डरे?",
+ "hint": "किसी ऐसे वीर/वीरांगना के बारे में सोचिए जिसकी कहानी आपको प्रेरित करती है।"
+}
+
+--- block #2 [meet_a_scientist] id=09f01818-40be-4119-9a43-7dd845243c82 ---
+{
+ "name": "सुभद्रा कुमारी चौहान",
+ "years": "1904–1948",
+ "nationality": "भारतीय — प्रयागराज, उत्तर प्रदेश",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of poet Subhadra Kumari Chauhan, a dignified Indian woman, dark ground.",
+ "contribution": "अपने समय की प्रसिद्ध कवयित्री और **स्वतंत्रता सेनानी** (दो बार जेल भी गईं)। उन्होंने अपनी कविताओं से जनमानस में **राष्ट्रीय चेतना** जगाई। प्रमुख रचनाएँ — मुकुल, त्रिधारा (कविता-संग्रह), बिखरे मोती, सीधे-सादे चित्र (कहानी)। उन्हें **सेकसरिया पुरस्कार** मिला।",
+ "connection": "\"झाँसी की रानी\" उनकी सबसे प्रसिद्ध कविता है — 1857 की क्रांति की पृष्ठभूमि पर रानी लक्ष्मीबाई के जीवन, संघर्ष और बलिदान की ओजपूर्ण (वीर-रस से भरी) गाथा।",
+ "fun_detail": "इसकी टेक — *\"खूब लड़ी मर्दानी वह तो झाँसी वाली रानी थी\"* — आज भी हर भारतीय की ज़बान पर है। भारतीय डाक विभाग ने उनके सम्मान में डाक टिकट जारी किया।",
+ "learn_more": "कविता-संग्रह \"मुकुल\" और कहानी-संग्रह \"बिखरे मोती\"।"
+}
+
+--- block #3 [callout] id=170c3a2f-472a-404e-8204-3b019de9b206 ---
+{
+ "variant": "india_voice",
+ "title": "1857 की क्रांति और वीर रस",
+ "markdown": "यह कविता **1857 के प्रथम स्वतंत्रता संग्राम** की पृष्ठभूमि पर है। यह **वीर रस** की कविता है — यानी वीरता, जोश और उत्साह का भाव जगाने वाली। यह एक **कथात्मक कविता** (कहानी जैसी) है, जिसमें लक्ष्मीबाई के जीवन की घटनाएँ क्रम से आती हैं। बीच-बीच में दोहराई जाने वाली पंक्ति को **टेक (refrain)** कहते हैं।"
+}
+
+--- block #4 [text] id=a1abe5a1-580f-4b48-8b1d-2dd71fd30196 ---
+{
+ "markdown": "इस ओजपूर्ण कविता को पढ़ने से पहले कुछ शब्द जान लें — फिर हर पंक्ति में वीरता की आग महसूस होगी।"
+}
+
+--- block #5 [vocabulary_lab] id=fd833a52-06f1-4f05-9639-02046ce1e409 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "कविता के शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "5e3a43dd-6db9-4367-b728-4dd39360bc8a",
+   "word": "फिरंगी",
+   "pronunciation": "fi-ran-gee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अंग्रेज",
+   "english": "the British",
+   "example": "फिरंगी को दूर करने की ठानी।",
+   "memory_hook": "the British।"
+  },
+  {
+   "id": "8ce1d0c6-97d8-4615-ab36-9567b830ef8f",
+   "word": "मर्दानी",
+   "pronunciation": "mar-daa-nee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बहादुर, वीर",
+   "english": "brave; valiant",
+   "example": "खूब लड़ी मर्दानी।",
+   "memory_hook": "valiant।"
+  },
+  {
+   "id": "b68e7f0e-633e-4063-a2b1-9718d51e466f",
+   "word": "छबीली",
+   "pronunciation": "chha-bee-lee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "तेजस्वी, सजीली",
+   "english": "spirited",
+   "example": "बचपन में नाम छबीली था।",
+   "memory_hook": "spirited।"
+  },
+  {
+   "id": "57208cdc-cd60-47e5-9377-4b3b91be629e",
+   "word": "अवतार",
+   "pronunciation": "av-taar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "देवता का मनुष्य-रूप",
+   "english": "an incarnation",
+   "example": "वीरता की अवतार।",
+   "memory_hook": "incarnation।"
+  },
+  {
+   "id": "97f881a2-1061-49ef-9818-3dd143862c8d",
+   "word": "हड़प",
+   "pronunciation": "ha-dap",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "ज़बरन छीनना",
+   "english": "to usurp",
+   "example": "राज्य हड़प करना।",
+   "memory_hook": "to grab।"
+  },
+  {
+   "id": "64f7ca2f-cb63-4669-88e9-69d03c44b1e4",
+   "word": "वीरगति",
+   "pronunciation": "veer-ga-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वीरता की मृत्यु",
+   "english": "martyrdom",
+   "example": "रानी को वीरगति मिली।",
+   "memory_hook": "martyrdom।"
+  },
+  {
+   "id": "bf071399-5b8a-4b48-8b64-9b72bc468227",
+   "word": "बलिदान",
+   "pronunciation": "ba-li-daan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "त्याग, क़ुर्बानी",
+   "english": "sacrifice",
+   "example": "उसका बलिदान अमर है।",
+   "memory_hook": "sacrifice।"
+  },
+  {
+   "id": "a22f3e63-fa9b-4dbb-af2b-0957fc40527a",
+   "word": "टेक",
+   "pronunciation": "tek",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दोहराई पंक्ति",
+   "english": "a refrain",
+   "example": "\"खूब लड़ी मर्दानी\" टेक है।",
+   "memory_hook": "refrain।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=c45eaf86-4042-4a79-8f76-08b7ba67d96d ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "37598444-ad3c-4b06-b8bc-73b8c8f5f68b",
+   "question": "यह कविता किसके जीवन और बलिदान पर आधारित है?",
+   "options": [
+    "रानी पद्मावती",
+    "रानी लक्ष्मीबाई",
+    "अहिल्याबाई होलकर",
+    "रज़िया सुल्तान"
+   ],
+   "correct_index": 1,
+   "explanation": "\"झाँसी की रानी\" रानी लक्ष्मीबाई के जीवन और 1857 के संघर्ष पर है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "6a0ed43a-c27e-47bf-8262-cda849dc2641",
+   "question": "सुभद्रा कुमारी चौहान कवयित्री होने के साथ-साथ और क्या थीं?",
+   "options": [
+    "वैज्ञानिक",
+    "चित्रकार",
+    "चिकित्सक",
+    "स्वतंत्रता सेनानी"
+   ],
+   "correct_index": 3,
+   "explanation": "वे स्वतंत्रता सेनानी भी थीं और दो बार जेल गईं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "adfb6bc7-1225-4dfb-bb25-677b398b7e3e",
+   "question": "यह कविता किस \"रस\" से ओत-प्रोत है?",
+   "options": [
+    "वीर रस (वीरता/जोश)",
+    "शृंगार रस",
+    "हास्य रस",
+    "केवल करुण और शांत रस"
+   ],
+   "correct_index": 0,
+   "explanation": "यह वीर रस की कविता है — वीरता, जोश और देशप्रेम जगाने वाली।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "कविता — भाग १ (जागरण और बचपन)"  (slug: ch11-kavita-bhag-1)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=0844543c-119a-45ec-945c-bc8ad541cb68 ---
+{
+ "src": "",
+ "alt": "1857 का जागरण",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an old sword glinting awake, thrones trembling, a spirited girl practising with spear and shield, dawn of rebellion. Warm heroic light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [callout] id=834cc69a-0c24-49e6-938e-ec65f93b2794 ---
+{
+ "variant": "india_voice",
+ "title": "कविता की टेक (refrain)",
+ "markdown": "हर छंद के अंत में यह दो पंक्तियाँ बार-बार आती हैं — यही कविता की **टेक** है:\n\n*\"बुंदेले हरबोलों के मुँह हमने सुनी कहानी थी, खूब लड़ी मर्दानी वह तो झाँसी वाली रानी थी॥\"*\n\n(बुंदेलखंड के लोकगायक \"हरबोलों\" के मुँह से हमने यह कहानी सुनी — वह झाँसी वाली रानी पुरुषों-सी वीरता से ख़ूब लड़ी।)"
+}
+
+--- block #2 [heading] id=3210d912-43c0-4d62-ad22-c2f3d150f5af ---
+{
+ "text": "भाग १ — सोई तलवार जाग उठी",
+ "level": 2
+}
+
+--- block #3 [text] id=afb62a05-c41d-42b0-924d-44e7eaa1c65c ---
+{
+ "markdown": "कविता 1857 के जागरण से शुरू होती है, फिर लक्ष्मीबाई के निडर बचपन को दिखाती है। हर पंक्ति पर टैप कर अर्थ देखिए।"
+}
+
+--- block #4 [narrated_passage] id=c0e9feea-ec16-4d20-b061-e93443e7c09a ---
+{
+ "source_label": "झाँसी की रानी · जागरण",
+ "paragraphs": [
+  {
+   "id": "e24262c7-3c73-46c5-bfde-34fd9549c28f",
+   "sentences": [
+    {
+     "id": "66cc278a-4cd0-4505-9174-9454c34f8b60",
+     "text": "सिंहासन हिल उठे, राजवंशों ने भृकुटी तानी थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "भृकुटी तानी",
+       "meaning": "भौंहें तान लीं (क्रोध/विरोध) — knit their brows in anger",
+       "pos": "पद",
+       "example": "राजवंश अंग्रेज़ों के विरुद्ध तन गए।"
+      }
+     ]
+    },
+    {
+     "id": "79251548-a594-440d-a821-b27fc6621333",
+     "text": "बूढ़े भारत में भी आई फिर से नई जवानी थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "नई जवानी",
+       "meaning": "नया जोश-उत्साह — fresh youthful vigour",
+       "pos": "पद",
+       "example": "पुराने भारत में नया जोश आ गया।"
+      }
+     ]
+    },
+    {
+     "id": "03e74c47-fe55-4cb2-9de1-985b77327340",
+     "text": "गुमी हुई आज़ादी की कीमत सबने पहचानी थी,",
+     "audio_url": ""
+    },
+    {
+     "id": "6c713fd5-529c-44e9-ba49-75e3d53aca23",
+     "text": "दूर फिरंगी को करने की सबने मन में ठानी थी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मन में ठानी",
+       "meaning": "दृढ़ निश्चय कर लिया — resolved firmly (idiom)",
+       "pos": "मुहावरा",
+       "example": "सबने अंग्रेज़ों को भगाने की ठान ली।"
+      }
+     ]
+    },
+    {
+     "id": "84ead438-7028-4b95-ba4a-f0937c58c060",
+     "text": "चमक उठी सन् सत्तावन में वह तलवार पुरानी थी,",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "देखो — कवयित्री \"सिंहासन हिल उठे\", \"बूढ़े भारत में नई जवानी\" जैसे चित्रों से 1857 के पूरे देश में फैले जागरण और जोश को दिखाती हैं। यह वीर रस का आरंभ है।"
+  },
+  {
+   "id": "6e1f44d6-92b7-472d-8288-a940e30309a5",
+   "sentences": [
+    {
+     "id": "015c78a1-64d4-414b-8589-2850fcfc662d",
+     "text": "कानपूर के नाना की मुँहबोली बहन 'छबीली' थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "छबीली",
+       "meaning": "लक्ष्मीबाई का बचपन का नाम — Lakshmibai’s childhood name",
+       "pos": "संज्ञा",
+       "example": "तेजस्वी होने से उसे \"छबीली\" कहते थे।"
+      }
+     ]
+    },
+    {
+     "id": "3308cc8d-bf6d-44ca-841d-ec6964c9e982",
+     "text": "लक्ष्मीबाई नाम, पिता की वह संतान अकेली थी,",
+     "audio_url": ""
+    },
+    {
+     "id": "64b712ee-8cbb-4736-826b-4bed11824c3f",
+     "text": "बरछी, ढाल, कृपाण, कटारी उसकी यही सहेली थी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "बरछी, ढाल, कृपाण, कटारी",
+       "meaning": "भाला, ढाल, तलवार, कटार — spear, shield, sword, dagger",
+       "pos": "संज्ञा",
+       "example": "हथियार ही उसके खिलौने/सहेली थे।"
+      }
+     ]
+    },
+    {
+     "id": "6d9a00e7-5569-4935-8f3c-0d82c3d5460d",
+     "text": "वीर शिवाजी की गाथाएँ उसको याद ज़बानी थीं,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "गाथाएँ",
+       "meaning": "वीरता की कथाएँ — heroic sagas",
+       "pos": "संज्ञा",
+       "example": "शिवाजी की वीर-गाथाएँ उसे ज़बानी याद थीं।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "अब बचपन का चित्र — दूसरी लड़कियाँ गुड़िया से खेलतीं, पर लक्ष्मीबाई की \"सहेलियाँ\" थीं तलवार, ढाल और भाला! वह नकली युद्ध, शिकार और दुर्ग तोड़ना खेलती थी। बचपन से ही वह एक वीरांगना थी।"
+  }
+ ]
+}
+
+--- block #5 [comprehension_checkpoint] id=c3c53729-b330-46a3-9a53-51279762981b ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "604f8c4f-0a6b-4e62-943a-851d085fca72",
+   "question": "लक्ष्मीबाई का बचपन दूसरी लड़कियों से कैसे अलग था?",
+   "options": [
+    "वह केवल गुड़ियों से खेलती थी",
+    "उसकी \"सहेलियाँ\" हथियार (तलवार, ढाल, भाला) थे; वह युद्ध-कौशल खेलती थी",
+    "वह कभी बाहर नहीं निकलती थी",
+    "वह पढ़ती ही नहीं थी"
+   ],
+   "correct_index": 1,
+   "explanation": "बचपन से ही उसके खेल थे — नकली युद्ध, शिकार, दुर्ग तोड़ना; हथियार उसकी \"सहेलियाँ\" थे। वह जन्मजात वीरांगना थी।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=ed77e1a3-19e9-4992-a866-7a5d09452a87 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "edca011e-8d79-41c7-9690-42f6064c5c5d",
+   "question": "\"सिंहासन हिल उठे, राजवंशों ने भृकुटी तानी थी\" किस बात का चित्र है?",
+   "options": [
+    "धरती पर आए किसी भीषण भूकंप का",
+    "किसी उत्सव का",
+    "1857 में पूरे देश में फैला विद्रोह/जागरण",
+    "किसी विवाह का"
+   ],
+   "correct_index": 2,
+   "explanation": "1857 की क्रांति में राजवंश अंग्रेज़ों के विरुद्ध तन गए — पूरे देश का जागरण।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "762aceda-641e-4762-adf3-733b33955c1d",
+   "question": "लक्ष्मीबाई का बचपन का नाम क्या था?",
+   "options": [
+    "मनु",
+    "दुर्गा",
+    "छबीली",
+    "मंदरा"
+   ],
+   "correct_index": 2,
+   "explanation": "कानपुर के नाना की मुँहबोली बहन — उसका बचपन का नाम \"छबीली\" था।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "5357ea6f-be60-4169-a359-b0660f056da8",
+   "question": "\"बरछी, ढाल, कृपाण, कटारी उसकी यही सहेली थी\" से क्या पता चलता है?",
+   "options": [
+    "बचपन से ही वह वीरता और युद्ध-कौशल की ओर थी",
+    "वह हथियार बेचती थी",
+    "वह डरपोक थी",
+    "उसे खेलकूद और हथियार बिलकुल पसंद नहीं थे"
+   ],
+   "correct_index": 0,
+   "explanation": "हथियारों को \"सहेली\" कहना दिखाता है कि वह जन्म से ही निडर वीरांगना थी।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "कविता — भाग २ (वैधव्य और हड़प)"  (slug: ch11-kavita-bhag-2)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=c4790c0e-9c0c-40e9-80ef-5d0ff52bdd60 ---
+{
+ "src": "",
+ "alt": "झाँसी पर संकट",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a grieving widowed queen in a palace as dark clouds gather, a British flag being raised over a fort, sorrow turning to resolve. Dark warm ground, dramatic light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=afb1682f-da88-4657-b364-4b413231ed67 ---
+{
+ "markdown": "विवाह के बाद ख़ुशियाँ आईं, पर जल्द ही दुख और अन्याय का दौर शुरू हुआ — रानी विधवा हुईं, और अंग्रेज़ों ने झाँसी हड़प ली। हर पंक्ति पर टैप कीजिए।"
+}
+
+--- block #2 [narrated_passage] id=585b310e-ef88-42c2-acac-6fe68c224ff5 ---
+{
+ "source_label": "झाँसी की रानी · वैधव्य और हड़प",
+ "paragraphs": [
+  {
+   "id": "a15cd9fe-67f2-4c1c-9560-2a646d8c3a0d",
+   "sentences": [
+    {
+     "id": "aeddc131-7f6d-4a94-83f3-c6e7dc225a31",
+     "text": "उदित हुआ सौभाग्य, मुदित महलों में उजयाली छाई,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "उदित... उजयाली",
+       "meaning": "सौभाग्य उगा, महलों में उजाला छाया — fortune dawned, light filled the palace",
+       "pos": "पद",
+       "example": "विवाह से झाँसी में ख़ुशियाँ आईं।"
+      }
+     ]
+    },
+    {
+     "id": "ed601c88-bdb7-46c6-9140-6d5459877d85",
+     "text": "किंतु कालगति चुपके-चुपके काली घटा घेर लाई,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "काली घटा",
+       "meaning": "दुख के काले बादल — dark clouds of grief",
+       "pos": "रूपक",
+       "example": "समय ने चुपके से दुख ला दिया।"
+      }
+     ]
+    },
+    {
+     "id": "5959ac95-b5aa-4712-a3b9-54b56112d080",
+     "text": "रानी विधवा हुई हाय! विधि को भी नहीं दया आई।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "विधि",
+       "meaning": "भाग्य/विधाता — fate",
+       "pos": "संज्ञा",
+       "example": "भाग्य भी निर्दयी रहा — रानी विधवा हो गईं।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "सुख ज़्यादा दिन न टिका — राजा की मृत्यु हो गई और रानी विधवा हो गईं। \"तीर चलाने वाले हाथ में चूड़ियाँ कब भातीं\" — यानी वह वीरांगना थीं, शोक में टूटने वाली नहीं।"
+  },
+  {
+   "id": "869d2286-f789-450e-bf54-427aacdbf3d3",
+   "sentences": [
+    {
+     "id": "10824f0b-aabd-45b7-b5cc-d0323fb3b892",
+     "text": "बुझा दीप झाँसी का तब डलहौजी मन में हरषाया,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "बुझा दीप",
+       "meaning": "झाँसी का \"दीपक\" बुझना — राजा की मृत्यु/राज्य की उम्मीदों का अंत",
+       "pos": "रूपक",
+       "example": "राजा की मृत्यु पर डलहौजी ख़ुश हुआ।"
+      }
+     ]
+    },
+    {
+     "id": "16a1dcb1-d7a4-429c-973e-78b7c2089b2b",
+     "text": "राज्य हड़प करने का उसने यह अच्छा अवसर पाया,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "राज्य हड़प",
+       "meaning": "राज्य ज़बरन छीन लेना — annexation",
+       "pos": "पद",
+       "example": "डलहौजी ने झाँसी हड़पने का मौक़ा पाया।"
+      }
+     ]
+    },
+    {
+     "id": "2714c330-ffa3-4375-8da3-74d47fa666f6",
+     "text": "लावारिस का वारिस बनकर ब्रिटिश राज्य झाँसी आया।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "लावारिस का वारिस",
+       "meaning": "जिसका वारिस न हो, उसका \"वारिस\" बनकर (हड़प नीति) — Doctrine of Lapse",
+       "pos": "पद",
+       "example": "बिना उत्तराधिकारी का बहाना बनाकर अंग्रेज़ झाँसी पर क़ब्ज़ा कर बैठे।"
+      }
+     ]
+    },
+    {
+     "id": "d95429fc-4a93-4e9f-bb55-b7b5572fc9c8",
+     "text": "अश्रुपूर्ण रानी ने देखा झाँसी हुई बिरानी थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "बिरानी",
+       "meaning": "पराई — alien/lost",
+       "pos": "विशेषण",
+       "example": "रानी ने आँसू भरकर देखा — झाँसी पराई हो गई।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "यहाँ अंग्रेज़ों की कुख्यात \"हड़प नीति\" (Doctrine of Lapse) दिखती है — जिस राजा का कोई वारिस न हो, उसका राज्य अंग्रेज़ हड़प लेते थे। इसी बहाने झाँसी छीन ली गई। पर रानी ने हार नहीं मानी।"
+  }
+ ]
+}
+
+--- block #3 [comprehension_checkpoint] id=fdcfed8e-fa6c-40e7-b792-d8bbfdb38fdf ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "95c4c59c-d87c-4fa8-8376-ed8a86cdc705",
+   "question": "\"लावारिस का वारिस बनकर ब्रिटिश राज्य झाँसी आया\" किस नीति की ओर संकेत करता है?",
+   "options": [
+    "व्यापार की नीति",
+    "शिक्षा की नीति",
+    "खेती की नीति",
+    "डलहौजी की हड़प नीति (Doctrine of Lapse)"
+   ],
+   "correct_index": 3,
+   "explanation": "जिस राजा का वारिस न हो उसका राज्य हड़प लेना — डलहौजी की \"हड़प नीति\"। इसी से झाँसी छीनी गई।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=a5d73a23-1bfd-4a19-ab95-107a865bbdb9 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "fbf94fd6-a8c9-4db4-88d0-d7b24f898330",
+   "question": "राजा की मृत्यु के बाद रानी की क्या दशा हुई?",
+   "options": [
+    "वे झाँसी राज्य छोड़कर हमेशा के लिए चली गईं",
+    "वे अंग्रेज़ों से मिल गईं",
+    "वे चुप बैठ गईं",
+    "वे विधवा हो गईं, पर वीरता नहीं छोड़ी"
+   ],
+   "correct_index": 3,
+   "explanation": "रानी विधवा हुईं, पर \"तीर चलाने वाले हाथ में चूड़ियाँ कब भातीं\" — उन्होंने वीरता नहीं छोड़ी।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "a1c1f12e-df13-4e53-a312-dd0b5f07c829",
+   "question": "\"बुझा दीप झाँसी का\" का भावार्थ क्या है?",
+   "options": [
+    "सचमुच का कोई जलता हुआ दीपक बुझ गया",
+    "राजा की मृत्यु से झाँसी की उम्मीदों/राज्य का संकट",
+    "बिजली चली गई",
+    "कोई त्योहार बीता"
+   ],
+   "correct_index": 1,
+   "explanation": "\"दीप बुझना\" रूपक है — राजा की मृत्यु और झाँसी राज्य पर छाया संकट।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "563cfc71-4f08-48d3-8ff4-fef97b2eac71",
+   "question": "झाँसी हड़पने पर अंग्रेज़ों ने कौन-सा बहाना बनाया?",
+   "options": [
+    "कि रानी राज्य चलाने के बिलकुल अयोग्य थीं",
+    "कि राजा का कोई वारिस नहीं (हड़प नीति)",
+    "कि झाँसी ग़रीब थी",
+    "कि कोई युद्ध हुआ"
+   ],
+   "correct_index": 1,
+   "explanation": "\"लावारिस का वारिस बनकर\" — बिना उत्तराधिकारी का बहाना बनाकर हड़प नीति से क़ब्ज़ा।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "कविता — भाग ३ (क्रांति, युद्ध और बलिदान)"  (slug: ch11-kavita-bhag-3)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=3a4456a9-1787-4499-b37d-efce964a4d92 ---
+{
+ "src": "",
+ "alt": "अंतिम युद्ध और बलिदान",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warrior queen on horseback fighting many soldiers near a ravine, sword flashing, heroic and tragic, a flame of freedom rising behind. Dark warm ground, dramatic light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=66be33e7-7e7a-478c-986a-42f02fd0144f ---
+{
+ "markdown": "अब क्रांति की आग पूरे देश में फैलती है, रानी अंतिम साँस तक लड़ती हैं, और वीरगति पाकर अमर हो जाती हैं। हर पंक्ति पर टैप कीजिए।"
+}
+
+--- block #2 [narrated_passage] id=b160512f-9c8b-4157-a445-a93c20b86525 ---
+{
+ "source_label": "झाँसी की रानी · क्रांति और बलिदान",
+ "paragraphs": [
+  {
+   "id": "e2466ce8-99a9-46b6-9454-e7c4c3e02e7a",
+   "sentences": [
+    {
+     "id": "9025f6ab-d75f-45de-8251-cf4695062706",
+     "text": "महलों ने दी आग, झोंपड़ी ने ज्वाला सुलगाई थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "महलों... झोंपड़ी",
+       "meaning": "राजा-रंक सब, अमीर-ग़रीब एक साथ — palaces and huts alike",
+       "pos": "पद",
+       "example": "अमीर-ग़रीब सब क्रांति में जुड़े।"
+      }
+     ]
+    },
+    {
+     "id": "cccb3bd0-12cc-4ac9-9eb7-28548c79a0bb",
+     "text": "यह स्वतंत्रता की चिंगारी अंतरतम से आई थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "चिंगारी",
+       "meaning": "आज़ादी की पहली कण-सी आग — the first spark of freedom",
+       "pos": "रूपक",
+       "example": "यह आग दिल की गहराई से उठी थी।"
+      }
+     ]
+    },
+    {
+     "id": "7972a499-e651-4012-b8da-948438239ea8",
+     "text": "झाँसी चेती, दिल्ली चेती, लखनऊ लपटें छाई थीं,",
+     "audio_url": ""
+    },
+    {
+     "id": "49a9675c-5bc1-4dfe-96c4-4a0dba5060c4",
+     "text": "मेरठ, कानपुर, पटना ने भारी धूम मचाई थी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "धूम मचाना",
+       "meaning": "ज़ोरदार हलचल करना (मुहावरा) — to cause an uproar",
+       "pos": "मुहावरा",
+       "example": "जगह-जगह विद्रोह की धूम मच गई।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "देखो — \"महल\" और \"झोंपड़ी\" दोनों ने आग दी, यानी अमीर-ग़रीब सब एक साथ उठे। दिल्ली, लखनऊ, मेरठ, कानपुर — पूरे उत्तर भारत में क्रांति की लपटें फैल गईं। यह सबकी साझा लड़ाई थी।"
+  },
+  {
+   "id": "ba884f85-898f-41ff-82a7-86587c43db95",
+   "sentences": [
+    {
+     "id": "bb509c02-0ed8-42e2-a20e-4f07fcf43bc5",
+     "text": "रानी एक, शत्रु बहुतेरे, होने लगे वार पर वार,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "एक... बहुतेरे",
+       "meaning": "अकेली रानी, अनेक शत्रु — one queen, many foes",
+       "pos": "पद",
+       "example": "अकेली रानी पर अनेक शत्रुओं के वार।"
+      }
+     ]
+    },
+    {
+     "id": "f15dece4-32a6-45af-9264-0c1cc3609a79",
+     "text": "घायल होकर गिरी सिंहनी उसे वीर-गति पानी थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "गिरी सिंहनी",
+       "meaning": "शेरनी-सी रानी घायल होकर गिरी — the lioness fell wounded",
+       "pos": "रूपक",
+       "example": "रानी को सीधे \"सिंहनी\" कहना — रूपक।"
+      },
+      {
+       "word": "वीर-गति",
+       "meaning": "वीरता की मृत्यु — a martyr’s death",
+       "pos": "संज्ञा",
+       "example": "रानी ने वीरगति पाई — शहीद हुईं।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "अंतिम युद्ध — अकेली रानी पर अनेक शत्रु टूट पड़े। \"सिंहनी\" (शेरनी) की तरह लड़ती हुई, घायल होकर वे गिरीं और वीरगति को प्राप्त हुईं — केवल 23 वर्ष की उम्र में।"
+  },
+  {
+   "id": "35f3b401-6608-45cf-8292-e413ba79405b",
+   "sentences": [
+    {
+     "id": "176bca2e-8d90-4d7b-9fab-8afaf56f9736",
+     "text": "जाओ रानी याद रखेंगे हम कृतज्ञ भारत वासी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "कृतज्ञ",
+       "meaning": "एहसानमंद — grateful",
+       "pos": "विशेषण",
+       "example": "कृतज्ञ भारतवासी तुम्हें सदा याद रखेंगे।"
+      }
+     ]
+    },
+    {
+     "id": "48b7b743-17ae-40b1-96fb-1e86d9441e60",
+     "text": "यह तेरा बलिदान जगावेगा स्वतंत्रता अविनाशी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "अविनाशी",
+       "meaning": "जो कभी न मिटे — imperishable",
+       "pos": "विशेषण",
+       "example": "तुम्हारा बलिदान अमर स्वतंत्रता को जगाएगा।"
+      }
+     ]
+    },
+    {
+     "id": "32f3748e-756f-4b8b-bc13-07a7d26d14c6",
+     "text": "तेरा स्मारक तू ही होगी, तू खुद अमिट निशानी थी,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "स्मारक... अमिट निशानी",
+       "meaning": "तुम्हारी याद ही तुम्हारा स्मारक — your memory is your monument",
+       "pos": "पद",
+       "example": "रानी ख़ुद एक अमिट (न मिटने वाली) निशानी बन गईं।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "अंत में कवयित्री की भावभीनी श्रद्धांजलि — \"जाओ रानी, कृतज्ञ भारत तुम्हें सदा याद रखेगा। तुम्हारा बलिदान आज़ादी की अमर आग जगाएगा। तुम ख़ुद ही अपना स्मारक हो।\" यही इस कविता की अमरता है।"
+  }
+ ]
+}
+
+--- block #3 [heading] id=ce164f37-aece-4eae-bafc-45ea0f6f8e4e ---
+{
+ "text": "कविता की भाव-यात्रा",
+ "level": 2
+}
+
+--- block #4 [tone_meter] id=5fea5489-0b6d-4d75-b199-d073fe8cab61 ---
+{
+ "segments": [
+  {
+   "id": "e563dc15-4d3f-4295-aca8-11f22d3ca35f",
+   "excerpt": "सिंहासन हिल उठे... नई जवानी थी",
+   "emotion": "जोश/जागरण",
+   "intensity": 4,
+   "note": "1857 का देशव्यापी जागरण।"
+  },
+  {
+   "id": "5b435469-bff1-4df2-a473-3952123d0a89",
+   "excerpt": "बरछी, ढाल, कृपाण... सहेली थी",
+   "emotion": "वीर-गर्व",
+   "intensity": 4,
+   "note": "बचपन से ही निडर वीरांगना।"
+  },
+  {
+   "id": "2c8709bf-cd94-4e64-8471-a8af920a44ba",
+   "excerpt": "रानी विधवा हुई हाय!",
+   "emotion": "शोक",
+   "intensity": 3,
+   "note": "राजा की मृत्यु — दुख का क्षण।"
+  },
+  {
+   "id": "98e4b0e7-c449-4742-abb3-ac7cfa599e96",
+   "excerpt": "लावारिस का वारिस बनकर... आया",
+   "emotion": "आक्रोश",
+   "intensity": 4,
+   "note": "अन्यायपूर्ण हड़प नीति पर रोष।"
+  },
+  {
+   "id": "be965939-8252-4458-a21b-0e7d02cac6df",
+   "excerpt": "घायल होकर गिरी सिंहनी",
+   "emotion": "वीरता-बलिदान",
+   "intensity": 5,
+   "note": "अंतिम साँस तक लड़ते हुए वीरगति।"
+  },
+  {
+   "id": "02687f1c-6230-44d4-99d8-d85055b40d18",
+   "excerpt": "तेरा स्मारक तू ही होगी",
+   "emotion": "श्रद्धा/अमरता",
+   "intensity": 5,
+   "note": "अमर बलिदान को भावभीनी श्रद्धांजलि।"
+  }
+ ]
+}
+
+--- block #5 [comprehension_checkpoint] id=26b5983f-a14e-438c-b510-e3b8e84cc7c2 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "3d7f7168-1533-4fae-b517-f1ce866cee18",
+   "question": "\"महलों ने दी आग, झोंपड़ी ने ज्वाला सुलगाई थी\" किस बात पर ज़ोर देता है?",
+   "options": [
+    "अमीर-ग़रीब, राजा-रंक सब क्रांति में एक साथ थे (एकता)",
+    "केवल राजा लड़े",
+    "केवल ग़रीब लड़े",
+    "किसी ने आग लगाई"
+   ],
+   "correct_index": 0,
+   "explanation": "महल (अमीर) और झोंपड़ी (ग़रीब) दोनों ने मिलकर आग दी — पूरे समाज की एकता ही 1857 की ताक़त थी।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=db84e7f3-562e-4179-b057-932c2d500776 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "136b76c5-8cc7-457a-b8cc-eadf52c7bc13",
+   "question": "1857 की क्रांति की लपटें किन-किन शहरों में फैलीं?",
+   "options": [
+    "केवल झाँसी",
+    "केवल दिल्ली",
+    "देश के किसी भी बड़े शहर में बिलकुल नहीं",
+    "झाँसी, दिल्ली, लखनऊ, मेरठ, कानपुर, पटना"
+   ],
+   "correct_index": 3,
+   "explanation": "\"झाँसी चेती, दिल्ली चेती, लखनऊ लपटें छाई\" — पूरे उत्तर भारत में क्रांति फैली।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "34ee6ffe-84e7-4ccf-bf08-7598dc8d2b67",
+   "question": "\"घायल होकर गिरी सिंहनी\" में रानी को \"सिंहनी\" कहना कौन-सा अलंकार है?",
+   "options": [
+    "रूपक (अभेद)",
+    "अनुप्रास",
+    "अतिशयोक्ति",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 0,
+   "explanation": "रानी को सीधे \"सिंहनी\" (शेरनी) कह देना (बिना \"जैसे\" के) — रूपक अलंकार।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "442b72df-4355-42c6-95b3-d2163edfeff8",
+   "question": "\"तेरा स्मारक तू ही होगी, तू खुद अमिट निशानी थी\" का भाव क्या है?",
+   "options": [
+    "रानी की याद में पूरे देश में आज तक कहीं कोई स्मारक नहीं बनाया गया",
+    "रानी को भुला दिया गया",
+    "रानी का बलिदान ही उन्हें अमर बना गया — वे ख़ुद एक न मिटने वाली निशानी हैं",
+    "रानी ने स्मारक बनवाया"
+   ],
+   "correct_index": 2,
+   "explanation": "उनकी वीरता और बलिदान ही उनका सबसे बड़ा, अमिट स्मारक है — वे इतिहास में अमर हो गईं।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "शब्द-संपदा"  (slug: ch11-shabd-sampada)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=b143367b-4467-4d52-b228-344dba1b89b0 ---
+{
+ "src": "",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a sword-and-shield motif, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=b6aca18a-4045-42af-ba1c-27e2f570f821 ---
+{
+ "markdown": "इस वीर-रस कविता के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=51e262df-9c87-43f9-b852-ad54ef2d38c9 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: कविता के मूल शब्द।",
+ "cards": [
+  {
+   "id": "ef5ef57c-5aac-43fc-8c66-2229a7657262",
+   "word": "फिरंगी",
+   "pronunciation": "fi-ran-gee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अंग्रेज, विलायती",
+   "english": "the British; a foreigner",
+   "example": "\"दूर फिरंगी को करने की सबने मन में ठानी थी।\"",
+   "memory_hook": "the British।"
+  },
+  {
+   "id": "1b9fa3a1-8411-448a-810b-a347a237d85e",
+   "word": "मर्दानी",
+   "pronunciation": "mar-daa-nee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "बहादुर, पुरुषोचित",
+   "english": "brave; valiant",
+   "example": "\"खूब लड़ी मर्दानी...\"",
+   "memory_hook": "पुरुष-सी वीर।"
+  },
+  {
+   "id": "3031f76c-12d6-43f0-9a8d-b2695b4bd666",
+   "word": "छबीली",
+   "pronunciation": "chha-bee-lee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "तेजस्वी, सजीली, सुंदर",
+   "english": "vivacious; spirited",
+   "example": "\"...मुँहबोली बहन छबीली थी।\" (लक्ष्मीबाई का बचपन का नाम)।",
+   "memory_hook": "lively/spirited।"
+  },
+  {
+   "id": "ed249e2e-3d44-40ff-85ad-a459a2319e67",
+   "word": "बरछी",
+   "pronunciation": "bar-chhee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "छोटा भाला",
+   "english": "a small spear",
+   "example": "\"बरछी, ढाल, कृपाण, कटारी उसकी यही सहेली थी।\"",
+   "memory_hook": "a spear।"
+  },
+  {
+   "id": "e075ea06-ccbe-487d-91a7-f5cab7a92258",
+   "word": "ढाल",
+   "pronunciation": "dhaal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आघात रोकने का साधन",
+   "english": "a shield",
+   "example": "तलवार के वार को ढाल रोकती है।",
+   "memory_hook": "a shield।"
+  },
+  {
+   "id": "257e8be8-be30-4844-982f-b6d86f44a149",
+   "word": "कृपाण",
+   "pronunciation": "kri-paan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "तलवार",
+   "english": "a sword",
+   "example": "बचपन में कृपाण ही उसकी सहेली थी।",
+   "memory_hook": "a sword।"
+  },
+  {
+   "id": "c3a5e10c-11c8-4252-9a16-20e928bc15a9",
+   "word": "गाथा",
+   "pronunciation": "gaa-thaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कथा, प्रशंसा-गीत",
+   "english": "a ballad; a saga",
+   "example": "\"वीर शिवाजी की गाथाएँ उसको याद ज़बानी थीं।\"",
+   "memory_hook": "a saga।"
+  },
+  {
+   "id": "9e2a5ee4-3f5c-462a-b2ba-f7b2c005dae6",
+   "word": "अवतार",
+   "pronunciation": "av-taar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "देवता का मनुष्य-रूप में जन्म",
+   "english": "an incarnation",
+   "example": "\"...वह स्वयं वीरता की अवतार।\"",
+   "memory_hook": "incarnation।"
+  },
+  {
+   "id": "1818929b-884c-4da8-9f36-e732a712f006",
+   "word": "व्यूह",
+   "pronunciation": "vyooh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सेना की रचना/घेरा",
+   "english": "a battle-formation",
+   "example": "\"नकली युद्ध-व्यूह की रचना...\"",
+   "memory_hook": "formation।"
+  },
+  {
+   "id": "51d6bb69-424a-465a-a777-215961656b5f",
+   "word": "दुर्ग",
+   "pronunciation": "durg",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "किला, गढ़",
+   "english": "a fort",
+   "example": "\"सैन्य घेरना, दुर्ग तोड़ना...\"",
+   "memory_hook": "a fort।"
+  },
+  {
+   "id": "e3d6fda6-f226-4833-95fc-f13dc1059f5b",
+   "word": "हड़प",
+   "pronunciation": "ha-dap",
+   "audio_url": "",
+   "pos": "क्रिया/संज्ञा",
+   "meaning": "ज़बरन छीन लेना",
+   "english": "to usurp; grab",
+   "example": "\"राज्य हड़प करने का उसने यह अच्छा अवसर पाया।\"",
+   "memory_hook": "to grab।"
+  },
+  {
+   "id": "ebb4a94d-61fa-463e-9318-6dec8079c2d0",
+   "word": "लावारिस",
+   "pronunciation": "laa-vaa-ris",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जिसका कोई वारिस न हो",
+   "english": "heirless",
+   "example": "\"लावारिस का वारिस बनकर ब्रिटिश राज्य झाँसी आया।\"",
+   "memory_hook": "heirless।"
+  },
+  {
+   "id": "96e859de-805a-4df4-9531-cd4b4cd05fae",
+   "word": "बिरानी",
+   "pronunciation": "bi-raa-nee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पराई, बेगानी",
+   "english": "alien; another's",
+   "example": "\"झाँसी हुई बिरानी थी।\" (झाँसी पराई हो गई)।",
+   "memory_hook": "alien।"
+  },
+  {
+   "id": "e80aa5dd-d220-4863-81b6-c8aa1132f6cf",
+   "word": "विधि",
+   "pronunciation": "vi-dhi",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विधाता, भाग्य; तरीक़ा",
+   "english": "fate/Creator; a method",
+   "example": "\"विधि को भी नहीं दया आई।\" (अनेकार्थी)।",
+   "memory_hook": "fate/method।"
+  },
+  {
+   "id": "d6603c3d-e1ce-41c4-aec0-9ea52c868a93",
+   "word": "चिंगारी",
+   "pronunciation": "chin-gaa-ree",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आग का छोटा कण",
+   "english": "a spark",
+   "example": "\"यह स्वतंत्रता की चिंगारी अंतरतम से आई थी।\"",
+   "memory_hook": "a spark।"
+  },
+  {
+   "id": "795c30e7-e597-48d4-97db-71c6905bc97f",
+   "word": "ज्वाला",
+   "pronunciation": "jvaa-laa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आग की लपट",
+   "english": "a flame",
+   "example": "\"झोंपड़ी ने ज्वाला सुलगाई थी।\"",
+   "memory_hook": "a flame।"
+  },
+  {
+   "id": "31c57e0d-fe7a-4859-84ff-3c7271129c28",
+   "word": "बलिदान",
+   "pronunciation": "ba-li-daan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "त्याग, क़ुर्बानी",
+   "english": "sacrifice",
+   "example": "\"यह तेरा बलिदान जगावेगा स्वतंत्रता अविनाशी।\"",
+   "memory_hook": "sacrifice।"
+  },
+  {
+   "id": "65a85db0-d696-4642-bfdb-73626ddf4f93",
+   "word": "वीरगति",
+   "pronunciation": "veer-ga-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वीरता की मृत्यु",
+   "english": "a hero's death (martyrdom)",
+   "example": "\"उसे वीर-गति पानी थी।\"",
+   "memory_hook": "martyrdom।"
+  },
+  {
+   "id": "3c0020d2-bbc8-447e-8377-615ae12a4f0a",
+   "word": "सिंहनी",
+   "pronunciation": "sinh-nee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "शेरनी",
+   "english": "a lioness",
+   "example": "\"घायल होकर गिरी सिंहनी...\"",
+   "memory_hook": "a lioness।"
+  },
+  {
+   "id": "79088e36-f0d0-4d4b-81d5-8ebcd3a53dc9",
+   "word": "मदमाती",
+   "pronunciation": "mad-maa-tee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "मस्त, उन्मत्त",
+   "english": "exultant; intoxicated",
+   "example": "\"हो मदमाती विजय...\"",
+   "memory_hook": "exultant।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "8c7b6bc8-6136-4124-b9cd-b96c42c9baa0",
+   "question": "\"फिरंगी\" किसे कहा गया है?",
+   "options": [
+    "मराठों को",
+    "बुंदेलों को",
+    "अंग्रेज़ों को",
+    "मुगलों को"
+   ],
+   "correct_index": 2,
+   "explanation": "फिरंगी = the British/foreigner — यहाँ अंग्रेज़।"
+  },
+  {
+   "id": "040410fa-1f89-4f77-bb5c-b8041a74a99b",
+   "question": "\"मर्दानी\" का अर्थ है —",
+   "options": [
+    "बहादुर, वीर",
+    "डरपोक",
+    "आलसी",
+    "कमज़ोर"
+   ],
+   "correct_index": 0,
+   "explanation": "मर्दानी = brave/valiant, पुरुषोचित वीरता।"
+  },
+  {
+   "id": "515063bd-2ecf-4c1a-af93-13f5421d5100",
+   "question": "\"हड़प\" का अर्थ है —",
+   "options": [
+    "उपहार देना",
+    "रक्षा करना",
+    "बाँट देना",
+    "ज़बरन छीन लेना"
+   ],
+   "correct_index": 3,
+   "explanation": "हड़प = to usurp/grab, ज़बरन छीनना।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=058a7b61-54f7-47c7-9009-123ccede2c0c ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: श्रद्धांजलि और काव्य से जुड़े शब्द।",
+ "cards": [
+  {
+   "id": "3863f9d3-67a2-4a0f-a5f6-d9480ecb22a7",
+   "word": "कृतज्ञ",
+   "pronunciation": "kri-tagya",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "उपकार मानने वाला, एहसानमंद",
+   "english": "grateful",
+   "example": "\"याद रखेंगे हम कृतज्ञ भारत वासी।\"",
+   "memory_hook": "grateful।"
+  },
+  {
+   "id": "4ec16b0b-636c-4a59-86c5-99fa69428cdc",
+   "word": "अविनाशी",
+   "pronunciation": "a-vi-naa-shee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "नाशरहित, नित्य",
+   "english": "imperishable; eternal",
+   "example": "\"...जगावेगा स्वतंत्रता अविनाशी।\"",
+   "memory_hook": "अ + विनाशी।"
+  },
+  {
+   "id": "1ffec6a8-d398-45c4-896a-6009330a1575",
+   "word": "स्मारक",
+   "pronunciation": "smaa-rak",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "स्मृति-रक्षा का भवन/स्तंभ",
+   "english": "a memorial",
+   "example": "\"तेरा स्मारक तू ही होगी।\"",
+   "memory_hook": "a memorial।"
+  },
+  {
+   "id": "26c20856-1888-403b-84e7-a61e62ecdc55",
+   "word": "अमिट",
+   "pronunciation": "a-mit",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जो मिटे नहीं",
+   "english": "indelible",
+   "example": "\"तू खुद अमिट निशानी थी।\"",
+   "memory_hook": "अ + मिट।"
+  },
+  {
+   "id": "b5d14395-7f62-405e-a04f-6d168207f980",
+   "word": "सुभट",
+   "pronunciation": "su-bhat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "रणकुशल योद्धा",
+   "english": "a valiant warrior",
+   "example": "\"सुभट बुंदेलों की विरुदावलि-सी...\"",
+   "memory_hook": "a warrior।"
+  },
+  {
+   "id": "7e0df7f0-94cb-4fcc-a9c6-1cb7ad4c5c57",
+   "word": "विरुदावलि",
+   "pronunciation": "vi-ru-daa-va-li",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "यशोगान, कीर्ति-गाथा",
+   "english": "a eulogy",
+   "example": "बुंदेलों की विरुदावलि-सी झाँसी आई।",
+   "memory_hook": "praise-song।"
+  },
+  {
+   "id": "f48df7c5-798e-476a-95ed-00cbc3b4ab8c",
+   "word": "बिसात",
+   "pronunciation": "bi-saat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हैसियत, सामर्थ्य",
+   "english": "worth; standing",
+   "example": "\"...की कौन बिसात।\"",
+   "memory_hook": "worth।"
+  },
+  {
+   "id": "efd87867-0871-48aa-90e7-b80237f0fe8b",
+   "word": "निपात",
+   "pronunciation": "ni-paat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "गिरना, विनाश",
+   "english": "fall; destruction",
+   "example": "\"...हुआ था वज्र-निपात।\"",
+   "memory_hook": "a fall।"
+  },
+  {
+   "id": "72d87d7c-1719-4e25-81d9-9aaf311071f2",
+   "word": "बेजार",
+   "pronunciation": "be-jaar",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "दुखी, ऊबा हुआ",
+   "english": "distressed; weary",
+   "example": "\"बेगम ग़म से थीं बेजार।\"",
+   "memory_hook": "distressed।"
+  },
+  {
+   "id": "909fb5af-8e6c-4e32-bc57-de097f80b65e",
+   "word": "सन्मुख",
+   "pronunciation": "san-mukh",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "सामने, भिड़ने वाला",
+   "english": "facing; confronting",
+   "example": "\"जनरल स्मिथ सन्मुख था।\"",
+   "memory_hook": "facing।"
+  },
+  {
+   "id": "f91cd1de-e579-462a-abd6-ea889e431abb",
+   "word": "वीर रस",
+   "pronunciation": "veer-ras",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "वीरता/उत्साह का भाव (रस)",
+   "english": "the heroic sentiment (Vir Rasa)",
+   "example": "यह कविता वीर रस से ओत-प्रोत है।",
+   "memory_hook": "heroic mood।"
+  },
+  {
+   "id": "5160d912-241d-462a-888c-af52c7b07229",
+   "word": "कथात्मक",
+   "pronunciation": "ka-thaat-mak",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "कहानी जैसी (घटना-क्रम वाली)",
+   "english": "narrative",
+   "example": "यह एक कथात्मक कविता है।",
+   "memory_hook": "narrative।"
+  },
+  {
+   "id": "7f0be46f-6d06-4051-b6c7-8d1d62238283",
+   "word": "क्रांति",
+   "pronunciation": "kraan-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विद्रोह, बड़ा उलटफेर",
+   "english": "a revolution",
+   "example": "1857 की क्रांति भारत का अमर अध्याय है।",
+   "memory_hook": "revolution।"
+  },
+  {
+   "id": "76c1f821-7474-46bc-99e5-95ce834b8eb6",
+   "word": "टेक",
+   "pronunciation": "tek",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कविता की बार-बार दोहराई पंक्ति",
+   "english": "a refrain",
+   "example": "\"खूब लड़ी मर्दानी...\" कविता की टेक है।",
+   "memory_hook": "a refrain।"
+  },
+  {
+   "id": "9cb3718f-13ea-4b4d-8862-3b6cab630149",
+   "word": "नाना",
+   "pronunciation": "naa-naa",
+   "audio_url": "",
+   "pos": "संज्ञा/विशेषण",
+   "meaning": "माता का पिता; अनेक प्रकार के",
+   "english": "maternal grandfather; various",
+   "example": "\"नाना के सँग खेली थी।\" (अनेकार्थी शब्द)।",
+   "memory_hook": "grandpa / various।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=0ea5e957-f0c3-4bc5-a7e0-f5b4ce5eee78 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "2a6da38a-047f-45e4-94e8-74166c5b7c2a",
+   "question": "\"वीरगति\" का अर्थ है —",
+   "options": [
+    "डरकर युद्ध से भाग जाना",
+    "बहुत तेज़ चलना",
+    "वीरता दिखाते हुए युद्ध में मृत्यु",
+    "विजय का जुलूस"
+   ],
+   "correct_index": 2,
+   "explanation": "वीरगति = a hero's death (martyrdom)।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "888eabf6-da88-4e3e-9f9d-7084f7946d74",
+   "question": "\"अविनाशी\" का अर्थ है —",
+   "options": [
+    "जो कभी न मिटे (नित्य)",
+    "जो बहुत जल्दी टूट जाए",
+    "जो छोटा हो",
+    "जो नया हो"
+   ],
+   "correct_index": 0,
+   "explanation": "अविनाशी = imperishable, अ + विनाशी।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "ff251095-4375-4f58-ba0e-9ae16bf627c7",
+   "question": "\"नाना\" शब्द अनेकार्थी है — इसके दो अर्थ कौन-से हैं?",
+   "options": [
+    "केवल पिता और कोई नहीं",
+    "केवल भाई",
+    "केवल मित्र",
+    "माता का पिता; अनेक प्रकार के"
+   ],
+   "correct_index": 3,
+   "explanation": "\"नाना\" = (1) माता का पिता, (2) अनेक प्रकार के — एक से अधिक अर्थ वाला अनेकार्थी शब्द।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "कविता में कहानी और सौंदर्य"  (slug: ch11-kavita-kahani)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=85d3ae84-535f-421e-8f59-ce95b8b22fba ---
+{
+ "src": "",
+ "alt": "कविता में कहानी",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a timeline of a heroic life unfolding — childhood, marriage, war, martyrdom — with verse flowing alongside, on a dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=26da1708-8d15-4aba-b5fb-018050ed8981 ---
+{
+ "markdown": "यह एक **कथात्मक कविता** है — इसमें कहानी की तरह घटनाएँ क्रम से आती हैं। पहले लक्ष्मीबाई के जीवन की समय-रेखा देखिए, फिर कविता के अलंकार।"
+}
+
+--- block #2 [timeline] id=2aca22dc-00f4-41b6-acd5-ae28e6acea17 ---
+{
+ "title": "रानी लक्ष्मीबाई के जीवन की समय-रेखा",
+ "orientation": "vertical",
+ "events": [
+  {
+   "id": "90ebe865-7380-4605-a81c-ca6d9bb74ab0",
+   "label": "बचपन — \"छबीली\"",
+   "detail": "कानपुर में बचपन; हथियार ही सहेली; शिवाजी की वीर-गाथाएँ कंठस्थ।"
+  },
+  {
+   "id": "e366fc1b-77c4-4ac5-9cb3-01b24c30c9a4",
+   "label": "विवाह — झाँसी आगमन",
+   "detail": "झाँसी के राजा से विवाह; महलों में ख़ुशियाँ छाईं।"
+  },
+  {
+   "id": "f34742c8-c028-4c9e-8217-8a3fa7c8d97a",
+   "label": "वैधव्य",
+   "detail": "राजा की मृत्यु; रानी विधवा हुईं, पर वीरता नहीं छोड़ी।"
+  },
+  {
+   "id": "f6852dc9-d27d-49f9-8b72-979ed0371c2b",
+   "label": "हड़प नीति",
+   "detail": "डलहौजी ने \"लावारिस का वारिस\" बनकर झाँसी हड़प ली।"
+  },
+  {
+   "id": "61c2426a-f65b-4dcc-a4e3-0a13a69fd654",
+   "label": "1857 की क्रांति",
+   "detail": "झाँसी-दिल्ली-लखनऊ-मेरठ-कानपुर में क्रांति की लपटें; रानी ने रण-चंडी रूप धारण किया।"
+  },
+  {
+   "id": "69d11a7f-3f67-4095-b737-0c422880a800",
+   "label": "युद्ध और वीरगति",
+   "detail": "ग्वालियर तक लड़ीं; अंतिम युद्ध में सिंहनी-सी लड़ते हुए वीरगति पाई (उम्र ~23)।"
+  }
+ ]
+}
+
+--- block #3 [heading] id=542a77ef-be4d-4d2d-a2ac-46ba57714efa ---
+{
+ "text": "कविता का सौंदर्य — अलंकार",
+ "level": 2
+}
+
+--- block #4 [text] id=6e0fcc15-3210-4349-8a41-9bfeeb4f8ea5 ---
+{
+ "markdown": "नीचे किसी अलंकार पर टैप करें — उसके उदाहरण रेखांकित हो जाएँगे।"
+}
+
+--- block #5 [literary_devices_highlighter] id=824ed61e-24f4-4379-8c89-272e4ef8084d ---
+{
+ "lang": "hindi",
+ "passage": "सिंहासन हिल उठे। चमक उठी सन् सत्तावन में वह तलवार पुरानी थी। घायल होकर गिरी सिंहनी। बुंदेले हरबोलों के मुँह हमने सुनी कहानी थी, खूब लड़ी मर्दानी वह तो झाँसी वाली रानी थी।",
+ "devices": [
+  {
+   "id": "3ffadecc-a2d8-459a-8b8f-86d4936a3c66",
+   "device": "personification",
+   "matches": [
+    {
+     "text": "सिंहासन हिल उठे",
+     "explanation": "निर्जीव \"सिंहासन\" का (भय से) हिलना — राजसत्ताओं का काँपना; मानवीकरण।"
+    }
+   ]
+  },
+  {
+   "id": "6968ee53-8709-41c0-98f9-b6d9f9cd48a7",
+   "device": "metaphor",
+   "matches": [
+    {
+     "text": "गिरी सिंहनी",
+     "explanation": "रानी को सीधे \"सिंहनी\" (शेरनी) कह देना (अभेद) — रूपक अलंकार।"
+    }
+   ]
+  },
+  {
+   "id": "3de84529-ce41-4ae7-8f89-f154a0ff2343",
+   "device": "refrain",
+   "matches": [
+    {
+     "text": "बुंदेले हरबोलों के मुँह हमने सुनी कहानी थी, खूब लड़ी मर्दानी वह तो झाँसी वाली रानी थी",
+     "explanation": "हर छंद के अंत में दोहराई जाने वाली पंक्ति — यह कविता की टेक (refrain/पुनरुक्ति) है, जो लय और जोश बढ़ाती है।"
+    }
+   ]
+  },
+  {
+   "id": "688470c4-c2d3-44c8-ab63-43cf8b2304b2",
+   "device": "alliteration",
+   "matches": [
+    {
+     "text": "चमक... सत्तावन... तलवार",
+     "explanation": "पंक्ति में वर्णों की आवृत्ति से लयात्मकता — अनुप्रास का सौंदर्य।"
+    }
+   ]
+  }
+ ]
+}
+
+--- block #6 [worked_example] id=b6061ae0-7990-414c-85b4-cafd751a6c5e ---
+{
+ "label": "इस कविता को \"कथात्मक कविता\" क्यों कहते हैं?",
+ "variant": "ncert_intext",
+ "problem": "यह कविता एक \"कथात्मक कविता\" कही जाती है। इसका क्या अर्थ है? सोचिए, फिर उत्तर देखिए।",
+ "solution": "**कथात्मक कविता** वह कविता है जिसमें — कहानी की तरह — पात्र, घटनाएँ और एक घटना-क्रम होता है।\n\nइस कविता में लक्ष्मीबाई के जीवन की घटनाएँ **क्रम से** आती हैं — बचपन → विवाह → वैधव्य → हड़प → क्रांति → युद्ध → वीरगति। इस तरह यह एक पूरी जीवन-गाथा (कहानी) कविता के रूप में कहती है। इसकी **गेयता** (गाए जाने योग्य लय) और **टेक** (बार-बार दोहराई पंक्ति) इसे और जीवंत व प्रभावशाली बना देती हैं — इसलिए इसे लोकगायक \"हरबोले\" गाते भी थे।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #7 [inline_quiz] id=8c8a6104-85a5-4237-af4e-ecc5ff1e18a2 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "191471ac-3c77-41bf-85c2-fdb912a060af",
+   "question": "इस कविता को \"कथात्मक कविता\" क्यों कहते हैं?",
+   "options": [
+    "इसमें कोई कहानी या घटना-क्रम नहीं है",
+    "इसमें कहानी की तरह घटनाएँ क्रम से आती हैं",
+    "यह बहुत छोटी है",
+    "यह गाई नहीं जा सकती"
+   ],
+   "correct_index": 1,
+   "explanation": "लक्ष्मीबाई के जीवन की घटनाएँ क्रम से आती हैं — इसलिए यह कथात्मक (narrative) कविता है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "a48004d9-024e-4ed7-a792-e8c45d924796",
+   "question": "\"खूब लड़ी मर्दानी...\" पंक्ति जो बार-बार दोहराई जाती है, उसे क्या कहते हैं?",
+   "options": [
+    "उपमा",
+    "टेक",
+    "समास",
+    "दोहा"
+   ],
+   "correct_index": 1,
+   "explanation": "हर छंद के अंत में दोहराई जाने वाली पंक्ति — टेक (refrain)।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "0d4aec85-3917-4897-9786-1671f310cad2",
+   "question": "\"घायल होकर गिरी सिंहनी\" में कौन-सा अलंकार है?",
+   "options": [
+    "अनुप्रास",
+    "बढ़ा-चढ़ाकर कहना, अतिशयोक्ति",
+    "श्लेष",
+    "रूपक (रानी = सिंहनी)"
+   ],
+   "correct_index": 3,
+   "explanation": "रानी को सीधे \"सिंहनी\" कह देना — रूपक अलंकार।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "विषय और व्याकरण"  (slug: ch11-vishay-vyakaran)
+published=false blocks=10 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=788a5f5c-c5b7-430c-969b-85dfa2cdf5ce ---
+{
+ "src": "",
+ "alt": "एक शब्द, अनेक अर्थ",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a single Devanagari word branching into several meanings, with patriotic 1857 motifs, on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=8d5f5d34-ec1a-458e-85bd-45949b383cdb ---
+{
+ "markdown": "यह कविता 1857 की अमर गाथा है। पहले इतिहास का एक संदर्भ देखिए, फिर भाषा का खेल — एक शब्द के अनेक अर्थ (**अनेकार्थी**) और मुहावरे।"
+}
+
+--- block #2 [cultural_context_card] id=faa97e32-8f5c-4224-ab4c-5614a69b6973 ---
+{
+ "reference": "डलहौजी की हड़प नीति (Doctrine of Lapse)",
+ "category": "history",
+ "short_desc": "जिस राजा का वारिस न हो, उसका राज्य अंग्रेज़ हड़प लेते थे।",
+ "detail": "\"लावारिस का वारिस बनकर ब्रिटिश राज्य झाँसी आया\" — यह पंक्ति लॉर्ड **डलहौजी की हड़प नीति (Doctrine of Lapse)** की ओर संकेत करती है। इस नीति के अनुसार, यदि किसी राजा का **अपना (जैविक) उत्तराधिकारी न हो**, तो अंग्रेज़ उसका **गोद लिया पुत्र** स्वीकार नहीं करते थे और राज्य को ब्रिटिश साम्राज्य में मिला (हड़प) लेते थे। इसी अन्यायपूर्ण नीति से सतारा, नागपुर, झाँसी जैसे अनेक राज्य छीने गए — और यही 1857 की क्रांति के बड़े कारणों में से एक बना।",
+ "image_url": ""
+}
+
+--- block #3 [heading] id=fd059714-4f3d-401f-b6f7-448e45ba568f ---
+{
+ "text": "व्याकरण — अनेकार्थी शब्द (एक शब्द, अनेक अर्थ)",
+ "level": 2
+}
+
+--- block #4 [text] id=51d1caad-e591-4ca6-b281-e092470c3720 ---
+{
+ "markdown": "कुछ शब्दों के एक से अधिक अर्थ होते हैं — इन्हें **अनेकार्थी** शब्द कहते हैं। संदर्भ (वाक्य) से उनका सही अर्थ तय होता है।"
+}
+
+--- block #5 [table] id=58ae018b-41bd-491b-a8d5-41c65566706f ---
+{
+ "caption": "कविता के अनेकार्थी शब्द",
+ "headers": [
+  "शब्द",
+  "अर्थ (संदर्भ के अनुसार)"
+ ],
+ "rows": [
+  [
+   "नाना",
+   "माता का पिता / अनेक प्रकार के"
+  ],
+  [
+   "तीर",
+   "बाण / नदी का किनारा"
+  ],
+  [
+   "विधि",
+   "विधाता-भाग्य / तरीक़ा-नियम"
+  ],
+  [
+   "तेज",
+   "आभा-चमक / गति / धार"
+  ],
+  [
+   "गोला",
+   "तोप का गोला / गोल पिंड / सूत का गोला"
+  ]
+ ]
+}
+
+--- block #6 [apply_express] id=c055249a-8a13-42b7-847b-9bf93d9d9b48 ---
+{
+ "title": "व्याकरण व्यायामशाला — अनेकार्थी और मुहावरे",
+ "intro": "अर्थ पहचानने और मुहावरे प्रयोग का अभ्यास कीजिए।",
+ "chapter_number": 11,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h11-gr-01",
+   "kind": "form_select",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "prompt": "\"तीर चलाने वाले कर में उसे चूड़ियाँ कब भाईं\" — यहाँ \"तीर\" का अर्थ है —",
+   "options": [
+    "नदी का किनारा",
+    "बाण",
+    "तीसरा",
+    "तेज़"
+   ],
+   "correct_index": 1,
+   "option_reasons": [
+    "ग़लत — यह दूसरा अर्थ है, यहाँ नहीं।",
+    "सही — यहाँ \"तीर\" = बाण (arrow)।",
+    "ग़लत।",
+    "ग़लत।"
+   ]
+  },
+  {
+   "id": "h11-gr-02",
+   "kind": "form_select",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "prompt": "\"विधि को भी नहीं दया आई\" — यहाँ \"विधि\" का अर्थ है —",
+   "options": [
+    "कोई तरीक़ा",
+    "विधाता/भाग्य",
+    "कोई नियम",
+    "कोई धर्मग्रंथ"
+   ],
+   "correct_index": 1,
+   "option_reasons": [
+    "ग़लत — यह दूसरा अर्थ है।",
+    "सही — यहाँ \"विधि\" = विधाता/भाग्य।",
+    "ग़लत।",
+    "ग़लत।"
+   ]
+  },
+  {
+   "id": "h11-gr-03",
+   "kind": "fill_blank",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2,
+   "prompt": "मुहावरा पूरा कीजिए — \"दृढ़ निश्चय करना\" के लिए \"मन में ______ लेना\"।",
+   "answers": [
+    [
+     "ठान"
+    ]
+   ],
+   "hint": "दृढ़ निश्चय वाला मुहावरा (कविता से)।",
+   "explanation": "\"मन में ठान लेना\" = दृढ़ निश्चय करना (\"दूर फिरंगी को... मन में ठानी थी\")।"
+  },
+  {
+   "id": "h11-gr-04",
+   "kind": "form_select",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "prompt": "\"मुँह की खाना\" मुहावरे का अर्थ है —",
+   "options": [
+    "स्वादिष्ट भोजन करना",
+    "चुप हो जाना",
+    "जीत जाना",
+    "बुरी तरह हार जाना"
+   ],
+   "correct_index": 3,
+   "option_reasons": [
+    "ग़लत।",
+    "ग़लत।",
+    "ग़लत — उल्टा अर्थ।",
+    "सही — \"मुँह की खाना\" = बुरी तरह हारना (\"स्मिथ ने मुँह की खाई थी\")।"
+   ]
+  },
+  {
+   "id": "h11-gr-05",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "धूम मचाना",
+   "instruction": "\"धूम मचाना\" मुहावरे से अपना एक वाक्य बनाइए।",
+   "rubric": [
+    "मुहावरे का प्रयोग किया",
+    "अर्थ सही (ज़ोरदार हलचल)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "हमारी टीम ने जीतकर पूरे स्कूल में धूम मचा दी।",
+   "min_words": 6
+  },
+  {
+   "id": "h11-gr-06",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "बलिदान",
+   "instruction": "\"सच्चा बलिदान कभी व्यर्थ नहीं जाता\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "रानी लक्ष्मीबाई का बलिदान व्यर्थ नहीं गया — उसी की चिंगारी से आगे चलकर आज़ादी की मशाल जली।",
+   "min_words": 9
+  }
+ ]
+}
+
+--- block #7 [heading] id=f4f7c3e9-f54c-42ff-a59d-a3a42b428c1f ---
+{
+ "text": "भाषा संगम — \"बहन\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #8 [table] id=c1ced513-911b-4b8b-9832-e1904bae0cd3 ---
+{
+ "caption": "\"बहन\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "बहन/भगिनी"
+  ],
+  [
+   "संस्कृत",
+   "स्वसृ"
+  ],
+  [
+   "पंजाबी",
+   "भैण"
+  ],
+  [
+   "उर्दू",
+   "हमशीरा"
+  ],
+  [
+   "मराठी",
+   "बहीण"
+  ],
+  [
+   "गुजराती",
+   "બહેન (बहेन)"
+  ],
+  [
+   "बांग्ला",
+   "বোন (बोन)"
+  ],
+  [
+   "नेपाली",
+   "दीदी/बहिनी"
+  ],
+  [
+   "ओडिआ",
+   "ଭଉଣୀ (भउणी)"
+  ],
+  [
+   "तेलुगु",
+   "అక్క (अक्क)"
+  ],
+  [
+   "तमिल",
+   "அக்கா (अक्का)"
+  ],
+  [
+   "कन्नड़",
+   "ಅಕ್ಕ (अक्क)"
+  ]
+ ]
+}
+
+--- block #9 [inline_quiz] id=626280f7-b1b3-4c68-84d2-d4470409c740 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "8fc36815-bc01-42e2-9559-78c2630ba10f",
+   "question": "\"लावारिस का वारिस\" पंक्ति किस अंग्रेज़ी नीति की ओर संकेत करती है?",
+   "options": [
+    "हड़प नीति",
+    "फूट डालो नीति",
+    "स्थायी बंदोबस्त",
+    "रैयतवाड़ी"
+   ],
+   "correct_index": 0,
+   "explanation": "जिसका वारिस न हो, उसका राज्य हड़पना — डलहौजी की हड़प नीति।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "9194f8b4-31d7-4abe-9d9b-d136d222b2d2",
+   "question": "\"नाना\" शब्द किस प्रकार का है?",
+   "options": [
+    "समानार्थी शब्द, पर्यायवाची",
+    "विलोम",
+    "अनेकार्थी (अनेक अर्थ वाला)",
+    "तत्सम मात्र"
+   ],
+   "correct_index": 2,
+   "explanation": "\"नाना\" के एक से अधिक अर्थ हैं (माता का पिता / अनेक प्रकार के) — अनेकार्थी शब्द।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "7aef999c-ff43-43db-81f4-df6be28b0ca1",
+   "question": "\"मुँह की खाना\" मुहावरे का अर्थ है —",
+   "options": [
+    "अच्छा भोजन करना",
+    "जीत जाना",
+    "बुरी तरह हार जाना",
+    "चुप रहना"
+   ],
+   "correct_index": 2,
+   "explanation": "मुँह की खाना = बुरी तरह पराजित होना।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "अभ्यास — Practice"  (slug: ch11-abhyas)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=a5ca94f1-c7e8-4c46-9c67-43452763050f ---
+{
+ "src": "",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi poetry book, a quill and lamp, a faint sword-and-horse motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=ab59d613-4c2b-43c3-980b-d2880c9a2c1a ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=c835b822-7970-4cae-befd-fb62444f344c ---
+{
+ "title": "अध्याय 11 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 11,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h11-pr-01",
+   "question": "इस कविता की रचयिता कौन हैं?",
+   "options": [
+    "कवयित्री महादेवी वर्मा",
+    "सुभद्रा कुमारी चौहान",
+    "सुमित्रानंदन पंत जी",
+    "मीराबाई"
+   ],
+   "correct_index": 1,
+   "explanation": "\"झाँसी की रानी\" सुभद्रा कुमारी चौहान की रचना है।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h11-pr-02",
+   "question": "यह कविता किस ऐतिहासिक घटना की पृष्ठभूमि पर है?",
+   "options": [
+    "सन् 1942 का भारत छोड़ो आंदोलन",
+    "गांधीजी का असहयोग आंदोलन",
+    "सविनय अवज्ञा आंदोलन",
+    "1857 का स्वतंत्रता संग्राम"
+   ],
+   "correct_index": 3,
+   "explanation": "यह 1857 की क्रांति की पृष्ठभूमि पर लिखी गई है।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h11-pr-03",
+   "question": "लक्ष्मीबाई का बचपन का नाम क्या था?",
+   "options": [
+    "छबीली",
+    "मंदरा",
+    "काना",
+    "दुर्गा"
+   ],
+   "correct_index": 0,
+   "explanation": "कानपुर के नाना की मुँहबोली बहन — उसका बचपन का नाम \"छबीली\" था।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h11-pr-04",
+   "question": "बचपन में लक्ष्मीबाई की \"सहेलियाँ\" क्या थीं?",
+   "options": [
+    "रंग-बिरंगी सुंदर-सुंदर गुड़ियाँ",
+    "सोने-चाँदी के क़ीमती गहने",
+    "बरछी, ढाल, कृपाण और कटारी",
+    "घर के मिट्टी के खिलौने"
+   ],
+   "correct_index": 2,
+   "explanation": "\"बरछी, ढाल, कृपाण, कटारी उसकी यही सहेली थी\" — हथियार ही उसके साथी थे।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h11-pr-05",
+   "question": "अंग्रेज़ों ने झाँसी को किस नीति/बहाने से हड़पा?",
+   "options": [
+    "एक बड़ा-सा निर्णायक युद्ध जीतकर",
+    "रानी को बहुत धन देकर ख़रीदकर",
+    "हड़प नीति से (\"लावारिस का वारिस\")",
+    "रानी की अपनी अनुमति से"
+   ],
+   "correct_index": 2,
+   "explanation": "राजा के निःसंतान मरने पर डलहौजी ने हड़प नीति से झाँसी छीन ली।",
+   "concept_tag": "comprehension",
+   "difficulty": 3
+  },
+  {
+   "id": "h11-pr-06",
+   "question": "\"फिरंगी\" किसे कहा गया है?",
+   "options": [
+    "अंग्रेज़ों को",
+    "वीर मराठों को",
+    "बुंदेलखंड के बुंदेलों को",
+    "राजपूतों को"
+   ],
+   "correct_index": 0,
+   "explanation": "फिरंगी = the British।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h11-pr-07",
+   "question": "\"मर्दानी\" का अर्थ है —",
+   "options": [
+    "डरपोक और कायर",
+    "देखने में बहुत सुंदर",
+    "बहुत आलसी",
+    "बहादुर, वीर"
+   ],
+   "correct_index": 3,
+   "explanation": "मर्दानी = brave/valiant।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h11-pr-08",
+   "question": "\"वीरगति\" का अर्थ है —",
+   "options": [
+    "डरकर युद्ध के मैदान से भाग जाना",
+    "वीरता के साथ युद्ध-मृत्यु",
+    "घोड़े पर बहुत तेज़ दौड़ना",
+    "विजय का जुलूस"
+   ],
+   "correct_index": 1,
+   "explanation": "वीरगति = martyrdom।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h11-pr-09",
+   "question": "\"अविनाशी\" का सबसे सही अर्थ है —",
+   "options": [
+    "जो बहुत जल्दी टूट जाए",
+    "जो कभी न मिटे",
+    "जो आकार में छोटा हो",
+    "जो पुराना हो"
+   ],
+   "correct_index": 1,
+   "explanation": "अविनाशी = imperishable।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h11-pr-10",
+   "question": "\"बूढ़े भारत में भी आई फिर से नई जवानी थी\" में \"नई जवानी\" किस भाव को व्यक्त करती है?",
+   "options": [
+    "किसी व्यक्ति की असली उम्र",
+    "किसी बड़े उत्सव",
+    "किसी का विवाह",
+    "नया जोश और देश की जागृति"
+   ],
+   "correct_index": 3,
+   "explanation": "\"नई जवानी\" = देश में फिर से जागा नया जोश-उत्साह।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h11-pr-11",
+   "question": "\"घायल होकर गिरी सिंहनी\" में कौन-सा अलंकार है?",
+   "options": [
+    "रूपक (रानी = सिंहनी)",
+    "वर्ण-आवृत्ति का अनुप्रास",
+    "बढ़ा-चढ़ाकर अतिशयोक्ति",
+    "श्लेष"
+   ],
+   "correct_index": 0,
+   "explanation": "रानी को सीधे \"सिंहनी\" कहना — रूपक।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h11-pr-12",
+   "question": "\"खूब लड़ी मर्दानी...\" पंक्ति जो बार-बार आती है, उसे क्या कहते हैं?",
+   "options": [
+    "दो पंक्ति का दोहा",
+    "समानता वाली उपमा",
+    "टेक (refrain)",
+    "समास"
+   ],
+   "correct_index": 2,
+   "explanation": "बार-बार दोहराई पंक्ति — टेक (refrain)।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h11-pr-13",
+   "question": "\"तीर चलाने वाले कर में...\" — यहाँ \"तीर\" का अर्थ है —",
+   "options": [
+    "नदी का किनारा",
+    "तीसरा",
+    "बाण",
+    "तेज़"
+   ],
+   "correct_index": 2,
+   "explanation": "यहाँ \"तीर\" = बाण (अनेकार्थी शब्द का संदर्भ-अर्थ)।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h11-pr-14",
+   "question": "\"मुँह की खाना\" मुहावरे का अर्थ है —",
+   "options": [
+    "बुरी तरह हार जाना",
+    "बहुत अच्छा भोजन करना",
+    "आसानी से जीत जाना",
+    "चुप रहना"
+   ],
+   "correct_index": 0,
+   "explanation": "मुँह की खाना = बुरी तरह हारना।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h11-pr-15",
+   "question": "\"बुझा दीप झाँसी का\" पंक्ति का भावार्थ क्या है?",
+   "options": [
+    "सचमुच किसी जलते दीपक का बुझ जाना",
+    "घर की बिजली का अचानक चले जाना",
+    "कोई बड़ा त्योहार बीत जाना",
+    "राजा की मृत्यु से झाँसी पर संकट"
+   ],
+   "correct_index": 3,
+   "explanation": "\"दीप बुझना\" रूपक — राजा की मृत्यु और झाँसी पर छाया संकट।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h11-pr-16",
+   "question": "लक्ष्मीबाई को \"वीरता की अवतार\" कहना उनके किस गुण को दर्शाता है?",
+   "options": [
+    "उनकी अनुपम मुख-सुंदरता",
+    "जन्मजात अद्भुत वीरता",
+    "उनके पास का अपार धन-वैभव",
+    "उनकी व्यापारिक चतुराई"
+   ],
+   "correct_index": 1,
+   "explanation": "\"अवतार\" से तात्पर्य — वीरता उनमें जन्म से ही दिव्य रूप में थी।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h11-pr-17",
+   "question": "\"महलों ने दी आग, झोंपड़ी ने ज्वाला सुलगाई थी\" किस बात पर ज़ोर देता है?",
+   "options": [
+    "क्रांति में केवल राजा-महाराजा ही लड़े",
+    "अमीर-ग़रीब सब क्रांति में साथ थे",
+    "क्रांति में केवल ग़रीब झोंपड़ी वाले लड़े",
+    "किसी ने जान-बूझकर घर जलाया"
+   ],
+   "correct_index": 1,
+   "explanation": "महल (अमीर) और झोंपड़ी (ग़रीब) दोनों मिलकर उठे — 1857 की साझा एकता।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h11-pr-18",
+   "question": "\"लावारिस का वारिस बनकर ब्रिटिश राज्य झाँसी आया\" में \"यह\" अन्याय किसके द्वारा हुआ?",
+   "options": [
+    "झाँसी के वीर मराठा सरदारों द्वारा",
+    "बुंदेलखंड में रहने वाले बुंदेलों द्वारा",
+    "स्वयं रानी द्वारा",
+    "अंग्रेज़ शासन (डलहौजी) द्वारा"
+   ],
+   "correct_index": 3,
+   "explanation": "डलहौजी की हड़प नीति से ब्रिटिश राज ने झाँसी छीनी।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h11-pr-19",
+   "question": "\"तेरा स्मारक तू ही होगी, तू खुद अमिट निशानी थी\" का गहरा अर्थ क्या है?",
+   "options": [
+    "रानी का बलिदान ही उन्हें अमर बना गया",
+    "रानी का तो कहीं कोई स्मारक ही नहीं बना",
+    "रानी को बाद में लोगों ने भुला दिया",
+    "रानी ने ख़ुद अपना स्मारक बनवाया"
+   ],
+   "correct_index": 0,
+   "explanation": "उनकी वीरता-बलिदान ही उनका सबसे बड़ा, न मिटने वाला स्मारक है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h11-pr-20",
+   "question": "इस पूरी कविता का केंद्रीय भाव क्या है?",
+   "options": [
+    "प्रकृति का मनोरम और भव्य सौंदर्य",
+    "प्रेम की कोमल और मधुर भावना",
+    "वीरता, बलिदान व देशप्रेम की प्रेरणा",
+    "व्यापार-वाणिज्य का महत्व"
+   ],
+   "correct_index": 2,
+   "explanation": "रानी लक्ष्मीबाई की वीरता और बलिदान के माध्यम से देशप्रेम व त्याग की प्रेरणा।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h11-pr-21",
+   "question": "बचपन में हथियारों से खेलती लक्ष्मीबाई का चित्र आगे की कथा के लिए क्या तैयार करता है?",
+   "options": [
+    "कि वह जन्म से ही निडर वीरांगना बनने वाली थी",
+    "कि उसे खेल पसंद नहीं थे",
+    "कि वह बहुत शांत स्वभाव की थी",
+    "कि वह डरपोक थी"
+   ],
+   "correct_index": 1,
+   "explanation": "बचपन का यह चित्र उसकी आगे की अद्भुत वीरता की भूमिका तैयार करता है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h11-pr-22",
+   "question": "\"महलों ने दी आग, झोंपड़ी ने ज्वाला सुलगाई\" 1857 की किस ताक़त को दिखाता है?",
+   "options": [
+    "अमीर-ग़रीब सबके मिलकर उठने की साझा एकता",
+    "केवल राजाओं की लड़ाई",
+    "केवल ग़रीब और मज़दूर लोगों का गुस्सा",
+    "आपसी फूट"
+   ],
+   "correct_index": 0,
+   "explanation": "महल और झोंपड़ी दोनों का साथ उठना — पूरे समाज की एकता ही 1857 की असली ताक़त थी।",
+   "concept_tag": "interpretation",
+   "difficulty": 5
+  },
+  {
+   "id": "h11-pr-23",
+   "question": "कवयित्री बार-बार आने वाली \"टेक\" का कथा पर क्या प्रभाव पड़ता है?",
+   "options": [
+    "वीरता का जोश और लय बार-बार गूँजकर गहरी हो जाती है",
+    "कहानी उबाऊ हो जाती है",
+    "अर्थ खो जाता है",
+    "कविता छोटी लगती है"
+   ],
+   "correct_index": 2,
+   "explanation": "दोहराई जाने वाली टेक जोश और गेयता को बार-बार उभारकर प्रभाव गहरा करती है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h11-pr-24",
+   "question": "लक्ष्मीबाई की कहानी आज की लड़कियों को सबसे बड़ी क्या प्रेरणा देती है?",
+   "options": [
+    "साहस, नेतृत्व और दृढ़ता में स्त्री किसी से पीछे नहीं",
+    "लड़कियों को बस घर की चारदीवारी में रहना चाहिए",
+    "युद्ध ही जीवन है",
+    "इतिहास बेकार है"
+   ],
+   "correct_index": 0,
+   "explanation": "रानी का जीवन नारी-शक्ति, नेतृत्व और निडरता का अमर उदाहरण है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=94d196e0-0425-44a5-9003-b483d38a513a ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 11,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h11-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "खूब",
+    "लड़ी",
+    "मर्दानी",
+    "वह",
+    "तो",
+    "झाँसी",
+    "वाली",
+    "रानी",
+    "थी"
+   ],
+   "answer": "खूब लड़ी मर्दानी वह तो झाँसी वाली रानी थी"
+  },
+  {
+   "id": "h11-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "बलिदान",
+   "instruction": "\"बलिदान\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (त्याग/क़ुर्बानी)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "देश की आज़ादी के लिए अनगिनत वीरों ने अपने प्राणों का बलिदान दिया।",
+   "min_words": 7
+  },
+  {
+   "id": "h11-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "नारी-शक्ति",
+   "instruction": "\"लक्ष्मीबाई की कहानी आज की लड़कियों को क्या सिखाती है?\" — इस पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "लक्ष्मीबाई सिखाती हैं कि लड़कियाँ कमज़ोर नहीं — वे साहस, नेतृत्व और दृढ़ता में किसी से पीछे नहीं हैं।",
+   "min_words": 10
+  }
+ ]
+}
+
+--- block #4 [callout] id=6a5968b9-0cd7-47a8-b9d1-a47ace91d545 ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "झरोखे से + खोजबीन",
+ "markdown": "और पढ़िए-जानिए:\n\n- **झरोखे से:** एक और वीरांगना **झलकारी बाई** की कहानी — जो रानी का वेश धारण कर अंग्रेज़ों से लड़ीं।\n- **खोजबीन:** रानी लक्ष्मीबाई और 1857 की अन्य वीरांगनाओं के बारे में पढ़िए।\n- **हरबोला:** अपने क्षेत्र के लोकगायकों के गाए देशभक्ति-गीत खोजकर कक्षा में साझा कीजिए।"
+}

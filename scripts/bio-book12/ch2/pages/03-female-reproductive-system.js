@@ -1,0 +1,140 @@
+'use strict';
+const { v4: uuid } = require('uuid');
+
+module.exports = {
+  slug: 'the-female-reproductive-system',
+  title: 'The Female Reproductive System',
+  subtitle: 'A pair of ovaries, two long tubes, and a pear-shaped womb — the assembly line that releases an egg, catches it, and grows a baby.',
+  page_number: 3,
+  page_type: 'lesson',
+  tags: ['female-reproductive-system', 'ovary', 'oviduct', 'uterus', 'human-reproduction'],
+  glossary: [
+    { term: 'ovary', definition: 'The primary female sex organ. A pair of them, one on each side of the lower abdomen, produce the ovum (egg) and the ovarian steroid hormones.' },
+    { term: 'oviduct (fallopian tube)', definition: 'A 10–12 cm accessory duct that carries the ovum from the ovary towards the uterus. Its parts, in order, are infundibulum, ampulla and isthmus.' },
+    { term: 'infundibulum', definition: 'The funnel-shaped part of the fallopian tube, closest to the ovary. Its edges bear the finger-like fimbriae.' },
+    { term: 'fimbriae', definition: 'Finger-like projections on the edge of the infundibulum that help collect the ovum after ovulation.' },
+    { term: 'ampulla', definition: 'The wider middle part of the oviduct, lying between the infundibulum and the isthmus. This is where fertilisation normally takes place.' },
+    { term: 'isthmus', definition: 'The last part of the oviduct. It has a narrow lumen and joins the uterus.' },
+    { term: 'cervix', definition: 'The narrow lower opening of the uterus into the vagina. Its cavity, the cervical canal, together with the vagina forms the birth canal.' },
+    { term: 'endometrium', definition: 'The inner glandular layer that lines the uterine cavity. It undergoes cyclical changes during the menstrual cycle.' },
+  ],
+  blocks: [
+    {
+      id: uuid(), type: 'image', order: 0, src: '',
+      alt: 'A soft, atmospheric painterly view of the female pelvic region suggesting the paired ovaries, curving tubes and central womb without hard labels',
+      caption: '', width: 'full', aspect_ratio: '16:5',
+      generation_prompt: "Ultra-wide cinematic banner (16:5 ratio). A quiet, atmospheric anatomical impression of the female reproductive organs floating in a soft warm glow against a deep dark background (#0a0a0a base tones): a central pear-shaped uterus with two gently curving fallopian tubes arcing outward to a small rounded ovary on each side, the tube ends fringed with fine finger-like projections. Painterly, naturalistic, warm rose and amber lighting, a sense of gentle biological wholeness, dark background overall, no text, no labels, no leader lines, no diagram callouts.",
+    },
+    {
+      id: uuid(), type: 'callout', order: 1, variant: 'fun_fact', title: 'The Egg Never Actually Touches the Ovary and the Tube',
+      markdown: "Here's something that surprises most students. When an ovary releases an egg, that egg is let go into the **open body cavity** — the ovary and the fallopian tube are not directly joined by a sealed pipe. So how does the egg not get lost? The **fimbriae**, a fringe of finger-like projections at the mouth of the tube, sweep over the ovary's surface and **catch the egg** the moment it pops out. Miss that catch and there is no pregnancy. The whole female tract is built around this one delicate hand-off.",
+    },
+    {
+      id: uuid(), type: 'text', order: 2,
+      markdown: "The female reproductive system is a team of parts working towards one job: making an egg, catching it, and growing a baby. NCERT lists the members as a **pair of ovaries**, a **pair of oviducts**, the **uterus**, the **cervix**, the **vagina**, and the **external genitalia** — all sitting in the pelvic region. Along with a pair of **mammary glands**, these parts are built to support **ovulation, fertilisation, pregnancy, birth and child care**.\n\nThe **ovaries are the primary female sex organs**. \"Primary\" means they do the two most important jobs: they produce the **female gamete (the ovum)** and they make several **steroid hormones** called the ovarian hormones. Everything else — the tubes, the uterus, the vagina — are **accessory ducts** that receive, transport and shelter what the ovary makes.",
+    },
+    {
+      id: uuid(), type: 'heading', order: 3, level: 2,
+      text: 'From Ovary to Uterus: the Path of the Egg',
+      objective: "By the end of this you can trace the egg's journey and name every part of the oviduct in the correct order.",
+    },
+    {
+      id: uuid(), type: 'text', order: 4,
+      markdown: "Start at the **ovary**. There is one on each side of the lower abdomen, each about **2 to 4 cm long**, held to the pelvic wall and the uterus by ligaments. A thin **epithelium** covers each ovary and encloses the **ovarian stroma** — and that stroma is divided into two zones: a **peripheral cortex** and an **inner medulla**. (The eggs actually mature in the cortex, which matters on the next page.)\n\nNow follow the egg out. The **oviducts (fallopian tubes)**, the uterus and the vagina are the female **accessory ducts**. Each fallopian tube is about **10–12 cm long** and runs from near the ovary to the uterus. It has three parts, and NCERT wants them in order:\n\n- **Infundibulum** — the **funnel-shaped** part closest to the ovary. Its edges carry the finger-like **fimbriae** that collect the ovum after ovulation.\n- **Ampulla** — the **wider** middle part that the infundibulum leads into.\n- **Isthmus** — the **last** part, with a **narrow lumen**, which joins the uterus.\n\nSo the running order the egg follows is **fimbriae → infundibulum → ampulla → isthmus → uterus**.",
+    },
+    {
+      id: uuid(), type: 'interactive_image', order: 5, src: '',
+      alt: 'Diagrammatic sectional front view of the female reproductive system showing the ovaries, fallopian tubes with fimbriae, ampulla, isthmus, the pear-shaped uterus with its endometrial lining, the cervix and the vagina',
+      caption: '📸 Tap each dot to explore the female reproductive tract (Figure 2.3b)',
+      hotspots: [
+        { id: uuid(), x: 0.19, y: 0.40, label: 'Ovary', icon: 'circle',
+          detail: 'The **primary female sex organ**, about 2–4 cm long, one on each side. It produces the **ovum** and the ovarian steroid hormones. Its stroma has a peripheral **cortex** and inner **medulla**.' },
+        { id: uuid(), x: 0.11, y: 0.30, label: 'Fimbriae', icon: 'circle',
+          detail: 'Finger-like projections on the edge of the infundibulum. They **collect the ovum** after ovulation, catching it as the ovary releases it.' },
+        { id: uuid(), x: 0.30, y: 0.26, label: 'Oviduct (fallopian tube)', icon: 'circle',
+          detail: 'A **10–12 cm** accessory duct running from near the ovary to the uterus. It carries the ovum inward and has three parts — infundibulum, ampulla and isthmus.' },
+        { id: uuid(), x: 0.34, y: 0.36, label: 'Ampulla', icon: 'circle',
+          detail: 'The **wider middle part** of the oviduct, between the funnel-shaped infundibulum and the narrow isthmus. This is the spacious region where **fertilisation normally happens**.' },
+        { id: uuid(), x: 0.50, y: 0.50, label: 'Uterus', icon: 'circle',
+          detail: 'The single, **inverted-pear-shaped** womb, held by ligaments to the pelvic wall. Its wall has three layers and it shelters the growing embryo.' },
+        { id: uuid(), x: 0.50, y: 0.43, label: 'Endometrium', icon: 'circle',
+          detail: 'The **inner glandular layer** lining the uterine cavity. It **undergoes cyclical changes** during the menstrual cycle and is where the embryo implants.' },
+        { id: uuid(), x: 0.50, y: 0.70, label: 'Cervix', icon: 'circle',
+          detail: 'The **narrow** opening of the uterus into the vagina. Its cavity is the **cervical canal**, which together with the vagina forms the **birth canal**.' },
+        { id: uuid(), x: 0.50, y: 0.85, label: 'Vagina', icon: 'circle',
+          detail: 'The muscular tube below the cervix. With the cervical canal it forms the **birth canal**, the passage the baby travels through at delivery.' },
+      ],
+      generation_prompt: "Scientific textbook illustration of the human female reproductive system, diagrammatic sectional front view (Figure 2.3b style). Flat 2D educational diagram on a dark background (#0a0a0a near-black). Clean white outlines with soft pink/magenta fill for the soft-tissue organs. Centre: a single inverted-pear-shaped uterus shown in section so its inner cavity and glandular lining are visible; below it a narrow cervix leading down into a tube-like vagina. From each upper side of the uterus a fallopian tube curves outward and upward, widening into an ampulla region, then flaring into a funnel-shaped infundibulum whose edge bears fine finger-like fimbriae draped over a small rounded ovary on each side. Symmetrical left-right layout, biologically accurate proportions, thin white leader lines but NO baked-in text labels. No photorealism, no cartoon, no mascots, standard NCERT biology textbook illustration conventions.",
+    },
+    {
+      id: uuid(), type: 'reasoning_prompt', order: 6, reasoning_type: 'logical',
+      prompt: "After ovulation the fimbriae catch the egg and the sperm swim up from the vagina to meet it. In which part of the female tract do the egg and sperm normally meet, so that fertilisation takes place?",
+      options: [
+        "The infundibulum, because that is the funnel where the egg first enters the tube",
+        "The ampulla, the wider middle part of the oviduct",
+        "The isthmus, because its narrow lumen traps the egg against the uterus",
+        "The endometrium, because the embryo will later implant there",
+      ],
+      reveal: "Fertilisation normally happens in the **ampulla** — the wide, roomy middle stretch of the oviduct, which gives the egg and sperm space to meet. The infundibulum only catches and funnels the egg in; it is not where they fuse. The isthmus is the narrow final stretch the fertilised egg passes through *after* fertilisation, on its way to the uterus. The endometrium is the trap answer for students who confuse **fertilisation** (egg + sperm fuse, in the ampulla) with **implantation** (the embryo settles into the uterine lining, which happens later).",
+      difficulty_level: 2,
+    },
+    {
+      id: uuid(), type: 'heading', order: 7, level: 2,
+      text: 'The Uterus: a Womb Wrapped in Three Layers',
+      objective: "By the end of this you can name the three layers of the uterine wall from outside in, and say which one contracts and which one changes each month.",
+    },
+    {
+      id: uuid(), type: 'text', order: 8,
+      markdown: "The **uterus is single**, and it is also called the **womb**. Its shape is like an **inverted pear**, and ligaments hold it to the pelvic wall. At its lower end the uterus opens into the vagina through a narrow **cervix**. The cavity of the cervix is the **cervical canal**, and this canal together with the vagina forms the **birth canal** — the route the baby takes at delivery.\n\nThe wall of the uterus is built from **three layers of tissue**. From outside in:\n\n- **Perimetrium** — the external, thin, membranous outer covering.\n- **Myometrium** — the middle, thick layer of **smooth muscle**. It gives the **strong contractions** that push the baby out during delivery.\n- **Endometrium** — the inner **glandular** layer that lines the uterine cavity. It **undergoes cyclical changes** during the menstrual cycle.\n\nA memory hook for the order: **P–M–E**, outside to inside — Perimetrium, Myometrium, Endometrium. Keep the two inner ones straight by their jobs: **M**yometrium = **M**uscle that contracts at birth; **E**ndometrium = the **E**ver-changing lining that builds up and sheds each month.",
+    },
+    {
+      id: uuid(), type: 'callout', order: 9, variant: 'remember', title: 'The Three Layers of the Uterine Wall',
+      markdown: "From outside in — **P → M → E**:\n\n- **Perimetrium** → thin membranous **outer** covering.\n- **Myometrium** → thick **smooth-muscle** middle layer; **contracts strongly during delivery**.\n- **Endometrium** → **inner glandular** lining; **undergoes cyclical changes** during the menstrual cycle and is where the embryo implants.",
+    },
+    {
+      id: uuid(), type: 'callout', order: 10, variant: 'exam_tip', title: 'NEET Exam Insight',
+      markdown: "**Oviduct order:** infundibulum (with fimbriae) → ampulla → isthmus → uterus. NEET loves to shuffle these or swap the fimbriae onto the ampulla — fimbriae belong to the **infundibulum**.\n\n**Fertilisation site:** the **ampulla**. Do not confuse it with **implantation**, which happens in the **endometrium** of the uterus.\n\n**Uterine layers:** perimetrium (outer) → myometrium (muscle, contracts at birth) → endometrium (inner, changes monthly). The classic trap swaps myometrium and endometrium.\n\n**Classic NEET question:** \"The wider part of the fallopian tube where fertilisation occurs is the ____.\" → **ampulla.** And: \"Which uterine layer exhibits strong contractions during delivery?\" → **myometrium.**",
+    },
+    {
+      id: uuid(), type: 'text', order: 11,
+      markdown: "One more member of the team supports the baby *after* birth: the **mammary glands**. These paired structures (the breasts) hold **glandular tissue** and some fat. The glandular tissue of each breast is divided into **15–20 mammary lobes**, and each lobe holds clusters of cells called **alveoli** whose cells **secrete milk**. The milk drains from the alveoli into mammary tubules, which join into a **mammary duct**; several ducts join into a wider **mammary ampulla**, which connects to the **lactiferous duct** and opens at the **nipple**.\n\nWe now have the whole female tract, from the egg-making ovary to the milk-making breast. Next we look at how the ovary actually builds an egg — **gametogenesis**, the making of the gametes.",
+    },
+    {
+      id: uuid(), type: 'inline_quiz', order: 12, pass_threshold: 0.67,
+      questions: [
+        {
+          id: uuid(),
+          question: "Which part of the fallopian tube is funnel-shaped and carries the finger-like fimbriae?",
+          options: ['Infundibulum', 'Ampulla', 'Isthmus', 'Cervix'],
+          correct_index: 0,
+          explanation: "The funnel-shaped part closest to the ovary is the infundibulum, and its edges bear the fimbriae that collect the ovum. The ampulla is the wider middle part and the isthmus is the narrow final part — neither carries fimbriae. The cervix is not part of the oviduct at all; it is the narrow opening of the uterus into the vagina.",
+          difficulty_level: 1,
+        },
+        {
+          id: uuid(),
+          question: "Which layer of the uterine wall is glandular, lines the uterine cavity, and undergoes cyclical changes during the menstrual cycle?",
+          options: ['Perimetrium', 'Myometrium', 'Cervix', 'Endometrium'],
+          correct_index: 3,
+          explanation: "The endometrium is the inner glandular layer that lines the cavity and changes cyclically each month. The perimetrium is the thin outer membrane and the myometrium is the middle smooth-muscle layer that contracts at delivery — neither is glandular. The cervix is the uterine opening into the vagina, not one of the three wall layers.",
+          difficulty_level: 2,
+        },
+        {
+          id: uuid(),
+          question: "The last part of the oviduct, with a narrow lumen, which joins the uterus, is the:",
+          options: ['Fimbriae', 'Isthmus', 'Ampulla', 'Infundibulum'],
+          correct_index: 1,
+          explanation: "The isthmus is the last part of the oviduct; it has a narrow lumen and joins the uterus. The fimbriae and infundibulum are at the far, ovary end of the tube, and the ampulla is the wider middle part where fertilisation occurs — none of these connect the tube to the uterus.",
+          difficulty_level: 2,
+        },
+        {
+          id: uuid(),
+          question: "During delivery of the baby, which layer of the uterine wall provides the strong contractions that push the baby out?",
+          options: ['Endometrium', 'Perimetrium', 'Myometrium', 'Ovarian cortex'],
+          correct_index: 2,
+          explanation: "The myometrium is the thick middle layer of smooth muscle, and it exhibits the strong contractions during delivery. The endometrium changes with the menstrual cycle but does not drive delivery, and the perimetrium is just a thin outer membrane. The ovarian cortex is a zone of the ovary, not part of the uterus at all.",
+          difficulty_level: 3,
+        },
+      ],
+    },
+  ],
+};

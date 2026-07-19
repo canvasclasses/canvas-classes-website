@@ -1,0 +1,3604 @@
+# Kaveri — Class 9 English (NCERT) — Chapter 8: Follow That Dream
+book=class9-english-kaveri chapter=8 pages=17
+
+
+================================================================================
+## PAGE 1 — "Before You Read: By All Means, Follow That Dream"  (slug: unit-8-reflect-and-respond-follow-that-dream)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=9b0f2d84-43ee-4cef-99dc-5b5c8ccd4c72 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/9b0f2d84-43ee-4cef-99dc-5b5c8ccd4c72_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A young person at the foot of a long uphill road toward a glowing horizon, a handwritten letter in hand",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A young person standing at the foot of a long, winding uphill road that climbs toward a warm glowing horizon, a handwritten letter held in one hand, a small bag on the shoulder. Hopeful, full of possibility, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [curiosity_prompt] id=113a929e-d34c-430c-86b8-d4f31ee5a55d ---
+{
+ "prompt": "Finish this sentence honestly: 'My dream is to ___.' Now ask yourself a harder question — not *what* you dream of, but what you would be willing to *give up* for it. Years of effort? Comfort? Other paths? A dream is easy to have. What separates the people who reach theirs from the people who only ever *wish*?",
+ "hint": "Almost everyone has, at some point, wistfully thought 'I wish I could be...'. The question is what comes after the wish.",
+ "reveal": "This chapter — the last in your book — is a **letter from a mother to her teenage daughter**, written to answer exactly this. With warmth and honesty, she tells her daughter how dreams really come true: not through wishing, but through effort, sacrifice, and the courage to begin. It is a fitting note to end on — a grown-up's loving, clear-eyed advice on how to chase the life you want."
+}
+
+--- block #2 [callout] id=2139cbcc-e8f8-4dd6-8de8-cf70c7079a4a ---
+{
+ "variant": "fun_fact",
+ "title": "The ten-year rule",
+ "markdown": "The mother in this letter shares a striking fact: *to reach world-class standard in any field, one has to be singularly and intensively pursuing it for **at least ten years.*** This idea — that mastery takes roughly a decade of dedicated effort — is supported by real research into how the world's best athletes, musicians, scientists, and artists are made. There are no overnight champions. Behind every 'sudden' star are ten quiet years of work. The letter is honest about this from the start — and that honesty is its gift."
+}
+
+--- block #3 [text] id=487a1960-0928-4d02-baf8-059d70f4f398 ---
+{
+ "markdown": "The text is a **personal letter**, taken from a collection called *My Daughter, My Friend* by **Irene Chua** — a mother's letters to her daughter, Ming. Before you read, here are the words she uses to talk about chasing a dream."
+}
+
+--- block #4 [vocabulary_lab] id=6cd815a3-dd57-485d-a719-fb5aade9fcaf ---
+{
+ "mode": "flashcards",
+ "intro": "Six words from the letter. Tap each to flip.",
+ "cards": [
+  {
+   "id": "5900dbeb-0602-464b-ae54-96f6b3c2c6e0",
+   "word": "conviction",
+   "pos": "noun",
+   "pronunciation": "kun-VIK-shun",
+   "meaning": "a strong, firm belief",
+   "hindi": "दृढ़ विश्वास",
+   "example": "First passion, then the conviction that the dream must be realised."
+  },
+  {
+   "id": "4310693b-5343-4acc-981d-58ef114439be",
+   "word": "imperative",
+   "pos": "adjective",
+   "pronunciation": "im-PERR-uh-tiv",
+   "meaning": "absolutely necessary; urgent",
+   "hindi": "अनिवार्य",
+   "example": "She felt it was imperative to realise her dream."
+  },
+  {
+   "id": "3cd15361-e9e5-4a0f-9813-c18e5cd90569",
+   "word": "plunge",
+   "pos": "verb",
+   "pronunciation": "PLUNJ",
+   "meaning": "to throw yourself fully into something",
+   "hindi": "कूद पड़ना",
+   "example": "If it's still burning in your blood, plunge."
+  },
+  {
+   "id": "6eca8bf0-3a4e-4262-a754-b7d002a9d007",
+   "word": "buoyed up",
+   "pos": "phrase",
+   "pronunciation": "BOY-d up",
+   "meaning": "kept afloat; emotionally lifted and supported",
+   "hindi": "हौसला बना रहना",
+   "example": "On the uphill road, you are buoyed up by doing what you love."
+  },
+  {
+   "id": "b6be1a5e-f73d-4568-ad69-a8010650da6e",
+   "word": "wistfully",
+   "pos": "adverb",
+   "pronunciation": "WIST-ful-ee",
+   "meaning": "with sad or vague longing",
+   "hindi": "लालसा से",
+   "example": "People wistfully say, 'I wish I could be this or that.'"
+  },
+  {
+   "id": "c966c8c0-47d4-4abc-993d-4259e28b4a3f",
+   "word": "aspirations",
+   "pos": "noun",
+   "pronunciation": "as-pih-RAY-shunz",
+   "meaning": "hopes and ambitions for the future",
+   "hindi": "आकांक्षाएँ",
+   "example": "Our hopes and aspirations change over the years."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "641bf3a5-703e-4268-a55a-690a81a46b6e",
+   "question": "If something is *imperative*, it is:",
+   "options": [
+    "optional",
+    "absolutely necessary",
+    "easy",
+    "pleasant"
+   ],
+   "correct_index": 1,
+   "explanation": "*Imperative* = absolutely necessary, urgent. The dreamer feels it is imperative to realise the dream."
+  },
+  {
+   "id": "c8c3fa4e-e11f-467c-9d3c-be4f779263df",
+   "question": "To *plunge* into a task means to:",
+   "options": [
+    "avoid it",
+    "throw yourself fully into it",
+    "do it slowly",
+    "think about it"
+   ],
+   "correct_index": 1,
+   "explanation": "*Plunge* = to commit and throw yourself in completely — a full, not gradual, involvement."
+  },
+  {
+   "id": "3b3fbeab-4c96-49a2-a7eb-5b66c6a93602",
+   "question": "Saying something *wistfully* means saying it with:",
+   "options": [
+    "anger",
+    "a sad, vague longing",
+    "joy",
+    "boredom"
+   ],
+   "correct_index": 1,
+   "explanation": "*Wistfully* = with longing and a touch of sadness — the tone of 'I wish I could have...'."
+  }
+ ]
+}
+
+--- block #5 [inline_quiz] id=4cfbb5e0-f4fa-4d0c-b7c3-ee6135730bf2 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "9438c04d-4fb6-4c8b-b60a-4b7cb164a77f",
+   "question": "What kind of text is this chapter?",
+   "options": [
+    "A news report on talented young achievers today",
+    "A personal letter from a mother to her daughter",
+    "A stage play about a quarrelling family at home",
+    "A poem addressed to a famous young sportsperson"
+   ],
+   "correct_index": 1,
+   "explanation": "It is a personal letter from a collection called 'My Daughter, My Friend' — a mother's loving advice to her teenage daughter, Ming.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "85564f01-5689-4072-8a1f-289a25089fa9",
+   "question": "According to the letter's 'ten-year rule', reaching world-class standard takes:",
+   "options": [
+    "talent alone, with hardly any need for practice",
+    "a short, intense burst lasting only a couple of weeks",
+    "a fortunate stroke of luck at the right moment",
+    "about ten years of dedicated, single-minded effort"
+   ],
+   "correct_index": 3,
+   "explanation": "The mother notes that world-class mastery in any field takes about ten years of singular, intensive pursuit — there are no overnight champions.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "8b87e879-32b4-4739-9a62-1c77c913b4df",
+   "question": "What separates achievers from mere dreamers, the chapter asks?",
+   "options": [
+    "the effort and sacrifice they are willing to give",
+    "the good fortune that happens to fall their way",
+    "the natural talent they were lucky to be born with",
+    "the sheer strength of wishing for it hard enough"
+   ],
+   "correct_index": 0,
+   "explanation": "The letter's central idea: a dream is easy to have; what counts is the effort and sacrifice you invest to make it real.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "Part I — Then, Plunge"  (slug: unit-8-reading-part-1-then-plunge)
+published=true blocks=7 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=69cda7dd-6239-42f7-b8eb-e7c9770c2147 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/69cda7dd-6239-42f7-b8eb-e7c9770c2147_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A diver poised at the edge of a high board, about to plunge, the water glowing far below",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A figure poised at the very edge of a high diving board, arms ready, about to plunge into glowing water far below — the moment of full commitment to a leap. Tense and hopeful, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [heading] id=3d198614-ddb9-48a9-856b-4b3b818754fe ---
+{
+ "level": 2,
+ "text": "Part I — The mother begins"
+}
+
+--- block #2 [text] id=c9b9b41f-1c8f-4bc4-8cbd-72f0aac4b9af ---
+{
+ "markdown": "Ming has written to her mother about a dream of her own. This is the mother's reply — and she does not begin with caution. She begins with *yes*."
+}
+
+--- block #3 [narrated_passage] id=510ad606-989e-4d5c-be7d-878fc14a96ad ---
+{
+ "source_label": "Reading for Meaning · Part I (the letter)",
+ "paragraphs": [
+  {
+   "id": "1ad7140c-881e-43be-890d-67f9aaa88c3f",
+   "sentences": [
+    {
+     "id": "b598c1bd-5a49-48d1-b5d9-200f9ad21d27",
+     "text": "Dear Ming, By all means follow that dream.",
+     "audio_url": ""
+    },
+    {
+     "id": "2cda538d-e2d9-4572-ae23-437ed475bf3a",
+     "text": "Great men and women become great because they have a dream and they pursue it till it comes true.",
+     "audio_url": ""
+    },
+    {
+     "id": "ee5aceb8-e149-4cb9-b065-7ec63eedb7f5",
+     "text": "What differentiates greatness from the ordinary is how much effort and sacrifice people invest to realise their dream.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "differentiates",
+       "meaning": "shows the difference between",
+       "pos": "verb",
+       "hindi": "अंतर करता है",
+       "example": "A small mole on her cheek differentiates her from her twin sister."
+      }
+     ]
+    },
+    {
+     "id": "5f2bcb9a-89c3-47a5-802b-a0669d4f42aa",
+     "text": "Do you know that to reach world-class standard in any field, one has to be singularly and intensively pursuing the subject for at least ten years?",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "singularly",
+       "meaning": "with single-minded focus",
+       "pos": "adverb",
+       "hindi": "एकनिष्ठ रूप से",
+       "example": "Before the board exams, my brother worked singularly on his maths revision."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Maa ki chitthi seedhe haan se shuru hoti hai — 'By all means follow that dream' (zaroor apne sapne ke peechhe jaao). Phir woh asli sach batati hai: mahaan log isliye mahaan bante hain kyunki woh apne sapne ka peechha karte hain jab tak woh sach na ho jaaye. Aur greatness aur ordinary mein farak? Kitni mehnat aur kitna tyaag. Aur woh das-saal-ka-niyam: kisi bhi field mein world-class banne ke liye kam se kam 10 saal ki eknishth mehnat chahiye."
+  },
+  {
+   "id": "ae673fe0-0aa8-4385-a13d-91d79bdc9010",
+   "sentences": [
+    {
+     "id": "1dbee41e-68c7-45f6-9eb6-758332943837",
+     "text": "It starts with a passion for a particular interest, then comes the conviction that it is imperative to realise it.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "conviction",
+       "meaning": "a firm, strong belief",
+       "pos": "noun",
+       "hindi": "दृढ़ विश्वास",
+       "example": "She spoke with such conviction that the whole class believed her plan would work."
+      },
+      {
+       "word": "imperative",
+       "meaning": "absolutely necessary",
+       "pos": "adjective",
+       "hindi": "अनिवार्य",
+       "example": "During the monsoon, it is imperative to carry an umbrella to school."
+      }
+     ]
+    },
+    {
+     "id": "b9187156-4c8d-445b-bc85-90b5082ef2ce",
+     "text": "Count the cost in years of effort, financial investments and sacrifice.",
+     "audio_url": ""
+    },
+    {
+     "id": "7fbd19bd-39cf-4330-b2de-e7926e9831b2",
+     "text": "Then if it is still burning in your blood and you are ready to commit yourself to the task, plunge.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "plunge",
+       "meaning": "throw yourself fully in",
+       "pos": "verb",
+       "hindi": "कूद पड़ो",
+       "example": "On a hot afternoon, the boys ran to the pond and plunged straight in."
+      }
+     ]
+    },
+    {
+     "id": "c3eb67bf-a10c-4ea1-a635-e77a0ec5bd1f",
+     "text": "It could be in any field — sports, science, arts, business, or design.",
+     "audio_url": ""
+    },
+    {
+     "id": "977693ac-8503-418f-ab77-17c4efc902e1",
+     "text": "The road may be uphill most of the way and often you are buoyed up only by the knowledge that you are doing what you love best and are doing the right thing.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "buoyed up",
+       "meaning": "kept afloat; lifted",
+       "pos": "phrase",
+       "hindi": "हौसला बना रहना",
+       "example": "The team felt buoyed up by the loud cheering from their friends in the stands."
+      }
+     ]
+    },
+    {
+     "id": "44de43d5-c687-418b-a6e9-44ca111f78c2",
+     "text": "When stamina is running out, the prospect of success will keep you on track.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "prospect",
+       "meaning": "the possibility or hope (of something)",
+       "pos": "noun",
+       "hindi": "संभावना",
+       "example": "The prospect of a long holiday made the whole class smile."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Maa ek pyaara nuskha deti hai — sapne ko sach karne ke kadam. Pehle: ek shauk, ek passion. Phir: conviction — yeh pakka vishwaas ki ise paana zaroori hai. Phir: 'count the cost' — saalon ki mehnat, paisa, tyaag — sab ka hisaab lagao. Aur agar phir bhi woh 'khoon mein jal raha hai', to — 'plunge' (kood pado). Raasta zyadatar chadhaai ka hoga; tumhe sirf yeh baat sambhaalegi ki tum woh kar rahe ho jo tumhe sabse pyaara hai. Aur jab himmat tootne lage, tab safalta ki ummeed tumhe raaste pe rakhegi."
+  }
+ ]
+}
+
+--- block #4 [comprehension_checkpoint] id=11b4b8df-3cb7-40c5-a821-5a219e6ca3b7 ---
+{
+ "intro": "Pause and check.",
+ "questions": [
+  {
+   "id": "64303963-0bb6-426a-a1d1-4615af7acafa",
+   "question": "According to the mother, what differentiates 'greatness' from 'the ordinary'?",
+   "options": [
+    "Natural talent alone",
+    "How much EFFORT and SACRIFICE people invest to realise their dream",
+    "Good luck",
+    "Being born wealthy"
+   ],
+   "correct_index": 1,
+   "explanation": "Great people aren't simply more talented — they invest far more effort and sacrifice in pursuing their dream until it comes true."
+  },
+  {
+   "id": "45489241-995e-4d49-b223-eb1982c22fbc",
+   "question": "What is the mother's step-by-step recipe before you 'plunge'?",
+   "options": [
+    "Just start immediately",
+    "Passion → conviction it's imperative → count the cost (effort, money, sacrifice) → if it's still burning in you and you're ready to commit, THEN plunge",
+    "Wait for permission",
+    "Pick the easiest field"
+   ],
+   "correct_index": 1,
+   "explanation": "She's careful: feel the passion, form the conviction, honestly count the cost, and only then — if the fire remains — commit fully ('plunge')."
+  }
+ ]
+}
+
+--- block #5 [reasoning_prompt] id=5655e9e3-bb71-4a0b-90af-276d780657db ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "The mother tells Ming to 'count the cost' — to honestly add up the years of effort, money, and sacrifice — *before* plunging into a dream. Isn't that the opposite of what we usually tell dreamers ('just go for it, don't think about the obstacles')? Why might 'count the cost first' be the *wiser* advice?",
+ "reveal": "'Just go for it' sounds inspiring but can be cruel — it sends people leaping blindly, only to crash when the real costs appear, leaving them disillusioned and hurt. 'Count the cost first' is the advice of someone who *loves* the dreamer enough to be honest. It doesn't say *don't* dream; it says *dream with your eyes open.* By honestly facing the years and sacrifices in advance, you do two things: you weed out the dreams that are really just passing wishes (which is kind — better to know now), and you *strengthen* the dreams that survive the test, because you commit to them knowing exactly what they'll cost. A dream you've counted the cost of is far more durable than one built on excitement alone. That's why, right after 'count the cost', she adds the beautiful condition: '*if it is still burning in your blood*' — the costs are not meant to put out the fire, but to prove the fire is real. Honesty is not the enemy of dreams; it is their foundation."
+}
+
+--- block #6 [inline_quiz] id=053a86c5-ad70-4171-b4d6-935f86b0566d ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "36becf58-a40e-4106-963b-c50f54936458",
+   "question": "How does the letter say a dream begins, and what's the second step?",
+   "options": [
+    "With money at first, and then the chase for fame",
+    "With a stroke of luck, and then a spell of patient waiting",
+    "With a passion for it, then the conviction to realise it",
+    "With a good teacher first, and then a final test to pass"
+   ],
+   "correct_index": 2,
+   "explanation": "First passion, then conviction (a firm belief that you must realise it). Only after counting the cost does she say 'plunge'.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "74c5ce2c-83cf-47a8-be91-4f7bc493e50d",
+   "question": "On the 'uphill road', what keeps a dreamer going?",
+   "options": [
+    "The praise and warm applause that other people offer",
+    "The money the dream is widely expected to bring in at the very end",
+    "Loving the work, and the hope of success when energy runs low",
+    "The fear of what might happen if you were to give up now"
+   ],
+   "correct_index": 2,
+   "explanation": "Two things sustain you: loving the work itself (intrinsic motivation), and the hope of success when energy runs low.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "62cc0a0e-ee27-4bb7-a571-f16b36686356",
+   "question": "Why is 'count the cost first' wiser than 'just go for it'?",
+   "options": [
+    "It weeds out passing wishes and strengthens the dreams you keep",
+    "It is simply the cheaper route, so in the end it saves money",
+    "It quietly discourages people from daring to dream at all",
+    "It is not wiser at all; rushing straight in tends to work out just as well"
+   ],
+   "correct_index": 0,
+   "explanation": "Honestly facing the cost makes a dream durable: only the dreams 'still burning in your blood' survive — and those you pursue fully prepared.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "Part II — Why Some Dreams Stay Dreams"  (slug: unit-8-reading-part-2-dreams-that-change)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=e3b820ea-b2e7-4074-bf30-5e8901854e70 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/e3b820ea-b2e7-4074-bf30-5e8901854e70_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A winner on a stage holding a trophy, with a faint crowd of supporting hands and faces glowing behind",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A person on a softly lit stage holding up a trophy, and behind them, faintly glowing, a whole crowd of supporting hands and faces — the unseen network that made one winner possible. Warm and grateful, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [heading] id=00a5a866-f621-4b3f-aa18-4de5408591f7 ---
+{
+ "level": 2,
+ "text": "Part II — The network, the obstacles, the change"
+}
+
+--- block #2 [text] id=2b7f2e5e-2b61-4558-92a2-6a7dfbefd5d1 ---
+{
+ "markdown": "Now the mother turns gentle and honest. No dream is reached alone; many dreams never come true; and — most movingly — a dream can *change* across a life, and still be worth chasing."
+}
+
+--- block #3 [narrated_passage] id=8d0b7ac1-c34b-4831-94f9-4c3ef9d86ac5 ---
+{
+ "source_label": "Reading for Meaning · Part II (the letter)",
+ "paragraphs": [
+  {
+   "id": "a0375b80-f501-42e7-b1ec-3df467ff3417",
+   "sentences": [
+    {
+     "id": "efa0b9b9-63c9-4ce3-8502-5932c12ddb37",
+     "text": "When you watch the Academy Awards for best actors and actresses and films, the winner always thanks a host of people that formed his/her support network.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "a host of",
+       "meaning": "a large number of",
+       "pos": "phrase",
+       "hindi": "बहुत सारे",
+       "example": "A host of relatives arrived at our home for my cousin's wedding."
+      }
+     ]
+    },
+    {
+     "id": "fe7d6b74-85a8-40f2-aacc-94306a39294b",
+     "text": "So, you see that for one winner, there is a group of people who stood by him/her.",
+     "audio_url": ""
+    },
+    {
+     "id": "892c73d2-c70b-42f8-b5ca-c278475def7b",
+     "text": "It is good to be able to fulfil your dreams but for a lot of people, dreams remain dreams.",
+     "audio_url": ""
+    },
+    {
+     "id": "816da673-d639-43d2-9778-52c0ed2b4af1",
+     "text": "Although everyone at one time or other has wistfully said to oneself, \"I wish I could be this or the other,\" they have never got beyond just wishful thinking.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "wishful thinking",
+       "meaning": "imagining what you want without acting on it",
+       "pos": "phrase",
+       "hindi": "सिर्फ़ कल्पना करना",
+       "example": "Hoping to top the class without studying is just wishful thinking."
+      }
+     ]
+    },
+    {
+     "id": "31482a1a-1658-4742-9411-a4fc8a2fe543",
+     "text": "They could have preferred to trade their dream for security.",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "Maa ek pyaari baat dikhati hai — Oscar jeetne wala hamesha 'a host of people' (bahut saare logon) ko thank karta hai, apne support network ko. Ek vijeta ke peechhe ek poora group hota hai. Phir woh sach: bahut logon ke sapne, sapne hi reh jaate hain. Har koi kabhi na kabhi 'kaash main yeh ban paata' kehta hai — par 'wishful thinking' (sirf khayaali pulao) se aage nahi badhta. Kuch log sapne ko 'security' (suraksha) se badal lete hain."
+  },
+  {
+   "id": "fbfc731c-9208-4fe4-b066-68cfce9885e7",
+   "sentences": [
+    {
+     "id": "48bfd5f5-a496-46ca-b841-5c627780bf46",
+     "text": "I know of people whose dream was to go to the then Raffles College, now the National University of Singapore, but the Japanese invasion during World War II changed forever their destiny.",
+     "audio_url": ""
+    },
+    {
+     "id": "4d8ebdc5-c79d-4d6c-a2e8-03eaf1b6533b",
+     "text": "I know too, of people who had wished to finish secondary school but they had to go out to work so that they could support their siblings through school.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "siblings",
+       "meaning": "brothers and sisters",
+       "pos": "noun",
+       "hindi": "भाई-बहन",
+       "example": "My two siblings and I share one small study table at home."
+      }
+     ]
+    },
+    {
+     "id": "091804b7-17c9-41cc-ae91-3d95a971f233",
+     "text": "No, I am not going to put a wet blanket on your dreams, but you will also have to consider the years you need to chase your dream.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "put a wet blanket on",
+       "meaning": "to discourage or spoil",
+       "pos": "idiom",
+       "hindi": "उत्साह ठंडा करना",
+       "example": "Sudden rain put a wet blanket on our cricket match in the park."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Maa imaandaari se kehti hai ki kabhi-kabhi haalaat sapne badal dete hain. Kuch logon ka sapna tha Raffles College jaana — par WWII ki Japanese invasion ne kismat badal di. Kuch school poora karna chahte the — par bhai-behno ko padhaane ke liye kaam pe jaana pada. Phir woh saaf karti hai: 'main tumhare sapnon par paani nahi daal rahi' (wet blanket) — par tumhe yeh bhi sochna hoga ki kitne saal lagenge. Yeh sach-jhooth ka balance hi achhi salaah hai."
+  },
+  {
+   "id": "891dff26-fa83-43d3-adf3-cccd3081bbd9",
+   "sentences": [
+    {
+     "id": "745899cc-e3b7-46ac-b43b-b92654a56775",
+     "text": "After all the obstacles are considered, if the burning conviction is still coursing through your veins, then go ahead and do something about it.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "coursing through your veins",
+       "meaning": "flowing strongly through you",
+       "pos": "phrase",
+       "hindi": "नसों में दौड़ता हुआ",
+       "example": "Before the race began, I felt excitement coursing through my veins."
+      }
+     ]
+    },
+    {
+     "id": "2017a248-1047-426f-abb7-424589ba86bd",
+     "text": "From my own experience, life itself may change a person's dreams.",
+     "audio_url": ""
+    },
+    {
+     "id": "86051b4a-0be3-4c14-afde-2b16708bb60a",
+     "text": "These hopes and aspirations are no less than the original dream of younger days.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "aspirations",
+       "meaning": "hopes and ambitions",
+       "pos": "noun",
+       "hindi": "आकांक्षाएँ",
+       "example": "Many students in our village have aspirations of becoming doctors and engineers."
+      }
+     ]
+    },
+    {
+     "id": "6c8c3e9e-3b75-4977-b4b8-c30864b95872",
+     "text": "For example, publishing this book is a dream I have chased in the last ten years.",
+     "audio_url": ""
+    },
+    {
+     "id": "f316274e-5c5b-4902-a5fd-5b2d5aa99d76",
+     "text": "This was not the dream I had in my youth but my original dream has changed over the years.",
+     "audio_url": ""
+    },
+    {
+     "id": "53502e9a-0064-42bb-9d67-8f466e4ca475",
+     "text": "So, I wish at least one of your dreams comes true too. Love, Mum.",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "Aur yeh raha letter ka sabse sundar hissa. Sab rukaavatein soch lene ke baad, agar woh 'burning conviction' abhi bhi nason mein daud rahi hai — to aage badho. Phir maa apne bare mein batati hai: zindagi khud sapne badal deti hai. Aur naye sapne purane se kam nahi hote. Misaal: yeh kitaab chhapna — jo woh padh rahi ho — uska apna ek 10-saal-purana sapna hai. Yeh uska bachpan ka sapna nahi tha, par badal gaya. Maa ant mein kehti hai — 'kaash tumhara kam se kam ek sapna bhi sach ho.' Love, Mum. Ek maa ki sabse khoobsoorat dua."
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=f0fa5837-d614-4e77-85f4-0766ce86776b ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 4,
+ "prompt": "The most surprising idea in the letter is that a dream can *change* across your life — and the new dream is 'no less than the original dream of younger days.' The mother even shares her own: publishing this very book, a dream that *replaced* her youthful one. Is a changed dream a *failure* of the first dream, or something else?",
+ "reveal": "It's something far more hopeful than failure. We're often taught that dreams are fixed targets — that if you don't become the astronaut you wanted to be at ten, you've 'lost' your dream. The mother offers a wiser view: a dream is not a single fixed destination but a *direction of the heart*, and as you grow, learn, and meet life, that direction matures. The youthful dream and the later dream aren't winner and loser — they are the *same longing* finding a truer form. Her own story proves it: the book she's writing wasn't her childhood dream, yet it's 'no less' precious — perhaps more, because it's the dream of who she actually became. This frees Ming (and you) from a quiet fear: that changing your dream means betraying it. It doesn't. A person who chases dreams their whole life — even as those dreams evolve — is far richer than one who clings rigidly to a single youthful wish or, worse, traded all their dreams for security. The letter's final gift is permission to keep dreaming *new* dreams as long as you live. That is a beautiful note for a whole book to end on."
+}
+
+--- block #5 [inline_quiz] id=d9af3a18-4919-4651-b9b4-c2277e9755d3 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "31c75e3f-531e-4539-856e-b91812d23844",
+   "question": "What does the Academy Awards example teach about success?",
+   "options": [
+    "That climbing right to the very top is, in truth, actually quite easy",
+    "That only film actors are lucky enough to have real dreams",
+    "That awards and prizes do not really matter in the end",
+    "That no one succeeds alone; every winner has people behind them"
+   ],
+   "correct_index": 3,
+   "explanation": "The winner always thanks 'a host of people' — proof that behind one success stands a whole group of supporters.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "88733e17-9923-47ea-b549-9137036691e3",
+   "question": "Why do many people's dreams 'remain dreams'?",
+   "options": [
+    "They simply have no real talent for the thing they want to do",
+    "They never get past wishing; they do not act, or life intervenes",
+    "Dreams are impossible by nature, so no one ever reaches them",
+    "They do not have the sort of money that big dreams are usually seen to require"
+   ],
+   "correct_index": 1,
+   "explanation": "Most people only wistfully wish; they never act. Some choose security; for others, life's circumstances (like war, or family duty) intervene.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "b690b2c2-8586-4d9d-b914-543544d14197",
+   "question": "What does the mother mean when she says her new dream is 'no less than the original dream of younger days'?",
+   "options": [
+    "That she has quietly given up on dreaming altogether now",
+    "That a changed, grown-up dream is as worthy as a youthful one",
+    "That her new dream is a poorer version of the first one",
+    "That the dreams formed in one's early youth are always the very best"
+   ],
+   "correct_index": 1,
+   "explanation": "Dreams aren't fixed targets; they mature as you do. A later dream is the same longing in a truer form — 'no less' valuable than the first.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "The Wisdom in the Letter"  (slug: unit-8-themes-follow-that-dream)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=0bfe8256-b940-4b09-8bad-725afa5a6052 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/0bfe8256-b940-4b09-8bad-725afa5a6052_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A mother and daughter walking together up a hill at dawn, the daughter a step ahead",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A mother and a teenage daughter walking up a gentle hill at dawn, the daughter a step ahead toward the glowing horizon, the mother behind with a hand near her shoulder — guidance and letting-go at once. Tender, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=056858d8-98f0-4fc4-a16b-a649764d7bde ---
+{
+ "markdown": "This is advice, but it's also love. Tap each theme to see what the mother is really teaching."
+}
+
+--- block #2 [theme_explorer] id=42a69d4a-4a2f-454c-adf0-152c683bf68a ---
+{
+ "intro": "Three pieces of wisdom in one letter.",
+ "themes": [
+  {
+   "id": "13789e56-65a1-44bf-b062-718acd1a3b8e",
+   "title": "Effort and sacrifice over wishing",
+   "description": "The heart of the letter: dreams come true through years of effort and sacrifice, not wishful thinking. The 'ten-year rule' and 'count the cost' are honest about what it really takes.",
+   "evidence": [
+    "'What differentiates greatness from the ordinary is how much effort and sacrifice people invest'",
+    "'they have never got beyond just wishful thinking'"
+   ],
+   "reflection_prompt": "What is one thing you 'wish' for but haven't yet taken a single real action toward? What is one small action you could take this week?",
+   "description_hinglish": "Letter ka asli dil yahi hai: sapne sirf chaahne se nahi, balki saalon ki mehnat aur tyaag se poore hote hain, khali wishful thinking se nahi. 'Ten-year rule' aur 'count the cost' iss baat mein imaandaar hain ki asal mein lagta kya kya hai.",
+   "reflection_prompt_hinglish": "Aisi ek cheez kaunsi hai jiske liye aap sirf 'wish' karte ho par ab tak ek bhi sachcha kadam nahi uthaaya? Ek chhota kadam kaunsa hai jo aap iss hafte utha sakte ho?"
+  },
+  {
+   "id": "c4a56e17-be65-44cd-8e55-f2be238883ba",
+   "title": "No one dreams alone",
+   "description": "Behind every winner is a 'support network'. Dreams are reached with the help of many — family, teachers, friends — who stand by us. Gratitude is part of achievement.",
+   "evidence": [
+    "'the winner always thanks a host of people that formed his/her support network'",
+    "'for one winner, there is a group of people who stood by him/her'"
+   ],
+   "reflection_prompt": "Who are the people in YOUR 'support network' — the ones who stand by your dreams? Have you ever thanked them?",
+   "description_hinglish": "Har winner ke peeche ek 'support network' hota hai. Sapne bahut saare logon ki madad se poore hote hain — parivaar, teachers, dost — jo hamaare saath khade rehte hain. Shukrana ada karna bhi kamyaabi ka hissa hai.",
+   "reflection_prompt_hinglish": "Aapke 'support network' mein kaun log hain — wo jo aapke sapnon ke saath khade rehte hain? Kya aapne kabhi unhe thank you kaha hai?"
+  },
+  {
+   "id": "c57511e1-66c2-4a5a-9829-7d710d9e77c2",
+   "title": "Dreams change, and that's alright",
+   "description": "A dream can evolve across a life, and the new dream is 'no less' than the old. Chasing dreams is a lifelong practice, not a single youthful goal that you either hit or miss.",
+   "evidence": [
+    "'life itself may change a person's dreams'",
+    "'These hopes and aspirations are no less than the original dream of younger days.'"
+   ],
+   "reflection_prompt": "Has one of your dreams already changed as you've grown? Is the new one truer to who you are now?",
+   "description_hinglish": "Ek sapna poori zindagi badalta reh sakta hai, aur naya sapna purane se 'no less' hota hai. Sapnon ke peeche bhaagna zindagi bhar ki ek practice hai, sirf jawaani ka ek goal nahi jise aap ya to pa lo ya chook jaao.",
+   "reflection_prompt_hinglish": "Kya aapka koi sapna bade hote hote pehle hi badal gaya hai? Kya naya sapna aaj ke aap se zyaada sachcha hai?"
+  }
+ ]
+}
+
+--- block #3 [callout] id=fd117f40-c072-4c7d-ae2b-664fc4975597 ---
+{
+ "variant": "literature_in_life",
+ "title": "Dreaming in the real world",
+ "markdown": "It's easy to find slogans telling you to 'follow your dreams' — on posters, in films, all over social media. What makes *this* letter different is its **honesty**. It doesn't promise that dreams come easily or always come true. It tells you the road is 'uphill most of the way', that you must 'count the cost', that for many 'dreams remain dreams', and that life may change your plans entirely. And *still* it says: follow that dream. That balance — hope with honesty, encouragement with caution — is what real, loving advice sounds like. The cheap version says 'you can be anything!'; the true version says 'here is exactly what it will cost, and here is why it's still worth it.' As you finish this book and look toward your own future, it is the honest version that will actually carry you.",
+ "markdown_hinglish": "'Follow your dreams' bolne waale slogans dhoondhna aasaan hai — posters par, filmon mein, poore social media par. Lekin *iss* letter ko alag banaata hai uska **imaandaar hona**. Yeh waada nahi karta ki sapne aasaani se poore ho jaate hain ya hamesha sach hote hain. Yeh batata hai ki raasta 'uphill most of the way' hai, ki aapko 'count the cost' karna padega, ki bahuton ke 'dreams remain dreams', aur zindagi aapke plan poori tarah badal sakti hai. Aur *phir bhi* yeh kehta hai: follow that dream. Yahi balance — ummeed ke saath imaandaari, hausla ke saath savdhaani — asli, pyaar bhari salah ki pehchaan hai. Sasti version kehti hai 'you can be anything!'; sachchi version kehti hai 'yeh exactly kya cost karega, aur phir bhi yeh kyun worth it hai.' Jab aap yeh book khatam karke apne future ki taraf dekhte ho, to yahi imaandaar version aapko sach mein aage le jaayegi."
+}
+
+--- block #4 [reasoning_prompt] id=470853ab-b9dc-416b-9e9b-6518a9bd605c ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "The mother carefully *balances* two things: encouragement ('by all means, follow that dream') and caution ('count the cost', 'dreams remain dreams', 'life may change your plans'). Why is advice that holds *both* more valuable than advice that is only encouraging — or only cautious?",
+ "reveal": "Pure encouragement ('you can do anything!') feels wonderful but can mislead — it sets people up to be crushed when reality turns out to be hard, and it offers no map for the difficulties. Pure caution ('it's too risky, be sensible') feels safe but can kill a dream that was worth chasing, and it breeds regret. *Both together* is what wisdom looks like: it says *yes, go* — and *here is the truth about what 'go' will demand.* This balance respects the dreamer as capable of handling reality. It's also the difference between a cheerleader and a *mentor*: a cheerleader only claps; a mentor claps *and* prepares you. Notice how the structure of the whole letter enacts this balance — it opens with a ringing 'yes', spends the middle on honest costs and obstacles, and returns at the end to 'go ahead and do something about it.' The caution is sandwiched inside the encouragement, so the dreamer is warned but never discouraged. That is the hardest and most loving kind of advice to give — and the most useful to receive."
+}
+
+--- block #5 [inline_quiz] id=e5d16e97-9af9-4ab0-b97d-7a15126b66d7 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d91d6fb4-e774-4c43-a88e-ec66d303761d",
+   "question": "What is the letter's central message about achieving dreams?",
+   "options": [
+    "That sincere, heartfelt wishing is really all that it takes",
+    "That real success is reserved only for the naturally talented few",
+    "That chasing after dreams is rarely worth all the trouble",
+    "That dreams come true through effort and sacrifice, not wishing"
+   ],
+   "correct_index": 3,
+   "explanation": "The core wisdom: effort and sacrifice — not mere wishing — separate achievers from dreamers.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "fee09fef-05f2-4f9f-a2be-5fbb3f519154",
+   "question": "What makes this letter different from a 'follow your dreams!' slogan?",
+   "options": [
+    "Its honesty: it admits the road is uphill, yet still says go",
+    "Nothing much; it is really just another cheerful slogan",
+    "The way it firmly discourages people from dreaming at all",
+    "That it is a good deal shorter and snappier than any ordinary slogan"
+   ],
+   "correct_index": 0,
+   "explanation": "Real, loving advice balances hope with honesty — encouragement with caution — unlike an empty motivational slogan.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "55251bc9-410f-4a20-94dd-0b14386b4b85",
+   "question": "Why is advice that balances encouragement AND caution most valuable?",
+   "options": [
+    "Because advice that is longer is always the more useful kind",
+    "Because mixing the two only makes the advice more confusing",
+    "It says go, and tells the honest truth about what it will cost",
+    "It is not; pure, cheerful encouragement entirely on its own works best"
+   ],
+   "correct_index": 2,
+   "explanation": "A mentor (not just a cheerleader) both encourages you and prepares you for reality — the hardest and most useful kind of advice.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "Read Closely, Answer Carefully"  (slug: unit-8-working-with-text-follow-that-dream)
+published=true blocks=9 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=bcc7d5ab-51da-4981-947a-e9fc98720b3d ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/bcc7d5ab-51da-4981-947a-e9fc98720b3d_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A handwritten letter and a fountain pen on a desk, warm lamp light",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A warm handwritten letter and an old fountain pen resting on a wooden desk, a small framed photo nearby, gentle lamp light. Glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=d2ebf97b-d30e-4895-88d6-a3ad85d69893 ---
+{
+ "markdown": "Attempt each answer first, then tap **Show solution**."
+}
+
+--- block #2 [comprehension_checkpoint] id=c8c9623f-4637-4e89-bda2-16fdecd756ef ---
+{
+ "intro": "True or false?",
+ "questions": [
+  {
+   "id": "6aac53f4-a0a6-4693-888a-b5e1ac833757",
+   "question": "T/F: Reaching the peak of skill in a field typically demands focused, intense dedication for about a decade.",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct_index": 0,
+   "explanation": "TRUE — the 'ten-year rule': world-class standard takes about ten years of singular, intensive effort."
+  },
+  {
+   "id": "25168bfb-6d24-45be-a22b-7246ab392dbf",
+   "question": "T/F: A person's life goals and hopes can evolve over time.",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct_index": 0,
+   "explanation": "TRUE — 'life itself may change a person's dreams', and the new dream is 'no less' than the original."
+  },
+  {
+   "id": "5e0b8d92-d75b-40b4-aa08-f58e3c2b2c28",
+   "question": "T/F: Having a strong network of individuals is a HURDLE in pursuing one's ambition.",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct_index": 1,
+   "explanation": "FALSE — a support network is a HELP, not a hurdle. 'For one winner, there is a group of people who stood by him/her.'"
+  }
+ ]
+}
+
+--- block #3 [worked_example] id=70a3d35c-a236-494a-8eba-3433459ab1ef ---
+{
+ "label": "Extract 1 · \"then comes the conviction\"",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "(i) Analogy: enthusiasm : passion :: belief : ___ (ii) A realistic assessment of effort/investment/sacrifice prevents what? (iii) Does 'plunge' indicate complete or gradual involvement? (iv) Why does 'doing what you love best' work as intrinsic motivation? (v) Name one motivating factor besides 'prospect of success' that keeps a person on track.",
+ "solution": "**(i)** *enthusiasm : passion :: belief : **conviction*** (conviction is a strong belief, as passion is strong enthusiasm).\n\n**(ii)** A realistic assessment prevents **an early abandonment of the dream** (B) — by counting the cost first, you don't give up in shock when the difficulties appear.\n\n**(iii)** **Complete** involvement — to 'plunge' is to throw yourself fully and at once into the task, not to ease in gradually.\n\n**(iv)** Because the reward comes **from inside the activity itself** — the joy of doing what you love — rather than from an outside prize. *Intrinsic* motivation (loving the work) lasts even when external rewards or recognition are absent, so it keeps you going on the hard, unseen days.\n\n**(v)** Any reasonable one: **the knowledge that you are doing what you love best**, or **that you are doing the right thing** — both are named in the extract as forces that 'buoy you up' on the uphill road."
+}
+
+--- block #4 [worked_example] id=c96a651e-403d-404c-bbe1-dbb901853906 ---
+{
+ "label": "Extract 2 · \"life itself may change\"",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "(i) 'Life itself may change a person's dreams' suggests dreams are not static but rather ___ (evolving/dynamic). (ii) What does 'hopes and aspirations are no less than the original dream of younger days' mean? (iii) Which phrase indicates a complex, challenging journey? (iv) Why would 'participants in your dreamscape be many more'? (v) What is the tone of this extract?",
+ "solution": "**(i)** Dreams are not static but rather **evolving** (or dynamic) — they grow and change as life unfolds.\n\n**(ii)** It means that a **dream that changes with age is just as worthy and precious as the dream you had when young**. A later, matured dream is 'no less' valuable — growing up doesn't make your new dreams smaller.\n\n**(iii)** **'Negotiate a path through a maze of hurdles'** — this phrase pictures a complex, obstacle-filled journey.\n\n**(iv)** Because a dream that takes longer and is bigger naturally **involves more people** along the way — more helpers, mentors, collaborators, and supporters join your 'dreamscape' over the years it takes to realise it.\n\n**(v)** The tone is **optimistic and encouraging** (C) — even while admitting the hurdles, the mother is hopeful and supportive, sharing her own changed dream with excitement."
+}
+
+--- block #5 [worked_example] id=e3a2eeb4-61ac-42d0-845d-6d7ff6831e38 ---
+{
+ "label": "Q3 & Q4",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "Q3: What differentiates mere dreamers from actual achievers? Q4: How does Ming's mother use critical questions and personal anecdotes to persuade Ming effectively?",
+ "solution": "**Q3:** Mere dreamers **stop at wishful thinking** — they say 'I wish I could be...' but never act, or they trade their dream for security. Actual achievers **take action**: they feel the passion, form the conviction, count the cost, and *commit* — investing the years of effort and sacrifice it takes. The difference is not the dream but the *doing*.\n\n**Q4:** She persuades powerfully by mixing two tools. **Critical questions** ('Do you know that to reach world-class standard… one has to be pursuing it for at least ten years?') make Ming *think* and engage, rather than just receive a lecture. **Personal anecdotes** — the people whose Raffles College dream was ended by WWII, those who worked to support their siblings, and above all *her own* dream of publishing this book — make the advice **real and trustworthy**, because it comes from lived experience, not abstract theory. Together, questions invite reflection and stories earn belief."
+}
+
+--- block #6 [worked_example] id=39299653-846c-43c9-8036-3cd01b082e8b ---
+{
+ "label": "Q5 & Q6",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "Q5: How does the mother balance encouragement with caution? Q6: Is this advice still relevant in contemporary society? Why or why not?",
+ "solution": "**Q5:** She balances them by **structure and tone**. She *opens* with strong encouragement ('By all means follow that dream') and *closes* with it ('go ahead and do something about it… I wish at least one of your dreams comes true'). In *between*, she places honest caution — the ten-year rule, 'count the cost', 'dreams remain dreams', the obstacles that changed people's lives. The caution is wrapped inside the encouragement, so Ming is *prepared* without being *discouraged*. She even names the danger directly: 'I am not going to put a wet blanket on your dreams.'\n\n**Q6:** **Yes, it is highly relevant today** (a reasoned answer). If anything, in an age of 'overnight' social-media fame and instant gratification, her honest message — that real achievement takes about ten years of effort and sacrifice — is *more* needed, not less. Young people today are often shown only the glamorous result, never the decade of work behind it. Her insistence on effort, a support network, counting the cost, and accepting that dreams evolve speaks directly to the pressures of contemporary life. (A thoughtful answer could also note what's changed — more career options, faster change — while concluding the core wisdom holds.)"
+}
+
+--- block #7 [reasoning_prompt] id=611708b8-0f22-47fd-9fb7-98702d26819c ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 2,
+ "prompt": "Question 7 asks what 'costs' — in effort, sacrifice, and time — YOU are willing or unwilling to pay for your own goals. Pick one real dream of yours and answer honestly: what would it cost, and would you pay it?",
+ "reveal": "There's no right answer — the value is in the honesty. The mother's whole point is that this question, asked *before* you plunge, is what separates a real dream from a passing wish. Some costs you'll find you'd gladly pay (the ten years, the hard practice) — that's a sign the dream is truly yours. Other costs you'll realise you *wouldn't* pay — and that's not failure or weakness; it's valuable self-knowledge that frees you to find the dream you *would* pay for. The bravest thing isn't to claim you'd sacrifice everything for every dream; it's to look honestly at one real dream and know which costs you'd truly accept. Do that, and you've already done what most people never do — you've moved past wishful thinking into real thinking. That is exactly where the mother wants Ming to begin."
+}
+
+--- block #8 [inline_quiz] id=4109a8c1-cb4b-4356-9a2b-f8cc96b2a14f ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "3bc8aee4-b1d3-4b36-8385-ec35afc97541",
+   "question": "Complete the analogy: enthusiasm : passion :: belief : ___",
+   "options": [
+    "hesitation",
+    "sheer fear",
+    "conviction",
+    "a faint wish"
+   ],
+   "correct_index": 2,
+   "explanation": "Conviction is a strong belief, just as passion is strong enthusiasm.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "34f9b9c4-beab-476f-a832-340e1496df22",
+   "question": "What differentiates mere dreamers from actual achievers?",
+   "options": [
+    "Action: achievers act, while dreamers only keep wishing",
+    "The natural talent they simply happened to be born with already",
+    "The sheer amount of money they are able to spend",
+    "Their age at the moment when they first begin"
+   ],
+   "correct_index": 0,
+   "explanation": "The difference is the doing: achievers invest the effort and sacrifice; dreamers only wish.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "d782b3a3-7f73-42cc-9c28-94e81c763e69",
+   "question": "Why does the mother use her OWN dream (publishing the book) as an example?",
+   "options": [
+    "To boast a little about the book she managed to publish",
+    "To fill some space when she had nothing else left to write",
+    "She happened to pick the example more or less by accident",
+    "A lived example makes the advice feel real and trustworthy"
+   ],
+   "correct_index": 3,
+   "explanation": "Personal stories earn belief. By sharing her own changed dream, she proves her advice is lived, not just preached.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "Building Words, Picturing Dreams"  (slug: unit-8-vocabulary-compounds-and-idioms)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=6710b6c4-9461-457e-9ca3-cf3409eb36d1 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/6710b6c4-9461-457e-9ca3-cf3409eb36d1_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "Word pieces joining together — \"dream\" + \"scape\" merging into a dreamy landscape",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). Two soft word-cards, 'dream' and 'scape', sliding together and dissolving into a dreamy glowing landscape of hills and sky — the idea of a compound word becoming a picture. Imaginative, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=7ac86999-2976-4666-a598-a4ea6778d5b6 ---
+{
+ "markdown": "The letter uses a lovely word — **dreamscape**. It's a **compound word**: *dream* + *-scape*, where **-scape** means 'a view or scene of'. Once you know the piece, you can read a whole family of words: *landscape* (a view of land), *seascape* (of the sea), *cityscape* (of a city), *mindscape* (of the mind). Learning word-*pieces* lets you unlock words you've never met."
+}
+
+--- block #2 [vocabulary_lab] id=27af8c2c-7967-47e3-8d9d-1ef3ef0a4885 ---
+{
+ "mode": "affixes",
+ "intro": "The '-scape' family. Each is [a thing] + a view/scene of it.",
+ "cards": [
+  {
+   "id": "fa3db594-d3b2-4ff1-ad81-78439aff9c39",
+   "word": "landscape",
+   "pos": "noun",
+   "pronunciation": "LAND-skayp",
+   "meaning": "a wide view of an area of land / countryside",
+   "hindi": "भूदृश्य",
+   "example": "The hills made a beautiful landscape."
+  },
+  {
+   "id": "6c634d49-08e3-4503-9572-9623173e0c90",
+   "word": "seascape",
+   "pos": "noun",
+   "pronunciation": "SEE-skayp",
+   "meaning": "a view or picture of the sea",
+   "hindi": "समुद्र-दृश्य",
+   "example": "The painter loved a calm seascape."
+  },
+  {
+   "id": "9bf4b34f-8b0c-4c34-9822-83ede0967d62",
+   "word": "cityscape",
+   "pos": "noun",
+   "pronunciation": "SIT-ee-skayp",
+   "meaning": "a view of a city, especially its skyline",
+   "hindi": "नगर-दृश्य",
+   "example": "The cityscape glittered at night."
+  },
+  {
+   "id": "2e19592e-44a0-44a7-a57a-b7f4656ff5a7",
+   "word": "mindscape",
+   "pos": "noun",
+   "pronunciation": "MYND-skayp",
+   "meaning": "the inner world of one's mind and thoughts",
+   "hindi": "मन का परिदृश्य",
+   "example": "Nature clears the mindscape."
+  },
+  {
+   "id": "4af890b6-60c6-43b4-86fb-b8164adcf756",
+   "word": "dreamscape",
+   "pos": "noun",
+   "pronunciation": "DREEM-skayp",
+   "meaning": "a world of dreams; a dream-like scene",
+   "hindi": "स्वप्न-लोक",
+   "example": "Many people join the participants in your dreamscape."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "ace241a4-7c25-4d63-8141-3e4532c8e85a",
+   "question": "If '-scape' means 'a view/scene of', then *seascape* is:",
+   "options": [
+    "a kind of boat",
+    "a view of the sea",
+    "a sea creature",
+    "a beach holiday"
+   ],
+   "correct_index": 1,
+   "explanation": "Sea + scape = a view or picture of the sea. The word-piece '-scape' unlocks the meaning."
+  },
+  {
+   "id": "9d4b23d7-f228-4e70-aaf0-5462d60c2afd",
+   "question": "*Mindscape* means:",
+   "options": [
+    "a map of a city",
+    "the inner world of one's mind and thoughts",
+    "a kind of land",
+    "a dream you forget"
+   ],
+   "correct_index": 1,
+   "explanation": "Mind + scape = the inner scene of one's mind — your thoughts and inner world."
+  }
+ ]
+}
+
+--- block #3 [heading] id=4938ad64-d210-4470-be86-c3528954b90b ---
+{
+ "level": 2,
+ "text": "The idioms of a dream"
+}
+
+--- block #4 [vocabulary_lab] id=a28e3be9-81f0-49bb-9d33-7171cac27630 ---
+{
+ "mode": "idioms",
+ "intro": "Vivid expressions the letter uses to talk about chasing dreams.",
+ "cards": [
+  {
+   "id": "4c17dda2-4893-4ef0-9144-078e20608657",
+   "word": "burning in your blood",
+   "pos": "idiom",
+   "pronunciation": "—",
+   "meaning": "felt as a deep, passionate desire",
+   "hindi": "खून में जुनून होना",
+   "example": "If the dream is still burning in your blood, plunge."
+  },
+  {
+   "id": "b40a0d88-57bb-4a87-a0ff-b4dadedd8a6a",
+   "word": "an uphill task",
+   "pos": "idiom",
+   "pronunciation": "—",
+   "meaning": "a tough, difficult challenge",
+   "hindi": "कठिन काम",
+   "example": "The road may be uphill most of the way."
+  },
+  {
+   "id": "9e44cf26-cdb7-4c0a-b431-7246cfb89d1f",
+   "word": "buoyed up",
+   "pos": "idiom",
+   "pronunciation": "BOY-d up",
+   "meaning": "lifted and energised in spirit",
+   "hindi": "हौसला बना रहना",
+   "example": "You are buoyed up by doing what you love."
+  },
+  {
+   "id": "9c352987-1831-4b9e-907d-bc99ddaf04c0",
+   "word": "wishful thinking",
+   "pos": "idiom",
+   "pronunciation": "—",
+   "meaning": "a hopeful belief that is unlikely to come true (without action)",
+   "hindi": "सिर्फ़ ख़याली पुलाव",
+   "example": "They never got beyond just wishful thinking."
+  },
+  {
+   "id": "a80bd396-9f11-405d-b73b-be78fe332b65",
+   "word": "a wet blanket",
+   "pos": "idiom",
+   "pronunciation": "—",
+   "meaning": "a spoil-sport; someone who discourages others",
+   "hindi": "रंग में भंग करने वाला",
+   "example": "I'm not going to put a wet blanket on your dreams."
+  },
+  {
+   "id": "af597592-f50a-42c9-9cb1-2ad41859ceba",
+   "word": "coursing through your veins",
+   "pos": "idiom",
+   "pronunciation": "—",
+   "meaning": "flowing strongly through you (of a feeling)",
+   "hindi": "नसों में दौड़ना",
+   "example": "If the conviction is still coursing through your veins, go ahead."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "fd40d820-eb36-4e36-9e53-916b60a1b0d5",
+   "question": "'Don't be a wet blanket!' means don't be a:",
+   "options": [
+    "spoil-sport / kill-joy",
+    "latecomer",
+    "rule-breaker",
+    "daydreamer"
+   ],
+   "correct_index": 0,
+   "explanation": "A 'wet blanket' is a spoil-sport — someone who dampens everyone's enthusiasm."
+  },
+  {
+   "id": "bab2d0dd-b9a9-4b0a-b821-4153faa826e8",
+   "question": "If a dream is 'burning in your blood', you:",
+   "options": [
+    "are physically ill",
+    "have a deep, passionate desire for it",
+    "are angry",
+    "have forgotten it"
+   ],
+   "correct_index": 1,
+   "explanation": "'Burning in your blood' = feeling a passionate, deep desire — the test of whether a dream is truly yours."
+  },
+  {
+   "id": "2b200da3-f052-4b93-997d-5c4754b1bfb3",
+   "question": "'Just wishful thinking' is a hopeful belief that:",
+   "options": [
+    "always comes true",
+    "is unlikely to come true, because it isn't backed by action",
+    "is based on facts",
+    "others share"
+   ],
+   "correct_index": 1,
+   "explanation": "Wishful thinking is wanting something without acting on it — the trap the letter warns dreamers against."
+  }
+ ]
+}
+
+--- block #5 [inline_quiz] id=9ea5770c-22e3-4482-987f-3fa140c31306 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "bd7b679a-c78b-40a0-a0ed-5b910b3dcb7f",
+   "question": "A *compound word* is:",
+   "options": [
+    "a word that has simply been spelt in the wrong way",
+    "a word made of two or more parts joined together",
+    "any word that happens to be unusually long",
+    "a word borrowed in from a foreign language"
+   ],
+   "correct_index": 1,
+   "explanation": "Compound words join parts together — knowing a piece like '-scape' helps you read a whole family of words.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "3d53902d-c670-4600-9cd4-b3084595c7c0",
+   "question": "Which idiom means 'a tough, difficult challenge'?",
+   "options": [
+    "wishful thinking",
+    "an uphill task",
+    "a wet blanket",
+    "burning in your blood"
+   ],
+   "correct_index": 1,
+   "explanation": "'An uphill task' (like climbing a hill) = a hard, demanding challenge — like the 'uphill road' of a dream.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "a799f1d1-a489-40f8-b830-4b4ec5b5b7cc",
+   "question": "Why is learning word-PIECES (like '-scape') useful?",
+   "options": [
+    "It is really only of any use when you are reading poems",
+    "It mostly just makes ordinary words look longer than they are",
+    "It is of no use; whole words must simply be memorised one by one",
+    "It lets you unlock the meaning of words you have never met"
+   ],
+   "correct_index": 3,
+   "explanation": "Knowing a part's meaning ('-scape' = a view of) lets you decode landscape, seascape, mindscape, and more — a powerful vocabulary skill.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "If… Then — and the Many Jobs of "Could""  (slug: unit-8-grammar-conditionals-and-could)
+published=true blocks=10 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=1da84c15-8737-440a-9548-76ed2a74cd8f ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/1da84c15-8737-440a-9548-76ed2a74cd8f_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A fork in a glowing road, one path labelled IF and the other THEN, under a hopeful sky",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A glowing road forking into two gentle paths under a hopeful dawn sky, suggesting an 'if… then' choice toward the future. Calm and contemplative, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=93a67b5d-4e38-480c-9fc9-e7f6a41390dc ---
+{
+ "markdown": "The letter is full of *'if… then'*. That's the **first conditional** — used for **real or possible future situations.**"
+}
+
+--- block #2 [heading] id=bfb2de1a-b0fa-4c1a-a7ff-f021ede1c659 ---
+{
+ "level": 2,
+ "text": "The first conditional"
+}
+
+--- block #3 [text] id=a64666f6-98d6-40f3-af0a-646d95d64056 ---
+{
+ "markdown": "The usual shape is: **If + present tense, … will + verb.** *If you work hard, you **will** succeed.*\n\nBut the letter does something neat: in the main clause, instead of *will*, it uses an **imperative** (a command or piece of advice): *'After all the obstacles are considered, **if** the burning conviction is still coursing through your veins, then **go ahead** and do something about it.'* — *'If…, then **go ahead**.'* Using a command instead of *will* makes the conditional sound like direct, urgent advice — perfect for a mother guiding her daughter."
+}
+
+--- block #4 [comprehension_checkpoint] id=aefe6a2f-de4e-4eda-a59a-a1ce6e9e209d ---
+{
+ "intro": "Complete each first conditional with an imperative (a command/advice).",
+ "questions": [
+  {
+   "id": "a852336c-9e22-41b1-8e19-4ba415c1f7ee",
+   "question": "'If the idea excites you, ___.' Which is a correct imperative main clause?",
+   "options": [
+    "you will be happy",
+    "go for it and make a plan",
+    "if you try harder",
+    "you could maybe"
+   ],
+   "correct_index": 1,
+   "explanation": "An imperative gives a direct command/advice: 'If the idea excites you, GO FOR IT and make a plan.' (Not 'will' — a command.)"
+  },
+  {
+   "id": "f3538630-113f-48f5-99e7-6fc3475ece4f",
+   "question": "'If this seems too hard, ___.' Choose the imperative.",
+   "options": [
+    "break it into smaller steps",
+    "you will fail",
+    "if it is hard",
+    "it could be"
+   ],
+   "correct_index": 0,
+   "explanation": "'BREAK it into smaller steps' is an imperative — direct advice in the main clause of a first conditional."
+  },
+  {
+   "id": "f1dafab9-69b8-4a58-b44f-0e34f8cd757e",
+   "question": "The first conditional is used for:",
+   "options": [
+    "impossible past events",
+    "real or possible FUTURE situations",
+    "things that never change",
+    "questions only"
+   ],
+   "correct_index": 1,
+   "explanation": "First conditional = real/likely future situations: 'If X happens, Y will happen' (or, as advice, 'then do Y')."
+  }
+ ]
+}
+
+--- block #5 [heading] id=f40e8fbf-be49-4198-85e1-675dd529eaa0 ---
+{
+ "level": 2,
+ "text": "The five jobs of \"could\""
+}
+
+--- block #6 [text] id=17aa9795-728b-45c8-aa7a-b06544432427 ---
+{
+ "markdown": "The little word **could** does several different jobs, and the letter uses many of them. Read the *situation* to know which:\n\n- **Possibility:** *'It **could** be in any field — sports, science, arts…'* (it is possible)\n- **Unreal/hypothetical wish:** *'I wish I **could** be this or the other'* (an imagined, not-real situation)\n- **Past possibility / speculation:** *'They **could have** preferred to trade their dream for security'* (a guess about what might have happened)\n- **Past ability / purpose:** *'so that they **could** support their siblings'* (they were able to / in order to)\n- **Polite request:** *'**Could** you repeat the question?'* (a courteous ask)"
+}
+
+--- block #7 [comprehension_checkpoint] id=f2372ef6-01e2-4b89-8695-ec415f03a83a ---
+{
+ "intro": "What job is 'could' doing?",
+ "questions": [
+  {
+   "id": "9140f3e6-6e93-4caf-8f4b-363f74fedc9f",
+   "question": "'It could be in any field — sports, science, arts.' Here *could* expresses:",
+   "options": [
+    "a polite request",
+    "possibility",
+    "past ability",
+    "an order"
+   ],
+   "correct_index": 1,
+   "explanation": "*Could* here = possibility — the dream is possible in any of these fields."
+  },
+  {
+   "id": "2cc4cc20-43bb-40e3-9f44-0feab241a584",
+   "question": "'I wish I could be a singer.' Here *could* expresses:",
+   "options": [
+    "a real plan",
+    "an unreal / hypothetical wish (imagining something not true now)",
+    "past ability",
+    "a request"
+   ],
+   "correct_index": 1,
+   "explanation": "*Could* after 'I wish' marks an unreal, hypothetical situation — a wish, not a real plan."
+  },
+  {
+   "id": "0361e934-7e49-462d-adb6-28e66710a1ee",
+   "question": "'They could have taken the shorter route, but they didn't know about it.' Here *could have* expresses:",
+   "options": [
+    "a present possibility",
+    "a past possibility / speculation about what didn't happen",
+    "a polite request",
+    "a habit"
+   ],
+   "correct_index": 1,
+   "explanation": "*Could have + past participle* speculates about a past possibility that didn't actually occur."
+  }
+ ]
+}
+
+--- block #8 [apply_express] id=4b1eb9e6-0c90-42fc-af51-1bc37d18dca4 ---
+{
+ "title": "Grammar Gym — If… Then, and 'Could'",
+ "intro": "'If you believe, you will begin.' The first conditional links a real possibility to its result. Drill the if-then pattern and the many jobs the small word *could* quietly does.",
+ "chapter_number": 8,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "kind": "fill_blank",
+   "difficulty": 1,
+   "prompt": "First conditional: If you ____ (work) hard, you ____ succeed.",
+   "answers": [
+    [
+     "work"
+    ],
+    [
+     "will"
+    ]
+   ],
+   "hint": "If + present simple, … will + base verb.",
+   "explanation": "First conditional = If + present (work), main clause + will (will succeed).",
+   "id": "ch8-gram-01",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "spot_error",
+   "difficulty": 2,
+   "tokens": [
+    "If",
+    "it",
+    "will",
+    "rain",
+    "tomorrow",
+    ",",
+    "the",
+    "mela",
+    "will",
+    "be",
+    "cancelled",
+    "."
+   ],
+   "error_index": 2,
+   "fix": "(remove)",
+   "fix_options": [
+    "(remove)",
+    "would",
+    "shall"
+   ],
+   "rule": "The IF-clause takes the present simple, not 'will': 'If it rains tomorrow, … will be cancelled.' Keep will only in the result clause.",
+   "explanation": "No 'will' in the if-clause: 'If it rains …, it will be cancelled.'",
+   "id": "ch8-gram-02",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "transform",
+   "difficulty": 2,
+   "source": "Believe in your dream. Then you will begin.",
+   "instruction": "Combine into one first-conditional sentence with 'If'.",
+   "answers": [
+    "If you believe in your dream, you will begin.",
+    "If you believe in your dream you will begin.",
+    "If you believe in your dream, you will begin"
+   ],
+   "rule": "First conditional: If + present (believe), result + will (will begin).",
+   "explanation": "Two facts → one conditional: 'If you believe …, you will begin.'",
+   "id": "ch8-gram-03",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "form_select",
+   "difficulty": 2,
+   "prompt": "Which job is *could* doing here? 'When I was young, I **could** run for miles.' → ____",
+   "options": [
+    "past ability",
+    "polite request",
+    "present possibility",
+    "permission"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Here could = past ability (was able to, back then).",
+    "A request would be 'Could you …?' addressed to someone.",
+    "Present possibility would describe now, not 'when I was young'.",
+    "Permission would be 'You could go' (allowed to)."
+   ],
+   "explanation": "could has many jobs; the time cue 'when I was young' fixes this as PAST ABILITY.",
+   "id": "ch8-gram-04",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "form_select",
+   "difficulty": 3,
+   "prompt": "Which job is *could* doing here? 'You **could** ask your teacher for help.' → ____",
+   "options": [
+    "suggestion / advice",
+    "past ability",
+    "certainty",
+    "obligation"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Here could softly SUGGESTS an option (one thing you might do).",
+    "No past-time cue, so not past ability.",
+    "could never expresses certainty.",
+    "Obligation would be must, not could."
+   ],
+   "explanation": "could also offers a gentle suggestion: 'you could ask …' = one possibility worth trying.",
+   "id": "ch8-gram-05",
+   "concept_tag": "grammar"
+  },
+  {
+   "kind": "fill_blank",
+   "difficulty": 3,
+   "prompt": "Complete the conditional advice in the letter's spirit: If you never ____ (try), you will never ____.",
+   "answers": [
+    [
+     "try"
+    ],
+    [
+     "know",
+     "succeed"
+    ]
+   ],
+   "hint": "If + present (try) → will + base (know / succeed).",
+   "explanation": "First conditional again: present in the if-clause, will in the result.",
+   "id": "ch8-gram-06",
+   "concept_tag": "grammar"
+  }
+ ]
+}
+
+--- block #9 [inline_quiz] id=c78b1549-ddaa-4222-ba2e-f99afa50e3a7 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "6cdad4dd-acc4-4650-a620-abb61272253b",
+   "question": "The first conditional usually follows the pattern:",
+   "options": [
+    "If + present, will + verb (or an imperative)",
+    "If + past tense, then would + verb",
+    "If + future tense, then present tense",
+    "If + could, then will + verb in that same clause"
+   ],
+   "correct_index": 0,
+   "explanation": "First conditional: 'If + present tense, will + verb' — or, as in the letter, an imperative ('then go ahead') for direct advice.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "c3e1fb44-bc78-4418-a4bd-0f198a242540",
+   "question": "In 'Could you repeat that, please?', *could* expresses:",
+   "options": [
+    "an ability that someone once had in the past",
+    "a possibility that might perhaps happen",
+    "a polite and courteous request",
+    "a quiet, private wish for something"
+   ],
+   "correct_index": 2,
+   "explanation": "*Could* here is a courteous, polite request — softer than 'can you'.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "7e1abfa8-b967-42a4-9d93-47ca42ede09a",
+   "question": "Why does the letter use an imperative ('then go ahead') instead of 'will' in its conditional?",
+   "options": [
+    "She slipped, and 'will' was really the very word she had meant to write",
+    "It is simply a way to fit fewer words onto the page that day",
+    "It turns the conditional into direct, urgent advice for her child",
+    "Because using 'will' in that position would have been wrong"
+   ],
+   "correct_index": 2,
+   "explanation": "Using a command in the main clause makes the 'if… then' sound like personal advice rather than a neutral prediction.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "Talk Dreams, Write an Email"  (slug: unit-8-speaking-and-writing-email)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=e245e92d-fe7a-45c3-8075-3d878b713450 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/e245e92d-fe7a-45c3-8075-3d878b713450_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A laptop screen showing an email being composed, a notebook of dreams beside it",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A laptop open to a half-written email beside a notebook full of sketched dreams and plans, a cup of tea, warm focused light. Glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=db1b81a1-1e22-4e2c-a81e-c060a6da9bee ---
+{
+ "markdown": "First, a few words to say aloud. Then discuss your dreams with a partner. Finally, learn the **formal email** — the way you'll actually reach out to chase opportunities in the real world."
+}
+
+--- block #2 [pronunciation_drill] id=d6c8e27f-b7c8-4462-b6e9-b0fc7689ae4e ---
+{
+ "intro": "Five words from this chapter. Tap to hear; read aloud twice.",
+ "words": [
+  {
+   "id": "2da353d9-2a4e-4e63-986a-86435437306f",
+   "word": "conviction",
+   "syllables": "kun-VIK-shun",
+   "ipa": "kənˈvɪk.ʃən",
+   "context_sentence": "Then comes the conviction that it is imperative.",
+   "common_mistake": "Stress the middle: kun-VIK-shun. It means a firm belief."
+  },
+  {
+   "id": "2616fdea-7892-4558-aea8-2ad706f47aa3",
+   "word": "imperative",
+   "syllables": "im-PERR-uh-tiv",
+   "ipa": "ɪmˈper.ə.tɪv",
+   "context_sentence": "It is imperative to realise it.",
+   "common_mistake": "Stress the second syllable: im-PERR-uh-tiv. Means absolutely necessary."
+  },
+  {
+   "id": "2492a58f-9957-4d79-971f-62f1d98c1b4c",
+   "word": "aspirations",
+   "syllables": "as-pih-RAY-shunz",
+   "ipa": "ˌæs.pɪˈreɪ.ʃənz",
+   "context_sentence": "Hopes and aspirations change over time.",
+   "common_mistake": "Stress 'RAY': as-pih-RAY-shunz. Means hopes/ambitions."
+  },
+  {
+   "id": "dc2e5574-bc44-42f5-8772-76a4955f8d5d",
+   "word": "singularly",
+   "syllables": "SING-gyuh-lur-lee",
+   "ipa": "ˈsɪŋ.ɡjə.lə.li",
+   "context_sentence": "Singularly and intensively pursuing it.",
+   "common_mistake": "Stress the first syllable: SING-gyuh-lur-lee. Means with single-minded focus."
+  },
+  {
+   "id": "2f76049d-9e70-495e-830d-248a7ee957b6",
+   "word": "realise",
+   "syllables": "REE-uh-lyze",
+   "ipa": "ˈriː.ə.laɪz",
+   "context_sentence": "The dream will take longer to realise.",
+   "common_mistake": "Here it means 'to make real / achieve', not 'to understand'. REE-uh-lyze."
+  }
+ ]
+}
+
+--- block #3 [dialogue_role_play] id=3feb1a80-3b93-4580-bc37-4df050043e17 ---
+{
+ "mode": "debate",
+ "scene_description": "Share your dreams the way Ming and her mother might. In pairs, one person describes a dream and what it might cost; the partner responds like a wise, encouraging mentor — balancing 'go for it!' with honest questions. Then swap. Use the frames.",
+ "characters": [
+  {
+   "id": "dreamer",
+   "name": "The Dreamer",
+   "color": "emerald"
+  },
+  {
+   "id": "mentor",
+   "name": "The Mentor",
+   "color": "sky"
+  }
+ ],
+ "lines": [],
+ "debate_frames": {
+  "for": [
+   "One dream I have is to…, and what draws me to it is…",
+   "I think the cost would be…, in effort, time, and sacrifice.",
+   "What scares me about chasing it is…",
+   "But the reason it's 'burning in my blood' is…"
+  ],
+  "against": [
+   "(As the mentor) That's a real dream — have you counted the cost in years?",
+   "Who could be part of your 'support network' for this?",
+   "What is one small first step you could take this month?",
+   "By all means, follow that dream — but here's one honest thing to consider:…"
+  ]
+ }
+}
+
+--- block #4 [writing_scaffold] id=eefe1573-9def-4451-9a66-47007b829253 ---
+{
+ "task": "You are passionate about pursuing a course in design. You come across a summer workshop run by a reputed design institute. Write a FORMAL email to the Director of the institute, enquiring about the workshop details and expressing your interest in joining. Use formal language; avoid abbreviations.",
+ "format": "letter",
+ "model_parts": [
+  {
+   "id": "c86254dc-7587-49d9-847c-7fe471f02d12",
+   "label": "The header (From / To / Subject)",
+   "text": "From: ananya.rao@email.com\nTo: director@designinstitute.edu.in\nSubject: Enquiry Regarding the Summer Design Workshop 2026",
+   "annotation": "An email begins with a header: your address (From), the recipient (To), and — crucially — a clear, specific SUBJECT line. The subject tells the busy reader exactly what the email is about in one glance. Keep it precise: 'Enquiry Regarding the Summer Design Workshop', not just 'Hello'."
+  },
+  {
+   "id": "460fdac9-668d-4f25-be2b-d5b04631c86d",
+   "label": "Salutation & introduction",
+   "text": "Dear Sir/Madam,\n\nI am Ananya Rao, a Class IX student at Greenfield Public School with a keen interest in design. I am writing to enquire about the Summer Design Workshop being organised by your esteemed institute.",
+   "annotation": "Use a formal salutation ('Dear Sir/Madam,'). Then introduce yourself briefly (who you are) and state your purpose at once (why you're writing). A formal email gets to the point politely and quickly."
+  },
+  {
+   "id": "9b8ecb29-325c-4406-8f1b-d9e3fb410565",
+   "label": "The body — your specific questions",
+   "text": "I would be grateful if you could kindly provide the following details: the dates and duration of the workshop, the eligibility criteria, the fee structure, and the registration procedure. I would also like to know whether any prior experience in design is required.",
+   "annotation": "List your actual questions clearly — dates, eligibility, fees, how to apply. Specific questions get specific answers. The polite phrase 'I would be grateful if you could kindly…' keeps the tone formal and courteous. Avoid abbreviations (write 'I am', not 'I'm')."
+  },
+  {
+   "id": "be5fec26-8e16-4082-9f53-1bc5cb595a9e",
+   "label": "Closing & sign-off",
+   "text": "I am genuinely enthusiastic about the opportunity to learn from your institute and look forward to your response. Thank you for your time and consideration.\n\nYours sincerely,\nAnanya Rao\nClass IX, Greenfield Public School\nPhone: 98xxxxxxxx",
+   "annotation": "Close by expressing genuine interest and thanking the reader. Sign off formally ('Yours sincerely,') with your full name and contact details (so they can reply). This is how you reach out to chase a real opportunity — exactly the kind of action the letter urges."
+  }
+ ],
+ "tips": [
+  "Write a clear, specific SUBJECT line — it's the first thing the reader sees.",
+  "Use formal language and AVOID abbreviations ('I am', not 'I'm'; 'cannot', not 'can't').",
+  "List your actual questions clearly — specific questions get specific answers.",
+  "Include your contact details so they can reply — and thank them for their time."
+ ]
+}
+
+--- block #5 [inline_quiz] id=a6127a62-f90e-4618-a281-fae80efbe9cf ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "4a8a3866-2b8e-4afa-8e3f-20ff7dc881b3",
+   "question": "What is the most important part of a formal email's header?",
+   "options": [
+    "A clear subject line saying what the email is about",
+    "The particular font that the writer has chosen to use",
+    "The colour scheme that is used across the message",
+    "The overall length of the email from start to finish"
+   ],
+   "correct_index": 0,
+   "explanation": "The subject line is read first — a precise one ('Enquiry Regarding the Summer Design Workshop') gets your email opened and understood instantly.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "8d1a92c3-d764-40ff-89f0-7f74e3cd75d7",
+   "question": "In a formal email, you should:",
+   "options": [
+    "fill it up with casual abbreviations and friendly emojis",
+    "leave out the greeting in order to save the reader's time",
+    "keep the whole message down to a single short word",
+    "use formal language and avoid abbreviations like 'I'm'"
+   ],
+   "correct_index": 3,
+   "explanation": "Formality means full forms, polite phrasing, and no casual abbreviations — it shows respect and professionalism.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "14ae50a2-bb4c-4eee-8d35-a88fc4f0f4c7",
+   "question": "How does writing this email connect to the letter's message?",
+   "options": [
+    "It is only a grammar exercise, with no real purpose behind it",
+    "It is a real first action, moving from wishing into doing",
+    "It quietly replaces the real dream with a piece of paperwork",
+    "It has nothing at all to do with the letter's actual message"
+   ],
+   "correct_index": 1,
+   "explanation": "The letter urges action over wishing. Writing to enquire about a workshop is exactly that — a concrete step toward chasing a dream.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 9 — "A Mother's Letters, and the Words We Keep"  (slug: unit-8-about-irene-chua-and-letters)
+published=true blocks=5 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=36f0994b-be96-47ad-8ed3-8718685f6291 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/36f0994b-be96-47ad-8ed3-8718685f6291_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A bundle of letters tied with ribbon, a mother and daughter's photo tucked among them",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A treasured bundle of handwritten letters tied with a soft ribbon, a small photo of a mother and daughter tucked among them, warm lamp light. Tender and timeless, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=8e792cb8-1ba7-47de-9545-2e991a1dfc13 ---
+{
+ "markdown": "The letter you read was never meant to be a textbook chapter. It began as a real mother's private words to her real daughter — which is exactly why it rings so true."
+}
+
+--- block #2 [meet_a_scientist] id=4c369cc2-9954-472a-8f79-20f83bf7c18b ---
+{
+ "name": "Irene Chua",
+ "years": "Contemporary author (Singapore)",
+ "nationality": "Singaporean",
+ "portrait_prompt": "Watercolour portrait painting of a warm, thoughtful contemporary Singaporean woman author seated with a pen and writing paper, a gentle, loving expression. Soft warm light glowing against a dark neutral background. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels.",
+ "portrait_src": "",
+ "contribution": "A writer from **Singapore** and the author of **_My Daughter, My Friend_** — a collection of letters written by a mother to her teenage daughter, Ming. In them she shares her honest reflections on life, love, growing up, and chasing one's dreams, equipping her daughter for the challenges ahead. *Follow That Dream* is one of those letters.",
+ "connection": "The whole power of this chapter comes from its *form*: it is a **personal letter**, not a lecture. Because Irene Chua is writing to someone she loves, the advice is warm, honest, and unguarded — she admits her own dreams changed, shares real people's struggles, and writes 'Love, Mum'. The intimacy of a letter does what no impersonal essay could: it makes the reader feel *spoken to*, gently, by someone who wants the best for them.",
+ "fun_detail": "The collection's title — *My Daughter, My Friend* — captures something beautiful: that a parent and a teenager can become *friends* who speak honestly to each other, not just an authority and a child. The whole book is built on the belief that the deepest guidance is given not as orders, but as one heart writing openly to another.",
+ "learn_more": "*My Daughter, My Friend* by Irene Chua — the collection this letter is taken from."
+}
+
+--- block #3 [callout] id=552201ad-1a91-42cc-9112-3c78f3391833 ---
+{
+ "variant": "literature_in_life",
+ "title": "Write the letter you would want to keep",
+ "markdown": "In a world of disappearing messages, a **letter** is a rare gift — something a person can hold, re-read for years, and keep forever. Ming will have her mother's words long after a hundred thousand texts have scrolled away. You don't have to be a famous author to write one. Think of someone you love — a parent, a grandparent, a younger sibling, a friend who's struggling. What is the one true thing you'd want them to carry? Write it down, by hand, and give it to them. Like the postman Khetaram in the last unit, you'll be a *carrier of words* — and like Irene Chua, you'll be giving someone something they can keep. Some of the most important words you ever speak will be the ones you take the time to write.",
+ "markdown_hinglish": "Gayab ho jaane waale messages ki duniya mein, ek **letter** ek durlabh tohfa hai — kuch jise insaan haath mein pakad sakta hai, saalon tak phir se padh sakta hai, aur hamesha ke liye rakh sakta hai. Ming ke paas uski maa ke shabd tab bhi rahenge jab ek laakh texts scroll hoke kab ke gayab ho chuke honge. Aise letter likhne ke liye aapko mashhoor lekhak hone ki zaroorat nahi. Kisi aise insaan ke baare mein socho jise aap pyaar karte ho — ek parent, dada-dadi, chhota bhai-behen, ya ek dost jo mushkil mein hai. Wo ek sachchi baat kya hai jo aap chaahte ho ki wo apne saath rakhe? Use likho, apne haath se, aur unhe do. Pichhle unit ke postman Khetaram ki tarah, aap bhi *shabdon ke carrier* banoge — aur Irene Chua ki tarah, aap kisi ko kuch aisa de rahe ho jise wo rakh sake. Aapke bole hue kuch sabse zaroori shabd wahi honge jinhe likhne ke liye aapne waqt nikaala."
+}
+
+--- block #4 [inline_quiz] id=db72fef2-aa0c-4043-9c8c-91decc8b7273 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "db56ec25-cd91-41a7-b71c-5e64e062df1b",
+   "question": "What is *My Daughter, My Friend*?",
+   "options": [
+    "A long novel set during a faraway war",
+    "A collection of a mother's letters to her daughter",
+    "A school science textbook for teenagers",
+    "A short stage play written specially for the theatre"
+   ],
+   "correct_index": 1,
+   "explanation": "It's a collection of a mother's honest, loving letters to her daughter — and 'Follow That Dream' is one of them.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "b7ebae98-b0d1-4b68-a72e-731291e0815d",
+   "question": "Why does the LETTER form make this chapter so powerful?",
+   "options": [
+    "Letters are old-fashioned, and that very old charm gives it real power",
+    "It is a good deal shorter than an essay on the subject would be",
+    "Letters follow no rules at all, so the writer felt entirely free",
+    "It is personal and warm, so the advice feels intimate, not preachy"
+   ],
+   "correct_index": 3,
+   "explanation": "Because it's a real letter to a loved one, the advice is unguarded and warm — it makes the reader feel personally spoken to.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "0c7c4c46-8d25-496d-a255-3d1899e029e6",
+   "question": "What does the title 'My Daughter, My Friend' suggest about parent-teen relationships?",
+   "options": [
+    "That a parent and teen can be honest friends who speak openly",
+    "That parents and teenagers can never truly get along well",
+    "That children ought to obey their parents in complete silence",
+    "That parents should hand down all guidance as firm orders"
+   ],
+   "correct_index": 0,
+   "explanation": "The title captures the book's belief: the deepest guidance is one heart writing openly to another — a friendship, not just authority.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 10 — "Before You Read: Just You and the Future"  (slug: unit-8-reflect-and-respond-believe-in-yourself)
+published=true blocks=5 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=45b5bee7-2464-4774-88b2-4171e88e679a ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/45b5bee7-2464-4774-88b2-4171e88e679a_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A lone figure at the foot of a steep path, one foot raised to take the first step toward a glowing horizon",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A lone figure standing at the foot of a steep path, one foot lifted to take the very first step, looking up toward a bright, glowing horizon. No crowd, just the climb ahead. Determined and hopeful, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [curiosity_prompt] id=6c85d06d-7ac1-49a8-a83f-6c315161759d ---
+{
+ "prompt": "Picture yourself at the very start of something hard — a new school, a big exam, a dream you've decided to chase. There's no crowd cheering, no one watching; it's just you, and a long road. What makes that *first step* the hardest of all? And what, in that moment, would make you take it anyway?",
+ "hint": "Notice — the hardest part is almost never the middle or the end. It's deciding to begin.",
+ "reveal": "This poem — the very last text in your book — is about exactly that moment: the first step. It speaks directly to *you*, like a friend at your shoulder, about leaving the comfort of the familiar and walking toward your future, on the strength of one thing: *believing in yourself.* It's the perfect note for a whole year of reading to end on."
+}
+
+--- block #2 [text] id=a26356e3-0692-48e2-96ed-587dabf805eb ---
+{
+ "markdown": "The poem, by **Robert Langley**, is short and direct. Before you read, learn one important phrase that sits at its heart — **status quo.**"
+}
+
+--- block #3 [vocabulary_lab] id=75d057ed-2997-43aa-bc6d-d4335bd7ee46 ---
+{
+ "mode": "flashcards",
+ "intro": "Words and phrases from the poem.",
+ "cards": [
+  {
+   "id": "8b21c62b-9c2a-4f88-830c-f448da44ac72",
+   "word": "status quo",
+   "pos": "noun (Latin)",
+   "pronunciation": "STAY-tus KWOH",
+   "meaning": "the existing state of things; keeping things as they are",
+   "hindi": "यथास्थिति",
+   "example": "There is ease in comfort, in maintaining the status quo."
+  },
+  {
+   "id": "5164e00a-73db-4711-aae8-ddc276a45dce",
+   "word": "comfort zone",
+   "pos": "noun",
+   "pronunciation": "KUM-furt zohn",
+   "meaning": "the familiar, safe situation where you feel no challenge",
+   "hindi": "सुविधा क्षेत्र",
+   "example": "Growth begins where the comfort zone ends."
+  },
+  {
+   "id": "6bcdae81-7b4c-49fa-8cb7-66c1a2bbc268",
+   "word": "stagnation",
+   "pos": "noun",
+   "pronunciation": "stag-NAY-shun",
+   "meaning": "a state of not growing or moving; staying still",
+   "hindi": "ठहराव",
+   "example": "Comfort can lead to stagnation rather than growth."
+  },
+  {
+   "id": "17692dda-d96b-4259-994c-9db89bf7a646",
+   "word": "on track",
+   "pos": "idiom",
+   "pronunciation": "on TRAK",
+   "meaning": "progressing as you should toward a goal",
+   "hindi": "सही राह पर",
+   "example": "Believe in yourself for your future to be on track."
+  },
+  {
+   "id": "86f06d1f-5fdf-46be-b3ea-95490eddb397",
+   "word": "leap of faith",
+   "pos": "idiom",
+   "pronunciation": "leep of FAYTH",
+   "meaning": "a bold act of trust, without being sure of the outcome",
+   "hindi": "विश्वास की छलाँग",
+   "example": "Taking the first step is a leap of faith."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "1c253f98-4bb9-4234-9e46-fdcbb2d353f1",
+   "question": "*Status quo* means:",
+   "options": [
+    "a big change",
+    "the existing state of things; keeping things as they are",
+    "a kind of dream",
+    "a fast journey"
+   ],
+   "correct_index": 1,
+   "explanation": "*Status quo* (Latin) = the way things currently are. The poem warns of the 'ease' of just maintaining it."
+  },
+  {
+   "id": "cad2bbb8-a589-4359-934b-55e05a648f2d",
+   "question": "Your *comfort zone* is:",
+   "options": [
+    "a difficult challenge",
+    "the familiar, safe situation where you feel no challenge or risk",
+    "a place far away",
+    "a new skill"
+   ],
+   "correct_index": 1,
+   "explanation": "The comfort zone is the safe, familiar space — cosy, but where no growth happens."
+  },
+  {
+   "id": "d8fdd405-4631-4a10-ad55-94b806ca9a11",
+   "question": "A *leap of faith* is:",
+   "options": [
+    "a guaranteed success",
+    "a bold act of trust, taken without being sure of the outcome",
+    "a careful, slow plan",
+    "a kind of fear"
+   ],
+   "correct_index": 1,
+   "explanation": "A leap of faith means acting on trust and self-belief even when the result is uncertain — exactly the poem's 'first step'."
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=e4d1eb91-016e-429d-aa3a-5affffadf794 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "78a9af4b-a7a8-416a-9137-45b675d611e6",
+   "question": "What is the poem about?",
+   "options": [
+    "A close-fought sports match inside a packed stadium",
+    "A noisy crowd that has gathered to watch a big contest unfold",
+    "The courage to take the first step toward your future",
+    "A long and restful seaside holiday far from home"
+   ],
+   "correct_index": 2,
+   "explanation": "The poem is about facing the future alone, leaving the comfortable 'status quo', and taking the hardest step — the first — on the strength of self-belief.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "0d4d419e-c557-4222-a4c1-d1cdae6ce02c",
+   "question": "How does this poem complete the chapter's letter?",
+   "options": [
+    "It quietly contradicts the advice that the letter has given",
+    "The two of them have nothing in common with one another",
+    "The letter gives the advice; the poem gives the courage to begin",
+    "Both of them turn out, on a rather closer look, to be about postmen"
+   ],
+   "correct_index": 2,
+   "explanation": "The letter explains how dreams come true; the poem supplies the nerve to actually begin. Together: know what to do, and find the courage to do it.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "ff2b6b6a-a20c-4173-b90f-f5ed36d72ba8",
+   "question": "Why is it fitting that this is the LAST text in the book?",
+   "options": [
+    "It sends the reader off with courage toward their own future",
+    "It is short, which makes for a brisk and tidy ending",
+    "It rhymes neatly, and that rounds the whole book off well",
+    "There is no real reason at all; the running order is simply chance"
+   ],
+   "correct_index": 0,
+   "explanation": "Ending on 'believe in yourself' turns the book into a send-off — closing the reading and pointing you toward your own road ahead.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 11 — "Believe in Yourself"  (slug: unit-8-poem-believe-in-yourself)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=86ae6c7f-a8b8-40fc-855a-f2f20e89f971 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/86ae6c7f-a8b8-40fc-855a-f2f20e89f971_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A single footprint at the start of a path that climbs into a glowing dawn",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A single fresh footprint at the very start of a path that winds upward into a glowing golden dawn, empty and full of promise. Quiet, courageous, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=73fbd4bd-4b8b-4bda-986d-65230fb0328c ---
+{
+ "markdown": "The full poem is below. **Tap any line to hear it.** Notice how it speaks straight to *you* ('It's just you and the future'), and how its tone climbs from thoughtful to determined by the final line."
+}
+
+--- block #2 [narrated_passage] id=ee9e1027-5b51-4489-8b49-86819af7b162 ---
+{
+ "source_label": "Reading for Appreciation — Believe in Yourself (Robert Langley)",
+ "paragraphs": [
+  {
+   "id": "e96d7c83-47ea-4d70-9068-76393df8f27f",
+   "sentences": [
+    {
+     "id": "4dbc573e-824f-4aac-b087-63b7e96a31bb",
+     "text": "Step up to the challenge, / There is no crowd to see,",
+     "audio_url": ""
+    },
+    {
+     "id": "2fc6af45-cfd5-4581-9e77-ccefa88972b3",
+     "text": "It's just you and the future / And where you want to be.",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "Poem seedhe TUMSE baat karti hai. 'Step up to the challenge' — chunauti ka saamna karo. Koi bheed nahi dekh rahi, koi tamashbeen nahi. Bas tum ho, aur tumhara future, aur woh jagah jahan tum pahunchna chahte ho. Yeh akelapan dar nahi — yeh zimmedaari hai. Apna raasta sirf tum chun sakte ho."
+  },
+  {
+   "id": "5eb47d3a-fdd6-4d1e-bc49-aa578ab81c50",
+   "sentences": [
+    {
+     "id": "cbf47a56-f9d0-4e25-8e19-4ade28f0a219",
+     "text": "Will it pull you forward / Or push you back in fear?",
+     "audio_url": ""
+    },
+    {
+     "id": "69e2a804-c4c4-4a84-8843-95ef7d6b033d",
+     "text": "Difficult are choices / When the future is getting near.",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "Doosra stanza ek sawaal poochhta hai: yeh future tumhe aage kheenchega, ya dar ke maare peechhe dhakelega? Jab future paas aata hai, to faisle mushkil ho jaate hain. Yeh imaandaar baat hai — dar asli hai, aur chunaav aasaan nahi."
+  },
+  {
+   "id": "4561513b-83db-48d3-9ba2-7d71c8fa9737",
+   "sentences": [
+    {
+     "id": "4ce55676-f192-4e21-a873-7daad63792e9",
+     "text": "There is such ease in comfort / To maintain the status quo,",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "status quo",
+       "meaning": "the existing state of things",
+       "pos": "noun (Latin)",
+       "hindi": "यथास्थिति",
+       "example": "The new monitor wanted to change things, but most boys preferred the status quo."
+      }
+     ]
+    },
+    {
+     "id": "da94d931-eb33-4e91-924d-2cad0496c1dc",
+     "text": "But this isn't what we are made for, / This isn't how we grow.",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "Teesra stanza poem ka dil hai. Comfort mein — 'status quo' (jaisa hai waisa hi rakhna) mein — badi aasaani hai. Par kavi kehta hai: 'lekin hum iske liye nahi bane, aise hum badhte nahi.' Aaram mein thehraav hai; vikaas sirf comfort zone ke bahar hota hai. Yeh do vipreet vichaar — aasaani vs vikaas — ek saath rakhe gaye hain (antithesis)."
+  },
+  {
+   "id": "f30191c7-6e3a-420e-be78-3c118de86f6d",
+   "sentences": [
+    {
+     "id": "5cc0dbc3-d5e3-4469-bc36-527069ff46c3",
+     "text": "The first step is the hardest, / There is no turning back,",
+     "audio_url": ""
+    },
+    {
+     "id": "4ffafb36-1dad-4a44-b160-ad1997f7f4a8",
+     "text": "You just need to believe in yourself / For your future to be on track.",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "on track",
+       "meaning": "progressing toward a goal",
+       "pos": "idiom",
+       "hindi": "सही राह पर",
+       "example": "A weekly timetable keeps my exam preparation on track."
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "Aur yeh raha antim, sabse taakatwar stanza. 'The first step is the hardest' — pehla kadam sabse mushkil. Ek baar utha liya, to 'no turning back' — wapsi nahi. Aur uthane ka raaz? Sirf ek cheez — 'believe in yourself' (khud par vishwaas karo). Tabhi tumhara future sahi raah par aayega. Poem ka tone shuru mein soch-vichaar wala tha, ant tak dridhta (determination) ban jaata hai. Aur yahi — 'believe in yourself' — poori kitaab ka aakhri sandesh hai."
+  }
+ ]
+}
+
+--- block #3 [tone_meter] id=95670f6a-1d3e-4c2e-a579-6e8891bd3d68 ---
+{
+ "segments": [
+  {
+   "id": "12a6f4c7-1ccf-4f87-a577-ecf78067f605",
+   "excerpt": "Step up to the challenge, there is no crowd to see,",
+   "emotion": "quiet resolve",
+   "intensity": 3,
+   "note": "A calm, serious opening — no fanfare, just you and the task. The poem sets a thoughtful, honest mood.",
+   "note_hinglish": "Ek shaant, gambheer shuruaat — koi shor-sharaaba nahi, bas aap aur kaam. Poem ek soch-vichaar bhara, imaandaar mood set karti hai."
+  },
+  {
+   "id": "1ebbe6d7-47ad-44f5-9d68-941492195077",
+   "excerpt": "Or push you back in fear?",
+   "emotion": "doubt",
+   "intensity": 3,
+   "note": "The poem admits fear honestly — it doesn't pretend the future isn't frightening.",
+   "note_hinglish": "Poem dar ko imaandaari se maanti hai — yeh dikhaava nahi karti ki future darawna nahi hai."
+  },
+  {
+   "id": "e2c5dfee-b085-4c7e-8db4-61a6d5f28c41",
+   "excerpt": "Difficult are choices when the future is getting near.",
+   "emotion": "thoughtfulness",
+   "intensity": 3,
+   "note": "A reflective dip — facing how hard real choices are. The poem earns its later courage by being honest here.",
+   "note_hinglish": "Ek soch bhara thehraav — yeh maanna ki asli choices kitni mushkil hoti hain. Poem yahaan imaandaar hokar apni baad waali himmat kamaati hai."
+  },
+  {
+   "id": "a221d031-2de2-44ff-8601-1ffa4d638518",
+   "excerpt": "But this isn't what we are made for, this isn't how we grow.",
+   "emotion": "conviction",
+   "intensity": 4,
+   "note": "The turn — a firm rejection of mere comfort. The tone begins to rise toward determination.",
+   "note_hinglish": "Yeh mod — sirf aaraam ko saaf taur par thukraana. Tone ab determination ki taraf uthne lagti hai."
+  },
+  {
+   "id": "e10b8b06-6286-4b12-b841-1701c04da7ad",
+   "excerpt": "The first step is the hardest, there is no turning back,",
+   "emotion": "courage",
+   "intensity": 4,
+   "note": "Bracing for the leap — naming the hardest moment and committing to it.",
+   "note_hinglish": "Chhalaang ke liye khud ko taiyaar karna — sabse mushkil pal ko naam dena aur uske liye thaan lena."
+  },
+  {
+   "id": "111c6a95-891b-49ab-95c5-3fed8e0b0308",
+   "excerpt": "You just need to believe in yourself for your future to be on track.",
+   "emotion": "determination",
+   "intensity": 5,
+   "note": "The peak — a clear, ringing call to self-belief. The poem ends higher and braver than it began.",
+   "note_hinglish": "Yeh choti — khud par yakeen ki ek saaf, goonjti pukaar. Poem jahaan se shuru hui thi, usse oonchi aur bahaadur jagah par khatam hoti hai."
+  }
+ ]
+}
+
+--- block #4 [comprehension_checkpoint] id=5c245078-84be-40fd-a0bd-9d49beacf7aa ---
+{
+ "intro": "What is each stanza's central idea?",
+ "questions": [
+  {
+   "id": "a7dfda7c-f27c-4a4e-9e92-cd8b9ba7c43e",
+   "question": "Stanza 1 ('Step up to the challenge… just you and the future') is mainly about:",
+   "options": [
+    "taking challenges with lots of support from others",
+    "facing challenges with personal responsibility and a clear focus on your own future",
+    "avoiding challenges",
+    "the importance of a crowd"
+   ],
+   "correct_index": 1,
+   "explanation": "'There is no crowd… it's just you and the future' stresses individual responsibility — facing your future yourself."
+  },
+  {
+   "id": "5d1845fa-4f8c-4359-8eb5-08296bcc5ecf",
+   "question": "Stanza 3 ('ease in comfort… this isn't how we grow') is mainly about:",
+   "options": [
+    "staying comfortable is best",
+    "personal growth requires LEAVING comfort and embracing change",
+    "comfort and change are the same",
+    "growth needs no effort"
+   ],
+   "correct_index": 1,
+   "explanation": "The stanza contrasts the 'ease' of the status quo with growth — saying we grow only by leaving our comfort zone."
+  }
+ ]
+}
+
+--- block #5 [inline_quiz] id=66f79958-51a9-4aff-b026-dc57ca102e6e ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "2ca1065d-4438-4aaf-9643-4bfda5843562",
+   "question": "What is the rhyme scheme of the poem?",
+   "options": [
+    "AABB, where each pair of lines rhymes together",
+    "ABAB, where alternate lines rhyme all the way through",
+    "No rhyme scheme at all; the poem is written in free verse",
+    "ABCB, where the second and fourth lines rhyme"
+   ],
+   "correct_index": 3,
+   "explanation": "ABCB — the second and fourth lines rhyme (see/be, fear/near, quo/grow, back/track), giving a steady, simple flow.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "6c6eaf4c-c5e9-4610-a4ef-3013c6ceaafd",
+   "question": "How does the poem's tone change from start to finish?",
+   "options": [
+    "It stays quite flat and unchanged from first line to last",
+    "From thoughtful and honest at the start to determined by the end",
+    "From cheerful at the very start to sorrowful by the close",
+    "From angry at the very opening to wholly peaceful and calm by the finish"
+   ],
+   "correct_index": 1,
+   "explanation": "The tone climbs from reflective doubt to ringing determination — ending on the brave call to 'believe in yourself'.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "3708799d-ad10-4ceb-b31f-dc1881aec914",
+   "question": "Who is the 'You' the poem speaks to?",
+   "options": [
+    "A distant character somewhere within the poem's story",
+    "The reader directly, urged to take charge of their future",
+    "The poet himself, thinking quietly through his own past choices",
+    "A faceless crowd standing far off in the distance"
+   ],
+   "correct_index": 1,
+   "explanation": "The direct address 'You' speaks straight to the reader, creating a close, encouraging connection — like a mentor or friend.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 12 — "Opposites That Make a Point"  (slug: unit-8-poem-devices-antithesis)
+published=true blocks=7 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=3a579c71-d81b-4745-b9ae-dfa05e5842fe ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/3a579c71-d81b-4745-b9ae-dfa05e5842fe_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "Two contrasting halves of one image — a cosy still room on one side, an open growing path on the other",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). One image split into two contrasting halves — on the left, a cosy, still, comfortable room in soft shadow; on the right, an open path climbing into bright growing light — the contrast of comfort versus growth. Glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=74992219-62da-44b9-a159-364c9436e3d5 ---
+{
+ "markdown": "This poem makes its point largely through **contrast** — setting opposites side by side. Use the highlighter to find its devices, then work through the questions. You'll meet a new one: **antithesis.**"
+}
+
+--- block #2 [literary_devices_highlighter] id=ad5703ef-e156-48c3-a661-4aa186119f19 ---
+{
+ "passage": "Step up to the challenge, there is no crowd to see, it's just you and the future and where you want to be. Will it pull you forward or push you back in fear? Difficult are choices when the future is getting near. There is such ease in comfort to maintain the status quo, but this isn't what we are made for, this isn't how we grow. The first step is the hardest, there is no turning back, you just need to believe in yourself for your future to be on track.",
+ "devices": [
+  {
+   "id": "6808d1ad-cc59-48fe-a1c3-5e93d49adc9d",
+   "device": "metaphor",
+   "matches": [
+    {
+     "text": "The first step is the hardest",
+     "explanation": "A metaphor — the 'first step' isn't only a literal step; it stands for the act of BEGINNING anything difficult (a dream, a change). Beginning is the hardest part of any journey.",
+     "explanation_hinglish": "Ek metaphor — 'first step' sirf ek literal kadam nahi hai; yeh kisi bhi mushkil cheez ko SHURU karne ke act ko darshata hai (ek sapna, ek badlaav). Shuruaat hi kisi bhi safar ka sabse mushkil hissa hoti hai."
+    },
+    {
+     "text": "for your future to be on track",
+     "explanation": "'On track' is a metaphor from railways — your future is pictured as a train that stays on its rails (its right path) when you believe in yourself.",
+     "explanation_hinglish": "'On track' railways se aaya ek metaphor hai — aapka future ek train ki tarah dikhaaya gaya hai jo apni patri (apne sahi raaste) par tab tikti hai jab aap khud par yakeen karte ho."
+    }
+   ]
+  },
+  {
+   "id": "d731710c-4a4f-4c85-b3e0-fb05bfef2525",
+   "device": "symbolism",
+   "matches": [
+    {
+     "text": "the status quo",
+     "explanation": "Comfort and the status quo SYMBOLISE the comfort zone — stagnation and the fear of change that hold a person back.",
+     "explanation_hinglish": "Aaraam aur status quo comfort zone ka SYMBOL hai — wo theharaav aur badlaav ka dar jo insaan ko peeche rok ke rakhta hai."
+    },
+    {
+     "text": "the future",
+     "explanation": "'The future' symbolises the unknown — all the potential, change, and success that lie ahead but require courage to step into.",
+     "explanation_hinglish": "'The future' anjaan ka symbol hai — wo saari sambhaavna, badlaav, aur kamyaabi jo aage hai par jisme kadam rakhne ke liye himmat chahiye."
+    },
+    {
+     "text": "The first step",
+     "explanation": "The first step symbolises the initial courage — the leap of faith — needed to begin any journey of growth or self-improvement.",
+     "explanation_hinglish": "The first step uss shuruaati himmat ka symbol hai — wo leap of faith — jo growth ya khud ko behtar banaane ke kisi bhi safar ko shuru karne ke liye chahiye."
+    }
+   ]
+  },
+  {
+   "id": "cf076d35-a608-4fa3-ba60-ba5e4496125f",
+   "device": "imagery",
+   "matches": [
+    {
+     "text": "There is no crowd to see",
+     "explanation": "An image of solitude — no audience, no spectators — stressing that this challenge is yours alone, an individual effort.",
+     "explanation_hinglish": "Akelepan ki ek image — koi audience nahi, koi tamashbeen nahi — yeh zor dete hue ki yeh challenge sirf aapka hai, ek individual mehnat."
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [text] id=9136cb29-c292-47db-98a1-e66e6f7f83bc ---
+{
+ "markdown": "**Antithesis** is a special device: it places **two opposite ideas side by side in a balanced, parallel structure** to highlight the contrast. Neil Armstrong's famous line is the perfect example: *'one small step for a man, but a giant leap for mankind'* — *small step* vs *giant leap*, balanced against each other to make the point unforgettable. Other examples: *'Speech is silver, but silence is gold'*; *'Patience is bitter, but it has a sweet fruit.'*"
+}
+
+--- block #4 [worked_example] id=1e7c5f18-75e2-4d31-8467-00bfb45f0393 ---
+{
+ "label": "Find the antithesis",
+ "variant": "ncert_intext",
+ "reveal_mode": "tap_to_reveal",
+ "problem": "(i) Identify the lines in the poem that use antithesis and explain why. (ii) Why is 'The first step is the hardest' metaphorical? (iii) What does the antithesis convey about personal development?",
+ "solution": "**(i)** The clearest **antithesis** is:\n*'Will it **pull you forward** / Or **push you back** in fear?'* — *pull forward* is set directly against *push back*, two opposite movements in a balanced structure, capturing the exact tug-of-war between courage and fear.\n\nAlso: *'There is such **ease in comfort** … But this **isn't how we grow**.'* — *comfort/ease* (staying still) is contrasted with *growth* (moving on), highlighting that the two pull in opposite directions.\n\n**(ii)** *'The first step is the hardest'* is **metaphorical** because it isn't really about a single physical step. The 'first step' stands for **the act of beginning** anything difficult — a dream, a change, a new challenge. The poet uses a small physical image to capture a large truth: starting is harder than continuing.\n\n**(iii)** The antithesis conveys that **personal development is a choice between two opposite pulls** — the easy comfort of staying the same, and the hard but rewarding path of growth. By placing them side by side, the poem makes the choice vivid and forces the reader to see that you cannot have both: to grow, you must leave comfort behind."
+}
+
+--- block #5 [reasoning_prompt] id=7d17568e-fac0-4199-bf5b-cd9588e267ba ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 3,
+ "prompt": "Why is **antithesis** — putting two opposites side by side — such a powerful way to make a point? Why does 'one small step… one giant leap' stick in the memory far better than just saying 'this was an important moment'?",
+ "reveal": "Antithesis works because the human mind understands things best by *contrast*. We grasp 'big' most sharply when it's next to 'small'; 'light' means most beside 'dark'. By placing opposites in a balanced, parallel structure, antithesis does three things at once: it **clarifies** (the contrast makes each idea sharper), it **emphasises** (the tension between the two grabs attention), and it **sticks** (the neat, balanced rhythm is satisfying and easy to remember — almost like a saying). 'One small step for a man, one giant leap for mankind' captures the entire meaning of the moon landing — personal and universal, tiny and enormous — in a single balanced breath, which is why it's quoted decades later. In this poem, 'pull you forward / push you back' lets you *feel* the inner tug-of-war in four words. Antithesis is the rhetorical equivalent of holding two things up to compare them: the difference, seen side by side, teaches more than either thing alone. That's why proverbs across every language and culture love it — 'man proposes, God disposes', 'patience is bitter, its fruit is sweet'. Opposites, balanced, are unforgettable."
+}
+
+--- block #6 [inline_quiz] id=e5024646-6703-4ff1-812d-3bc06fbf3382 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "e4b5def3-de69-488d-b7de-599704e8a519",
+   "question": "*Antithesis* is a device that:",
+   "options": [
+    "repeats a single word over again for emphasis",
+    "compares two unlike things using the words 'like' or 'as'",
+    "exaggerates a point far beyond the plain truth",
+    "sets two opposite ideas side by side to mark the contrast"
+   ],
+   "correct_index": 3,
+   "explanation": "Antithesis sets opposites in parallel ('pull forward / push back', 'small step / giant leap') to sharpen and emphasise a point.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "c8d5d16f-bf69-4589-bb4a-a62731726232",
+   "question": "Which line from the poem is an example of antithesis?",
+   "options": [
+    "'Will it pull you forward or push you back in fear?'",
+    "'There is no waiting crowd here to see you go'",
+    "'The very first step is always the hardest one'",
+    "'It is only you and the whole long future lying ahead'"
+   ],
+   "correct_index": 0,
+   "explanation": "'Pull you forward / push you back' sets two opposite movements in balanced contrast — antithesis.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "e6526de4-f413-4fb4-b393-40285401c37b",
+   "question": "Why is 'The first step is the hardest' a metaphor?",
+   "options": [
+    "Because the line is really all about the act of walking",
+    "Because the line happens to rhyme with the one before it",
+    "The 'first step' stands for beginning anything that is hard",
+    "Because it greatly exaggerates just how difficult walking can be"
+   ],
+   "correct_index": 2,
+   "explanation": "The physical 'first step' represents the larger idea of starting something hard — a metaphor for beginning.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 13 — "The Courage to Begin"  (slug: unit-8-poem-themes-believe-in-yourself)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=da8639b7-ac9b-4d55-a029-26b5ee715ea6 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/da8639b7-ac9b-4d55-a029-26b5ee715ea6_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A small seedling pushing up through a crack toward the light, against the odds",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A single small green seedling pushing up bravely through a crack in hard ground toward a warm beam of light — the courage of a first step toward growth. Hopeful and tender, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=8180a9b5-9699-4eb4-8414-e085f839b339 ---
+{
+ "markdown": "Short and simple, but it carries the courage of the whole book. Tap each theme to explore it."
+}
+
+--- block #2 [theme_explorer] id=bc2b8f8e-69ad-49b0-8bc8-bddcb7a24c0c ---
+{
+ "intro": "Three themes in four stanzas.",
+ "themes": [
+  {
+   "id": "f13d300b-6851-494a-8907-f2e0c01a2b23",
+   "title": "Self-belief is the engine of the future",
+   "description": "The poem's title and final line say it: believing in yourself is what gets your future 'on track'. Not luck, not a crowd — your own faith in yourself takes the first step.",
+   "evidence": [
+    "'You just need to believe in yourself / For your future to be on track.'"
+   ],
+   "reflection_prompt": "What is one thing you'd attempt if you fully believed you could do it? What's stopping the belief?",
+   "description_hinglish": "Poem ka title aur aakhri line yahi kehti hai: khud par yakeen karna hi aapke future ko 'on track' laata hai. Na kismat, na koi bheed — aapka khud par bharosa hi pehla kadam uthata hai.",
+   "reflection_prompt_hinglish": "Aisi ek cheez kaunsi hai jo aap try karte agar aapko poora yakeen hota ki aap kar sakte ho? Uss yakeen ko kya cheez rok rahi hai?"
+  },
+  {
+   "id": "a0adfbfb-c2ea-4dda-b5e2-1768034944d4",
+   "title": "Growth lives outside the comfort zone",
+   "description": "Comfort and the status quo are easy — but 'this isn't how we grow'. Real development means choosing the harder path of change over the cosy path of staying the same.",
+   "evidence": [
+    "'There is such ease in comfort / To maintain the status quo, / But this isn't what we are made for, / This isn't how we grow.'"
+   ],
+   "reflection_prompt": "Where is your comfort zone holding you back right now? What is one small step outside it you could take?",
+   "description_hinglish": "Aaraam aur status quo aasaan hain — par 'this isn't how we grow'. Asli vikaas ka matlab hai badlaav ka mushkil raasta chunna, na ki wahi rehne ka aaramdaayak raasta.",
+   "reflection_prompt_hinglish": "Aapka comfort zone abhi aapko kahaan rok raha hai? Usse bahar nikalne ka ek chhota kadam kaunsa hai jo aap utha sakte ho?"
+  },
+  {
+   "id": "2f9be134-1463-4ac5-8c5e-38445e7ee690",
+   "title": "The first step is the hardest — and yours to take",
+   "description": "Beginning is harder than continuing, and you must take that step alone ('no crowd to see'). But once taken, 'there is no turning back' — and the journey is underway.",
+   "evidence": [
+    "'The first step is the hardest, / There is no turning back'",
+    "'It's just you and the future'"
+   ],
+   "reflection_prompt": "Think of a 'first step' you've been putting off. What would it feel like to take it this week?",
+   "description_hinglish": "Shuru karna aage badhne se zyaada mushkil hai, aur wo kadam aapko akele uthana padta hai ('no crowd to see'). Par ek baar utha lo, to 'there is no turning back' — aur safar shuru ho jaata hai.",
+   "reflection_prompt_hinglish": "Ek aise 'first step' ke baare mein socho jise aap taalte aa rahe ho. Use iss hafte uthana kaisa lagega?"
+  }
+ ]
+}
+
+--- block #3 [callout] id=204acae4-8c22-47f4-8524-30b49a6d737d ---
+{
+ "variant": "literature_in_life",
+ "title": "The letter and the poem, hand in hand",
+ "markdown": "See how the two halves of this final unit fit together perfectly:\n\n- **The letter (Follow That Dream):** the *wisdom* — HOW dreams come true: passion, conviction, effort, sacrifice, a support network, and the truth that dreams evolve. The *mind* of dreaming.\n- **The poem (Believe in Yourself):** the *courage* — the nerve to actually TAKE THE FIRST STEP, alone, leaving comfort behind, on the strength of self-belief. The *heart* of dreaming.\n\nThe mother tells you what the road requires; the poem gives you the courage to set foot on it. Wisdom without courage never begins; courage without wisdom soon stumbles. Together — *know what it takes, and believe you can* — they are everything you need to chase a dream. It is the perfect pair of ideas to carry out of this book and into your own life.",
+ "markdown_hinglish": "Dekho iss aakhri unit ke dono hisse kaise ekdum sahi jodi banaate hain:\n\n- **The letter (Follow That Dream):** yeh *gyaan* — KAISE sapne poore hote hain: passion, conviction, mehnat, tyaag, ek support network, aur yeh sach ki sapne badalte rehte hain. Sapne dekhne ka *dimaag*.\n- **The poem (Believe in Yourself):** yeh *himmat* — wo daring jo asal mein TAKE THE FIRST STEP karne ke liye chahiye, akele, aaraam ko peeche chhod ke, khud ke yakeen ke dam par. Sapne dekhne ka *dil*.\n\nMaa aapko batati hai ki raasta kya maangta hai; poem aapko uss par kadam rakhne ki himmat deti hai. Himmat ke bina gyaan kabhi shuru hi nahi hota; gyaan ke bina himmat jaldi ladkhada jaati hai. Saath mein — *jaano ki kya lagega, aur yakeen karo ki tum kar sakte ho* — yeh sab kuch hai jo sapne ka peecha karne ke liye chahiye. Yeh idea ki ek perfect jodi hai jise iss book se bahar apni zindagi mein le jaana hai."
+}
+
+--- block #4 [reasoning_prompt] id=cf0ab4f5-f579-4ec8-8eaf-9f89b5a20555 ---
+{
+ "reasoning_type": "logical",
+ "difficulty_level": 4,
+ "prompt": "Critical Reflection question 3 asks a tough one: is simply 'believing in yourself' *enough* to overcome real obstacles? Or are other factors — resources, help, luck, hard work — also needed? Is the poem's message too simple to be true?",
+ "reveal": "This is exactly the right question to end the book on — and the honest answer is *both yes and no*. **No, self-belief alone is not enough.** The poem, taken by itself, could mislead: believing you can fly won't make you fly. Real achievement also needs effort, skill, resources, mentors, opportunity, and yes, sometimes luck — all the things the *letter* on the earlier pages spells out so honestly (count the cost, the support network, the years of work). A poster that says only 'believe in yourself!' can even be cruel, blaming people for 'not believing hard enough' when they actually lacked support or chances. **But yes, self-belief is necessary** — because without it, you never take the first step at all, and then none of the other factors ever get a chance to help you. Belief isn't the *whole* engine, but it's the key that starts it. That is why this unit is wise to give you *both* texts: the poem's courage AND the letter's realism. Read alone, each is incomplete; read together, they're true. The deepest lesson of the whole chapter — and a fine one to close a year of reading — is that dreams need *both* a believing heart and a clear-eyed plan. Believe in yourself; and also, count the cost, do the work, and thank those who help you. That balanced wisdom is what this book hopes you carry forward."
+}
+
+--- block #5 [inline_quiz] id=1aed12ab-8e8a-4948-9dc3-2a3957da5484 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "3c84ca42-5996-47d8-a9e8-fdd85572a5c8",
+   "question": "What is the poem's central message?",
+   "options": [
+    "Stay comfortable and steer clear of taking any risks",
+    "Wait patiently for a large cheering crowd to gather and urge you onward",
+    "Believe in yourself and take the hard first step toward your future",
+    "Keep well away from every challenge that comes your way"
+   ],
+   "correct_index": 2,
+   "explanation": "Self-belief gives you the courage to take the first step and leave comfort behind — the path to growth and your future.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "ff4cdb87-cd5f-46c0-a511-be49a971c905",
+   "question": "How do the letter and the poem complete each other?",
+   "options": [
+    "The letter gives the wisdom; the poem gives the courage to begin",
+    "They disagree, pulling the reader in two different directions",
+    "They are quite unrelated and just happen to sit beside each other",
+    "Both of them turn out, on reflection, to be about sports"
+   ],
+   "correct_index": 0,
+   "explanation": "Wisdom without courage never begins; courage without wisdom stumbles. Together they're everything you need to chase a dream.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "56d21fe9-8208-4b0c-bede-9535d4c7b3bb",
+   "question": "Is 'believe in yourself' ENOUGH on its own?",
+   "options": [
+    "Yes; with enough self-belief alone, nothing else is ever needed",
+    "No; on its own, self-belief turns out to be more or less useless",
+    "It works only for the lucky few who are born with real talent",
+    "It is needed to begin, but effort and help are needed too"
+   ],
+   "correct_index": 3,
+   "explanation": "Self-belief starts the engine but isn't the whole engine. The unit gives both the poem's courage AND the letter's realism — together they're true.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 14 — "The Language of Change"  (slug: unit-8-poem-vocabulary-status-quo)
+published=true blocks=5 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=6a142d80-a85d-4c8b-b26f-29478966db68 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/6a142d80-a85d-4c8b-b26f-29478966db68_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A still pond on one side and a flowing river on the other, joined in one scene",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). One scene holding two states of water — a still, calm pond on one side (stagnation) and a flowing, sparkling river on the other (movement and growth) — joined where they meet. Calm yet dynamic, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=98cd92a4-3bb7-4662-81e0-27620cd60ead ---
+{
+ "markdown": "The poem turns on a contrast between **staying** and **moving**. English has precise words for both. The key phrase, **status quo**, is a **Latin expression** meaning 'the state in which (things are)' — a reminder that English borrows from many languages."
+}
+
+--- block #2 [vocabulary_lab] id=7dfa67fb-5ecf-4e45-94ed-88d3fb7bd256 ---
+{
+ "mode": "flashcards",
+ "intro": "Words for staying still vs stepping forward.",
+ "cards": [
+  {
+   "id": "b76cb67b-52fd-4773-942f-93f5eca10e6a",
+   "word": "status quo",
+   "pos": "noun (Latin)",
+   "pronunciation": "STAY-tus KWOH",
+   "meaning": "the existing state of things; the way things are now",
+   "hindi": "यथास्थिति",
+   "example": "Most preferred the status quo and wanted no change."
+  },
+  {
+   "id": "6631989b-f981-4f32-ba97-bcd14d42d778",
+   "word": "stagnation",
+   "pos": "noun",
+   "pronunciation": "stag-NAY-shun",
+   "meaning": "a state of not growing or moving; standing still",
+   "hindi": "ठहराव",
+   "example": "Comfort can slide into stagnation."
+  },
+  {
+   "id": "e61193a2-b2db-4b9b-982a-0c12494bbee4",
+   "word": "comfort zone",
+   "pos": "noun",
+   "pronunciation": "KUM-furt zohn",
+   "meaning": "the safe, familiar space where you feel no challenge",
+   "hindi": "सुविधा क्षेत्र",
+   "example": "Growth begins at the edge of the comfort zone."
+  },
+  {
+   "id": "f35cb303-f97c-479d-b6e4-708e3cb97a0c",
+   "word": "leap of faith",
+   "pos": "idiom",
+   "pronunciation": "leep of FAYTH",
+   "meaning": "a bold act of trust without certainty of the outcome",
+   "hindi": "विश्वास की छलाँग",
+   "example": "Starting the workshop was a leap of faith."
+  },
+  {
+   "id": "7b438dfd-faca-479b-ae45-ae6267f71ee1",
+   "word": "self-improvement",
+   "pos": "noun",
+   "pronunciation": "self-im-PROOV-munt",
+   "meaning": "the effort to make yourself better",
+   "hindi": "आत्म-सुधार",
+   "example": "Every challenge is a chance for self-improvement."
+  },
+  {
+   "id": "a9931a88-e033-4ea6-8f22-e6112d0967cb",
+   "word": "momentum",
+   "pos": "noun",
+   "pronunciation": "moh-MEN-tum",
+   "meaning": "the force that keeps a moving thing going",
+   "hindi": "गति",
+   "example": "After the first step, momentum carries you forward."
+  }
+ ],
+ "self_check": [
+  {
+   "id": "3ba86f25-3699-487d-b2dd-3302a64bb809",
+   "question": "*Stagnation* is the opposite of:",
+   "options": [
+    "rest",
+    "growth and movement",
+    "comfort",
+    "fear"
+   ],
+   "correct_index": 1,
+   "explanation": "*Stagnation* = standing still, not growing — the opposite of movement and growth. The poem warns against it."
+  },
+  {
+   "id": "d4db8d3d-91f3-4f84-a6d4-17f850a0951e",
+   "question": "*Status quo* is a borrowed phrase from which language?",
+   "options": [
+    "French",
+    "Latin",
+    "Greek",
+    "Hindi"
+   ],
+   "correct_index": 1,
+   "explanation": "*Status quo* is Latin — meaning 'the state in which'. English borrows words from many languages."
+  },
+  {
+   "id": "3a71fc8a-b3d2-45d2-ae4a-65d4b599d5e0",
+   "question": "Stepping out of your *comfort zone* means:",
+   "options": [
+    "staying safe",
+    "facing a challenge or change where you feel uncertain — where growth happens",
+    "going on holiday",
+    "giving up"
+   ],
+   "correct_index": 1,
+   "explanation": "The comfort zone is safe but unchanging; growth happens when you step beyond it into challenge."
+  }
+ ]
+}
+
+--- block #3 [comprehension_checkpoint] id=80ff9516-ecb3-4ec4-9f9f-f972fbad4acf ---
+{
+ "intro": "Symbolism — match the idea (from the poem's themes).",
+ "questions": [
+  {
+   "id": "30d81282-6ede-45ab-b449-e0e868313067",
+   "question": "In the poem, comfort and the status quo represent:",
+   "options": [
+    "growth and courage",
+    "stagnation and the fear of change — the comfort zone that holds one back",
+    "the future",
+    "success"
+   ],
+   "correct_index": 1,
+   "explanation": "Comfort/status quo symbolise stagnation and fear of change — the cosy trap the poem urges you to leave."
+  },
+  {
+   "id": "5a94e6a8-a6a9-4621-b278-9a6aa218c784",
+   "question": "The 'first step' symbolises:",
+   "options": [
+    "the end of a journey",
+    "the initial courage (a leap of faith) needed to begin self-improvement",
+    "a literal walk",
+    "giving up"
+   ],
+   "correct_index": 1,
+   "explanation": "The first step stands for the courage to begin — the leap of faith that starts a journey of growth."
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=b4b0d6c6-afed-4bae-b801-8fd240d5bbb2 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "98199242-4b8e-408c-903e-66a0dc68d0c3",
+   "question": "*Status quo* means:",
+   "options": [
+    "a sudden and sweeping change",
+    "the existing state, kept as it is",
+    "a long journey to a far-off place",
+    "a particular kind of dream"
+   ],
+   "correct_index": 1,
+   "explanation": "*Status quo* (Latin) = the current state of affairs — staying as things are.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "ee76ac15-96d4-48f4-b99d-d14ca2d7b7ef",
+   "question": "Which word means 'a state of not growing or moving'?",
+   "options": [
+    "momentum",
+    "stagnation",
+    "leap of faith",
+    "improvement"
+   ],
+   "correct_index": 1,
+   "explanation": "*Stagnation* = standing still, not progressing — the danger of staying too comfortable.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "95fb353a-a7e5-4c09-9e12-afd8c773ce29",
+   "question": "What does the borrowing of 'status quo' from Latin show about English?",
+   "options": [
+    "That English is really nothing more than Latin in disguise",
+    "That Latin is a dead language that nobody uses any more",
+    "Nothing in particular about the English language at all",
+    "That English freely borrows words from many languages"
+   ],
+   "correct_index": 3,
+   "explanation": "English freely borrows from Latin, French, Hindi, and many tongues — a living, mixing language (rather like the 'fusion' of Unit 6).",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 15 — "Speak to Inspire, Turn Challenges into Chances"  (slug: unit-8-poem-speaking-and-writing-speech)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=fb9e4947-b24c-4e31-8ec5-66adad6b5cef ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/fb9e4947-b24c-4e31-8ec5-66adad6b5cef_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A student at a podium delivering a speech to a school assembly, faces turned attentively upward",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A confident student at a podium during a school morning assembly, delivering a speech, rows of attentive students' faces turned up toward them in warm light. Inspiring, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=6e1e4dc3-32bb-4756-b467-0838e4b74fc0 ---
+{
+ "markdown": "First, a few words to say aloud. Then discuss how challenges can become chances. Finally — a fitting last skill for the book — learn to write a **speech** that can move an audience."
+}
+
+--- block #2 [pronunciation_drill] id=1212a366-620f-4b26-b1c8-7f15605e3ed6 ---
+{
+ "intro": "Four words from this section. Tap to hear; read aloud twice.",
+ "words": [
+  {
+   "id": "82c46dad-bbd7-4f8c-810f-d2136b99e5e4",
+   "word": "status quo",
+   "syllables": "STAY-tus KWOH",
+   "ipa": "ˌsteɪ.təs ˈkwəʊ",
+   "context_sentence": "To maintain the status quo.",
+   "common_mistake": "Latin: 'STAY-tus KWOH'. The 'qu' is 'kw'; don't say 'status koo'."
+  },
+  {
+   "id": "acd8f6ef-35af-4435-a173-7096fea95edd",
+   "word": "stagnation",
+   "syllables": "stag-NAY-shun",
+   "ipa": "stæɡˈneɪ.ʃən",
+   "context_sentence": "Comfort can lead to stagnation.",
+   "common_mistake": "Stress 'NAY': stag-NAY-shun."
+  },
+  {
+   "id": "57c4d677-e8b9-47b6-ac91-f2fa6dcb098b",
+   "word": "opportunity",
+   "syllables": "op-er-TYOO-nih-tee",
+   "ipa": "ˌɒp.əˈtʃuː.nə.ti",
+   "context_sentence": "Turning challenges into opportunities.",
+   "common_mistake": "Five syllables — stress 'TYOO': op-er-TYOO-nih-tee."
+  },
+  {
+   "id": "fb769120-6f11-4fb5-bce8-39c7a94a6661",
+   "word": "perseverance",
+   "syllables": "pur-suh-VEER-unss",
+   "ipa": "ˌpɜː.sɪˈvɪə.rəns",
+   "context_sentence": "Success takes perseverance.",
+   "common_mistake": "Stress 'VEER': pur-suh-VEER-unss. Means not giving up."
+  }
+ ]
+}
+
+--- block #3 [dialogue_role_play] id=37410a31-59a4-4114-9679-807449818ff1 ---
+{
+ "mode": "debate",
+ "scene_description": "A discussion: 'Every challenge is really an opportunity in disguise.' Do you agree? One side defends it; the other complicates it (some challenges are just hard, and that's okay too). Pick a side, use the frames, then swap.",
+ "characters": [
+  {
+   "id": "for",
+   "name": "Challenges are chances",
+   "color": "emerald"
+  },
+  {
+   "id": "against",
+   "name": "Some challenges are just hard",
+   "color": "rust"
+  }
+ ],
+ "lines": [],
+ "debate_frames": {
+  "for": [
+   "To begin with, I agree that challenges can become opportunities because…",
+   "When I faced ___, what first felt like a problem turned into…",
+   "The poem 'Believe in Yourself' supports this when it says…",
+   "Facing hard things builds skills and confidence, such as…"
+  ],
+  "against": [
+   "On the other hand, not every challenge is a hidden gift; sometimes…",
+   "It can feel unfair to tell someone struggling that their pain is an 'opportunity', because…",
+   "What helps more than slogans is real support, like…",
+   "Perhaps the truth is: challenges CAN become opportunities, but only with…"
+  ]
+ }
+}
+
+--- block #4 [writing_scaffold] id=9e54600c-4e3f-402d-a185-9faea6060b20 ---
+{
+ "task": "Your class is conducting the morning assembly, and you must deliver a speech on 'Turning Challenges into Opportunities'. Draft the speech: open by greeting the audience and grabbing attention; develop two main points in the body; and close with a memorable, thankful ending. Use a persuasive tone.",
+ "format": "speech",
+ "model_parts": [
+  {
+   "id": "a98f83c3-eeab-4a01-ade9-b74df73287dd",
+   "label": "Opening — greet, hook, purpose",
+   "text": "Good morning, respected teachers and dear friends. I am Aarav from Class IX. Let me begin with a question: have you ever failed at something — and later realised it was the best thing that could have happened to you? Today, I want to talk about how our greatest challenges can become our greatest opportunities.",
+   "annotation": "Open a speech by greeting the audience and introducing yourself, then HOOK them — a question, a surprising fact, or a quotation works best. End the opening by stating your topic clearly, so the audience knows where you're taking them."
+  },
+  {
+   "id": "93b7a198-e4df-4489-bbbc-81234f661fc4",
+   "label": "Body 1 — first point + example",
+   "text": "Firstly, challenges teach us what comfort never can. When I failed my first mathematics test, I was crushed. But that failure forced me to change how I studied — and within a year, maths became my favourite subject. The challenge didn't break me; it built me. Don't you agree that we learn far more from our struggles than from our easy wins?",
+   "annotation": "Make your first point clearly, then PROVE it with a real example or story. Notice the persuasive touch — a direct question to the audience ('Don't you agree…?') pulls listeners in and makes them nod along. Transition words ('Firstly') guide them."
+  },
+  {
+   "id": "ac3eaccd-b40b-4b02-9fff-2958b8f14ade",
+   "label": "Body 2 — second point + example",
+   "text": "Secondly, the world's greatest achievers were forged by their hardships, not spared them. Dr. Deepa Malik, whom we read about this year, was told she would never walk again — and turned that very setback into a Paralympic medal. As the poet says, 'this isn't what we are made for, this isn't how we grow.' We grow by stepping bravely into the difficult, not away from it.",
+   "annotation": "A second, stronger point, backed by a powerful example (and a quotation — here, from this very chapter's poem and an earlier unit). Drawing on real, admired people gives your argument weight. Persuasive speeches build from a personal example to a bigger, inspiring one."
+  },
+  {
+   "id": "e6fe073a-3b33-4c9a-90c7-3e177dc3ec79",
+   "label": "Conclusion — sum up, inspire, thank",
+   "text": "So, my friends, the next time a challenge stands in your path, do not see a wall — see a door. Believe in yourself, take that first hard step, and let your struggles shape you into who you are meant to be. The future is yours to build. Thank you.",
+   "annotation": "Close by summing up and ending on an inspiring, memorable line ('see a door', not 'a wall'). A speech should leave the audience FEELING something. Finish by thanking them. Notice how it weaves in the poem's own message — a fitting close for the final page of your book."
+  }
+ ],
+ "tips": [
+  "Open with a HOOK — a question, surprising fact, or quotation — then state your topic.",
+  "Use a persuasive tone: direct questions ('Don't you agree…?') pull the audience in.",
+  "Back each point with a real example — personal stories and admired figures both work.",
+  "End on a memorable, inspiring line — and thank your audience."
+ ]
+}
+
+--- block #5 [inline_quiz] id=2bea278a-2d0c-4f5d-9fa7-b08aefbb052b ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "75596122-5af9-4ff4-a6e0-ad11099b00a7",
+   "question": "How should a speech OPEN?",
+   "options": [
+    "By greeting the audience, hooking them, then stating the topic",
+    "By stating the conclusion right there at the very start",
+    "By reading out a long list of all the points to be covered",
+    "By standing in complete silence right up until the whole room settles"
+   ],
+   "correct_index": 0,
+   "explanation": "Greet, hook (question/fact/quote), then state your purpose — so the audience is engaged and knows where you're heading.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "7b5a69d0-1a5f-45ea-ac10-b660678f9ac3",
+   "question": "What makes a tone 'persuasive' in a speech?",
+   "options": [
+    "Speaking as fast as you possibly can throughout",
+    "Choosing the most difficult words that you know",
+    "Direct questions, real examples, and an inspiring close",
+    "Pressing steadily on without ever pausing once to draw breath"
+   ],
+   "correct_index": 2,
+   "explanation": "Persuasion comes from engaging the audience directly, proving points with examples, and ending on a line that makes them FEEL something.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "ac20b265-1c8d-4bd8-9ba8-c2e1550aaea4",
+   "question": "How should a speech END?",
+   "options": [
+    "Abruptly, stopping the moment your points run out",
+    "With one final question to the room and nothing more",
+    "On a memorable, inspiring line, with a thank-you",
+    "By repeating the opening sentence again word for word"
+   ],
+   "correct_index": 2,
+   "explanation": "A strong close sums up, leaves the audience inspired ('see a door, not a wall'), and thanks them.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 16 — "Believe in Yourself: The End of Kaveri"  (slug: unit-8-believe-in-yourself-and-the-end-of-kaveri)
+published=true blocks=6 reading_time=?min
+================================================================================
+
+--- block #0 [image] id=5edbac5c-b851-4dfd-a65d-f30088a7d15b ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/51aa3d19-aa4f-48d7-be58-494065eeaef8/ch8/5edbac5c-b851-4dfd-a65d-f30088a7d15b_gen.webp",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "alt": "A river (the Kaveri) flowing from many small streams into one bright sea at dawn, a figure walking the bank toward the light",
+ "generation_prompt": "Watercolour painting — an ultra-wide cinematic banner (16:5). A great river (suggesting the Kaveri) formed from many small joining streams, flowing toward a bright open sea at dawn; a small figure walks along its bank toward the glowing horizon. A sense of a long journey completed and a new one beginning. Luminous and hopeful, glowing against a dark ground. Loose luminous watercolour washes, soft wet-on-wet colour bleeds, granulation and visible paper grain, glowing against the dark ground. No text, no labels."
+}
+
+--- block #1 [text] id=63e9a275-e13c-4184-a1ce-41ecc75851fd ---
+{
+ "markdown": "*Believe in Yourself* is by **Robert Langley**, a contemporary poet. Like the other short, heartfelt poems in this book, its power lies not in a famous name but in a true and simple message — exactly the kind of honest, direct encouragement a student needs at the start of a journey."
+}
+
+--- block #2 [callout] id=a86ce34f-3cfa-4333-a872-870c2fa0ff9c ---
+{
+ "variant": "note",
+ "title": "A note on the poet",
+ "markdown": "*Believe in Yourself* is a **contemporary poem** by Robert Langley. He is not a famous historical figure with a documented biography, and it's worth being honest about that — much of the writing that genuinely helps people comes from ordinary voices, not only celebrated names. The poem earns its place at the very end of your book not through fame, but through *usefulness*: it says, in plain and memorable words, the one thing every young person about to step into their future needs to hear — *believe in yourself.*"
+}
+
+--- block #3 [callout] id=b62036d0-dc40-4986-8960-452d177d2972 ---
+{
+ "variant": "literature_in_life",
+ "title": "Kaveri: the whole river, end to end",
+ "markdown": "You have reached the last page. Look back at the journey your book — named for a great river, **Kaveri** — has carried you on. Like a river gathering many streams, it gathered many lives and voices:\n\n- **Unit 1** — a grandmother learning to read, and a poet's love for Bharat: *learning has no age, and our land is our own.*\n- **Unit 2** — a Naga pot maker and a hymn to vocations: *the dignity of every honest craft.*\n- **Unit 3** — the pankha and a garden-painting: *art is heritage, love, and life itself.*\n- **Unit 4** — a sharp old grandfather, a lost child, a remembered mother: *the deep bonds of family.*\n- **Unit 5** — a para-athlete and nine gold medals: *ability beyond disability, and the true meaning of winning.*\n- **Unit 6** — a violinist torn between tradition and fusion: *music, old and new, and the friend it can be.*\n- **Unit 7** — a desert postman and a poem on words: *carry the true words, with care.*\n- **Unit 8** — a mother's letter and this poem: *follow that dream, and believe in yourself.*\n\nEvery story, poem, and play here was, in its own way, about **becoming who you are meant to be.** Now the book closes, and a different story begins — yours.",
+ "markdown_hinglish": "Aap aakhri page tak pahunch gaye ho. Peeche mudke dekho ki aapki book — ek mahaan nadi **Kaveri** ke naam par — aapko kis safar par le aayi hai. Ek nadi ki tarah jo kayi dhaaraon ko apne mein samet leti hai, isne kayi zindagiyaan aur aawaazein samet li:\n\n- **Unit 1** — ek dadi ka padhna seekhna, aur ek kavi ka Bharat se pyaar: *seekhne ki koi umar nahi, aur hamaari dharti hamaari apni hai.*\n- **Unit 2** — ek Naga kumhaar aur kaam-dhandhon ko ek hymn: *har imaandaar hunar ki izzat.*\n- **Unit 3** — pankha aur ek garden-painting: *kala virasat hai, pyaar hai, aur khud zindagi hai.*\n- **Unit 4** — ek tej dada, ek khoya hua bachcha, ek yaad ki gayi maa: *parivaar ke gehre rishte.*\n- **Unit 5** — ek para-athlete aur nau gold medals: *disability se aage ability, aur jeetne ka asli matlab.*\n- **Unit 6** — ek violinist tradition aur fusion ke beech bata: *sangeet, purana aur naya, aur jo dost yeh ban sakta hai.*\n- **Unit 7** — ek registaan ka postman aur shabdon par ek poem: *sachche shabd, dhyaan se le jaao.*\n- **Unit 8** — ek maa ka letter aur yeh poem: *follow that dream, aur believe in yourself.*\n\nYahaan ki har kahani, poem, aur play apne apne tareeke se issi baare mein thi — **wo banna jo tum banne ke liye bane ho.** Ab book band hoti hai, aur ek alag kahani shuru hoti hai — aapki."
+}
+
+--- block #4 [callout] id=aae9d8d5-1f94-4c17-857b-54ab1b132384 ---
+{
+ "variant": "india_voice",
+ "title": "A parting word",
+ "markdown": "Kaveri gave you Indian voices and voices from the world — Sudha Murty and Tagore, Temsula Ao and O. Henry, Deepa Malik and a Naga potter, a Thar postman and a Singaporean mother. It taught you to read closely, to write with care, to tell a fact from an opinion and a metaphor from a simile, and to hear the music in a sentence. But beneath all the grammar and the devices, every page was quietly saying one thing to *you* — the student holding this book:\n\n*Step up to the challenge. There is no crowd to see. It's just you and the future. The first step is the hardest — so take it, and believe in yourself. Your future is waiting to be on track.*\n\n**Now go — and follow that dream.**"
+}
+
+--- block #5 [inline_quiz] id=a0c210ff-04c2-4c55-b426-b98af28045e7 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f1bcba0a-8842-423f-9410-524c95159000",
+   "question": "What does this page honestly say about the poet Robert Langley?",
+   "options": [
+    "That he is a present-day poet, valued for use, not fame",
+    "That he is a world-famous and widely celebrated poet",
+    "That he is the writer who single-handedly wrote the book",
+    "That he was a well-known poet writing back in the 1800s"
+   ],
+   "correct_index": 0,
+   "explanation": "The page is honest: the poem matters for its true, useful message, not for a celebrated name — much helpful writing comes from ordinary voices.",
+   "difficulty_level": 1
+  },
+  {
+   "id": "d136ad90-0230-459a-bd8d-d25138744fb1",
+   "question": "What single idea runs beneath all eight units of Kaveri?",
+   "options": [
+    "The grammar rules that are taught across the chapters",
+    "The patient work of memorising endless facts for the examinations",
+    "A study of Indian geography and its many varied regions",
+    "Becoming who you are meant to be, through learning and dreams"
+   ],
+   "correct_index": 3,
+   "explanation": "From a grandmother learning to read to a poem urging self-belief, every unit was, in its way, about growing into your fullest self.",
+   "difficulty_level": 2
+  },
+  {
+   "id": "2c7a91ad-88e7-4043-917b-7e4a0e80ccff",
+   "question": "What is the book's final message to the student?",
+   "options": [
+    "To close the book here and now and stop reading for good",
+    "To take the hard first step, believe in yourself, and follow that dream",
+    "To stay safe and settled quite comfortably within your own comfort zone",
+    "To memorise all of the poems carefully for the examination"
+   ],
+   "correct_index": 1,
+   "explanation": "Kaveri closes by speaking straight to you: take the first step toward your future, and believe in yourself. Now go — and follow that dream.",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 17 — "Practice & Mastery"  (slug: ch8-practice-mastery)
+published=true blocks=4 reading_time=?min
+================================================================================
+
+--- block #0 [heading] id=12a58f52-af99-4900-859e-7e95ed10915f ---
+{
+ "level": 1,
+ "text": "Practice & Mastery"
+}
+
+--- block #1 [text] id=476492ab-d014-4578-ba91-c62b0a7b4635 ---
+{
+ "markdown": "This is the final chapter of Kaveri, so this last set of practice is also a quiet goodbye. You have travelled a long way — through stories, poems, voices and ideas — and Chapter 8 leaves you with the gentlest and most useful message of all: follow that dream, and believe in yourself. Here you will gather everything Chapter 8 teaches. The mother's letter to Ming and the poem 'Believe in Yourself', the vocabulary of dreams and change, and the two pieces of grammar at the heart of the chapter — the first conditional ('If you work hard, you will succeed') and the many jobs of the word 'could'. Work through the adaptive set, then take the Apply & Express challenges. When you finish, you will not only have closed the book — you will have made it your own."
+}
+
+--- block #2 [chapter_practice] id=b7b9ece8-3e4d-4b84-9c24-314e24b6914b ---
+{
+ "title": "Chapter 8 Practice",
+ "intro": null,
+ "chapter_number": 8,
+ "session_size": 10,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "ch8-pr-01",
+   "question": "Who writes the letter that forms the heart of this chapter, and who is it written to?",
+   "options": [
+    "A teacher writing to a student",
+    "A mother writing to her daughter, Ming",
+    "A daughter writing to her mother",
+    "A friend writing to another friend"
+   ],
+   "correct_index": 1,
+   "explanation": "The chapter is built on a personal letter from a mother to her daughter Ming, signed 'Love, Mum'. That intimate form is what makes the advice feel warm rather than preachy.",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "ch8-pr-02",
+   "question": "The mother leans on a 'ten-year rule' rather than talking about talent. What is she really trying to teach Ming through it?",
+   "options": [
+    "That Ming should give up any dream she cannot commit to for a full decade",
+    "That only a rare few, born with natural talent, can ever hope to reach the top",
+    "That exactly ten years is the fixed time every single career will demand",
+    "That world-class skill is built by sustained, patient effort over years, not by being born gifted"
+   ],
+   "correct_index": 3,
+   "explanation": "The ten-year figure is the mother's way of saying mastery is earned through long, steady work — the opposite of relying on talent or luck. The point is the effort behind the number, not the number itself.",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-03",
+   "question": "In the letter, what does the mother say differentiates greatness from the ordinary?",
+   "options": [
+    "The effort and sacrifice people invest to realise their dream",
+    "The natural talent and good luck a person happens to be born with",
+    "The wealth and connections of a person's family and friends",
+    "Being born in the right place at exactly the right moment"
+   ],
+   "correct_index": 0,
+   "explanation": "She is clear that greatness is not about talent or luck but about the effort and sacrifice invested to realise a dream.",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-04",
+   "question": "When an Academy Award winner thanks 'a host of people', what point is the mother making to Ming?",
+   "options": [
+    "That film award ceremonies tend to run on far too long",
+    "That actors are not really as talented as they appear to be",
+    "That behind every winner stands a network of people who supported them",
+    "That dreams of greatness are only ever meant for famous film stars"
+   ],
+   "correct_index": 2,
+   "explanation": "The winner thanking many people shows that no one reaches a dream alone — there is always a group who supported them. Gratitude is part of achievement.",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-05",
+   "question": "Why does the mother mention the dream of publishing her own book in the last ten years?",
+   "options": [
+    "To boast to Ming about her own publishing success and skill",
+    "To warn Ming away from ever trying to become a writer herself",
+    "To show that a dream can change over time, and the new one is no less worthy",
+    "To explain to Ming exactly why she now has so little time for her"
+   ],
+   "correct_index": 2,
+   "explanation": "She admits this was not her youthful dream — it changed over the years — to make the gentle point that dreams evolve across a life, and the new one is 'no less' than the first.",
+   "concept_tag": "comprehension",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-06",
+   "question": "In the poem 'Believe in Yourself', what does the speaker say is the hardest part of any journey?",
+   "options": [
+    "The first step",
+    "Reaching the very end",
+    "Finding a crowd to cheer you on",
+    "Staying in the comfort zone"
+   ],
+   "correct_index": 0,
+   "explanation": "The poem states 'The first step is the hardest, / There is no turning back' — beginning is harder than continuing, and it must be done alone.",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-07",
+   "question": "According to the poem, what finally puts your future 'on track'?",
+   "options": [
+    "A large and cheering crowd",
+    "Staying safe in the status quo",
+    "Waiting for the right moment",
+    "Believing in yourself"
+   ],
+   "correct_index": 3,
+   "explanation": "The closing lines say you 'just need to believe in yourself / For your future to be on track' — self-belief, not luck or a crowd, is the engine.",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-08",
+   "question": "The mother writes, 'Then if it is still burning in your blood … plunge.' In this context, the word 'plunge' means to —",
+   "options": [
+    "step back carefully",
+    "throw yourself fully into the task",
+    "think it over for years",
+    "ask others to decide for you"
+   ],
+   "correct_index": 1,
+   "explanation": "To 'plunge' is to commit and throw yourself fully into something, holding nothing back — exactly what she urges once the desire is still burning.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-09",
+   "question": "'When stamina is running out, the prospect of success will keep you on track.' Here, 'buoyed up' — used earlier in the same letter — most nearly means —",
+   "options": [
+    "weighed down and full of doubt",
+    "lifted and supported in spirit",
+    "left completely on your own",
+    "quietly filled with regret"
+   ],
+   "correct_index": 1,
+   "explanation": "'Buoyed up' carries the image of being kept afloat — emotionally lifted and supported, the opposite of being weighed down.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-10",
+   "question": "The mother says she is 'not going to put a wet blanket on your dreams'. The idiom 'a wet blanket' refers to —",
+   "options": [
+    "a sudden, soaking rainstorm that ruins the day",
+    "a useful piece of advice given with great care",
+    "a warm and comforting friend who is always near",
+    "a person who discourages others and spoils their enthusiasm"
+   ],
+   "correct_index": 3,
+   "explanation": "'A wet blanket' is a spoil-sport — someone who dampens others' excitement. She promises she will not be one, even while urging Ming to be realistic.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-11",
+   "question": "People who only ever said 'I wish I could be this or the other' but never acted were guilty of mere 'wishful thinking'. This phrase describes —",
+   "options": [
+    "a hopeful belief that stays only a wish, with no action",
+    "careful, step-by-step planning towards a clear goal",
+    "a dream that has already come true after years of effort",
+    "the hard, daily work of actually chasing a real goal"
+   ],
+   "correct_index": 0,
+   "explanation": "'Wishful thinking' is hoping for something while doing nothing to make it real — the very trap the letter warns Ming against.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-12",
+   "question": "The poem contrasts growth with 'the status quo'. The phrase 'status quo' means —",
+   "options": [
+    "a bold and risky leap into the great unknown",
+    "a sudden, unexpected change of one's whole plan",
+    "the existing state of things, kept exactly as they are",
+    "a bright and hopeful view of the years ahead"
+   ],
+   "correct_index": 2,
+   "explanation": "'Status quo' is the way things already are. The poem warns that staying in it is comfortable but 'isn't how we grow'.",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-13",
+   "question": "Choose the correct first conditional sentence.",
+   "options": [
+    "If you will work hard, you succeed.",
+    "If you worked hard, you will succeed.",
+    "If you work hard, you will succeed.",
+    "If you work hard, you would succeed."
+   ],
+   "correct_index": 2,
+   "explanation": "The first conditional is 'If + present simple, … will + base verb'. The 'if' clause stays in the present; 'will' belongs only in the result clause.",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-14",
+   "question": "Which sentence uses the first conditional correctly?",
+   "options": [
+    "If it rains tomorrow, the match will be cancelled.",
+    "If it will rain tomorrow, the match is cancelled.",
+    "If it rained tomorrow, the match will cancel.",
+    "If it rains tomorrow, the match would be cancelled."
+   ],
+   "correct_index": 0,
+   "explanation": "Present simple in the 'if' clause ('rains'), then 'will' in the result clause ('will be cancelled') — that is the first conditional for a likely future event.",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-15",
+   "question": "'You could ask your teacher for help.' What job is 'could' doing here?",
+   "options": [
+    "showing past ability",
+    "stating an absolute certainty",
+    "giving a firm command",
+    "making a polite suggestion"
+   ],
+   "correct_index": 3,
+   "explanation": "Here 'could' softens advice into a gentle suggestion — 'one option open to you is to ask your teacher'. It is not about the past at all.",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-16",
+   "question": "'When she was young, she could run for miles without tiring.' What job is 'could' doing in this sentence?",
+   "options": [
+    "making a request",
+    "describing past ability",
+    "offering a suggestion",
+    "asking permission"
+   ],
+   "correct_index": 1,
+   "explanation": "'Could' here describes an ability someone had in the past — she was able to run for miles back then.",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-17",
+   "question": "'Could you pass me the salt, please?' What job is 'could' doing here?",
+   "options": [
+    "describing past ability",
+    "making a polite request",
+    "expressing a future possibility",
+    "giving a strong warning"
+   ],
+   "correct_index": 1,
+   "explanation": "At the start of a question and followed by 'please', 'could' makes a polite request — a courteous way of asking someone to do something.",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "ch8-pr-18",
+   "question": "'Take an umbrella — it could rain later this evening.' What job is 'could' doing here?",
+   "options": [
+    "describing past ability",
+    "making a polite request",
+    "stating a firm rule",
+    "expressing a possibility"
+   ],
+   "correct_index": 3,
+   "explanation": "Here 'could' shows possibility — rain is one thing that might happen, so taking an umbrella is sensible.",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-19",
+   "question": "The whole letter is built on the gap between wishing and doing. Which option best captures what the mother is really advising Ming?",
+   "options": [
+    "Dream honestly, count the real cost, and only then commit fully to the effort.",
+    "Dream as much as you like, since wishing alone will carry you all the way there.",
+    "Avoid big dreams altogether, since they almost always end in deep disappointment.",
+    "Follow whatever safe dream your family chooses for you, for the sake of security."
+   ],
+   "correct_index": 0,
+   "explanation": "She neither crushes the dream nor promises it is easy. Her real advice is to dream, weigh the cost in years and sacrifice, and then — if the desire still burns — commit. This is the best-supported reading.",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-20",
+   "question": "The poem says, 'There is such ease in comfort / To maintain the status quo, / But this isn't what we are made for, / This isn't how we grow.' What is the poem most arguing here?",
+   "options": [
+    "Comfort should always be avoided because it is harmful to everyone",
+    "People should never allow themselves to feel comfortable or settled at all",
+    "Real growth means choosing the harder path of change over staying the same",
+    "Change is pointless and best avoided, since comfort always feels much better"
+   ],
+   "correct_index": 2,
+   "explanation": "The lines admit comfort is easy but insist growth lies in change. The best-supported reading is that we grow by leaving the cosy status quo, not by avoiding all comfort forever.",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-21",
+   "question": "The chapter is titled 'Follow That Dream', yet the poem is 'Believe in Yourself'. Read together, what is their shared message about whether self-belief is enough?",
+   "options": [
+    "Self-belief alone fully guarantees the dream, so no real effort is ever needed",
+    "Self-belief is completely useless unless there is a large, cheering crowd behind you",
+    "Self-belief lets you take the first step, but effort and sacrifice must then follow",
+    "Dreams should simply be left to luck and chance, never to belief or to hard work"
+   ],
+   "correct_index": 2,
+   "explanation": "The poem says belief gets your future 'on track'; the letter says years of effort make the dream real. Together they suggest belief begins the journey, but effort completes it — belief alone is not enough.",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "ch8-pr-22",
+   "question": "The mother recalls people whose dream was to attend Raffles College but whose 'destiny' was changed forever by the Japanese invasion during World War II. Why does she include this in a letter encouraging Ming to dream?",
+   "options": [
+    "To be honest that forces beyond our control can block dreams, so the choice must be weighed",
+    "To prove, with a clear example, that dreaming is always a complete waste of time",
+    "To frighten Ming into giving up on the whole idea of going to college one day",
+    "To complain bitterly about painful historical events from her own younger days"
+   ],
+   "correct_index": 0,
+   "explanation": "She is not discouraging Ming but being honest: outside forces can derail dreams. The best reading is that this honesty is meant to make Ming weigh her choice seriously, not abandon it.",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "ch8-pr-23",
+   "question": "The poem opens, 'Step up to the challenge, / There is no crowd to see, / It's just you and the future'. What can we most reasonably infer about facing one's dreams?",
+   "options": [
+    "Dreams are nearly always best chased together in large, noisy groups",
+    "Only famous and important people ever truly face challenges in their lives",
+    "The future does not really matter, so the choices we make hardly count",
+    "The decisive moment is private and faced alone, even when others support you"
+   ],
+   "correct_index": 3,
+   "explanation": "'No crowd to see … just you and the future' implies the choice to begin is a solitary one. Even with a support network, the first step is yours alone to take.",
+   "concept_tag": "inference",
+   "difficulty": 3
+  },
+  {
+   "id": "ch8-pr-24",
+   "question": "The mother writes that some people 'could have preferred to trade their dream for security'. What does this suggest about her view of giving up a dream?",
+   "options": [
+    "She firmly thinks that choosing security is always shameful and weak",
+    "She understands it as a human choice to sympathise with, not a failure to condemn",
+    "She believes that no one in the world ever truly gives up on a dream",
+    "She is quite certain that choosing security always makes people happy"
+   ],
+   "correct_index": 1,
+   "explanation": "Her gentle phrasing — 'could have preferred' — shows sympathy, not scorn. We can infer she sees trading a dream for security as an understandable choice, even as she hopes Ming chooses differently.",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "ch8-pr-25",
+   "question": "The letter ends, 'So, I wish at least one of your dreams comes true too.' What does the small word 'too' quietly reveal?",
+   "options": [
+    "That Ming has already had many of her own dreams fulfilled",
+    "That the mother counts her book as a dream come true, and hopes the same for Ming",
+    "That the mother has quietly given up on all of her own remaining dreams",
+    "That Ming's dreams are really quite unimportant to her mother after all"
+   ],
+   "correct_index": 1,
+   "explanation": "The 'too' links back to her own dream of publishing the book. We can infer she sees her dream as fulfilled and warmly wishes the same outcome for her daughter.",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "ch8-pr-26",
+   "question": "Given the whole chapter's tone, why might the writer have chosen the form of a personal letter rather than a list of rules for chasing dreams?",
+   "options": [
+    "Because a personal letter is much quicker to write than a careful list of rules",
+    "Because she simply did not know how to set her thoughts out as a list of rules",
+    "Because a letter, unlike a list, is not really able to contain any advice at all",
+    "Because a letter from someone who loves you makes hard advice feel warm and honest"
+   ],
+   "correct_index": 3,
+   "explanation": "We can infer the form is deliberate: advice from a loving mother lands as care, not a lecture. The warmth of the letter is exactly what makes its honest counsel persuasive.",
+   "concept_tag": "inference",
+   "difficulty": 4
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=313bd3ce-ec8f-42af-b236-630618fef8a2 ---
+{
+ "title": "Apply & Express",
+ "intro": null,
+ "chapter_number": 8,
+ "challenges": [
+  {
+   "id": "ch8-ae-01",
+   "concept_tag": "grammar",
+   "kind": "fill_blank",
+   "prompt": "If you ____ (work) hard, you ____ succeed.",
+   "answers": [
+    [
+     "work"
+    ],
+    [
+     "will"
+    ]
+   ],
+   "hint": "First conditional: present simple in the 'if' clause, then 'will' in the result.",
+   "difficulty": 2,
+   "explanation": "The first conditional pairs a present-simple 'if' clause ('work') with a 'will' result clause ('will succeed')."
+  },
+  {
+   "id": "ch8-ae-02",
+   "concept_tag": "grammar",
+   "kind": "fill_blank",
+   "prompt": "If it ____ (rain) tomorrow, we ____ stay indoors.",
+   "answers": [
+    [
+     "rains"
+    ],
+    [
+     "will"
+    ]
+   ],
+   "hint": "The verb after 'it' takes an -s; never put 'will' in the 'if' clause.",
+   "difficulty": 2,
+   "explanation": "Present simple 'rains' in the condition, 'will stay' in the result — the standard first-conditional shape for a likely future event."
+  },
+  {
+   "id": "ch8-ae-03",
+   "concept_tag": "comprehension",
+   "kind": "fill_blank",
+   "prompt": "The mother tells Ming that a dream remains only ____ thinking unless action follows it.",
+   "answers": [
+    [
+     "wishful"
+    ]
+   ],
+   "choices": [
+    "wishful",
+    "positive",
+    "clever",
+    "careful"
+   ],
+   "hint": "An idiom from the letter for hoping without doing.",
+   "difficulty": 2,
+   "explanation": "'Wishful thinking' is the letter's phrase for a hope that never moves beyond a wish — exactly what she warns against."
+  },
+  {
+   "id": "ch8-ae-04",
+   "concept_tag": "comprehension",
+   "kind": "predict_word",
+   "lead": "You just need to believe in yourself / For your future to be on ____",
+   "answers": [
+    "track"
+   ],
+   "full_line": "You just need to believe in yourself / For your future to be on track.",
+   "difficulty": 2,
+   "explanation": "The poem's final image is 'on track' — the metaphor of a journey heading the right way, set in motion by self-belief."
+  },
+  {
+   "id": "ch8-ae-05",
+   "concept_tag": "comprehension",
+   "kind": "predict_word",
+   "lead": "The first step is the ____",
+   "answers": [
+    "hardest"
+   ],
+   "full_line": "The first step is the hardest, / There is no turning back.",
+   "difficulty": 2,
+   "explanation": "The poem insists the beginning is the hardest part — once taken, 'there is no turning back'."
+  },
+  {
+   "id": "ch8-ae-06",
+   "concept_tag": "vocab_in_context",
+   "kind": "word_builder",
+   "base": "land",
+   "affixes": [
+    "-scape",
+    "-ship",
+    "-ful"
+   ],
+   "correct": "-scape",
+   "target": "landscape",
+   "position": "suffix",
+   "meaning_hint": "A wide view of an area of land or countryside.",
+   "difficulty": 2,
+   "explanation": "Adding the suffix '-scape' to 'land' gives 'landscape' — a wide view of the land. The same '-scape' builds seascape, cityscape, mindscape and dreamscape."
+  },
+  {
+   "id": "ch8-ae-07",
+   "concept_tag": "vocab_in_context",
+   "kind": "word_builder",
+   "base": "dream",
+   "affixes": [
+    "-scape",
+    "-less",
+    "-en"
+   ],
+   "correct": "-scape",
+   "target": "dreamscape",
+   "position": "suffix",
+   "meaning_hint": "A dream-like scene; a world of dreams.",
+   "difficulty": 2,
+   "explanation": "'Dream' + '-scape' makes 'dreamscape', a dream-like world — a perfect fit for a chapter about following dreams."
+  },
+  {
+   "id": "ch8-ae-08",
+   "concept_tag": "vocab_in_context",
+   "kind": "sentence_compose",
+   "word": "conviction",
+   "instruction": "Write one sentence using the word 'conviction' the way the letter uses it — a strong, firm belief that drives a person to act.",
+   "rubric": [
+    "Uses 'conviction' to mean a strong, firm belief",
+    "Shows the belief leading to some action or determination",
+    "A complete, correctly punctuated sentence"
+   ],
+   "model_answer": "Her conviction that she could become a doctor kept her studying late into every night.",
+   "min_words": 6,
+   "difficulty": 3,
+   "explanation": "A good answer ties 'conviction' to firm belief and shows it pushing the person forward, just as the letter does."
+  },
+  {
+   "id": "ch8-ae-09",
+   "concept_tag": "vocab_in_context",
+   "kind": "sentence_compose",
+   "word": "aspirations",
+   "instruction": "Write one sentence using 'aspirations' to mean your hopes and ambitions for the future.",
+   "rubric": [
+    "Uses 'aspirations' to mean hopes or ambitions for the future",
+    "Set in a believable, everyday Indian context",
+    "A complete, correctly punctuated sentence"
+   ],
+   "model_answer": "My aspirations are to study engineering and one day build affordable homes for my village.",
+   "min_words": 6,
+   "difficulty": 3,
+   "explanation": "'Aspirations' should name future hopes or ambitions; the model sentence links them to a clear goal."
+  },
+  {
+   "id": "ch8-ae-10",
+   "concept_tag": "comprehension",
+   "kind": "unscramble",
+   "tokens": [
+    "Great",
+    "people",
+    "have",
+    "a",
+    "dream",
+    "and",
+    "pursue",
+    "it"
+   ],
+   "answer": "Great people have a dream and pursue it",
+   "difficulty": 2,
+   "explanation": "Reordered, the words echo the letter's idea that great people both hold a dream and pursue it until it comes true."
+  },
+  {
+   "id": "ch8-ae-11",
+   "concept_tag": "comprehension",
+   "kind": "unscramble",
+   "tokens": [
+    "Behind",
+    "every",
+    "winner",
+    "is",
+    "a",
+    "support",
+    "network"
+   ],
+   "answer": "Behind every winner is a support network",
+   "difficulty": 2,
+   "explanation": "This captures the letter's point that no one wins alone — a network of people stands behind each winner."
+  },
+  {
+   "id": "ch8-ae-12",
+   "concept_tag": "grammar",
+   "kind": "transform",
+   "source": "Believe in your dream. Then you will begin.",
+   "instruction": "Combine into one first-conditional sentence with 'If'",
+   "answers": [
+    "If you believe in your dream, you will begin.",
+    "If you believe in your dream you will begin."
+   ],
+   "rule": "First conditional: If + present simple, … will + base verb.",
+   "difficulty": 3,
+   "explanation": "Joining the two ideas with 'If' gives a first conditional: present 'believe' in the condition, 'will begin' in the result."
+  },
+  {
+   "id": "ch8-ae-13",
+   "concept_tag": "grammar",
+   "kind": "transform",
+   "source": "Take the first step. Then your future will be on track.",
+   "instruction": "Combine into one first-conditional sentence with 'If'",
+   "answers": [
+    "If you take the first step, your future will be on track.",
+    "If you take the first step your future will be on track."
+   ],
+   "rule": "First conditional: If + present simple, … will + base verb.",
+   "difficulty": 3,
+   "explanation": "'If you take the first step' (present) pairs with 'your future will be on track' (will) — a clean first conditional drawn from the poem."
+  },
+  {
+   "id": "ch8-ae-14",
+   "concept_tag": "grammar",
+   "kind": "spot_error",
+   "tokens": [
+    "If",
+    "it",
+    "will",
+    "rain",
+    "tomorrow",
+    "we",
+    "will",
+    "stay",
+    "home"
+   ],
+   "error_index": 2,
+   "fix": "(remove)",
+   "fix_options": [
+    "(remove)",
+    "would",
+    "shall"
+   ],
+   "rule": "Never use 'will' in the 'if' clause of a first conditional — keep it in the present simple ('rains').",
+   "difficulty": 3,
+   "explanation": "The 'if' clause should read 'If it rains tomorrow'. The 'will' at index 2 is wrong and must be removed so the verb becomes present simple."
+  },
+  {
+   "id": "ch8-ae-15",
+   "concept_tag": "grammar",
+   "kind": "form_select",
+   "prompt": "Which job is 'could' doing? 'You ____ ask your teacher for help if you are stuck.'",
+   "options": [
+    "suggestion",
+    "past ability",
+    "certainty"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Correct — 'could' softens advice into a gentle suggestion, one option open to you.",
+    "Wrong — nothing here points to the past; the sentence is about a present choice.",
+    "Wrong — 'could' here is tentative, not certain; it suggests rather than guarantees."
+   ],
+   "difficulty": 2,
+   "explanation": "Offering one possible course of action — 'you could ask' — is 'could' doing the job of a polite suggestion."
+  },
+  {
+   "id": "ch8-ae-16",
+   "concept_tag": "grammar",
+   "kind": "form_select",
+   "prompt": "Which job is 'could' doing? 'As a child, she ____ recite the whole poem from memory.'",
+   "options": [
+    "past ability",
+    "request",
+    "possibility"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "Correct — 'As a child … could recite' describes an ability she had in the past.",
+    "Wrong — this is a statement, not a question asking someone to do something.",
+    "Wrong — it reports a real past skill, not something that merely might happen."
+   ],
+   "difficulty": 2,
+   "explanation": "'As a child, she could recite …' tells us about a past ability — she was able to do it back then."
+  },
+  {
+   "id": "ch8-ae-17",
+   "concept_tag": "vocab_in_context",
+   "kind": "fill_blank",
+   "prompt": "The mother urges Ming not to settle for the ____ but to keep pushing for growth and change.",
+   "answers": [
+    [
+     "status quo"
+    ]
+   ],
+   "choices": [
+    "status quo",
+    "wishful thinking",
+    "wet blanket",
+    "prospect"
+   ],
+   "hint": "A two-word phrase for things staying exactly as they are.",
+   "difficulty": 3,
+   "explanation": "'Status quo' means the existing state of things, left unchanged — the very thing the letter pushes Ming to outgrow."
+  },
+  {
+   "id": "ch8-ae-18",
+   "concept_tag": "vocab_in_context",
+   "kind": "word_match",
+   "instruction": "Match each word or phrase from the letter to its meaning.",
+   "pairs": [
+    {
+     "left": "plunge",
+     "right": "throw yourself fully into a task"
+    },
+    {
+     "left": "buoyed up",
+     "right": "lifted and supported in spirit"
+    },
+    {
+     "left": "wet blanket",
+     "right": "someone who spoils others' enthusiasm"
+    },
+    {
+     "left": "wishful thinking",
+     "right": "a hope with no action behind it"
+    },
+    {
+     "left": "status quo",
+     "right": "the existing state, kept unchanged"
+    }
+   ],
+   "difficulty": 3,
+   "explanation": "These are the key expressions the mother uses in her letter of advice."
+  }
+ ]
+}

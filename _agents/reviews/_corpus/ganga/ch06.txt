@@ -1,0 +1,2356 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 6: रीढ़ की हड्डी
+book=class9-hindi-ganga chapter=6 pages=9
+
+
+================================================================================
+## PAGE 1 — "परिचय — लेखक से मिलिए"  (slug: ch6-parichay)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=6aa01ec6-3b56-46a8-a8e2-1f1d288244b9 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/6aa01ec6-3b56-46a8-a8e2-1f1d288244b9_gen.webp",
+ "alt": "जगदीशचंद्र माथुर",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour bust-portrait of Hindi playwright Jagdishchandra Mathur wearing spectacles, a dignified scholarly look, warm lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=61fc4aa5-8b62-47f8-915f-8a34c1295d09 ---
+{
+ "prompt": "क्या आपने कभी देखा है कि लोग बाहर से \"आधुनिक\" होने का दिखावा करते हैं, पर भीतर से पुरानी सोच रखते हैं — जैसे \"लड़की ज़्यादा पढ़ी-लिखी न हो\"? ऐसी सोच पर अगर एक पढ़ी-लिखी लड़की खुलकर बोल पड़े, तो क्या होगा?",
+ "hint": "अपने आस-पास \"लड़का-लड़की में फ़र्क़\" वाली किसी सोच के बारे में सोचिए।"
+}
+
+--- block #2 [meet_a_scientist] id=4065c710-3854-4683-acbe-af6afe6e0ed3 ---
+{
+ "name": "जगदीशचंद्र माथुर",
+ "years": "1917–1978",
+ "nationality": "भारतीय — शाहजहाँपुर, उत्तर प्रदेश",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of playwright Jagdishchandra Mathur, spectacles, dark ground.",
+ "contribution": "हिंदी नाटक और रंगमंच के सशक्त रचनाकार; एकांकी (one-act play) को नई ऊँचाई दी। प्रमुख रचनाएँ — **कोणार्क** (सर्वाधिक चर्चित नाटक), भोर का तारा, ओ मेरे सपने, दस तस्वीरें। वे इंडियन सिविल सर्विस में भी चयनित हुए और प्रशासनिक पदों पर रहे।",
+ "connection": "\"रीढ़ की हड्डी\" एकांकी में उन्होंने परंपरागत विवाह-व्यवस्था, दहेज और स्त्री-शिक्षा को लेकर रूढ़िवादी सोच पर तीखी चोट की है।",
+ "fun_detail": "यह एकांकी 1939 में लिखी गई — उस समय जब स्त्रियों को शिक्षा में समान अवसर नहीं मिलते थे। फिर भी इसकी नायिका उमा एक सशक्त, पढ़ी-लिखी महिला है।",
+ "learn_more": "नाटक \"कोणार्क\" और \"जगदीशचंद्र माथुर रचनावली\" (चार खंड)।"
+}
+
+--- block #3 [callout] id=c8d7ab32-fe96-4f83-98f0-5976321d7c6e ---
+{
+ "variant": "india_voice",
+ "title": "एकांकी क्या है?",
+ "markdown": "**एकांकी (One-act play)** एक ही अंक का छोटा नाटक है, जो किसी एक समस्या या विचार पर केंद्रित होता है। यह पूरी तरह **संवादों और मंच-निर्देशों (रंग-निर्देश)** से चलती है — जैसे \"(ज़रा तेज़ आवाज़ में)\" यह बताता है कि पात्र कैसे बोले। इसे मंच पर अभिनय के लिए लिखा जाता है।"
+}
+
+--- block #4 [text] id=4608b054-3f0c-4272-9aaf-13adecc06d65 ---
+{
+ "markdown": "इस एकांकी की नायिका है **उमा** — एक पढ़ी-लिखी, स्वाभिमानी लड़की, जिसके \"देखने\" विवाह के लिए लड़के वाले आते हैं। पढ़ने से पहले कुछ शब्द जान लें।"
+}
+
+--- block #5 [vocabulary_lab] id=c6005874-f432-4aab-a71e-e5d18e574e26 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "एकांकी में आने वाले शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "40c8664e-5d36-4aa7-a418-9598948f6369",
+   "word": "तालीम",
+   "pronunciation": "taa-leem",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "शिक्षा",
+   "english": "education",
+   "example": "ऊँची तालीम पर बहस होती है।",
+   "memory_hook": "उर्दू — education।"
+  },
+  {
+   "id": "ddeb4fd3-70c0-4052-9720-f0a771049e2e",
+   "word": "दकियानूसी",
+   "pronunciation": "da-ki-yaa-noo-see",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पुरानी जड़ सोच वाला",
+   "english": "old-fashioned",
+   "example": "दकियानूसी विचार बदलने चाहिए।",
+   "memory_hook": "orthodox।"
+  },
+  {
+   "id": "190534d7-5ca6-4fbc-8cf3-016d5cd9ac9c",
+   "word": "दहेज",
+   "pronunciation": "da-hej",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विवाह में लिया-दिया धन",
+   "english": "dowry",
+   "example": "दहेज एक कुरीति है।",
+   "memory_hook": "dowry।"
+  },
+  {
+   "id": "e735164c-dcc6-4e7a-9577-0af91c8a9943",
+   "word": "आत्मसम्मान",
+   "pronunciation": "aatm-sam-maan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अपने मान का खयाल",
+   "english": "self-respect",
+   "example": "उमा को अपने आत्मसम्मान का खयाल है।",
+   "memory_hook": "आत्म + सम्मान।"
+  },
+  {
+   "id": "ae6ee5ef-ffac-4289-a9f3-4ec7d95a2ff4",
+   "word": "व्यंग्य",
+   "pronunciation": "vyang-ya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "चुभता कटाक्ष",
+   "english": "satire",
+   "example": "एकांकी में तीखा व्यंग्य है।",
+   "memory_hook": "satire।"
+  },
+  {
+   "id": "dcb3f546-a9d9-43e6-b346-29cc5ba920d7",
+   "word": "सशक्त",
+   "pronunciation": "sa-shakt",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "मज़बूत, समर्थ",
+   "english": "empowered; strong",
+   "example": "उमा एक सशक्त नारी है।",
+   "memory_hook": "स + शक्त।"
+  },
+  {
+   "id": "e36aa874-7e07-4523-ae85-1c3e8466c215",
+   "word": "रूढ़िवादी",
+   "pronunciation": "roo-dhi-vaa-dee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पुरानी रूढ़ियों वाला",
+   "english": "orthodox",
+   "example": "रूढ़िवादी सोच पर चोट है।",
+   "memory_hook": "रूढ़ि + वादी।"
+  },
+  {
+   "id": "aec4175b-aae4-4e34-8050-ff0864c61f39",
+   "word": "बेबस",
+   "pronunciation": "be-bas",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "मजबूर, लाचार",
+   "english": "helpless",
+   "example": "क्या लड़कियाँ बेबस भेड़-बकरियाँ हैं?",
+   "memory_hook": "बे + बस।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=08413553-64fb-47ab-a7cb-0d987bcd55f7 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "3786d16e-a741-4630-97df-e30d01bf2c1b",
+   "question": "जगदीशचंद्र माथुर का सर्वाधिक चर्चित नाटक कौन-सा है?",
+   "options": [
+    "आधे-अधूरे",
+    "कोणार्क",
+    "आषाढ़ का एक दिन",
+    "अंधेर नगरी"
+   ],
+   "correct_index": 1,
+   "explanation": "\"कोणार्क\" उनका सर्वाधिक चर्चित और मंचित नाटक है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "6b7147b5-1d38-469b-93ce-52e81c08e85d",
+   "question": "\"रीढ़ की हड्डी\" किस सामाजिक सोच पर चोट करती है?",
+   "options": [
+    "गाँव की खेती की बहुत पुरानी पद्धति पर",
+    "व्यापार के तरीक़ों पर",
+    "युद्ध और हिंसा पर",
+    "स्त्री-शिक्षा और दहेज को लेकर रूढ़िवादी सोच पर"
+   ],
+   "correct_index": 3,
+   "explanation": "यह परंपरागत विवाह, दहेज और स्त्री-शिक्षा की रूढ़िवादी सोच पर तीखी चोट करती है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "9dbff6ad-aefd-4acb-928e-9c22345f4fcf",
+   "question": "एकांकी की मुख्य पात्र उमा कैसी महिला है?",
+   "options": [
+    "पढ़ी-लिखी, सशक्त और स्वाभिमानी",
+    "बिलकुल अनपढ़ और डरपोक",
+    "धन की लालची",
+    "चालाक और झूठी"
+   ],
+   "correct_index": 0,
+   "explanation": "उमा एक पढ़ी-लिखी, सशक्त और आत्मसम्मानी महिला का प्रतिनिधित्व करती है।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "एकांकी — भाग १"  (slug: ch6-ekanki-bhag-1)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=0a620d1f-328d-4cb4-b3d8-ad5f11575005 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/0a620d1f-328d-4cb4-b3d8-ad5f11575005_gen.webp",
+ "alt": "विवाह की तैयारी का दृश्य",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an elderly man and a servant hurriedly arranging a modest room with a cot, harmonium and chairs for guests, a nervous mood. Warm indoor light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [heading] id=1557e609-d176-4dbc-98b0-9e29529cb891 ---
+{
+ "text": "भाग १ — दिखावे की तैयारी",
+ "level": 2
+}
+
+--- block #2 [text] id=5d6b2709-cb45-417b-b40e-a702389a326d ---
+{
+ "markdown": "एकांकी एक मामूली कमरे में शुरू होती है। बाबू रामस्वरूप और नौकर रतन घबराहट में घर सजा रहे हैं — लड़के वाले उमा को \"देखने\" आ रहे हैं। रामस्वरूप ने एक बात छिपा रखी है।"
+}
+
+--- block #3 [dialogue_role_play] id=b9195932-f67c-49b7-84a2-41d4dd0c0008 ---
+{
+ "mode": "dialogue",
+ "scene_description": "बाबू रामस्वरूप, प्रेमा और रतन विवाह के \"देखने\" की तैयारी कर रहे हैं। कोई एक भूमिका चुनकर निभाइए।",
+ "characters": [
+  {
+   "id": "uma",
+   "name": "उमा",
+   "color": "warm_amber"
+  },
+  {
+   "id": "ram",
+   "name": "रामस्वरूप (बाबू)",
+   "color": "deep_clay"
+  },
+  {
+   "id": "prema",
+   "name": "प्रेमा",
+   "color": "rust"
+  },
+  {
+   "id": "gopal",
+   "name": "गोपालप्रसाद",
+   "color": "slate"
+  },
+  {
+   "id": "shankar",
+   "name": "शंकर",
+   "color": "emerald"
+  },
+  {
+   "id": "ratan",
+   "name": "रतन",
+   "color": "note"
+  }
+ ],
+ "lines": [
+  {
+   "id": "2f266bcf-5ae4-4ada-8231-80e8761f4c1d",
+   "character_id": "ram",
+   "text": "अरे धीरे-धीरे चल... अब तख़्त को उधर मोड़ दे... उधर! बस, बस।",
+   "audio_url": "",
+   "stage_direction": "(तख़्त उठवाते हुए)"
+  },
+  {
+   "id": "7ded69f8-c370-4392-9724-7eae5a0877ed",
+   "character_id": "ratan",
+   "text": "बिछा दें, साहब?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "7923e984-f3ae-46b5-beaa-8fd3c35ab20a",
+   "character_id": "ram",
+   "text": "और क्या करेगा? परमात्मा के यहाँ अक्ल बँट रही थी तो तू देर से पहुँचा था क्या?",
+   "audio_url": "",
+   "stage_direction": "(ज़रा तेज़ आवाज़ में)"
+  },
+  {
+   "id": "b49ffd7e-f855-405a-ab21-9da4f69def56",
+   "character_id": "prema",
+   "text": "तो मैं ही क्या करूँ? सारे जतन करके तो हार गई। तुम्हीं ने उसे पढ़ा-लिखाकर इतना सिर चढ़ा रखा है। मेरी समझ में तो ये पढ़ाई-लिखाई के जंजाल आते नहीं।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "ce947829-b0ec-485d-bbb6-1cb8d42b3d3f",
+   "character_id": "ram",
+   "text": "गुस्सा तो मुझे बहुत आता है इनके दकियानूसी ख़यालों पर। ख़ुद पढ़े-लिखे हैं, वकील हैं, सभा-सोसाइटियों में जाते हैं, मगर लड़की चाहते हैं ऐसी कि ज़्यादा पढ़ी-लिखी न हो।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "b7a47d2d-04f5-4758-8908-5f32e9265cca",
+   "character_id": "prema",
+   "text": "अच्छा बाबा, मैं न बोलूँगी। जैसी तुम्हारी मर्ज़ी हो, करना। बस मुझे तो मेरा काम बता दो।",
+   "audio_url": "",
+   "stage_direction": null
+  }
+ ],
+ "debate_frames": null
+}
+
+--- block #4 [comprehension_checkpoint] id=b84d3157-64fd-4648-819d-908fad5dbe93 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "f1de20a6-7a01-4e39-a0d5-990e98d50f40",
+   "question": "रामस्वरूप ने उमा के बारे में क्या बात छिपा रखी थी?",
+   "options": [
+    "कि वह बीमार है",
+    "कि वह बहुत ग़रीब है",
+    "कि वह बहुत बड़ी है",
+    "कि वह बहुत पढ़ी-लिखी (B.A. पास) है"
+   ],
+   "correct_index": 3,
+   "explanation": "लड़के वाले कम पढ़ी-लिखी लड़की चाहते थे, इसलिए रामस्वरूप ने उमा की ऊँची शिक्षा छिपा रखी थी।"
+  }
+ ]
+}
+
+--- block #5 [reasoning_prompt] id=f222bc43-2d10-4a6e-8149-58a8e325b96a ---
+{
+ "reasoning_type": "logical",
+ "prompt": "रामस्वरूप ख़ुद पढ़े-लिखे, वकील और \"आधुनिक\" हैं, पर अपनी पढ़ी-लिखी बेटी की शिक्षा छिपाते हैं। यह उनके किस अंतर्द्वंद्व (भीतरी विरोध) को दिखाता है?",
+ "reveal": "यह \"ऊपर से आधुनिक, भीतर से रूढ़िवादी\" का अंतर्द्वंद्व है। रामस्वरूप समाज में आधुनिक व्यवहार का दिखावा करते हैं और गोपालप्रसाद के दकियानूसी ख़यालों पर गुस्सा भी होते हैं — पर जब अपनी बेटी के विवाह की बात आती है, तो वही समाज के दबाव में झुककर उसकी शिक्षा छिपा लेते हैं। यह दिखाता है कि सिर्फ़ कहने से नहीं, करके दिखाने से ही सच्ची प्रगतिशीलता आती है।",
+ "difficulty_level": 4
+}
+
+--- block #6 [inline_quiz] id=2feb5d73-aef0-4b1f-877d-85c2c3818062 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "d5209a14-ae17-4c66-960b-ee97291e2c5b",
+   "question": "घर में विवाह के \"देखने\" की तैयारी क्यों हो रही थी?",
+   "options": [
+    "कोई त्योहार था",
+    "दूर के मेहमान घूमने आ रहे थे",
+    "लड़के वाले उमा को देखने आ रहे थे",
+    "घर की मरम्मत हो रही थी"
+   ],
+   "correct_index": 2,
+   "explanation": "गोपालप्रसाद और उनके बेटे शंकर उमा को विवाह के लिए \"देखने\" आ रहे थे।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "fb214242-fbe2-4143-a38d-62366b2fa1fd",
+   "question": "प्रेमा (माँ) पढ़ाई-लिखाई को क्या मानती थी?",
+   "options": [
+    "सबसे ज़रूरी चीज़",
+    "केवल लड़कियों का हक़",
+    "एक बेकार \"जंजाल\"",
+    "धन कमाने का साधन"
+   ],
+   "correct_index": 2,
+   "explanation": "प्रेमा की रूढ़िवादी सोच में पढ़ाई-लिखाई \"जंजाल\" (झंझट) थी — उस समय की स्त्री-शिक्षा-विरोधी सोच।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "d75f861d-07ed-4edc-83e5-18420208231e",
+   "question": "रामस्वरूप का \"आधुनिक दिखना पर बेटी की शिक्षा छिपाना\" क्या उजागर करता है?",
+   "options": [
+    "उनका भीतरी विरोध — कथनी और करनी का फ़र्क़",
+    "उनकी मन से सच्ची और गहरी प्रगतिशीलता",
+    "उनकी ग़रीबी",
+    "उनका भोलापन"
+   ],
+   "correct_index": 0,
+   "explanation": "ऊपर से आधुनिक, भीतर से समाज के दबाव में झुकना — कथनी और करनी का अंतर।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "एकांकी — भाग २"  (slug: ch6-ekanki-bhag-2)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=b53f718e-2dce-4cba-800c-9e66c1b0736b ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/b53f718e-2dce-4cba-800c-9e66c1b0736b_gen.webp",
+ "alt": "लड़के वाले आते हैं",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a worldly older man with a walking stick and his young son being welcomed into a sitting room by a host, tea being served, a tense polite mood. Warm light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=ecd35e4b-4873-49de-abff-695153f77943 ---
+{
+ "markdown": "गोपालप्रसाद और उनका बेटा शंकर आते हैं। गोपालप्रसाद एक अनुभवी, \"फितरती\" आदमी हैं — पुराने ज़माने की शान बघारते और स्त्री-शिक्षा के विरुद्ध रूढ़िवादी विचार रखते हैं।"
+}
+
+--- block #2 [dialogue_role_play] id=479e5292-8d1e-4586-910c-77f9b0e12d47 ---
+{
+ "mode": "dialogue",
+ "scene_description": "गोपालप्रसाद अपने रूढ़िवादी विचार रखते हैं। पात्रों के संवाद पढ़िए — और सोचिए कि इनमें क्या ग़लत है।",
+ "characters": [
+  {
+   "id": "uma",
+   "name": "उमा",
+   "color": "warm_amber"
+  },
+  {
+   "id": "ram",
+   "name": "रामस्वरूप (बाबू)",
+   "color": "deep_clay"
+  },
+  {
+   "id": "prema",
+   "name": "प्रेमा",
+   "color": "rust"
+  },
+  {
+   "id": "gopal",
+   "name": "गोपालप्रसाद",
+   "color": "slate"
+  },
+  {
+   "id": "shankar",
+   "name": "शंकर",
+   "color": "emerald"
+  },
+  {
+   "id": "ratan",
+   "name": "रतन",
+   "color": "note"
+  }
+ ],
+ "lines": [
+  {
+   "id": "ffa0a5f5-6724-47fc-8418-42a95caee802",
+   "character_id": "gopal",
+   "text": "इन अक्ल के ठेकेदारों से ज़रा पूछिए कि क्या लड़कों की पढ़ाई और लड़कियों की पढ़ाई एक बात है? अरे, मर्दों का काम तो है ही पढ़ना और काबिल होना।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "352da873-4bec-41b8-af59-4b6f2af47d6d",
+   "character_id": "gopal",
+   "text": "मोर के पंख होते हैं, मोरनी के नहीं; शेर के बाल होते हैं, शेरनी के नहीं। कुछ बातें दुनिया में ऐसी हैं जो सिर्फ़ मर्दों के लिए हैं, और ऊँची तालीम भी ऐसी चीज़ों में से एक है।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "5aefa45b-b3d2-40e5-a462-157b6d742d0b",
+   "character_id": "ram",
+   "text": "जी हाँ, और मर्द के दाढ़ी होती है, औरत के नहीं!",
+   "audio_url": "",
+   "stage_direction": "(हँसते हुए हामी भरते हुए)"
+  },
+  {
+   "id": "1bd28202-a587-4b86-919e-182c6461c6d5",
+   "character_id": "gopal",
+   "text": "हमें ज़्यादा पढ़ी-लिखी लड़की नहीं चाहिए। मेम साहब तो रखनी नहीं, कौन भुगतेगा उसके नख़रों को। बस हद से हद मैट्रिक-पास होनी चाहिए।",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "f59d5179-5c3f-4b81-a8ec-92d4045e5566",
+   "character_id": "shankar",
+   "text": "जी... कुछ नहीं।",
+   "audio_url": "",
+   "stage_direction": "(खाँसकर, इधर-उधर देखता है)"
+  }
+ ],
+ "debate_frames": null
+}
+
+--- block #3 [comprehension_checkpoint] id=9e8a5ace-867d-490f-9a13-e9416f8151e8 ---
+{
+ "questions": [
+  {
+   "id": "e3719caa-ba65-4fca-8dc6-209ccf7f5f4b",
+   "question": "गोपालप्रसाद \"मोर के पंख होते हैं, मोरनी के नहीं\" कहकर क्या तर्क देना चाहते हैं?",
+   "options": [
+    "कि मोर सुंदर होता है",
+    "कि ऊँची शिक्षा सिर्फ़ मर्दों के लिए है, स्त्रियों के लिए नहीं",
+    "कि स्त्रियाँ कमज़ोर होती हैं",
+    "कि पढ़ाई बेकार है"
+   ],
+   "correct_index": 1,
+   "explanation": "यह एक रूढ़िवादी (और ग़लत) तर्क है कि शिक्षा \"स्वभाव से\" सिर्फ़ पुरुषों का अधिकार है — एकांकी इसी सोच पर व्यंग्य करती है।"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=45ca99d3-5e51-456b-8997-c935c5b278dd ---
+{
+ "reasoning_type": "logical",
+ "prompt": "गोपालप्रसाद \"मोर-मोरनी, शेर-शेरनी\" का उदाहरण देकर कहते हैं कि ऊँची शिक्षा सिर्फ़ मर्दों के लिए है। यह तर्क ग़लत क्यों है?",
+ "reveal": "यह तर्क \"प्राकृतिक अंतर\" को \"अधिकार के अंतर\" से जोड़ने की भूल है। पंख या बाल जैसे शारीरिक अंतर का शिक्षा/बुद्धि से कोई संबंध नहीं — सीखने की क्षमता स्त्री और पुरुष दोनों में बराबर होती है। शिक्षा हर इंसान का समान अधिकार है। लेखक जान-बूझकर यह हास्यास्पद तर्क रखकर दिखाते हैं कि स्त्री-शिक्षा का विरोध कितना खोखला है।",
+ "difficulty_level": 4
+}
+
+--- block #5 [inline_quiz] id=b076fc0e-b15b-428c-8e32-0e9b51eb5344 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "1578613f-aad9-44ae-a02a-261446d14822",
+   "question": "गोपालप्रसाद कैसी लड़की चाहते थे?",
+   "options": [
+    "जितनी अधिक पढ़ी हो उतनी अच्छी",
+    "विदेश में पढ़ी हुई",
+    "केवल बहुत धनी",
+    "ज़्यादा पढ़ी-लिखी नहीं — बस मैट्रिक तक"
+   ],
+   "correct_index": 3,
+   "explanation": "\"मेम साहब\" से बचने के लिए वे \"हद से हद मैट्रिक-पास\" लड़की चाहते थे।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "91084c11-1aae-400a-a471-5ab07259b035",
+   "question": "गोपालप्रसाद की सोच के अनुसार ऊँची तालीम किसके लिए है?",
+   "options": [
+    "सिर्फ़ औरतों के लिए",
+    "सिर्फ़ मर्दों के लिए",
+    "सबके लिए बराबर",
+    "किसी के लिए नहीं"
+   ],
+   "correct_index": 1,
+   "explanation": "वे ऊँची शिक्षा को \"सिर्फ़ मर्दों की चीज़\" मानते थे — एक रूढ़िवादी, ग़लत सोच।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "c756188d-90b1-43b7-ba63-ffeb5dc45b0d",
+   "question": "लेखक गोपालप्रसाद के \"मोर-मोरनी\" तर्क को रखकर क्या करना चाहते हैं?",
+   "options": [
+    "मोर-मोरनी की सुंदरता का बखान करना",
+    "स्त्री-शिक्षा-विरोधी सोच की खोखलाहट पर व्यंग्य",
+    "शिक्षा को बेकार बताना",
+    "पुरुषों की प्रशंसा"
+   ],
+   "correct_index": 1,
+   "explanation": "हास्यास्पद तर्क रखकर लेखक दिखाते हैं कि यह सोच कितनी खोखली और ग़लत है — यही व्यंग्य।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "एकांकी — भाग ३ (चरम)"  (slug: ch6-ekanki-bhag-3)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=33543699-7077-4ea5-b437-46bddafe7284 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/33543699-7077-4ea5-b437-46bddafe7284_gen.webp",
+ "alt": "उमा की निर्भीक आवाज़",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a young woman in simple clothes standing tall and speaking firmly, pointing, while three men sit stunned, one rising in anger with a stick. Dramatic warm light, dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=6d6e6453-6bbf-438b-899a-54e9bf5dbfc8 ---
+{
+ "markdown": "उमा पान देने आती है — और उसका **सोने की रिम वाला चश्मा** दिख जाता है। भेद खुल जाता है कि वह पढ़ी-लिखी है। फिर गोपालप्रसाद उसे \"बोलने\" को कहते हैं — और उमा का स्वाभिमान फूट पड़ता है।"
+}
+
+--- block #2 [dialogue_role_play] id=cb623cdb-3618-4b9a-a059-7aab2bfe89cc ---
+{
+ "mode": "dialogue",
+ "scene_description": "यह एकांकी का चरम (climax) है — उमा खुलकर अपने अधिकार और स्वाभिमान की बात करती है। ध्यान से पढ़िए।",
+ "characters": [
+  {
+   "id": "uma",
+   "name": "उमा",
+   "color": "warm_amber"
+  },
+  {
+   "id": "ram",
+   "name": "रामस्वरूप (बाबू)",
+   "color": "deep_clay"
+  },
+  {
+   "id": "prema",
+   "name": "प्रेमा",
+   "color": "rust"
+  },
+  {
+   "id": "gopal",
+   "name": "गोपालप्रसाद",
+   "color": "slate"
+  },
+  {
+   "id": "shankar",
+   "name": "शंकर",
+   "color": "emerald"
+  },
+  {
+   "id": "ratan",
+   "name": "रतन",
+   "color": "note"
+  }
+ ],
+ "lines": [
+  {
+   "id": "da77a13b-96fc-4194-aec8-3360a810f243",
+   "character_id": "gopal",
+   "text": "चश्मा!!!",
+   "audio_url": "",
+   "stage_direction": "(शंकर के साथ एक साथ, चौंककर)"
+  },
+  {
+   "id": "4fcda584-8aee-44fd-9482-248a0ad0ed44",
+   "character_id": "uma",
+   "text": "क्या जवाब दूँ, बाबूजी! जब कुर्सी-मेज बिकती है तब दुकानदार कुर्सी-मेज से कुछ नहीं पूछता, सिर्फ़ ख़रीदार को दिखला देता है। पसंद आ गई तो अच्छा है, वरना...",
+   "audio_url": "",
+   "stage_direction": "(हल्की लेकिन मज़बूत आवाज़ में)"
+  },
+  {
+   "id": "73375984-4e85-489b-a062-4174806666f8",
+   "character_id": "uma",
+   "text": "ये जो महाशय मेरे ख़रीदार बनकर आए हैं, इनसे ज़रा पूछिए कि क्या लड़कियों के दिल नहीं होता? क्या उनके चोट नहीं लगती? क्या वे बेबस भेड़-बकरियाँ हैं, जिन्हें कसाई अच्छी तरह देख-भालकर ख़रीदते हैं?",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "1a6aaddd-6d43-480a-8d32-9e6115bd7ae6",
+   "character_id": "uma",
+   "text": "जी हाँ, मैं कॉलेज में पढ़ी हूँ। मैंने बी.ए. पास किया है। कोई पाप नहीं किया, कोई चोरी नहीं की, और न आपके पुत्र की तरह ताक-झाँककर कायरता दिखाई है। इनसे पूछिए कि ये किस तरह अपना मुँह छिपाकर भागे थे!",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "7a0597ba-68d5-4e8c-8bf5-d241498078f9",
+   "character_id": "gopal",
+   "text": "बाबू रामस्वरूप, आपने मेरे साथ दगा किया! आपकी लड़की बी.ए. पास है और आपने मुझको कहा था कि सिर्फ़ मैट्रिक तक पढ़ी है। आओ, बेटे, चलें।",
+   "audio_url": "",
+   "stage_direction": "(खड़े होकर गुस्से में)"
+  },
+  {
+   "id": "dba7fd21-f00d-4524-8db8-0a45d903a8f4",
+   "character_id": "uma",
+   "text": "जी हाँ, ज़रूर चले जाइए! लेकिन घर जाकर ज़रा यह पता लगाइएगा कि आपके लाडले बेटे के रीढ़ की हड्डी भी है या नहीं— यानी बैकबोन, बैकबोन!",
+   "audio_url": "",
+   "stage_direction": null
+  },
+  {
+   "id": "89274d85-d36d-420c-87e3-e98587460780",
+   "character_id": "ratan",
+   "text": "बाबूजी, मक्खन!",
+   "audio_url": "",
+   "stage_direction": "(सब रतन की तरफ़ देखते हैं और परदा गिरता है।)"
+  }
+ ],
+ "debate_frames": null
+}
+
+--- block #3 [comprehension_checkpoint] id=c126502c-3853-4f5b-a980-6aa9d437e24f ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "5c87893f-06e8-40b1-9b68-f03d1577fca5",
+   "question": "उमा अपनी तुलना \"कुर्सी-मेज\" और \"भेड़-बकरियों\" से क्यों करती है?",
+   "options": [
+    "क्योंकि उसे फर्नीचर पसंद है",
+    "यह दिखाने के लिए कि \"लड़की देखना\" उसे इंसान नहीं, बिकने वाली वस्तु बना देता है",
+    "क्योंकि वह व्यापारी है",
+    "क्योंकि वह डरी हुई है"
+   ],
+   "correct_index": 1,
+   "explanation": "उमा व्यंग्य से दिखाती है कि बिना उसकी भावनाओं की परवाह किए \"देखना-परखना\" उसे एक बिकाऊ वस्तु जैसा बना देता है — यही उसका विरोध है।"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=b1e7c6be-2b4e-4432-9f27-e748950b6af8 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "एकांकी का शीर्षक \"रीढ़ की हड्डी\" दो पात्रों के लिए दो अलग अर्थों में आता है। दोनों अर्थ पहचानिए।",
+ "reveal": "(१) **शारीरिक अर्थ** — शंकर के लिए: वह एक साल बीमार रहा था, उसकी \"रीढ़ की हड्डी\" (पीठ) कमज़ोर है, इसलिए वह झुककर बैठता है। (२) **नैतिक/प्रतीकात्मक अर्थ** — उमा के व्यंग्य में: शंकर में नैतिक साहस और चारित्रिक दृढ़ता (moral backbone) नहीं है — वह लड़कियों के हॉस्टल के पास ताक-झाँक करके मुँह छिपाकर भाग गया था। उमा कहती है \"रीढ़ की हड्डी है या नहीं\" — यानी क्या उसमें कोई रीढ़ (चरित्र/साहस) है भी?",
+ "difficulty_level": 5
+}
+
+--- block #5 [inline_quiz] id=27c7b82d-c14e-433c-ad4a-a3e83d42b20f ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "0bd46080-34eb-48e4-88ab-a9fca3db5267",
+   "question": "उमा का भेद कैसे खुला कि वह पढ़ी-लिखी है?",
+   "options": [
+    "उसने ख़ुद बता दिया",
+    "रतन ने बता दिया",
+    "मेज़ पर रखी हुई उसकी सारी किताबें दिख गईं",
+    "पान देते समय उसका सोने की रिम वाला चश्मा दिख गया"
+   ],
+   "correct_index": 3,
+   "explanation": "पान देते समय उसका चेहरा ऊपर उठा और चश्मा दिख गया — सब चौंक उठे।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "1656d6ba-a789-4239-99a0-6d380debddfa",
+   "question": "उमा ने शंकर की किस \"कायरता\" का पर्दाफ़ाश किया?",
+   "options": [
+    "वह लड़कियों के हॉस्टल के पास ताक-झाँक करके भागा था",
+    "उसने चोरी की थी",
+    "वह घरवालों से अक्सर झूठ बोलता रहता था",
+    "वह पढ़ता नहीं था"
+   ],
+   "correct_index": 0,
+   "explanation": "उमा बताती है कि शंकर लड़कियों के हॉस्टल के इर्द-गिर्द घूमता और मुँह छिपाकर भागा था — कायरता।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "314b750d-e715-401d-92da-20cab74996aa",
+   "question": "\"रीढ़ की हड्डी\" शीर्षक का गहरा (प्रतीकात्मक) अर्थ क्या है?",
+   "options": [
+    "सिर्फ़ शरीर का एक अंग",
+    "धन और संपत्ति",
+    "नैतिक साहस व चारित्रिक दृढ़ता",
+    "सुंदरता"
+   ],
+   "correct_index": 2,
+   "explanation": "प्रतीकात्मक रूप से \"रीढ़ की हड्डी\" = नैतिक/चारित्रिक दृढ़ता (backbone), जो शंकर में नहीं है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "शब्द-संपदा"  (slug: ch6-shabd-sampada)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=b37e4a79-8bb3-4cd3-adf7-343c72484d2c ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/b37e4a79-8bb3-4cd3-adf7-343c72484d2c_gen.webp",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a stage-curtain motif, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=27a771f6-4172-458d-bc38-0a3ccb92258e ---
+{
+ "markdown": "इस एकांकी के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और याद रखने की ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=dde8df77-983f-4644-ac21-5a9273fea357 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: एकांकी के मूल शब्द।",
+ "cards": [
+  {
+   "id": "d0b39aa3-7063-462a-8a02-4381b5b1a717",
+   "word": "अधेड़",
+   "pronunciation": "a-dhed",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "ढलती उम्र का, अधबूढ़ा",
+   "english": "middle-aged",
+   "example": "दरवाज़े से आते अधेड़ उम्र के महाशय की पीठ दिख रही थी।",
+   "memory_hook": "middle-aged।"
+  },
+  {
+   "id": "2b7befb6-812d-4138-9796-aa82d4b65936",
+   "word": "तालीम",
+   "pronunciation": "taa-leem",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "शिक्षा, पढ़ाई",
+   "english": "education",
+   "example": "गोपालप्रसाद मानते थे ऊँची तालीम सिर्फ़ मर्दों के लिए है।",
+   "memory_hook": "उर्दू — education।"
+  },
+  {
+   "id": "1c276224-e47e-4322-a850-587c8cc45839",
+   "word": "दकियानूसी",
+   "pronunciation": "da-ki-yaa-noo-see",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पुराने जड़ विचारों वाला",
+   "english": "old-fashioned; orthodox",
+   "example": "रामस्वरूप को गोपालप्रसाद के दकियानूसी ख़यालों पर गुस्सा आता था।",
+   "memory_hook": "backward/orthodox।"
+  },
+  {
+   "id": "00f198ee-7bb5-4a06-b1c4-64170264dda7",
+   "word": "फितरती",
+   "pronunciation": "fit-ra-tee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "चालबाज़, धूर्त स्वभाव का",
+   "english": "crafty; cunning",
+   "example": "गोपालप्रसाद एक अनुभवी, फितरती आदमी था।",
+   "memory_hook": "उर्दू \"फ़ितरत\" (nature) से।"
+  },
+  {
+   "id": "5dac5e23-84b3-474f-8f6f-6d7c89e2f838",
+   "word": "जंजाल",
+   "pronunciation": "jan-jaal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "झंझट, झमेला",
+   "english": "entanglement; bother",
+   "example": "प्रेमा को पढ़ाई-लिखाई \"जंजाल\" लगती थी।",
+   "memory_hook": "a tangle/mess।"
+  },
+  {
+   "id": "69061c2a-42d4-4ba7-9a7c-73aad2868cd5",
+   "word": "ठठोली",
+   "pronunciation": "tha-tho-lee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हँसी-मज़ाक, परिहास",
+   "english": "jest; banter",
+   "example": "\"तुम्हें ठठोली ही सूझती रहती है।\"",
+   "memory_hook": "jesting।"
+  },
+  {
+   "id": "9d6f808f-c1ba-408c-b4fa-6ce7e4ae4ce4",
+   "word": "तकल्लुफ़",
+   "pronunciation": "ta-kal-luf",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बनावट, औपचारिक शिष्टाचार",
+   "english": "formality; ceremony",
+   "example": "\"तकल्लुफ़ किस बात का!\"",
+   "memory_hook": "उर्दू — formality।"
+  },
+  {
+   "id": "0804e008-3731-453a-90a2-4b2df548dd5e",
+   "word": "तशरीफ़",
+   "pronunciation": "tash-reef",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "(आदरपूर्वक) पधारना/उपस्थिति",
+   "english": "(respectful) presence",
+   "example": "\"इधर तशरीफ़ लाइए!\"",
+   "memory_hook": "उर्दू — honoured presence।"
+  },
+  {
+   "id": "8db959fb-4b6a-4b6a-8978-ff98521e5248",
+   "word": "मुखातिब",
+   "pronunciation": "mu-khaa-tib",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "संबोधन करने वाला, बात करने वाला",
+   "english": "addressing (someone)",
+   "example": "गोपालप्रसाद शंकर की तरफ़ मुखातिब होकर बोले।",
+   "memory_hook": "उर्दू — addressing।"
+  },
+  {
+   "id": "0f1f68a3-996e-45af-9bcb-8315684eecea",
+   "word": "निहायत",
+   "pronunciation": "ni-haa-yat",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "अत्यंत, बहुत ज़्यादा",
+   "english": "extremely",
+   "example": "\"लड़की का खूबसूरत होना निहायत ज़रूरी है।\"",
+   "memory_hook": "उर्दू — extremely।"
+  },
+  {
+   "id": "58e77636-7db1-47c0-8555-657cfb37da9e",
+   "word": "जायचा",
+   "pronunciation": "jaa-y-chaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "जन्मपत्री, कुंडली",
+   "english": "a horoscope",
+   "example": "\"जायचा तो मिल ही गया होगा?\"",
+   "memory_hook": "horoscope।"
+  },
+  {
+   "id": "03a38907-8453-4238-b733-4b25d8d6cd85",
+   "word": "अधीर",
+   "pronunciation": "a-dheer",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "धैर्यहीन, उतावला, बेचैन",
+   "english": "impatient; restless",
+   "example": "जवाब न मिलने पर गोपालप्रसाद अधीर हो उठे।",
+   "memory_hook": "अ + धीर (धैर्य) = un-patient।"
+  },
+  {
+   "id": "848be04a-ab72-490a-b591-b421f4172daa",
+   "word": "खासियत",
+   "pronunciation": "khaa-si-yat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विशेषता, गुण, स्वभाव",
+   "english": "a trait; peculiarity",
+   "example": "झुकी कमर गोपालप्रसाद की खासियत थी।",
+   "memory_hook": "उर्दू — speciality।"
+  },
+  {
+   "id": "d5d7db5a-d6d2-4469-9df9-5360d60eb04b",
+   "word": "बालाई",
+   "pronunciation": "baa-laa-ee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "ऊपर का हिस्सा, मलाई",
+   "english": "cream; the top layer",
+   "example": "\"चार पैसे में ढेर-सी बालाई आती थी।\"",
+   "memory_hook": "cream/top।"
+  },
+  {
+   "id": "d15b0ca2-8125-4913-bdf2-c82dbc34ada8",
+   "word": "माफ़िक",
+   "pronunciation": "maa-fik",
+   "audio_url": "",
+   "pos": "क्रिया-विशेषण",
+   "meaning": "अनुकूल, अनुसार",
+   "english": "suitable; as per",
+   "example": "\"अपनी खूबसूरती के माफ़िक टैक्स तय कर ले।\"",
+   "memory_hook": "उर्दू \"मुवाफ़िक़\" से।"
+  },
+  {
+   "id": "e457fce1-14d9-4f55-b5a7-abf3d7ff83c2",
+   "word": "अर्ज़",
+   "pronunciation": "arz",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "निवेदन, प्रार्थना",
+   "english": "a request; submission",
+   "example": "\"वह मैंने अर्ज़ किया न।\"",
+   "memory_hook": "उर्दू — a request।"
+  },
+  {
+   "id": "b5d6d995-8de7-4685-8c4e-974b6313a369",
+   "word": "तख्त",
+   "pronunciation": "takht",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "लकड़ी की बड़ी चौकी",
+   "english": "a wooden cot; throne",
+   "example": "रतन और बाबू तख़्त सीधा कर रहे थे।",
+   "memory_hook": "फ़ारसी — a throne/cot।"
+  },
+  {
+   "id": "2083a126-9404-4550-b586-2b2091ae33c8",
+   "word": "चौपट",
+   "pronunciation": "chau-pat",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "नष्ट, बरबाद",
+   "english": "ruined; spoiled",
+   "example": "\"सब चौपट कर दिया!\"",
+   "memory_hook": "ruined।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "bdda1827-61cc-4719-81b8-9e685c35f5bc",
+   "question": "किस शब्द का अर्थ \"पुरानी जड़ सोच वाला\" है?",
+   "options": [
+    "निहायत",
+    "तकल्लुफ़",
+    "दकियानूसी",
+    "बालाई"
+   ],
+   "correct_index": 2,
+   "explanation": "दकियानूसी = old-fashioned/orthodox।"
+  },
+  {
+   "id": "1783184a-59d9-417a-a26a-a080487e8e8a",
+   "question": "\"तालीम\" का अर्थ है —",
+   "options": [
+    "भोजन",
+    "संगीत",
+    "शिक्षा",
+    "यात्रा"
+   ],
+   "correct_index": 2,
+   "explanation": "तालीम = education।"
+  },
+  {
+   "id": "82d0c36f-ac15-4494-9535-e178c10d74f9",
+   "question": "\"फितरती\" व्यक्ति कैसा होता है?",
+   "options": [
+    "चालबाज़, धूर्त स्वभाव का",
+    "सीधा-सादा और भोला",
+    "बहुत उदार",
+    "बहुत आलसी"
+   ],
+   "correct_index": 0,
+   "explanation": "फितरती = crafty/cunning।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=957e80ca-03d7-49ae-9e1a-93c6140cfe87 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: एकांकी से जुड़े और शब्द।",
+ "cards": [
+  {
+   "id": "c344f3bd-872d-4724-b0f0-5bbe01d19966",
+   "word": "रूढ़िवादी",
+   "pronunciation": "roo-dhi-vaa-dee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पुरानी रूढ़ियों को मानने वाला",
+   "english": "orthodox; conventional",
+   "example": "रामस्वरूप ऊपर से आधुनिक, पर भीतर से रूढ़िवादी थे।",
+   "memory_hook": "रूढ़ि + वादी।"
+  },
+  {
+   "id": "d3023e8f-5f35-4d4f-b330-add65c821a97",
+   "word": "दहेज",
+   "pronunciation": "da-hej",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विवाह में दिया-लिया जाने वाला धन/सामान",
+   "english": "dowry",
+   "example": "एकांकी दहेज और लेन-देन की कुरीति पर चोट करती है।",
+   "memory_hook": "a dowry।"
+  },
+  {
+   "id": "766a071e-fd8e-4fd2-ad6d-efa340995b80",
+   "word": "कुरीति",
+   "pronunciation": "ku-ree-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "समाज की बुरी प्रथा",
+   "english": "a social evil; malpractice",
+   "example": "दहेज एक सामाजिक कुरीति है।",
+   "memory_hook": "कु (बुरी) + रीति।"
+  },
+  {
+   "id": "b5a2065c-03fe-4f7c-a96f-59b7658b58ba",
+   "word": "आत्मसम्मान",
+   "pronunciation": "aatm-sam-maan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अपने मान का खयाल, स्वाभिमान",
+   "english": "self-respect",
+   "example": "\"मुझे अपनी इज्ज़त— अपने मान का खयाल तो है।\"",
+   "memory_hook": "आत्म + सम्मान।"
+  },
+  {
+   "id": "1c225dd1-ae76-4fc1-9a93-4fc5977f6650",
+   "word": "बेबस",
+   "pronunciation": "be-bas",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "मजबूर, लाचार",
+   "english": "helpless",
+   "example": "\"क्या वे बेबस भेड़-बकरियाँ हैं?\"",
+   "memory_hook": "बे (बिना) + बस = powerless।"
+  },
+  {
+   "id": "791e99cd-b6c2-45ff-9b22-ce69fd3db52d",
+   "word": "कायरता",
+   "pronunciation": "kaa-yar-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "डरपोकपन",
+   "english": "cowardice",
+   "example": "\"न आपके पुत्र की तरह कायरता दिखाई है।\"",
+   "memory_hook": "\"कायर\" का भाव।"
+  },
+  {
+   "id": "8ef7d96e-d04c-480f-a644-6e5b9a70485f",
+   "word": "ख़रीदार",
+   "pronunciation": "kha-ree-daar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मोल लेने वाला",
+   "english": "a buyer; customer",
+   "example": "\"ये महाशय मेरे ख़रीदार बनकर आए हैं।\"",
+   "memory_hook": "उर्दू — a buyer।"
+  },
+  {
+   "id": "199ce9ff-1e67-44c5-8d28-3199673b80a6",
+   "word": "व्यंग्य",
+   "pronunciation": "vyang-ya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "चुभता कटाक्ष",
+   "english": "satire; irony",
+   "example": "एकांकी अशिक्षा और दहेज पर तीखा व्यंग्य करती है।",
+   "memory_hook": "satire।"
+  },
+  {
+   "id": "3b03fa07-548a-40be-865a-05671e4c0e44",
+   "word": "नैतिक",
+   "pronunciation": "nai-tik",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "नीति/मूल्यों से संबंधित",
+   "english": "moral; ethical",
+   "example": "\"रीढ़ की हड्डी\" नैतिक दृढ़ता का प्रतीक है।",
+   "memory_hook": "\"नीति\" से।"
+  },
+  {
+   "id": "c2b1e888-3d3f-4dfb-8fd4-48c567041e2d",
+   "word": "दृढ़ता",
+   "pronunciation": "dri-dha-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मज़बूती, अडिगता",
+   "english": "firmness; resolve",
+   "example": "उमा अपनी बात मज़बूत दृढ़ता से कहती है।",
+   "memory_hook": "\"दृढ़\" का भाव।"
+  },
+  {
+   "id": "5ad38a54-8c2b-4cba-8919-c153365165d3",
+   "word": "सशक्त",
+   "pronunciation": "sa-shakt",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "मज़बूत, समर्थ, सबल",
+   "english": "strong; empowered",
+   "example": "उमा एक सशक्त, पढ़ी-लिखी महिला है।",
+   "memory_hook": "स + शक्त = with power।"
+  },
+  {
+   "id": "d5c133c3-f70d-4ac9-a2df-6bb87f9cbf03",
+   "word": "टिप्पणी",
+   "pronunciation": "tip-pa-nee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "किसी पर संक्षिप्त राय/comment",
+   "english": "a comment; note",
+   "example": "उमा का \"बैकबोन\" कथन शंकर पर एक व्यंग्य-टिप्पणी है।",
+   "memory_hook": "a remark।"
+  },
+  {
+   "id": "faa1ebc5-4de1-4c9f-8cea-b82c3f3154f8",
+   "word": "परिवेश",
+   "pronunciation": "pa-ri-vesh",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "माहौल, आस-पास का वातावरण",
+   "english": "setting; surroundings",
+   "example": "रंग-निर्देश से एकांकी का परिवेश बनता है।",
+   "memory_hook": "परि + वेश = surroundings।"
+  },
+  {
+   "id": "aa30c771-09dc-4911-9c03-475d1da036d3",
+   "word": "समाधान",
+   "pronunciation": "sa-maa-dhaan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "किसी समस्या का हल",
+   "english": "resolution; solution",
+   "example": "एकांकी के अंत में समस्या का समाधान/परिणाम आता है।",
+   "memory_hook": "a solution।"
+  },
+  {
+   "id": "143a79c2-9cf7-4ea0-95a9-5ee4378a0d60",
+   "word": "दिखावा",
+   "pronunciation": "di-khaa-vaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बनावटी प्रदर्शन",
+   "english": "pretence; show-off",
+   "example": "रामस्वरूप आधुनिकता का केवल दिखावा करते थे।",
+   "memory_hook": "a show/pretence।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=66eeffca-f37b-4ca3-aa30-f225d20de34e ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "befdd5c9-e177-4f0e-aa1e-ab2b867165a1",
+   "question": "\"दहेज\" का अर्थ है —",
+   "options": [
+    "विवाह का छपा हुआ निमंत्रण",
+    "विवाह का गीत",
+    "विवाह में लिया-दिया जाने वाला धन",
+    "विवाह की तिथि"
+   ],
+   "correct_index": 2,
+   "explanation": "दहेज = dowry, एक सामाजिक कुरीति।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "9a62f3aa-59ec-4c46-853f-268164ea4923",
+   "question": "\"बेबस\" का सबसे सही अर्थ है —",
+   "options": [
+    "मजबूर, लाचार",
+    "बहुत बलवान",
+    "बहुत प्रसन्न",
+    "बहुत धनी"
+   ],
+   "correct_index": 0,
+   "explanation": "बेबस = helpless, बिना वश के।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "4c519333-daa7-46e7-a84d-3d747f5fe8c7",
+   "question": "\"रूढ़िवादी\" किसे कहते हैं?",
+   "options": [
+    "हर नई सोच को तुरंत अपनाने वाला",
+    "बहुत पढ़ा-लिखा",
+    "बहुत दयालु",
+    "पुरानी रूढ़ियों को आँख मूँदकर मानने वाला"
+   ],
+   "correct_index": 3,
+   "explanation": "रूढ़िवादी = orthodox/conventional।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "पात्र और एकांकी की विधा"  (slug: ch6-patra-vidha)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=5d1c26eb-7216-4b82-8e1d-8dc32bd2f745 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/5d1c26eb-7216-4b82-8e1d-8dc32bd2f745_gen.webp",
+ "alt": "एकांकी के पात्र",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — faded portrait grouping of a confident young woman, two older men, a young man, a mother and a servant, on a dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=7f677448-9d12-4329-827b-1360b3ebb06a ---
+{
+ "markdown": "एकांकी के पात्रों को पहचानिए, फिर देखिए कि एकांकी-विधा कैसे काम करती है।"
+}
+
+--- block #2 [character_map] id=44a73e70-dd52-4524-a7b9-68332fe38863 ---
+{
+ "title": "रीढ़ की हड्डी के पात्र",
+ "characters": [
+  {
+   "id": "uma",
+   "name": "उमा",
+   "role": "नायिका",
+   "bio": "पढ़ी-लिखी (B.A.), सशक्त और स्वाभिमानी लड़की; अन्याय के विरुद्ध निर्भीक होकर बोलती है।",
+   "traits": [
+    "स्वाभिमानी",
+    "निर्भीक",
+    "विवेकी"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": "Watercolour portrait of a confident young Indian woman with glasses, dark ground."
+  },
+  {
+   "id": "ram",
+   "name": "रामस्वरूप",
+   "role": "उमा का पिता",
+   "bio": "वकील; ऊपर से आधुनिक पर भीतर से समाज के दबाव में झुकने वाला — बेटी की शिक्षा छिपाता है।",
+   "traits": [
+    "दिखावटी-आधुनिक",
+    "दुविधाग्रस्त"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": ""
+  },
+  {
+   "id": "prema",
+   "name": "प्रेमा",
+   "role": "उमा की माँ",
+   "bio": "रूढ़िवादी सोच की; पढ़ाई-लिखाई को \"जंजाल\" मानती है।",
+   "traits": [
+    "रूढ़िवादी",
+    "चिंतित"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": ""
+  },
+  {
+   "id": "gopal",
+   "name": "गोपालप्रसाद",
+   "role": "लड़के का पिता",
+   "bio": "अनुभवी, फितरती; ऊँची शिक्षा को \"सिर्फ़ मर्दों का अधिकार\" मानने वाला रूढ़िवादी।",
+   "traits": [
+    "फितरती",
+    "रूढ़िवादी",
+    "दिखावटी"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": ""
+  },
+  {
+   "id": "shankar",
+   "name": "शंकर",
+   "role": "लड़का (वर)",
+   "bio": "मेडिकल का छात्र; \"रीढ़ की हड्डी\" कमज़ोर — शारीरिक और चारित्रिक दोनों रूप से दुर्बल/कायर।",
+   "traits": [
+    "दुर्बल",
+    "कायर"
+   ],
+   "portrait_url": "",
+   "portrait_prompt": ""
+  }
+ ],
+ "relationships": [
+  {
+   "from": "ram",
+   "to": "uma",
+   "label": "पिता"
+  },
+  {
+   "from": "prema",
+   "to": "uma",
+   "label": "माँ"
+  },
+  {
+   "from": "gopal",
+   "to": "shankar",
+   "label": "पिता"
+  },
+  {
+   "from": "uma",
+   "to": "shankar",
+   "label": "व्यंग्य-प्रहार"
+  },
+  {
+   "from": "gopal",
+   "to": "ram",
+   "label": "दगे का आरोप"
+  }
+ ]
+}
+
+--- block #3 [heading] id=492839c2-87a5-4281-b917-7c86b7bcc6f2 ---
+{
+ "text": "एकांकी की विधा — मुख्य तत्व",
+ "level": 2
+}
+
+--- block #4 [timeline] id=b94d9826-bbc4-4231-8411-9d869819e5be ---
+{
+ "title": "एकांकी के मुख्य तत्व",
+ "orientation": "vertical",
+ "events": [
+  {
+   "id": "d2d97664-cfcf-47c4-9df8-cc5c0d0d5662",
+   "label": "पात्र व परिवेश",
+   "detail": "सीमित पात्र और एक ही परिवेश/देश-काल (यहाँ — एक कमरा)।"
+  },
+  {
+   "id": "244be190-53d2-468a-ada6-cfc92a6b7825",
+   "label": "रंग-निर्देश (मंच-निर्देश)",
+   "detail": "कोष्ठक में दिए निर्देश — \"(ज़रा तेज़ आवाज़ में)\" — जो अभिनय/मंच-सज्जा बताते हैं।"
+  },
+  {
+   "id": "09d44cb2-151f-44f0-a982-96c06eb55940",
+   "label": "संवाद",
+   "detail": "एकांकी की रीढ़ — कथा पूरी तरह संवादों से चलती है।"
+  },
+  {
+   "id": "1a3b3a72-3843-4602-9951-5a5893058240",
+   "label": "समस्या",
+   "detail": "एक केंद्रीय समस्या (यहाँ — स्त्री-शिक्षा व दहेज की रूढ़िवादी सोच)।"
+  },
+  {
+   "id": "a8ce87aa-ada7-430a-8676-b40745b12dde",
+   "label": "मुख्य विचार",
+   "detail": "समानता और स्त्री के आत्मसम्मान का संदेश।"
+  },
+  {
+   "id": "417d72e0-4630-4d5d-be0d-9cd36a3fcf83",
+   "label": "समाधान/परिणाम",
+   "detail": "चरम पर समस्या का खुलासा/परिणाम (उमा का निर्भीक प्रतिकार)।"
+  }
+ ]
+}
+
+--- block #5 [worked_example] id=c1bd2469-2435-4e6f-9ebe-0232cc855408 ---
+{
+ "label": "\"रंग-निर्देश\" क्या काम करते हैं?",
+ "variant": "ncert_intext",
+ "problem": "एकांकी में जगह-जगह कोष्ठक में निर्देश आते हैं, जैसे \"(ज़रा तेज़ आवाज़ में)\", \"(हँसते हुए)\"। इन्हें \"रंग-निर्देश\" कहते हैं। ये किसलिए होते हैं? सोचिए, फिर उत्तर देखिए।",
+ "solution": "**रंग-निर्देश (stage directions)** एकांकीकार/नाटककार द्वारा दिए गए निर्देश हैं, जो बताते हैं कि पात्र **कैसे बोले, कैसे चले, क्या भाव दिखाए**, और मंच कैसे सजे।\n\nचूँकि एकांकी मंच पर अभिनय के लिए है, ये निर्देश निर्देशक और अभिनेता को सही जानकारी देते हैं — जैसे \"(ज़रा तेज़ आवाज़ में)\" बताता है कि बाबू गुस्से/जल्दी में हैं। पाठक के लिए भी ये दृश्य को आँखों के सामने जीवंत कर देते हैं।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #6 [inline_quiz] id=d65a24b1-4a97-4490-87ac-6463349b3453 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "44dfb793-70b6-492f-b2ca-9d495cfe36a5",
+   "question": "एकांकी में कोष्ठक में दिए \"(हँसते हुए)\" जैसे निर्देश क्या कहलाते हैं?",
+   "options": [
+    "एकांकी का मुख्य विचार",
+    "रंग-निर्देश (मंच-निर्देश)",
+    "समाधान",
+    "परिवेश"
+   ],
+   "correct_index": 1,
+   "explanation": "पात्र के अभिनय/भाव और मंच के बारे में बताने वाले निर्देश \"रंग-निर्देश\" कहलाते हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "9d6289ea-e14a-4ecc-ad87-63fdd1246f7c",
+   "question": "एकांकी मुख्यतः किसके सहारे आगे बढ़ती है?",
+   "options": [
+    "लंबे वर्णनों के",
+    "संवादों के",
+    "कविता की पंक्तियों के",
+    "आँकड़ों के"
+   ],
+   "correct_index": 1,
+   "explanation": "एकांकी की कथा पूरी तरह पात्रों के संवादों से चलती है — संवाद उसकी रीढ़ हैं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "839b38fd-3f64-4dd5-8567-d209347adbab",
+   "question": "रंग-निर्देश पाठक के लिए क्यों उपयोगी हैं?",
+   "options": [
+    "वे कहानी को बेवजह बहुत लंबा बनाते हैं",
+    "उनसे कुछ पता नहीं चलता",
+    "वे केवल सजावट हैं",
+    "वे दृश्य को आँखों के सामने जीवंत कर देते हैं"
+   ],
+   "correct_index": 3,
+   "explanation": "पात्र कैसे बोले/क्या भाव दिखाए — यह बताकर रंग-निर्देश दृश्य को सजीव कर देते हैं।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "विषयों से संवाद"  (slug: ch6-vishayon-se-samvad)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=3bdef996-1a2a-40fa-8357-9ad74bc4f202 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/3bdef996-1a2a-40fa-8357-9ad74bc4f202_gen.webp",
+ "alt": "स्त्री-शिक्षा और समानता",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a young woman holding a book and graduation scroll standing tall against faded regressive shadows, hopeful dawn light. Dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=38705ce6-7e1d-40a5-8d95-3757155455cb ---
+{
+ "markdown": "यह एकांकी 1939 की है, पर इसके सवाल आज भी ज़रूरी हैं — स्त्री-शिक्षा, समानता, दहेज और स्त्री का आत्मसम्मान।"
+}
+
+--- block #2 [cultural_context_card] id=c32db1fb-ac3c-401a-88a0-73070e99b799 ---
+{
+ "reference": "स्त्री-शिक्षा और दहेज (1939 और आज)",
+ "category": "concept",
+ "short_desc": "विवाह में स्त्री की शिक्षा को बाधा मानना और लेन-देन (दहेज) की कुरीति।",
+ "detail": "एकांकी के समय **स्त्रियों को शिक्षा और अन्य क्षेत्रों में समान अवसर नहीं मिलते थे** — \"ज़्यादा पढ़ी-लिखी लड़की\" को बोझ माना जाता था, और विवाह में दहेज व लड़की को \"देखना-परखना\" आम था। आज क़ानून दहेज को अपराध मानता है और स्त्री-शिक्षा का अधिकार है — पर ऐसी सोच की जड़ें कहीं-कहीं अब भी बची हैं। उमा का स्वर इसी अन्याय के विरुद्ध आज भी प्रासंगिक है।",
+ "image_url": ""
+}
+
+--- block #3 [theme_explorer] id=24d8e3e0-89af-44de-ad92-fba3b0749bf2 ---
+{
+ "intro": "एकांकी के मुख्य भाव — हर कार्ड पर टैप कीजिए।",
+ "themes": [
+  {
+   "id": "df9a5069-170c-4c07-8084-6c72a4678dae",
+   "title": "स्त्री का आत्मसम्मान",
+   "description": "स्त्री कोई \"बिकने वाली वस्तु\" नहीं — उसके दिल, भावनाएँ और मान हैं।",
+   "evidence": [
+    "\"क्या लड़कियों के दिल नहीं होता? क्या उनके चोट नहीं लगती?\"",
+    "\"मुझे अपनी इज्ज़त— अपने मान का खयाल तो है।\""
+   ],
+   "reflection_prompt": "अपने आस-पास किसी स्त्री (माँ, बहन, सहपाठी) के आत्मसम्मान का एक उदाहरण सोचिए। आप उसका सम्मान कैसे बढ़ा सकते हैं?"
+  },
+  {
+   "id": "e9838762-c429-4d22-bb1d-9f6910a9f19a",
+   "title": "शिक्षा में समानता",
+   "description": "सीखने का अधिकार स्त्री-पुरुष दोनों का बराबर है; इसे \"सिर्फ़ मर्दों का\" कहना ग़लत है।",
+   "evidence": [
+    "\"क्या लड़कों की पढ़ाई और लड़कियों की पढ़ाई एक बात है?\" (इस पर व्यंग्य)",
+    "\"जी हाँ, मैं कॉलेज में पढ़ी हूँ। मैंने बी.ए. पास किया है।\""
+   ],
+   "reflection_prompt": "क्या आप मानते हैं कि लड़के और लड़की को शिक्षा में बराबर मौक़ा मिलना चाहिए? अपने कारण लिखिए।"
+  },
+  {
+   "id": "fa162825-bb16-4696-808c-f2f280cb876a",
+   "title": "दिखावा बनाम सच्ची प्रगतिशीलता",
+   "description": "सिर्फ़ \"आधुनिक\" कहने से नहीं, करके दिखाने से सच्ची प्रगति आती है।",
+   "evidence": [
+    "रामस्वरूप का आधुनिक दिखना, पर बेटी की शिक्षा छिपाना।"
+   ],
+   "reflection_prompt": "क्या कभी आपने \"कहना कुछ और, करना कुछ और\" वाली स्थिति देखी है? उससे क्या सीख मिली?"
+  }
+ ]
+}
+
+--- block #4 [callout] id=31a4b2b2-576f-49c9-b2c1-419cdf03d592 ---
+{
+ "variant": "literature_in_life",
+ "title": "एकांकी और आपका जीवन",
+ "markdown": "उमा हमें सिखाती है कि अन्याय के सामने चुप रहना ज़रूरी नहीं — सही बात विनम्रता पर दृढ़ता से कही जा सकती है। अगली बार किसी के साथ \"लड़का-लड़की\" का भेदभाव देखें, तो उमा की \"रीढ़ की हड्डी\" याद रखिए।"
+}
+
+--- block #5 [reasoning_prompt] id=e87e5778-7ff7-4e42-84c0-10e9c87e2d6e ---
+{
+ "reasoning_type": "logical",
+ "prompt": "गोपालप्रसाद और रामस्वरूप — दोनों में क्या समानता है, भले ही एक खुलकर रूढ़िवादी है और दूसरा \"आधुनिक\" दिखता है?",
+ "reveal": "दोनों ही असल में **दिखावे और परंपरा के शिकार** हैं। गोपालप्रसाद खुलकर रूढ़िवादी हैं; रामस्वरूप ऊपर से आधुनिक दिखते हैं पर भीतर से समाज के दबाव में झुककर बेटी की शिक्षा छिपाते हैं और गोपालप्रसाद की हर बात में \"हाँ-हाँ\" मिलाते हैं। यानी दोनों ही स्त्री को बराबर का इंसान मानने में पीछे हैं — बस एक का रूढ़िवाद खुला है, दूसरे का छिपा हुआ। सच्चा बदलाव सोच बदलने से आता है, दिखावे से नहीं।",
+ "difficulty_level": 4
+}
+
+--- block #6 [inline_quiz] id=2ac2e5f7-6d2b-4fab-9cca-0b1c0282e5eb ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "5083a00e-2242-4f6c-a832-ca7d5fd1dcad",
+   "question": "यह एकांकी किस सामाजिक कुरीति/सोच पर सबसे अधिक चोट करती है?",
+   "options": [
+    "स्त्री-शिक्षा-विरोध और दहेज",
+    "खेती के पुराने तरीक़े",
+    "व्यापार की होड़",
+    "धार्मिक आडंबर"
+   ],
+   "correct_index": 0,
+   "explanation": "स्त्री को कम पढ़ाने की सोच और विवाह में लेन-देन (दहेज) की कुरीति पर।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "1074d77e-f92e-4690-b215-a051a521a28e",
+   "question": "उमा की दृष्टि में सच्ची शिक्षा का अर्थ क्या है?",
+   "options": [
+    "बड़ी-बड़ी डिग्रियाँ इकट्ठा करना",
+    "सबको ख़ुश रखना",
+    "आत्मबल और स्वतंत्र विचार रखना",
+    "केवल नौकरी पाना"
+   ],
+   "correct_index": 2,
+   "explanation": "उमा के लिए शिक्षा का अर्थ है आत्मबल, स्वाभिमान और स्वतंत्र सोच — डिग्री भर नहीं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "7bab085e-a534-40f2-832a-910a7c2a132b",
+   "question": "गोपालप्रसाद और रामस्वरूप में मुख्य समानता क्या है?",
+   "options": [
+    "दोनों सच्चे प्रगतिशील हैं",
+    "दोनों स्त्री-शिक्षा के पक्के समर्थक हैं",
+    "दोनों दिखावे और परंपरा के शिकार हैं",
+    "दोनों बहुत ग़रीब हैं"
+   ],
+   "correct_index": 2,
+   "explanation": "एक का रूढ़िवाद खुला, दूसरे का छिपा — पर दोनों ही दिखावे और पुरानी सोच में बँधे हैं।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "सृजन और व्याकरण"  (slug: ch6-srijan-vyakaran)
+published=false blocks=10 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=9ba5f07e-a7f6-479d-8267-cb96d834dbf2 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/9ba5f07e-a7f6-479d-8267-cb96d834dbf2_gen.webp",
+ "alt": "रचना और मुहावरे",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a script/diary and quill with playful idiom motifs (a wet cat, a puffed face) glowing around them, on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=3d386026-b98f-4c5a-bf92-c9624e5cc36f ---
+{
+ "markdown": "अब आपकी बारी। पहले एक \"टिप्पणी\" लिखिए, फिर एकांकी के **मुहावरों** का अभ्यास कीजिए।"
+}
+
+--- block #2 [writing_scaffold] id=d4b9bae4-06c8-4f6d-90bd-4b3e3eea80fd ---
+{
+ "task": "उमा शंकर पर व्यंग्य करते हुए \"रीढ़ की हड्डी (बैकबोन)\" वाली बात कहती है। उमा के इस कथन पर अपने विचार रखते हुए एक संक्षिप्त \"टिप्पणी\" लिखिए।",
+ "format": "paragraph",
+ "model_parts": [
+  {
+   "id": "03dfcda0-d71a-4aac-a8cc-f53a7099126f",
+   "label": "मुख्य बात",
+   "text": "उमा का \"बैकबोन\" कथन सिर्फ़ शंकर की कमज़ोर पीठ पर नहीं, उसके कमज़ोर चरित्र पर एक तीखा व्यंग्य है।",
+   "annotation": "टिप्पणी की शुरुआत मुख्य बिंदु से कीजिए — पाठक तुरंत समझ जाए कि बात किस बारे में है।"
+  },
+  {
+   "id": "170f29a6-5e97-4125-906b-8864db871436",
+   "label": "स्पष्टीकरण",
+   "text": "जो युवक लड़कियों के हॉस्टल के पास ताक-झाँक करके मुँह छिपाकर भाग जाए, उसमें नैतिक साहस — यानी असली \"रीढ़ की हड्डी\" — नहीं है। उमा एक ही वाक्य में उसकी कायरता उजागर कर देती है।",
+   "annotation": "टिप्पणी में अपनी बात संक्षेप, सरल और तर्कपूर्ण भाषा में रखिए — एक-दो उदाहरण से बात स्पष्ट कीजिए।"
+  },
+  {
+   "id": "9acdac4d-4ef6-42fa-99c7-ad320400d075",
+   "label": "अपनी राय",
+   "text": "मेरे विचार से उमा का साहस ही असली \"रीढ़ की हड्डी\" है — जो अन्याय के सामने झुकती नहीं। यही इस एकांकी का संदेश है।",
+   "annotation": "अंत अपनी स्पष्ट राय/सुझाव पर कीजिए — टिप्पणी व्यक्ति के अपने विचार दिखाती है।"
+  }
+ ],
+ "tips": [
+  "मुख्य बिंदु से शुरू कीजिए।",
+  "भाषा सरल और तर्कपूर्ण रखिए।",
+  "अंत अपनी राय पर कीजिए।"
+ ]
+}
+
+--- block #3 [heading] id=a9ca4ac5-4780-4b12-99c3-0db7d2f528a7 ---
+{
+ "text": "एकांकी के मुहावरे",
+ "level": 2
+}
+
+--- block #4 [text] id=bdcdf382-3c39-427b-8ba6-0a04f33f64a5 ---
+{
+ "markdown": "यह एकांकी मुहावरों से भरी है। नीचे पलटकर अर्थ देखिए, फिर अभ्यास कीजिए।"
+}
+
+--- block #5 [vocabulary_lab] id=b7b8cc30-3aa1-45ae-b929-bc964ecd6a0b ---
+{
+ "mode": "idioms",
+ "lang": "hindi",
+ "intro": "एकांकी के मुहावरे — टैप कर के पलटिए।",
+ "cards": [
+  {
+   "id": "9f52427b-d1e6-49c0-bc57-43914af6bfef",
+   "word": "सिर चढ़ाना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "बहुत लाड़-प्यार से बिगाड़ना/शह देना — to spoil/over-indulge",
+   "example": "\"तुम्हीं ने उसे पढ़ा-लिखाकर इतना सिर चढ़ा रखा है।\""
+  },
+  {
+   "id": "4ac18e7b-8431-448f-a985-122f93e716c2",
+   "word": "मुँह फुलाना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "नाराज़/रूठ जाना — to sulk",
+   "example": "\"वह तुम्हारी लाडली बेटी तो मुँह फुलाए पड़ी है।\""
+  },
+  {
+   "id": "aba80c59-deb1-4635-8637-54076f4ad3bf",
+   "word": "सब-कुछ उगल देना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "छिपी बात कह देना — to blurt everything out",
+   "example": "\"तुम तो अभी से सब-कुछ उगल देती हो।\""
+  },
+  {
+   "id": "b49b21dd-199f-4203-89e8-77ffb2119374",
+   "word": "काँटों में घसीटना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "अनावश्यक संकोच/शर्मिंदगी में डालना — to embarrass needlessly",
+   "example": "\"आप तो मुझे काँटों में घसीटने लगे।\""
+  },
+  {
+   "id": "d2b4189e-6035-407d-9873-bc164e34e9dc",
+   "word": "इज्ज़त उतारना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "अपमान करना, बेइज़्ज़त करना — to insult/humiliate",
+   "example": "\"आपने मेरी इज्ज़त उतारने के लिए मुझे यहाँ बुलाया था?\""
+  },
+  {
+   "id": "99f6ed65-7d94-4d79-ad85-fbc1d09b49fe",
+   "word": "मुँह छिपाकर भागना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "शर्म/डर से बचकर भाग जाना — to flee in shame",
+   "example": "\"ये किस तरह अपना मुँह छिपाकर भागे थे!\""
+  },
+  {
+   "id": "b4f4660f-9ce4-426c-a24f-460f8436b289",
+   "word": "भीगी बिल्ली बनना",
+   "pronunciation": "",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "डरकर दब जाना — to become meek/cowed",
+   "example": "डाँट सुनते ही रतन भीगी बिल्ली-सा हो गया।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "f4d7da1d-0e54-4d80-b697-8cc0df32f722",
+   "question": "\"मुँह फुलाना\" मुहावरे का अर्थ है —",
+   "options": [
+    "ज़ोर से हँसना",
+    "बहुत खाना",
+    "भाग जाना",
+    "नाराज़/रूठ जाना"
+   ],
+   "correct_index": 3,
+   "explanation": "मुँह फुलाना = रूठ/नाराज़ हो जाना।"
+  },
+  {
+   "id": "94ccb830-db27-4d4c-8b41-99b70b216e9b",
+   "question": "किसी को अपमानित करने के लिए कौन-सा मुहावरा है?",
+   "options": [
+    "सिर चढ़ाना",
+    "इज्ज़त उतारना",
+    "मुँह फुलाना",
+    "भीगी बिल्ली बनना"
+   ],
+   "correct_index": 1,
+   "explanation": "इज्ज़त उतारना = अपमान करना।"
+  }
+ ]
+}
+
+--- block #6 [apply_express] id=dc69e7b9-fd0f-4ea2-a33b-2e3a467bb59e ---
+{
+ "title": "व्याकरण व्यायामशाला — मुहावरे व कहावत",
+ "intro": "प्रयोग और पहचान का अभ्यास कीजिए।",
+ "chapter_number": 6,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h6-gr-01",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "सिर चढ़ाना",
+   "instruction": "\"सिर चढ़ाना\" मुहावरे से अपना एक वाक्य बनाइए।",
+   "rubric": [
+    "मुहावरे का प्रयोग किया",
+    "अर्थ सही (लाड़ से बिगाड़ना)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "ज़रूरत से ज़्यादा लाड़ बच्चों को सिर चढ़ा देता है।",
+   "min_words": 6
+  },
+  {
+   "id": "h6-gr-02",
+   "kind": "form_select",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "prompt": "\"मुँह छिपाकर भागना\" का सही अर्थ कौन-सा है?",
+   "options": [
+    "ख़ुशी से दौड़ना",
+    "शर्म/डर से बचकर भाग जाना",
+    "मुँह धोना",
+    "छिपकर खाना"
+   ],
+   "correct_index": 1,
+   "option_reasons": [
+    "ग़लत।",
+    "सही — शर्मिंदगी से बचकर भागना।",
+    "ग़लत।",
+    "ग़लत।"
+   ]
+  },
+  {
+   "id": "h6-gr-03",
+   "kind": "fill_blank",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2,
+   "prompt": "मुहावरा पूरा कीजिए — नाराज़ होकर वह घंटों मुँह ______ बैठी रही।",
+   "answers": [
+    [
+     "फुलाए",
+     "फुलाकर"
+    ]
+   ],
+   "hint": "रूठने वाला मुहावरा।",
+   "explanation": "\"मुँह फुलाना\" = रूठना; अतः \"मुँह फुलाए/फुलाकर\"।"
+  },
+  {
+   "id": "h6-gr-04",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "बाप सेर तो लड़का सवा सेर",
+   "instruction": "इस कहावत का सकारात्मक अर्थ में प्रयोग करते हुए वाक्य बनाइए (बेटा पिता से भी आगे)।",
+   "rubric": [
+    "कहावत का प्रयोग किया",
+    "सकारात्मक अर्थ निकला",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "पिता अच्छे चित्रकार थे, पर बाप सेर तो बेटा सवा सेर — बेटे ने तो राष्ट्रीय पुरस्कार ही जीत लिया।",
+   "min_words": 8
+  },
+  {
+   "id": "h6-gr-05",
+   "kind": "word_builder",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "base": "सम्मान",
+   "affixes": [
+    "आत्म",
+    "अप",
+    "अनु",
+    "प्र"
+   ],
+   "correct": "आत्म",
+   "target": "आत्मसम्मान",
+   "position": "prefix",
+   "meaning_hint": "अपने मान का खयाल — self-respect",
+   "explanation": "\"आत्म\" (अपना) + सम्मान = आत्मसम्मान।"
+  },
+  {
+   "id": "h6-gr-06",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "उमा बहुत बहादुर लड़की है।",
+   "instruction": "इस वाक्य को प्रश्नवाचक वाक्य में बदलिए।",
+   "answers": [
+    "क्या उमा बहुत बहादुर लड़की है?"
+   ],
+   "hint": "\"क्या\" जोड़िए।",
+   "rule": "विधानवाचक → प्रश्नवाचक: आरंभ में \"क्या\" + प्रश्नचिह्न।"
+  }
+ ]
+}
+
+--- block #7 [heading] id=a767dde5-18a1-4095-bb1f-be47a6e7d60b ---
+{
+ "text": "भाषा संगम — \"मक्खन\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #8 [table] id=bd7d76b9-f97b-446c-bff0-9111c70da108 ---
+{
+ "caption": "\"मक्खन\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "मक्खन"
+  ],
+  [
+   "संस्कृत",
+   "नवनीतम्"
+  ],
+  [
+   "पंजाबी",
+   "मक्खन"
+  ],
+  [
+   "उर्दू",
+   "मक्खन"
+  ],
+  [
+   "मराठी",
+   "लोणी"
+  ],
+  [
+   "गुजराती",
+   "માખણ (माखण)"
+  ],
+  [
+   "बांग्ला",
+   "মাখন (माखन)"
+  ],
+  [
+   "नेपाली",
+   "नौनी"
+  ],
+  [
+   "ओडिआ",
+   "ଲହୁଣୀ (लहुणी)"
+  ],
+  [
+   "तेलुगु",
+   "వెన్న (वेन्न)"
+  ],
+  [
+   "तमिल",
+   "வெண்ணெய் (वेण्णै)"
+  ],
+  [
+   "कन्नड़",
+   "ಬೆಣ್ಣೆ (बेण्णे)"
+  ]
+ ]
+}
+
+--- block #9 [inline_quiz] id=2677fd06-1dc0-4788-81d6-0b67af840abb ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "df1554d8-bb73-4b23-b8c1-4f3cec0789e4",
+   "question": "\"सिर चढ़ाना\" मुहावरे का अर्थ है —",
+   "options": [
+    "लाड़-प्यार से बिगाड़ना/शह देना",
+    "किसी को सिर पर बैठा लेना",
+    "डाँटना",
+    "भगाना"
+   ],
+   "correct_index": 0,
+   "explanation": "सिर चढ़ाना = ज़रूरत से ज़्यादा लाड़ देकर बिगाड़ना।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "380111a6-7567-4203-84fe-8fbb1a9011de",
+   "question": "\"इज्ज़त उतारना\" का अर्थ है —",
+   "options": [
+    "सम्मान देना",
+    "मदद करना",
+    "हँसाना",
+    "अपमान करना"
+   ],
+   "correct_index": 3,
+   "explanation": "इज्ज़त उतारना = बेइज़्ज़त/अपमानित करना।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "381c5d1b-bfe2-4cac-bb91-a12a7b92aae5",
+   "question": "\"बाप सेर तो लड़का सवा सेर\" कहावत का अर्थ है —",
+   "options": [
+    "पिता-पुत्र में झगड़ा",
+    "बेटा पिता से भी बढ़कर निकलना",
+    "पिता-पुत्र दोनों एक जैसे आलसी",
+    "वज़न तौलना"
+   ],
+   "correct_index": 1,
+   "explanation": "इसका अर्थ है — बेटा पिता से भी आगे/बढ़कर हो (यहाँ नकारात्मक भाव में, पर सकारात्मक भी हो सकता है)।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 9 — "अभ्यास — Practice"  (slug: ch6-abhyas)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=223b9b18-e3ef-43ea-8318-f1ed9ef3a8d8 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch6/223b9b18-e3ef-43ea-8318-f1ed9ef3a8d8_gen.webp",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi play-book, a quill and lamp, a faint stage-curtain motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=ae469021-c8ae-4507-9b63-5a01336e89d8 ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=34ba98f4-5557-47a2-9eb9-587d50f8d952 ---
+{
+ "title": "अध्याय 6 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 6,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h6-pr-01",
+   "question": "इस एकांकी के लेखक कौन हैं?",
+   "options": [
+    "कथाकार शेखर जोशी",
+    "जगदीशचंद्र माथुर",
+    "नाटककार मोहन राकेश",
+    "प्रेमचंद"
+   ],
+   "correct_index": 1,
+   "explanation": "एकांकी \"रीढ़ की हड्डी\" के लेखक जगदीशचंद्र माथुर हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h6-pr-02",
+   "question": "एकांकी की नायिका कौन है?",
+   "options": [
+    "प्रेमा (उमा की माँ)",
+    "मास्टराइन",
+    "शंकर की बहन",
+    "उमा"
+   ],
+   "correct_index": 3,
+   "explanation": "नायिका उमा — पढ़ी-लिखी, सशक्त लड़की।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h6-pr-03",
+   "question": "रामस्वरूप ने उमा के बारे में क्या छिपाया था?",
+   "options": [
+    "कि वह B.A. पास, बहुत पढ़ी-लिखी है",
+    "कि वह कई वर्षों से बहुत बीमार रहती है",
+    "कि उसका परिवार बहुत ग़रीब है",
+    "कि वह विदेश में रहती है"
+   ],
+   "correct_index": 0,
+   "explanation": "लड़के वाले कम पढ़ी लड़की चाहते थे, इसलिए शिक्षा छिपाई।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h6-pr-04",
+   "question": "गोपालप्रसाद कैसी बहू/लड़की चाहते थे?",
+   "options": [
+    "जितनी अधिक पढ़ी-लिखी हो उतनी अच्छी",
+    "किसी विदेश से पढ़कर लौटी हुई",
+    "बस मैट्रिक तक पढ़ी",
+    "केवल बहुत धनी"
+   ],
+   "correct_index": 2,
+   "explanation": "\"मेम साहब\" से बचने के लिए \"हद से हद मैट्रिक-पास\"।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h6-pr-05",
+   "question": "उमा का भेद (कि वह पढ़ी-लिखी है) कैसे खुला?",
+   "options": [
+    "उसने ख़ुद खड़े होकर घोषणा कर दी",
+    "नौकर रतन ने सबको बता दिया",
+    "पान देते समय उसका चश्मा दिख गया",
+    "उसकी डिग्री दिख गई"
+   ],
+   "correct_index": 2,
+   "explanation": "चेहरा ऊपर उठते ही सोने की रिम वाला चश्मा दिख गया।",
+   "concept_tag": "comprehension",
+   "difficulty": 3
+  },
+  {
+   "id": "h6-pr-06",
+   "question": "\"तालीम\" शब्द का अर्थ है —",
+   "options": [
+    "शिक्षा",
+    "स्वादिष्ट भोजन",
+    "मधुर संगीत",
+    "लंबी यात्रा"
+   ],
+   "correct_index": 0,
+   "explanation": "तालीम = education।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h6-pr-07",
+   "question": "\"दकियानूसी\" का सबसे सही अर्थ है —",
+   "options": [
+    "बहुत आधुनिक विचारों वाला",
+    "बहुत दयालु और उदार",
+    "बहुत मेहनती",
+    "पुरानी जड़ सोच वाला"
+   ],
+   "correct_index": 3,
+   "explanation": "दकियानूसी = old-fashioned/orthodox।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h6-pr-08",
+   "question": "\"बेबस\" का अर्थ है —",
+   "options": [
+    "बहुत बलवान और सबल",
+    "मजबूर, लाचार",
+    "बहुत प्रसन्न",
+    "बहुत धनी"
+   ],
+   "correct_index": 1,
+   "explanation": "बेबस = helpless।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h6-pr-09",
+   "question": "\"फितरती\" व्यक्ति कैसा होता है?",
+   "options": [
+    "स्वभाव से बहुत सीधा-सादा और भोला",
+    "चालबाज़ और धूर्त",
+    "बहुत उदार और दान देने वाला",
+    "बहुत आलसी"
+   ],
+   "correct_index": 1,
+   "explanation": "फितरती = crafty/cunning।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h6-pr-10",
+   "question": "\"मुँह फुलाना\" मुहावरे का अर्थ है —",
+   "options": [
+    "खिलखिलाकर ज़ोर से हँसना",
+    "पेट भरकर बहुत खाना",
+    "भाग जाना",
+    "नाराज़/रूठ जाना"
+   ],
+   "correct_index": 3,
+   "explanation": "मुँह फुलाना = रूठना।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h6-pr-11",
+   "question": "\"सिर चढ़ाना\" का अर्थ है —",
+   "options": [
+    "लाड़ से बिगाड़ देना",
+    "किसी को सिर पर बैठाकर रखना",
+    "ज़ोर से डाँट लगाना",
+    "भगाना"
+   ],
+   "correct_index": 0,
+   "explanation": "सिर चढ़ाना = अति-लाड़ से बिगाड़ना।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h6-pr-12",
+   "question": "\"इज्ज़त उतारना\" मुहावरे का अर्थ है —",
+   "options": [
+    "आदरपूर्वक सम्मान देना",
+    "किसी की मदद करना",
+    "अपमान करना",
+    "हँसाना"
+   ],
+   "correct_index": 2,
+   "explanation": "इज्ज़त उतारना = बेइज़्ज़त करना।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h6-pr-13",
+   "question": "\"आत्मसम्मान\" किन घटकों से बना है?",
+   "options": [
+    "आत + मसम्मान",
+    "आ + त्मसम्मान",
+    "आत्म + सम्मान",
+    "आत्मस + म्मान"
+   ],
+   "correct_index": 2,
+   "explanation": "आत्म (अपना) + सम्मान = self-respect।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h6-pr-14",
+   "question": "कोष्ठक में दिए \"(हँसते हुए)\" जैसे निर्देश क्या कहलाते हैं?",
+   "options": [
+    "रंग-निर्देश",
+    "एकांकी का मुख्य विचार",
+    "समस्या का समाधान",
+    "कोई कहावत"
+   ],
+   "correct_index": 0,
+   "explanation": "अभिनय/मंच के निर्देश \"रंग-निर्देश\" कहलाते हैं।",
+   "concept_tag": "grammar",
+   "difficulty": 4
+  },
+  {
+   "id": "h6-pr-15",
+   "question": "उमा अपनी तुलना \"कुर्सी-मेज/भेड़-बकरियों\" से क्यों करती है?",
+   "options": [
+    "क्योंकि उसे घर का फर्नीचर बहुत पसंद है",
+    "क्योंकि वह ख़ुद एक व्यापारी है",
+    "क्योंकि वह डरी हुई है",
+    "यह दिखाने को कि उसे बिकाऊ वस्तु बनाया जा रहा है"
+   ],
+   "correct_index": 3,
+   "explanation": "बिना भावनाओं की परवाह किए \"देखना-परखना\" स्त्री को वस्तु बना देता है — यही व्यंग्य।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h6-pr-16",
+   "question": "एकांकी का शीर्षक \"रीढ़ की हड्डी\" किसका प्रतीक है?",
+   "options": [
+    "शरीर के एक मामूली-से अंग",
+    "आत्म-सम्मान और नैतिक दृढ़ता",
+    "व्यक्ति की लंबाई-ऊँचाई",
+    "शारीरिक शक्ति"
+   ],
+   "correct_index": 1,
+   "explanation": "प्रतीकात्मक रूप से \"रीढ़ की हड्डी\" = नैतिक/चारित्रिक दृढ़ता (backbone)।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h6-pr-17",
+   "question": "\"रीढ़ की हड्डी\" शब्द एकांकी में दो अलग अर्थों में किनके लिए आता है?",
+   "options": [
+    "नायिका उमा और उसकी माँ प्रेमा के लिए",
+    "शंकर के शरीर और उसके चरित्र के लिए",
+    "नौकर रतन और बाबू रामस्वरूप के लिए",
+    "गोपाल और राम के लिए"
+   ],
+   "correct_index": 1,
+   "explanation": "शंकर की कमज़ोर पीठ (शारीरिक) और उसके कमज़ोर चरित्र (नैतिक) — दोनों अर्थ।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h6-pr-18",
+   "question": "गोपालप्रसाद और रामस्वरूप में मुख्य समानता क्या है?",
+   "options": [
+    "दोनों सच्चे मन से प्रगतिशील हैं",
+    "दोनों स्त्री-शिक्षा के पक्के समर्थक हैं",
+    "दोनों संगीत-प्रेमी हैं",
+    "दोनों दिखावे और पुरानी सोच के शिकार हैं"
+   ],
+   "correct_index": 3,
+   "explanation": "एक का रूढ़िवाद खुला, दूसरे का छिपा — पर दोनों दिखावे में बँधे हैं।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h6-pr-19",
+   "question": "उमा की दृष्टि में सच्ची शिक्षा का अर्थ क्या है?",
+   "options": [
+    "आत्मबल और स्वतंत्र विचार",
+    "बड़ी-बड़ी डिग्रियाँ जमा करना",
+    "सबको ख़ुश रखना",
+    "अच्छी नौकरी पाना"
+   ],
+   "correct_index": 0,
+   "explanation": "शिक्षा = आत्मबल, स्वाभिमान और स्वतंत्र सोच — डिग्री भर नहीं।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h6-pr-20",
+   "question": "इस एकांकी की संवाद-शैली मुख्यतः कैसी है?",
+   "options": [
+    "बहुत औपचारिक और सूखी",
+    "काव्यात्मक और छंदबद्ध",
+    "स्वाभाविक और व्यंग्यपूर्ण",
+    "भावुक और बहुत संक्षिप्त"
+   ],
+   "correct_index": 2,
+   "explanation": "सहज, बोल-चाल की और तीखे व्यंग्य से भरी — यही इसकी संवाद-शैली है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h6-pr-21",
+   "question": "उमा का खुलकर बोल पड़ना उस समय के समाज के लिए क्यों साहसिक कदम था?",
+   "options": [
+    "तब स्त्रियों का इस तरह निडर होकर बोलना दुर्लभ था",
+    "क्योंकि वह बहुत ग़ुस्सैल थी",
+    "क्योंकि उसे बोलना पसंद था",
+    "क्योंकि घर में कोई नहीं था"
+   ],
+   "correct_index": 1,
+   "explanation": "1939 के समाज में एक स्त्री का अन्याय के सामने निर्भीक बोलना बड़ा साहस था।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h6-pr-22",
+   "question": "गोपालप्रसाद और रामस्वरूप दोनों मिलकर लेखक किस सोच पर चोट करते हैं?",
+   "options": [
+    "स्त्री को बराबर का इंसान न मानने वाली पुरुष-मानसिकता पर",
+    "गाँव की खेती के पुराने और घिसे-पिटे तरीक़ों पर",
+    "शहर के रहन-सहन पर",
+    "बच्चों की शिक्षा पर"
+   ],
+   "correct_index": 0,
+   "explanation": "दोनों पात्र अलग-अलग ढंग से वही स्त्री-विरोधी सोच दिखाते हैं, जिस पर एकांकी चोट करती है।",
+   "concept_tag": "interpretation",
+   "difficulty": 5
+  },
+  {
+   "id": "h6-pr-23",
+   "question": "एकांकी का सुखद-व्यंग्यपूर्ण अंत (\"मक्खन!\") पाठक पर क्या प्रभाव डालता है?",
+   "options": [
+    "गंभीर मुद्दे को हल्के-व्यंग्य से और गहरा कर देता है",
+    "कहानी को बेकार बना देता है",
+    "सब कुछ भुला देता है",
+    "दर्शक को डरा देता है"
+   ],
+   "correct_index": 2,
+   "explanation": "हास्य-व्यंग्यपूर्ण अंत गंभीर संदेश को रोचक बनाकर मन में और गहरे बैठा देता है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h6-pr-24",
+   "question": "\"रीढ़ की हड्डी\" शीर्षक आज के समय में भी प्रासंगिक क्यों है?",
+   "options": [
+    "स्त्री-समानता और नैतिक साहस की ज़रूरत आज भी बनी है",
+    "आज के समाज में अब ऐसी कोई समस्या ही नहीं रही",
+    "यह केवल पुरानी बात है",
+    "इसका आज से कोई नाता नहीं"
+   ],
+   "correct_index": 0,
+   "explanation": "समानता और आत्मसम्मान का संघर्ष आज भी जारी है — इसलिए शीर्षक आज भी सार्थक है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=0b65eb2a-9166-466d-b420-14ca84f094bc ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 6,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h6-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "मैंने",
+    "बी.ए.",
+    "पास",
+    "किया",
+    "है"
+   ],
+   "answer": "मैंने बी.ए. पास किया है"
+  },
+  {
+   "id": "h6-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "आत्मसम्मान",
+   "instruction": "\"आत्मसम्मान\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (स्वाभिमान)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "अपने आत्मसम्मान की रक्षा के लिए उमा ने अन्याय के सामने झुकने से इनकार कर दिया।",
+   "min_words": 8
+  },
+  {
+   "id": "h6-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "स्त्री-शिक्षा",
+   "instruction": "\"शिक्षा हर इंसान का समान अधिकार है\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "लड़का हो या लड़की, सीखने और आगे बढ़ने का अधिकार दोनों को बराबर मिलना चाहिए — तभी समाज सचमुच आगे बढ़ता है।",
+   "min_words": 10
+  }
+ ]
+}
+
+--- block #4 [callout] id=e6b65071-7c15-4198-8fc2-191a24d13fec ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "खोजबीन — और आगे",
+ "markdown": "और जानिए-खोजिए:\n\n- **एकांकी** विधा क्या है और इसकी अन्य प्रसिद्ध रचनाएँ कौन-सी हैं।\n- लेखक **जगदीशचंद्र माथुर** का नाटक \"कोणार्क\"।\n- सोचिए — आज भी \"रीढ़ की हड्डी\" वाली बात (स्त्री-शिक्षा, समानता) कहाँ-कहाँ ज़रूरी है?"
+}

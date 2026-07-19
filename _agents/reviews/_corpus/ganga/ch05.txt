@@ -1,0 +1,2290 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 5: आखिरी चट्टान तक
+book=class9-hindi-ganga chapter=5 pages=9
+
+
+================================================================================
+## PAGE 1 — "परिचय — लेखक से मिलिए"  (slug: ch5-parichay)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=a27f1cfc-c2b8-414f-8983-057557ed9c57 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/a27f1cfc-c2b8-414f-8983-057557ed9c57_gen.webp",
+ "alt": "मोहन राकेश",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour bust-portrait of Hindi writer Mohan Rakesh wearing spectacles, a thoughtful modern look, warm lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=d8ed2c6f-6f35-4183-830d-1e62cb90d14a ---
+{
+ "prompt": "क्या आपने कभी सूर्योदय या सूर्यास्त को समुद्र के किनारे देखा है — या देखना चाहते हैं? सोचिए, उस विशाल फैलाव के सामने अकेले खड़े होकर मन में कैसे-कैसे भाव उठते होंगे — विस्मय, छोटापन, या किसी \"बड़ी शक्ति\" का एहसास?",
+ "hint": "किसी विशाल प्राकृतिक दृश्य (समुद्र, पहाड़, खुला आकाश) के सामने अपने अनुभव को याद कीजिए।"
+}
+
+--- block #2 [meet_a_scientist] id=84d5e15d-b4c9-4e25-8572-59ccd9dce51b ---
+{
+ "name": "मोहन राकेश",
+ "years": "1925–1972",
+ "nationality": "भारतीय — अमृतसर, पंजाब",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of writer Mohan Rakesh, spectacles, dark ground.",
+ "contribution": "हिंदी साहित्य के बहुमुखी रचनाकार — कहानी, उपन्यास, नाटक, डायरी और यात्रा-वृत्तांत के सशक्त लेखक। प्रमुख रचनाएँ — **आषाढ़ का एक दिन** (नाटक), आधे-अधूरे, अंधेरे बंद कमरे (उपन्यास), आखिरी चट्टान तक (यात्रा-वृत्तांत)। उनके लेखन में आधुनिक जीवन की जटिलताओं का सूक्ष्म अंकन मिलता है।",
+ "connection": "\"आखिरी चट्टान तक\" में वे कन्याकुमारी की अपनी यात्रा के सहारे प्रकृति की भव्यता और मानव-मन की गहरी अनुभूतियों को एक साथ उजागर करते हैं।",
+ "fun_detail": "\"आषाढ़ का एक दिन\" नाटक के लिए उन्हें \"संगीत नाटक अकादमी पुरस्कार\" मिला; उन्होंने *सारिका* पत्रिका का संपादन भी किया।",
+ "learn_more": "नाटक \"आषाढ़ का एक दिन\" और यात्रा-वृत्तांत \"आखिरी चट्टान तक\"।"
+}
+
+--- block #3 [callout] id=768f5d03-866e-4d2c-8b8e-73b3b449aa14 ---
+{
+ "variant": "india_voice",
+ "title": "यात्रा-वृत्तांत क्या है?",
+ "markdown": "**यात्रा-वृत्तांत (Travelogue)** गद्य की वह विधा है जिसमें लेखक अपनी यात्रा के अनुभव लिखता है। पर अच्छा यात्रा-वृत्तांत केवल \"कहाँ गए, क्या देखा\" नहीं बताता — वह उन दृश्यों से उठने वाली **भावनाओं, विस्मय और भीतरी खोज** को भी जीवंत कर देता है, मानो पाठक भी साथ-साथ यात्रा कर रहा हो।"
+}
+
+--- block #4 [text] id=ee99bc85-aaa5-422a-90d6-e78b7f22b462 ---
+{
+ "markdown": "इस यात्रा-वृत्तांत का गंतव्य है **कन्याकुमारी** — भारत की धरती का दक्षिणतम छोर, जहाँ तीन सागर मिलते हैं। पढ़ने से पहले कुछ शब्द जान लें।"
+}
+
+--- block #5 [vocabulary_lab] id=99db8264-79d7-4933-8fb2-2377a46693d7 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "यात्रा में आने वाले शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "efef9356-f05f-4252-9979-8733fc62fefb",
+   "word": "क्षितिज",
+   "pronunciation": "kshi-tij",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "धरती-आकाश की मिलन-रेखा",
+   "english": "horizon",
+   "example": "क्षितिज तक पानी ही पानी था।",
+   "memory_hook": "where earth meets sky।"
+  },
+  {
+   "id": "ed9a15b7-d7df-4fe5-91be-fcfed9fc9a74",
+   "word": "विस्तार",
+   "pronunciation": "vis-taar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "फैलाव",
+   "english": "expanse",
+   "example": "समुद्र का विस्तार अनंत लगता था।",
+   "memory_hook": "expanse।"
+  },
+  {
+   "id": "2c3bc82c-0f13-4218-a51c-03c1bdd35eeb",
+   "word": "भव्यता",
+   "pronunciation": "bhav-ya-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विशालता, शान",
+   "english": "grandeur",
+   "example": "प्रकृति की भव्यता ने मन मोह लिया।",
+   "memory_hook": "भव्य का भाव।"
+  },
+  {
+   "id": "a73e025a-91b2-4e25-9c3f-a99d90833ec4",
+   "word": "समाधिस्थ",
+   "pronunciation": "sa-maa-dhisth",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "गहरे ध्यान में लीन",
+   "english": "in deep meditation",
+   "example": "चट्टान समाधिस्थ-सी लग रही थी।",
+   "memory_hook": "समाधि + स्थ।"
+  },
+  {
+   "id": "e9dd0959-cbe4-4371-b727-7aaa8cd6c4f8",
+   "word": "सिहरन",
+   "pronunciation": "si-ha-ran",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कंपकंपी, रोमांच",
+   "english": "a shiver; thrill",
+   "example": "ठंडी रेत पर सिहरन हुई।",
+   "memory_hook": "to shiver।"
+  },
+  {
+   "id": "c709d13f-1393-49b0-8c9c-2e312f62564e",
+   "word": "क्षणभंगुर",
+   "pronunciation": "kshan-bhan-gur",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पल में मिट जाने वाला",
+   "english": "fleeting",
+   "example": "सूर्यास्त के रंग क्षणभंगुर थे।",
+   "memory_hook": "क्षण + भंगुर।"
+  },
+  {
+   "id": "1386980e-544f-4d0c-9e1e-c4cd27faf8e6",
+   "word": "दार्शनिक",
+   "pronunciation": "daar-sha-nik",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दर्शन का ज्ञाता",
+   "english": "a philosopher",
+   "example": "युवक दार्शनिक बहस करते थे।",
+   "memory_hook": "दर्शन से।"
+  },
+  {
+   "id": "5c0a8e29-83cc-44a3-a1be-77c1d64a9269",
+   "word": "बेकारी",
+   "pronunciation": "be-kaa-ree",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बेरोज़गारी",
+   "english": "unemployment",
+   "example": "वहाँ बेकारी एक बड़ी समस्या थी।",
+   "memory_hook": "बे + कारी।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=b2b71de0-81cf-4f6b-894c-80c3e20eb471 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "c3bdbee1-da5c-49fe-8567-ac882dea9587",
+   "question": "\"आषाढ़ का एक दिन\" किस विधा की रचना है, जिसके लिए मोहन राकेश को अकादमी पुरस्कार मिला?",
+   "options": [
+    "कोई लंबा उपन्यास",
+    "नाटक",
+    "यात्रा-वृत्तांत",
+    "कविता-संग्रह"
+   ],
+   "correct_index": 1,
+   "explanation": "\"आषाढ़ का एक दिन\" नाटक है, जिसके लिए उन्हें संगीत नाटक अकादमी पुरस्कार मिला।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "15809b31-b400-471f-89a3-16ec82c20216",
+   "question": "इस यात्रा-वृत्तांत का गंतव्य (destination) कौन-सा स्थान है?",
+   "options": [
+    "हिमालय की कोई चोटी",
+    "राजस्थान का रेगिस्तान",
+    "काशी",
+    "कन्याकुमारी"
+   ],
+   "correct_index": 3,
+   "explanation": "यह कन्याकुमारी — भारत के दक्षिणतम छोर — की यात्रा का वृत्तांत है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "6988a2dc-062e-483d-982c-6af919432ca4",
+   "question": "अच्छे यात्रा-वृत्तांत की मुख्य विशेषता क्या है?",
+   "options": [
+    "दृश्यों के साथ भावनाओं और भीतरी अनुभव का जीवंत वर्णन",
+    "यात्रा की केवल दूरी और किराये की पूरी जानकारी",
+    "काल्पनिक रोमांचक कथा",
+    "गणितीय आँकड़े"
+   ],
+   "correct_index": 0,
+   "explanation": "यह दृश्य-वर्णन के साथ-साथ लेखक की भावनाओं और भीतरी खोज को भी सजीव करता है।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "यात्रा — भाग १"  (slug: ch5-yatra-bhag-1)
+published=false blocks=8 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=e1c029fe-5ef2-4f1f-bb49-92839296b880 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/e1c029fe-5ef2-4f1f-bb49-92839296b880_gen.webp",
+ "alt": "कन्याकुमारी — तीन सागरों का संगम",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — black rocks at Kanyakumari where three seas meet, the Vivekananda Rock Memorial in the distance, tall waves crashing, golden light. Dark atmospheric ground. Loose luminous washes, paper grain. No text."
+}
+
+--- block #1 [heading] id=3baa6b94-d3a1-47f1-9f4c-3683aeee61d1 ---
+{
+ "text": "भाग १ — आखिरी चट्टान और तीन सागर",
+ "level": 2
+}
+
+--- block #2 [text] id=62a18c71-3f89-4ce1-93e3-3f80aa4b2d29 ---
+{
+ "markdown": "लेखक भारत की धरती की आखिरी चट्टान पर खड़ा है — जहाँ तीन सागर मिलते हैं और जहाँ कभी स्वामी विवेकानंद ने समाधि लगाई थी।"
+}
+
+--- block #3 [narrated_passage] id=3dd7b70c-cf32-4463-b57d-da7b8465e525 ---
+{
+ "source_label": "भाग १ · शक्ति का विस्तार",
+ "paragraphs": [
+  {
+   "id": "651239d2-6b65-45e0-a488-edd895cbc827",
+   "sentences": [
+    {
+     "id": "f3e5bc59-b5e4-44e8-ab30-d2bbc5f5be36",
+     "text": "कन्याकुमारी। सुनहले सूर्योदय और सूर्यास्त की भूमि।",
+     "audio_url": ""
+    },
+    {
+     "id": "a0dda565-484a-4386-8361-9bdff34240fb",
+     "text": "अरब सागर, हिंद महासागर और बंगाल की खाड़ी— इन तीनों के संगम-स्थल-सी वह चट्टान, जिस पर कभी स्वामी विवेकानंद ने समाधि लगाई थी, हर तरफ़ से पानी की मार सहती हुई स्वयं भी समाधिस्थ-सी लग रही थी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "संगम-स्थल",
+       "meaning": "मिलन-स्थान — a confluence",
+       "pos": "संज्ञा",
+       "example": "प्रयाग तीन नदियों का संगम-स्थल है।"
+      },
+      {
+       "word": "समाधिस्थ",
+       "meaning": "गहरे ध्यान में लीन — in deep meditation",
+       "pos": "विशेषण",
+       "example": "योगी समाधिस्थ होकर बैठा था।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "देखो — लेखक चट्टान को \"समाधिस्थ-सी\" कहता है। पानी की लगातार मार सहती हुई भी वह अडिग, शांत खड़ी है — मानो ध्यान में लीन हो। यही मानवीकरण (चट्टान को इंसान-सा दिखाना) कहानी की भाषा का सौंदर्य है।"
+  },
+  {
+   "id": "092a1826-c0b2-487c-8b40-178d02b77ecb",
+   "sentences": [
+    {
+     "id": "33f6bac9-8934-4147-a09a-4572c09872a7",
+     "text": "हिंद महासागर की ऊँची-ऊँची लहरें मेरे आस-पास की स्याह चट्टानों से टकरा रही थीं। बलखाती लहरें रास्ते की नुकीली चट्टानों से कटती हुई आती थीं जिससे उनके ऊपर चूरा बूँदों की जालियाँ बन जाती थीं।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "स्याह",
+       "meaning": "काली — black; dark",
+       "pos": "विशेषण",
+       "example": "समुद्र की स्याह चट्टानें चमक रही थीं।"
+      },
+      {
+       "word": "बलखाती",
+       "meaning": "लहराती, मुड़ती हुई — winding; swaying",
+       "pos": "विशेषण",
+       "example": "बलखाती नदी पहाड़ों से उतरती है।"
+      }
+     ]
+    },
+    {
+     "id": "446dd773-ac99-4aa3-a89b-49ff7d731678",
+     "text": "मैं देख रहा था और अपनी पूरी चेतना से महसूस कर रहा था— शक्ति का विस्तार, विस्तार की शक्ति।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "चेतना",
+       "meaning": "होश, सजगता — consciousness",
+       "pos": "संज्ञा",
+       "example": "पूरी चेतना से उसने वह दृश्य महसूस किया।"
+      },
+      {
+       "word": "विस्तार",
+       "meaning": "फैलाव — expanse; extent",
+       "pos": "संज्ञा",
+       "example": "समुद्र का विस्तार अनंत जान पड़ता था।"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+--- block #4 [image] id=f9dc0abe-d736-439e-8730-aadd93cb6687 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/f9dc0abe-d736-439e-8730-aadd93cb6687_gen.webp",
+ "alt": "विवेकानंद शिला और समुद्र",
+ "caption": "",
+ "width": "three_quarter",
+ "aspect_ratio": "16:9",
+ "generation_prompt": "Watercolour — the Vivekananda Rock Memorial on a small island surrounded by deep blue sea at golden hour, waves around it. Dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #5 [comprehension_checkpoint] id=fce3b0ff-b53d-4232-94aa-9df245429597 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "d147d3f3-bf24-46f5-ab06-afe823ec6817",
+   "question": "कन्याकुमारी की वह चट्टान किन तीन सागरों के संगम पर है?",
+   "options": [
+    "काला सागर, लाल सागर, अरब सागर",
+    "केवल हिंद महासागर",
+    "अरब सागर, हिंद महासागर, बंगाल की खाड़ी",
+    "गंगा, यमुना, सरस्वती"
+   ],
+   "correct_index": 2,
+   "explanation": "अरब सागर, हिंद महासागर और बंगाल की खाड़ी — इन तीनों का संगम-स्थल कन्याकुमारी है।"
+  }
+ ]
+}
+
+--- block #6 [reasoning_prompt] id=d4af3726-a733-40f4-9008-e632b2da8d4d ---
+{
+ "reasoning_type": "logical",
+ "prompt": "\"शक्ति का विस्तार, विस्तार की शक्ति\" — इन कुछ शब्दों में लेखक समुद्र को देखकर क्या गहरा भाव व्यक्त कर रहा है?",
+ "reveal": "विशाल फैले समुद्र के सामने लेखक दो बातें एक साथ महसूस करता है — समुद्र की शक्ति इतनी विशाल (फैली हुई) है, और यह विशाल फैलाव अपने-आप में एक शक्ति है। इतने बड़े दृश्य के सामने वह अपने छोटेपन और साथ ही प्रकृति की भव्यता का गहरा बोध करता है — यही यात्रा-वृत्तांत में \"आत्म-चेतना\" और प्रकृति से संवाद है।",
+ "difficulty_level": 4
+}
+
+--- block #7 [inline_quiz] id=382b81a7-aa6c-41a9-a8ca-63b06ee0b335 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "2029ea2f-1aca-4f04-a8dc-ecf93332445a",
+   "question": "उस आखिरी चट्टान पर कभी किसने समाधि लगाई थी?",
+   "options": [
+    "महात्मा गांधी",
+    "तानसेन",
+    "स्वामी विवेकानंद",
+    "गुरु नानक"
+   ],
+   "correct_index": 2,
+   "explanation": "स्वामी विवेकानंद ने उस चट्टान पर समाधि लगाई थी — इसीलिए वह \"विवेकानंद चट्टान\" कहलाती है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "09c9d583-52f8-4693-ac92-7ec5aea0f480",
+   "question": "लेखक ने पानी की मार सहती चट्टान को कैसा बताया?",
+   "options": [
+    "धीरे-धीरे टूटती-बिखरती हुई",
+    "डरी हुई",
+    "समाधिस्थ-सी (ध्यान में लीन)",
+    "हँसती हुई"
+   ],
+   "correct_index": 2,
+   "explanation": "अडिग, शांत खड़ी चट्टान उसे ध्यान में लीन \"समाधिस्थ-सी\" लगी — एक सुंदर मानवीकरण।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "ecaa31da-db46-4569-8e07-73571e81fa66",
+   "question": "\"शक्ति का विस्तार, विस्तार की शक्ति\" मुख्यतः किसका वर्णन है?",
+   "options": [
+    "विशाल समुद्र की व्यापकता और शक्ति का",
+    "ढलते सूर्यास्त के सुनहरे रंगों का",
+    "पच्छिमी क्षितिज का",
+    "रेत के टीलों का"
+   ],
+   "correct_index": 0,
+   "explanation": "यह पंक्ति समुद्र के विशाल फैलाव और उसकी अपार शक्ति के बोध को व्यक्त करती है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "यात्रा — भाग २"  (slug: ch5-yatra-bhag-2)
+published=false blocks=6 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=9bd2343a-26ac-46fb-99e5-63da53be1edf ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/9bd2343a-26ac-46fb-99e5-63da53be1edf_gen.webp",
+ "alt": "सैंड हिल पर सूर्यास्त",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a person climbing sand dunes toward a glowing sunset over the sea, the sand tinted in many colours, long shadows. Dark warm ground, golden-crimson light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=7921d783-9c01-425d-9f77-82f166b1421f ---
+{
+ "markdown": "सूर्यास्त देखने के लिए लेखक \"सैंड हिल\" (बालू का टीला) की ओर बढ़ता है — एक टीले के बाद दूसरा, और हर बार लगता है अगला ही आख़िरी होगा।"
+}
+
+--- block #2 [narrated_passage] id=23820eac-4ab4-4c26-b72b-0b0024203ba0 ---
+{
+ "source_label": "भाग २ · चोटी सर करना",
+ "paragraphs": [
+  {
+   "id": "19d7955f-78ec-42d9-8c7d-558cbbbaefcb",
+   "sentences": [
+    {
+     "id": "62d37fd5-549f-4086-9bd9-06b686888e98",
+     "text": "जल्दी-जल्दी चलते हुए मैंने एक के बाद एक कई टीले पार किए। टाँगें थक रही थीं पर मन थकने को तैयार नहीं था।",
+     "audio_url": ""
+    },
+    {
+     "id": "fac70aa4-4634-4e8e-9b30-d4c18ea8b466",
+     "text": "और सचमुच एक टीले पर पहुँचकर वह खुला विस्तार सामने फैला दिखाई दे गया— वहाँ से दूर तक एक रेत की लंबी ढलान थी, जैसे वह टीले से समुद्र में उतरने का रास्ता हो।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "विस्तार",
+       "meaning": "फैलाव — expanse",
+       "pos": "संज्ञा",
+       "example": "टीले से खुला विस्तार दिखाई दिया।"
+      },
+      {
+       "word": "ढलान",
+       "meaning": "नीचे की ओर झुकाव — a slope",
+       "pos": "संज्ञा",
+       "example": "रेत की लंबी ढलान समुद्र तक जाती थी।"
+      }
+     ]
+    },
+    {
+     "id": "dcb8cf7b-3031-471f-8450-593562107a06",
+     "text": "अपने प्रयत्न की सार्थकता से संतुष्ट होकर मैं टीले पर बैठ गया— ऐसे जैसे वह टीला संसार की सबसे ऊँची चोटी हो, और मैंने, सिर्फ़ मैंने, उस चोटी को पहली बार सर किया हो।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "सार्थकता",
+       "meaning": "सफल/अर्थपूर्ण होना — meaningfulness",
+       "pos": "संज्ञा",
+       "example": "मेहनत की सार्थकता तब मिली जब चोटी दिखी।"
+      },
+      {
+       "word": "सर किया",
+       "meaning": "जीत लिया, फ़तह किया — conquered",
+       "pos": "मुहावरा",
+       "example": "पर्वतारोही ने आख़िर वह चोटी सर कर ली।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "यह यात्रा-वृत्तांत का सुंदर भाव है: एक मामूली रेत का टीला, पर उसे पार करने की संतुष्टि \"संसार की सबसे ऊँची चोटी\" जीतने जैसी लगती है। लक्ष्य बड़ा हो या छोटा — प्रयत्न की सार्थकता का सुख एक-सा होता है।"
+  },
+  {
+   "id": "661547c3-6804-4476-adc6-ed8231813438",
+   "sentences": [
+    {
+     "id": "633afd64-b482-4f8c-83a8-87c08e161262",
+     "text": "कितने ही अनाम रंग वे थे। एक-एक इंच पर एक-दूसरे से अलग, और एक-एक रंग कई-कई रंगों की झलक लिए हुए।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "अनाम",
+       "meaning": "जिसका नाम न हो — nameless",
+       "pos": "विशेषण",
+       "example": "सूर्यास्त की रेत में कितने ही अनाम रंग थे।"
+      }
+     ]
+    },
+    {
+     "id": "17479ecf-c883-452a-9229-246d3e584cf3",
+     "text": "लगा जैसे रेत पहली बार उन निशानों से टूटा हो। इससे मन में एक सिहरन भी हुई, हल्की उदासी भी घिर आई।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "सिहरन",
+       "meaning": "कंपकंपी, रोमांच — a shiver",
+       "pos": "संज्ञा",
+       "example": "अनोखे दृश्य से मन में सिहरन हुई।"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [comprehension_checkpoint] id=b5a88c3f-5570-4ccc-b8dd-7757d4e75182 ---
+{
+ "questions": [
+  {
+   "id": "4124d155-c5fb-4c0a-b15f-7e4d5f03861c",
+   "question": "एक साधारण रेत के टीले पर पहुँचकर लेखक को \"संसार की सबसे ऊँची चोटी सर करने\" जैसा सुख क्यों मिला?",
+   "options": [
+    "क्योंकि टीला सचमुच बहुत ऊँचा था",
+    "क्योंकि वहाँ बहुत लोग थे",
+    "प्रयत्न (मेहनत) की सार्थकता और लक्ष्य पाने की संतुष्टि से",
+    "क्योंकि उसे इनाम मिला"
+   ],
+   "correct_index": 2,
+   "explanation": "लगातार चलकर लक्ष्य तक पहुँचने की संतुष्टि ने उस छोटे टीले को भी \"चोटी\" जैसा बना दिया — प्रयत्न की सार्थकता का सुख।"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=fde1b9c9-7624-41d7-92c3-e68574ab5f38 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "रंगीन रेत और डूबते सूर्य को देखकर लेखक के मन में \"सिहरन\" के साथ \"हल्की उदासी\" भी घिर आती है। इतने सुंदर दृश्य पर उदासी क्यों?",
+ "reveal": "सूर्यास्त के रंग और रेत के निशान क्षणभंगुर हैं — पल-भर में बदल/मिट जाएँगे। इतनी सुंदरता का \"अभी है, अभी नहीं\" वाला भाव मन को छू जाता है। सुंदरता की क्षणभंगुरता (कि कुछ भी स्थायी नहीं) का बोध ही उस हल्की उदासी का कारण है — यही यात्रा-वृत्तांत में जीवन-दर्शन की गहराई है।",
+ "difficulty_level": 4
+}
+
+--- block #5 [inline_quiz] id=5820354c-bf76-4963-9ac1-1f6caa250b19 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "bf39354e-82dc-4a9a-8e17-c56794cf78f1",
+   "question": "सूर्यास्त देखने के लिए लेखक किस ओर बढ़ता रहा?",
+   "options": [
+    "विवेकानंद चट्टान की ओर",
+    "कन्याकुमारी मंदिर की ओर",
+    "समुद्र किनारे के केप होटल की ओर",
+    "सैंड हिल (बालू के टीलों) की ओर"
+   ],
+   "correct_index": 3,
+   "explanation": "खुला विस्तार देखने के लिए वह एक के बाद एक सैंड हिल के टीले पार करता गया।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "b87c494d-eb7d-4fce-aaf7-20921f694ed2",
+   "question": "सूर्यास्त की रेत के रंगों को लेखक ने कैसा बताया?",
+   "options": [
+    "सिर्फ़ एक हल्का-सा पीला रंग",
+    "कितने ही अनाम (बेनाम) रंग",
+    "बिलकुल रंगहीन",
+    "काले और सफ़ेद"
+   ],
+   "correct_index": 1,
+   "explanation": "रेत में इतने रंग थे कि उन्हें कोई नाम देना असंभव था — \"कितने ही अनाम रंग\"।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "5125b0ee-70de-4137-a7cd-64cd24ea0d46",
+   "question": "सुंदर दृश्य पर \"हल्की उदासी\" किस गहरे बोध से जुड़ी है?",
+   "options": [
+    "भूख और थकान",
+    "सुंदरता की क्षणभंगुरता (कुछ भी स्थायी नहीं)",
+    "अकेले रास्ता भटक जाने के गहरे डर से",
+    "पैसे की कमी"
+   ],
+   "correct_index": 1,
+   "explanation": "रंग पल-पल बदलते-मिटते हैं; इस क्षणभंगुरता का बोध ही उदासी लाता है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "यात्रा — भाग ३"  (slug: ch5-yatra-bhag-3)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=bf159025-847e-4e89-81fe-97e5e9876a9a ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/bf159025-847e-4e89-81fe-97e5e9876a9a_gen.webp",
+ "alt": "बढ़ता पानी और सूर्योदय",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — rising tide swirling around black rocks at dusk turning to a serene sunrise over Vivekananda Rock, a small fishing boat with sails. Dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=6672f018-0c61-4ed4-86e5-d8fef346287b ---
+{
+ "markdown": "लौटते समय ज्वार से पानी बढ़ने लगता है और लेखक को संघर्ष करना पड़ता है। फिर अगली सुबह वह विवेकानंद चट्टान पर सूर्योदय देखता है — और वहाँ के बेकार नवयुवकों से मिलता है।"
+}
+
+--- block #2 [narrated_passage] id=833f4439-04da-43b3-85d3-836b1d1bf15f ---
+{
+ "source_label": "भाग ३ · संघर्ष और सूर्योदय",
+ "paragraphs": [
+  {
+   "id": "19963228-139c-47f1-b051-31898e4f32a4",
+   "sentences": [
+    {
+     "id": "9c370c14-0e65-49cb-9101-72b68df9e30f",
+     "text": "एक लहर मेरे पैरों को भिगो गई, तो सहसा मुझे ख़तरे का एहसास हुआ। मैं जल्दी-जल्दी चलने लगा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "सहसा",
+       "meaning": "अचानक — suddenly",
+       "pos": "क्रिया-विशेषण",
+       "example": "सहसा लहर ने पैर भिगो दिए।"
+      }
+     ]
+    },
+    {
+     "id": "64f82f09-9536-4142-aa72-417879dc0786",
+     "text": "एक ऊँची चट्टान थी। वक़्त पर अपने को सँभालने की कोशिश की, फिर भी उससे टकरा गया। बाँहों पर हल्की खरोंच आ गई, पर ज़्यादा चोट नहीं लगी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "खरोंच",
+       "meaning": "हल्का छिल जाना — a scratch",
+       "pos": "संज्ञा",
+       "example": "गिरने से घुटने पर खरोंच आ गई।"
+      }
+     ]
+    },
+    {
+     "id": "f746809c-a168-4311-b7d7-e6aab48c4669",
+     "text": "मन से डर निकल जाने से मुझे अपने आप काफ़ी हल्का लगा और मैं चट्टान से नीचे कूद गया।",
+     "audio_url": ""
+    }
+   ],
+   "hinglish_commentary": "देखो — लेखक की हार न मानने वाली प्रवृत्ति: ख़तरे और चोट के बावजूद वह डटा रहता है, और जब \"मन से डर निकल जाता है\" तो ख़ुद को हल्का महसूस करता है। डर पर जीत ही असली राहत है।"
+  },
+  {
+   "id": "3912fe11-7895-4600-967f-6aafeb79359a",
+   "sentences": [
+    {
+     "id": "e4b9d1e2-38f5-4917-900e-344e0fcafdc3",
+     "text": "सूर्योदय। हम आठ आदमी \"विवेकानंद चट्टान\" पर बैठे थे, जहाँ बंगाल की खाड़ी की भौगोलिक सीमा समाप्त होती है।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "भौगोलिक",
+       "meaning": "भूगोल से संबंधित — geographical",
+       "pos": "विशेषण",
+       "example": "यह कन्याकुमारी की भौगोलिक सीमा है।"
+      }
+     ]
+    },
+    {
+     "id": "8c1d2de7-f8a9-4322-9594-61cb1f93c2a2",
+     "text": "ग्रेजुएट नवयुवक ने बताया कि कन्याकुमारी की आबादी में चार-पाँच सौ शिक्षित नवयुवक बेकार हैं। एक कह रहा था— \"हम लोग सीपियों का गूदा खाते हैं और दार्शनिक सिद्धांतों पर बहस करते हैं। इस चट्टान से इतनी प्रेरणा तो हमें मिलती ही है।\"",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "बेकार",
+       "meaning": "बेरोज़गार — unemployed",
+       "pos": "विशेषण",
+       "example": "कई शिक्षित नवयुवक बेकार थे।"
+      },
+      {
+       "word": "दार्शनिक",
+       "meaning": "दर्शन-संबंधी — philosophical",
+       "pos": "विशेषण",
+       "example": "वे दार्शनिक सिद्धांतों पर बहस करते थे।"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [image] id=3c833d85-dac3-46c5-8fd5-408395d76fa0 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/3c833d85-dac3-46c5-8fd5-408395d76fa0_gen.webp",
+ "alt": "विवेकानंद चट्टान पर सूर्योदय और मछुआ नाव",
+ "caption": "",
+ "width": "three_quarter",
+ "aspect_ratio": "16:9",
+ "generation_prompt": "Watercolour — sunrise over the sea at Vivekananda Rock, people watching, a small fishing boat of tied logs with a sail, locals with shell garlands. Dark warm ground, golden light. Loose washes, paper grain. No text."
+}
+
+--- block #4 [comprehension_checkpoint] id=457d8b6d-ffff-4eb7-a7ea-e9d2bd0b161f ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "3e4b290e-bd48-4b74-9c11-1d253e1e64be",
+   "question": "कन्याकुमारी के शिक्षित नवयुवकों की मुख्य समस्या क्या थी?",
+   "options": [
+    "बेकारी (बेरोज़गारी) — पढ़े-लिखे होकर भी काम नहीं",
+    "पानी की कमी",
+    "पढ़ाई के साधन न होना",
+    "बहुत अधिक काम"
+   ],
+   "correct_index": 0,
+   "explanation": "चार-पाँच सौ शिक्षित नवयुवक बेकार थे — सूर्योदय की भव्यता के बीच यह कठोर सामाजिक यथार्थ है।"
+  }
+ ]
+}
+
+--- block #5 [reasoning_prompt] id=6085a8d9-fa9d-442d-8f7f-4a9822f31286 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "पूरे वृत्तांत में लेखक का मन एक ओर समुद्र की भव्यता में डूबता है, और दूसरी ओर अंत में \"बसों का टाइम-टेबल\" दोहराता रहता है — \"तीसरी बस नौ चालीस पर, चौथी...\"। यह विरोधाभास क्या दिखाता है?",
+ "reveal": "यह आधुनिक मनुष्य के मन का सच्चा द्वंद्व दिखाता है — एक ओर प्रकृति की असीम भव्यता और सूर्योदय की पवित्रता, दूसरी ओर रोज़मर्रा की व्यावहारिक चिंताएँ (बस कब है, लौटना कैसे है)। सुंदरतम क्षण में भी मन सांसारिक हिसाब-किताब से पूरी तरह मुक्त नहीं हो पाता — यही \"आदर्श और यथार्थ\" का जीवंत चित्र है।",
+ "difficulty_level": 5
+}
+
+--- block #6 [inline_quiz] id=f4f41dd3-eaa6-4fcf-9fb7-1dfe1ad62aad ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "fb367228-49c0-44ab-93ac-d014fea2070f",
+   "question": "लौटते समय लेखक को किस बात से ख़तरे का एहसास हुआ?",
+   "options": [
+    "जंगली जानवरों से",
+    "अँधेरा घिर आने से रास्ता बिलकुल न दिखने से",
+    "पैसे ख़त्म होने से",
+    "ज्वार से पानी बढ़ने और लहर के पैर भिगोने से"
+   ],
+   "correct_index": 3,
+   "explanation": "एक लहर ने पैर भिगो दिए, तब उसे बढ़ते पानी (ज्वार) के ख़तरे का एहसास हुआ।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "3375962e-603c-48dc-b60b-2ddf0cffa643",
+   "question": "चट्टान से टकराकर डर निकल जाने पर लेखक ने स्वयं को कैसा महसूस किया?",
+   "options": [
+    "काफ़ी हल्का",
+    "और भी अधिक डरा हुआ",
+    "बहुत थका और निराश",
+    "बहुत क्रोधित"
+   ],
+   "correct_index": 0,
+   "explanation": "\"मन से डर निकल जाने से मुझे काफ़ी हल्का लगा\" — डर पर जीत ने राहत दी।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "f5c063b7-b76f-4aab-90c5-311b6a12efe7",
+   "question": "अंत में सूर्योदय के बीच \"बसों का टाइम-टेबल\" दोहराना क्या दर्शाता है?",
+   "options": [
+    "लेखक को सूर्योदय पसंद नहीं था",
+    "मन में बस छूट जाने का डर ही सब कुछ था",
+    "भव्यता और रोज़मर्रा के यथार्थ के बीच मन का द्वंद्व",
+    "गणित का अभ्यास"
+   ],
+   "correct_index": 2,
+   "explanation": "सुंदरतम क्षण में भी मन व्यावहारिक चिंताओं से मुक्त नहीं — आदर्श और यथार्थ का द्वंद्व।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "शब्द-संपदा"  (slug: ch5-shabd-sampada)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=e46f7ec1-30bc-437f-9e7c-b2434989e5d7 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/e46f7ec1-30bc-437f-9e7c-b2434989e5d7_gen.webp",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a small sea-shell and wave motif, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=c3765008-79a8-43f5-9104-3e255d0786e4 ---
+{
+ "markdown": "इस यात्रा-वृत्तांत के कठिन शब्द यहाँ एक जगह हैं। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और याद रखने की ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=04a96da6-bc27-4e76-bc3b-672003cf7107 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: यात्रा-वृत्तांत के मूल शब्द।",
+ "cards": [
+  {
+   "id": "713799b7-d06c-4f31-87a4-b29a5ed9b42e",
+   "word": "स्याह",
+   "pronunciation": "syaah",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "काला, श्याम",
+   "english": "black; dark",
+   "example": "समुद्र की स्याह चट्टानों पर लहरें टकरा रही थीं।",
+   "memory_hook": "उर्दू — black।"
+  },
+  {
+   "id": "0a085e47-424a-4b39-9dfd-cb35a05f60eb",
+   "word": "समाधिस्थ",
+   "pronunciation": "sa-maa-dhisth",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "गहरी समाधि/ध्यान में लीन",
+   "english": "in deep meditation; in a trance",
+   "example": "पानी की मार सहती चट्टान स्वयं भी समाधिस्थ-सी लग रही थी।",
+   "memory_hook": "समाधि + स्थ (स्थित)।"
+  },
+  {
+   "id": "1c817f96-bf73-43bc-8280-9740cfcc2203",
+   "word": "चेतना",
+   "pronunciation": "che-ta-naa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "होश, सजगता, बुद्धि-विवेक",
+   "english": "consciousness; awareness",
+   "example": "मैं अपनी पूरी चेतना से उस विस्तार को महसूस कर रहा था।",
+   "memory_hook": "\"चेत\" (होश) से।"
+  },
+  {
+   "id": "f06bb2ae-178e-4e49-a2d8-b2dc236d6b12",
+   "word": "क्षितिज",
+   "pronunciation": "kshi-tij",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "धरती और आकाश के मिलने की रेखा",
+   "english": "the horizon",
+   "example": "तीनों तरफ़ क्षितिज तक पानी-ही-पानी था।",
+   "memory_hook": "जहाँ धरती-आकाश मिलते दिखें।"
+  },
+  {
+   "id": "2214a491-118d-4ed0-bcb4-d18be739d1b1",
+   "word": "सिहरन",
+   "pronunciation": "si-ha-ran",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कंपकंपी, रोमांच",
+   "english": "a shiver; thrill",
+   "example": "ठंडी रेत पर पैर रखते ही मन में एक सिहरन हुई।",
+   "memory_hook": "\"सिहरना\" से — to shiver।"
+  },
+  {
+   "id": "108ab7ef-3bad-40f0-ac71-10d8ae99cc53",
+   "word": "पृष्ठभूमि",
+   "pronunciation": "prish-tha-bhoo-mi",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पीछे की भूमि/दृश्य",
+   "english": "background",
+   "example": "पृष्ठभूमि में कन्याकुमारी का मंदिर चमक रहा था।",
+   "memory_hook": "पृष्ठ (पीछे) + भूमि।"
+  },
+  {
+   "id": "41720b82-5e18-4ce7-86a8-2fd8fda540d0",
+   "word": "झुरमुट",
+   "pronunciation": "jhur-mut",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पेड़ों/झाड़ियों का गुच्छा, कुंज",
+   "english": "a cluster; thicket",
+   "example": "दूर नारियलों के झुरमुट नज़र आ रहे थे।",
+   "memory_hook": "a clump of trees।"
+  },
+  {
+   "id": "ef19260b-1ec8-4bb2-9396-27f8efe9c1ca",
+   "word": "बीहड़",
+   "pronunciation": "bee-had",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "ऊबड़-खाबड़, विकट, उजाड़",
+   "english": "rugged; wild",
+   "example": "सूखी पहाड़ियाँ बहुत रूखी, बीहड़ और वीरान लग रही थीं।",
+   "memory_hook": "rough/wild terrain।"
+  },
+  {
+   "id": "4e4a6d50-3760-4163-b03c-b5a3ca929fd1",
+   "word": "मद्धिम",
+   "pronunciation": "mad-dhim",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "मंद, धीमा, हलका",
+   "english": "dim; faint",
+   "example": "दूर जहाज़ की मद्धिम-सी रोशनी दिख रही थी।",
+   "memory_hook": "उर्दू — faint।"
+  },
+  {
+   "id": "63aed972-4c99-4be9-baf0-bcca97eb703b",
+   "word": "दार्शनिक",
+   "pronunciation": "daar-sha-nik",
+   "audio_url": "",
+   "pos": "संज्ञा/विशेषण",
+   "meaning": "दर्शन का ज्ञाता, तत्त्ववेत्ता",
+   "english": "a philosopher; philosophical",
+   "example": "वे सीपियों का गूदा खाते और दार्शनिक सिद्धांतों पर बहस करते थे।",
+   "memory_hook": "\"दर्शन\" से — philosopher।"
+  },
+  {
+   "id": "55065ee6-94ec-492f-867a-5c0c43874228",
+   "word": "ओट",
+   "pronunciation": "ot",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आड़, परदा, रोक",
+   "english": "a cover; screen",
+   "example": "एक ऊँचा टीला उस विस्तार को ओट में लिए था।",
+   "memory_hook": "cover/screen।"
+  },
+  {
+   "id": "a201613c-e804-4ef7-b560-bb82b528aefc",
+   "word": "अर्घ्य",
+   "pronunciation": "argh-ya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पूजा में देवता को दी जाने वाली भेंट",
+   "english": "an offering to a deity",
+   "example": "लोग उगते सूर्य को अर्घ्य देने के लिए एकत्र थे।",
+   "memory_hook": "sacred offering।"
+  },
+  {
+   "id": "fa872fe8-88c4-4ad1-a586-5564d7d58e6f",
+   "word": "सुरमई",
+   "pronunciation": "sur-ma-ee",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "हल्के नीले/सुरमे के रंग का",
+   "english": "slate-grey; bluish",
+   "example": "समुद्र-तट की सुरमई रेत बड़ी सुंदर थी।",
+   "memory_hook": "\"सुरमा\" (kohl) के रंग का।"
+  },
+  {
+   "id": "b222df7d-07f2-4463-908c-7b3399a71da3",
+   "word": "सिर धुनना",
+   "pronunciation": "sir-dhun-naa",
+   "audio_url": "",
+   "pos": "मुहावरा",
+   "meaning": "पछताकर/शोक में सिर पीटना",
+   "english": "to beat one’s head (in grief/regret)",
+   "example": "मौक़ा खोकर वह सिर धुनता रह गया।",
+   "memory_hook": "regretful head-beating।"
+  },
+  {
+   "id": "74f1f6ab-b60a-4f67-bc6b-d695e053be80",
+   "word": "बे-लाग",
+   "pronunciation": "be-laag",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "खरा, दो-टूक, बिना लगाव के",
+   "english": "blunt; frank",
+   "example": "बेकारी और सूर्योदय — दोनों से वह बे-लाग था।",
+   "memory_hook": "बे (बिना) + लाग = detached/blunt।"
+  },
+  {
+   "id": "a360ca3e-1ece-4762-a26e-4e0820abd1c9",
+   "word": "सीपियाँ",
+   "pronunciation": "see-pi-yaan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "समुद्री शंख/घोंघे के खोल",
+   "english": "sea shells",
+   "example": "युवक सीपियों का गूदा खाते थे।",
+   "memory_hook": "shells।"
+  },
+  {
+   "id": "95ad2520-742c-4e5b-b2c9-2127ef70cf89",
+   "word": "महुआ",
+   "pronunciation": "ma-hu-aa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "एक प्रसिद्ध पेड़ (फूल-फल उपयोगी)",
+   "english": "the mahua tree",
+   "example": "गाँव के पास महुआ का पेड़ था।",
+   "memory_hook": "a mahua tree।"
+  },
+  {
+   "id": "2ed3059c-9dac-4ba7-8ec0-45e73440839a",
+   "word": "चट्टान",
+   "pronunciation": "chat-taan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बड़ी शिला",
+   "english": "a rock; boulder",
+   "example": "भारत की आखिरी चट्टान पर लेखक खड़ा था।",
+   "memory_hook": "a rock।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "7a85ea4c-f21a-40ce-a162-77f8e372ca5b",
+   "question": "किस शब्द का अर्थ \"धरती और आकाश के मिलने की रेखा\" है?",
+   "options": [
+    "झुरमुट",
+    "क्षितिज",
+    "ढलान",
+    "ओट"
+   ],
+   "correct_index": 1,
+   "explanation": "क्षितिज = the horizon।"
+  },
+  {
+   "id": "8dc07add-aece-4732-8371-f7177f58b691",
+   "question": "\"समाधिस्थ\" का अर्थ है —",
+   "options": [
+    "बहुत क्रोधित",
+    "टूटा-फूटा",
+    "बहुत प्रसन्न",
+    "गहरे ध्यान में लीन"
+   ],
+   "correct_index": 3,
+   "explanation": "समाधिस्थ = in deep meditation/trance।"
+  },
+  {
+   "id": "1af81c5b-2a99-4b5a-816f-30397fabe4c5",
+   "question": "\"बीहड़\" का अर्थ है —",
+   "options": [
+    "ऊबड़-खाबड़, विकट, उजाड़",
+    "समतल और सुंदर",
+    "हरा-भरा बाग़",
+    "बहुत छोटा"
+   ],
+   "correct_index": 0,
+   "explanation": "बीहड़ = rugged/wild terrain।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=67c42957-c7d2-4b9f-949f-d8ea4978dac6 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: यात्रा से जुड़े और शब्द।",
+ "cards": [
+  {
+   "id": "186a8319-dde9-42a5-aa6f-0b3f972907af",
+   "word": "संगम-स्थल",
+   "pronunciation": "san-gam-sthal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दो/अधिक नदियों या सागरों का मिलन-स्थान",
+   "english": "a confluence",
+   "example": "तीन सागरों के संगम-स्थल पर कन्याकुमारी है।",
+   "memory_hook": "संगम + स्थल = meeting point।"
+  },
+  {
+   "id": "a405156a-d80f-4fe4-8435-2226fcc71903",
+   "word": "विस्तार",
+   "pronunciation": "vis-taar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "फैलाव, चौड़ाई",
+   "english": "expanse; extent",
+   "example": "\"शक्ति का विस्तार, विस्तार की शक्ति।\"",
+   "memory_hook": "to spread — expanse।"
+  },
+  {
+   "id": "2a573c05-4c45-476e-9567-82eeeb488a71",
+   "word": "भव्यता",
+   "pronunciation": "bhav-ya-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "विशालता, शान-शौकत",
+   "english": "grandeur; magnificence",
+   "example": "समुद्र की भव्यता ने लेखक को अभिभूत कर दिया।",
+   "memory_hook": "\"भव्य\" का भाव।"
+  },
+  {
+   "id": "1a8621d9-eac2-4f14-b10a-cba3e9ae5d5f",
+   "word": "रोमांच",
+   "pronunciation": "ro-maanch",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सुखद उत्तेजना, थ्रिल",
+   "english": "thrill; excitement",
+   "example": "चट्टानों पर चढ़ने का रोमांच अनोखा था।",
+   "memory_hook": "goosebump-thrill।"
+  },
+  {
+   "id": "e887f195-7de8-46d4-a312-2dd22005041a",
+   "word": "विस्मय",
+   "pronunciation": "vis-may",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "आश्चर्य, अचंभा",
+   "english": "wonder; amazement",
+   "example": "रंगीन रेत देख लेखक विस्मय से भर गया।",
+   "memory_hook": "wonder।"
+  },
+  {
+   "id": "8f66da32-ff76-47bc-a7d8-95ee258331a3",
+   "word": "क्षणभंगुर",
+   "pronunciation": "kshan-bhan-gur",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "पल-भर में मिट जाने वाला",
+   "english": "fleeting; transient",
+   "example": "सूर्यास्त के रंग क्षणभंगुर थे, पल-पल बदलते।",
+   "memory_hook": "क्षण (moment) + भंगुर (breaking)।"
+  },
+  {
+   "id": "31eb1e25-c119-4f03-9b22-1150d148066a",
+   "word": "सार्थकता",
+   "pronunciation": "saar-thak-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अर्थपूर्ण/सफल होना",
+   "english": "meaningfulness; worth",
+   "example": "अपने प्रयत्न की सार्थकता से वह संतुष्ट था।",
+   "memory_hook": "\"सार्थक\" का भाव।"
+  },
+  {
+   "id": "4e8fda53-54fa-4ede-8c0b-fb046a20e74c",
+   "word": "अनाम",
+   "pronunciation": "a-naam",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जिसका कोई नाम न हो",
+   "english": "nameless; unnamed",
+   "example": "रेत में कितने ही अनाम रंग थे।",
+   "memory_hook": "अ + नाम = nameless।"
+  },
+  {
+   "id": "fbc2dbe9-cac5-4cad-9b65-6ee2859c7714",
+   "word": "ढलान",
+   "pronunciation": "dha-laan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "नीचे की ओर झुकाव",
+   "english": "a slope; incline",
+   "example": "टीले से समुद्र तक रेत की लंबी ढलान थी।",
+   "memory_hook": "a downward slope।"
+  },
+  {
+   "id": "dea29794-9c3f-4765-9d75-5e84078c3431",
+   "word": "शृंखला",
+   "pronunciation": "shrin-kha-laa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कड़ियों की लड़ी, सिलसिला",
+   "english": "a chain; range",
+   "example": "सूखी पहाड़ियों की एक शृंखला दूर तक फैली थी।",
+   "memory_hook": "a chain/series।"
+  },
+  {
+   "id": "43e169c4-c543-4b08-b5b6-79d4e67d8a84",
+   "word": "वीरान",
+   "pronunciation": "vee-raan",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "सुनसान, उजाड़",
+   "english": "desolate; deserted",
+   "example": "रेत के कारण पहाड़ियाँ वीरान लग रही थीं।",
+   "memory_hook": "उर्दू — deserted।"
+  },
+  {
+   "id": "f4a9e52f-8cc6-4acf-934d-90f1e9632e95",
+   "word": "मल्लाह",
+   "pronunciation": "mal-laah",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "नाव खेने वाला, नाविक",
+   "english": "a boatman",
+   "example": "चार मल्लाह नाव को उस तरफ़ ला रहे थे।",
+   "memory_hook": "a boatman।"
+  },
+  {
+   "id": "752f0880-bd58-4e3e-937c-1d1b209a0dd8",
+   "word": "बेकारी",
+   "pronunciation": "be-kaa-ree",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बेरोज़गारी",
+   "english": "unemployment",
+   "example": "कन्याकुमारी में शिक्षित नवयुवकों की बेकारी एक बड़ी समस्या थी।",
+   "memory_hook": "बे + कारी = joblessness।"
+  },
+  {
+   "id": "9df93531-964d-436d-93f0-484481633e8b",
+   "word": "हस्तशिल्प",
+   "pronunciation": "hast-shilp",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हाथ से बनाई कला/शिल्प",
+   "english": "handicraft",
+   "example": "शंख-मालाएँ भारतीय हस्तशिल्प का सुंदर रूप हैं।",
+   "memory_hook": "हस्त (हाथ) + शिल्प।"
+  },
+  {
+   "id": "0d2f685f-c870-4694-a0bc-9ea270bb3b0a",
+   "word": "आत्म-चेतना",
+   "pronunciation": "aatm-che-ta-naa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अपने अस्तित्व का बोध",
+   "english": "self-awareness",
+   "example": "अकेले उस विस्तार में लेखक को गहरी आत्म-चेतना हुई।",
+   "memory_hook": "आत्म + चेतना।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=0a9046ec-df92-45e3-9933-828303dc22e4 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f2b16e07-781d-42cc-9286-7b347833c51c",
+   "question": "\"क्षणभंगुर\" का अर्थ है —",
+   "options": [
+    "हमेशा-हमेशा बना रहने वाला",
+    "बहुत मज़बूत",
+    "पल-भर में मिट जाने वाला",
+    "बहुत बड़ा"
+   ],
+   "correct_index": 2,
+   "explanation": "क्षणभंगुर = fleeting/transient।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "36ecddcc-d871-430f-9f87-def7a155aa0a",
+   "question": "\"विस्मय\" का सबसे सही अर्थ है —",
+   "options": [
+    "आश्चर्य, अचंभा",
+    "गहरी नींद",
+    "क्रोध",
+    "भूख"
+   ],
+   "correct_index": 0,
+   "explanation": "विस्मय = wonder/amazement।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "09784c91-4d61-449d-99ce-ec268e802ede",
+   "question": "\"संगम-स्थल\" का अर्थ है —",
+   "options": [
+    "बर्फ़ से ढका कोई ऊँचा पहाड़",
+    "घना जंगल",
+    "रेगिस्तान",
+    "नदियों/सागरों के मिलने का स्थान"
+   ],
+   "correct_index": 3,
+   "explanation": "संगम-स्थल = a confluence, मिलन-स्थान।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "भाव, सौंदर्य और विधा"  (slug: ch5-bhav-saundarya)
+published=false blocks=11 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=5b2ff57d-d1fe-49ec-884e-7bfae5dd5c4b ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/5b2ff57d-d1fe-49ec-884e-7bfae5dd5c4b_gen.webp",
+ "alt": "यात्रा की भाव-यात्रा",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an emotional arc suggested across a seascape: wonder, struggle, calm, glowing on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=c79e15c4-f90f-45e9-824a-db658f4d3015 ---
+{
+ "markdown": "इस यात्रा-वृत्तांत में लेखक का भाव बदलता रहता है, और उसकी भाषा चित्रों जैसी जीवंत है। दोनों को देखिए, फिर यात्रा-वृत्तांत के मुख्य तत्व समझिए।"
+}
+
+--- block #2 [heading] id=5e3c9e7a-5561-4dc1-9733-def57aaf80e3 ---
+{
+ "text": "भाव-यात्रा — लेखक का मन",
+ "level": 2
+}
+
+--- block #3 [tone_meter] id=d6da304d-2919-4533-9e21-e7a82f129203 ---
+{
+ "segments": [
+  {
+   "id": "df79f2a2-4a43-48da-8e4f-aa6c64729be7",
+   "excerpt": "शक्ति का विस्तार, विस्तार की शक्ति।",
+   "emotion": "विस्मय",
+   "intensity": 5,
+   "note": "तीन सागरों के विशाल संगम के सामने अभिभूत विस्मय।"
+  },
+  {
+   "id": "43991afe-274d-421e-9a7a-7bda3fda7303",
+   "excerpt": "ऐसे जैसे... मैंने, सिर्फ़ मैंने, उस चोटी को पहली बार सर किया हो।",
+   "emotion": "संतुष्टि",
+   "intensity": 4,
+   "note": "टीला पार करने की उपलब्धि का सुख।"
+  },
+  {
+   "id": "df599d0b-d73a-41f1-b24a-cd850f3a0426",
+   "excerpt": "मन में एक सिहरन भी हुई, हल्की उदासी भी घिर आई।",
+   "emotion": "उदासी",
+   "intensity": 3,
+   "note": "सुंदरता की क्षणभंगुरता का बोध।"
+  },
+  {
+   "id": "2941465c-5be2-4408-bec4-fe53dc09d556",
+   "excerpt": "एक लहर मेरे पैरों को भिगो गई, तो सहसा मुझे ख़तरे का एहसास हुआ।",
+   "emotion": "भय",
+   "intensity": 4,
+   "note": "बढ़ते ज्वार में लौटने का संघर्ष और डर।"
+  },
+  {
+   "id": "553a0dc7-a4bc-41a7-bcf8-e8b563d6f0bc",
+   "excerpt": "मन से डर निकल जाने से मुझे अपने आप काफ़ी हल्का लगा।",
+   "emotion": "हल्कापन",
+   "intensity": 4,
+   "note": "डर पर जीत के बाद की राहत।"
+  },
+  {
+   "id": "959f2360-7126-443d-93ae-a8161eb75923",
+   "excerpt": "मन में बसों का टाइम-टेबल दोहरा रहा था।",
+   "emotion": "सहजता",
+   "intensity": 2,
+   "note": "भव्यता के बीच भी रोज़मर्रा की सहज चिंता।"
+  }
+ ]
+}
+
+--- block #4 [heading] id=47dce1f3-6cca-4f01-81b3-a913d1096aac ---
+{
+ "text": "यात्रा-वृत्तांत की भाषा का सौंदर्य",
+ "level": 2
+}
+
+--- block #5 [text] id=68c00ec2-6636-4005-b0dd-db8da139c9cb ---
+{
+ "markdown": "मोहन राकेश की भाषा चित्रों जैसी है। नीचे किसी विशेषता पर टैप करें — उसके उदाहरण रेखांकित हो जाएँगे।"
+}
+
+--- block #6 [literary_devices_highlighter] id=48dc4325-a9b2-4afc-95da-cd73b707078b ---
+{
+ "lang": "hindi",
+ "passage": "बलखाती लहरें रास्ते की नुकीली चट्टानों से कटती हुई आती थीं जिससे उनके ऊपर चूरा बूँदों की जालियाँ बन जाती थीं। वह चट्टान, हर तरफ़ से पानी की मार सहती हुई स्वयं भी समाधिस्थ-सी लग रही थी। शक्ति का विस्तार, विस्तार की शक्ति।",
+ "devices": [
+  {
+   "id": "2206f712-b493-4254-a7ed-0a6595b9bc36",
+   "device": "imagery",
+   "matches": [
+    {
+     "text": "चूरा बूँदों की जालियाँ बन जाती थीं",
+     "explanation": "शब्दों से बूँदों के बारीक जाल का जीवंत दृश्य आँखों के सामने खिंच जाता है — चित्रात्मकता।"
+    }
+   ]
+  },
+  {
+   "id": "eab18208-6105-41bf-9ad0-5a79a07c7e2d",
+   "device": "personification",
+   "matches": [
+    {
+     "text": "स्वयं भी समाधिस्थ-सी लग रही थी",
+     "explanation": "चट्टान को ध्यान में लीन \"इंसान\" की तरह दिखाना — मानवीकरण।"
+    }
+   ]
+  },
+  {
+   "id": "9524db29-e6df-4374-bf0b-b60a164d2c96",
+   "device": "hyperbole",
+   "matches": [
+    {
+     "text": "शक्ति का विस्तार, विस्तार की शक्ति",
+     "explanation": "समुद्र की शक्ति को बढ़ा-चढ़ाकर, गहन रूप में व्यक्त करना।"
+    }
+   ]
+  }
+ ]
+}
+
+--- block #7 [heading] id=00b3f033-15b0-49f2-a5e9-67f762785ea4 ---
+{
+ "text": "यात्रा-वृत्तांत के छह मुख्य तत्व",
+ "level": 2
+}
+
+--- block #8 [timeline] id=aaad867b-5ea4-49cb-a90a-d985b4e33bdf ---
+{
+ "title": "यात्रा-वृत्तांत के तत्व",
+ "orientation": "vertical",
+ "events": [
+  {
+   "id": "7b655ad0-fae4-4b26-8999-789dca332ce1",
+   "label": "१. दृश्य-वर्णन",
+   "detail": "समुद्र, चट्टानें, रंग, रेत का जीवंत चित्रण।"
+  },
+  {
+   "id": "6750ac93-8f96-4f61-ae02-4f070ff33e7e",
+   "label": "२. आत्मानुभूति व भावनाएँ",
+   "detail": "विस्मय, रोमांच, भय, अपने अस्तित्व का बोध।"
+  },
+  {
+   "id": "8a62bd1d-fc51-4ad0-9ea0-9e1ccadbdbfc",
+   "label": "३. सांस्कृतिक परिप्रेक्ष्य",
+   "detail": "विवेकानंद चट्टान, स्थानीय लोग, मंदिर-अर्घ्य।"
+  },
+  {
+   "id": "66b00eb0-f2a8-4eca-a517-7e3fbd4f449f",
+   "label": "४. जीवन-दर्शन",
+   "detail": "शक्ति का विस्तार, आत्म-चेतना, क्षणभंगुरता।"
+  },
+  {
+   "id": "94895303-75fa-4742-bc8e-74f1f02f9b7e",
+   "label": "५. शैलीगत विशेषताएँ",
+   "detail": "सजीव, प्रवाहपूर्ण भाषा; चित्रात्मकता; रूपक-उपमा।"
+  },
+  {
+   "id": "d7de7d13-cb39-46ad-8999-f9c695ca96b2",
+   "label": "६. रोमांच व संघर्ष",
+   "detail": "लहरों से संघर्ष, भटकने का भय, सुरक्षित लौटने की चिंता।"
+  }
+ ]
+}
+
+--- block #9 [worked_example] id=84c3c451-03b1-4fdf-ad2f-5000c92d1559 ---
+{
+ "label": "यात्रा-वृत्तांत बनाम कहानी",
+ "variant": "ncert_intext",
+ "problem": "\"आखिरी चट्टान तक\" एक यात्रा-वृत्तांत है, कहानी नहीं। इसे \"कहानी\" से क्या अलग बनाता है? सोचिए, फिर उत्तर देखिए।",
+ "solution": "कहानी में काल्पनिक पात्र और गढ़ी हुई घटनाएँ होती हैं, जो किसी एक भाव/कथानक की ओर बढ़ती हैं।\n\nयात्रा-वृत्तांत में लेखक अपनी **असली यात्रा के सच्चे अनुभव** लिखता है — जो उसने सचमुच देखा, महसूस किया, सोचा। यहाँ \"नायक\" स्वयं लेखक है, \"घटनाएँ\" उसकी यात्रा के पल हैं, और सबसे बड़ी बात — दृश्यों के साथ उसकी **भीतरी भावनाएँ और दर्शन** भी साथ चलते हैं। इसीलिए पाठक को लगता है मानो वह भी लेखक के साथ यात्रा कर रहा हो।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #10 [inline_quiz] id=233cfe7a-89e8-4fb1-acd0-a76f018784c1 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "01974c20-62d1-4e64-b845-0c61a3174f64",
+   "question": "\"स्वयं भी समाधिस्थ-सी लग रही थी\" (चट्टान के लिए) — यह कौन-सी विशेषता है?",
+   "options": [
+    "एक ही वर्ण की बार-बार आवृत्ति, अनुप्रास",
+    "मानवीकरण (निर्जीव को इंसान-सा दिखाना)",
+    "तुक",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 1,
+   "explanation": "चट्टान को ध्यान में लीन इंसान-सा दिखाना मानवीकरण है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "b2bdb21e-37c8-419c-baf7-4b2ca7e13808",
+   "question": "कहानी की भाव-यात्रा (मूड) का सही क्रम कौन-सा है?",
+   "options": [
+    "भय → विस्मय → हल्कापन",
+    "विस्मय → संतुष्टि → उदासी → भय → हल्कापन",
+    "हल्कापन → उदासी → विस्मय",
+    "हल्की उदासी → भय → विस्मय → संतुष्टि"
+   ],
+   "correct_index": 1,
+   "explanation": "संगम का विस्मय, टीला-विजय की संतुष्टि, क्षणभंगुरता की उदासी, ज्वार का भय, और डर-जीत का हल्कापन।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "f61cb22a-edb4-4bdd-9848-a10af370ba2c",
+   "question": "\"आखिरी चट्टान तक\" को \"कहानी\" से क्या अलग बनाता है?",
+   "options": [
+    "इसमें काल्पनिक पात्र हैं",
+    "इसमें कोई वर्णन नहीं",
+    "यह पूरी तरह तुकांत-छंदबद्ध कविता है",
+    "यह लेखक की असली यात्रा के सच्चे अनुभव-भाव हैं"
+   ],
+   "correct_index": 3,
+   "explanation": "यात्रा-वृत्तांत में लेखक के सच्चे अनुभव, दृश्य और भीतरी भाव साथ चलते हैं।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "विषयों से संवाद"  (slug: ch5-vishayon-se-samvad)
+published=false blocks=7 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=80cfb9d4-2886-4080-bb54-c87e30634360 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/80cfb9d4-2886-4080-bb54-c87e30634360_gen.webp",
+ "alt": "धरती, संस्कृति और समाज",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — Kanyakumari coast with the temple, local women with shell garlands and fishing boats, suggesting culture and livelihood. Dark warm ground, golden light. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=0131e453-1a55-457d-a988-f7d0201677a9 ---
+{
+ "markdown": "यह यात्रा भारत की भौगोलिक, सांस्कृतिक और सामाजिक कई बातों को छूती है — दक्षिणतम छोर से लेकर बेरोज़गारी और हस्तशिल्प तक।"
+}
+
+--- block #2 [cultural_context_card] id=642b014c-0231-44ff-bed4-30f4722ce22b ---
+{
+ "reference": "कन्याकुमारी — भारत का दक्षिणतम छोर",
+ "category": "place",
+ "short_desc": "तमिलनाडु में बसा तटीय शहर, जहाँ तीन सागर मिलते हैं।",
+ "detail": "कन्याकुमारी भारत की मुख्य भूमि का **दक्षिणतम बिंदु** है — अरब सागर, हिंद महासागर और बंगाल की खाड़ी का संगम। यहीं समुद्र में **विवेकानंद स्मारक शिला** और विशाल **तिरुवल्लुवर की प्रतिमा** हैं। सुनहले सूर्योदय-सूर्यास्त के लिए यह विश्व-प्रसिद्ध है — इसी प्राकृतिक भव्यता का साक्षात्कार लेखक ने किया।",
+ "image_url": "",
+ "image_prompt": "Watercolour of Kanyakumari coast with the Vivekananda Rock and a tall statue at sunrise. Dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #3 [cultural_context_card] id=d7be87b0-a69c-46df-ad7c-00c4a262fc00 ---
+{
+ "reference": "शिक्षित बेरोज़गारी",
+ "category": "concept",
+ "short_desc": "पढ़े-लिखे होकर भी रोज़गार न मिलने की सामाजिक समस्या।",
+ "detail": "सूर्योदय की भव्यता के बीच लेखक एक कठोर यथार्थ भी देखता है — कन्याकुमारी के **चार-पाँच सौ शिक्षित नवयुवक बेकार** हैं; कई ग्रेजुएट हैं, पर काम नहीं। कोई फ़ोटो-एल्बम बेचता है, कोई सीपियाँ। यह दिखाता है कि प्राकृतिक/सांस्कृतिक सुंदरता और रोज़मर्रा की **आर्थिक समस्याएँ** साथ-साथ चलती हैं — सच्चा यात्रा-वृत्तांत दोनों को देखता है।",
+ "image_url": ""
+}
+
+--- block #4 [callout] id=2f3c4a82-b1c2-45a5-92a4-8c1527ae63c7 ---
+{
+ "variant": "literature_in_life",
+ "title": "पाठ और आपका जीवन",
+ "markdown": "अगली बार जब आप कोई सुंदर जगह घूमें, तो केवल \"सेल्फ़ी\" नहीं — वहाँ के लोगों के जीवन, उनकी कला (जैसे शंख-मालाएँ, हस्तशिल्प) और चुनौतियों को भी देखिए। तभी यात्रा सचमुच \"समृद्ध\" करती है।"
+}
+
+--- block #5 [reasoning_prompt] id=6b0b528a-d8a5-40a2-b6fa-cf0e0bef895a ---
+{
+ "reasoning_type": "logical",
+ "prompt": "पाठ में \"मिलकर चलें\" का भाव है — विशेष आवश्यकता वाले (दिव्यांग) साथियों के साथ यात्रा। ऐसे साथियों की यात्रा को सहज बनाने के लिए हम क्या कर सकते हैं?",
+ "reveal": "हम कई कदम उठा सकते हैं — रैंप/व्हीलचेयर की सुविधा देखना, उनकी गति से चलना, ज़रूरत पर सहारा देना, दृष्टिबाधित साथी को दृश्य का वर्णन सुनाना, और सबसे बढ़कर — उन्हें \"बेचारा\" न समझकर बराबरी और सम्मान देना, उनकी राय पूछना। सच्चा साथ \"दया\" नहीं, \"बराबरी और सहयोग\" है — तभी यात्रा सबके लिए सुखद बनती है।",
+ "difficulty_level": 4
+}
+
+--- block #6 [inline_quiz] id=148f703a-b0f3-4f4d-ac05-27da3e22133e ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "94b82f3d-7fc6-43f8-adf8-c66e927b37bb",
+   "question": "कन्याकुमारी भारत के किस छोर पर स्थित है?",
+   "options": [
+    "दक्षिणतम छोर",
+    "उत्तरी छोर",
+    "पूर्वी छोर",
+    "पश्चिमी छोर"
+   ],
+   "correct_index": 0,
+   "explanation": "कन्याकुमारी (तमिलनाडु) भारत की मुख्य भूमि का दक्षिणतम बिंदु है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "0a68f264-d263-4248-bec2-5685cd7db015",
+   "question": "स्थानीय युवतियाँ यात्रियों को अपनी टोकरियों से क्या दिखा रही थीं?",
+   "options": [
+    "चमकते सोने के क़ीमती गहने",
+    "किताबें",
+    "शंख और सीप की मालाएँ (हस्तशिल्प)",
+    "फल-सब्ज़ियाँ"
+   ],
+   "correct_index": 2,
+   "explanation": "शंख-मालाएँ — भारतीय हस्तशिल्प/कुटीर उद्योग का एक पारंपरिक रूप।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "8c603d36-aaff-4293-8328-baa04b37a714",
+   "question": "सूर्योदय की भव्यता के साथ-साथ लेखक किस सामाजिक यथार्थ को भी उजागर करता है?",
+   "options": [
+    "पानी की कमी",
+    "जगह-जगह बहुत अधिक भीड़",
+    "शिक्षित नवयुवकों की बेरोज़गारी",
+    "खेती की समस्या"
+   ],
+   "correct_index": 2,
+   "explanation": "सुंदरता के बीच चार-पाँच सौ शिक्षित बेकार नवयुवकों की कठोर सच्चाई भी सामने आती है।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 8 — "सृजन और व्याकरण"  (slug: ch5-srijan-vyakaran)
+published=false blocks=10 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=7532a771-0803-4d77-a9ea-3b98b63f74b2 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/7532a771-0803-4d77-a9ea-3b98b63f74b2_gen.webp",
+ "alt": "रचना और क्रिया-विशेषण",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a travel diary and quill with words like धीरे-धीरे glowing around them, on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=70270bb2-efc8-409d-ad20-5a8577fea8ac ---
+{
+ "markdown": "अब आपकी बारी। पहले एक यात्रा-संस्मरण लिखिए, फिर **क्रिया-विशेषण** (क्रिया की विशेषता बताने वाले शब्द) पहचानने का अभ्यास कीजिए।"
+}
+
+--- block #2 [writing_scaffold] id=17e33d53-b80c-469e-a1ca-ca0b8511f94f ---
+{
+ "task": "आपने भी किसी प्रिय स्थान की यात्रा की होगी। उस यात्रा का एक संस्मरण (यात्रा-वृत्तांत) लिखिए — जिसमें दृश्य के साथ अपनी भावनाएँ भी हों।",
+ "format": "paragraph",
+ "model_parts": [
+  {
+   "id": "83eaa9ca-789d-4f7a-8727-b923a13efcea",
+   "label": "आरंभ — स्थान व पहुँचना",
+   "text": "पिछली गर्मियों में हम परिवार के साथ ऋषिकेश गए। सुबह-सुबह जब गंगा के किनारे पहुँचे, तो ठंडी हवा और पानी की कलकल ने मन मोह लिया।",
+   "annotation": "यात्रा-संस्मरण स्थान और \"पहुँचने\" के पल से शुरू कीजिए — पाठक तुरंत वहाँ पहुँच जाता है।"
+  },
+  {
+   "id": "48579b41-fef9-41dd-b348-40c7804e7d1f",
+   "label": "दृश्य-वर्णन व भाव",
+   "text": "दूर पहाड़ियों पर धीरे-धीरे सूरज चढ़ रहा था, और गंगा की लहरें सुनहरी हो उठीं। उस विशाल दृश्य के सामने मुझे अपना छोटापन और साथ ही एक अजीब शांति महसूस हुई।",
+   "annotation": "दृश्य के साथ अपनी भावना ज़रूर जोड़िए — यही यात्रा-वृत्तांत को कहानी से अलग, जीवंत बनाता है।"
+  },
+  {
+   "id": "579eb02d-17b7-401b-ad19-305460a6acdf",
+   "label": "समापन — सीख/भाव",
+   "text": "लौटते समय मैंने सोचा — प्रकृति हमें कितना छोटा और कितना समृद्ध, दोनों एक साथ महसूस कराती है। यह यात्रा हमेशा याद रहेगी।",
+   "annotation": "अंत अपने भाव या सीख पर कीजिए — संस्मरण एक अनुभव की कहानी बन जाता है।"
+  }
+ ],
+ "tips": [
+  "स्थान और पहुँचने से शुरू कीजिए।",
+  "दृश्य के साथ भाव जोड़िए।",
+  "अंत भाव/सीख पर कीजिए।"
+ ]
+}
+
+--- block #3 [heading] id=2eb53eaa-2113-42f0-b77f-c75242532935 ---
+{
+ "text": "क्रिया-विशेषण — क्रिया की विशेषता",
+ "level": 2
+}
+
+--- block #4 [text] id=232ac80f-7272-49d8-8f0c-e46022a0b86f ---
+{
+ "markdown": "जैसे \"विशेषण\" संज्ञा की विशेषता बताता है, वैसे ही **क्रिया-विशेषण** क्रिया की विशेषता बताता है। जैसे — \"वह **धीरे-धीरे** चला\" में \"धीरे-धीरे\" बताता है कि चलने की क्रिया कैसे हुई। नीचे पहचानने का अभ्यास कीजिए।"
+}
+
+--- block #5 [table] id=013eb6a4-4ed0-45d0-9c54-88a460e65806 ---
+{
+ "caption": "क्रिया-विशेषण — उदाहरण",
+ "headers": [
+  "वाक्य",
+  "क्रिया-विशेषण",
+  "किस क्रिया की विशेषता"
+ ],
+ "rows": [
+  [
+   "मैं जल्दी-जल्दी चलने लगा।",
+   "जल्दी-जल्दी",
+   "\"चलने लगा\" की"
+  ],
+  [
+   "तट की चौड़ाई धीरे-धीरे कम हो रही थी।",
+   "धीरे-धीरे",
+   "\"कम हो रही थी\" की"
+  ],
+  [
+   "मैं देर तक आखिरी चट्टान को देखता रहा।",
+   "देर तक",
+   "\"देखता रहा\" की"
+  ],
+  [
+   "सहसा मुझे ख़तरे का एहसास हुआ।",
+   "सहसा",
+   "\"एहसास हुआ\" की"
+  ]
+ ]
+}
+
+--- block #6 [apply_express] id=f62212d0-4e93-4adf-a136-fdcae4a935df ---
+{
+ "title": "व्याकरण व्यायामशाला — क्रिया-विशेषण",
+ "intro": "पहचानने और बनाने का अभ्यास कीजिए।",
+ "chapter_number": 5,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h5-gr-01",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "\"मैं जल्दी-जल्दी चलने लगा।\" — इस वाक्य में क्रिया-विशेषण कौन-सा है?",
+   "options": [
+    "जल्दी-जल्दी",
+    "मैं",
+    "चलने लगा"
+   ],
+   "correct_index": 0,
+   "option_reasons": [
+    "सही — \"जल्दी-जल्दी\" चलने की विशेषता बताता है।",
+    "ग़लत — \"मैं\" कर्ता (सर्वनाम) है।",
+    "ग़लत — \"चलने लगा\" क्रिया है।"
+   ]
+  },
+  {
+   "id": "h5-gr-02",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "prompt": "\"तट की चौड़ाई धीरे-धीरे कम हो रही थी।\" — क्रिया-विशेषण कौन-सा है?",
+   "options": [
+    "चौड़ाई",
+    "धीरे-धीरे",
+    "कम हो रही थी"
+   ],
+   "correct_index": 1,
+   "option_reasons": [
+    "ग़लत — \"चौड़ाई\" संज्ञा है।",
+    "सही — \"धीरे-धीरे\" क्रिया की गति बताता है।",
+    "ग़लत — वह क्रिया है।"
+   ]
+  },
+  {
+   "id": "h5-gr-03",
+   "kind": "fill_blank",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "रिक्त स्थान भरिए (क्रिया-विशेषण) — सहसा मुझे ख़तरे का एहसास हुआ; \"सहसा\" का अर्थ है ______।",
+   "answers": [
+    [
+     "अचानक"
+    ]
+   ],
+   "hint": "एकाएक।",
+   "explanation": "\"सहसा\" = अचानक — यह \"एहसास हुआ\" क्रिया की विशेषता (कब/कैसे) बताता है।"
+  },
+  {
+   "id": "h5-gr-04",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "वह चला।",
+   "instruction": "इस वाक्य में कोई क्रिया-विशेषण जोड़कर वाक्य फिर से लिखिए।",
+   "answers": [
+    "वह धीरे-धीरे चला।",
+    "वह तेज़ चला।",
+    "वह जल्दी चला।"
+   ],
+   "hint": "\"कैसे चला\" बताने वाला शब्द जोड़िए।",
+   "rule": "क्रिया-विशेषण (धीरे/तेज़/जल्दी) क्रिया की विशेषता जोड़ता है।"
+  },
+  {
+   "id": "h5-gr-05",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "क्षितिज",
+   "instruction": "\"क्षितिज\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (horizon)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "डूबता सूरज धीरे-धीरे क्षितिज के पार छिप गया।",
+   "min_words": 6
+  },
+  {
+   "id": "h5-gr-06",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "क्षणभंगुर",
+   "instruction": "\"क्षणभंगुर\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (fleeting)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "सूर्यास्त की सुंदरता क्षणभंगुर होती है — पल-भर में बदल जाती है।",
+   "min_words": 7
+  }
+ ]
+}
+
+--- block #7 [heading] id=f0e7b49f-5372-4698-8dbf-0258ab6dad70 ---
+{
+ "text": "भाषा संगम — \"नाव\" अनेक भारतीय भाषाओं में",
+ "level": 2
+}
+
+--- block #8 [table] id=60d4a246-f368-4e0e-8f66-d5b4d6d008ad ---
+{
+ "caption": "\"नाव\" — भारतीय भाषाओं में",
+ "headers": [
+  "भाषा",
+  "शब्द"
+ ],
+ "rows": [
+  [
+   "हिंदी",
+   "नाव"
+  ],
+  [
+   "संस्कृत",
+   "नौका"
+  ],
+  [
+   "पंजाबी",
+   "बेड़ी"
+  ],
+  [
+   "उर्दू",
+   "किश्ती"
+  ],
+  [
+   "मराठी",
+   "नाव/होडी"
+  ],
+  [
+   "गुजराती",
+   "નાવ (नाव)"
+  ],
+  [
+   "बांग्ला",
+   "নৌকা (नौका)"
+  ],
+  [
+   "नेपाली",
+   "डुङ्गा"
+  ],
+  [
+   "ओडिआ",
+   "ନାଆ (नाआ)"
+  ],
+  [
+   "तेलुगु",
+   "పడవ (पडव)"
+  ],
+  [
+   "तमिल",
+   "தோணி (तोणि)"
+  ],
+  [
+   "कन्नड़",
+   "ದೋಣಿ (दोणि)"
+  ]
+ ]
+}
+
+--- block #9 [inline_quiz] id=dc6bb05c-f3d0-4b55-a6d3-70d35e5c7fcb ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f94257fb-f069-4127-93e9-d510a60c891e",
+   "question": "\"मैं देर तक चट्टान को देखता रहा।\" — इसमें क्रिया-विशेषण कौन-सा है?",
+   "options": [
+    "देर तक",
+    "मैं",
+    "चट्टान",
+    "देखता रहा"
+   ],
+   "correct_index": 0,
+   "explanation": "\"देर तक\" बताता है कि देखने की क्रिया कितनी देर हुई — क्रिया-विशेषण।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "ed40cc23-1944-44d3-9472-d355f2ba8de5",
+   "question": "क्रिया-विशेषण किसकी विशेषता बताता है?",
+   "options": [
+    "संज्ञा की",
+    "केवल विशेषण की",
+    "सर्वनाम की",
+    "क्रिया की"
+   ],
+   "correct_index": 3,
+   "explanation": "क्रिया-विशेषण क्रिया की विशेषता (कैसे/कब/कहाँ/कितना) बताता है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "61971c8f-4f93-40f8-8966-2df1c87a7394",
+   "question": "\"सहसा\" शब्द का अर्थ है —",
+   "options": [
+    "बहुत धीरे",
+    "अचानक",
+    "हमेशा",
+    "कभी नहीं"
+   ],
+   "correct_index": 1,
+   "explanation": "सहसा = अचानक/एकाएक।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 9 — "अभ्यास — Practice"  (slug: ch5-abhyas)
+published=false blocks=5 reading_time=6min
+================================================================================
+
+--- block #0 [image] id=e57cf0f6-5b16-4454-82e4-a70f96d4efd6 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch5/e57cf0f6-5b16-4454-82e4-a70f96d4efd6_gen.webp",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi book, a quill and lamp, faint wave-and-rock motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=5a7c0d47-fc66-42da-baed-ed24ca05f586 ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=5c4ba0f1-d547-44c1-a102-28e83e74c91a ---
+{
+ "title": "अध्याय 5 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 5,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h5-pr-01",
+   "question": "इस यात्रा-वृत्तांत के लेखक कौन हैं?",
+   "options": [
+    "कथाकार शेखर जोशी",
+    "मोहन राकेश",
+    "कवि यतींद्र मिश्र",
+    "प्रेमचंद"
+   ],
+   "correct_index": 1,
+   "explanation": "यात्रा-वृत्तांत \"आखिरी चट्टान तक\" के लेखक मोहन राकेश हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h5-pr-02",
+   "question": "यह यात्रा-वृत्तांत किस स्थान की यात्रा पर आधारित है?",
+   "options": [
+    "किसी हिमालयी चोटी",
+    "काशी",
+    "राजस्थान के रेगिस्तान",
+    "कन्याकुमारी"
+   ],
+   "correct_index": 3,
+   "explanation": "यह कन्याकुमारी की यात्रा का वृत्तांत है।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h5-pr-03",
+   "question": "आखिरी चट्टान किन तीन सागरों के संगम पर है?",
+   "options": [
+    "अरब सागर, हिंद महासागर, बंगाल की खाड़ी",
+    "काला सागर, लाल सागर और हिंद महासागर",
+    "केवल अकेला हिंद महासागर",
+    "गंगा, यमुना, सरस्वती"
+   ],
+   "correct_index": 0,
+   "explanation": "तीनों सागरों का संगम-स्थल कन्याकुमारी है।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h5-pr-04",
+   "question": "उस आखिरी चट्टान पर कभी किसने समाधि लगाई थी?",
+   "options": [
+    "राष्ट्रपिता महात्मा गांधी",
+    "गुरु नानक देव जी",
+    "स्वामी विवेकानंद",
+    "संत तुकाराम"
+   ],
+   "correct_index": 2,
+   "explanation": "स्वामी विवेकानंद — इसलिए वह \"विवेकानंद चट्टान\" कहलाती है।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h5-pr-05",
+   "question": "कन्याकुमारी के शिक्षित नवयुवकों की मुख्य समस्या क्या थी?",
+   "options": [
+    "पानी की भारी कमी",
+    "पढ़ाई के साधन न होना",
+    "बेकारी (बेरोज़गारी)",
+    "बहुत अधिक काम का बोझ"
+   ],
+   "correct_index": 2,
+   "explanation": "चार-पाँच सौ शिक्षित नवयुवक बेकार थे।",
+   "concept_tag": "comprehension",
+   "difficulty": 3
+  },
+  {
+   "id": "h5-pr-06",
+   "question": "\"क्षितिज\" शब्द का अर्थ है —",
+   "options": [
+    "धरती-आकाश की मिलन-रेखा",
+    "गहरे समुद्र की अथाह गहराई",
+    "बहुत ऊँचा पहाड़",
+    "रेत का टीला"
+   ],
+   "correct_index": 0,
+   "explanation": "क्षितिज = the horizon।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h5-pr-07",
+   "question": "\"समाधिस्थ\" का अर्थ है —",
+   "options": [
+    "किसी बात पर बहुत क्रोधित",
+    "पूरी तरह टूटा-फूटा",
+    "बहुत प्रसन्न",
+    "गहरे ध्यान में लीन"
+   ],
+   "correct_index": 3,
+   "explanation": "समाधिस्थ = in deep meditation।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h5-pr-08",
+   "question": "\"क्षणभंगुर\" का सबसे सही अर्थ है —",
+   "options": [
+    "सदा-सर्वदा बना रहने वाला",
+    "पल में मिट जाने वाला",
+    "बहुत मज़बूत और टिकाऊ",
+    "बहुत विशाल"
+   ],
+   "correct_index": 1,
+   "explanation": "क्षणभंगुर = fleeting/transient।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h5-pr-09",
+   "question": "\"बीहड़\" का अर्थ है —",
+   "options": [
+    "समतल, हरा-भरा और सुंदर",
+    "ऊबड़-खाबड़, उजाड़",
+    "बहुत सुंदर हरा बाग़",
+    "बहुत छोटा"
+   ],
+   "correct_index": 1,
+   "explanation": "बीहड़ = rugged/wild terrain।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h5-pr-10",
+   "question": "\"मैं जल्दी-जल्दी चलने लगा।\" — इसमें क्रिया-विशेषण कौन-सा है?",
+   "options": [
+    "मैं (सर्वनाम)",
+    "चलने (क्रिया)",
+    "लगा (सहायक क्रिया)",
+    "जल्दी-जल्दी"
+   ],
+   "correct_index": 3,
+   "explanation": "\"जल्दी-जल्दी\" चलने की क्रिया की विशेषता बताता है।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h5-pr-11",
+   "question": "क्रिया-विशेषण किसकी विशेषता बताता है?",
+   "options": [
+    "क्रिया की",
+    "केवल संज्ञा की",
+    "केवल विशेषण की",
+    "केवल सर्वनाम की"
+   ],
+   "correct_index": 0,
+   "explanation": "क्रिया-विशेषण क्रिया की विशेषता बताता है।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h5-pr-12",
+   "question": "\"सहसा\" शब्द (क्रिया-विशेषण) का अर्थ है —",
+   "options": [
+    "बहुत धीरे",
+    "हमेशा",
+    "अचानक",
+    "कभी नहीं"
+   ],
+   "correct_index": 2,
+   "explanation": "सहसा = अचानक/एकाएक।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h5-pr-13",
+   "question": "\"तट की चौड़ाई धीरे-धीरे कम हो रही थी।\" — क्रिया-विशेषण कौन-सा है?",
+   "options": [
+    "चौड़ाई (संज्ञा)",
+    "तट (संज्ञा)",
+    "धीरे-धीरे",
+    "कम (विशेषण)"
+   ],
+   "correct_index": 2,
+   "explanation": "\"धीरे-धीरे\" क्रिया की गति/ढंग बताता है।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h5-pr-14",
+   "question": "\"वह चला।\" में कोई क्रिया-विशेषण जोड़ने पर सही वाक्य कौन-सा है?",
+   "options": [
+    "वह धीरे-धीरे चला।",
+    "वह सुंदर चला घर।",
+    "चला वह धीरे।",
+    "धीरे वह चला-चला।"
+   ],
+   "correct_index": 0,
+   "explanation": "\"धीरे-धीरे\" क्रिया-विशेषण है; \"वह धीरे-धीरे चला।\" सही वाक्य है।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h5-pr-15",
+   "question": "\"शक्ति का विस्तार, विस्तार की शक्ति\" — यह मुख्यतः किसका बोध है?",
+   "options": [
+    "डूबते सूर्यास्त के बदलते रंगों",
+    "दूर फैले रेत के टीलों",
+    "मंदिर की घंटियों",
+    "समुद्र की व्यापकता व शक्ति"
+   ],
+   "correct_index": 3,
+   "explanation": "समुद्र के विशाल फैलाव और अपार शक्ति का गहन बोध।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h5-pr-16",
+   "question": "साधारण टीले को \"सबसे ऊँची चोटी सर करने\" जैसा सुख देने वाला भाव क्या है?",
+   "options": [
+    "गहरी थकान और मन की निराशा",
+    "प्रयत्न की सार्थकता का सुख",
+    "अनजाने रास्ते का भय और घबराहट",
+    "धन का लालच"
+   ],
+   "correct_index": 1,
+   "explanation": "मेहनत से लक्ष्य पाने की संतुष्टि ने छोटे टीले को भी \"चोटी\" बना दिया।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h5-pr-17",
+   "question": "सुंदर सूर्यास्त पर लेखक की \"हल्की उदासी\" किस बोध से जुड़ी है?",
+   "options": [
+    "गहरी भूख और रास्ते की थकान",
+    "सुंदरता की क्षणभंगुरता",
+    "रास्ता भटक जाने का डर",
+    "पैसे की कमी"
+   ],
+   "correct_index": 1,
+   "explanation": "रंग पल-पल बदलते-मिटते हैं; इस क्षणभंगुरता का बोध उदासी लाता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h5-pr-18",
+   "question": "अंत में \"बसों का टाइम-टेबल\" दोहराना किस द्वंद्व को दर्शाता है?",
+   "options": [
+    "पेट की भूख और गले की प्यास का",
+    "दिन और रात के बदलने का",
+    "अमीरी और ग़रीबी का",
+    "भव्यता और रोज़मर्रा के यथार्थ का"
+   ],
+   "correct_index": 3,
+   "explanation": "सुंदरतम क्षण में भी मन व्यावहारिक चिंताओं से मुक्त नहीं — आदर्श बनाम यथार्थ।",
+   "concept_tag": "interpretation",
+   "difficulty": 5
+  },
+  {
+   "id": "h5-pr-19",
+   "question": "लहरों और ख़तरे से जूझकर भी आगे बढ़ते रहना लेखक के किस गुण को दिखाता है?",
+   "options": [
+    "दृढ़ता और हार न मानना",
+    "पूरी लापरवाही और नासमझी की मूर्खता",
+    "मन में बैठा डर और कायरता",
+    "आलस्य"
+   ],
+   "correct_index": 0,
+   "explanation": "चोट-ख़तरे के बावजूद डटे रहना — दृढ़ता और हार न मानने का भाव।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h5-pr-20",
+   "question": "यह यात्रा-वृत्तांत मुख्यतः किस दृष्टि से लिखा गया है?",
+   "options": [
+    "केवल मौसम और जलवायु का विस्तृत विवरण देकर",
+    "केवल किराये और दूरी के आँकड़े देकर",
+    "यात्रा को जीवन की अनुभूतियों से जोड़कर",
+    "काल्पनिक कथा गढ़कर"
+   ],
+   "correct_index": 2,
+   "explanation": "दृश्य-वर्णन के साथ विस्मय, संघर्ष और जीवन-दर्शन की गहरी अनुभूतियाँ — यही इसकी विशेषता है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h5-pr-21",
+   "question": "अंतिम चट्टान तक पहुँचने की लेखक की लगन उसके किस स्वभाव को दर्शाती है?",
+   "options": [
+    "अंत तक देखने-जानने की गहरी जिज्ञासा और दृढ़ता",
+    "उसे थकान का बिलकुल पता नहीं चलता",
+    "वह बहुत डरपोक था",
+    "उसे समुद्र पसंद नहीं था"
+   ],
+   "correct_index": 1,
+   "explanation": "\"आखिरी चट्टान तक\" जाने की ज़िद यात्री की जिज्ञासा और संकल्प दिखाती है।",
+   "concept_tag": "inference",
+   "difficulty": 4
+  },
+  {
+   "id": "h5-pr-22",
+   "question": "समुद्र की विशालता और लहरों का वर्णन पढ़ते समय पाठक के मन में क्या उठता है?",
+   "options": [
+    "प्रकृति की भव्यता के सामने विस्मय और छोटेपन का भाव",
+    "समुद्र से ऊब और चिढ़",
+    "समुद्र का इतना सारा पानी बेकार है, यह विचार",
+    "घर लौटने की जल्दी"
+   ],
+   "correct_index": 0,
+   "explanation": "विशाल समुद्र का सजीव वर्णन प्रकृति की भव्यता के आगे मन में विस्मय भर देता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h5-pr-23",
+   "question": "यात्रा-वृत्तांत में लेखक केवल दृश्य ही नहीं, अपने भीतर के भाव भी क्यों लिखता है?",
+   "options": [
+    "ताकि पाठक यात्रा को आँखों से देखे और मन से महसूस करे",
+    "क्योंकि दृश्य याद नहीं रहते",
+    "भाव लिखना अनिवार्य नियम है",
+    "इससे लेख छोटा हो जाता है"
+   ],
+   "correct_index": 2,
+   "explanation": "दृश्य + भीतरी अनुभव का मेल ही यात्रा-वृत्तांत को जीवंत और आत्मीय बनाता है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h5-pr-24",
+   "question": "भव्य प्रकृति और रोज़मर्रा के यथार्थ के बीच लेखक के मन का \"द्वंद्व\" क्या दर्शाता है?",
+   "options": [
+    "सुंदरता में खोना और सच्चाई में लौटना — दोनों जीवन के सत्य हैं",
+    "लेखक को कुछ समझ नहीं आता",
+    "प्रकृति झूठी होती है",
+    "इस जीवन के कठोर-कड़वे यथार्थ का कोई मोल या मूल्य नहीं होता"
+   ],
+   "correct_index": 0,
+   "explanation": "मन का यह द्वंद्व दिखाता है कि कल्पना की भव्यता और जीवन का यथार्थ साथ-साथ चलते हैं।",
+   "concept_tag": "interpretation",
+   "difficulty": 5
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=65443a99-8c05-4965-a712-876e0bce6521 ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 5,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h5-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "शक्ति",
+    "का",
+    "विस्तार",
+    "विस्तार",
+    "की",
+    "शक्ति"
+   ],
+   "answer": "शक्ति का विस्तार विस्तार की शक्ति"
+  },
+  {
+   "id": "h5-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "विस्मय",
+   "instruction": "\"विस्मय\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (आश्चर्य)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "पहली बार समुद्र देखकर मैं विस्मय से भर उठा।",
+   "min_words": 6
+  },
+  {
+   "id": "h5-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "प्रयत्न की सार्थकता",
+   "instruction": "\"छोटा हो या बड़ा, लक्ष्य पाने की संतुष्टि एक-सी होती है\" — इस विचार पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "पूरी मेहनत से कोई छोटा-सा लक्ष्य भी पा लेना संसार की सबसे ऊँची चोटी सर करने जैसा सुख देता है।",
+   "min_words": 10
+  }
+ ]
+}
+
+--- block #4 [callout] id=e543591b-a444-4224-988e-f3ae107255e2 ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "झरोखे से + खोजबीन",
+ "markdown": "और पढ़िए-खोजिए:\n\n- **झरोखे से:** निर्मल वर्मा का यात्रा-वृत्तांत-अंश *\"प्रयाग: 1976\"* — कुंभ मेले की रात का सजीव चित्रण।\n- **खोजबीन:** स्वामी विवेकानंद का जीवन और **राष्ट्रीय युवा दिवस** (12 जनवरी) के बारे में पढ़िए।\n- कन्याकुमारी की **विवेकानंद शिला** और **तिरुवल्लुवर प्रतिमा** के बारे में खोजिए।"
+}

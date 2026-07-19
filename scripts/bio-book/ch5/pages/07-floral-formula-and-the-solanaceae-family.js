@@ -1,0 +1,168 @@
+'use strict';
+const { v4: uuid } = require('uuid');
+
+module.exports = {
+  slug: 'floral-formula-and-the-solanaceae-family',
+  title: 'Floral Formula, Floral Diagram, and the Solanaceae Family',
+  subtitle: "This chapter's whole vocabulary — root, stem, leaf, flower — folds into one line of symbols. Learn to read that line, and you can decode any labelled plant diagram NEET puts in front of you.",
+  page_number: 7,
+  page_type: 'lesson',
+  tags: ['morphology-of-flowering-plants', 'floral-formula', 'solanaceae', 'chapter-synthesis'],
+  glossary: [
+    { term: 'floral formula', definition: "A shorthand code for a flower, using one letter per whorl — Br, K, C, P, A, G — plus numbers, brackets, and lines to record how many parts each whorl has and how they're fused or joined." },
+    { term: 'floral diagram', definition: "A picture of a flower's cross-section, drawn as a dot for the mother axis followed by successive rings for calyx, corolla, androecium, and gynoecium, showing the number, arrangement, and relation of every part." },
+    { term: 'bracteate', definition: "Having a bract — a small leaf-like structure — at the base of the flower. Marked as 'Br' in a floral formula." },
+    { term: 'actinomorphic', definition: 'Radially symmetric — the flower can be cut through the centre along more than one line and still divide into two matching halves. Marked with the symbol ⊕.' },
+    { term: 'cohesion', definition: 'Fusion of parts within the same whorl — for example, sepals joined into one tube. Shown in a floral formula by enclosing that whorl’s number in a bracket.' },
+    { term: 'adhesion', definition: "Fusion of parts belonging to two different whorls — for example, stamens stuck onto petals. Shown in a floral formula by a line drawn above the two symbols involved." },
+    { term: 'syncarpous', definition: 'A gynoecium whose carpels are fused together into a single compound ovary, rather than remaining separate.' },
+    { term: 'epipetalous', definition: 'Stamens that are attached to (fused with) the petals, rather than arising separately from the floral axis.' },
+  ],
+  blocks: [
+    {
+      id: uuid(), type: 'image', order: 0, src: '',
+      alt: 'A naturalist’s dusk writing desk with a mustard flower and a Solanum flower laid side by side under lamplight',
+      caption: '', width: 'full', aspect_ratio: '16:5',
+      generation_prompt: "Ultra-wide cinematic banner (16:5 ratio). A quiet naturalist's writing desk at dusk, seen close-up from a slight angle: a small mustard flower with its yellow four-petalled bloom resting on the wooden desk beside a Solanum nightshade flower with its star-shaped purple-white bloom, both lit by the warm circular glow of a single desk lamp. An open, blank field notebook lies beside the two flowers, its pages catching the lamplight, with a magnifying glass resting on top of it. Everything beyond the small pool of lamplight fades into soft dusk darkness. No text, no visible handwriting, no diagram elements baked into the scene. Painterly, atmospheric illustration style, dark naturalistic background throughout (#0a0a0a base tones).",
+    },
+    {
+      id: uuid(), type: 'callout', order: 1, variant: 'fun_fact', title: 'A Whole Flower, Compressed to One Line',
+      markdown: "Every flower you've studied in this chapter — its symmetry, its sepals, its petals, its stamens, its ovary — can be squeezed down into one short line of letters, numbers, and brackets. Botanists call it a **floral formula**, and once you know how to read it, a single line like **⊕ K2+2 C4 A2+4 G(2)** tells you more about a flower than a full paragraph of description would.",
+    },
+    {
+      id: uuid(), type: 'text', order: 2,
+      markdown: "NCERT calls this chapter's closing skill the **semi-technical description** of a flowering plant: a fixed, proper sequence for writing a plant up, moving from the outside in. You start with the plant's **habit** (herb, shrub, or tree), then its **vegetative characters** — root, stem, leaf — and only after that do you move to the **floral characters**: the inflorescence, then every whorl of the flower itself. Once all of that is on paper, two final tools sum the whole flower up — a **floral diagram** and a **floral formula**.\n\nThe floral formula is a code, one letter per whorl: **Br** for bracteate (whether a bract sits at the base of the flower), **K** for calyx, **C** for corolla, **P** for perianth (used instead of separate K and C when sepals and petals look alike), **A** for androecium, and **G** for gynoecium. A number written after each letter tells you how many parts sit in that whorl. Two more marks do extra work. When parts **within one whorl are fused** to each other — sepals joined into a single tube, for instance — that whorl's number is written **inside a bracket**; this within-whorl fusion is called **cohesion**. When parts from **two different whorls are fused** to each other — say the stamens stuck onto the petals — a **line is drawn above** the two symbols involved; this is called **adhesion**. The letter G also carries a small bar, drawn above or below it, marking whether the ovary is **superior** or **inferior** — always read that bar off the specific diagram's key rather than assuming. Separate symbols also record whether a flower is **male-only, female-only, or bisexual**, and the symbol **⊕** marks **actinomorphic** (radial) symmetry, with a different symbol used for **zygomorphic** (bilateral) symmetry.\n\nThe **floral diagram** is the picture version of the same information. It shows the number of parts in each whorl, how they're arranged, and how they relate to one another. A small **dot at the top** of the diagram marks the position of the **mother axis** — the stem the flower hangs from. Below that dot, the four whorls are drawn as **successive rings**: calyx on the **outside**, then corolla, then androecium, with the gynoecium sitting right at the **centre**.",
+    },
+    {
+      id: uuid(), type: 'heading', order: 3, level: 2,
+      text: 'Reading the Mustard Floral Formula, Symbol by Symbol',
+      objective: "By the end of this you can take apart any flower's floral formula, symbol by symbol, and describe exactly what kind of flower it belongs to.",
+    },
+    {
+      id: uuid(), type: 'interactive_image', order: 4, src: '',
+      alt: 'A floral diagram of the mustard flower, viewed from above, with a dot for the mother axis and four rings for calyx, corolla, androecium, and gynoecium',
+      caption: '📸 Tap each ring of the mustard’s floral diagram to match it to its floral formula symbol',
+      generation_prompt: "Scientific textbook illustration of a floral diagram, viewed directly from above. Flat 2D educational diagram on a dark background (#0a0a0a near-black). A small solid white dot sits just above the top of the diagram, marking the mother axis. Below it, four concentric rings are drawn one inside the other: the outermost ring made of four small overlapping sepal-shaped outlines (the calyx), the next ring in made of four petal-shaped outlines (the corolla), the next ring in made of six small stamen-shaped outlines grouped visually as a pair and a group of four (the androecium), and at the very centre a small cluster of two fused, rounded carpel outlines forming one compound shape (the gynoecium). Clean white outlines throughout, thin construction lines separating each ring, biologically accurate proportions and whorl arrangement matching a real Brassicaceae floral diagram. No text or labels baked into the image itself. No photorealism, no cartoon, matches standard biology textbook floral-diagram conventions.",
+      hotspots: [
+        { id: uuid(), x: 0.5, y: 0.08, label: 'Mother Axis Dot', icon: 'circle',
+          detail: "The small dot above the diagram marks where the flower attaches to its stem — the **mother axis**. It isn't a floral whorl itself; it just orients the rest of the diagram, so you always know which side faces the parent stem." },
+        { id: uuid(), x: 0.5, y: 0.26, label: 'K2+2 — Calyx', icon: 'circle',
+          detail: "**K** stands for calyx. The formula reads **K2+2**, so this outermost ring is made of **4 sepals** in total, written as two groups of two. Calyx is always the **outermost** ring, since sepals sit outermost on the real flower too." },
+        { id: uuid(), x: 0.5, y: 0.42, label: 'C4 — Corolla', icon: 'circle',
+          detail: "**C** stands for corolla. **C4** means the ring just inside the calyx is made of **4 petals**, with no bracket — so they aren't fused to each other." },
+        { id: uuid(), x: 0.5, y: 0.58, label: 'A2+4 — Androecium', icon: 'circle',
+          detail: "**A** stands for androecium, the stamen whorl. **A2+4** means **6 stamens** in total, in two groups — 2 and 4 — sitting inside the corolla ring." },
+        { id: uuid(), x: 0.5, y: 0.76, label: 'G(2) — Gynoecium', icon: 'circle',
+          detail: "**G** stands for gynoecium, drawn at the very **centre** since it's the innermost whorl. The **2 is inside a bracket**, and a bracket always marks **fusion** — so this flower's **2 carpels are fused together** into a single compound ovary, not two separate ones." },
+      ],
+    },
+    {
+      id: uuid(), type: 'worked_example', order: 5, label: 'Reading a Floral Formula', variant: 'solved_example',
+      problem: 'NCERT gives the floral formula of the mustard plant (family Brassicaceae) as ⊕ K2+2 C4 A2+4 G(2). Read this line symbol by symbol and describe, in plain words, exactly what kind of flower it is describing.',
+      solution: "**Step 1 — the symmetry symbol.** ⊕ means the flower is **actinomorphic**: cut it through the centre along more than one line, and both halves match.\n\n**Step 2 — K2+2.** K is calyx. The **2+2** adds up to **4 sepals**, written as two sets of two.\n\n**Step 3 — C4.** C is corolla. **4 petals**, with no bracket, so read them as four separate petals.\n\n**Step 4 — A2+4.** A is androecium. **2+4 = 6 stamens** in total, in two groups of 2 and 4.\n\n**Step 5 — G(2).** G is gynoecium. The **2 sits inside a bracket**, so the **2 carpels are fused** into one compound ovary rather than staying separate.\n\n**Put it together:** a mustard flower is **radially symmetric**, with **4 sepals, 4 petals, 6 stamens, and one ovary built from 2 fused carpels**. One line of symbols — ⊕ K2+2 C4 A2+4 G(2) — carries all of that. Any flower's formula unpacks the exact same way: symmetry symbol first, then calyx, corolla, androecium, gynoecium in order, reading brackets as fusion and a line above the letters as adhesion between whorls.",
+      reveal_mode: 'tap_to_reveal',
+    },
+    {
+      id: uuid(), type: 'reasoning_prompt', order: 6, reasoning_type: 'logical',
+      prompt: 'In the mustard floral formula G(2), the number 2 is written inside a bracket. What does that bracket tell you about the gynoecium?',
+      options: [
+        'The gynoecium has 2 separate whorls of carpels, one inside the other',
+        "The ovary sits below the rest of the flower's parts — an inferior ovary",
+        'The 2 carpels are fused together, forming one compound ovary instead of two separate ones',
+        'The flower has 2 completely separate ovaries that develop independently of each other',
+      ],
+      correct_index: 2,
+      reveal: "A bracket around a number in a floral formula always marks **fusion** — the parts of that whorl are joined to each other, not separate. So G(2) means the gynoecium's 2 carpels are **fused into a single compound ovary**. The 'inferior ovary' option describes the small bar attached directly to the letter G — a completely different symbol from the bracket around the number. The 'completely separate ovaries' option is the exact opposite of what a bracket means. And nothing in floral formula notation groups carpels into separate 'whorls' the way the first option claims — G is a single whorl.",
+      difficulty_level: 2,
+    },
+    {
+      id: uuid(), type: 'heading', order: 7, level: 2,
+      text: 'The Solanaceae Family — a Complete Semi-Technical Description',
+      objective: 'By the end of this you can list every vegetative and floral character that identifies a Solanaceae plant, and match named examples to their economic use.',
+    },
+    {
+      id: uuid(), type: 'text', order: 8,
+      markdown: "Family **Solanaceae** is commonly called the **'potato family'** — a **large family**, widely distributed across the **tropics, subtropics, and even temperate zones**. NCERT works through it as a full worked example of the same semi-technical description you just used on mustard: vegetative characters first, then floral characters, then economic importance.",
+    },
+    {
+      id: uuid(), type: 'table', order: 9, caption: 'Solanaceae — Vegetative and Floral Characters',
+      headers: ['Character', 'Description'],
+      rows: [
+        ['Habit', 'Mostly herbs and shrubs, rarely small trees'],
+        ['Stem', 'Herbaceous, rarely woody; aerial, erect, cylindrical, branched, solid or hollow, hairy or glabrous; underground stem in potato (Solanum tuberosum)'],
+        ['Leaves', 'Alternate, simple, rarely pinnately compound, exstipulate; venation reticulate'],
+        ['Inflorescence', 'Solitary, axillary, or cymose (as in Solanum)'],
+        ['Flower', 'Bisexual, actinomorphic'],
+        ['Calyx', 'Five sepals, united, persistent, valvate aestivation'],
+        ['Corolla', 'Five petals, united; valvate aestivation'],
+        ['Androecium', 'Five stamens, epipetalous'],
+        ['Gynoecium', 'Bicarpellary, obliquely placed, syncarpous; ovary superior, bilocular; placenta swollen with many ovules, axile'],
+        ['Fruits', 'Berry or capsule'],
+        ['Seeds', 'Many, endospermous'],
+      ],
+    },
+    {
+      id: uuid(), type: 'callout', order: 10, variant: 'remember', title: "Solanaceae's Economic Importance — Match the Plant to the Use",
+      markdown: "- **Food:** tomato, brinjal, potato\n- **Spice:** chilli\n- **Medicine:** belladonna, ashwagandha\n- **Fumigatory:** tobacco\n- **Ornamentals:** petunia\n\nNotice **potato** is grown for food even though the part you eat is its **stem** — the vegetative row above already told you this: an underground stem in *Solanum tuberosum* is one of Solanaceae's own listed characters.",
+    },
+    {
+      id: uuid(), type: 'reasoning_prompt', order: 11, reasoning_type: 'logical',
+      prompt: 'Potato, tomato, and brinjal are grown for food within Solanaceae, and chilli is grown as a spice. What is belladonna and ashwagandha’s economic use in this family, according to NCERT?',
+      options: [
+        'Food — grown and eaten the same way as potato and tomato',
+        'Spice — used the same way as chilli',
+        'Medicine',
+        'Ornamentals — grown for their flowers, like petunia',
+      ],
+      correct_index: 2,
+      reveal: "NCERT lists **belladonna and ashwagandha** under **medicine**, in the same family that also gives food (tomato, brinjal, potato), spice (chilli), fumigatory use (tobacco), and ornamentals (petunia). Each wrong option swaps belladonna/ashwagandha into a different one of those five categories — exactly the kind of mix-up NEET tests when it names a specific plant and asks for its own use, rather than the family's use-list as a whole.",
+      difficulty_level: 2,
+    },
+    {
+      id: uuid(), type: 'callout', order: 12, variant: 'exam_tip', title: 'NEET Exam Insight',
+      markdown: "**The Solanaceae one-liner:** \"bicarpellary, obliquely placed, syncarpous, ovary superior, axile placentation\" is a single memorisable chain describing the gynoecium — NEET can ask for any piece of it (carpel number, placement, fusion, ovary position, or placentation type) and this one phrase answers all of them at once.\n\n**Reproduce the mustard method on any flower:** NCERT's mustard example — ⊕ K2+2 C4 A2+4 G(2) — is a template. Given any flower's floral description, you should be able to build its formula the same way: symmetry symbol first, then K, C, A, G in order, brackets for fusion, a line above for adhesion.\n\n**Classic NEET question:** \"Which family has flowers with epipetalous stamens and axile placentation?\" → **Solanaceae.**",
+    },
+    {
+      id: uuid(), type: 'text', order: 13,
+      markdown: "Walk back through this chapter and you'll see the same journey NCERT's semi-technical description takes on a single flower: root, then stem, then leaf, then inflorescence, then every whorl of the flower, and finally the two tools — floral diagram and floral formula — that fold all of it into one line you can read at a glance. Hand you any labelled plant diagram or any floral formula from here on, mustard or otherwise, and you now have everything you need to read it.",
+    },
+    {
+      id: uuid(), type: 'inline_quiz', order: 14, pass_threshold: 0.67,
+      questions: [
+        {
+          id: uuid(), question: 'What does the letter K stand for in a floral formula?',
+          options: ['Calyx', 'Corolla', 'Perianth', 'Gynoecium'],
+          correct_index: 0,
+          explanation: "K stands for calyx, the sepal whorl. Corolla is C, perianth is P (used instead of K and C when sepals and petals look alike), and gynoecium is G — all real symbols from the same formula system, which is exactly why mixing them up is the trap here.",
+          difficulty_level: 1,
+        },
+        {
+          id: uuid(), question: 'In a floral diagram, calyx, corolla, androecium, and gynoecium are drawn as successive rings. Which whorl sits at the very centre of the diagram?',
+          options: ['Calyx', 'Corolla', 'Androecium', 'Gynoecium'],
+          correct_index: 3,
+          explanation: 'Gynoecium sits at the centre because it is the innermost whorl. Calyx is drawn as the outermost ring, with corolla and androecium filling the two rings in between — so any option other than gynoecium places the whorls in the wrong order.',
+          difficulty_level: 1,
+        },
+        {
+          id: uuid(), question: "Which option correctly gives NCERT's full description of the Solanaceae gynoecium?",
+          options: [
+            'Bicarpellary, obliquely placed, syncarpous, ovary superior, axile placentation',
+            'Bicarpellary, obliquely placed, apocarpous, ovary inferior, parietal placentation',
+            'Tricarpellary, obliquely placed, syncarpous, ovary superior, axile placentation',
+            'Bicarpellary, obliquely placed, syncarpous, ovary inferior, axile placentation',
+          ],
+          correct_index: 0,
+          explanation: 'NCERT’s exact chain is bicarpellary, obliquely placed, syncarpous, with a superior, bilocular ovary and axile placentation. The second option flips syncarpous to apocarpous and superior to inferior while also swapping axile for parietal; the third changes the carpel number to three; the fourth changes only the ovary position to inferior — each one breaks a single link in the same memorised chain.',
+          difficulty_level: 3,
+        },
+        {
+          id: uuid(), question: "According to NCERT, which pair correctly matches a Solanaceae plant to its economic use?",
+          options: ['Belladonna — medicine', 'Tobacco — ornamental', 'Potato — spice', 'Petunia — food'],
+          correct_index: 0,
+          explanation: 'NCERT lists belladonna under medicine. Tobacco is actually the family’s fumigatory example (not ornamental — that role belongs to petunia), potato is a food source (not a spice — chilli is the spice), and petunia is grown as an ornamental (not for food). Each wrong option takes a real named plant and swaps it into the wrong one of the five economic-use categories.',
+          difficulty_level: 2,
+        },
+      ],
+    },
+  ],
+};

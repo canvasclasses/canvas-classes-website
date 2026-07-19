@@ -1,0 +1,1959 @@
+# गंगा — कक्षा 9 हिंदी (NCERT) — Chapter 8: पद (रैदास)
+book=class9-hindi-ganga chapter=8 pages=7
+
+
+================================================================================
+## PAGE 1 — "परिचय — कवि से मिलिए"  (slug: ch8-parichay)
+published=false blocks=7 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=ce714128-f1ff-4768-a7e1-8072161178f6 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch8/ce714128-f1ff-4768-a7e1-8072161178f6_gen.webp",
+ "alt": "संत रैदास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour bust-portrait of the medieval saint-poet Raidas (Ravidas) with a serene devotional expression, simple robes, a soft glowing halo of lamplight on a dark neutral ground. Loose washes, soft bleeding edges, paper grain. No text."
+}
+
+--- block #1 [curiosity_prompt] id=0fa66d81-7d78-47b7-9b1c-c916d5580147 ---
+{
+ "prompt": "जब आप किसी से बहुत गहरा प्रेम करते हैं — माँ, कोई दोस्त, या ईश्वर — तो लगता है मानो आप दोनों एक-दूसरे से अलग ही नहीं हो सकते। रैदास भी अपने प्रभु से ऐसा ही अटूट नाता महसूस करते हैं। सोचिए — किस चीज़/व्यक्ति से आप ऐसा \"अलग न हो पाने\" वाला जुड़ाव महसूस करते हैं?",
+ "hint": "किसी ऐसे रिश्ते के बारे में सोचिए जो आपको \"अटूट\" लगता है।"
+}
+
+--- block #2 [meet_a_scientist] id=87ab767d-beb3-40b5-b654-2da4200d0757 ---
+{
+ "name": "रैदास (रविदास)",
+ "years": "15वीं शताब्दी (लगभग 1388–1518)",
+ "nationality": "भारतीय — काशी (वाराणसी)",
+ "portrait_src": "",
+ "portrait_prompt": "Watercolour portrait of saint Raidas, serene, dark ground.",
+ "contribution": "भक्तिकाल के प्रसिद्ध **निर्गुण संत कवि**। उन्होंने बाह्य आडंबरों का खंडन कर **मन की शुद्धता और आंतरिक भक्ति** को सच्चा धर्म माना। उनकी रचनाएँ **आदि श्री गुरु ग्रंथ साहिब** में शामिल हैं और आज भी समानता, प्रेम और भाईचारे का संदेश देती हैं।",
+ "connection": "यहाँ रैदास के दो \"पद\" हैं, जिनमें वे सुंदर उपमाओं (चंदन-पानी, दीपक-बाती) से भक्त और आराध्य के **अटूट संबंध** और अपनी **अडिग भक्ति** को व्यक्त करते हैं।",
+ "fun_detail": "उन्होंने सरल, व्यावहारिक ब्रजभाषा में लिखा, जिसमें अवधी, राजस्थानी, खड़ी बोली और उर्दू-फ़ारसी शब्दों का भी मेल है — इसलिए उनकी वाणी सबके दिल तक पहुँचती है।",
+ "learn_more": "रचना-संग्रह \"रैदास बानी\"।"
+}
+
+--- block #3 [callout] id=217b7231-3224-4bab-85b7-4f4e51cb0bbe ---
+{
+ "variant": "india_voice",
+ "title": "भक्तिकाल और निर्गुण धारा",
+ "markdown": "**भक्तिकाल** हिंदी साहित्य का वह युग है जब संत कवियों ने ईश्वर-प्रेम, समानता और भाईचारे के गीत गाए। रैदास **निर्गुण धारा** के संत हैं — वे **निराकार (बिना रूप के) ईश्वर** की भक्ति पर बल देते हैं, और जाति-पाँति, आडंबर, छुआछूत के विरुद्ध आवाज़ उठाते हैं।"
+}
+
+--- block #4 [text] id=bcb302e4-660d-48b2-bce2-5d793db0a101 ---
+{
+ "markdown": "\"पद\" एक छोटी, **गाई जाने योग्य (गेय)** काव्य-रचना है। पढ़ने से पहले इन पुराने ब्रजभाषा के शब्दों को जान लें — फिर पद का आनंद और गहरा होगा।"
+}
+
+--- block #5 [vocabulary_lab] id=2024c746-2d80-4727-a8a5-0aa29ccf6a7e ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "पदों में आने वाले शब्द — हर कार्ड पलटिए।",
+ "cards": [
+  {
+   "id": "3e572537-8569-48b6-856c-8985201791f7",
+   "word": "रट",
+   "pronunciation": "rat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बार-बार जपना",
+   "english": "constant chant",
+   "example": "राम-नाम की रट लग गई।",
+   "memory_hook": "a chant।"
+  },
+  {
+   "id": "c6cd1531-f01f-4ed2-a26c-6b5c7d7fe62f",
+   "word": "बास",
+   "pronunciation": "baas",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सुगंध, गंध",
+   "english": "fragrance",
+   "example": "चंदन की बास पानी में समा गई।",
+   "memory_hook": "fragrance।"
+  },
+  {
+   "id": "076f0d3e-09e4-46c3-aaa3-e426a0ac328b",
+   "word": "चकोर",
+   "pronunciation": "cha-kor",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "चाँद का प्रेमी पक्षी",
+   "english": "the chakor (moon-loving bird)",
+   "example": "चकोर चाँद को निहारता है।",
+   "memory_hook": "moon-bird।"
+  },
+  {
+   "id": "cb0c0e3b-0c83-49ed-8ebe-238a23c38ba0",
+   "word": "सुहागा",
+   "pronunciation": "su-haa-gaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सोने को निखारने वाला खनिज",
+   "english": "borax",
+   "example": "सोने में सुहागा मिलने जैसा।",
+   "memory_hook": "borax।"
+  },
+  {
+   "id": "fdf07fa2-23c2-47fa-9947-09ddb2cd5030",
+   "word": "अंदेसा",
+   "pronunciation": "an-de-saa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "चिंता, संदेह",
+   "english": "worry; doubt",
+   "example": "रैदास को तीर्थ-व्रत का अंदेसा नहीं।",
+   "memory_hook": "worry।"
+  },
+  {
+   "id": "85100a89-41b0-4d84-a594-8fbea1101a92",
+   "word": "अनन्य",
+   "pronunciation": "a-nan-ya",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "एकनिष्ठ, और किसी की नहीं",
+   "english": "single-minded",
+   "example": "रैदास की भक्ति अनन्य है।",
+   "memory_hook": "अ+अन्य।"
+  },
+  {
+   "id": "74889a0d-6a29-4f3b-9683-b85de5af2b87",
+   "word": "निर्गुण",
+   "pronunciation": "nir-gun",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "निराकार ईश्वर",
+   "english": "the formless God",
+   "example": "रैदास निर्गुण संत हैं।",
+   "memory_hook": "निर्+गुण।"
+  },
+  {
+   "id": "3c00d304-b3d4-49ad-a189-addd4f5f783d",
+   "word": "अटूट",
+   "pronunciation": "a-toot",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जो टूटे नहीं",
+   "english": "unbreakable",
+   "example": "भक्त-प्रभु का नाता अटूट है।",
+   "memory_hook": "अ+टूट।"
+  }
+ ]
+}
+
+--- block #6 [inline_quiz] id=0579b713-6d4f-45f4-8200-cdc4989d3a2c ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "b03d4589-ccaf-4371-ab4c-b5bce90e9b10",
+   "question": "रैदास किस काल/धारा के संत कवि हैं?",
+   "options": [
+    "रीतिकाल के",
+    "भक्तिकाल की निर्गुण धारा के",
+    "हिंदी के आधुनिक काल के",
+    "वीरगाथा काल के"
+   ],
+   "correct_index": 1,
+   "explanation": "रैदास भक्तिकाल के निर्गुण (निराकार ईश्वर के उपासक) संत कवि हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "17bd985e-0791-456b-ba76-25aa3162c888",
+   "question": "रैदास ने सच्चा धर्म किसे माना?",
+   "options": [
+    "केवल बाहरी दिखावे की पूजा-पाठ को",
+    "तीर्थ-यात्रा को",
+    "दान-दक्षिणा को",
+    "मन की शुद्धता और आंतरिक भक्ति को"
+   ],
+   "correct_index": 3,
+   "explanation": "उन्होंने बाह्य आडंबरों का खंडन कर मन की शुद्धता और आंतरिक भक्ति को सच्चा धर्म माना।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "95f6b3b8-d677-4658-b121-7d82d77abbc2",
+   "question": "रैदास की रचनाएँ किस ग्रंथ में शामिल हैं?",
+   "options": [
+    "आदि श्री गुरु ग्रंथ साहिब में",
+    "तुलसी के रामचरितमानस में",
+    "गीता में",
+    "पंचतंत्र में"
+   ],
+   "correct_index": 0,
+   "explanation": "उनकी वाणी आदि श्री गुरु ग्रंथ साहिब में संकलित है।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 2 — "पद १ — अब कैसे छूटै राम रट लागी"  (slug: ch8-pad-1)
+published=false blocks=8 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=d30b444b-a426-452d-b635-597e0c5fa406 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch8/d30b444b-a426-452d-b635-597e0c5fa406_gen.webp",
+ "alt": "भक्त और प्रभु का अटूट नाता",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — devotional motifs of a peacock dancing before a rain-cloud, a lamp with a steady flame, a thread through a pearl, glowing softly on a dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [heading] id=2ad0f851-4a9a-48a9-b78f-987b5cf9e08e ---
+{
+ "text": "पद १ — \"तुम चंदन, हम पानी\"",
+ "level": 2
+}
+
+--- block #2 [text] id=b728b620-2af8-47ec-a857-c1ae5415bdb5 ---
+{
+ "markdown": "पहले पद में रैदास सुंदर उपमाओं से बताते हैं कि भक्त और आराध्य का संबंध कितना अटूट है — जैसे चंदन और पानी, बादल और मोर, दीपक और बाती, एक-दूसरे से अलग नहीं हो सकते। हर पंक्ति पर टैप कर अर्थ देखिए।"
+}
+
+--- block #3 [narrated_passage] id=a9730715-f1c6-4a61-a511-36ffdc97539a ---
+{
+ "source_label": "पद १ · रैदास",
+ "paragraphs": [
+  {
+   "id": "f3b8892b-7e21-46aa-8f26-248ae6f79f9b",
+   "sentences": [
+    {
+     "id": "6a0c1503-011d-4ca3-9e6f-530c775a5ad5",
+     "text": "अब कैसे छूटै राम रट लागी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "रट",
+       "meaning": "बार-बार जपना — a constant chant",
+       "pos": "संज्ञा",
+       "example": "राम-नाम की रट लग गई।"
+      }
+     ]
+    },
+    {
+     "id": "8145d1c8-aaaf-4fa2-bd62-f449594d2aff",
+     "text": "प्रभु जी तुम चंदन हम पानी, जाकी अंग-अंग बास समानी।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "चंदन हम पानी",
+       "meaning": "प्रभु चंदन-से, भक्त पानी-सा — Lord is sandalwood, I am its water",
+       "pos": "उपमा",
+       "example": "चंदन घिसने पर पानी में मिलकर सुगंध फैलाता है।"
+      },
+      {
+       "word": "बास समानी",
+       "meaning": "सुगंध समा गई — the fragrance pervaded",
+       "pos": "पद",
+       "example": "चंदन की बास अंग-अंग में समा गई।"
+      }
+     ]
+    },
+    {
+     "id": "3620dcca-e38b-4264-ba1f-5fe1e4631c17",
+     "text": "प्रभु जी तुम घन बन, हम मोरा, जैसे चितवत चंद चकोरा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "घन बन, हम मोरा",
+       "meaning": "प्रभु बादल-से, भक्त मोर-सा — Lord is the cloud, I am the peacock",
+       "pos": "उपमा",
+       "example": "बादल देख मोर ख़ुशी से नाच उठता है।"
+      },
+      {
+       "word": "चितवत चंद चकोरा",
+       "meaning": "जैसे चकोर चाँद को निहारता है — as the chakor gazes at the moon",
+       "pos": "उपमा",
+       "example": "चकोर टकटकी लगाकर चाँद को देखता है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "देखो — रैदास हर पंक्ति में एक जोड़ी लेते हैं जहाँ दूसरा पहले के बिना अधूरा है: पानी में चंदन की ख़ुशबू, बादल बिना मोर का नाच अधूरा, चकोर के लिए चाँद ही सब कुछ। यही भक्त की प्रभु पर पूरी निर्भरता है।"
+  },
+  {
+   "id": "6f18800f-c98f-4b88-ad95-907f407304af",
+   "sentences": [
+    {
+     "id": "ea6ff92d-d93e-4662-9716-64676660191f",
+     "text": "प्रभु जी तुम दीपक, हम बाती, जाकी जोति बरै दिन राती।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "दीपक, हम बाती",
+       "meaning": "प्रभु दीपक, भक्त बाती — Lord is the lamp, I am the wick",
+       "pos": "उपमा",
+       "example": "बाती दीपक में जलकर दिन-रात रोशनी देती है।"
+      },
+      {
+       "word": "जोति बरै दिन राती",
+       "meaning": "लौ दिन-रात जलती है — the flame burns day and night",
+       "pos": "पद",
+       "example": "भक्ति की जोत निरंतर जलती रहे।"
+      }
+     ]
+    },
+    {
+     "id": "43def74d-da4b-4975-8be0-1a5e0b789319",
+     "text": "प्रभु जी तुम मोती, हम धागा, जैसे सोने मिलत सुहागा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मोती, हम धागा",
+       "meaning": "प्रभु मोती, भक्त धागा — Lord is the pearl, I am the thread",
+       "pos": "उपमा",
+       "example": "धागे में पिरोकर ही मोती की माला बनती है।"
+      },
+      {
+       "word": "सोने मिलत सुहागा",
+       "meaning": "जैसे सोने में सुहागा मिलता है — as borax unites with gold",
+       "pos": "उपमा",
+       "example": "सुहागा सोने को निखार देता है।"
+      }
+     ]
+    },
+    {
+     "id": "83e820d4-038b-4e64-8bb6-992aca44fad1",
+     "text": "प्रभु जी तुम स्वामी, हम दासा, ऐसी भगति करै रैदासा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "स्वामी, हम दासा",
+       "meaning": "प्रभु मालिक, भक्त सेवक — Lord is the master, I the servant",
+       "pos": "उपमा",
+       "example": "सेवक स्वामी की भक्ति में लीन रहता है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "अंत में रैदास कहते हैं — \"तुम स्वामी, हम दास; ऐसी भक्ति रैदास करते हैं।\" यानी पूरा समर्पण — भक्त अपने को प्रभु का दास मानकर अनन्य भक्ति करता है।"
+  }
+ ]
+}
+
+--- block #4 [heading] id=7ed40c89-01e1-489e-a56a-3bff5ed4c49f ---
+{
+ "text": "पद की भाव-यात्रा",
+ "level": 2
+}
+
+--- block #5 [tone_meter] id=0a211dba-33e3-4fa9-b34b-9c6ff7133db0 ---
+{
+ "segments": [
+  {
+   "id": "91683a9d-071f-4dc7-a8f8-b6b3d8822b9d",
+   "excerpt": "अब कैसे छूटै राम रट लागी।",
+   "emotion": "अनन्यता",
+   "intensity": 4,
+   "note": "राम-नाम की लगन इतनी कि अब छूट ही नहीं सकती।"
+  },
+  {
+   "id": "408eb6b7-0438-4403-967d-de3ea14b3685",
+   "excerpt": "तुम चंदन हम पानी",
+   "emotion": "समरसता",
+   "intensity": 3,
+   "note": "भक्त-प्रभु का घुल-मिल जाना — एकाकार।"
+  },
+  {
+   "id": "1a9406e6-3af6-4071-a34c-19d8688ce343",
+   "excerpt": "तुम घन बन, हम मोरा",
+   "emotion": "प्रेम-उल्लास",
+   "intensity": 4,
+   "note": "बादल देख मोर-सा नाचता प्रेम।"
+  },
+  {
+   "id": "754c034a-6451-43d0-9437-1182cdd8a1c8",
+   "excerpt": "जाकी जोति बरै दिन राती",
+   "emotion": "अटूट जुड़ाव",
+   "intensity": 4,
+   "note": "दीपक-बाती-सा निरंतर, अविभाज्य संबंध।"
+  },
+  {
+   "id": "67ac7a33-f60c-4dca-8a22-873ca1909e56",
+   "excerpt": "ऐसी भगति करै रैदासा",
+   "emotion": "समर्पण",
+   "intensity": 5,
+   "note": "पूर्ण दास-भाव — भक्ति का चरम।"
+  }
+ ]
+}
+
+--- block #6 [comprehension_checkpoint] id=24a11f36-e1d9-4041-bfc4-e1429e0ba4b8 ---
+{
+ "intro": "रुकिए और सोचिए —",
+ "questions": [
+  {
+   "id": "a1cfbb31-6bfa-4c0d-a2cf-01f28bac42ae",
+   "question": "\"तुम चंदन हम पानी\" उपमा से रैदास क्या कहना चाहते हैं?",
+   "options": [
+    "पानी चंदन से बेहतर है",
+    "चंदन और पानी का कोई मेल नहीं",
+    "भक्त प्रभु में घुल-मिलकर उसी की सुगंध (गुण) धारण कर लेता है",
+    "पानी ठंडा होता है"
+   ],
+   "correct_index": 2,
+   "explanation": "जैसे चंदन की सुगंध पानी के अंग-अंग में समा जाती है, वैसे ही भक्त प्रभु में घुलकर उसी का रूप-गुण पा लेता है।"
+  }
+ ]
+}
+
+--- block #7 [inline_quiz] id=cc489025-f4d9-4b0a-b2a7-41efec36ce6d ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "ee1287ad-0c1a-4ab5-8571-01fe02f37270",
+   "question": "पद १ में रैदास भक्त-प्रभु के संबंध को किस रूप में दिखाते हैं?",
+   "options": [
+    "दो बिलकुल अलग और स्वतंत्र",
+    "प्रतिस्पर्धा का",
+    "अटूट — एक के बिना दूसरा अधूरा",
+    "झगड़े का"
+   ],
+   "correct_index": 2,
+   "explanation": "चंदन-पानी, बादल-मोर, दीपक-बाती — सब अटूट जोड़ियाँ हैं, जहाँ दूसरा पहले के बिना अधूरा है।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "4fcf5555-20d2-4cee-a538-0fee0d9848b4",
+   "question": "\"तुम दीपक, हम बाती\" से क्या भाव है?",
+   "options": [
+    "दीपक और बाती का आपस में कोई मेल नहीं",
+    "भक्त प्रभु से बड़ा है",
+    "भक्त-प्रभु का मेल जीवन को आलोकित (रोशन) करता है",
+    "दीपक बेकार है"
+   ],
+   "correct_index": 2,
+   "explanation": "दीपक और बाती मिलकर ही ज्योति (प्रकाश) देते हैं — भक्त-प्रभु का मेल जीवन को आलोकित करता है।",
+   "difficulty_level": 3
+  },
+  {
+   "id": "25169e10-b306-480b-81fe-0c693e70cea1",
+   "question": "\"ऐसी भगति करै रैदासा\" में अंतिम भाव क्या है?",
+   "options": [
+    "पूर्ण समर्पण (दास-भाव)",
+    "घमंड",
+    "संदेह",
+    "मन की गहरी उदासीनता और ऊब"
+   ],
+   "correct_index": 0,
+   "explanation": "\"तुम स्वामी, हम दास\" — रैदास पूर्ण समर्पण और दास-भाव से अनन्य भक्ति करते हैं।",
+   "difficulty_level": 1
+  }
+ ]
+}
+
+================================================================================
+## PAGE 3 — "पद २ — जो तुम तोरौ राम मैं नहिं तोरौं"  (slug: ch8-pad-2)
+published=false blocks=6 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=dea57556-131a-4ca4-926e-92d58210f443 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch8/dea57556-131a-4ca4-926e-92d58210f443_gen.webp",
+ "alt": "अडिग निष्ठा",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — devotional lotus-feet glowing above a calm devotee, a single steady flame, soft golden light on a dark ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=df129145-fa69-41a5-bd6d-f06df456a243 ---
+{
+ "markdown": "दूसरे पद में रैदास अपनी **अडिग निष्ठा** दिखाते हैं — चाहे प्रभु नाता तोड़ दें, भक्त नहीं तोड़ेगा। वह तीर्थ-व्रत छोड़ सकता है, पर प्रभु-चरणों की भक्ति नहीं।"
+}
+
+--- block #2 [narrated_passage] id=95035797-338d-4d39-8054-1a04c7d4159c ---
+{
+ "source_label": "पद २ · रैदास",
+ "paragraphs": [
+  {
+   "id": "1daa2df8-1521-4a6d-9318-12e2e0cac6f5",
+   "sentences": [
+    {
+     "id": "6673669d-c781-4ddd-aba3-44f927fc2d0f",
+     "text": "जो तुम तोरौ राम मैं नहिं तोरौं, तुम सौं तोरि कवन सौं जोरौं।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "तोरौं",
+       "meaning": "तोड़ूँ (नाता) — to break (the bond)",
+       "pos": "क्रिया",
+       "example": "मैं यह नाता कभी न तोरौं।"
+      },
+      {
+       "word": "कवन सौं जोरौं",
+       "meaning": "किससे जोड़ूँ — with whom shall I join",
+       "pos": "पद",
+       "example": "तुमसे तोड़कर किससे जोड़ूँ?"
+      }
+     ]
+    },
+    {
+     "id": "f7e10311-b4ca-4c94-bcc7-219e9e6633c6",
+     "text": "तीरथ बरत न करूँ अंदेसा, तुम्हरे चरन कमल एक भरोसां।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "तीरथ बरत न करूँ अंदेसा",
+       "meaning": "तीर्थ-व्रत की चिंता नहीं करता — I have no worry of pilgrimage/fasting",
+       "pos": "पद",
+       "example": "मुझे बाहरी कर्मकांड का अंदेसा नहीं।"
+      },
+      {
+       "word": "चरन कमल एक भरोसां",
+       "meaning": "कमल जैसे चरणों का ही एक भरोसा — only the trust of (your) lotus-feet",
+       "pos": "रूपक",
+       "example": "मुझे बस प्रभु-चरणों का भरोसा है।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "ध्यान दो — रैदास तीर्थ और व्रत (बाहरी कर्मकांड) को ज़रूरी नहीं मानते; उनके लिए सच्चा सहारा सिर्फ़ \"प्रभु के चरण\" यानी आंतरिक भक्ति है। यही निर्गुण-संत भक्ति का सार है।"
+  },
+  {
+   "id": "80d58d56-48f8-48e7-9f06-0767170f6084",
+   "sentences": [
+    {
+     "id": "5543127e-19f5-44bb-bbf5-9e5ad75f842a",
+     "text": "जहँ जहँ जाओ तुम्हरी पूजा, तुम सा देव और नहिं दूजा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "तुम सा देव और नहिं दूजा",
+       "meaning": "तुम जैसा कोई दूसरा देव नहीं — there is no other god like you",
+       "pos": "पद",
+       "example": "जहाँ-जहाँ जाऊँ, तुम्हीं हो — सर्वव्यापक।"
+      }
+     ]
+    },
+    {
+     "id": "b3f74333-7f2f-4536-bc82-6241e9db0baa",
+     "text": "मैं अपनो मन हरि सो जोरौ, हरि सो जोरि सबन सो तोरौं।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मन हरि सो जोरौ",
+       "meaning": "मन को हरि (प्रभु) से जोड़ लिया — joined my mind to Hari",
+       "pos": "पद",
+       "example": "मैंने अपना मन प्रभु से जोड़ लिया।"
+      },
+      {
+       "word": "सबन सो तोरौं",
+       "meaning": "बाक़ी सबसे (मोह) तोड़ लिया — broke ties with all else",
+       "pos": "पद",
+       "example": "हरि से जुड़कर बाक़ी सब से नाता तोड़ लिया।"
+      }
+     ]
+    },
+    {
+     "id": "fb10d2da-5441-499a-be2b-d15f94814c72",
+     "text": "सबही पहर तुम्हारी आसा, मन क्रम वचन कहै रैदासा।",
+     "audio_url": "",
+     "glosses": [
+      {
+       "word": "मन क्रम वचन कहै रैदासा",
+       "meaning": "मन, कर्म और वचन से (तन-मन-वाणी से) — by mind, deed and word",
+       "pos": "पद",
+       "example": "रैदास मन-कर्म-वचन से प्रभु को भजते हैं।"
+      }
+     ]
+    }
+   ],
+   "hinglish_commentary": "अंत में रैदास कहते हैं कि वे हर पहर (हर समय) प्रभु की आस लगाए रहते हैं — मन, कर्म और वचन तीनों से। यह तन-मन-वाणी का पूर्ण समर्पण है।"
+  }
+ ]
+}
+
+--- block #3 [theme_explorer] id=fca1be5b-745e-482d-b92f-eb37abbc1889 ---
+{
+ "intro": "पदों के मुख्य भाव — हर कार्ड पर टैप कीजिए।",
+ "themes": [
+  {
+   "id": "ffca42cf-265f-4d37-a2eb-52d85613a6a4",
+   "title": "भक्त-आराध्य का अटूट नाता",
+   "description": "भक्त और प्रभु एक-दूसरे से अलग नहीं हो सकते — दूसरा पहले के बिना अधूरा है।",
+   "evidence": [
+    "\"तुम चंदन हम पानी, जाकी अंग-अंग बास समानी।\"",
+    "\"जो तुम तोरौ राम मैं नहिं तोरौं।\""
+   ],
+   "reflection_prompt": "अपने जीवन में किसी ऐसे रिश्ते के बारे में लिखिए जो आपको \"अटूट\" लगता है — और क्यों।"
+  },
+  {
+   "id": "96aeb299-a4bf-4b28-a158-7551442da49f",
+   "title": "आंतरिक भक्ति > बाहरी आडंबर",
+   "description": "सच्ची भक्ति मन की है; तीर्थ-व्रत जैसे बाहरी कर्मकांड से बड़ी नहीं।",
+   "evidence": [
+    "\"तीरथ बरत न करूँ अंदेसा, तुम्हरे चरन कमल एक भरोसां।\""
+   ],
+   "reflection_prompt": "क्या आप मानते हैं कि भीतर की सच्ची भावना दिखावे से बड़ी है? अपने उदाहरण से समझाइए।"
+  },
+  {
+   "id": "586f9470-88e8-400a-8ca0-1baea84f7e57",
+   "title": "ईश्वर सर्वव्यापक और एक है",
+   "description": "प्रभु हर जगह है और उसके जैसा दूसरा कोई नहीं।",
+   "evidence": [
+    "\"जहँ जहँ जाओ तुम्हरी पूजा, तुम सा देव और नहिं दूजा।\""
+   ],
+   "reflection_prompt": "सब धर्मों-जातियों में \"एक ही ईश्वर\" का विचार समाज को कैसे जोड़ सकता है?"
+  }
+ ]
+}
+
+--- block #4 [reasoning_prompt] id=4074c331-b090-4b6f-9138-245091091238 ---
+{
+ "reasoning_type": "logical",
+ "prompt": "रैदास \"तीरथ बरत न करूँ अंदेसा\" कहकर तीर्थ और व्रत को ज़रूरी नहीं मानते। तत्कालीन समाज में रैदास (और कबीर) जैसे संत बाहरी आडंबर के बजाय आंतरिक भक्ति पर बल क्यों देते थे?",
+ "reveal": "उस समय धर्म के नाम पर बहुत आडंबर, कर्मकांड, जाति-पाँति और छुआछूत फैली थी — पूजा-पाठ और तीर्थ-व्रत को ही \"धर्म\" मान लिया गया था, जबकि मन की शुद्धता पीछे छूट गई थी। रैदास स्वयं समाज के \"निचले\" माने गए वर्ग से थे, जिन्हें मंदिर-तीर्थ से दूर रखा जाता था। इसलिए उन्होंने ज़ोर दिया कि सच्ची भक्ति मन की होती है, सबके लिए खुली है, और ईश्वर सबमें समान है — इस तरह उनकी वाणी समानता, प्रेम और भाईचारे का क्रांतिकारी संदेश बन गई।",
+ "difficulty_level": 5
+}
+
+--- block #5 [inline_quiz] id=97a52b0b-cc96-4329-acb2-ed1084b43ad4 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "818bdded-bc80-4bdd-962d-5f864cc581dc",
+   "question": "पद २ में रैदास की अपने आराध्य में कैसी निष्ठा है?",
+   "options": [
+    "स्वार्थ से भरी, कमज़ोर और डगमगाती",
+    "लाभ के लिए",
+    "दिखावे की",
+    "अटूट — चाहे प्रभु तोड़ें, भक्त नहीं तोड़ेगा"
+   ],
+   "correct_index": 3,
+   "explanation": "\"जो तुम तोरौ राम मैं नहिं तोरौं\" — भक्त की निष्ठा अटूट है।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "6e2ab81e-d1e8-4732-9ea4-cbffc5fc2753",
+   "question": "रैदास ने तीर्थ-व्रत के स्थान पर किसे भक्ति का आधार माना?",
+   "options": [
+    "मंदिर में धन और दान चढ़ाने को",
+    "प्रभु के चरणों (आंतरिक भक्ति) को",
+    "तीर्थ-यात्रा को",
+    "उपवास को"
+   ],
+   "correct_index": 1,
+   "explanation": "\"तुम्हरे चरन कमल एक भरोसां\" — सच्चा सहारा प्रभु-चरण (आंतरिक भक्ति) हैं, बाहरी कर्मकांड नहीं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "a773fef6-a51e-48c4-9fbe-299db925f21f",
+   "question": "\"जहँ जहँ जाओ तुम्हरी पूजा, तुम सा देव और नहिं दूजा\" — यह किस विचार को व्यक्त करता है?",
+   "options": [
+    "दुनिया में अनेक देवता हैं",
+    "ईश्वर सर्वव्यापक और एक है",
+    "पूजा बेकार है",
+    "तीर्थ ज़रूरी है"
+   ],
+   "correct_index": 1,
+   "explanation": "प्रभु हर जगह व्याप्त है और उस जैसा दूसरा कोई नहीं — सर्वव्यापक, एक ईश्वर।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 4 — "शब्द-संपदा"  (slug: ch8-shabd-sampada)
+published=false blocks=5 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=b9a61d1d-05b0-47db-a267-69d3f1a31a0c ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch8/b9a61d1d-05b0-47db-a267-69d3f1a31a0c_gen.webp",
+ "alt": "शब्दों का ख़ज़ाना",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — an open Hindi book with Devanagari letters lifting off as glowing motes beside a small lamp-and-lotus motif, dark ground, Madhubani accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=673f8764-bc81-4a42-9896-1c8032f02e9f ---
+{
+ "markdown": "इन पुराने ब्रजभाषा के शब्दों को यहाँ एक जगह जान लीजिए। हर कार्ड पलटिए — **सरल हिंदी अर्थ**, **English**, उदाहरण और ट्रिक। पसंद के शब्द Word Vault में सहेजिए।"
+}
+
+--- block #2 [vocabulary_lab] id=0f47df84-e32d-4661-9814-7250b5908bd0 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग १: पदों के मूल शब्द।",
+ "cards": [
+  {
+   "id": "f03172c3-e837-40d2-9750-72a51d891d84",
+   "word": "रट",
+   "pronunciation": "rat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बार-बार जपना/दोहराना",
+   "english": "constant repetition (of a name)",
+   "example": "\"अब कैसे छूटै राम रट लागी।\"",
+   "memory_hook": "a constant chant।"
+  },
+  {
+   "id": "9be3397a-d600-4a69-adc6-e4384813434e",
+   "word": "चंदन",
+   "pronunciation": "chan-dan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "सुगंधित लकड़ी/लेप",
+   "english": "sandalwood",
+   "example": "प्रभु चंदन हैं, भक्त उसका पानी।",
+   "memory_hook": "sandalwood।"
+  },
+  {
+   "id": "4142418f-5ab1-44b7-a72c-a5ea7edfc850",
+   "word": "बास",
+   "pronunciation": "baas",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "गंध, सुगंध",
+   "english": "fragrance; scent",
+   "example": "चंदन की बास पानी के अंग-अंग में समा जाती है।",
+   "memory_hook": "fragrance।"
+  },
+  {
+   "id": "3f78a19e-2b29-4526-a065-7ba31ac14245",
+   "word": "घन",
+   "pronunciation": "ghan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "बादल, मेघ",
+   "english": "a (rain) cloud",
+   "example": "प्रभु घन (बादल) हैं, भक्त मोर।",
+   "memory_hook": "a cloud।"
+  },
+  {
+   "id": "f1e5de6f-a829-431c-9a3b-865558b81382",
+   "word": "मोरा",
+   "pronunciation": "mo-raa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "मोर",
+   "english": "a peacock",
+   "example": "जैसे बादल देख मोर नाचता है।",
+   "memory_hook": "peacock।"
+  },
+  {
+   "id": "d6736cca-6810-4b45-9d7a-71c67920149a",
+   "word": "चितवत",
+   "pronunciation": "chit-vat",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "प्रेम से निहारना, ताकना",
+   "english": "gazing fondly",
+   "example": "\"जैसे चितवत चंद चकोरा।\"",
+   "memory_hook": "to gaze।"
+  },
+  {
+   "id": "ab1da93b-0171-4e61-a330-d8a1badb8a9c",
+   "word": "चकोर",
+   "pronunciation": "cha-kor",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "चंद्रमा का प्रेमी माना जाने वाला पक्षी",
+   "english": "the chakor bird (moon-lover)",
+   "example": "चकोर टकटकी लगाकर चाँद को निहारता है।",
+   "memory_hook": "moon-loving bird।"
+  },
+  {
+   "id": "cb0f5e50-d5a1-475a-9fa3-7aa22ba91b4d",
+   "word": "बाती",
+   "pronunciation": "baa-tee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दीये की बत्ती",
+   "english": "the wick (of a lamp)",
+   "example": "प्रभु दीपक हैं, भक्त उसकी बाती।",
+   "memory_hook": "lamp wick।"
+  },
+  {
+   "id": "eaa2ddb0-6b1e-4caa-ace7-7d7fa91d0991",
+   "word": "जोति",
+   "pronunciation": "jo-ti",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "लौ, प्रकाश (ज्योति)",
+   "english": "flame; light",
+   "example": "\"जाकी जोति बरै दिन राती।\"",
+   "memory_hook": "flame/light।"
+  },
+  {
+   "id": "6f3405c8-8ef0-4ccb-a83c-f8698c82a653",
+   "word": "राती",
+   "pronunciation": "raa-tee",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "रात",
+   "english": "night",
+   "example": "दीपक की लौ दिन-राती जलती रहती है।",
+   "memory_hook": "night।"
+  },
+  {
+   "id": "9e449437-19a8-4d30-b114-db47e4925045",
+   "word": "सुहागा",
+   "pronunciation": "su-haa-gaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "एक खनिज जो सोने को निखारता है",
+   "english": "borax (purifies gold)",
+   "example": "\"जैसे सोने मिलत सुहागा।\"",
+   "memory_hook": "borax — sone पे suhaga।"
+  },
+  {
+   "id": "d1333ff5-8b46-49d2-be27-f927f2a4a5e5",
+   "word": "दासा",
+   "pronunciation": "daa-saa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दास, सेवक",
+   "english": "a servant",
+   "example": "\"प्रभु जी तुम स्वामी, हम दासा।\"",
+   "memory_hook": "servant।"
+  },
+  {
+   "id": "c0e9cd55-1358-4484-89a6-ae88e626f145",
+   "word": "तोरौं",
+   "pronunciation": "to-raun",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "तोड़ूँ (संबंध)",
+   "english": "to break (a bond)",
+   "example": "\"जो तुम तोरौ राम मैं नहिं तोरौं।\"",
+   "memory_hook": "to break।"
+  },
+  {
+   "id": "589d9c6f-b985-4098-b61c-5fca41206b46",
+   "word": "जोरौं",
+   "pronunciation": "jo-raun",
+   "audio_url": "",
+   "pos": "क्रिया",
+   "meaning": "जोड़ूँ",
+   "english": "to join; to connect",
+   "example": "\"तुम सौं तोरि कवन सौं जोरौं।\"",
+   "memory_hook": "to join।"
+  },
+  {
+   "id": "31bc0bbb-19da-4a7b-8870-87633500510b",
+   "word": "तीरथ",
+   "pronunciation": "tee-rath",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "तीर्थ, पुण्य स्थान",
+   "english": "a pilgrimage place",
+   "example": "\"तीरथ बरत न करूँ अंदेसा।\"",
+   "memory_hook": "pilgrimage।"
+  },
+  {
+   "id": "3ac63581-f106-464c-a7dd-dfddb892f8b7",
+   "word": "बरत",
+   "pronunciation": "ba-rat",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "व्रत, उपवास",
+   "english": "a fast; a vow",
+   "example": "रैदास तीर्थ-बरत की चिंता नहीं करते।",
+   "memory_hook": "व्रत — a fast।"
+  },
+  {
+   "id": "b567f75a-118a-41a9-9975-407586a060ef",
+   "word": "अंदेसा",
+   "pronunciation": "an-de-saa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "चिंता, संदेह, शंका",
+   "english": "worry; doubt",
+   "example": "\"तीरथ बरत न करूँ अंदेसा।\"",
+   "memory_hook": "worry/doubt।"
+  },
+  {
+   "id": "71e99345-892a-4c79-9f4a-fc596d651b76",
+   "word": "चरन कमल",
+   "pronunciation": "cha-ran-ka-mal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "कमल जैसे (प्रभु के) चरण",
+   "english": "the lotus-feet (of the Lord)",
+   "example": "\"तुम्हरे चरन कमल एक भरोसां।\"",
+   "memory_hook": "चरण ही कमल — रूपक।"
+  }
+ ],
+ "self_check": [
+  {
+   "id": "38e00cc9-0c72-4713-a1fa-552209153ac7",
+   "question": "\"चकोर\" किस पक्षी को कहते हैं?",
+   "options": [
+    "पानी में रहने वाली मछली",
+    "बहुत बड़ा गरुड़",
+    "चाँद का प्रेमी माना जाने वाला पक्षी",
+    "रंग-बिरंगा तोता"
+   ],
+   "correct_index": 2,
+   "explanation": "चकोर = the chakor, चंद्रमा का परम प्रेमी माना जाने वाला पक्षी।"
+  },
+  {
+   "id": "c3918f92-ef9a-418e-82d3-3907c05e29f8",
+   "question": "\"सुहागा\" क्या है?",
+   "options": [
+    "एक प्रकार का फूल",
+    "मीठा फल",
+    "सोने को निखारने वाला खनिज",
+    "एक वाद्य-यंत्र"
+   ],
+   "correct_index": 2,
+   "explanation": "सुहागा (borax) सोने की अशुद्धियाँ दूर कर उसकी चमक बढ़ाता है।"
+  },
+  {
+   "id": "4a674d65-92d7-4e72-a4c7-0646dc837440",
+   "question": "\"अंदेसा\" का अर्थ है —",
+   "options": [
+    "चिंता/संदेह",
+    "गहरी नींद",
+    "मधुर ध्वनि",
+    "तेज़ प्रकाश"
+   ],
+   "correct_index": 0,
+   "explanation": "अंदेसा = worry/doubt, चिंता या शंका।"
+  }
+ ]
+}
+
+--- block #3 [vocabulary_lab] id=08731b81-f832-48d1-a4d9-0853f28de107 ---
+{
+ "mode": "flashcards",
+ "lang": "hindi",
+ "intro": "भाग २: भक्ति और काव्य से जुड़े शब्द।",
+ "cards": [
+  {
+   "id": "038c30a2-1c98-4446-af9d-2f9b459c5a72",
+   "word": "आराध्य",
+   "pronunciation": "aa-raa-dhya",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पूज्य, जिसकी आराधना हो",
+   "english": "the worshipped one (the Lord)",
+   "example": "भक्त अपने आराध्य से अटूट रूप से जुड़ा है।",
+   "memory_hook": "the worshipped।"
+  },
+  {
+   "id": "d059f653-be9d-457c-92c6-df41d3616252",
+   "word": "भक्त",
+   "pronunciation": "bhakt",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "उपासक, भक्ति करने वाला",
+   "english": "a devotee",
+   "example": "भक्त और आराध्य का नाता अटूट है।",
+   "memory_hook": "a devotee।"
+  },
+  {
+   "id": "78d19277-ca4b-4e8e-bd77-a4879445b5cd",
+   "word": "अनन्य",
+   "pronunciation": "a-nan-ya",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "एकनिष्ठ, और किसी की नहीं",
+   "english": "exclusive; single-minded",
+   "example": "रैदास की भक्ति अनन्य है।",
+   "memory_hook": "अ + अन्य = none-other।"
+  },
+  {
+   "id": "735f85ba-e23f-4e0f-8ec1-85f4be4f19f4",
+   "word": "निष्ठा",
+   "pronunciation": "nish-thaa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दृढ़ विश्वास, लगन",
+   "english": "steadfast devotion",
+   "example": "पद दृढ़ निष्ठा और आस्था व्यक्त करते हैं।",
+   "memory_hook": "firm faith।"
+  },
+  {
+   "id": "335ba4c9-5e4d-4249-89c3-4ed12b4c7f2b",
+   "word": "समर्पण",
+   "pronunciation": "sa-mar-pan",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "पूरी तरह सौंप देना",
+   "english": "surrender; dedication",
+   "example": "\"हम दासा\" में पूर्ण समर्पण का भाव है।",
+   "memory_hook": "surrender।"
+  },
+  {
+   "id": "0683ea4e-221b-4977-b45a-abd7ea93c32d",
+   "word": "आडंबर",
+   "pronunciation": "aa-dam-bar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "दिखावा, बाहरी ढोंग",
+   "english": "outward show; ostentation",
+   "example": "रैदास बाह्य आडंबरों का खंडन करते हैं।",
+   "memory_hook": "show/pomp।"
+  },
+  {
+   "id": "a6c36cbd-5b56-495a-ab51-c91a5c70810c",
+   "word": "निर्गुण",
+   "pronunciation": "nir-gun",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "निराकार (बिना रूप-गुण) ईश्वर",
+   "english": "the formless God",
+   "example": "रैदास निर्गुण भक्ति-धारा के संत हैं।",
+   "memory_hook": "निर् + गुण = without form।"
+  },
+  {
+   "id": "e7b98ce2-fc2d-418f-95b4-5126d98f2326",
+   "word": "भक्तिकाल",
+   "pronunciation": "bhak-ti-kaal",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "हिंदी साहित्य का भक्ति-युग",
+   "english": "the Bhakti (devotional) era",
+   "example": "भक्तिकाल में संत कवियों ने प्रेम-समता गाई।",
+   "memory_hook": "devotional era।"
+  },
+  {
+   "id": "133bf6d5-991c-4bcc-9d62-3f616743f818",
+   "word": "अटूट",
+   "pronunciation": "a-toot",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "जो टूटे नहीं",
+   "english": "unbreakable",
+   "example": "भक्त-आराध्य का नाता अटूट है।",
+   "memory_hook": "अ + टूट = un-breaking।"
+  },
+  {
+   "id": "642a857c-a593-4355-8f1a-d424fa6cb2a8",
+   "word": "सर्वव्यापक",
+   "pronunciation": "sarv-vyaa-pak",
+   "audio_url": "",
+   "pos": "विशेषण",
+   "meaning": "सब जगह व्याप्त",
+   "english": "omnipresent",
+   "example": "\"जहँ जहँ जाओ तुम्हरी पूजा\" — ईश्वर सर्वव्यापक है।",
+   "memory_hook": "सर्व + व्यापक।"
+  },
+  {
+   "id": "109612ae-52a5-45d2-b887-73bb16ef45ca",
+   "word": "समता",
+   "pronunciation": "sa-ma-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "समानता, बराबरी",
+   "english": "equality",
+   "example": "रैदास की रचनाएँ समता का संदेश देती हैं।",
+   "memory_hook": "equality।"
+  },
+  {
+   "id": "35c18559-d66a-44f0-b582-c2cee970bc2b",
+   "word": "अलंकार",
+   "pronunciation": "a-lan-kaar",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "काव्य का आभूषण/सौंदर्य",
+   "english": "a figure of speech",
+   "example": "अनुप्रास और उपमा अलंकार हैं।",
+   "memory_hook": "काव्य का गहना।"
+  },
+  {
+   "id": "bf7c67fc-0276-415a-ac04-e783cfccae30",
+   "word": "उपमा",
+   "pronunciation": "up-maa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "समानता दिखाने वाला अलंकार",
+   "english": "simile",
+   "example": "\"जैसे सोने मिलत सुहागा\" — उपमा।",
+   "memory_hook": "a simile।"
+  },
+  {
+   "id": "3066faca-f4fc-4e95-952a-8824ad695f26",
+   "word": "रूपक",
+   "pronunciation": "roo-pak",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "अभेद दिखाने वाला अलंकार",
+   "english": "metaphor",
+   "example": "\"चरन कमल\" — रूपक।",
+   "memory_hook": "a metaphor।"
+  },
+  {
+   "id": "6db794c9-9a5d-4304-abb6-e1defe2b8987",
+   "word": "गेयता",
+   "pronunciation": "ge-ya-taa",
+   "audio_url": "",
+   "pos": "संज्ञा",
+   "meaning": "गाए जाने योग्य होना, लय",
+   "english": "singability; lyricism",
+   "example": "पदों में गेयता और लयात्मकता है।",
+   "memory_hook": "\"गेय\" का भाव।"
+  }
+ ]
+}
+
+--- block #4 [inline_quiz] id=43a787e2-f4b5-48fc-a712-30008efab0bd ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "f21e1a24-7372-467b-bfca-c5f2341c6684",
+   "question": "\"निर्गुण\" ईश्वर से क्या तात्पर्य है?",
+   "options": [
+    "अनेक रूपों और गुणों वाला ईश्वर",
+    "मूर्ति में बसा ईश्वर",
+    "केवल एक मंदिर का ईश्वर",
+    "निराकार (बिना रूप-गुण के) ईश्वर"
+   ],
+   "correct_index": 3,
+   "explanation": "निर्गुण = formless God, बिना रूप-आकार के।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "d07cbfea-bb79-4d3a-94be-378ddbe2798a",
+   "question": "\"अनन्य भक्ति\" का अर्थ है —",
+   "options": [
+    "एकनिष्ठ — केवल एक ही की भक्ति",
+    "एक साथ अनेक देवताओं की भक्ति",
+    "दिखावे की भक्ति",
+    "कभी-कभी की भक्ति"
+   ],
+   "correct_index": 0,
+   "explanation": "अनन्य = single-minded; और किसी की नहीं, केवल एक ही की भक्ति।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "b4b4621c-4b73-4971-a048-24aa6dfbd046",
+   "question": "\"उपमा\" अलंकार किसे कहते हैं?",
+   "options": [
+    "शब्द दोहराना",
+    "किसी बात को बहुत बढ़ा-चढ़ाकर कहना",
+    "समानता दिखाने वाला अलंकार (\"जैसे...\")",
+    "प्रश्न पूछना"
+   ],
+   "correct_index": 2,
+   "explanation": "उपमा = simile; किसी की समानता किसी प्रसिद्ध वस्तु से दिखाना।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 5 — "कविता का सौंदर्य — अलंकार"  (slug: ch8-kavita-saundarya)
+published=false blocks=6 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=ea6793af-f697-4822-b832-91017171a154 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch8/ea6793af-f697-4822-b832-91017171a154_gen.webp",
+ "alt": "कविता का सौंदर्य",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — flowing Devanagari verse turning into images of sandalwood, a peacock and a lamp, glowing on a dark ground with folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=6fdcaf1d-3338-4a38-9a7c-fe2808aa0664 ---
+{
+ "markdown": "रैदास के पदों की भाषा सरल पर सौंदर्य से भरी है। इनमें **अलंकार** (काव्य के आभूषण) हैं — अनुप्रास, उपमा और रूपक। नीचे किसी अलंकार पर टैप करें — उसके उदाहरण रेखांकित हो जाएँगे।"
+}
+
+--- block #2 [literary_devices_highlighter] id=df44c4a5-2e7f-4518-bbe1-1dd3dc8ef056 ---
+{
+ "lang": "hindi",
+ "passage": "प्रभु जी तुम घन बन, हम मोरा, जैसे चितवत चंद चकोरा। प्रभु जी तुम मोती, हम धागा, जैसे सोने मिलत सुहागा। तीरथ बरत न करूँ अंदेसा, तुम्हरे चरन कमल एक भरोसां।",
+ "devices": [
+  {
+   "id": "235b7f0e-4c27-45f0-a2ea-3e99cccb6077",
+   "device": "alliteration",
+   "matches": [
+    {
+     "text": "चितवत चंद चकोरा",
+     "explanation": "\"च\" वर्ण की बार-बार आवृत्ति — यह अनुप्रास अलंकार है (व्यंजन-वर्ण की आवृत्ति)।"
+    }
+   ]
+  },
+  {
+   "id": "e8780b07-96d5-4171-84cb-0255bbebe9b8",
+   "device": "simile",
+   "matches": [
+    {
+     "text": "जैसे सोने मिलत सुहागा",
+     "explanation": "\"जैसे\" से समानता दिखाई गई — भक्त-प्रभु का मेल सोने-सुहागे जैसा। यह उपमा अलंकार है।"
+    },
+    {
+     "text": "जैसे चितवत चंद चकोरा",
+     "explanation": "चकोर के चाँद-प्रेम जैसी भक्ति — \"जैसे\" से तुलना, उपमा अलंकार।"
+    }
+   ]
+  },
+  {
+   "id": "f05a22d8-1b63-4b58-a10c-f70c8fb6825c",
+   "device": "metaphor",
+   "matches": [
+    {
+     "text": "चरन कमल",
+     "explanation": "चरणों को सीधे \"कमल\" कह देना (बिना \"जैसे\" के, अभेद) — यह रूपक अलंकार है।"
+    }
+   ]
+  }
+ ]
+}
+
+--- block #3 [table] id=62d0951c-6000-4cd9-a422-9b40ab661fd6 ---
+{
+ "caption": "रैदास के पदों की विशेषताएँ",
+ "headers": [
+  "विशेषता",
+  "उदाहरण"
+ ],
+ "rows": [
+  [
+   "अनन्य भक्ति भाव",
+   "\"जो तुम तोरौ राम मैं नहिं तोरौं।\""
+  ],
+  [
+   "सरल, लोकधर्मी भाषा",
+   "\"प्रभु जी तुम चंदन हम पानी।\""
+  ],
+  [
+   "उपमा और तुलना",
+   "\"जैसे सोने मिलत सुहागा।\""
+  ],
+  [
+   "लयात्मकता व गेयता",
+   "हर पंक्ति का तुक मिलना — \"मोरा-चकोरा\", \"बाती-राती\"।"
+  ],
+  [
+   "दृढ़ निष्ठा और आस्था",
+   "\"तुम्हरे चरन कमल एक भरोसां।\""
+  ]
+ ]
+}
+
+--- block #4 [worked_example] id=cac147d3-4394-452b-8e21-937e4a8dd511 ---
+{
+ "label": "अनुप्रास, उपमा और रूपक में क्या अंतर है?",
+ "variant": "ncert_intext",
+ "problem": "अनुप्रास, उपमा और रूपक — तीनों अलंकार हैं। इनमें क्या अंतर है? सोचिए, फिर उत्तर देखिए।",
+ "solution": "**अनुप्रास** — जब एक ही व्यंजन-वर्ण बार-बार आए। जैसे \"चितवत चंद चकोरा\" में \"च\" की आवृत्ति।\n\n**उपमा** — जब दो वस्तुओं की समानता \"जैसे/सा/सी\" शब्दों से दिखाई जाए (दोनों अलग रहते हैं)। जैसे \"जैसे सोने मिलत सुहागा\" — मेल सुहागे *जैसा*।\n\n**रूपक** — जब समानता इतनी गहरी हो कि एक को सीधे दूसरा कह दिया जाए (बिना \"जैसे\" के, अभेद)। जैसे \"चरन कमल\" — चरणों को सीधे *कमल ही* कह दिया, यह नहीं कि \"कमल जैसे चरण\"।",
+ "reveal_mode": "tap_to_reveal"
+}
+
+--- block #5 [inline_quiz] id=972b31d6-b433-4515-8760-237b36132e39 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "04a48a38-38a5-4dc8-b012-dfa3284536d4",
+   "question": "\"चितवत चंद चकोरा\" में कौन-सा अलंकार है?",
+   "options": [
+    "समानता दिखाने वाली उपमा",
+    "रूपक",
+    "अनुप्रास (\"च\" की आवृत्ति)",
+    "अतिशयोक्ति"
+   ],
+   "correct_index": 2,
+   "explanation": "एक ही व्यंजन \"च\" की बार-बार आवृत्ति — अनुप्रास अलंकार।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "1043b8d2-7e9e-4ad4-a81a-fce16fcaaa1b",
+   "question": "\"जैसे सोने मिलत सुहागा\" में कौन-सा अलंकार है?",
+   "options": [
+    "उपमा (\"जैसे\" से समानता)",
+    "वर्ण-आवृत्ति वाला अनुप्रास",
+    "रूपक",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 0,
+   "explanation": "\"जैसे\" से दो चीज़ों की समानता दिखाई गई — उपमा अलंकार।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "452991ae-fbf7-4c1b-ba19-cfa0bf0a0ebd",
+   "question": "\"चरन कमल\" में चरणों को सीधे \"कमल\" कहना कौन-सा अलंकार है?",
+   "options": [
+    "उपमा",
+    "अनुप्रास",
+    "तुक",
+    "रूपक (अभेद)"
+   ],
+   "correct_index": 3,
+   "explanation": "बिना \"जैसे\" के, चरण को सीधे कमल कह देना (अभेद) — रूपक अलंकार।",
+   "difficulty_level": 3
+  }
+ ]
+}
+
+================================================================================
+## PAGE 6 — "विषय और व्याकरण"  (slug: ch8-vishay-vyakaran)
+published=false blocks=9 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=7ddc68d7-c942-4321-80da-ba01d95cefc6 ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch8/7ddc68d7-c942-4321-80da-ba01d95cefc6_gen.webp",
+ "alt": "समता और भक्ति",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — diverse people of all kinds joined in a circle of devotion under one glowing lamp, suggesting equality and love. Dark warm ground. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=b33baff8-e282-4268-aa81-ded0b9634b1f ---
+{
+ "markdown": "रैदास के पद सिर्फ़ भक्ति नहीं, समाज को भी संदेश देते हैं — समानता, प्रेम और भीतरी सच्चाई का।"
+}
+
+--- block #2 [cultural_context_card] id=274dfb2a-f06b-4b63-a3a0-1c13a9cf15b1 ---
+{
+ "reference": "निर्गुण संत और समता का संदेश",
+ "category": "tradition",
+ "short_desc": "बाहरी आडंबर-जाति के विरुद्ध, सबके लिए खुली आंतरिक भक्ति।",
+ "detail": "रैदास और कबीर जैसे **निर्गुण संत** उस समय की **जाति-पाँति, छुआछूत और धार्मिक आडंबर** के विरुद्ध खड़े हुए। उन्होंने कहा कि ईश्वर निराकार है, सबमें समान है, और सच्ची भक्ति मन की होती है — मंदिर/तीर्थ की मोहताज नहीं। इसलिए उनकी वाणी \"ऊँच-नीच\" को नकारकर **समानता, प्रेम और भाईचारे** का क्रांतिकारी संदेश देती है — जो आज भी उतना ही ज़रूरी है।",
+ "image_url": ""
+}
+
+--- block #3 [callout] id=a80f34b5-b7d7-4f7e-a7e0-7bf18558a71e ---
+{
+ "variant": "literature_in_life",
+ "title": "पद और आपका जीवन",
+ "markdown": "रैदास का \"एक ही ईश्वर, सबमें समान\" वाला संदेश हमें सिखाता है — किसी को जाति, धर्म या हैसियत से छोटा-बड़ा न समझें। सच्चा बड़प्पन भीतर की अच्छाई में है, बाहरी दिखावे में नहीं।"
+}
+
+--- block #4 [heading] id=621c94f2-4476-44a1-a0d1-15970ee7e41f ---
+{
+ "text": "व्याकरण — संज्ञा और सर्वनाम",
+ "level": 2
+}
+
+--- block #5 [text] id=4e27da07-bb0e-4342-b80f-40bf18e841a5 ---
+{
+ "markdown": "**संज्ञा** किसी व्यक्ति, वस्तु, स्थान या भाव का नाम है (रैदास, चंदन, मोती)। **सर्वनाम** संज्ञा के बदले आने वाला शब्द है (तुम, हम, मैं, जो)। नीचे अभ्यास कीजिए।"
+}
+
+--- block #6 [table] id=81712458-5f1f-4b88-b3ea-636749a0600e ---
+{
+ "caption": "पदों से — संज्ञा और सर्वनाम",
+ "headers": [
+  "शब्द",
+  "भेद",
+  "उदाहरण-पंक्ति"
+ ],
+ "rows": [
+  [
+   "रैदास",
+   "संज्ञा (व्यक्ति)",
+   "\"ऐसी भगति करै रैदासा।\""
+  ],
+  [
+   "चंदन",
+   "संज्ञा (वस्तु)",
+   "\"तुम चंदन हम पानी।\""
+  ],
+  [
+   "तुम",
+   "सर्वनाम",
+   "\"प्रभु जी तुम स्वामी।\""
+  ],
+  [
+   "हम",
+   "सर्वनाम",
+   "\"हम दासा।\""
+  ],
+  [
+   "मैं",
+   "सर्वनाम",
+   "\"मैं नहिं तोरौं।\""
+  ]
+ ]
+}
+
+--- block #7 [apply_express] id=0bf2d63d-989f-4e76-a3e3-9c93bf68601a ---
+{
+ "title": "व्याकरण व्यायामशाला — संज्ञा, सर्वनाम व पर्याय",
+ "intro": "पहचानने और बनाने का अभ्यास कीजिए।",
+ "chapter_number": 8,
+ "variant": "grammar",
+ "challenges": [
+  {
+   "id": "h8-gr-01",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "\"प्रभु जी तुम स्वामी, हम दासा।\" — इसमें सर्वनाम कौन-सा है?",
+   "options": [
+    "स्वामी",
+    "दासा",
+    "तुम / हम",
+    "प्रभु"
+   ],
+   "correct_index": 2,
+   "option_reasons": [
+    "ग़लत — स्वामी संज्ञा है।",
+    "ग़लत — दासा संज्ञा है।",
+    "सही — \"तुम\" और \"हम\" सर्वनाम हैं।",
+    "ग़लत — प्रभु संज्ञा है।"
+   ]
+  },
+  {
+   "id": "h8-gr-02",
+   "kind": "form_select",
+   "concept_tag": "grammar",
+   "difficulty": 2,
+   "prompt": "\"चंदन\" शब्द किस भेद का है?",
+   "options": [
+    "सर्वनाम",
+    "क्रिया",
+    "संज्ञा",
+    "विशेषण"
+   ],
+   "correct_index": 2,
+   "option_reasons": [
+    "ग़लत।",
+    "ग़लत।",
+    "सही — चंदन एक वस्तु का नाम (संज्ञा) है।",
+    "ग़लत।"
+   ]
+  },
+  {
+   "id": "h8-gr-03",
+   "kind": "fill_blank",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2,
+   "prompt": "पर्याय (समानार्थी) भरिए — \"जोति\" का अर्थ है ज्योति/______ (light)।",
+   "answers": [
+    [
+     "प्रकाश",
+     "लौ",
+     "रोशनी"
+    ]
+   ],
+   "hint": "दीये का उजाला।",
+   "explanation": "\"जोति/ज्योति\" का पर्याय — प्रकाश/लौ/रोशनी।"
+  },
+  {
+   "id": "h8-gr-04",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "अटूट",
+   "instruction": "\"अटूट\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (न टूटने वाला)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "सच्चे मित्रों के बीच एक अटूट विश्वास होता है।",
+   "min_words": 6
+  },
+  {
+   "id": "h8-gr-05",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "मोरा",
+   "instruction": "इस ब्रज शब्द का खड़ी बोली (आज की हिंदी) रूप लिखिए।",
+   "answers": [
+    "मोर"
+   ],
+   "rule": "ब्रज \"मोरा\" → खड़ी बोली \"मोर\" (peacock)।"
+  },
+  {
+   "id": "h8-gr-06",
+   "kind": "transform",
+   "concept_tag": "grammar",
+   "difficulty": 3,
+   "source": "राती",
+   "instruction": "इस ब्रज शब्द का आज की हिंदी रूप लिखिए।",
+   "answers": [
+    "रात"
+   ],
+   "rule": "ब्रज \"राती\" → हिंदी \"रात\" (night)।"
+  }
+ ]
+}
+
+--- block #8 [inline_quiz] id=8b76eda7-e2e2-4cdc-bc92-460752eadf33 ---
+{
+ "pass_threshold": 0.67,
+ "questions": [
+  {
+   "id": "420272a1-49fd-42cc-8c43-e88e7f284fbc",
+   "question": "\"तुम\", \"हम\", \"मैं\" — ये किस भेद के शब्द हैं?",
+   "options": [
+    "संज्ञा",
+    "सर्वनाम",
+    "क्रिया",
+    "विशेषण"
+   ],
+   "correct_index": 1,
+   "explanation": "संज्ञा के बदले आने वाले शब्द (तुम/हम/मैं) सर्वनाम हैं।",
+   "difficulty_level": 1
+  },
+  {
+   "id": "425d683e-384d-4478-a841-12b32fc4568d",
+   "question": "\"मोती\", \"दीपक\", \"रैदास\" किस भेद के शब्द हैं?",
+   "options": [
+    "सर्वनाम",
+    "संज्ञा",
+    "क्रिया-विशेषण",
+    "अव्यय"
+   ],
+   "correct_index": 1,
+   "explanation": "वस्तु/व्यक्ति के नाम — ये संज्ञा हैं।",
+   "difficulty_level": 2
+  },
+  {
+   "id": "e92d7bd4-b33c-4427-8d7d-bf43a91d65c4",
+   "question": "ब्रजभाषा का \"राती\" आज की हिंदी में क्या होगा?",
+   "options": [
+    "रोटी",
+    "राजा",
+    "रीति",
+    "रात"
+   ],
+   "correct_index": 3,
+   "explanation": "ब्रज \"राती\" = हिंदी \"रात\" (night)।",
+   "difficulty_level": 2
+  }
+ ]
+}
+
+================================================================================
+## PAGE 7 — "अभ्यास — Practice"  (slug: ch8-abhyas)
+published=false blocks=5 reading_time=5min
+================================================================================
+
+--- block #0 [image] id=12030005-cd94-44fe-9423-f3d6d68a9dec ---
+{
+ "src": "https://pub-2ff04ffcdd1247b6b8d19c44c1dfe553.r2.dev/books/4287c846-ee7e-4bc5-a48f-8822438c05c8/ch8/12030005-cd94-44fe-9423-f3d6d68a9dec_gen.webp",
+ "alt": "अभ्यास",
+ "caption": "",
+ "width": "full",
+ "aspect_ratio": "16:5",
+ "generation_prompt": "Watercolour 16:5 banner — a warm study nook with an open Hindi poetry book, a quill and lamp, a faint lotus-and-flame motif. Dark ground, folk accents. Loose washes, paper grain. No text."
+}
+
+--- block #1 [text] id=7b8391d8-8ce4-439e-8336-822ffb178caa ---
+{
+ "markdown": "अब अभ्यास का समय। पहले बहुविकल्पी प्रश्न (हर प्रश्न के साथ **कारण**) हल कीजिए, फिर रचनात्मक चुनौतियाँ।"
+}
+
+--- block #2 [chapter_practice] id=49d0400d-e625-4faa-94ef-4511b1e29153 ---
+{
+ "title": "अध्याय 8 — अभ्यास प्रश्न",
+ "intro": "सही उत्तर चुनिए और कारण समझिए।",
+ "chapter_number": 8,
+ "session_size": 8,
+ "pass_threshold": 0.7,
+ "questions": [
+  {
+   "id": "h8-pr-01",
+   "question": "इन पदों के रचयिता कौन हैं?",
+   "options": [
+    "गोस्वामी तुलसीदास",
+    "संत रैदास",
+    "कवि सूरदास",
+    "कवि निराला"
+   ],
+   "correct_index": 1,
+   "explanation": "ये दोनों पद संत रैदास के हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h8-pr-02",
+   "question": "रैदास किस भक्ति-धारा के संत हैं?",
+   "options": [
+    "केवल मूर्ति-पूजा करने वाली धारा",
+    "रीतिकालीन शृंगार-काव्य",
+    "वीरगाथा",
+    "निर्गुण — निराकार ईश्वर"
+   ],
+   "correct_index": 3,
+   "explanation": "रैदास निर्गुण (निराकार ईश्वर के उपासक) संत कवि हैं।",
+   "concept_tag": "comprehension",
+   "difficulty": 1
+  },
+  {
+   "id": "h8-pr-03",
+   "question": "पद १ में भक्त-प्रभु संबंध किन जोड़ियों से दिखाया गया है?",
+   "options": [
+    "चंदन-पानी, दीपक-बाती, मोती-धागा",
+    "राजा-प्रजा तथा गुरु-शिष्य की जोड़ियों से",
+    "पिता-पुत्र और भाई-बहन से",
+    "व्यापारी-ग्राहक से"
+   ],
+   "correct_index": 0,
+   "explanation": "चंदन-पानी, बादल-मोर, दीपक-बाती, मोती-धागा, स्वामी-दास जैसी अटूट जोड़ियाँ।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h8-pr-04",
+   "question": "रैदास ने तीर्थ-व्रत के स्थान पर किसे भक्ति का आधार माना?",
+   "options": [
+    "धन इकट्ठा करना और दान देना",
+    "लंबी और कठिन तीर्थ-यात्रा",
+    "प्रभु के चरण — आंतरिक भक्ति",
+    "कठोर उपवास"
+   ],
+   "correct_index": 2,
+   "explanation": "\"तुम्हरे चरन कमल एक भरोसां\" — आंतरिक भक्ति ही सच्चा आधार।",
+   "concept_tag": "comprehension",
+   "difficulty": 2
+  },
+  {
+   "id": "h8-pr-05",
+   "question": "\"अब कैसे छूटै राम रट लागी\" पंक्ति का भाव है —",
+   "options": [
+    "किसी मित्र का नाम बार-बार रटना",
+    "कोई नाम याद ही न आना",
+    "आराध्य का नाम जपना (राम-रट)",
+    "नाम का उच्चारण कठिन होना"
+   ],
+   "correct_index": 2,
+   "explanation": "\"राम रट\" = राम-नाम का बार-बार जप — अनन्य भक्ति।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h8-pr-06",
+   "question": "\"चकोर\" शब्द का अर्थ है —",
+   "options": [
+    "चाँद का प्रेमी पक्षी",
+    "पानी में रहने वाली मछली",
+    "बहुत बड़ा गरुड़ पक्षी",
+    "रंगीन तोता"
+   ],
+   "correct_index": 0,
+   "explanation": "चकोर = the chakor, चंद्रमा का प्रेमी माना जाने वाला पक्षी।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h8-pr-07",
+   "question": "\"अंदेसा\" का सबसे सही अर्थ है —",
+   "options": [
+    "मन की गहरी शांति",
+    "कानों में मधुर संगीत",
+    "तेज़ प्रकाश",
+    "चिंता/संदेह"
+   ],
+   "correct_index": 3,
+   "explanation": "अंदेसा = worry/doubt।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h8-pr-08",
+   "question": "\"सुहागा\" किस काम आता है?",
+   "options": [
+    "पानी को ठंडा करने में",
+    "सोने को निखारने में",
+    "दीया जलाने के काम में",
+    "कपड़ा सिलने में"
+   ],
+   "correct_index": 1,
+   "explanation": "सुहागा (borax) सोने की अशुद्धियाँ दूर कर चमक बढ़ाता है।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 2
+  },
+  {
+   "id": "h8-pr-09",
+   "question": "\"निर्गुण\" ईश्वर से तात्पर्य है —",
+   "options": [
+    "अनेक रूपों और गुणों वाला",
+    "निराकार (बिना रूप के)",
+    "केवल मूर्ति में बसा हुआ",
+    "एक मंदिर का"
+   ],
+   "correct_index": 1,
+   "explanation": "निर्गुण = the formless God।",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3
+  },
+  {
+   "id": "h8-pr-10",
+   "question": "\"चितवत चंद चकोरा\" में कौन-सा अलंकार है?",
+   "options": [
+    "उपमा",
+    "रूपक",
+    "अतिशयोक्ति",
+    "अनुप्रास"
+   ],
+   "correct_index": 3,
+   "explanation": "\"च\" वर्ण की आवृत्ति — अनुप्रास अलंकार।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h8-pr-11",
+   "question": "\"जैसे सोने मिलत सुहागा\" में कौन-सा अलंकार है?",
+   "options": [
+    "उपमा",
+    "अनुप्रास",
+    "रूपक",
+    "पुनरुक्ति"
+   ],
+   "correct_index": 0,
+   "explanation": "\"जैसे\" से समानता — उपमा अलंकार।",
+   "concept_tag": "grammar",
+   "difficulty": 3
+  },
+  {
+   "id": "h8-pr-12",
+   "question": "\"चरन कमल\" में कौन-सा अलंकार है?",
+   "options": [
+    "उपमा",
+    "अनुप्रास",
+    "रूपक",
+    "तुक"
+   ],
+   "correct_index": 2,
+   "explanation": "चरण को सीधे कमल कहना (अभेद) — रूपक अलंकार।",
+   "concept_tag": "grammar",
+   "difficulty": 4
+  },
+  {
+   "id": "h8-pr-13",
+   "question": "\"तुम\", \"हम\", \"मैं\" किस भेद के शब्द हैं?",
+   "options": [
+    "व्यक्तिवाचक संज्ञा",
+    "क्रिया",
+    "सर्वनाम",
+    "विशेषण"
+   ],
+   "correct_index": 2,
+   "explanation": "संज्ञा के बदले आने वाले शब्द — सर्वनाम।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h8-pr-14",
+   "question": "ब्रज शब्द \"राती\" आज की हिंदी में क्या होगा?",
+   "options": [
+    "रात",
+    "रीति",
+    "रोटी",
+    "राजा"
+   ],
+   "correct_index": 0,
+   "explanation": "ब्रज \"राती\" = हिंदी \"रात\"।",
+   "concept_tag": "grammar",
+   "difficulty": 2
+  },
+  {
+   "id": "h8-pr-15",
+   "question": "\"तुम चंदन हम पानी\" उपमा से रैदास क्या कहना चाहते हैं?",
+   "options": [
+    "पानी चंदन से कहीं अधिक बेहतर होता है",
+    "चंदन और पानी का कोई मेल नहीं",
+    "पानी ठंडा होता है",
+    "भक्त प्रभु में घुलकर उसी का गुण पा लेता है"
+   ],
+   "correct_index": 3,
+   "explanation": "चंदन की सुगंध पानी के अंग-अंग में समाने जैसा — भक्त प्रभु में घुलकर उसका रूप-गुण पा लेता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h8-pr-16",
+   "question": "\"तुम दीपक, हम बाती\" से रैदास का भाव है —",
+   "options": [
+    "दीपक और बाती का आपस में कोई मेल नहीं",
+    "भक्त-प्रभु का मेल जीवन को रोशन करता है",
+    "भक्त प्रभु से भी बड़ा है",
+    "दीपक बेकार है"
+   ],
+   "correct_index": 1,
+   "explanation": "दीपक-बाती मिलकर ही ज्योति देते हैं — मेल जीवन को रोशन करता है।",
+   "concept_tag": "interpretation",
+   "difficulty": 3
+  },
+  {
+   "id": "h8-pr-17",
+   "question": "\"जो तुम तोरौ राम मैं नहिं तोरौं\" किस भाव को व्यक्त करता है?",
+   "options": [
+    "सांसारिक चीज़ों का गहरा मोह",
+    "आराध्य में अटूट निष्ठा",
+    "बाहरी कर्मकांड पर बल",
+    "परोपकार"
+   ],
+   "correct_index": 1,
+   "explanation": "चाहे प्रभु नाता तोड़ दें, भक्त नहीं तोड़ेगा — अटूट निष्ठा।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h8-pr-18",
+   "question": "\"जहँ जहँ जाओ तुम्हरी पूजा\" किस विचार को व्यक्त करता है?",
+   "options": [
+    "पूजा करना बेकार है",
+    "अनेक अलग-अलग ईश्वर हैं",
+    "तीर्थ ज़रूरी है",
+    "ईश्वर सर्वव्यापक है"
+   ],
+   "correct_index": 3,
+   "explanation": "प्रभु हर जगह व्याप्त है — सर्वव्यापक ईश्वर की अवधारणा।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h8-pr-19",
+   "question": "रैदास (और कबीर) बाहरी आडंबर के बजाय आंतरिक भक्ति पर क्यों बल देते थे?",
+   "options": [
+    "जाति-आडंबर के विरुद्ध, सबके लिए समान भक्ति हेतु",
+    "क्योंकि वे स्वभाव से बहुत आलसी थे",
+    "क्योंकि उस समय तीर्थ-यात्रा बहुत महँगी थी",
+    "क्योंकि उन्हें पूजा नहीं आती थी"
+   ],
+   "correct_index": 0,
+   "explanation": "जाति-पाँति-आडंबर के विरुद्ध, उन्होंने मन की सच्ची, सबके लिए समान भक्ति पर बल दिया।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h8-pr-20",
+   "question": "इन पदों का केंद्रीय भाव क्या है?",
+   "options": [
+    "गाँव की खेती-बाड़ी का बड़ा महत्व",
+    "युद्ध के मैदान की वीरता",
+    "भक्त-आराध्य का अटूट नाता और भक्ति",
+    "धन का लालच"
+   ],
+   "correct_index": 2,
+   "explanation": "दोनों पद भक्त-प्रभु के अटूट संबंध, समर्पण और अनन्य भक्ति को व्यक्त करते हैं।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h8-pr-21",
+   "question": "रैदास बार-बार \"तुम चंदन, हम पानी\" जैसी जोड़ियाँ क्यों चुनते हैं?",
+   "options": [
+    "भक्त-प्रभु के अटूट, घुले-मिले संबंध को दिखाने के लिए",
+    "क्योंकि उन्हें प्रकृति पसंद थी",
+    "क्योंकि तुक मिलाना था",
+    "क्योंकि और शब्द नहीं थे"
+   ],
+   "correct_index": 1,
+   "explanation": "हर जोड़ी में दूसरा पहले के बिना अधूरा है — भक्त की प्रभु पर पूर्ण निर्भरता।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  },
+  {
+   "id": "h8-pr-22",
+   "question": "रैदास का तीर्थ-व्रत से अधिक आंतरिक भक्ति को महत्व देना समाज को क्या संदेश देता है?",
+   "options": [
+    "सच्चा धर्म मन की शुद्धता है, बाहरी दिखावा नहीं",
+    "तीर्थ जाना मना है",
+    "पूजा बेकार है",
+    "भक्ति केवल पढ़े-लिखे विद्वानों के लिए ही है"
+   ],
+   "correct_index": 0,
+   "explanation": "रैदास बाहरी आडंबर से ऊपर मन की सच्ची, सबके लिए खुली भक्ति को रखते हैं।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h8-pr-23",
+   "question": "\"जहँ जहँ जाओ तुम्हरी पूजा\" से रैदास किस उदार सामाजिक विचार की ओर ले जाते हैं?",
+   "options": [
+    "ईश्वर सबमें एक-समान है, इसलिए सब बराबर हैं",
+    "हर जगह अलग ईश्वर है",
+    "पूजा कठिन है",
+    "केवल मंदिर में ईश्वर है"
+   ],
+   "correct_index": 2,
+   "explanation": "एक, सर्वव्यापक ईश्वर का भाव \"ऊँच-नीच\" को नकारकर समता का संदेश बनता है।",
+   "concept_tag": "inference",
+   "difficulty": 5
+  },
+  {
+   "id": "h8-pr-24",
+   "question": "सरल लोकभाषा में लिखने से रैदास की भक्ति का क्या असर हुआ?",
+   "options": [
+    "वह आम जन के दिल तक सीधे पहुँच सकी",
+    "वह कठिन और दुर्लभ हो गई",
+    "वह केवल कुछ पंडितों-विद्वानों तक सिमट गई",
+    "उसका अर्थ खो गया"
+   ],
+   "correct_index": 0,
+   "explanation": "सरल भाषा ने रैदास की समता-भक्ति को हर आम व्यक्ति तक पहुँचा दिया।",
+   "concept_tag": "interpretation",
+   "difficulty": 4
+  }
+ ]
+}
+
+--- block #3 [apply_express] id=515486de-089a-4a7c-baf2-fa893daa7143 ---
+{
+ "title": "रचना से संवाद — अपना उत्तर रचिए",
+ "intro": "पढ़ने के बाद अब रचना कीजिए।",
+ "chapter_number": 8,
+ "variant": "apply",
+ "challenges": [
+  {
+   "id": "h8-ap-01",
+   "kind": "unscramble",
+   "concept_tag": "comprehension",
+   "difficulty": 3,
+   "tokens": [
+    "प्रभु",
+    "जी",
+    "तुम",
+    "चंदन",
+    "हम",
+    "पानी"
+   ],
+   "answer": "प्रभु जी तुम चंदन हम पानी"
+  },
+  {
+   "id": "h8-ap-02",
+   "kind": "sentence_compose",
+   "concept_tag": "vocab_in_context",
+   "difficulty": 3,
+   "word": "समर्पण",
+   "instruction": "\"समर्पण\" शब्द से अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "शब्द का प्रयोग किया",
+    "अर्थ सही (पूरी तरह सौंपना)",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "सच्ची भक्ति में अपने आप को पूरी तरह प्रभु को समर्पण कर देना होता है।",
+   "min_words": 7
+  },
+  {
+   "id": "h8-ap-03",
+   "kind": "sentence_compose",
+   "concept_tag": "interpretation",
+   "difficulty": 4,
+   "word": "अटूट नाता",
+   "instruction": "\"जो तुम तोरौ राम मैं नहिं तोरौं\" पंक्ति को आधार बनाकर अटूट मित्रता पर अपना एक वाक्य लिखिए।",
+   "rubric": [
+    "विचार स्पष्ट है",
+    "अपनी बात जोड़ी",
+    "वाक्य पूरा है"
+   ],
+   "model_answer": "सच्चा मित्र वही है जो कहे — चाहे तुम साथ छोड़ दो, मैं तुम्हारा साथ कभी नहीं छोड़ूँगा।",
+   "min_words": 9
+  }
+ ]
+}
+
+--- block #4 [callout] id=a5bd144c-3f38-40ca-8780-cae3963ce64f ---
+{
+ "variant": "threads_of_curiosity",
+ "title": "झरोखे से + खोजबीन",
+ "markdown": "और पढ़िए-सुनिए:\n\n- **झरोखे से:** महाराष्ट्र के निर्गुण संत कवि **नामदेव** के दो पद — रैदास जैसी समता और निराकार भक्ति।\n- **खोजबीन:** संत रैदास का जीवन और उनके पदों का गायन सुनिए।\n- सोचिए — रैदास और कबीर की भक्ति में क्या समानताएँ हैं?"
+}

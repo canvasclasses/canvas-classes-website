@@ -1,0 +1,68 @@
+EXERCISES
+
+Group the following as nitrogenous bases and nucleosides:
+Adenine, Cytidine, Thymine, Guanosine, Uracil and Cytosine.
+
+2.
+
+If a double stranded DNA has 20 per cent of cytosine, calculate the per
+cent of adenine in the DNA.
+
+3.
+
+If the sequence of one strand of DNA is written as follows:
+5' -ATGCATGCATGCATGCATGCATGCATGC-3'
+Write down the sequence of complementary strand in 5' →3' direction.
+
+4.
+
+If the sequence of the coding strand in a transcription unit is written
+as follows:
+5' -ATGCATGCATGCATGCATGCATGCATGC-3'
+Write down the sequence of mRNA.
+
+5.
+
+Which property of DNA double helix led Watson and Crick to hypothesise
+semi-conservative mode of DNA replication? Explain.
+
+6.
+
+Depending upon the chemical nature of the template (DNA or RNA)
+and the nature of nucleic acids synthesised from it (DNA or RNA), list
+the types of nucleic acid polymerases.
+
+7.
+
+How did Hershey and Chase differentiate between DNA and protein in
+their experiment while proving that DNA is the genetic material?
+
+8.
+
+Differentiate between the followings:
+(a) Repetitive DNA and Satellite DNA
+(b) mRNA and tRNA
+(c) Template strand and Coding strand
+
+9.
+
+List two essential roles of ribosome during translation.
+
+10. In the medium where E. coli was growing, lactose was added, which
+induced the lac operon. Then, why does lac operon shut down some
+time after addition of lactose in the medium?
+11. Explain (in one or two lines) the function of the followings:
+(a) Promoter
+(b) tRNA
+(c) Exons
+12. Why is the Human Genome project called a mega project?
+13. What is DNA fingerprinting? Mention its application.
+14. Briefly describe the following:
+(a) Transcription
+(b) Polymorphism
+(c) Translation
+(d) Bioinformatics
+
+
+
+
