@@ -10,6 +10,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 type PropertyType = 'bp' | 'mp' | 'solubility';
 type SortOption = 'desc' | 'asc' | 'mw';
 
+const SANS = "var(--font-ibm-plex-sans), 'IBM Plex Sans', system-ui, sans-serif";
+const MONO = "var(--font-geist-mono), 'Geist Mono', monospace";
+
 function CompoundRow({
     comp,
     value,
@@ -43,8 +46,8 @@ function CompoundRow({
             >
                 {/* Left: Functional Group Box (Soothing Dark Style) */}
                 <div className="w-36 md:w-48 shrink-0">
-                    <div className="bg-[#161b22] border border-white/10 rounded-md px-3 py-1.5 flex items-center justify-center">
-                        <span className="text-[9px] md:text-[10px] font-bold text-white/50 uppercase tracking-widest whitespace-nowrap">
+                    <div className="bg-[#161C24] border border-white/[0.07] rounded-md px-3 py-1.5 flex items-center justify-center">
+                        <span className="whitespace-nowrap" style={{ font: `600 10px ${MONO}`, letterSpacing: '.1em', textTransform: 'uppercase', color: '#8a94a3' }}>
                             {comp.type}
                         </span>
                     </div>
@@ -52,13 +55,13 @@ function CompoundRow({
 
                 {/* Middle: Name and Info */}
                 <div className="w-28 md:w-36 shrink-0 overflow-hidden">
-                    <div className="text-[14px] font-bold text-white/80 truncate">{comp.name}</div>
-                    <div className="text-[10px] text-white/45 font-mono uppercase tracking-tighter">{comp.mw}u</div>
+                    <div className="text-[14px] font-semibold text-[#E6EAF0] truncate">{comp.name}</div>
+                    <div className="text-[10px] text-white/45 tracking-tighter" style={{ fontFamily: MONO }}>{comp.mw}u</div>
                 </div>
 
                 {/* Right: Dynamic Progress Bar */}
                 <div className="flex-1 flex items-center gap-3">
-                    <div className="flex-1 h-2 bg-black/40 rounded-full overflow-hidden border border-white/5 relative">
+                    <div className="flex-1 h-2 rounded-full overflow-hidden relative" style={{ background: 'rgba(255,255,255,.05)' }}>
                         <motion.div
                             layoutId={`bar-${comp.id}`}
                             initial={false}
@@ -76,11 +79,12 @@ function CompoundRow({
                             key={property}
                             initial={{ opacity: 0, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-[14px] font-bold font-mono text-white/70"
+                            className="text-[14px] font-semibold text-[#E6EAF0] ml-0.5"
+                            style={{ fontFamily: MONO }}
                         >
                             {property === 'solubility' ? comp.solubility : value}
                         </motion.span>
-                        <span className="text-[10px] text-white/40 font-mono ml-0.5">{unit}</span>
+                        <span className="text-[10px] text-white/40 ml-0.5" style={{ fontFamily: MONO }}>{unit}</span>
                     </div>
                     <motion.div
                         animate={{ rotate: isExpanded ? 180 : 0 }}
@@ -160,11 +164,12 @@ export default function PhysicalPropertiesLab() {
             {/* Header & Search */}
             <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-                        Physical <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Properties Lab</span>
-                    </h2>
-                    <p className="text-white/40 text-[12px] mt-1">
-                        Compare trends across all major functional groups.
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 9, font: `400 11.5px ${SANS}`, color: '#5e6774', marginBottom: 7 }}>
+                        Organic Hub <span style={{ opacity: 0.5 }}>/</span> <span style={{ color: '#8a94a3' }}>Simulators</span>
+                    </div>
+                    <h2 style={{ margin: 0, font: `600 23px ${SANS}`, color: '#E6EAF0', letterSpacing: '-.01em' }}>Physical Properties Lab</h2>
+                    <p style={{ margin: '6px 0 0', font: `400 12.5px ${SANS}`, color: '#7a8494' }}>
+                        Compare boiling point, melting point and solubility trends across functional groups.
                     </p>
                 </div>
 
@@ -176,7 +181,7 @@ export default function PhysicalPropertiesLab() {
                             placeholder="Search compounds..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="bg-white/5 border border-white/10 rounded-xl pl-8 pr-4 py-2 text-[12px] text-white focus:outline-none focus:border-emerald-500/30 transition-all w-40 md:w-64"
+                            className="bg-white/5 border border-white/10 rounded-xl pl-8 pr-4 py-2 text-[12px] text-white focus:outline-none focus:border-[#4E8CFF]/40 transition-all w-40 md:w-64"
                         />
                     </div>
                     <div className="flex items-center bg-white/5 border border-white/10 rounded-xl p-1">
@@ -199,7 +204,7 @@ export default function PhysicalPropertiesLab() {
             </div>
 
             {/* Main Lab Interface */}
-            <div className="bg-[#0b0e14] border border-white/[0.05] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-[#12181F] border border-white/[0.07] rounded-2xl overflow-hidden">
 
                 {/* Horizontal Tabs Component */}
                 <div className="flex border-b border-white/[0.05] bg-white/[0.02]">
@@ -207,14 +212,14 @@ export default function PhysicalPropertiesLab() {
                         <button
                             key={tab}
                             onClick={() => setActiveProperty(tab)}
-                            className={`flex-1 py-4 text-[13px] font-bold tracking-widest uppercase transition-all relative ${activeProperty === tab ? 'text-emerald-400 bg-white/[0.02]' : 'text-white/30 hover:text-white/50'
+                            className={`flex-1 py-4 text-[13px] font-bold tracking-widest uppercase transition-all relative ${activeProperty === tab ? 'text-[#6FA8FF] bg-white/[0.02]' : 'text-white/30 hover:text-white/50'
                                 }`}
                         >
                             {tab === 'bp' ? 'Boiling Point' : tab === 'mp' ? 'Melting Point' : 'Solubility'}
                             {activeProperty === tab && (
                                 <motion.div
                                     layoutId="activeTab"
-                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"
+                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4E8CFF]"
                                 />
                             )}
                         </button>
@@ -247,10 +252,10 @@ export default function PhysicalPropertiesLab() {
             </div>
 
             {/* Lab Tips */}
-            <div className="mt-6 p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 flex gap-4 items-start">
-                <Info size={18} className="text-indigo-400 shrink-0 mt-0.5" />
-                <div className="text-[12px] text-indigo-200/60 leading-relaxed">
-                    <strong className="text-indigo-300">Analysis Tip:</strong> Select a property above to visualize trends. Notice how branching (e.g. 3° Alcohols) reduces surface area and lowers both Boiling and Melting points compared to linear isomers of similar weight.
+            <div className="mt-6 p-4 rounded-xl flex gap-4 items-start" style={{ background: '#12181F', border: '1px solid rgba(255,255,255,.06)' }}>
+                <Info size={18} className="text-[#6FA8FF] shrink-0 mt-0.5" />
+                <div className="text-[12px] leading-relaxed" style={{ color: '#97a0ae' }}>
+                    <strong className="text-[#cfe0ff]">Analysis tip:</strong> Select a property above to visualise trends. Notice how branching (e.g. 3° alcohols) reduces surface area and lowers both boiling and melting points compared to linear isomers of similar weight.
                 </div>
             </div>
 

@@ -1,17 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import {
   type AcidFamily,
   type Position,
-  type PkaDataPoint,
   getPka,
-  getAvailableSubstituents,
   getCompoundName,
-  PHENOL_PKA_DATA,
-  BENZOIC_ACID_PKA_DATA,
-  ANILINE_PKA_DATA,
-  DATA_STATS,
 } from './acidity-universal-data';
 import {
   calculatePkaHammett,
@@ -22,6 +16,7 @@ import {
   OrthoEffectSection,
 } from './AcidityEducationCards.v2';
 import AcidityHeatMap from './AcidityHeatMap';
+import Molecule, { type MoleculeTone, type MoleculePosition } from './Molecule';
 
 // ── TYPES ─────────────────────────────────────────────────────────────────────
 
@@ -39,18 +34,50 @@ interface CompoundData extends CompoundSlot {
   hammettResult?: HammettCalculationResult;
 }
 
+// ── DESIGN TOKENS (handoff Direction 1a — "Slate & Blue") ───────────────────────
+
+const ACCENT = '#4E8CFF';                     // active nav / selected borders / primary
+const ACCENT_TINT = 'rgba(78,140,255,.12)';   // selected surface tint
+const ACCENT_TEXT = '#cfe0ff';                // selected compound / family name
+
+const SURFACE_CARD = '#161C24';
+const SURFACE_CARD_SEL = '#1B232E';
+const SURFACE_WELL = '#10151C';               // molecule inset
+const SURFACE_PANEL = '#12181F';              // comparison / detail panels
+const BORDER = 'rgba(255,255,255,.07)';
+const BORDER_SUBTLE = 'rgba(255,255,255,.05)';
+const DIVIDER = 'rgba(255,255,255,.06)';
+
+const TXT_PRIMARY = '#E6EAF0';
+const TXT_SECONDARY = '#8a94a3';
+const TXT_MUTED = '#5e6774';
+const TXT_FAINT = '#6b7482';
+
+const SANS = "var(--font-ibm-plex-sans), 'IBM Plex Sans', system-ui, sans-serif";
+const MONO = "var(--font-geist-mono), 'Geist Mono', monospace";
+
+// Semantic tone: colour encodes the substituent's electronic character.
+const TYPE_COLORS: Record<MoleculeTone, string> = {
+  ewg: '#E4A845',
+  edg: '#46B98A',
+  neutral: '#8B93A7',
+};
+const TYPE_GRADIENTS: Record<MoleculeTone, string> = {
+  ewg: 'linear-gradient(90deg,#E0932E,#EEC468)',
+  edg: 'linear-gradient(90deg,#2FA378,#5FD3AD)',
+  neutral: 'linear-gradient(90deg,#5B76C4,#8E7BE0)',
+};
+
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
 
-const SLOT_COLORS = ['#818cf8', '#f59e0b', '#34d399', '#f472b6'];
-
-const ACID_FAMILIES: { id: AcidFamily; label: string; description: string }[] = [
-  { id: 'phenol', label: 'Phenol', description: 'C₆H₅OH derivatives (pKa of –OH)' },
-  { id: 'benzoic', label: 'Benzoic Acid', description: 'C₆H₅COOH derivatives (pKa of –COOH)' },
-  { id: 'aniline', label: 'Aniline', description: 'C₆H₅NH₂ derivatives (pKa of –NH₃⁺)' },
-  { id: 'aliphatic', label: 'Aliphatic Acid', description: 'Y–CH₂–COOH derivatives (inductive only)' },
+const ACID_FAMILIES: { id: AcidFamily; label: string; formula: string }[] = [
+  { id: 'phenol', label: 'Phenol', formula: 'C₆H₅OH derivatives' },
+  { id: 'benzoic', label: 'Benzoic acid', formula: 'C₆H₅COOH derivatives' },
+  { id: 'aniline', label: 'Aniline', formula: 'C₆H₅NH₂ derivatives' },
+  { id: 'aliphatic', label: 'Aliphatic', formula: 'Y–CH₂–COOH' },
 ];
 
-// Substituent groups organized by type
+// Substituent groups organized by electronic type
 const SUBSTITUENT_GROUPS = {
   ewg: [
     { id: 'NO2', symbol: 'NO₂', name: 'Nitro' },
@@ -85,12 +112,26 @@ const ALL_SUBSTITUENTS = [
 
 // ── HELPER FUNCTIONS ──────────────────────────────────────────────────────────
 
+function subType(id: string): MoleculeTone {
+  if (SUBSTITUENT_GROUPS.ewg.some(s => s.id === id)) return 'ewg';
+  if (SUBSTITUENT_GROUPS.edg.some(s => s.id === id)) return 'edg';
+  return 'neutral';
+}
+
+function coreSymbol(fam: AcidFamily): string {
+  return fam === 'phenol' ? 'OH' : fam === 'benzoic' ? 'COOH' : fam === 'aniline' ? 'NH₂' : 'COOH';
+}
+
+function subSymbolOf(id: string): string {
+  return ALL_SUBSTITUENTS.find(s => s.id === id)?.symbol || id;
+}
+
 function getCompoundData(slot: CompoundSlot): CompoundData {
   const { acidFamily, substituent, position } = slot;
-  
+
   // Try to get experimental data first
   const experimental = getPka(acidFamily, substituent, position);
-  
+
   if (experimental) {
     return {
       ...slot,
@@ -100,10 +141,10 @@ function getCompoundData(slot: CompoundSlot): CompoundData {
       compoundName: getCompoundName(acidFamily, substituent, position),
     };
   }
-  
+
   // Fall back to Hammett calculation
   const hammett = calculatePkaHammett(acidFamily, substituent, position);
-  
+
   if (hammett) {
     return {
       ...slot,
@@ -114,7 +155,7 @@ function getCompoundData(slot: CompoundSlot): CompoundData {
       hammettResult: hammett,
     };
   }
-  
+
   // Default fallback (should rarely happen)
   return {
     ...slot,
@@ -128,200 +169,94 @@ function getCompoundData(slot: CompoundSlot): CompoundData {
 function acidLabel(pKa: number, acidFamily: AcidFamily): { txt: string; col: string } {
   if (acidFamily === 'aniline') {
     // For aniline, higher pKa of conjugate acid = stronger base
-    if (pKa < 1) return { txt: 'Very Weak Base', col: '#fb7185' };
-    if (pKa < 3) return { txt: 'Weak Base', col: '#fb923c' };
-    if (pKa < 5) return { txt: 'Moderate Base', col: '#4ade80' };
-    return { txt: 'Strong Base', col: '#60a5fa' };
+    if (pKa < 1) return { txt: 'Very weak base', col: '#E4A845' };
+    if (pKa < 3) return { txt: 'Weak base', col: '#E4A845' };
+    if (pKa < 5) return { txt: 'Moderate base', col: '#46B98A' };
+    return { txt: 'Strong base', col: '#7FA8E0' };
   } else {
     // For acids, lower pKa = stronger acid
-    if (pKa < 3) return { txt: 'Strong Acid', col: '#fb7185' };
-    if (pKa < 5) return { txt: 'Moderate Acid', col: '#fb923c' };
-    if (pKa < 9) return { txt: 'Weak Acid', col: '#4ade80' };
-    return { txt: 'Very Weak Acid', col: '#60a5fa' };
+    if (pKa < 3) return { txt: 'Strong acid', col: '#E4707A' };
+    if (pKa < 5) return { txt: 'Moderate acid', col: '#E4A845' };
+    if (pKa < 9) return { txt: 'Weak acid', col: '#E4A845' };
+    return { txt: 'Very weak', col: '#7FA8E0' };
   }
 }
 
-// ── STRUCTURE SVG COMPONENT ───────────────────────────────────────────────────
+// ── ALIPHATIC STRUCTURE (Y–CH₂–COOH) ────────────────────────────────────────────
+// The parametric Molecule handles aromatic rings; aliphatic acids are linear.
 
-function StructureSVG({
-  acidFamily,
-  substituent,
-  position,
-  color,
-}: {
-  acidFamily: AcidFamily;
-  substituent: string;
-  position: Position | null;
-  color: string;
-}) {
-  const subSymbol = ALL_SUBSTITUENTS.find(s => s.id === substituent)?.symbol || substituent;
-  
-  // Aliphatic structure: Y–CH₂–COOH (linear)
-  if (acidFamily === 'aliphatic') {
-    const w = 200, h = 100;
-    // Calculate substituent width dynamically (approximate 10px per character for safety)
-    const subWidth = substituent === 'H' ? 0 : subSymbol.length * 10;
-    const startX = 20;
-    const bondStart = startX + subWidth + (substituent === 'H' ? 0 : 8);
-    
-    return (
-      <svg viewBox={`0 0 ${w} ${h}`} width={w} height={h} style={{ overflow: 'visible', display: 'block', margin: '0 auto' }}>
-        {/* Substituent */}
-        {substituent !== 'H' && (
-          <text x={startX} y="52" fontSize="15" fontWeight="700" fill={color} dominantBaseline="middle">
-            {subSymbol}
-          </text>
-        )}
-        
-        {/* Bond to CH₂ */}
-        <line x1={bondStart} y1="52" x2={bondStart + 18} y2="52" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
-        
-        {/* CH₂ */}
-        <text x={bondStart + 22} y="52" fontSize="14" fill="rgba(255,255,255,0.75)" dominantBaseline="middle">
-          CH₂
-        </text>
-        
-        {/* Bond to COOH */}
-        <line x1={bondStart + 54} y1="52" x2={bondStart + 72} y2="52" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
-        
-        {/* COOH */}
-        <text x={bondStart + 76} y="52" fontSize="15" fontWeight="700" fill="rgba(255,255,255,0.9)" dominantBaseline="middle">
-          COOH
-        </text>
-        
-        {/* Note */}
-        <text x={w / 2} y="82" textAnchor="middle" fontSize="11" fill="rgba(255,255,255,0.25)">
-          inductive only — no resonance
-        </text>
-      </svg>
-    );
-  }
-  
-  // Aromatic structure: Benzene ring
-  const w = 140, h = 160, cx = 70, cy = 80, r = 32, bondOff = 4;
-  
-  // Benzene ring vertices
-  const pts = Array.from({ length: 6 }, (_, k) => {
-    const a = -Math.PI / 2 + k * Math.PI / 3;
-    return [cx + r * Math.cos(a), cy + r * Math.sin(a)] as [number, number];
-  });
-  
-  // Draw bonds
-  const bonds: React.ReactNode[] = [];
-  for (let i = 0; i < 6; i++) {
-    const a = pts[i], b = pts[(i + 1) % 6];
-    const dx = b[0] - a[0], dy = b[1] - a[1];
-    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
-    const idist = Math.sqrt((cx - mx) ** 2 + (cy - my) ** 2);
-    const inx = (cx - mx) / idist, iny = (cy - my) / idist;
-    
-    bonds.push(
-      <line
-        key={`b${i}`}
-        x1={(a[0] + dx * 0.09).toFixed(1)}
-        y1={(a[1] + dy * 0.09).toFixed(1)}
-        x2={(b[0] - dx * 0.09).toFixed(1)}
-        y2={(b[1] - dy * 0.09).toFixed(1)}
-        stroke="rgba(255,255,255,0.72)"
-        strokeWidth="1.8"
-      />
-    );
-    
-    if (i % 2 === 0) {
-      bonds.push(
-        <line
-          key={`d${i}`}
-          x1={(a[0] + dx * 0.18 + inx * bondOff).toFixed(1)}
-          y1={(a[1] + dy * 0.18 + iny * bondOff).toFixed(1)}
-          x2={(b[0] - dx * 0.18 + inx * bondOff).toFixed(1)}
-          y2={(b[1] - dy * 0.18 + iny * bondOff).toFixed(1)}
-          stroke="rgba(255,255,255,0.72)"
-          strokeWidth="1.8"
-        />
-      );
-    }
-  }
-  
-  // Acidic group at position 0 (top)
-  const [v0x, v0y] = pts[0];
-  const acidGroupSymbol = 
-    acidFamily === 'phenol' ? 'OH' :
-    acidFamily === 'benzoic' ? 'COOH' :
-    'NH₂';
-  
-  // Substituent position
-  const posIdx = position === 'ortho' ? 1 : position === 'meta' ? 2 : position === 'para' ? 3 : null;
-  
+function AliphaticStructure({ substituent, color, size = 130 }: { substituent: string; color: string; size?: number }) {
+  const subSymbol = subSymbolOf(substituent);
+  const w = 200, h = 100;
+  const subWidth = substituent === 'H' ? 0 : subSymbol.length * 10;
+  const startX = 20;
+  const bondStart = startX + subWidth + (substituent === 'H' ? 0 : 8);
+
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} width={w} height={h} style={{ overflow: 'visible', display: 'block', margin: '0 auto' }}>
-      {bonds}
-      
-      {/* Acidic group */}
-      <line x1={v0x} y1={v0y - 2} x2={v0x} y2={v0y - 18} stroke="rgba(255,255,255,0.6)" strokeWidth="1.8" />
-      <text x={v0x} y={v0y - 24} textAnchor="middle" fontSize="14" fontWeight="700" fill="rgba(255,255,255,0.9)">
-        {acidGroupSymbol}
-      </text>
-      
-      {/* Substituent */}
-      {posIdx !== null && substituent !== 'H' && (
-        <>
-          {(() => {
-            const [vsx, vsy] = pts[posIdx];
-            const odx = vsx - cx, ody = vsy - cy;
-            const olen = Math.sqrt(odx ** 2 + ody ** 2);
-            const ux = odx / olen, uy = ody / olen;
-            const ta = ux > 0.35 ? 'start' : ux < -0.35 ? 'end' : 'middle';
-            
-            return (
-              <>
-                <line
-                  x1={(vsx + ux * 4).toFixed(1)}
-                  y1={(vsy + uy * 4).toFixed(1)}
-                  x2={(vsx + ux * 22).toFixed(1)}
-                  y2={(vsy + uy * 22).toFixed(1)}
-                  stroke={color}
-                  strokeWidth="1.8"
-                />
-                <text
-                  x={(vsx + ux * 32).toFixed(1)}
-                  y={(vsy + uy * 32 + 4).toFixed(1)}
-                  textAnchor={ta}
-                  fontSize="14"
-                  fontWeight="700"
-                  fill={color}
-                >
-                  {subSymbol}
-                </text>
-              </>
-            );
-          })()}
-        </>
+    <svg viewBox={`0 0 ${w} ${h}`} width={size} height={size * (h / w)} style={{ display: 'block', overflow: 'visible' }}>
+      {substituent !== 'H' && (
+        <text x={startX} y="50" fontSize="15" fontWeight="600" fill={color} dominantBaseline="middle" fontFamily={SANS}>
+          {subSymbol}
+        </text>
       )}
-      
-      {/* Position indicators */}
-      {['ortho', 'meta', 'para'].map((p, idx) => {
-        const vi = idx + 1;
-        const [vx, vy] = pts[vi];
-        const isActive = position === p;
-        return (
-          <circle
-            key={p}
-            cx={vx}
-            cy={vy}
-            r={isActive ? 5.5 : 3.5}
-            fill={isActive ? color : 'rgba(255,255,255,0.12)'}
-            stroke={isActive ? 'none' : 'rgba(255,255,255,0.25)'}
-            strokeWidth="1"
-          />
-        );
-      })}
+      <line x1={bondStart} y1="50" x2={bondStart + 18} y2="50" stroke="#c2cad6" strokeWidth="2" strokeLinecap="round" />
+      <text x={bondStart + 22} y="50" fontSize="14" fill="#c2cad6" dominantBaseline="middle" fontFamily={SANS}>CH₂</text>
+      <line x1={bondStart + 54} y1="50" x2={bondStart + 72} y2="50" stroke="#c2cad6" strokeWidth="2" strokeLinecap="round" />
+      <text x={bondStart + 76} y="50" fontSize="15" fontWeight="600" fill="#c2cad6" dominantBaseline="middle" fontFamily={SANS}>COOH</text>
     </svg>
   );
 }
 
-// ── COMPOUND SLOT TILE ────────────────────────────────────────────────────────
+// Renders the correct structure for a slot (aromatic ring or aliphatic chain).
+function StructureFor({ slot, size }: { slot: CompoundSlot; size: number }) {
+  const tone = subType(slot.substituent);
+  if (slot.acidFamily === 'aliphatic') {
+    return <AliphaticStructure substituent={slot.substituent} color={TYPE_COLORS[tone]} size={size} />;
+  }
+  const isNone = slot.substituent === 'H' || slot.position === null;
+  return (
+    <Molecule
+      core={coreSymbol(slot.acidFamily)}
+      sub={isNone ? '' : subSymbolOf(slot.substituent)}
+      position={(slot.position ?? 'none') as MoleculePosition}
+      tone={tone}
+      stroke="#c2cad6"
+      size={size}
+    />
+  );
+}
 
-function CompoundSlotTile({
+// ── COMPOUND CARD ───────────────────────────────────────────────────────────────
+
+function classChipStyle(col: string): React.CSSProperties {
+  return {
+    font: `600 9.5px ${MONO}`,
+    color: col,
+    background: `${col}1f`,
+    borderRadius: 5,
+    padding: '2px 7px',
+    letterSpacing: '.03em',
+    whiteSpace: 'nowrap',
+  };
+}
+
+function posBtnStyle(active: boolean): React.CSSProperties {
+  return {
+    flex: 1,
+    textAlign: 'center',
+    font: `${active ? 600 : 500} 10px ${MONO}`,
+    textTransform: 'uppercase',
+    color: active ? ACCENT_TEXT : TXT_MUTED,
+    background: active ? 'rgba(78,140,255,.18)' : 'rgba(255,255,255,.03)',
+    border: `1px solid ${active ? 'rgba(78,140,255,.4)' : 'rgba(255,255,255,.06)'}`,
+    borderRadius: 6,
+    padding: '4px 0',
+    cursor: 'pointer',
+    transition: 'all .15s',
+  };
+}
+
+function CompoundCard({
   slot,
   slotIdx,
   isActive,
@@ -334,143 +269,139 @@ function CompoundSlotTile({
   onActivate: () => void;
   onUpdateSlot: (updates: Partial<CompoundSlot>) => void;
 }) {
-  const col = SLOT_COLORS[slotIdx];
   const data = getCompoundData(slot);
   const acL = acidLabel(data.pKa, slot.acidFamily);
-  
+  const tone = subType(slot.substituent);
+
   return (
     <div
       onClick={onActivate}
+      title={`${data.dataSource === 'EXPERIMENTAL' ? 'Experimental' : 'Calculated'} · ${data.reference}`}
       style={{
-        borderRadius: 10,
-        padding: '11px 11px 9px',
-        background: isActive ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.03)',
-        border: `1px solid ${isActive ? col : 'rgba(255,255,255,0.08)'}`,
+        background: isActive ? SURFACE_CARD_SEL : SURFACE_CARD,
+        border: `1px solid ${isActive ? 'rgba(78,140,255,.55)' : BORDER}`,
+        borderRadius: 12,
+        padding: 14,
         cursor: 'pointer',
-        transition: 'all .2s',
+        transition: 'border-color .15s',
+        boxShadow: isActive ? '0 0 0 1px rgba(78,140,255,.25)' : 'none',
       }}
     >
-      {/* Header */}
-      <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: isActive ? col : 'rgba(255,255,255,0.3)', marginBottom: 6 }}>
-        Compound {slotIdx + 1}
+      {/* Header: label + tone dot */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+        <span style={{ font: `600 9.5px ${MONO}`, letterSpacing: '.1em', color: TXT_MUTED }}>
+          COMPOUND {slotIdx + 1}
+        </span>
+        <span style={{ width: 8, height: 8, borderRadius: '50%', background: TYPE_COLORS[tone] }} />
       </div>
-      
-      {/* Compound name and pKa */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, marginBottom: 8 }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.92)', lineHeight: 1.2, marginBottom: 2 }}>
-            {data.compoundName}
-          </div>
-          <div style={{ fontSize: 11.5, fontWeight: 600, color: acL.col }}>{acL.txt}</div>
-        </div>
-        <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, opacity: 0.35, letterSpacing: '.05em', marginBottom: 1 }}>pKₐ</div>
-          <div className="font-mono" style={{ fontSize: 20, fontWeight: 800, color: isActive ? col : 'rgba(255,255,255,0.6)', lineHeight: 1 }}>
-            {data.pKa.toFixed(2)}
-          </div>
-        </div>
+
+      {/* Name */}
+      <div style={{ font: `600 15px ${SANS}`, color: TXT_PRIMARY, marginBottom: 3 }}>
+        {data.compoundName}
       </div>
-      
-      {/* Data quality badge */}
-      <div style={{ marginBottom: 8 }}>
-        {data.dataSource === 'EXPERIMENTAL' ? (
-          <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 12, background: 'rgba(34,197,94,0.15)', color: '#4ade80', border: '1px solid rgba(34,197,94,0.3)' }}>
-            🟢 EXPERIMENTAL
-          </span>
-        ) : (
-          <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 12, background: 'rgba(251,146,60,0.15)', color: '#fb923c', border: '1px solid rgba(251,146,60,0.3)' }}>
-            🟡 CALCULATED
-          </span>
-        )}
-        <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginLeft: 6 }}>{data.reference}</span>
+
+      {/* Class chip + pKa */}
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 12 }}>
+        <span style={classChipStyle(acL.col)}>{acL.txt}</span>
+        <span style={{ font: `600 22px ${MONO}`, color: TXT_PRIMARY, letterSpacing: '-.02em' }}>
+          {data.pKa.toFixed(2)}
+        </span>
       </div>
-      
-      {/* Structure visualization */}
-      <StructureSVG
-        acidFamily={slot.acidFamily}
-        substituent={slot.substituent}
-        position={slot.position}
-        color={col}
-      />
-      
-      {/* Position selector (only for aromatic acids) */}
+
+      {/* Molecule well */}
+      <div style={{ background: SURFACE_WELL, border: `1px solid ${BORDER_SUBTLE}`, borderRadius: 9, height: 150, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 11 }}>
+        <StructureFor slot={slot} size={130} />
+      </div>
+
+      {/* Position toggle (aromatic only) */}
       {slot.acidFamily !== 'aliphatic' && (
-        <div style={{ display: 'flex', gap: 4, marginTop: 8 }}>
-          {(['ortho', 'meta', 'para'] as Position[]).map(p => {
-            const isOn = slot.position === p;
-            return (
-              <button
-                key={p}
-                onClick={e => {
-                  e.stopPropagation();
-                  onUpdateSlot({ position: p });
-                }}
-                style={{
-                  flex: 1,
-                  padding: '5px 0',
-                  borderRadius: 5,
-                  fontSize: 12.5,
-                  fontWeight: isOn ? 700 : 500,
-                  cursor: 'pointer',
-                  letterSpacing: '.02em',
-                  border: `1px solid ${isOn ? col : 'rgba(255,255,255,0.12)'}`,
-                  background: isOn ? col : 'rgba(255,255,255,0.03)',
-                  color: isOn ? '#1a1a1a' : 'rgba(255,255,255,0.4)',
-                  transition: 'all .15s',
-                }}
-              >
-                {p.charAt(0).toUpperCase() + p.slice(1, 4)}
-              </button>
-            );
-          })}
+        <div style={{ display: 'flex', gap: 4 }}>
+          {(['ortho', 'meta', 'para'] as Position[]).map(p => (
+            <button
+              key={p}
+              title={p.charAt(0).toUpperCase() + p.slice(1)}
+              onClick={e => { e.stopPropagation(); onUpdateSlot({ position: p }); }}
+              style={posBtnStyle(slot.position === p)}
+            >
+              {p.charAt(0)}
+            </button>
+          ))}
         </div>
       )}
     </div>
   );
 }
 
-// ── SUBSTITUENT SELECTOR ──────────────────────────────────────────────────────
+// ── ACID FAMILY SELECTOR ────────────────────────────────────────────────────────
 
-function SubstituentSelector({
-  activeSubstituent,
-  onSelect,
-}: {
-  activeSubstituent: string;
-  onSelect: (id: string) => void;
-}) {
-  const typeStyles = {
-    ewg: { border: 'rgba(251, 146, 60, 0.25)', col: 'rgba(251, 146, 60, 0.65)', selBg: 'rgba(251, 146, 60, 0.15)', selBorder: 'rgba(251, 146, 60, 0.5)', selCol: '#fb923c' },
-    edg: { border: 'rgba(16, 185, 129, 0.25)', col: 'rgba(16, 185, 129, 0.65)', selBg: 'rgba(16, 185, 129, 0.15)', selBorder: 'rgba(16, 185, 129, 0.5)', selCol: '#10b981' },
-    neutral: { border: 'rgba(99, 102, 241, 0.25)', col: 'rgba(99, 102, 241, 0.65)', selBg: 'rgba(99, 102, 241, 0.15)', selBorder: 'rgba(99, 102, 241, 0.5)', selCol: '#818cf8' },
-  };
-  
+function AcidFamilySelector({ active, onSelect }: { active: AcidFamily; onSelect: (id: AcidFamily) => void }) {
   return (
-    <div style={{ marginBottom: 20 }}>
-      <div style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 12 }}>
-        Substituent · <span style={{ color: '#fb923c' }}>● EWG</span> <span style={{ color: '#10b981' }}>● EDG</span> <span style={{ color: '#6366f1' }}>● Neutral</span>
+    <div style={{ marginBottom: 22 }}>
+      <div style={{ font: `600 10px ${MONO}`, letterSpacing: '.14em', color: TXT_MUTED, marginBottom: 10 }}>ACID FAMILY</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10 }}>
+        {ACID_FAMILIES.map(fam => {
+          const isActive = active === fam.id;
+          return (
+            <button
+              key={fam.id}
+              onClick={() => onSelect(fam.id)}
+              style={{
+                textAlign: 'left',
+                background: isActive ? ACCENT_TINT : SURFACE_CARD,
+                border: `1px solid ${isActive ? 'rgba(78,140,255,.5)' : BORDER}`,
+                borderRadius: 11,
+                padding: '12px 13px',
+                cursor: 'pointer',
+                transition: 'border-color .15s',
+              }}
+            >
+              <div style={{ font: `600 13.5px ${SANS}`, color: isActive ? ACCENT_TEXT : '#c3ccd9', marginBottom: 4 }}>{fam.label}</div>
+              <div style={{ font: `400 10.5px ${SANS}`, color: TXT_FAINT, lineHeight: 1.35 }}>{fam.formula}</div>
+            </button>
+          );
+        })}
       </div>
-      
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+    </div>
+  );
+}
+
+// ── SUBSTITUENT SELECTOR ────────────────────────────────────────────────────────
+
+function SubstituentSelector({ active, onSelect }: { active: string; onSelect: (id: string) => void }) {
+  const legend: { tone: MoleculeTone; label: string }[] = [
+    { tone: 'ewg', label: 'EWG' },
+    { tone: 'edg', label: 'EDG' },
+    { tone: 'neutral', label: 'NEUTRAL' },
+  ];
+  return (
+    <div style={{ marginBottom: 22 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 11, flexWrap: 'wrap' }}>
+        <span style={{ font: `600 10px ${MONO}`, letterSpacing: '.14em', color: TXT_MUTED }}>SUBSTITUENT</span>
+        {legend.map(l => (
+          <span key={l.tone} style={{ display: 'flex', alignItems: 'center', gap: 5, font: `500 10px ${MONO}`, color: TYPE_COLORS[l.tone] }}>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: TYPE_COLORS[l.tone] }} />{l.label}
+          </span>
+        ))}
+      </div>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
         {ALL_SUBSTITUENTS.map(sub => {
-          const type = SUBSTITUENT_GROUPS.ewg.includes(sub) ? 'ewg' : SUBSTITUENT_GROUPS.edg.includes(sub) ? 'edg' : 'neutral';
-          const ts = typeStyles[type];
-          const isSel = sub.id === activeSubstituent;
-          
+          const tone = subType(sub.id);
+          const col = TYPE_COLORS[tone];
+          const isSel = sub.id === active;
           return (
             <button
               key={sub.id}
               onClick={() => onSelect(sub.id)}
               style={{
-                padding: '6px 12px',
+                font: `${isSel ? 600 : 500} 12px ${MONO}`,
+                color: isSel ? '#0E1319' : col,
+                background: isSel ? col : `${col}12`,
+                border: `1px solid ${isSel ? col : `${col}4d`}`,
                 borderRadius: 8,
-                fontSize: 12.5,
+                padding: '6px 11px',
                 cursor: 'pointer',
-                fontWeight: isSel ? 700 : 500,
-                letterSpacing: '.02em',
-                border: `1px solid ${isSel ? ts.selBorder : ts.border}`,
-                background: isSel ? ts.selBg : 'rgba(255,255,255,0.03)',
-                color: isSel ? ts.selCol : ts.col,
-                transition: 'all .2s cubic-bezier(0.4, 0, 0.2, 1)',
+                transition: 'all .15s',
               }}
             >
               {sub.symbol}
@@ -482,86 +413,84 @@ function SubstituentSelector({
   );
 }
 
-// ── COMPARISON CHART ──────────────────────────────────────────────────────────
+// ── pKa COMPARISON (gradient ranked bars) ────────────────────────────────────────
+
+const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
 
 function ComparisonChart({ slots }: { slots: CompoundSlot[] }) {
   const dataPoints = slots.map((slot, i) => ({
     ...getCompoundData(slot),
     slotIdx: i,
-    color: SLOT_COLORS[i],
+    tone: subType(slot.substituent),
   }));
-  
-  const pkas = dataPoints.map(d => d.pKa);
-  const pMin = Math.min(...pkas);
-  const pMax = Math.max(...pkas);
-  
+
+  // Fixed pKa domain from the handoff (6.5–11), widened only if real data
+  // falls outside so bars never overflow or vanish.
+  const allP = dataPoints.map(d => d.pKa);
+  const SMIN = Math.min(6.5, ...allP);
+  const SMAX = Math.max(11, ...allP);
+
+  const ranked = [...dataPoints].sort((a, b) => a.pKa - b.pKa);
+
   return (
-    <div className="mt-6 overflow-x-auto pb-2">
-      <div className="min-w-[500px]">
-        <div style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>
-          pKₐ Comparison
-        </div>
-        
-        {dataPoints.map((d, idx) => {
+    <div style={{ background: SURFACE_PANEL, border: `1px solid ${DIVIDER}`, borderRadius: 12, padding: '18px 22px', marginBottom: 16, overflowX: 'auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18, gap: 12, minWidth: 460 }}>
+        <span style={{ font: `600 10px ${MONO}`, letterSpacing: '.14em', color: TXT_SECONDARY }}>pKₐ COMPARISON</span>
+        <span style={{ font: `400 10.5px ${SANS}`, color: TXT_MUTED }}>ranked · longer bar = more acidic</span>
+      </div>
+
+      <div style={{ minWidth: 460 }}>
+        {ranked.map((d, idx) => {
           const acL = acidLabel(d.pKa, d.acidFamily);
-          const w = pMax === pMin ? 60 : Math.round(30 + 60 * (pMax - d.pKa) / (pMax - pMin));
-          
+          const barPct = clamp(((SMAX - d.pKa) / (SMAX - SMIN)) * 100, 2, 100);
           return (
-            <div
-              key={idx}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                padding: '8px 0',
-                borderBottom: idx < dataPoints.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
-              }}
-            >
-              <span style={{ fontSize: 12.5, fontWeight: 700, color: 'rgba(255,255,255,0.3)', minWidth: 24 }}>
-                #{d.slotIdx + 1}
+            <div key={d.slotIdx} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: idx < ranked.length - 1 ? 12 : 0 }}>
+              <span style={{ font: `500 10px ${MONO}`, color: TXT_MUTED, width: 16 }}>#{idx + 1}</span>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: TYPE_COLORS[d.tone], flex: 'none' }} />
+              <span style={{ width: 118, flex: 'none', font: `500 12.5px ${SANS}`, color: '#c8cfda', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.compoundName}</span>
+              <span style={{ flex: 1, height: 9, borderRadius: 5, background: 'rgba(255,255,255,.045)', overflow: 'hidden' }}>
+                <span style={{ display: 'block', height: '100%', width: `${barPct}%`, background: TYPE_GRADIENTS[d.tone], borderRadius: 5, transition: 'width .5s cubic-bezier(.34,1.56,.64,1)' }} />
               </span>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: d.color, flexShrink: 0 }} />
-              <span style={{ fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.9)', minWidth: 140, flexShrink: 0 }}>
-                {d.compoundName}
-              </span>
-              <div style={{ flex: 1, height: 28, background: 'rgba(255,255,255,0.04)', borderRadius: 6, overflow: 'hidden', position: 'relative' }}>
-                <div
-                  style={{
-                    height: '100%',
-                    width: `${w}%`,
-                    background: `linear-gradient(90deg, ${d.color}66, ${d.color}dd)`,
-                    borderRadius: 6,
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '0 10px',
-                    transition: 'all .6s cubic-bezier(.34,1.56,.64,1)',
-                  }}
-                >
-                  <span className="font-mono" style={{ fontSize: 12.5, fontWeight: 700, color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>
-                    {d.pKa.toFixed(2)}
-                  </span>
-                </div>
-              </div>
-              <span
-                style={{
-                  fontSize: 12.5,
-                  fontWeight: 700,
-                  padding: '3px 10px',
-                  borderRadius: 20,
-                  whiteSpace: 'nowrap',
-                  minWidth: 110,
-                  textAlign: 'center',
-                  color: acL.col,
-                  background: `${acL.col}15`,
-                  border: `1px solid ${acL.col}25`,
-                }}
-              >
-                {acL.txt}
-              </span>
+              <span style={{ font: `600 13px ${MONO}`, color: TXT_PRIMARY, width: 44, textAlign: 'right' }}>{d.pKa.toFixed(2)}</span>
+              <span style={classChipStyle(acL.col)}>{acL.txt}</span>
             </div>
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// ── SELECTED-COMPOUND DETAIL ─────────────────────────────────────────────────────
+
+function DetailPanel({ slot }: { slot: CompoundSlot }) {
+  const data = getCompoundData(slot);
+  return (
+    <div style={{ background: SURFACE_PANEL, border: `1px solid ${DIVIDER}`, borderRadius: 12, padding: '18px 22px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 26, flexWrap: 'wrap' }}>
+        <div style={{ width: 70, height: 70, flex: 'none', background: SURFACE_WELL, border: `1px solid ${BORDER_SUBTLE}`, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <StructureFor slot={slot} size={60} />
+        </div>
+        <div style={{ flex: 1, minWidth: 180 }}>
+          <div style={{ font: `600 10px ${MONO}`, letterSpacing: '.12em', color: TXT_MUTED, marginBottom: 5 }}>SELECTED COMPOUND</div>
+          <div style={{ font: `600 17px ${SANS}`, color: ACCENT_TEXT }}>{data.compoundName}</div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ font: `400 11px ${SANS}`, color: TXT_SECONDARY, marginBottom: 3 }}>
+            {data.dataSource === 'EXPERIMENTAL' ? 'experimental' : 'calculated'} pKₐ · {data.reference}
+          </div>
+          <div style={{ font: `600 26px ${MONO}`, color: TXT_PRIMARY, letterSpacing: '-.02em' }}>{data.pKa.toFixed(2)}</div>
+        </div>
+      </div>
+
+      {data.hammettResult && (
+        <div style={{ marginTop: 16, padding: 14, borderRadius: 10, background: 'rgba(228,168,69,.07)', border: '1px solid rgba(228,168,69,.2)' }}>
+          <div style={{ font: `600 10px ${MONO}`, letterSpacing: '.08em', color: 'rgba(228,168,69,.85)', marginBottom: 6 }}>HAMMETT CALCULATION</div>
+          <pre style={{ font: `400 12px ${MONO}`, color: '#97a0ae', lineHeight: 1.6, whiteSpace: 'pre-wrap', margin: 0 }}>
+            {getHammettExplanation(data.hammettResult, data.acidFamily)}
+          </pre>
+        </div>
+      )}
     </div>
   );
 }
@@ -577,68 +506,33 @@ export default function UniversalAcidityLab() {
     { acidFamily: 'phenol', substituent: 'H', position: null },
   ]);
   const [activeSlot, setActiveSlot] = useState(0);
-  
-  // Update all slots when acid family changes
+
   const handleAcidFamilyChange = (newFamily: AcidFamily) => {
     setAcidFamily(newFamily);
     setSlots(prev => prev.map(slot => ({
       ...slot,
       acidFamily: newFamily,
-      // Aliphatic acids don't have positions (no ortho/meta/para)
       position: newFamily === 'aliphatic' ? null : (slot.position || 'para'),
     })));
   };
-  
+
   const handleUpdateSlot = (slotIdx: number, updates: Partial<CompoundSlot>) => {
-    setSlots(prev => prev.map((slot, i) => i === slotIdx ? { ...slot, ...updates } : slot));
+    setSlots(prev => prev.map((slot, i) => (i === slotIdx ? { ...slot, ...updates } : slot)));
   };
-  
-  const activeSlotData = getCompoundData(slots[activeSlot]);
-  
+
   return (
-    <div>
-      {/* Acid family selector */}
-      <div style={{ marginBottom: 20 }}>
-        <div style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 10 }}>
-          Acid Family
-        </div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {ACID_FAMILIES.map(fam => {
-            const isActive = acidFamily === fam.id;
-            return (
-              <button
-                key={fam.id}
-                onClick={() => handleAcidFamilyChange(fam.id)}
-                style={{
-                  padding: '10px 18px',
-                  borderRadius: 10,
-                  fontSize: 14,
-                  fontWeight: isActive ? 700 : 500,
-                  cursor: 'pointer',
-                  border: `1px solid ${isActive ? 'rgba(139,92,246,0.5)' : 'rgba(255,255,255,0.12)'}`,
-                  background: isActive ? 'rgba(139,92,246,0.2)' : 'rgba(255,255,255,0.03)',
-                  color: isActive ? '#c4b5fd' : 'rgba(255,255,255,0.5)',
-                  transition: 'all .2s',
-                }}
-              >
-                <div>{fam.label}</div>
-                <div style={{ fontSize: 11, opacity: 0.6, marginTop: 2 }}>{fam.description}</div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-      
-      {/* Substituent selector */}
+    <div style={{ fontFamily: SANS, color: TXT_PRIMARY }}>
+      <AcidFamilySelector active={acidFamily} onSelect={handleAcidFamilyChange} />
+
       <SubstituentSelector
-        activeSubstituent={slots[activeSlot].substituent}
+        active={slots[activeSlot].substituent}
         onSelect={sub => handleUpdateSlot(activeSlot, { substituent: sub, position: sub === 'H' ? null : slots[activeSlot].position || 'para' })}
       />
-      
-      {/* Compound slots */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
+
+      {/* Compound cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 26 }} className="acidlab-cards">
         {slots.map((slot, i) => (
-          <CompoundSlotTile
+          <CompoundCard
             key={i}
             slot={slot}
             slotIdx={i}
@@ -648,55 +542,34 @@ export default function UniversalAcidityLab() {
           />
         ))}
       </div>
-      
-      {/* Comparison chart */}
+
       <ComparisonChart slots={slots} />
-      
-      {/* Detail panel for active compound */}
-      <div style={{ marginTop: 20, padding: 20, borderRadius: 12, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-        <div style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 12 }}>
-          Compound {activeSlot + 1} Details
-        </div>
-        
-        <div style={{ fontSize: 18, fontWeight: 700, color: SLOT_COLORS[activeSlot], marginBottom: 8 }}>
-          {activeSlotData.compoundName}
-        </div>
-        
-        <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>
-          pKₐ = {activeSlotData.pKa.toFixed(2)} · {activeSlotData.reference}
-        </div>
-        
-        {activeSlotData.hammettResult && (
-          <div style={{ padding: 14, borderRadius: 8, background: 'rgba(251,146,60,0.08)', border: '1px solid rgba(251,146,60,0.2)', marginTop: 12 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(251,146,60,0.8)', marginBottom: 6 }}>
-              Hammett Calculation
-            </div>
-            <pre style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, whiteSpace: 'pre-wrap', fontFamily: 'var(--font-geist-mono), monospace' }}>
-              {getHammettExplanation(activeSlotData.hammettResult, activeSlotData.acidFamily)}
-            </pre>
-          </div>
-        )}
-      </div>
-      
+
+      <DetailPanel slot={slots[activeSlot]} />
+
       {/* Educational Content Section */}
-      <div style={{ marginTop: 48, paddingTop: 32, borderTop: '2px solid rgba(255,255,255,0.08)' }}>
+      <div style={{ marginTop: 48, paddingTop: 32, borderTop: `1px solid ${DIVIDER}` }}>
         <div style={{ marginBottom: 24 }}>
-          <h2 style={{ fontSize: 22, fontWeight: 700, color: 'rgba(255,255,255,0.9)', marginBottom: 8 }}>
-            📊 Acidity Patterns & Trends
+          <h2 style={{ font: `600 20px ${SANS}`, color: TXT_PRIMARY, margin: '0 0 8px' }}>
+            Acidity Patterns &amp; Trends
           </h2>
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>
+          <p style={{ font: `400 13px ${SANS}`, color: TXT_SECONDARY, lineHeight: 1.6, margin: 0 }}>
             Understanding the factors that influence acid strength: electronic effects, geometry, and structural features.
           </p>
         </div>
-        
-        {/* Heat map table */}
+
         <AcidityHeatMap />
-        
-        {/* Vertical layout for educational sections */}
+
         <div style={{ marginTop: 48 }}>
           <OrthoEffectSection />
         </div>
       </div>
+
+      {/* Responsive: stack cards on narrow screens */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 860px) { .acidlab-cards { grid-template-columns: repeat(2,1fr) !important; } }
+        @media (max-width: 480px) { .acidlab-cards { grid-template-columns: 1fr !important; } }
+      ` }} />
     </div>
   );
 }

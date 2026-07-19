@@ -2,130 +2,128 @@
 
 import { useState } from 'react';
 import { CA_DATA, type CaRow } from './acidity-lab-data2';
+import Molecule, { MOLECULE_TONE_COLORS, type MoleculeTone, type MoleculePosition } from './Molecule';
 
 type SortCol = 'y' | 'acetic' | 'ortho' | 'meta' | 'para';
 type HL = { y: string; col: SortCol } | null;
 
-// Heat map background color based on pKa value
-function heatBg(v: number | null, sel: boolean): string {
-  if (v === null) return 'rgba(255,255,255,0.03)';
-  const t = Math.max(0, Math.min(1, (v - 2.0) / 3.0));
-  let r: number, g: number, b: number;
+// ── Design tokens (handoff 1a — Slate & Blue) ───────────────────────────────────
+const SANS = "var(--font-ibm-plex-sans), 'IBM Plex Sans', system-ui, sans-serif";
+const MONO = "var(--font-geist-mono), 'Geist Mono', monospace";
+const SURFACE_WELL = '#10151C';
+const SURFACE_PANEL = '#12181F';
+const BORDER = 'rgba(255,255,255,.07)';
+const BORDER_SUBTLE = 'rgba(255,255,255,.05)';
+const TXT_PRIMARY = '#E6EAF0';
+const TXT_SECONDARY = '#8a94a3';
+const TXT_MUTED = '#5e6774';
 
+// ── Heat scale: strong acid (red) → amber → weak acid (blue). ───────────────────
+// A warm-red → amber → periwinkle-blue ramp; the blue endpoint keeps a moderate
+// green channel so the amber→blue transition passes through warm taupe, never the
+// muddy olive-green the old scale produced.
+const HEAT_STOPS: [number, number, number][] = [
+  [216, 80, 78],   // strong  (#D8504E)
+  [228, 168, 69],  // mid amber (#E4A845)
+  [95, 130, 210],  // weak    (#5F82D2)
+];
+
+function heatRGB(v: number): [number, number, number] {
+  const t = Math.max(0, Math.min(1, (v - 2.0) / 3.0));
+  const [a, b, c] = HEAT_STOPS;
+  const lerp = (x: number, y: number, s: number) => Math.round(x + (y - x) * s);
   if (t < 0.5) {
     const s = t / 0.5;
-    r = Math.round(235 + s * 20);
-    g = Math.round(95 + s * 95);
-    b = Math.round(95 - s * 55);
-  } else {
-    const s = (t - 0.5) / 0.5;
-    r = Math.round(255 - s * 175);
-    g = Math.round(190 - s * 30);
-    b = Math.round(40 + s * 160);
+    return [lerp(a[0], b[0], s), lerp(a[1], b[1], s), lerp(a[2], b[2], s)];
   }
+  const s = (t - 0.5) / 0.5;
+  return [lerp(b[0], c[0], s), lerp(b[1], c[1], s), lerp(b[2], c[2], s)];
+}
 
-  return `rgba(${r},${g},${b},${sel ? 0.95 : 0.75})`;
+function heatBg(v: number | null, sel: boolean): string {
+  if (v === null) return 'rgba(255,255,255,0.03)';
+  const [r, g, b] = heatRGB(v);
+  return `rgba(${r},${g},${b},${sel ? 0.96 : 0.82})`;
 }
 
 function heatText(v: number | null): string {
   if (v === null) return 'rgba(255,255,255,0.2)';
-  return '#ffffff';
+  const [r, g, b] = heatRGB(v);
+  const L = 0.299 * r + 0.587 * g + 0.114 * b;
+  return L > 165 ? '#10151C' : '#ffffff'; // dark ink on the brightest amber cells
 }
 
-// Structure viewer for selected cell
-function StructureViewer({ hl }: { hl: HL }) {
-  if (!hl) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 200, color: 'rgba(255,255,255,0.22)', fontSize: 14, textAlign: 'center', lineHeight: 2 }}>
-      Click any cell in the table<br />to see the structure
-    </div>
+function toneColor(type: string): string {
+  return MOLECULE_TONE_COLORS[type as MoleculeTone] ?? MOLECULE_TONE_COLORS.neutral;
+}
+
+// ── Linear aliphatic structure (Y–CH₂–COOH) ─────────────────────────────────────
+function AliphaticStructure({ label, color }: { label: string; color: string }) {
+  const subWidth = label === 'H' ? 0 : label.length * 9;
+  const startX = 30;
+  const bondStart = startX + subWidth + (label === 'H' ? 0 : 6);
+  return (
+    <svg width="190" height="64" viewBox="0 0 190 64" style={{ overflow: 'visible', display: 'block' }}>
+      {label !== 'H' && (
+        <text x={startX} y="32" fontSize="15" fontWeight="600" fill={color} dominantBaseline="middle" fontFamily={SANS}>{label}</text>
+      )}
+      <line x1={bondStart} y1="32" x2={bondStart + 18} y2="32" stroke="#c2cad6" strokeWidth="2" strokeLinecap="round" />
+      <text x={bondStart + 22} y="32" fontSize="14" fill="#c2cad6" dominantBaseline="middle" fontFamily={SANS}>CH₂</text>
+      <line x1={bondStart + 54} y1="32" x2={bondStart + 72} y2="32" stroke="#c2cad6" strokeWidth="2" strokeLinecap="round" />
+      <text x={bondStart + 76} y="32" fontSize="15" fontWeight="600" fill="#c2cad6" dominantBaseline="middle" fontFamily={SANS}>COOH</text>
+    </svg>
   );
+}
 
-  const row = CA_DATA.find(r => r.y === hl.y)!;
-  const typeCol = row.type === 'ewg' ? '#e57373' : row.type === 'edg' ? '#34c759' : '#5856d6';
-  const v = hl.col === 'y' ? null : row[hl.col as keyof CaRow] as number | null;
-  const isAcetic = hl.col === 'acetic';
-  const posLabel = isAcetic ? 'Aliphatic' : hl.col.charAt(0).toUpperCase() + hl.col.slice(1);
-  const mech = row.type === 'ewg' ? 'EWG — stabilises carboxylate anion, increases acidity' : row.type === 'edg' ? 'EDG — destabilises carboxylate anion, decreases acidity' : 'Neutral — no significant electronic effect';
-
-  if (isAcetic) {
-    const subWidth = row.y.length * 8;
-    const startX = 50;
-    const bondStart = startX + subWidth + 4;
+// ── Structure viewer for the selected cell ──────────────────────────────────────
+function StructureViewer({ hl }: { hl: HL }) {
+  if (!hl) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-        {/* Structure */}
-        <svg width="180" height="60" viewBox="0 0 180 60" style={{ overflow: 'visible', display: 'block' }}>
-          <text x={startX} y="30" fontSize="14" fontWeight="700" fill={typeCol} dominantBaseline="middle">{row.y}</text>
-          <line x1={bondStart} y1="30" x2={bondStart + 16} y2="30" stroke="rgba(255,255,255,0.5)" strokeWidth="1.8" />
-          <text x={bondStart + 20} y="30" fontSize="13" fill="rgba(255,255,255,0.75)" dominantBaseline="middle">CH₂</text>
-          <line x1={bondStart + 48} y1="30" x2={bondStart + 64} y2="30" stroke="rgba(255,255,255,0.5)" strokeWidth="1.8" />
-          <text x={bondStart + 68} y="30" fontSize="14" fontWeight="600" fill="rgba(255,255,255,0.9)" dominantBaseline="middle">COOH</text>
-        </svg>
-        
-        {/* pKa value */}
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: typeCol, marginBottom: 4, letterSpacing: '.04em' }}>{posLabel} · {row.y}</div>
-          <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 8 }}>
-            <span style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.45)' }}>pKₐ =</span>
-            <span style={{ fontSize: 24, fontWeight: 800, fontFamily: 'var(--font-geist-mono),monospace', color: '#fff', lineHeight: 1 }}>{v !== null ? (v as number).toFixed(2) : '—'}</span>
-          </div>
-        </div>
-        
-        {/* Explanation */}
-        <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', width: '100%' }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '.06em' }}>Mechanism</div>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5 }}>{mech}</div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 6, fontStyle: 'italic' }}>Inductive effect only — no resonance stabilization</div>
-        </div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 210, color: 'rgba(255,255,255,0.24)', font: `400 13px ${SANS}`, textAlign: 'center', lineHeight: 2 }}>
+        Click any cell in the table<br />to see the structure
       </div>
     );
   }
 
-  // Benzoic acid structure (benzene ring) - smaller size
-  const cx = 90, cy = 70, r = 32, bo = 3.5;
-  const pts = Array.from({ length: 6 }, (_, k) => { const a = -Math.PI / 2 + k * Math.PI / 3; return [cx + r * Math.cos(a), cy + r * Math.sin(a)] as [number, number]; });
-  const bonds: React.ReactNode[] = [];
-  for (let i = 0; i < 6; i++) {
-    const a = pts[i], b = pts[(i + 1) % 6], dx = b[0] - a[0], dy = b[1] - a[1];
-    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
-    const id2 = Math.sqrt((cx - mx) ** 2 + (cy - my) ** 2);
-    const inx = (cx - mx) / id2, iny = (cy - my) / id2;
-    bonds.push(<line key={`b${i}`} x1={(a[0] + dx * .09).toFixed(1)} y1={(a[1] + dy * .09).toFixed(1)} x2={(b[0] - dx * .09).toFixed(1)} y2={(b[1] - dy * .09).toFixed(1)} stroke="rgba(255,255,255,0.72)" strokeWidth="1.8" />);
-    if (i % 2 === 0) bonds.push(<line key={`d${i}`} x1={(a[0] + dx * .18 + inx * bo).toFixed(1)} y1={(a[1] + dy * .18 + iny * bo).toFixed(1)} x2={(b[0] - dx * .18 + inx * bo).toFixed(1)} y2={(b[1] - dy * .18 + iny * bo).toFixed(1)} stroke="rgba(255,255,255,0.72)" strokeWidth="1.8" />);
-  }
-  const [v0x, v0y] = pts[0];
-  const pi = hl.col === 'ortho' ? 1 : hl.col === 'meta' ? 2 : 3;
-  const [vsx, vsy] = pts[pi];
-  const odx = vsx - cx, ody = vsy - cy, olen = Math.sqrt(odx ** 2 + ody ** 2);
-  const ux = odx / olen, uy = ody / olen;
-  const ta = ux > 0.35 ? 'start' : ux < -0.35 ? 'end' : 'middle';
-  const lx = vsx + ux * 32, ly = vsy + uy * 32;
+  const row = CA_DATA.find(r => r.y === hl.y)!;
+  const tCol = toneColor(row.type);
+  const v = hl.col === 'y' ? null : (row[hl.col as keyof CaRow] as number | null);
+  const isAcetic = hl.col === 'acetic';
+  const posLabel = isAcetic ? 'Aliphatic' : hl.col.charAt(0).toUpperCase() + hl.col.slice(1);
+  const mech = row.type === 'ewg'
+    ? 'EWG — stabilises the carboxylate anion, increases acidity'
+    : row.type === 'edg'
+      ? 'EDG — destabilises the carboxylate anion, decreases acidity'
+      : 'Neutral — no significant electronic effect';
+  const note = isAcetic
+    ? 'Inductive effect only — no resonance stabilisation'
+    : 'Resonance stabilisation of the carboxylate anion through the benzene ring';
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-      {/* Structure */}
-      <svg width="180" height="120" viewBox="0 0 180 120" style={{ overflow: 'visible', display: 'block' }}>
-        {bonds}
-        <line x1={v0x.toFixed(1)} y1={(v0y - 2).toFixed(1)} x2={v0x.toFixed(1)} y2={(v0y - 22).toFixed(1)} stroke="rgba(255,255,255,0.65)" strokeWidth="1.8" />
-        <text x={v0x.toFixed(1)} y={(v0y - 30).toFixed(1)} textAnchor="middle" fontSize="14" fontWeight="700" fill="rgba(255,255,255,0.92)">COOH</text>
-        <line x1={(vsx + ux * 4).toFixed(1)} y1={(vsy + uy * 4).toFixed(1)} x2={(vsx + ux * 24).toFixed(1)} y2={(vsy + uy * 24).toFixed(1)} stroke={typeCol} strokeWidth="2" />
-        <text x={lx.toFixed(1)} y={ly.toFixed(1)} textAnchor={ta} dominantBaseline="middle" fontSize="14" fontWeight="700" fill={typeCol}>{row.y}</text>
-      </svg>
-      
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, width: '100%' }}>
+      {/* Structure — framed inset well */}
+      <div style={{ width: '100%', background: SURFACE_WELL, border: `1px solid ${BORDER_SUBTLE}`, borderRadius: 12, height: 170, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {isAcetic ? (
+          <AliphaticStructure label={row.y} color={tCol} />
+        ) : (
+          <Molecule core="COOH" sub={row.y === 'H' ? '' : row.y} position={hl.col as MoleculePosition} tone={row.type as MoleculeTone} stroke="#c2cad6" size={150} />
+        )}
+      </div>
+
       {/* pKa value */}
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 12, fontWeight: 600, color: typeCol, marginBottom: 4, letterSpacing: '.04em' }}>{posLabel} · {row.y}</div>
+        <div style={{ font: `500 11px ${MONO}`, letterSpacing: '.08em', textTransform: 'uppercase', color: tCol, marginBottom: 5 }}>{posLabel} · {row.y}</div>
         <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 8 }}>
-          <span style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.45)' }}>pKₐ =</span>
-          <span style={{ fontSize: 24, fontWeight: 800, fontFamily: 'var(--font-geist-mono),monospace', color: '#fff', lineHeight: 1 }}>{v !== null ? (v as number).toFixed(2) : '—'}</span>
+          <span style={{ font: `500 14px ${SANS}`, color: 'rgba(255,255,255,0.4)' }}>pKₐ =</span>
+          <span style={{ font: `600 26px ${MONO}`, color: TXT_PRIMARY, lineHeight: 1, letterSpacing: '-.02em' }}>{v !== null ? (v as number).toFixed(2) : '—'}</span>
         </div>
       </div>
-      
-      {/* Explanation */}
-      <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', width: '100%' }}>
-        <div style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '.06em' }}>Mechanism</div>
-        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5 }}>{mech}</div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 6, fontStyle: 'italic' }}>Resonance stabilization of carboxylate anion through benzene ring</div>
+
+      {/* Mechanism */}
+      <div style={{ padding: '12px 14px', borderRadius: 10, background: SURFACE_PANEL, border: `1px solid ${BORDER}`, width: '100%' }}>
+        <div style={{ font: `600 10px ${MONO}`, letterSpacing: '.12em', textTransform: 'uppercase', color: TXT_MUTED, marginBottom: 6 }}>Mechanism</div>
+        <div style={{ font: `400 12.5px ${SANS}`, color: '#97a0ae', lineHeight: 1.55 }}>{mech}</div>
+        <div style={{ font: `400 11.5px ${SANS}`, color: TXT_MUTED, marginTop: 6, fontStyle: 'italic' }}>{note}</div>
       </div>
     </div>
   );
@@ -134,19 +132,27 @@ function StructureViewer({ hl }: { hl: HL }) {
 export default function AcidityHeatMap() {
   const [hl, setHl] = useState<HL>(null);
 
+  const thStyle: React.CSSProperties = {
+    padding: '10px 12px',
+    textAlign: 'center',
+    font: `600 10px ${MONO}`,
+    letterSpacing: '.12em',
+    textTransform: 'uppercase',
+    color: TXT_MUTED,
+    borderBottom: `1px solid ${BORDER}`,
+  };
+
   return (
     <div style={{ marginTop: 24 }}>
-      <div style={{ marginBottom: 16 }}>
-        <h3 style={{ fontSize: 18, fontWeight: 700, color: 'rgba(255,255,255,0.9)', marginBottom: 6 }}>
-          Interactive pKa Table
-        </h3>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>
-          Click any cell to see the structure and mechanism. Color intensity indicates acidity (red = strong acid, blue = weak acid).
+      <div style={{ marginBottom: 18 }}>
+        <h3 style={{ font: `600 16px ${SANS}`, color: TXT_PRIMARY, margin: '0 0 6px' }}>Interactive pKₐ Table</h3>
+        <p style={{ font: `400 12.5px ${SANS}`, color: TXT_SECONDARY, lineHeight: 1.6, margin: 0 }}>
+          Click any cell to see the structure and mechanism. Colour indicates acidity — <span style={{ color: '#E37E79', fontWeight: 600 }}>red = strong acid</span>, <span style={{ color: '#7FA0E0', fontWeight: 600 }}>blue = weak acid</span>.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: 32, alignItems: 'center' }} className="heat-map-container">
-        {/* Structure viewer - no box, center-aligned */}
+      <div style={{ display: 'grid', gridTemplateColumns: '288px 1fr', gap: 32, alignItems: 'center' }} className="heat-map-container">
+        {/* Structure viewer */}
         <div style={{ display: 'flex', justifyContent: 'center' }} className="structure-viewer-col">
           <StructureViewer hl={hl} />
         </div>
@@ -159,40 +165,26 @@ export default function AcidityHeatMap() {
                 grid-template-columns: 1fr !important;
                 gap: 20px !important;
               }
-              .structure-viewer-col {
-                order: 2;
-              }
-              .heat-map-table-col {
-                order: 1;
-              }
+              .structure-viewer-col { order: 2; }
+              .heat-map-table-col { order: 1; }
             }
           `}</style>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 3px', fontSize: 13, minWidth: 520 }}>
             <thead>
               <tr>
-                <th style={{ padding: '10px 12px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                  Substituent
-                </th>
-                <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                  Aliphatic
-                </th>
-                <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                  Ortho
-                </th>
-                <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                  Meta
-                </th>
-                <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                  Para
-                </th>
+                <th style={{ ...thStyle, textAlign: 'left' }}>Substituent</th>
+                <th style={thStyle}>Aliphatic</th>
+                <th style={thStyle}>Ortho</th>
+                <th style={thStyle}>Meta</th>
+                <th style={thStyle}>Para</th>
               </tr>
             </thead>
             <tbody>
               {CA_DATA.map((row, idx) => {
-                const typeCol = row.type === 'ewg' ? '#e57373' : row.type === 'edg' ? '#34c759' : '#5856d6';
+                const tCol = toneColor(row.type);
                 return (
                   <tr key={idx}>
-                    <td style={{ padding: '8px 12px', fontWeight: 600, color: typeCol, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    <td style={{ padding: '8px 12px', font: `600 12.5px ${MONO}`, color: tCol }}>
                       {row.y}
                     </td>
                     {(['acetic', 'ortho', 'meta', 'para'] as const).map(col => {
@@ -203,16 +195,14 @@ export default function AcidityHeatMap() {
                           key={col}
                           onClick={() => setHl({ y: row.y, col })}
                           style={{
-                            padding: '8px 12px',
+                            padding: '9px 12px',
                             textAlign: 'center',
-                            fontWeight: 700,
-                            fontFamily: 'var(--font-geist-mono), monospace',
+                            font: `600 13px ${MONO}`,
                             cursor: 'pointer',
                             background: heatBg(v, isSelected),
                             color: heatText(v),
-                            borderBottom: '1px solid rgba(255,255,255,0.05)',
-                            border: isSelected ? '2px solid rgba(255,255,255,0.5)' : 'none',
-                            transition: 'all .15s',
+                            boxShadow: isSelected ? 'inset 0 0 0 2px rgba(255,255,255,0.85)' : 'none',
+                            transition: 'background .15s, box-shadow .15s',
                           }}
                         >
                           {v !== null ? v.toFixed(2) : '—'}

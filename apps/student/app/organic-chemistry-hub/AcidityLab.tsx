@@ -292,48 +292,55 @@ function PhenolLab() {
 // ═══════════════════════════════════════════════════════════════════════════════
 type SubTab = 'universal' | 'basicity' | 'quiz';
 
+const HUB_SANS = "var(--font-ibm-plex-sans), 'IBM Plex Sans', system-ui, sans-serif";
+
 const SUB_TABS: { id: SubTab; label: string; desc: string }[] = [
-  { id: 'universal', label: 'Universal Acidity Lab', desc: 'Phenol, Benzoic Acid, Aniline & Aliphatic derivatives with experimental pKa values' },
-  { id: 'basicity', label: 'Basicity Lab', desc: 'Nitrogen bases · NCERT-aligned data and explanations' },
-  { id: 'quiz', label: 'Quiz Mode', desc: '10 questions with explanations' },
+  { id: 'universal', label: 'Acidity', desc: 'Phenol, benzoic acid, aniline & aliphatic derivatives compared with experimental pKₐ values.' },
+  { id: 'basicity', label: 'Basicity', desc: 'Nitrogen bases · NCERT-aligned data and explanations.' },
+  { id: 'quiz', label: 'Quiz', desc: '10 questions with worked explanations.' },
 ];
 
 export default function AcidityLab() {
   const [sub, setSub] = useState<SubTab>('universal');
+  const activeDesc = SUB_TABS.find(t => t.id === sub)?.desc;
 
   return (
-    <div>
-      {/* Sub-tab nav - sticky on scroll */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(10,10,10,0.95)', backdropFilter: 'blur(12px)', paddingTop: 16, paddingBottom: 16, marginBottom: 12, borderBottom: '1px solid rgba(255,255,255,0.08)', marginLeft: -16, marginRight: -16, paddingLeft: 16, paddingRight: 16 }}>
-        <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
-          <div style={{ display: 'flex', gap: 4, padding: '4px', background: 'rgba(139,92,246,0.06)', borderRadius: 12, border: '1px solid rgba(139,92,246,0.18)', width: 'fit-content', minWidth: '100%' }}>
-            {SUB_TABS.map(t => {
-              const isActive = sub === t.id;
-              return (
-                <button key={t.id} onClick={() => setSub(t.id)}
-                  style={{ padding: '9px 22px', borderRadius: 9, fontSize: 14, fontWeight: isActive ? 650 : 450, cursor: 'pointer', border: 'none', background: isActive ? 'rgba(139,92,246,0.25)' : 'transparent', color: isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.45)', transition: 'all .18s', boxShadow: isActive ? '0 1px 8px rgba(139,92,246,0.3)' : 'none', whiteSpace: 'nowrap' }}
-                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; }}
-                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}>
-                  {t.label}
-                </button>
-              );
-            })}
+    <div style={{ fontFamily: HUB_SANS, color: '#E6EAF0' }}>
+      {/* Header row — breadcrumb + title + segmented mode control */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 22 }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, font: `400 11.5px ${HUB_SANS}`, color: '#5e6774', marginBottom: 7 }}>
+            Organic Hub <span style={{ opacity: 0.5 }}>/</span> <span style={{ color: '#8a94a3' }}>Simulators</span>
           </div>
+          <h1 style={{ margin: 0, font: `600 23px ${HUB_SANS}`, color: '#E6EAF0', letterSpacing: '-.01em' }}>Acidity Lab</h1>
+          <p style={{ margin: '6px 0 0', font: `400 12.5px ${HUB_SANS}`, color: '#7a8494', maxWidth: 520 }}>{activeDesc}</p>
         </div>
-        
-        {/* Sub-tab description */}
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.32)', marginTop: 12 }}>
-          {SUB_TABS.find(t => t.id === sub)?.desc}
+
+        <div style={{ display: 'flex', gap: 2, padding: 3, background: '#12181F', border: '1px solid rgba(255,255,255,.06)', borderRadius: 11 }}>
+          {SUB_TABS.map(t => {
+            const isActive = sub === t.id;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setSub(t.id)}
+                style={{
+                  font: `${isActive ? 600 : 500} 12px ${HUB_SANS}`,
+                  color: isActive ? '#e6eaf0' : '#8a94a3',
+                  background: isActive ? '#232C38' : 'transparent',
+                  border: 'none',
+                  borderRadius: 8,
+                  padding: '8px 14px',
+                  cursor: 'pointer',
+                  transition: 'all .15s',
+                }}
+                onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = '#c3ccd9'; }}
+                onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = '#8a94a3'; }}
+              >
+                {t.label}
+              </button>
+            );
+          })}
         </div>
-        
-        <style jsx>{`
-          @media (max-width: 640px) {
-            button {
-              padding: 8px 16px !important;
-              fontSize: 13px !important;
-            }
-          }
-        `}</style>
       </div>
 
       {/* Content */}

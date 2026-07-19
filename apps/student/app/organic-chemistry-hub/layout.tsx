@@ -1,4 +1,16 @@
 import { Metadata } from 'next';
+import { IBM_Plex_Sans } from 'next/font/google';
+
+// Design-system sans for the Organic Hub (handoff Direction 1a). Scoped to this
+// route subtree via a CSS variable so the rest of the app keeps Geist. Mono text
+// in the hub intentionally uses the app-wide Geist Mono (--font-geist-mono, set
+// on <body> in apps/student/app/layout.tsx) — IBM Plex Mono is not used here.
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-ibm-plex-sans',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Organic Chemistry Hub | Name Reactions, Acidity Lab & Quick Reference',
@@ -35,5 +47,9 @@ export default function OrganicChemistryHubLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <div className={ibmPlexSans.variable} style={{ display: 'contents' }}>
+      {children}
+    </div>
+  );
 }
