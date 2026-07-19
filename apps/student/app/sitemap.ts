@@ -14,6 +14,14 @@ const BASE_URL = 'https://www.canvasclasses.in';
 // real `updated_at`/`generatedAt` and are unaffected by this constant.
 const STABLE_LASTMOD = new Date('2026-06-12');
 
+// Floor for Crucible question-page lastmod. Phase A (commit 8f95705, deployed
+// 2026-07-18) changed the rendered HTML of every /the-crucible/q/* page (SSR
+// question + solution content), but question docs' `updated_at` in Mongo never
+// moved — so the sitemap kept reporting Apr–Jun dates and Google had no signal
+// to re-crawl/re-judge the ~3.4k "Crawled - currently not indexed" pages.
+// Reporting max(updated_at, this date) is an honest one-time freshness bump.
+const QUESTION_PAGE_SSR_DEPLOY = new Date('2026-07-18');
+
 // Cache sitemap for 24 hours — question/chapter data changes infrequently
 export const revalidate = 86400;
 
@@ -188,7 +196,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const pyqSlugs = await getAllPublishedPYQSlugs();
         crucibleQuestionEntries = pyqSlugs.map(q => ({
             url: `${BASE_URL}/the-crucible/q/${q.id}`,
-            lastModified: new Date(q.updated_at),
+            lastModified: new Date(Math.max(new Date(q.updated_at).getTime(), QUESTION_PAGE_SSR_DEPLOY.getTime())),
             changeFrequency: 'monthly' as const,
             priority: 0.75,
         }));
@@ -481,7 +489,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .lean<Array<{ slug: string; updated_at?: Date }>>();
         careerSpecEntries = specs.map((s) => ({
             url: `${BASE_URL}/career-guide/${s.slug}`,
-            lastModified: s.updated_at instanceof Date ? s.updated_at : new Date(),
+            lastModified: s.updated_at instanceof Date ? s.updated_at : STABLE_LASTMOD,
             // Quarterly refresh cadence — leaf pages, lower change frequency
             // than the index. Still useful priority since these are deep
             // editorial pages with unique content per career.
@@ -509,7 +517,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .lean<Array<{ _id: unknown; updated_at?: Date }>>();
         careerExplorerEntries = careers.map((c) => ({
             url: `${BASE_URL}/career-explorer/careers/${String(c._id)}`,
-            lastModified: c.updated_at instanceof Date ? c.updated_at : new Date(),
+            lastModified: c.updated_at instanceof Date ? c.updated_at : STABLE_LASTMOD,
             changeFrequency: 'monthly' as const,
             priority: 0.7,
         }));

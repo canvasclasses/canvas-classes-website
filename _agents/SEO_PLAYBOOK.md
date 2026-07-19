@@ -318,6 +318,16 @@ open decision #7) — do not read them as teacher demand.
 6. Junk-magnet queries ("i cannot remember my mother", "guitar", "canvas of soil" — Class-9 book pages) — exclude from metrics; do NOT optimize for these.
 
 ### Changelog
+- **2026-07-20** — Sitemap lastmod fixes (GSC coverage review): (1) Crucible
+  question-page lastmod now floored at `QUESTION_PAGE_SSR_DEPLOY` (2026-07-18) —
+  Phase A changed the rendered HTML of all ~14.3k `/the-crucible/q/*` pages but
+  Mongo `updated_at` never moved, so Google had no freshness signal to re-crawl
+  the ~3.4k "Crawled - currently not indexed" pool (drilldown: 932/1000 sampled
+  were crucible q pages, all crawled pre-Phase-A). (2) career-spec +
+  career-explorer sitemap fallbacks changed `new Date()` → `STABLE_LASTMOD`
+  (leftover false-freshness bug). Also verified: the 815 GSC 5xx errors are all
+  stale (Apr 29–May 27 crawls, bot-storm era; spot-checked URLs return 200) —
+  Validate Fix clicked in GSC is the remaining manual step.
 - **2026-07-18 (later)** — Part G added: evidence-based title/metadata formulas
   (GSC striking-distance mining + live competitor research). Shipped alongside:
   `[Solved] ` prefix on both single-question title templates (crucible q +
