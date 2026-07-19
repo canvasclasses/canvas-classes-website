@@ -317,7 +317,43 @@ open decision #7) — do not read them as teacher demand.
 5. Chapter PYQ hubs — add counts + year-ranges (formula above).
 6. Junk-magnet queries ("i cannot remember my mother", "guitar", "canvas of soil" — Class-9 book pages) — exclude from metrics; do NOT optimize for these.
 
+### 2026-07-20 re-validation (fresh 28d export: 6,558 clicks / 306K imps / 2.1% CTR)
+
+Fresh GSC exports (site-wide + both per-family properties) re-confirm the
+hit-list and RE-RANK it — **Class-9 is now unambiguously #1 by leverage**:
+
+- **Class-9 = 128K imps (42% of the whole site) @ 0.78% CTR** — up from 105K
+  on 2026-07-16. Top losers: tyndall-effect (11.2K imps, 0.3%, pos 6.5),
+  distillation (8.5K, 0.7%), paper-chromatography (7.7K, 1.2%), coagulation
+  (6.7K, 1.0%). Fixing CTR to even 3% ≈ +3K clicks/mo (≈half current total).
+- **Zero-CTR-at-good-position anomalies** (snippet fails the query's intent —
+  these want a diagram/definition the snippet doesn't promise):
+  "distillation diagram class 9" (956 imps, pos 6.6, 0.0%), "eudiometry"
+  (924, pos 5.8, 0.1%), "what is coagulation in chemistry class 9" (743,
+  pos 5.0, 0.1%), "salt analysis" (458, pos 3.9, 0.0% — hit-list #1 STILL
+  unfixed).
+- **NCERT-PDF cluster still striking-distance:** "coordination compounds ncert
+  pdf" (1,371 imps, pos 7.8), "amines ncert pdf" (1,198, pos 7.5), "chemical
+  kinetics ncert pdf" (760, pos 8.6).
+- **Question families:** crucible q pages 35.9K imps → 101 clicks (0.28%);
+  chemistry-questions 10K imps → 19 clicks; **jee-main-pyqs ABSENT from the
+  site top-1000 pages (~zero traffic on ~6.5K pages)** — validates the
+  Library spec's canonical-dedup phase (jee-main-pyqs 301s LAST or never).
+- **Benchmark:** handwritten-notes = 3,375 clicks @ ~9% CTR — the
+  intent-match template every other family should copy.
+- **Devices:** mobile 203K imps (70%) — judge every snippet on a phone.
+- ⚠️ **Per-family GSC properties (added 2026-07-18) are still warming up:**
+  the-crucible property shows only ~1.3 days of data; jee-main-pyqs shows
+  zero rows. Do NOT read them as real until ~2026-08-05; use site-wide
+  exports filtered by path meanwhile.
+
 ### Changelog
+- **2026-07-20 (later)** — Part G re-validated against a fresh 28d export (see
+  "2026-07-20 re-validation" above). Class-9 promoted to hit-list #1 by
+  leverage; jee-main-pyqs zero-traffic confirmed; per-family GSC properties
+  flagged as too-new-to-read until ~2026-08-05. Also this session: SEO
+  dashboard outage diagnosed (dead OAuth refresh token — see
+  `plans/SEO_DASHBOARD.md` §OUTAGE; fix parked pending Google account access).
 - **2026-07-20** — Sitemap lastmod fixes (GSC coverage review): (1) Crucible
   question-page lastmod now floored at `QUESTION_PAGE_SSR_DEPLOY` (2026-07-18) —
   Phase A changed the rendered HTML of all ~14.3k `/the-crucible/q/*` pages but
