@@ -16,6 +16,13 @@
       "autoPort": true
     },
     {
+      "name": "admin-isolated",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/Users/CanvasClasses/.nvm/versions/node/v24.14.0/bin:$PATH && cd apps/admin && NEXT_DIST_DIR=.next-agent npx next dev --port 3099"],
+      "port": 3099,
+      "autoPort": true
+    },
+    {
       "name": "draw-studio",
       "runtimeExecutable": "/bin/bash",
       "runtimeArgs": ["-c", "export PATH=/Users/CanvasClasses/.nvm/versions/node/v24.14.0/bin:$PATH && CDS_NO_OPEN=1 node tools/canvas-draw-studio/serve.mjs"],
