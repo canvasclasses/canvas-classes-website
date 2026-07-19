@@ -9,7 +9,7 @@
 > If code and this doc disagree, fix whichever is wrong and update the Changelog.
 
 - **Owner:** Canvas (paaras.thakur07@gmail.com)
-- **Last updated:** 2026-06-06
+- **Last updated:** 2026-07-18
 - **Scope:** `apps/student/` (all public, indexable pages). The admin app is
   intentionally not indexed.
 
@@ -28,6 +28,7 @@
 - **Part D — GEO strategy** (getting cited by AI engines)
 - **Part E — Career segment** (the deep, feature-specific record)
 - **Part F — Monitoring** + Known gaps + Changelog
+- **Part G — Title/metadata formulas** (evidence-based, 2026-07-18)
 
 ---
 
@@ -51,9 +52,14 @@
    detailed lectures, career topics/specs/explorer, college-predictor landings/colleges).
    **New content in those collections auto-appears** on the next 24h revalidate.
 5. **robots.ts** (`CLAUDE.md §10.6`): blocks AI **training** crawlers (GPTBot,
-   Google-Extended, CCBot, …); **allows** AI **answer** crawlers (ChatGPT-User,
-   OAI-SearchBot, PerplexityBot, ClaudeBot, Googlebot, Bingbot). Disallows `/api/`,
-   admin, dashboard, login. **Do not block the answer bots — that breaks GEO.**
+   Google-Extended, CCBot, **ClaudeBot** — Anthropic's training bot, corrected
+   2026-07-18, …); **allows** AI **answer** crawlers (ChatGPT-User, OAI-SearchBot,
+   PerplexityBot, **Claude-User, Claude-SearchBot** — the actual Claude citation
+   agents, **meta-externalfetcher** — Meta AI on WhatsApp, Googlebot, Bingbot).
+   Disallows `/api/`, admin, dashboard, login. The middleware edge 403
+   (`apps/student/middleware.ts` NO_VALUE_BOT_RE) additionally blocks the
+   robots-ignoring no-value bots; meta-externalfetcher was removed from it
+   2026-07-18. **Do not block the answer bots — that breaks GEO.**
 6. **Redirects** (`apps/student/next.config.ts`): non-www → www (301); plus
    canonical moves (`/books/ncert-simplified/*` → `/class-11/chemistry/*`,
    `/jee-pyqs/*` → `/the-crucible`, flashcard renames). Preserve these.
@@ -246,9 +252,86 @@ pay/AI numbers are read live from `CareerSpec` — never hardcoded.**
 - Counselling-season "freshness" (live JoSAA 2026 round framing) deferred — needs real
   dates, must not be fabricated.
 - No tracking yet for whether pages actually get cited in AI-engine answers.
+- ~~robots.ts bot misclassification~~ **FIXED 2026-07-18** (Question Library
+  Phase A.3): ClaudeBot moved to the training-block list; Claude-User +
+  Claude-SearchBot explicitly allowed; meta-externalfetcher unblocked in BOTH
+  robots.ts and the middleware NO_VALUE_BOT_RE edge 403 (it was in the regex —
+  robots-only would have been a silent no-op). Part A #5 + CLAUDE.md §10.6 updated.
+- **Question-surface strategy now lives in
+  [`_agents/plans/QUESTION_LIBRARY_SPEC.md`](plans/QUESTION_LIBRARY_SPEC.md)**
+  (2026-07-18): one `/questions/*` surface, free SSR solutions, QAPage education
+  exception KEPT (Practice Problems / FAQ / Learning Video / Course Info rich
+  results are all dead 2025–26 — do not build on them), canonical-first
+  migration, gated pilot. Read it before touching any question page.
 - College-predictor tool/landing pages lack a Twitter card (only `college/[slug]` has one).
 
+---
+
+## Part G — Title/metadata formulas (evidence-based, 2026-07-18)
+
+> Built from two sources: (1) the site's own GSC export (2026-07-16 — 268K
+> impressions/28d; striking-distance mining) and (2) live-verified competitor
+> title research (SelfStudys/PW/Vedantu/Testbook/Careers360 pages that rank
+> #1-3; full evidence in the 2026-07-18 session's demand-research report).
+> Principle: **demand data decides the WORDING; the page's content decides the
+> TOPIC.** Never put a keyword in a title the page can't fulfil.
+
+### The vocabulary (impression-weighted, from our own queries)
+`class` (22K) · `pdf` (15K) · `notes` (14K) · `handwritten` (11K) · `ncert`
+(8.5K) · top phrases: "class 9", "handwritten notes", "ncert pdf". Students
+say **class + chapter + notes/pdf/ncert** — never "question bank". Caution:
+bare "paras thakur" impressions are substantially MUSIC-FAN queries (The
+Local Train's guitarist shares the name — entity collision; see Library spec
+open decision #7) — do not read them as teacher demand.
+
+### Formulas per page family
+
+| Family | Title formula | Notes |
+|---|---|---|
+| Single question (crucible q, pyq leaf, future Library) | `<question text VERBATIM, ~70 chars> — Solved (<exam year label>)` | Verbatim text FIRST (matches paste-searches AND Lens photo→text queries; survives mobile truncation); "— Solved" suffix = the answer-promise without Testbook's content-farm prefix (founder decision 2026-07-18, option B of A/B/C). Never paraphrase the question. SHIPPED 2026-07-18. |
+| Chapter PYQ hub | `<Exam> <Chapter> Previous Year Questions with Solutions (<N> Qs, <year-range>)` | Full phrase beats "PYQ" in titles (put "PYQ" once in description). Completeness numbers (count/year-range) are the observed #1-slot signal. |
+| Notes page | `Class <11/12> <Subject> <Chapter> Handwritten Notes PDF Download` (+ "(Handwritten & Short Notes)" hedge) | Our own 9.35%-CTR family — vocabulary already proven on us. |
+| NCERT-PDF pages | `<Chapter> NCERT PDF Class <11/12> — Free Download` | Our biggest striking-distance cluster ("coordination compounds ncert pdf" 994 imps @ pos 7.8 etc.). |
+| MCQ/practice hub | `<Topic> MCQ with Answers — Chapter Wise Practice` | "with answers" pairs with MCQ; "important questions" is the NEET-side variant. |
+
+### Rules (ranked by impact)
+1. "chapter wise" belongs in every chapter-level title (most universal modifier observed).
+2. "with Solutions" / "with Answers" go IN the title, not just the description.
+3. Year policy: year-ranges for archives ("2019–2025", never stale); roll single years forward at result time (competitors show "2027" pages in July 2026); single-question pages get NO freshness year — exam attribution only.
+4. "Free" is fine in titles; **never claim "PDF" without a real PDF** — sell the better-than-PDF reality in the description instead.
+5. Descriptions: front-load exam+subject+year, then a "high-weightage topics / repeated questions" hook (borrowed demand vocabulary).
+6. Mobile-first truncation (~2/3 of our traffic is mobile): keywords in the first ~50 chars.
+7. Hindi/Devanagari titles: NO (NEET Hindi-medium = ~14% and declining; Hinglish searchers use English tokens). Revisit only if GSC shows Hindi impressions.
+
+### Rewrite hit-list (from GSC striking-distance mining, by expected impact)
+1. `/salt-analysis` — pos 4.4 for "salt analysis" (542 imps) at **0.00% CTR**.
+   16-month nuance: this page previously WON simulator-intent queries ("salt
+   analysis simulation" 262 clicks @ 50% CTR pos 2.2; "virtual lab" /
+   "simulator" variants — all faded to ~0 in the last 28d). The rewrite must
+   lead with the interactive-simulation promise ("Salt Analysis Virtual Lab —
+   Interactive Simulation + Complete Guide"), and re-winning the simulator
+   query cluster is part of the job.
+2. NCERT-PDF cluster (`/download-ncert-books`, 22 pages, 17K imps @ 2.31%) — apply the NCERT-PDF formula; ~5K imps of chapter-level "ncert pdf" queries sit at pos 6-10.
+3. `/about` — pos 2.3, 7,578 imps, 0.12% CTR — brand + "paras thakur" searchers land here and bounce; rewrite once open decision #7 (face) resolves.
+4. `/class-9` concept pages (183 pages, 105K imps @ 0.79%) — "tyndall effect class 9"-style queries; needs per-page title templating pass.
+5. Chapter PYQ hubs — add counts + year-ranges (formula above).
+6. Junk-magnet queries ("i cannot remember my mother", "guitar", "canvas of soil" — Class-9 book pages) — exclude from metrics; do NOT optimize for these.
+
 ### Changelog
+- **2026-07-18 (later)** — Part G added: evidence-based title/metadata formulas
+  (GSC striking-distance mining + live competitor research). Shipped alongside:
+  `[Solved] ` prefix on both single-question title templates (crucible q +
+  jee-main-pyqs leaf). Hit-list recorded (salt-analysis 0%-CTR@pos4.4 first).
+- **2026-07-18** — Question Library spec written (`_agents/plans/QUESTION_LIBRARY_SPEC.md`)
+  after 4-agent research + 5-agent adversarial verification. Key records: three
+  question URL families confirmed cannibalizing (crucible q = jee-main-pyqs same
+  Mongo docs); `/the-crucible/q/*` content is client-rendered → invisible to
+  non-JS crawlers; jee-main-pyqs renders 6,521 `\ce{}` formulas as KaTeX errors
+  (no mhchem import — one-line fix); QAPage education exception verified (KEEP —
+  last surviving education rich result); Google-Extended block does NOT affect
+  AI Overviews; meta descriptions rewritten 62–87% (answer-leak concern moot);
+  robots bot misclassifications queued (see Known gaps). Absorbs cache-redesign
+  Phases 3–5.
 - **2026-06-06** — Playbook created as the single SEO/GEO record; folded in the career
   segment record (formerly `_agents/CAREER_SEO_GEO.md`). Captures: site-wide
   conventions, surface inventory, do-not-revert decisions, GEO strategy, and the

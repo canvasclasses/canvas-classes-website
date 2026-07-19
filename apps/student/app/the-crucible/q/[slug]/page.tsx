@@ -14,14 +14,17 @@ import QuestionDetailPage from './QuestionDetailPage';
 // request instead of fetching the full doc twice (vercel-cost #20b).
 const getQuestion = cache(getQuestionBySlug);
 
-// ISR: 7-day revalidate — solutions change infrequently. Admin question edits
+// ISR: 28-day revalidate — solutions change infrequently. Admin question edits
 // run in a separate deployment, so revalidateTag('questions') there does not
-// cross-invalidate this page's ISR cache; refresh is governed by this window.
-// Lengthened from 24h to 7d to cut steady-state ISR Writes (2026-06 bill).
-export const revalidate = 604800;
+// cross-invalidate this page's ISR cache; edits reach students via the
+// secret-gated /api/revalidate bridge instead (cache redesign Phase 1 —
+// _agents/plans/CRUCIBLE_CACHE_SEO_REDESIGN.md). Crawlers sweep this surface
+// ~weekly, so the earlier 7d window put ~every visit just past expiry and
+// triggered a stale-while-revalidate rebuild (2026-07 diagnosis); 28d lets
+// ~3 of 4 sweeps hit fresh. This window is only the self-healing backstop.
+export const revalidate = 2419200;
 
 // No pages pre-built at deploy time — generated on first request and cached via ISR.
-// With revalidate = 86400, each page is built once per day on first visit.
 // This keeps deploy times fast regardless of how many questions exist.
 export async function generateStaticParams() {
   return [];
@@ -58,8 +61,21 @@ export async function generateMetadata({
     question.metadata.exam_source
   ) ?? 'JEE PYQ';
 
-  const title = `${question.display_id}: ${rawText.substring(0, 55)}... | ${examLabel}`;
-  const description = `${examLabel} question on ${chapterName}. ${rawText.substring(0, 120)}. Full solution${question.solution.video_url ? ' with video explanation' : ''} by Paaras Sir.`;
+  // Title leads with the QUESTION TEXT (what students actually search /
+  // paste), never the internal display_id — the audit (2026-07-18) found the
+  // old `GOC-524: …` pattern spent the highest-value title slot on a token
+  // nobody searches, and Google fell back to bare "Canvasclasses" on at
+  // least one page. display_id trails for brand/reference.
+  // Verbatim question text FIRST (matches pasted-question searches + Google
+  // Lens photo→text queries; Google bolds the matched words), "— Solved" as a
+  // compact suffix promise (founder decision 2026-07-18, option B: text-first
+  // survives mobile truncation, no content-farm prefix; SEO_PLAYBOOK Part G).
+  const title = `${rawText.substring(0, 70)} — Solved (${examLabel}) | ${question.display_id}`;
+  // Subject-neutral attribution (2026-07-18): this surface serves ALL
+  // subjects; "by Paaras Sir" mis-credited physics/maths solutions to a
+  // chemistry teacher, and teacher-as-brand-face is an open decision
+  // (QUESTION_LIBRARY_SPEC §7).
+  const description = `${examLabel} question on ${chapterName}. ${rawText.substring(0, 120)}. Free step-by-step solution${question.solution.video_url ? ' with video explanation' : ''} — Canvas Classes.`;
 
   return {
     title,
@@ -77,7 +93,10 @@ export async function generateMetadata({
       canonical: `https://www.canvasclasses.in/the-crucible/q/${question.id}`,
     },
     openGraph: {
-      title: `${question.display_id} — ${examLabel} | Canvas Classes`,
+      // Question-text-first here too — OG titles are what WhatsApp/Telegram
+      // shares display, and a student sharing into a 200-member prep group
+      // needs the link to say what the question IS, not an internal ID.
+      title: `${rawText.substring(0, 70)} (${examLabel}) | Canvas Classes`,
       description,
       url: `https://www.canvasclasses.in/the-crucible/q/${question.id}`,
       siteName: 'Canvas Classes',
@@ -85,7 +104,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${question.display_id} — ${examLabel} | Canvas Classes`,
+      title: `${rawText.substring(0, 70)} (${examLabel}) | Canvas Classes`,
       description,
     },
   };

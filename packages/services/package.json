@@ -17,6 +17,7 @@
     "./flashcards-by-id": "./flashcards-by-id.ts",
     "./auth": "./auth.ts",
     "./questions-filters": "./questions-filters.ts",
+    "./revalidate-bridge": "./revalidate-bridge.ts",
     "./types": "./types.ts"
   },
   "dependencies": {

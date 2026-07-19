@@ -5,6 +5,7 @@ import connectToDatabase from '@canvas/data/db/mongodb';
 import { QuestionV2 } from '@canvas/data/models/Question.v2';
 import { Chapter } from '@canvas/data/models/Chapter';
 import { AuditLog } from '@canvas/data/models/AuditLog';
+import { revalidateStudentPaths, questionPagePaths } from '@canvas/services/revalidate-bridge';
 import { requireAdmin } from '@/lib/auth';
 
 // Chapter prefix map — CANONICAL prefixes matching actual display_id values in DB
@@ -187,6 +188,13 @@ export async function POST(
     // Bust the questions cache: both old and new chapter caches must refresh
     // since this question moves between chapter buckets.
     revalidateTag('questions');
+
+    // Refresh the student app's cached pages (question page + both chapter
+    // pages) via the HTTP bridge — revalidateTag above only reaches THIS
+    // (admin) deployment. See @canvas/services/revalidate-bridge.
+    await revalidateStudentPaths(
+      questionPagePaths(questionId, [oldChapterId, new_chapter_id])
+    );
 
     return NextResponse.json({
       success: true,

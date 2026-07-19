@@ -37,6 +37,7 @@ const FLAG_DIR = path.join(__dirname, '..', '..', '_agents', 'solution-flags');
 // Math policy: forbid all v2 section icons, ban "monster"+"anchor". Math is the
 // only toolkit that opts into the crammed-step SOFT lint (softLint: true below).
 const { validateSolution, normalizeCeCharges, POLICY } = require('../lib/solution-validator');
+const { revalidatePaths } = require('../lib/revalidate');
 
 // ─── Flag file appender ─────────────────────────────────────────────────────
 function readFlagFile(prefix) {
@@ -118,6 +119,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
   const flagSections = readFlagFile(prefix);
 
   let written = 0;
+  const writtenIds = []; // display_ids actually written — revalidated below
   let answerFixes = 0;
   let blocked = 0;
   let verifyFlags = 0;
@@ -267,12 +269,22 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
 
     if (!dryRun) {
       await Q.updateOne({ display_id: id }, { $set: set });
+      writtenIds.push(id);
     }
     written++;
     log.push(`${id}  OK${notes.length ? '  [' + notes.join(', ') + ']' : ''}${dryRun ? '  (dry-run)' : ''}`);
   }
 
   if (!dryRun) writeFlagFile(prefix, flagSections);
+
+  // Refresh the student-facing pages for everything just written, so the
+  // solutions go live in seconds instead of waiting out the 28d ISR window.
+  // Non-fatal: the Mongo writes above are already committed.
+  let revalidated = 0;
+  if (!dryRun && writtenIds.length > 0) {
+    const docs = await Q.find({ display_id: { $in: writtenIds } }, { _id: 1 }).lean();
+    revalidated = await revalidatePaths(docs.map((d) => `/the-crucible/q/${d._id}`));
+  }
 
   console.log('\n=== APPLY-BATCH SUMMARY ===');
   console.log(`Chapter prefix:         ${prefix}`);
@@ -282,6 +294,7 @@ function addOrReplaceFlag(sections, severity, displayId, note) {
   console.log(`Blocked (no write):     ${blocked}`);
   console.log(`Verify flags added:     ${verifyFlags}`);
   console.log(`Soft flags added:       ${softFlags}`);
+  console.log(`Pages revalidated:      ${revalidated}${dryRun ? '  (dry-run: skipped)' : ''}`);
   console.log('\nDetails:');
   for (const line of log) console.log('  ' + line);
 

@@ -7,6 +7,7 @@ import { Chapter } from '@canvas/data/models/Chapter';
 import { AuditLog } from '@canvas/data/models/AuditLog';
 import { canEditQuestion, canDeleteQuestion } from '@canvas/data/rbac';
 import { trackServer } from '@canvas/core/analytics/mixpanel.server';
+import { revalidateStudentPaths, questionPagePaths } from './revalidate-bridge';
 import type { ServiceDeps } from './types';
 
 // ── Transient-DB resilience ──────────────────────────────────────────────────
@@ -371,6 +372,16 @@ export async function PATCH(
       // Bust the questions cache so the edit is visible to students immediately
       revalidateTag('questions');
 
+      // Refresh the student-facing question page (and its chapter page).
+      // revalidateTag above only reaches the deployment this service runs in —
+      // when that's the admin app, the student app's ISR cache is refreshed via
+      // the HTTP bridge instead (revalidate-bridge.ts, cache redesign Phase 1).
+      await revalidateStudentPaths(
+        questionPagePaths(id, [
+          (updatedQuestion.metadata as { chapter_id?: string })?.chapter_id,
+        ])
+      );
+
       // If this is (or was) a demo question, also bust the notes-quicktest cache
       // so the side-by-side practice panel reflects the change. Covers: flag flip
       // either direction, and edits to question_text / options / solution on a
@@ -503,6 +514,13 @@ export async function DELETE(
 
     // Bust the questions cache so the deletion is visible to students immediately
     revalidateTag('questions');
+
+    // Drop the student-facing pages too (never throws — see revalidate-bridge.ts).
+    await revalidateStudentPaths(
+      questionPagePaths(id, [
+        (question.metadata as { chapter_id?: string })?.chapter_id,
+      ])
+    );
 
     return NextResponse.json({
       success: true,

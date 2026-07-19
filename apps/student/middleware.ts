@@ -14,10 +14,17 @@ export async function middleware(request: NextRequest) {
     // through into a 403. meta-externalagent (Vercel labels it "meta-webindexer")
     // IGNORES robots.txt, so this edge block is the only thing that actually
     // stops it. All VALUE bots (Googlebot, Bingbot, ChatGPT-User, Perplexity,
-    // Claude, facebookexternalhit, uptime monitors) are intentionally NOT listed.
+    // Claude-User/Claude-SearchBot, facebookexternalhit, uptime monitors) are
+    // intentionally NOT listed.
     // Mirrors blockedNoValueCrawlers in app/robots.ts. A Vercel Firewall rule
     // would do this one step earlier; this is the code-tracked equivalent.
-    const NO_VALUE_BOT_RE = /meta-externalagent|meta-externalfetcher|meta-webindexer|petalbot|yandexbot|ahrefsbot|semrushbot|mj12bot|dotbot|dataforseobot|blexbot/i;
+    // 2026-07-18: meta-externalfetcher REMOVED from this regex — it is Meta AI's
+    // user-triggered link fetcher (citations in Meta AI on WhatsApp) and it
+    // respects robots.txt, so it never belonged in the ignores-robots edge
+    // block. The training crawler meta-externalagent/meta-webindexer stays.
+    // (ClaudeBot — Anthropic's TRAINING bot — is robots-blocked, not 403'd:
+    // it complies with robots.txt, so the polite block suffices.)
+    const NO_VALUE_BOT_RE = /meta-externalagent|meta-webindexer|petalbot|yandexbot|ahrefsbot|semrushbot|mj12bot|dotbot|dataforseobot|blexbot/i;
     if (NO_VALUE_BOT_RE.test(request.headers.get('user-agent') || '')) {
         return new NextResponse(null, { status: 403 });
     }

@@ -17,7 +17,7 @@
 | **Live Books** (authoring / pages / images) | `_agents/state/LIVE_BOOKS_STATE.md` · `_agents/workflows/BOOK_PAGE_WORKFLOW.md` · `_agents/plans/CONTENT_PROTECTION.md` + CLAUDE.md §0.6 · **publish-readiness of every chapter/page** → the Book Readiness dashboard `admin.../books/dashboard` (engine `packages/data/books/readiness.ts`; cockpit row "Book Readiness Dashboard") |
 | **Taxonomy / tagging** | `packages/data/taxonomy/` · `_agents/workflows/CRUCIBLE_TAXONOMY_AND_TAGGING_RULES.md` |
 | **Persona / adaptive engine** | `_agents/CRUCIBLE_ARCHITECTURE.md` (persona pipeline) · `_agents/plans/UNIFIED_LEARNER_PERSONA.md` |
-| **SEO / any public page** | `_agents/SEO_PLAYBOOK.md` · CLAUDE.md §10 |
+| **SEO / any public page** | `_agents/SEO_PLAYBOOK.md` (incl. Part G title formulas) · CLAUDE.md §10 · `_agents/plans/QUESTION_LIBRARY_SPEC.md` (**the question-surface strategy** — one `/questions/*` library, free text solutions, phased migration; ⛔ Shaurya-only) · `_agents/plans/CRUCIBLE_CACHE_SEO_REDESIGN.md` (ISR/event-driven caching; Phases 3–5 absorbed into the Library spec) · GSC baselines: `_agents/data/gsc-baselines/` |
 | **The AI-native system itself** (brain / watchdogs / advisor / scout) | `_agents/plans/AI_NATIVE_ROADMAP.md` · this brain · `scripts/watchdogs/README.md` |
 | **Anything — "where do I stand?"** | `_agents/PROJECTS.md` (the cockpit) — one row per project |
 
