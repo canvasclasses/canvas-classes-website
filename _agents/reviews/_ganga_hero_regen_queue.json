@@ -1,0 +1,92 @@
+[
+ {
+  "slug": "parichay-premchand",
+  "blockId": "57aac397-961e-4292-a177-3d3aff225d60",
+  "pageId": "388d6135-ef59-41a7-91da-beb3f1d64212",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 1,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. Author Munshi Premchand, a thoughtful moustached figure in a simple coat and cap, in a North Indian village at dusk, a pair of bullocks and mud-walled homes beside him, fields stretching behind. Warm earth tones, dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "parichay-bakshi",
+  "blockId": "82b44269-daaf-4fb4-92e4-997de2fe7311",
+  "pageId": "08161cc5-2eea-417c-8295-d8a479f5d573",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 2,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. Essayist Padumlal Punnalal Bakshi at a wooden writing desk by a window, quill, ink and papers before him, a coat and hat on a peg nearby, books stacked around, soft lamplight. Warm tones on a dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "ch3-parichay-shekhar-joshi",
+  "blockId": "a5699ebd-d5e8-4c37-a84f-db866d78bf33",
+  "pageId": "589317eb-0265-4068-9075-b0d6dfbf69a3",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 3,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. Story writer Shekhar Joshi in a quiet Kumaoni hill town, stone houses and pine slopes, a lonely old woman with a caged parrot suggested in the distance, gentle melancholy. Warm muted tones, dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "ch5-parichay",
+  "blockId": "a27f1cfc-c2b8-414f-8983-057557ed9c57",
+  "pageId": "4fed98fc-e4de-49e3-98ae-690542f983bb",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 5,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. Writer Mohan Rakesh standing on the last rocks at Kanyakumari where the three seas meet, dawn breaking over the water, a temple silhouette on the shore. Warm luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "ch6-parichay",
+  "blockId": "6aa01ec6-3b56-46a8-a8e2-1f1d288244b9",
+  "pageId": "9e0cc8e9-ea65-48ca-bf32-d4600a1bcf41",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 6,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. Playwright Jagdishchandra Mathur beside a lamplit 1940s drawing room and stage, a poised young woman standing tall and dignified within the scene. Warm tones, dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "ch7-parichay",
+  "blockId": "0d87cfdc-a0c2-4e69-b2a1-bf31ec579a83",
+  "pageId": "ed5f57ea-9fbb-4aa7-a47e-d28ebd5dcfce",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 7,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. Essayist Kanhaiyalal Mishra Prabhakar amid scenes of ordinary Indians serving the nation, a postman, a farmer and a soldier suggested around him, under a warm patriotic dawn. Dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "ch8-parichay",
+  "blockId": "ce714128-f1ff-4768-a7e1-8072161178f6",
+  "pageId": "30f0e60c-018a-45be-b6a8-ac13f3dbb0b0",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 8,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. The bhakti saint-poet Raidas, a humble cobbler-saint seated in quiet devotion with simple leather tools beside him, a soft divine glow and a few devotees near. Warm spiritual tones on a dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "ch9-parichay",
+  "blockId": "1907af18-c623-4de1-8b7b-405a4f3cfab1",
+  "pageId": "b63bbf7a-68af-487c-b960-439ed6768a12",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 9,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. The poet-saint Tulsidas writing the Ramcharitmanas on the ghats of Kashi beside the Ganga at dawn, temple spires and stone steps, a palm-leaf manuscript in hand. Warm sacred tones, dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ },
+ {
+  "slug": "ch10-parichay",
+  "blockId": "33e6489b-2a10-4443-8a43-0e9992a4a446",
+  "pageId": "b0a2f6e6-a9a1-4207-8a2a-6df37252441f",
+  "bookId": "4287c846-ee7e-4bc5-a48f-8822438c05c8",
+  "chapter": 10,
+  "field": "src",
+  "lang": "en",
+  "prompt": "Watercolour 16:5 banner. The poet Suryakant Tripathi Nirala, a strong bearded figure, standing before the vast Indian landscape of Himalayas and rivers he invokes, dawn light glowing. Warm tones, dark luminous ground. Loose washes, soft bleeding edges, paper grain. No text."
+ }
+]

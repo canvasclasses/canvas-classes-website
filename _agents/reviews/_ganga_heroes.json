@@ -1,0 +1,866 @@
+[
+ {
+  "ch": 1,
+  "page": "parichay-premchand",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "57aac397-961e-4292-a177-3d3aff225d60_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "kahani-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "76ba4451-e41e-4eef-a9ed-2b10121332f5_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "kahani-bhag-2-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "5f895c3d-3cc1-411e-af23-b68b94b83b75_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "kahani-bhag-4-5",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "b605acf4-01cf-4459-8cb5-19b6e60ee57d_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "df6fe166-e7b5-4524-83fb-0e6991ebcf26_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "muhavare",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "576d70be-c050-413d-b68f-552724f11dae_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "patra-bhav",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "7a4c2ca3-dc4c-4668-9d89-50133a67359e_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "kahani-ka-saundarya",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "71cc1e56-787b-4037-b08a-826a7cfeadd6_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "1c11028f-a639-4dd7-b266-62db90478c40_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "srijan-gatividhiyan",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "cb8a0bac-f47e-4e7c-8029-b38f3a363576_gen.webp"
+ },
+ {
+  "ch": 1,
+  "page": "abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "730d79d9-77a7-435d-afab-91799b8396fd_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "parichay-bakshi",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "82b44269-daaf-4fb4-92e4-997de2fe7311_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "nibandh-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "1b1449bc-778a-44eb-a38e-1092cd402f1b_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "nibandh-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "0273a68e-fcbe-40df-8ca1-df16b5d47361_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "ch2-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "ce66b308-fd63-4075-9005-7ff3fb69aaa3_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "nibandh-ki-kala",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "cf498226-67f6-4d90-b2f2-a865a5d2ddfb_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "ch2-vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "72240f88-9c6d-4c65-9c76-44a18d090685_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "srijan-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "67190d57-27b5-4af7-82d4-528406f90e73_gen.webp"
+ },
+ {
+  "ch": 2,
+  "page": "ch2-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "2828992c-5aac-48ba-af3c-a009b31d4979_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-parichay-shekhar-joshi",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "a5699ebd-d5e8-4c37-a84f-db866d78bf33_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-kahani-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "3b025074-5234-4573-be11-92443991af34_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-kahani-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "5a54dfdb-9b21-404f-9729-d29c03d13592_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-kahani-bhag-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "3a2ac8a0-7386-4d8e-8896-96f37d2d975d_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "2751154b-fa18-467c-86cb-db41e9405c9c_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-patra-bhav",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "b07fbd28-52e2-43c8-acc2-548c89eac2bf_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-kahani-ka-saundarya",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "eab02f28-3549-44b0-b919-705611112791_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "5953e407-788c-4e71-92ba-10ff5739a4c1_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-srijan-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "0d54b333-10b2-4366-b346-3f39ebfbddc6_gen.webp"
+ },
+ {
+  "ch": 3,
+  "page": "ch3-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "4830491a-bd86-48c2-bb6f-0702313fe50b_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-parichay",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "e53fe2ea-649f-40d6-aa55-9350c576ef89_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-sakshatkar-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "11bbd18a-6ed5-4c3e-8d73-a5c7eae814e0_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-sakshatkar-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "e7551534-8546-4665-b3b1-475c002add0d_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-sakshatkar-bhag-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "9cb37187-af50-45bd-b9c7-35360caea48f_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "882ce58a-e020-4205-a156-ffc6b2ffd335_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-vyaktitva-vidha",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "d23bcbdf-d905-4acc-8b12-737f935ffaa2_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "1f5ddb12-b9e3-47d6-acbd-523e0a170a5f_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-srijan-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "4b8573e6-2bd6-409d-b617-5646778e1894_gen.webp"
+ },
+ {
+  "ch": 4,
+  "page": "ch4-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "da40c2b5-f28a-43e6-b367-5ab364da7f59_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-parichay",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "a27f1cfc-c2b8-414f-8983-057557ed9c57_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-yatra-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "e1c029fe-5ef2-4f1f-bb49-92839296b880_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-yatra-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "9bd2343a-26ac-46fb-99e5-63da53be1edf_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-yatra-bhag-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "bf159025-847e-4e89-81fe-97e5e9876a9a_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "e46f7ec1-30bc-437f-9e7c-b2434989e5d7_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-bhav-saundarya",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "5b2ff57d-d1fe-49ec-884e-7bfae5dd5c4b_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "80cfb9d4-2886-4080-bb54-c87e30634360_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-srijan-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "7532a771-0803-4d77-a9ea-3b98b63f74b2_gen.webp"
+ },
+ {
+  "ch": 5,
+  "page": "ch5-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "e57cf0f6-5b16-4454-82e4-a70f96d4efd6_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-parichay",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "6aa01ec6-3b56-46a8-a8e2-1f1d288244b9_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-ekanki-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "0a620d1f-328d-4cb4-b3d8-ad5f11575005_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-ekanki-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "b53f718e-2dce-4cba-800c-9e66c1b0736b_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-ekanki-bhag-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "33543699-7077-4ea5-b437-46bddafe7284_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "b37e4a79-8bb3-4cd3-adf7-343c72484d2c_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-patra-vidha",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "5d1c26eb-7216-4b82-8e1d-8dc32bd2f745_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "3bdef996-1a2a-40fa-8357-9ad74bc4f202_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-srijan-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "9ba5f07e-a7f6-479d-8267-cb96d834dbf2_gen.webp"
+ },
+ {
+  "ch": 6,
+  "page": "ch6-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "223b9b18-e3ef-43ea-8318-f1ed9ef3a8d8_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-parichay",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "0d87cfdc-a0c2-4e69-b2a1-bf31ec579a83_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-nibandh-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "f9b977f3-8754-4dd4-8904-d0a688e69eba_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-nibandh-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "9aeee663-a0e1-4066-afe3-2c06cb37e6ab_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-nibandh-bhag-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "6739b287-3ae3-4c7c-84a5-78805026e46d_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "af3e898f-6b17-40e3-91a2-f897ba47a96e_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-nibandh-vidha",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "e548fbb1-e202-4dd8-8238-5711763020d9_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "7b313e62-a974-40e0-a487-905e8ad0becb_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-srijan-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "65576f71-992e-4983-88db-0b2311ccd2be_gen.webp"
+ },
+ {
+  "ch": 7,
+  "page": "ch7-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "6399913b-5890-4e3d-8a01-6e7509e6e764_gen.webp"
+ },
+ {
+  "ch": 8,
+  "page": "ch8-parichay",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "ce714128-f1ff-4768-a7e1-8072161178f6_gen.webp"
+ },
+ {
+  "ch": 8,
+  "page": "ch8-pad-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "d30b444b-a426-452d-b635-597e0c5fa406_gen.webp"
+ },
+ {
+  "ch": 8,
+  "page": "ch8-pad-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "dea57556-131a-4ca4-926e-92d58210f443_gen.webp"
+ },
+ {
+  "ch": 8,
+  "page": "ch8-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "b9a61d1d-05b0-47db-a267-69d3f1a31a0c_gen.webp"
+ },
+ {
+  "ch": 8,
+  "page": "ch8-kavita-saundarya",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "ea6793af-f697-4822-b832-91017171a154_gen.webp"
+ },
+ {
+  "ch": 8,
+  "page": "ch8-vishay-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "7ddc68d7-c942-4321-80da-ba01d95cefc6_gen.webp"
+ },
+ {
+  "ch": 8,
+  "page": "ch8-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "12030005-cd94-44fe-9423-f3d6d68a9dec_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-parichay",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "1907af18-c623-4de1-8b7b-405a4f3cfab1_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-kavita-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "bf63b198-b926-4edf-bdf1-9ac71d78291b_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-kavita-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "7ca91fcf-6db6-4cc9-b1d1-7042fb9e3f4e_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "010f8426-9097-400b-9b63-8d581c6e7c79_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-patra-bhav",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "13818862-93f4-4e72-89a4-38a6db2d48cf_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-kavita-saundarya",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "bb337a67-9aef-467b-89dc-3d45eac83665_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-vishay-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "b4fe70ec-a74d-4078-91c9-3a1cca09b274_gen.webp"
+ },
+ {
+  "ch": 9,
+  "page": "ch9-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "38d6a5d9-9af8-4491-849b-2e2fc19468fa_gen.webp"
+ },
+ {
+  "ch": 10,
+  "page": "ch10-parichay",
+  "order": 0,
+  "aspect": "portrait",
+  "filled": true,
+  "srcfile": "33e6489b-2a10-4443-8a43-0e9992a4a446_gen.webp"
+ },
+ {
+  "ch": 10,
+  "page": "ch10-kavita",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "c2437a17-9aa5-4085-9c48-cc7a094e9d72_gen.webp"
+ },
+ {
+  "ch": 10,
+  "page": "ch10-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "5dc31c26-7c2a-4c1d-9a6c-6a99759d4b4a_gen.webp"
+ },
+ {
+  "ch": 10,
+  "page": "ch10-kavita-saundarya",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "e08dea73-781d-4e1a-b704-b58d25ac5f93_gen.webp"
+ },
+ {
+  "ch": 10,
+  "page": "ch10-vishayon-se-samvad",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "f68c57e0-c336-4640-8832-ff226d4c2206_gen.webp"
+ },
+ {
+  "ch": 10,
+  "page": "ch10-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": true,
+  "srcfile": "dc54825b-cee8-4ca3-b8c8-646cb761072a_gen.webp"
+ },
+ {
+  "ch": 10,
+  "page": "ch10-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-parichay",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-kavita-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-kavita-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-kavita-bhag-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-kavita-kahani",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-vishay-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 11,
+  "page": "ch11-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-parichay",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-kavita-bhag-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-kavita-bhag-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-kavita-bhag-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-shabd-sampada",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-kavita-saundarya",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-vishay-vyakaran",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 12,
+  "page": "ch12-abhyas",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 13,
+  "page": "apathit-rananeeti-gadyansh-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 13,
+  "page": "apathit-gadyansh-2-case",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 13,
+  "page": "apathit-kavyansh-1",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 13,
+  "page": "apathit-gadyansh-3",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ },
+ {
+  "ch": 13,
+  "page": "apathit-kavyansh-2",
+  "order": 0,
+  "aspect": "16:5",
+  "filled": false,
+  "srcfile": ""
+ }
+]

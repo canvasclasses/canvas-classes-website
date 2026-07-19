@@ -1,0 +1,28 @@
+[
+  {
+    "pageId": "950b236e-e25a-4b68-92e4-51b8da7557ed",
+    "slug": "structure-of-the-atom-opener",
+    "bookId": "69fbc73e-8f2c-4cf2-a678-c9fd41a1e706",
+    "chapterNumber": 8,
+    "pageNumber": 83,
+    "lang": "en",
+    "blockId": "7b2a7817-5a54-4eef-bd32-56cc7e75a02f",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Ultra-wide cinematic cover banner (21:9). A cover image for the chapter \"Journey Inside the Atom\": instruments, light and the spirit of scientific discovery, themed around the chapter's subject. Dark, atmospheric, cinematic, painterly illustration, no text overlay.",
+    "alt": "Journey Inside the Atom — chapter cover"
+  },
+  {
+    "pageId": "4a91a67f-7d7c-4d24-be13-a8fa6a1476f7",
+    "slug": "rutherfords-model",
+    "bookId": "69fbc73e-8f2c-4cf2-a678-c9fd41a1e706",
+    "chapterNumber": 8,
+    "pageNumber": 87,
+    "lang": "en",
+    "blockId": "b094059f-2662-48d6-a9cc-86e18d6fb99d",
+    "kind": "image",
+    "targetField": "src",
+    "prompt": "Hand-drawn coloured educational diagram — clean, elegant. Visible ink line work with soft hand-painted colour fills (coloured-pencil / gouache feel). Deep charcoal near-black background; warm muted colours; no neon, no glow, no bright flashy colours, no 3D-render look. 4:3. A beam of small particles travelling from the left toward a column of atoms, each drawn with a tiny dense central nucleus; most paths pass straight through, a few bend at angles, and one rebounds backward after striking a nucleus. Neat hand-lettered labels: 'Alpha particles', 'Gold foil', 'Nucleus', 'Deflected particle'. Calm and uncluttered.",
+    "alt": "The gold-foil experiment: alpha particles hitting gold foil, most passing through, some deflected, a few bouncing back off the tiny nucleus"
+  }
+]

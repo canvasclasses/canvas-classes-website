@@ -1,0 +1,152 @@
+[
+  {
+    "file": "ieq_b1_01.png",
+    "n": 1,
+    "page": 0,
+    "slug": "ionic-equilibrium-opener",
+    "pageId": "63313686-7848-4782-972f-5ad839b72587",
+    "blockId": "7e0925be-83cf-4554-845e-62fe08db1dad",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_02.png",
+    "n": 2,
+    "page": 1,
+    "slug": "ionic-equilibrium-and-electrolytes",
+    "pageId": "e9e66df9-e32a-4da6-af79-c34c0f8be6f7",
+    "blockId": "0e038ac2-d652-44af-ab85-4ba777f9b1db",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_03.png",
+    "n": 3,
+    "page": 1,
+    "slug": "ionic-equilibrium-and-electrolytes",
+    "pageId": "e9e66df9-e32a-4da6-af79-c34c0f8be6f7",
+    "blockId": "ad81e7fa-cf6f-4ac3-9526-989970326d58",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_04.png",
+    "n": 4,
+    "page": 2,
+    "slug": "degree-of-dissociation-factors",
+    "pageId": "0558f77b-280c-4daf-9f20-4b8d2353165e",
+    "blockId": "50537df4-92ea-42d5-b8df-1f45cc93b2c6",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_05.png",
+    "n": 5,
+    "page": 2,
+    "slug": "degree-of-dissociation-factors",
+    "pageId": "0558f77b-280c-4daf-9f20-4b8d2353165e",
+    "blockId": "fe39b666-3f30-413c-88dc-da30c8e7d2b2",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_06.png",
+    "n": 6,
+    "page": 3,
+    "slug": "ostwald-dilution-law",
+    "pageId": "01c96f96-16dc-47d8-9032-fe47a4e4cca7",
+    "blockId": "c9289a12-0224-4873-98fd-d7e2ac23a7ed",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_07.png",
+    "n": 7,
+    "page": 3,
+    "slug": "ostwald-dilution-law",
+    "pageId": "01c96f96-16dc-47d8-9032-fe47a4e4cca7",
+    "blockId": "24041832-a22f-4b2d-953b-4c672502dbc3",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_08.png",
+    "n": 8,
+    "page": 4,
+    "slug": "arrhenius-acids-and-bases",
+    "pageId": "bdf4901a-7403-4720-88b1-ce943d0c7f21",
+    "blockId": "e9020e75-28ba-4c1f-a91c-ac6b17885fac",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_09.png",
+    "n": 9,
+    "page": 4,
+    "slug": "arrhenius-acids-and-bases",
+    "pageId": "bdf4901a-7403-4720-88b1-ce943d0c7f21",
+    "blockId": "6b239ca5-d8ef-49dd-bce1-56414861f472",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_10.png",
+    "n": 10,
+    "page": 5,
+    "slug": "bronsted-lowry-conjugate-pairs",
+    "pageId": "9d4de285-d4d2-4f22-8c7a-1c62e29223cc",
+    "blockId": "0b043cb6-99d4-4eab-a831-e2b529c1d1f2",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_11.png",
+    "n": 11,
+    "page": 5,
+    "slug": "bronsted-lowry-conjugate-pairs",
+    "pageId": "9d4de285-d4d2-4f22-8c7a-1c62e29223cc",
+    "blockId": "2fa0e54a-26c8-40c7-9fc0-31a2475c9341",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_12.png",
+    "n": 12,
+    "page": 6,
+    "slug": "lewis-acids-and-bases",
+    "pageId": "5ed18fff-ed1c-49d3-9762-f4dccb63516e",
+    "blockId": "2e2c40a3-0ad3-4d9a-b168-45370301ae2b",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_13.png",
+    "n": 13,
+    "page": 6,
+    "slug": "lewis-acids-and-bases",
+    "pageId": "5ed18fff-ed1c-49d3-9762-f4dccb63516e",
+    "blockId": "c897ec6e-4dc7-40b0-8b4b-937d75401dd3",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_14.png",
+    "n": 14,
+    "page": 7,
+    "slug": "factors-affecting-acid-strength",
+    "pageId": "f457ccf7-1f11-4812-beff-e15b0a828681",
+    "blockId": "f7a72b4d-e8aa-4c7b-96e5-60f699d943a7",
+    "field": "src",
+    "lang": "en"
+  },
+  {
+    "file": "ieq_b1_15.png",
+    "n": 15,
+    "page": 7,
+    "slug": "factors-affecting-acid-strength",
+    "pageId": "f457ccf7-1f11-4812-beff-e15b0a828681",
+    "blockId": "2da29b58-1a71-41ed-a646-1393280a800b",
+    "field": "src",
+    "lang": "en"
+  }
+]
