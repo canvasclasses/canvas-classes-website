@@ -59,6 +59,8 @@ Two hard rules:
 | anti-aligned, mirror-scaled | related by $H = -kS$, opposite in sign |
 | universal converter, the bridge | the formula that links them |
 | crucial, paramount, leverage, elucidate, delineate | important, key, use, explain, point out |
+| rattle ("this value is given to rattle you") | confuse ("this value is only there to confuse you") |
+| dressed up as / dressed up like / disguised as (a topic) | (cut the costume framing; just name the concept plainly) |
 
 **Sentence length rule.** If a sentence has more than one comma, or an em-dash, check whether it can be broken into two short sentences. Short sentences are easier to read for students whose first language is not English.
 

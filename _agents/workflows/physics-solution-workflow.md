@@ -65,6 +65,8 @@ Two hard rules:
 | land on (figurative) | becomes, equals, comes out to be |
 | diagnostic spot | where students go wrong |
 | crucial, paramount, leverage, elucidate | important, key, use, explain |
+| rattle ("this value is given to rattle you") | confuse ("this value is only there to confuse you") |
+| dressed up as / dressed up like / disguised as (a topic) | (cut the costume framing; just name the concept plainly) |
 
 **Sentence length rule.** Target under 20 words per sentence; never over 30. If a sentence has more than one comma, or an em-dash, check whether it can be broken into two short sentences. Short sentences are easier to read for students whose first language is not English.
 

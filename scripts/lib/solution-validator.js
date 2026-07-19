@@ -35,6 +35,11 @@ const BASE_FORBIDDEN_PHRASES = [
   'crush it down', 'truth-state', 'stored system key', 'legacy data mismatch',
   'recorded logic key', 'per recorded logic', 'my rigorous calculation',
   'to trap students', 'sitting right there as option',
+  // AI-isms a real classroom teacher would never say (founder, 2026-06-25):
+  // - "rattle" (e.g. "given to rattle you") → say "confuse" instead.
+  // - "dressed up as/like <subject>", "disguised as", "in disguise" — don't frame
+  //   a question as another subject in costume; just name the concept plainly.
+  'rattle', 'dressed up', 'dressed-up', 'disguised as', 'in disguise',
 ];
 
 const ALL_SECTION_ICONS = ['🧠', '🗺️', '⚡', '⚠️', '🖼️', '💡'];

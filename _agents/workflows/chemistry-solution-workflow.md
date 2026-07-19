@@ -76,6 +76,8 @@ Two hard rules:
 | delve, robust, seamless, intricate, realm, navigate, underscore, pivotal, holistic, nuanced | (cut — AI-tell words; use plain equivalents) |
 | monster ("redox monster", "this monster of a question") | (cut — reads as AI hype; just name it: "this redox equation", "this long question") |
 | anchor / anchor it (figurative) | "let us fix X at …", "set X = …", "take X as …" |
+| rattle ("this value is given to rattle you") | confuse ("this value is only there to confuse you") |
+| dressed up as / dressed up like / disguised as (a subject) | (cut the costume framing; just name the concept: "this is a limiting-reagent question") |
 
 **Sentence length rule.** Target under 20 words per sentence; never over 30. If a sentence has more than one comma, or an em-dash, check whether it can be broken into two short sentences. Short sentences are easier to read for students whose first language is not English.
 
