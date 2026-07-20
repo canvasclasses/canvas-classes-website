@@ -12,7 +12,10 @@ const BASE_URL = 'https://www.canvasclasses.in';
 // Bump it only on a major site-wide content refresh — genuinely-dynamic blocks
 // below (books, careers, crucible questions, blog) already carry their own
 // real `updated_at`/`generatedAt` and are unaffected by this constant.
-const STABLE_LASTMOD = new Date('2026-06-12');
+// Bumped 2026-06-12 → 2026-07-20: site-wide metadata rewrite (notes ×26,
+// download-ncert-books family, ncert-solutions, salt-analysis,
+// college-predictor, assertion-reason titles/descriptions + year refresh).
+const STABLE_LASTMOD = new Date('2026-07-20');
 
 // Floor for Crucible question-page lastmod. Phase A (commit 8f95705, deployed
 // 2026-07-18) changed the rendered HTML of every /the-crucible/q/* page (SSR

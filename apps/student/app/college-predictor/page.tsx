@@ -9,9 +9,9 @@ import TrustStrip from '@/features/college-predictor/components/TrustStrip';
 import { TOP_COLLEGES } from '@/features/college-predictor/data/topCollegesData';
 
 export const metadata: Metadata = {
-  title: 'JEE Main & BITSAT College Predictor 2026 — NIT, IIIT, GFTI, BITS Rank Predictor',
+  title: 'JEE Main College Predictor 2026 — Free, Rank-Wise | NIT, IIIT, GFTI + BITSAT',
   description:
-    'Free JEE Main + BITSAT college predictor. Enter your JEE Main rank/percentile for Safe / Target / Reach NITs, IIITs and GFTIs, or your BITSAT score for BITS Pilani / Goa / Hyderabad. Built on 5 years of JoSAA cutoff data and 9 years of official BITSAT closing scores.',
+    'Free JEE Main college predictor 2026 — rank-wise Safe/Target/Reach NITs, IIITs & GFTIs for JoSAA & CSAB, plus BITS from your BITSAT score. Built on 5 years of real cutoff data.',
   keywords: [
     'JEE Main college predictor',
     'JEE Main rank predictor',

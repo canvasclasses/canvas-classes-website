@@ -221,7 +221,7 @@ function Hero() {
                     className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-orange-500/20 bg-orange-500/10 text-[11px] text-orange-300 font-semibold tracking-wide mb-4"
                 >
                     <Sparkles size={11} />
-                    Free Digital Library · CBSE 2025-26
+                    Free Digital Library · CBSE 2026-27
                 </motion.div>
 
                 <motion.h1
@@ -247,7 +247,7 @@ function Hero() {
                     transition={{ duration: 0.45, delay: 0.1 }}
                     className="mt-3 md:mt-4 text-sm md:text-base text-gray-400 max-w-xl mx-auto"
                 >
-                    Latest 2025-26 editions including the new NEP 2020 books. Read any chapter online or download the
+                    Latest 2026-27 editions including the new NEP 2020 books. Read any chapter online or download the
                     PDF instantly.
                 </motion.p>
             </div>
@@ -267,7 +267,7 @@ function WhyStrip() {
         },
         {
             icon: GraduationCap,
-            title: '2025-26 latest editions',
+            title: '2026-27 latest editions',
             body: 'Includes the new NEP 2020 textbooks for Class 9 (Kaveri, Science, Mathematics) plus all rationalised editions.',
             color: 'from-emerald-500 to-teal-500',
         },
@@ -435,8 +435,8 @@ function TakeItFurther() {
 
 const FAQS: { q: string; a: string }[] = [
     {
-        q: 'Are these the latest 2025-26 NCERT textbooks?',
-        a: 'Yes. The library mirrors the current 2025-26 CBSE NCERT editions, including all rationalised chapters and the new NEP 2020 textbooks for Class 9 (Kaveri English, the new Science book and the new Mathematics book).',
+        q: 'Are these the latest 2026-27 NCERT textbooks?',
+        a: 'Yes. The library mirrors the current 2026-27 CBSE NCERT editions, including all rationalised chapters and the new NEP 2020 textbooks for Class 9 (Kaveri English, the new Science book and the new Mathematics book).',
     },
     {
         q: 'Are these PDFs really free? Is there any login?',

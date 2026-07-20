@@ -1,6 +1,18 @@
-# Metadata Rewrite — Batch 1 (drafted 2026-07-18, apply after Phase A hold week 1)
+# Metadata Rewrite — Batch 1 (drafted 2026-07-18; **#1–#3 APPLIED 2026-07-20**, Shaurya-confirmed)
 
-> Drafts only — nothing here is applied yet. Evidence: SEO_PLAYBOOK Part G
+> **Status 2026-07-20:** #1 (salt-analysis), #2 (NCERT-PDF chapter pages incl.
+> family-wide 2025-26 → 2026-27 year bump), #3 (JEE PYQ hubs incl. the
+> `yearMin`/`yearMax` manifest fields) are APPLIED. Applied same day beyond this
+> doc, per `_agents/data/keyword-research-2026-07-20.md`: college-predictor
+> title tokens (Free, Rank-Wise, JoSAA/CSAB in desc), handwritten-notes hub
+> title ("Class 11 & 12" front-load) + keywords, stale-year bumps in
+> assertion-reason + ncert-solutions descriptions. #4 (Class-9) EXCLUDED —
+> founder said don't touch Live Books for now. #5 (/about) still parked.
+> **Bonus bug fixed:** `scripts/export_jee_main_pyqs.js` was writing to the
+> dead pre-monorepo root `app/lib/` path since Phase 5 — live jee-main-pyqs
+> data was frozen at 2026-05-07; path fixed + re-exported (1,868 Qs fresh).
+> The zombie root `app/` dir still exists — deletion awaiting founder OK.
+> Original drafts below. Evidence: SEO_PLAYBOOK Part G
 > (formulas + hit-list) + the 16-month GSC baseline
 > (`_agents/data/gsc-baselines/`). Rank effects tracked against
 > `rank-tracking-sample-2026-07-18.csv` (348 queries, 8 segments).

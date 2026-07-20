@@ -376,7 +376,10 @@ function ChapterCard({
     if (!meta) return null;
 
     const pillClass = SUBJECT_PILL[meta.subject] ?? SUBJECT_PILL['Physical'];
-    const isMainNcertChapter = Number.isInteger(meta.ncertChapterNumber);
+    // Badge shows the CURRENT rationalised NCERT chapter number only — the
+    // legacy `ncertChapterNumber` is old-syllabus ordering and must not be
+    // shown as a fact. Dropped/cross-chapter topics render as "Bonus".
+    const isMainNcertChapter = meta.currentNcertChapter != null;
     const thumbUrl = notes.find((n) => n.thumbnailUrl)?.thumbnailUrl ?? null;
 
     return (
@@ -399,7 +402,7 @@ function ChapterCard({
                         </span>
                         {isMainNcertChapter ? (
                             <span className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
-                                Ch {meta.ncertChapterNumber}
+                                Ch {meta.currentNcertChapter}
                             </span>
                         ) : (
                             <span className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-slate-600">

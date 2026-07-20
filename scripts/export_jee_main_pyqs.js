@@ -6,8 +6,8 @@
  * Pulls every star-marked JEE Main PYQ across all 25 chemistry chapters
  * from the Crucible questions_v2 collection and writes:
  *
- *   app/lib/jee-main-pyqs/data/manifest.json     — chapter list + counts + slug map
- *   app/lib/jee-main-pyqs/data/<chapter_id>.json — full question data per chapter
+ *   apps/student/features/public-content/data/jee-main-pyqs/data/manifest.json     — chapter list + counts + slug map
+ *   apps/student/features/public-content/data/jee-main-pyqs/data/<chapter_id>.json — full question data per chapter
  *
  * The Crucible database is NOT modified. Only `.find()` reads are issued.
  *
@@ -165,8 +165,25 @@ async function main() {
     }
 
     // Write per-chapter files + build manifest
-    const dataDir = path.join(__dirname, '..', 'app', 'lib', 'jee-main-pyqs', 'data');
+    // Post-Phase-5 monorepo location — the student app reads this via
+    // features/public-content/data/jee-main-pyqs/data.ts (DATA_DIR). The old
+    // repo-root app/lib/... path was a dead write target after the migration.
+    const dataDir = path.join(__dirname, '..', 'apps', 'student', 'features', 'public-content', 'data', 'jee-main-pyqs', 'data');
     fs.mkdirSync(dataDir, { recursive: true });
+
+    // SAFETY GATE: this wipes and rewrites the LIVE served dataset. If the DB
+    // query came back suspiciously small (wrong MONGODB_URI, empty dev
+    // cluster, bad filter), abort BEFORE deleting anything — a bad run must
+    // never destroy the deployed data. Baseline is ~1,868 questions (2026-07).
+    const MIN_EXPECTED_QUESTIONS = 500;
+    if (all.length < MIN_EXPECTED_QUESTIONS) {
+        console.error(
+            `✗ ABORT: query returned only ${all.length} questions ` +
+            `(< ${MIN_EXPECTED_QUESTIONS} floor). Check MONGODB_URI / filters. ` +
+            'Existing data files were NOT touched.'
+        );
+        process.exit(1);
+    }
 
     // Wipe stale per-chapter files (so deleted-from-bank questions don't linger)
     for (const f of fs.readdirSync(dataDir)) {
@@ -229,6 +246,9 @@ async function main() {
         const chapterFile = path.join(dataDir, `${ch.id}.json`);
         fs.writeFileSync(chapterFile, JSON.stringify({ chapterId: ch.id, questions: exported }, null, 0), 'utf8');
 
+        const examYears = exported
+            .map((q) => q.examYear)
+            .filter((y) => typeof y === 'number' && y > 1900);
         manifestChapters.push({
             id: ch.id,
             name: ch.name,
@@ -236,6 +256,8 @@ async function main() {
             classLevel: ch.class_level,
             chapterType: ch.type,
             questionCount: exported.length,
+            yearMin: examYears.length ? Math.min(...examYears) : null,
+            yearMax: examYears.length ? Math.max(...examYears) : null,
             // Store just slugs in manifest for fast generateStaticParams
             questionSlugs: exported.map((q) => q.slug),
         });

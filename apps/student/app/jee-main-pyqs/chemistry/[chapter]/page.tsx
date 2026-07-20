@@ -26,8 +26,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!chapter) return { title: 'Chapter Not Found' };
 
     const url = `${BASE_URL}/jee-main-pyqs/chemistry/${chapter.slug}`;
-    const title = `JEE Main ${chapter.name} PYQs — ${chapter.questionCount} Questions with Solutions`;
-    const description = `${chapter.questionCount} JEE Main previous year questions on ${chapter.name} (Class ${chapter.classLevel} chemistry), each with detailed solutions and the year/shift tagged. Free, no login.`;
+    // Part G formula: full "Previous Year Questions with Solutions" phrase in the
+    // title ("PYQ" stays in description/keywords); count + year-range = the
+    // completeness signal observed on #1-ranking competitor pages.
+    const yearRange = chapter.yearMin && chapter.yearMax
+        ? (chapter.yearMin === chapter.yearMax ? `${chapter.yearMax}` : `${chapter.yearMin}–${chapter.yearMax}`)
+        : null;
+    const title = `JEE Main ${chapter.name} Previous Year Questions with Solutions (${chapter.questionCount} Qs${yearRange ? `, ${yearRange}` : ''})`;
+    const description = `${chapter.questionCount} chapter-wise JEE Main ${chapter.name} PYQs${yearRange ? ` (${yearRange})` : ''} for Class ${chapter.classLevel} chemistry, each solved step-by-step with year/shift tagged. Free, no login.`;
 
     return {
         title,

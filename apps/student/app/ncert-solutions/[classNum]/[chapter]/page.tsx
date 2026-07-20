@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const url = `${BASE_URL}/ncert-solutions/class-${data.classNum}/${chapterSlug}`;
     const title = `NCERT Solutions for Class ${data.classNum} Chemistry — ${data.chapterName}`;
-    const description = `Free NCERT solutions for Class ${data.classNum} Chemistry chapter "${data.chapterName}" — ${data.questions.length} step-by-step solutions with detailed explanations and video walkthroughs by Paaras Sir. Updated for 2025-26 CBSE, JEE & NEET.`;
+    const description = `Free NCERT solutions for Class ${data.classNum} Chemistry chapter "${data.chapterName}" — ${data.questions.length} step-by-step solutions with detailed explanations and video walkthroughs by Paaras Sir. Updated for 2026-27 CBSE, JEE & NEET.`;
 
     return {
         title,

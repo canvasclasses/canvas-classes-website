@@ -5,8 +5,8 @@ import Script from 'next/script';
 const BASE_URL = 'https://www.canvasclasses.in';
 
 export const metadata: Metadata = {
-    title: 'Salt Analysis: Procedure, Cation & Anion Tests + Free Virtual Lab | Class 12',
-    description: 'Free interactive salt analysis lab with step-by-step cation analysis (Groups I–VI), anion tests, flame tests, and the brown ring test. Complete procedure, reactions, and viva questions for CBSE Class 12 practical, JEE & NEET.',
+    title: 'Salt Analysis Virtual Lab — Free Interactive Simulation + Full Procedure (Class 12)',
+    description: 'Practise salt analysis in a free virtual lab — no login. Step-by-step cation analysis (Groups I–VI), anion & flame tests, and viva questions for Class 12, JEE & NEET.',
     keywords: [
         'salt analysis',
         'salt analysis procedure',
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
         locale: 'en_IN',
         url: `${BASE_URL}/salt-analysis`,
         siteName: 'Canvas Classes',
-        title: 'Salt Analysis: Procedure, Tests & Free Virtual Lab — Class 12',
-        description: 'Step-by-step salt analysis procedure with free virtual lab. Cation analysis (Groups I–VI), anion tests, flame tests, brown ring test, and viva questions for CBSE Class 12 practical.',
+        title: 'Salt Analysis Virtual Lab — Free Interactive Simulation (Class 12)',
+        description: 'Practise salt analysis in a free virtual lab. Step-by-step cation analysis (Groups I–VI), anion tests, flame tests, brown ring test, and viva questions for CBSE Class 12 practical.',
         images: [
             {
                 url: `${BASE_URL}/og-salt-analysis.jpg`,
@@ -64,8 +64,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Salt Analysis: Procedure + Free Virtual Lab | Class 12',
-        description: 'Free interactive salt analysis lab. Step-by-step cation/anion tests, flame tests, brown ring test, and viva questions for CBSE Class 12.',
+        title: 'Salt Analysis Virtual Lab — Free Simulation | Class 12',
+        description: 'Practise salt analysis in a free virtual lab. Step-by-step cation/anion tests, flame tests, brown ring test, and viva questions for CBSE Class 12.',
         images: [`${BASE_URL}/og-salt-analysis.jpg`],
     },
     category: 'Education',

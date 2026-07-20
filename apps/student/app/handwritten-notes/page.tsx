@@ -44,10 +44,12 @@ const PAARAS_PERSON = {
 const DATE_PUBLISHED = '2025-09-01T00:00:00+05:30';
 
 export const metadata: Metadata = {
-    title: "Free Handwritten Chemistry Notes PDF — All Chapters | JEE, NEET & CBSE",
+    title: "Class 11 & 12 Chemistry Handwritten Notes PDF — All Chapters Free | JEE, NEET & CBSE",
     description:
-        "Download free handwritten chemistry notes by Paaras Sir — all Class 11 & 12 chapters: Organic, Inorganic & Physical Chemistry. Highlighted NCERTs, revision sheets, and exam-focused PDFs for JEE Main, JEE Advanced, NEET, and CBSE 2025-26.",
+        "Download free handwritten chemistry notes by Paaras Sir — all Class 11 & 12 chapters: Organic, Inorganic & Physical Chemistry. Highlighted NCERTs, revision sheets, and exam-focused PDFs for JEE Main, JEE Advanced, NEET, and CBSE 2026-27.",
     keywords: [
+        "class 11 chemistry handwritten notes pdf",
+        "class 12 chemistry handwritten notes pdf",
         "handwritten chemistry notes PDF",
         "free chemistry notes download",
         "JEE chemistry notes",
@@ -67,7 +69,7 @@ export const metadata: Metadata = {
     creator: 'Paaras Sir',
     publisher: 'Canvas Classes',
     openGraph: {
-        title: "Free Handwritten Chemistry Notes PDF — All Chapters | JEE, NEET & CBSE",
+        title: "Class 11 & 12 Chemistry Handwritten Notes PDF — All Chapters Free | JEE, NEET & CBSE",
         description:
             "Free handwritten chemistry notes by Paaras Sir. All chapters of Organic, Inorganic & Physical Chemistry for Class 11 & 12, JEE, and NEET.",
         type: "website",
@@ -86,7 +88,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Free Handwritten Chemistry Notes PDF | JEE, NEET & CBSE",
+        title: "Class 11 & 12 Chemistry Handwritten Notes PDF — Free | JEE, NEET & CBSE",
         description:
             "Download free handwritten notes for all Chemistry chapters — Organic, Inorganic & Physical. JEE, NEET & CBSE Class 11 & 12.",
         images: [OG_IMAGE_URL],
