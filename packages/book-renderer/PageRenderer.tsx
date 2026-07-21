@@ -47,17 +47,9 @@ interface PageRendererProps {
    * the student app's default. See VideoBlockRenderer.tsx.
    */
   videoOriginOverride?: string;
-  /**
-   * Running count of worked examples on chapter pages BEFORE this one. The
-   * reader (BookReader) passes this so worked-example numbering is continuous
-   * across the whole chapter — this page's examples are numbered
-   * exampleOffset + 1, +2, … in document order. Defaults to 0 (admin preview /
-   * standalone page → page-local numbering starting at 1).
-   */
-  exampleOffset?: number;
 }
 
-function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOverride, exampleOffset = 0 }: PageRendererProps) {
+function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOverride }: PageRendererProps) {
   const hasHinglish = Boolean(
     (page.hinglish_blocks && page.hinglish_blocks.length > 0) || hasAnalyticalHinglish(page.blocks)
   );
@@ -116,14 +108,15 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
     return { sorted: s, mainBlocks: main, examBlocks: exam, hasExamRail: exam.length > 0 };
   }, [page.blocks]);
 
-  // Chapter-continuous worked-example numbering. Walk blocks in display order
-  // (sorted by `order`, recursing into section columns so the count matches
-  // book-writer's stored worked_example_count) and assign each worked_example
-  // its number = exampleOffset + running index. Computed here, never stored in
-  // the block, so numbers auto-adjust when examples are added/removed/reordered.
+  // Page-local worked-example numbering — deliberately NOT chapter-continuous
+  // (reverted 2026-07-21; see BookReader.tsx for why). Walk blocks in display
+  // order (sorted by `order`, recursing into section columns) and assign each
+  // worked_example its number, starting at 1 on every page. Computed here,
+  // never stored in the block, so numbers auto-adjust within the page when
+  // examples are added/removed/reordered — but never drift across pages.
   const exampleNumbers = useMemo(() => {
     const map = new Map<string, number>();
-    let n = exampleOffset;
+    let n = 0;
     const walk = (blocks: ContentBlock[]) => {
       for (const b of blocks) {
         if (b.type === 'section' && Array.isArray(b.columns)) {
@@ -135,7 +128,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
     };
     walk(sorted);
     return map;
-  }, [sorted, exampleOffset]);
+  }, [sorted]);
 
   // "On This Page" rail navigation — a MAP of the page, not just a list of
   // subtopics. Headings are top-level; the landmark special sections (worked
