@@ -5,20 +5,16 @@ import BookModel from '@canvas/data/models/Book';
 import BookPageModel from '@canvas/data/models/BookPage';
 import { requireAdmin, isAdminRequest } from '@/lib/adminAuth';
 import { ContentBlock } from '@canvas/data/types/books';
-import { validateBlocks } from '@canvas/data/books/schemas';
+import { validateBlocks, CALLOUT_VARIANTS } from '@canvas/data/books/schemas';
 import { computeReadingTime, computeContentTypes, extractVideoTitle } from '@canvas/data/books/utils';
 import { computePageReadiness } from '@canvas/data/books/readiness';
 import { snapshotBookPageVersion } from '@canvas/data/books/page-protection';
 
-// MUST stay in sync with CalloutBlockSchema.variant in
-// packages/data/books/schemas.ts. If it drifts (misses a valid variant), a
-// callout carrying that variant gets silently downgraded to 'note' on save.
-const VALID_CALLOUT_VARIANTS = new Set([
-  'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
-  'threads_of_curiosity', 'bridging_science', 'india_science',
-  'what_if', 'quest_continues', 'ready_to_go_beyond',
-  'india_voice', 'literature_in_life', 'voices_that_inspire', 'evidence_pack',
-]);
+// Derived from the schema's single source of truth (CALLOUT_VARIANTS) so it can
+// never drift. Previously this was a hand-copied list that missed `real_world`,
+// which made sanitizeBlock() silently downgrade every Real-World Application
+// card to `note` on every admin save. Do NOT re-inline the list here.
+const VALID_CALLOUT_VARIANTS = new Set<string>(CALLOUT_VARIANTS);
 
 // Mirrors the `aspect_ratio` enum on ImageBlockSchema / GalleryBlockSchema in
 // packages/data/books/schemas.ts — keep in sync if that enum changes.
@@ -283,6 +279,11 @@ export async function PUT(req: NextRequest, { params }: Params) {
     delete body.book_id;
     delete body.slug;
 
+    // Optimistic-concurrency token (see the concurrency check below). It's a
+    // client-only field — never persist it onto the page document.
+    const baseUpdatedAt: unknown = body.baseUpdatedAt;
+    delete body.baseUpdatedAt;
+
     const updateFields: Record<string, unknown> = { ...body };
 
     // Only update blocks + reading_time when blocks are explicitly provided.
@@ -332,6 +333,26 @@ export async function PUT(req: NextRequest, { params }: Params) {
     // Content protection (CLAUDE.md §0.6): snapshot the current state into version
     // history BEFORE overwriting, so any edit is reversible. Idempotent (deduped by hash).
     const current = await BookPageModel.findOne({ book_id: String(book._id), slug: pageSlug }).lean();
+
+    // Optimistic concurrency: if the client sent the `updated_at` it loaded, and
+    // the page has since changed on the server (another tab, or a script edit),
+    // reject rather than silently clobber. The client surfaces this as a
+    // "reload — page changed elsewhere" prompt. Skipped when the token is absent
+    // (scripts, book-writer.js, and older clients are unaffected).
+    if (typeof baseUpdatedAt === 'string' && current?.updated_at) {
+      const currentToken = new Date(current.updated_at).toISOString();
+      if (currentToken !== baseUpdatedAt) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'This page was changed elsewhere since you opened it. Reload to get the latest version before saving.',
+            code: 'STALE_PAGE',
+          },
+          { status: 409 }
+        );
+      }
+    }
+
     if (current) {
       await snapshotBookPageVersion(current, `pre-save via admin UI (${admin.email})`, admin.email);
     }

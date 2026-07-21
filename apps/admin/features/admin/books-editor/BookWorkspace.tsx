@@ -95,6 +95,10 @@ export default function BookWorkspace() {
   const [isDirty, setIsDirty] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  // Set when the server rejects a save because the page changed under us
+  // (another tab or a script). While true, auto-save is paused so we stop
+  // hammering the server with doomed writes — the user reloads to recover.
+  const [conflict, setConflict] = useState(false);
   const [loadingPage, setLoadingPage] = useState(false);
 
   // Hinglish preview toggle — persists to the same localStorage key as the student reader
@@ -143,6 +147,11 @@ export default function BookWorkspace() {
   }, []);
 
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Optimistic-concurrency token: the `updated_at` of the page as we last loaded
+  // or successfully saved it. Sent on every save so the server can reject a
+  // stale overwrite (see the 409/STALE_PAGE handling in save()). A ref, not
+  // state, so the debounced save closure always reads the freshest value.
+  const baseUpdatedAtRef = useRef<string | null>(null);
   const selectedBook = books.find((b) => b.slug === selectedBookSlug) ?? null;
 
   // ── Load books on mount ────────────────────────────────────────────────────
@@ -194,6 +203,9 @@ export default function BookWorkspace() {
           setBlocks(pg.blocks.slice().sort((a, b) => a.order - b.order));
           setPageTitle(pg.title);
           setPageSubtitle(pg.subtitle ?? '');
+          baseUpdatedAtRef.current = pg.updated_at ? new Date(pg.updated_at).toISOString() : null;
+          setConflict(false);
+          setSaveError(null);
           setIsDirty(false);
         }
       })
@@ -205,12 +217,12 @@ export default function BookWorkspace() {
   // refresh. The unload listeners further down handle the final-keystroke
   // window where the debounce hasn't fired yet.
   useEffect(() => {
-    if (!isDirty) return;
+    if (!isDirty || conflict) return;
     if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
     autoSaveTimer.current = setTimeout(() => { save(); }, 1_500);
     return () => { if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDirty, blocks, pageTitle, pageSubtitle]);
+  }, [isDirty, conflict, blocks, pageTitle, pageSubtitle]);
 
   // ── Save ─────────────────────────────────────────────────────────────────
   // Two paths:
@@ -225,12 +237,15 @@ export default function BookWorkspace() {
     if (!selectedBookSlug || !selectedPageSlug) return;
     const keepalive = opts?.keepalive ?? false;
 
+    // Optimistic-concurrency token — lets the server reject a stale overwrite.
+    const baseUpdatedAt = baseUpdatedAtRef.current ?? undefined;
+
     if (keepalive) {
       try {
         await fetch(`/api/v2/books/${selectedBookSlug}/pages/${selectedPageSlug}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: pageTitle, subtitle: pageSubtitle || undefined, blocks }),
+          body: JSON.stringify({ title: pageTitle, subtitle: pageSubtitle || undefined, blocks, baseUpdatedAt }),
           keepalive: true,
         });
       } catch {
@@ -246,11 +261,16 @@ export default function BookWorkspace() {
       const res = await fetch(`/api/v2/books/${selectedBookSlug}/pages/${selectedPageSlug}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: pageTitle, subtitle: pageSubtitle || undefined, blocks }),
+        body: JSON.stringify({ title: pageTitle, subtitle: pageSubtitle || undefined, blocks, baseUpdatedAt }),
       });
       const data = await res.json();
       if (data.success) {
         setIsDirty(false);
+        // Advance the concurrency token to the version we just wrote, so the
+        // next save doesn't false-positive as a conflict.
+        if (data.data?.updated_at) {
+          baseUpdatedAtRef.current = new Date(data.data.updated_at).toISOString();
+        }
         // Update page list reading time
         setPages((prev) =>
           prev.map((p) =>
@@ -259,6 +279,11 @@ export default function BookWorkspace() {
               : p
           )
         );
+      } else if (res.status === 409 || data.code === 'STALE_PAGE') {
+        // The page changed under us — stop auto-saving so we don't clobber the
+        // newer version. The user reloads to pick up the latest.
+        setConflict(true);
+        setSaveError(data.error || 'This page changed elsewhere — reload before saving.');
       } else {
         setSaveError(data.error || 'Save failed');
       }
@@ -503,10 +528,20 @@ export default function BookWorkspace() {
             <Gauge size={13} />
             <span className="hidden sm:inline">Readiness</span>
           </Link>
-          {saveError && (
+          {conflict ? (
+            <span className="inline-flex items-center gap-2 text-xs text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg px-2.5 py-1.5">
+              <span className="max-w-[22rem]">{saveError || 'This page changed elsewhere — reload before saving.'}</span>
+              <button
+                onClick={() => window.location.reload()}
+                className="font-semibold underline underline-offset-2 hover:text-amber-200 shrink-0"
+              >
+                Reload
+              </button>
+            </span>
+          ) : saveError ? (
             <span className="text-xs text-red-400">{saveError}</span>
-          )}
-          {isDirty && !isSaving && (
+          ) : null}
+          {isDirty && !isSaving && !conflict && (
             <span className="text-xs text-white/30">Unsaved</span>
           )}
 

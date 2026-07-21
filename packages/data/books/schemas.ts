@@ -170,25 +170,32 @@ const PracticeLinkBlockSchema = BaseBlockSchema.extend({
   style: z.enum(['inline_quiz', 'link_to_crucible']),
 });
 
+// SINGLE SOURCE OF TRUTH for callout variants. Anything that needs the set of
+// valid variants (the Zod enum below, and the admin save route's sanitizer)
+// MUST derive from this const — never re-declare the list. A hand-copied second
+// list already drifted once (the admin route's whitelist missed `real_world`,
+// silently downgrading every Real-World Application card to `note` on save).
+export const CALLOUT_VARIANTS = [
+  'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
+  'threads_of_curiosity', 'bridging_science', 'india_science',
+  'what_if', 'quest_continues', 'ready_to_go_beyond',
+  // English-track variants — see ENGLISH_BOOK_PAGE_WORKFLOW.md §3.1
+  'india_voice', 'literature_in_life',
+  'voices_that_inspire',
+  // "Real-World Application" — boxed "Connect"-family enrichment card.
+  'real_world',
+  // Social Science engagement-plan variant (2026-07-08) — renders via the
+  // default NoteCallout card, no new renderer needed. See
+  // _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement retrofit" section.
+  // (`career_spotlight` was here too but was promoted to its own block type —
+  // see CareerSpotlightBlockSchema below — after founder feedback that a wall
+  // of prose buries the actual list of professions.)
+  'evidence_pack',
+] as const;
+
 const CalloutBlockSchema = BaseBlockSchema.extend({
   type: z.literal('callout'),
-  variant: z.enum([
-    'remember', 'note', 'warning', 'exam_tip', 'fun_fact',
-    'threads_of_curiosity', 'bridging_science', 'india_science',
-    'what_if', 'quest_continues', 'ready_to_go_beyond',
-    // English-track variants — see ENGLISH_BOOK_PAGE_WORKFLOW.md §3.1
-    'india_voice', 'literature_in_life',
-    'voices_that_inspire',
-    // "Real-World Application" — boxed "Connect"-family enrichment card.
-    'real_world',
-    // Social Science engagement-plan variant (2026-07-08) — renders via the
-    // default NoteCallout card, no new renderer needed. See
-    // _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement retrofit" section.
-    // (`career_spotlight` was here too but was promoted to its own block type —
-    // see CareerSpotlightBlockSchema below — after founder feedback that a wall
-    // of prose buries the actual list of professions.)
-    'evidence_pack',
-  ]),
+  variant: z.enum(CALLOUT_VARIANTS),
   title: z.string().optional(),
   markdown: z.string(),
   markdown_hinglish: z.string().optional(), // Hinglish twin shown in HI mode (e.g. literature_in_life)
