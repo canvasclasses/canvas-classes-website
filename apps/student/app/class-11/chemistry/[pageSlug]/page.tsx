@@ -68,7 +68,7 @@ export default async function Class11ChemistryPageRoute({ params }: Props) {
       chapter_number: { $in: publishedChapterNumbers },
       published: true,
     })
-    .select('_id slug title chapter_number page_number published page_type')
+    .select('_id slug title chapter_number page_number published page_type worked_example_count')
     .sort({ chapter_number: 1, page_number: 1 })
     .lean();
 

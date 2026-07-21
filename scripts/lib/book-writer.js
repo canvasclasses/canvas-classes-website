@@ -71,6 +71,14 @@ function computeContentTypes(arr) {
   return [...found].sort();
 }
 
+// Count of `worked_example` blocks on a page (recurses into section columns via
+// flattenBlocks). Stored on the page so the reader can compute chapter-continuous
+// "Solved Example N" numbering by summing preceding pages' counts, without loading
+// every page's blocks. Kept in sync on every write, exactly like reading_time_min.
+function computeWorkedExampleCount(arr) {
+  return flattenBlocks(arr).filter((b) => b && b.type === 'worked_example').length;
+}
+
 // Stable hash of a page's blocks (ignores key order).
 function stableStringify(v) {
   if (Array.isArray(v)) return '[' + v.map(stableStringify).join(',') + ']';
@@ -234,6 +242,7 @@ async function savePage(db, selector, newBlocks, opts = {}) {
       blocks: newBlocks,
       reading_time_min: computeReadingTime(newBlocks),
       content_types: computeContentTypes(newBlocks),
+      worked_example_count: computeWorkedExampleCount(newBlocks),
       updated_at: new Date(),
       ...extraSet,
     },
@@ -273,7 +282,9 @@ async function restorePageVersion(db, pageId, version, opts = {}) {
     await pages.updateOne({ _id: pageId }, {
       $set: {
         blocks: snap.blocks, reading_time_min: computeReadingTime(snap.blocks),
-        content_types: computeContentTypes(snap.blocks), deleted_at: null, updated_at: new Date(),
+        content_types: computeContentTypes(snap.blocks),
+        worked_example_count: computeWorkedExampleCount(snap.blocks),
+        deleted_at: null, updated_at: new Date(),
       },
       $unset: { deleted_by: '', deletion_reason: '' },
     });
@@ -305,7 +316,7 @@ async function withDb(fn) {
 }
 
 module.exports = {
-  flattenBlocks, computeReadingTime, computeContentTypes, hashBlocks,
+  flattenBlocks, computeReadingTime, computeContentTypes, computeWorkedExampleCount, hashBlocks,
   collectAssetRefs, collectBlockIds, diffPage, ensureIndexes, snapshotVersion,
   savePage, softDeletePage, restorePageVersion, listVersions, withDb,
 };

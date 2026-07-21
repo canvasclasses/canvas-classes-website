@@ -86,27 +86,51 @@ export default function LatexBlockRenderer({ block }: { block: LatexBlock }) {
   // short-circuits remounts across pages. Two layers, both cheap.
   const { html, error } = useMemo(() => renderLatexCached(block.latex), [block.latex]);
 
+  const equation = error ? (
+    <pre className="text-red-400 text-xs whitespace-pre-wrap text-center">{error}</pre>
+  ) : (
+    <div
+      className="text-white/90 text-lg"
+      // KaTeX output is trusted — it never injects external URLs or scripts
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+
+  const meta = (block.figure_number || block.label || block.note) && (
+    <>
+      {(block.figure_number || block.label) && (
+        <p className="text-xs text-white/40 font-mono mt-1">
+          {block.figure_number ? `Eq. ${block.figure_number}` : block.label}
+        </p>
+      )}
+      {block.note && (
+        <p className="text-sm text-white/60 italic mt-1">{block.note}</p>
+      )}
+    </>
+  );
+
+  if (block.highlight) {
+    return (
+      <div className="my-5 overflow-x-auto">
+        <div
+          className="flex flex-col items-center gap-1 rounded-xl px-5 py-4"
+          style={{
+            background: 'rgba(217,119,6,0.08)',
+            border: '1px solid rgba(217,119,6,0.28)',
+          }}
+        >
+          {equation}
+          {meta}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="my-4 overflow-x-auto">
       <div className="flex flex-col items-center gap-1">
-        {error ? (
-          <pre className="text-red-400 text-xs whitespace-pre-wrap text-center">{error}</pre>
-        ) : (
-          <div
-            className="text-white/90 text-lg"
-            // KaTeX output is trusted — it never injects external URLs or scripts
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-        )}
-
-        {(block.figure_number || block.label) && (
-          <p className="text-xs text-white/40 font-mono mt-1">
-            {block.figure_number ? `Eq. ${block.figure_number}` : block.label}
-          </p>
-        )}
-        {block.note && (
-          <p className="text-sm text-white/60 italic mt-1">{block.note}</p>
-        )}
+        {equation}
+        {meta}
       </div>
     </div>
   );

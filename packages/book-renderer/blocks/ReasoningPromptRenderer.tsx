@@ -1,21 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { ReasoningPromptBlock, ReasoningType } from '@canvas/data/types/books';
+import { ReasoningPromptBlock } from '@canvas/data/types/books';
 import InlineMarkdown from './InlineMarkdown';
 
-// ── Type config ───────────────────────────────────────────────────────────────
-
-const TYPE_CONFIG: Record<ReasoningType, { label: string; color: string; dimColor: string }> = {
-  logical:      { label: 'Logical Reasoning',     color: '#d97706', dimColor: 'rgba(217,119,6,0.12)' },
-  spatial:      { label: 'Spatial Reasoning',      color: '#3b82f6', dimColor: 'rgba(59,130,246,0.12)' },
-  quantitative: { label: 'Quantitative Reasoning', color: '#10b981', dimColor: 'rgba(16,185,129,0.12)' },
-  analogical:   { label: 'Analogical Reasoning',   color: '#7c3aed', dimColor: 'rgba(124,58,237,0.12)' },
-};
-
-const LEVEL_LABEL: Record<number, string> = {
-  1: 'Comprehension', 2: 'Application', 3: 'Analysis', 4: 'Evaluation', 5: 'Pattern & Analogy',
-};
+// ── Section identity — the "Think" family (violet), one consistent look ───────
+// All reasoning prompts share a single identity: label "Think It Through",
+// violet accent, no difficulty level shown, no per-type colour. The four
+// reasoning sub-types (logical / spatial / quantitative / analogical) still
+// exist in the data but no longer drive the visuals — see the book colour
+// system (Learn=amber, Think=violet, Connect=cyan, Remember=sky).
+// Muted lavender — the bright #a78bfa/#8b5cf6 read as neon; these are
+// desaturated for an elegant, textbook feel while staying in the violet
+// "Think" family. Keep in sync with the legend swatch in ChapterOpener.tsx.
+const ACCENT = '#a99bcf';                         // muted lavender — text / borders
+const ACCENT_BASE = '#7a6ba8';                    // muted violet — left bar
+const ACCENT_DIM = 'rgba(122,107,168,0.16)';      // muted violet — tinted fills
+const SECTION_LABEL = 'Think It Through';
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
@@ -24,7 +25,6 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
   const [committed, setCommitted] = useState(false);
   const [showReveal, setShowReveal] = useState(false);
 
-  const { color, dimColor, label } = TYPE_CONFIG[block.reasoning_type];
   const hasOptions = block.options && block.options.length > 0;
 
   function commit() {
@@ -34,24 +34,21 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
   }
 
   return (
-    <div className="my-8" style={{ borderLeft: `3px solid ${color}`, paddingLeft: '1.25rem' }}>
+    <div className="my-8" style={{ borderLeft: `3px solid ${ACCENT_BASE}`, paddingLeft: '1.25rem' }}>
 
-      {/* Header row */}
+      {/* Header row — one consistent "Think It Through" signpost, no level */}
       <div className="flex items-center gap-2 mb-3">
         <span
           className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
-          style={{ background: dimColor, color }}
+          style={{ background: ACCENT_DIM, color: ACCENT }}
         >
-          {label}
-        </span>
-        <span className="text-[10px] text-white/25 font-medium uppercase tracking-widest">
-          Level {block.difficulty_level} · {LEVEL_LABEL[block.difficulty_level]}
+          {SECTION_LABEL}
         </span>
       </div>
 
       {/* Prompt */}
       <div className="mb-4">
-        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/90 font-medium">
+        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/82 font-medium">
           {block.prompt}
         </InlineMarkdown>
       </div>
@@ -66,13 +63,13 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
               className="text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-150"
               style={{
                 border: selected === i
-                  ? `1.5px solid ${color}`
-                  : '1.5px solid rgba(255,255,255,0.07)',
-                background: selected === i ? dimColor : 'transparent',
-                color: selected === i ? '#f1f5f9' : 'rgba(255,255,255,0.55)',
+                  ? `1.5px solid ${ACCENT}`
+                  : '1.5px solid rgba(255,255,255,0.09)',
+                background: selected === i ? ACCENT_DIM : 'transparent',
+                color: selected === i ? '#f1f5f9' : 'rgba(255,255,255,0.82)',
               }}
             >
-              <span className="mr-2" style={{ color: selected === i ? color : 'rgba(255,255,255,0.2)' }}>
+              <span className="mr-2" style={{ color: selected === i ? ACCENT : 'rgba(255,255,255,0.4)' }}>
                 {String.fromCharCode(65 + i)}.
               </span>
               <InlineMarkdown>{opt}</InlineMarkdown>
@@ -83,7 +80,7 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
 
       {/* Open-ended prompt (no options) — just a think nudge */}
       {!hasOptions && !committed && (
-        <p className="text-sm text-white/35 mb-4 italic">
+        <p className="text-sm text-white/45 mb-4 italic">
           Take a moment to form your answer before reading further.
         </p>
       )}
@@ -95,9 +92,9 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
           disabled={hasOptions && selected === null}
           className="text-sm font-semibold px-4 py-2 rounded-xl transition-all duration-150"
           style={{
-            background: (hasOptions && selected === null) ? 'rgba(255,255,255,0.04)' : dimColor,
-            color: (hasOptions && selected === null) ? 'rgba(255,255,255,0.2)' : color,
-            border: `1.5px solid ${(hasOptions && selected === null) ? 'rgba(255,255,255,0.06)' : color}`,
+            background: (hasOptions && selected === null) ? 'rgba(255,255,255,0.04)' : ACCENT_DIM,
+            color: (hasOptions && selected === null) ? 'rgba(255,255,255,0.2)' : ACCENT,
+            border: `1.5px solid ${(hasOptions && selected === null) ? 'rgba(255,255,255,0.06)' : ACCENT}`,
             cursor: (hasOptions && selected === null) ? 'not-allowed' : 'pointer',
           }}
         >
@@ -110,10 +107,10 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
         <div>
           {hasOptions && selected !== null && (
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs text-white/35">Your answer:</span>
+              <span className="text-xs text-white/45">Your answer:</span>
               <span
                 className="text-xs font-semibold px-2.5 py-1 rounded-lg"
-                style={{ background: dimColor, color }}
+                style={{ background: ACCENT_DIM, color: ACCENT }}
               >
                 {String.fromCharCode(65 + selected)}. <InlineMarkdown>{block.options![selected]}</InlineMarkdown>
               </span>
@@ -125,7 +122,7 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
               className="rounded-xl px-4 py-3 text-sm leading-relaxed"
               style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)' }}
             >
-              <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color }}>
+              <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: ACCENT }}>
                 What to notice
               </p>
               <InlineMarkdown paragraphClassName="leading-relaxed mb-2 last:mb-0">{block.reveal}</InlineMarkdown>

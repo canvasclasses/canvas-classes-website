@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, GraduationCap } from 'lucide-react';
+import { ChevronDown, ChevronUp, Globe } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -60,28 +60,22 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="my-6 lg:my-0 rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden">
+    <div className="my-6 lg:my-0 rounded-lg overflow-hidden" style={{ border: '1px solid rgba(217,119,6,0.22)' }}>
 
-      {/* Header — always visible, toggles the body */}
+      {/* Header — one clean line, subtle amber gradient, no icon. Toggles body. */}
       <button
         type="button"
         onClick={() => setExpanded(v => !v)}
         aria-expanded={expanded}
-        className="w-full px-4 py-3 flex items-center gap-2.5 text-left hover:bg-white/[0.02] transition-colors"
+        className="w-full px-4 py-3 flex items-center gap-2 text-left transition-opacity hover:opacity-90"
+        style={{ background: 'linear-gradient(135deg, rgba(217,119,6,0.18) 0%, rgba(217,119,6,0.04) 100%)' }}
       >
-        <span className="shrink-0 w-7 h-7 rounded-full bg-amber-300/10 flex items-center justify-center">
-          <GraduationCap size={14} className="text-amber-300/80" />
-        </span>
-        <span className="text-[12px] font-bold tracking-[0.1em] uppercase text-amber-300/80 flex-1">
+        <span className="flex-1 text-[13px] font-bold tracking-[0.14em] uppercase whitespace-nowrap" style={{ color: '#fcd34d' }}>
           {block.title ?? 'Quick Recap'}
         </span>
-        <span className="text-[10px] font-semibold tracking-[0.12em] uppercase
-          text-white/40 bg-white/[0.04] px-2 py-0.5 rounded-full border border-white/10 shrink-0">
-          JEE / NEET
-        </span>
         {expanded
-          ? <ChevronUp size={15} className="text-white/30 shrink-0" />
-          : <ChevronDown size={15} className="text-white/30 shrink-0" />}
+          ? <ChevronUp size={15} className="shrink-0" style={{ color: 'rgba(252,211,77,0.6)' }} />
+          : <ChevronDown size={15} className="shrink-0" style={{ color: 'rgba(252,211,77,0.6)' }} />}
       </button>
 
       {/* Body — each paragraph becomes a bullet row. Hidden until expanded. */}
@@ -132,17 +126,22 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
 //   ---           → hr  → separator
 //   > English     → blockquote → 14px white/50 left-border (analytical, smallest)
 //   *Connection*  → em  → same amber italic (bridges verse to science)
+// "Connect" family — a warm neutral "paper" box (Option 3). A fixed "Did You
+// Know" eyebrow, no per-instance headline (block.title is ignored here), warm
+// muted accents — no cyan. Solid fill, easy on the eyes on the dark reading
+// surface.
 function FunFactCallout({ block }: { block: CalloutBlock }) {
   return (
-    <div className="my-8">
-
-      {/* Label row — diamond + title + trailing line */}
-      <div className="flex items-center gap-2.5 mb-5">
-        <span className="text-amber-400 text-[14px] leading-none select-none">✦</span>
-        <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-amber-400/80 leading-none">
-          {block.title ?? 'Real Life Hook'}
+    <div
+      className="my-8 rounded-[14px]"
+      style={{ background: '#201e1a', border: '1px solid rgba(255,255,255,0.10)', padding: '22px 26px' }}
+    >
+      {/* Signpost row — diamond + fixed section label */}
+      <div className="flex items-center gap-2.5 mb-3">
+        <span className="text-[13px] leading-none select-none" style={{ color: '#c3b7a4' }}>✦</span>
+        <span className="text-[10px] font-bold tracking-[0.18em] uppercase leading-none" style={{ color: '#c3b7a4' }}>
+          Did You Know
         </span>
-        <div className="flex-1 h-px bg-amber-400/18" />
       </div>
 
       {/* Body */}
@@ -152,35 +151,35 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
         components={{
           // Sanskrit / large header
           h3: ({ children }) => (
-            <h3 className="text-[21px] font-bold text-amber-200/80 leading-[1.55] mt-2 mb-3">
+            <h3 className="text-[21px] font-bold leading-[1.55] mt-2 mb-3" style={{ color: '#dcceb6' }}>
               {children}
             </h3>
           ),
-          // Amber hairline separator
+          // Warm hairline separator
           hr: () => (
-            <div className="my-6 h-px bg-amber-400/20" />
+            <div className="my-6 h-px" style={{ background: 'rgba(255,255,255,0.12)' }} />
           ),
-          // Main body paragraphs — large, warm, readable
+          // Main body paragraphs — large, readable
           p: ({ children }) => (
             <p className="text-[17px] leading-[1.85] text-white/82 mb-4 last:mb-0">
               {children}
             </p>
           ),
-          // Hindi / connection lines — amber italic
+          // Hindi / connection lines — warm muted italic
           em: ({ children }) => (
-            <em className="italic text-amber-200/80 text-[16px] leading-[1.8]">
+            <em className="italic text-[16px] leading-[1.8]" style={{ color: '#c9bda9' }}>
               {children}
             </em>
           ),
           // English translation blockquote — left border, no background box
           blockquote: ({ children }) => (
-            <blockquote className="border-l-2 border-amber-400/30 pl-4 my-4 text-white/52 text-[15px] leading-[1.75] not-italic">
+            <blockquote className="pl-4 my-4 text-white/52 text-[15px] leading-[1.75] not-italic" style={{ borderLeft: '2px solid rgba(255,255,255,0.15)' }}>
               {children}
             </blockquote>
           ),
-          // Bold — amber highlight, pops off the white/82 body
+          // Bold — warm highlight, pops off the white/82 body
           strong: ({ children }) => (
-            <strong className="font-semibold text-amber-200/80 not-italic">
+            <strong className="font-semibold not-italic" style={{ color: '#dcceb6' }}>
               {children}
             </strong>
           ),
@@ -190,9 +189,6 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
       </ReactMarkdown>
 
       <CalloutImage block={block} />
-
-      {/* Bottom accent — tapers to transparent, marks end of hook zone */}
-      <div className="mt-7 h-px bg-gradient-to-r from-amber-400/25 via-amber-400/10 to-transparent" />
     </div>
   );
 }
@@ -481,6 +477,92 @@ function VoicesThatInspireCallout({ block }: { block: CalloutBlock }) {
   );
 }
 
+// ─── Real-World Application ───────────────────────────────────────────────────
+// "Connect" family enrichment card. Deliberately NOT a neon/translucent tint —
+// a solid, muted teal panel with white body text and a soft-aqua header, for an
+// elegant textbook feel. Distinct from the borderless "Did You Know" hook: this
+// is the boxed section that says "here is where this shows up in the real world."
+function RealWorldCallout({ block }: { block: CalloutBlock }) {
+  const mdComponents = {
+    p: ({ children }: { children?: React.ReactNode }) => (
+      <p className="text-[16px] leading-[1.8] text-white/88 my-2.5 first:mt-0 last:mb-0">{children}</p>
+    ),
+    strong: ({ children }: { children?: React.ReactNode }) => (
+      <strong className="font-semibold not-italic" style={{ color: '#8fe0d6' }}>{children}</strong>
+    ),
+    em: ({ children }: { children?: React.ReactNode }) => (
+      <em className="italic text-white/70">{children}</em>
+    ),
+    ul: ({ children }: { children?: React.ReactNode }) => (
+      <ul className="my-2.5 pl-5 space-y-1.5 list-disc" style={{ color: 'rgba(255,255,255,0.88)' }}>{children}</ul>
+    ),
+    li: ({ children }: { children?: React.ReactNode }) => (
+      <li className="text-[16px] leading-[1.75] text-white/88">{children}</li>
+    ),
+    hr: () => <div className="my-4 h-px" style={{ background: 'rgba(255,255,255,0.10)' }} />,
+  };
+
+  return (
+    <div
+      className="my-8 rounded-2xl overflow-hidden"
+      style={{ background: '#14262b', border: '1px solid #244a52' }}
+    >
+      {/* Header — solid, muted; icon badge + label */}
+      <div className="flex items-center gap-2.5 px-5 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <span className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center" style={{ background: 'rgba(127,212,201,0.12)' }}>
+          <Globe size={14} style={{ color: '#7fd4c9' }} />
+        </span>
+        <span className="text-[11px] font-bold tracking-[0.14em] uppercase" style={{ color: '#7fd4c9' }}>
+          {block.title ?? 'Real-World Application'}
+        </span>
+      </div>
+
+      {/* Body — when an image is present, text sits on the left and the image
+          on the right (stacks on mobile). Without one, the text spans full width. */}
+      {(() => {
+        const hasImage = !!(block.image_src || block.image_prompt);
+        const text = (
+          <ReactMarkdown
+            remarkPlugins={[remarkMath]}
+            rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
+            components={mdComponents}
+          >
+            {block.markdown}
+          </ReactMarkdown>
+        );
+        if (!hasImage) {
+          return <div className="px-5 py-4">{text}</div>;
+        }
+        return (
+          <div className="px-5 py-4 flex flex-col md:flex-row md:items-center gap-5">
+            <div className="md:flex-1 min-w-0">{text}</div>
+            <div className="md:w-2/5 shrink-0">
+              {block.image_src ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={block.image_src}
+                  alt={block.title ?? 'Real-world application'}
+                  loading="lazy"
+                  className="w-full rounded-lg border border-white/10"
+                />
+              ) : (
+                <div className="rounded-lg border border-dashed border-white/12 bg-white/[0.02] px-3 py-3">
+                  <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: '#7fd4c9' }}>
+                    Image needed — generation prompt:
+                  </p>
+                  <p className="text-[12px] leading-relaxed text-white/45 select-all">
+                    {block.image_prompt}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })()}
+    </div>
+  );
+}
+
 // ─── Router ───────────────────────────────────────────────────────────────────
 export default function CalloutBlockRenderer({ block, hinglish }: { block: CalloutBlock; hinglish?: boolean }) {
   // In HI mode, swap the body to the Hinglish twin so the sub-renderers
@@ -492,6 +574,7 @@ export default function CalloutBlockRenderer({ block, hinglish }: { block: Callo
     case 'remember':            return <RememberCallout block={b} />;
     case 'warning':             return <WarningCallout block={b} />;
     case 'voices_that_inspire': return <VoicesThatInspireCallout block={b} />;
+    case 'real_world':          return <RealWorldCallout block={b} />;
     case 'note':
     default:                    return <NoteCallout block={b} />;
   }

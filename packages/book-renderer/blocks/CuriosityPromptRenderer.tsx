@@ -17,7 +17,7 @@ export default function CuriosityPromptRenderer({ block }: { block: CuriosityPro
       </div>
 
       <div className="mb-3">
-        <InlineMarkdown paragraphClassName="text-[16px] leading-relaxed text-white/85 font-medium">
+        <InlineMarkdown paragraphClassName="text-[16px] leading-relaxed text-white/82 font-medium">
           {block.prompt}
         </InlineMarkdown>
       </div>

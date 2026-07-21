@@ -182,6 +182,13 @@ export interface LatexBlock extends BaseBlock {
   note?: string;
   figure_key?: string;      // §16 — Equation series, opt-in (renderer shows "Eq. 1.5")
   figure_number?: string;
+  /**
+   * Renders inside a boxed, tinted card so a key definitional formula stands
+   * out from surrounding prose (e.g. "% by mole of element = ..."). Use for
+   * the one formula per concept worth anchoring visually — not every
+   * intermediate calculation step, which would clutter the page.
+   */
+  highlight?: boolean;
 }
 
 // 10. PRACTICE LINK — links to Crucible questions
@@ -209,7 +216,11 @@ export type CalloutVariant =
   //   - "> the borrowed line": rendered as a large pulled-out italic quote
   //   - "*— attribution*": rendered as a small italic attribution row
   //   - "?? a reflection prompt": rendered as a soft prompt at the bottom
-  | 'voices_that_inspire';
+  | 'voices_that_inspire'
+  // "Real-World Application" — the "Connect" family enrichment card. A boxed,
+  // elegant section for where a concept shows up in real life / industry, or
+  // beyond-the-core depth. Distinct from the borderless "Did You Know" hook.
+  | 'real_world';
 export interface CalloutBlock extends BaseBlock {
   type: 'callout';
   variant: CalloutVariant;
@@ -1238,6 +1249,13 @@ export interface BookPage {
   updated_at: Date;
   published: boolean;
   reading_time_min?: number;
+  /**
+   * Count of `worked_example` blocks on this page (computed on save, recurses
+   * into section columns). Lets the reader compute chapter-continuous
+   * "Solved Example N" numbering by summing preceding pages' counts without
+   * loading every page's blocks. Maintained by scripts/lib/book-writer.js.
+   */
+  worked_example_count?: number;
   /** Deduplicated list of interactive block types on this page (computed on save). */
   content_types?: BlockType[];
   /** Title of the first video block on this page (computed on save). Shown as a preview in page listing cards. */

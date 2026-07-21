@@ -12,19 +12,8 @@ import { GlossaryProvider } from './glossary-context';
 // so students see them before diving into core text.
 const SIDEBAR_CALLOUT_VARIANTS = new Set(['exam_tip', 'remember']);
 
-// Bite-size media (§15.5) is pulled into the rail's "Watch & Listen" lane on
-// desktop instead of breaking the reading column with full-width player bars.
-const RAIL_MEDIA_TYPES = new Set(['audio_note', 'video']);
-
 function isExamBlock(block: ContentBlock): boolean {
   return block.type === 'callout' && SIDEBAR_CALLOUT_VARIANTS.has(block.variant);
-}
-
-function isMediaBlock(block: ContentBlock): boolean {
-  // An audio note with no uploaded src renders nothing — keep it out of the
-  // rail (and its count) so there's no empty slot / inflated badge.
-  if (block.type === 'audio_note') return !!block.src?.trim();
-  return block.type === 'video';
 }
 
 // True if any analytical block carries a Hinglish twin — so the EN/HI toggle
@@ -58,9 +47,17 @@ interface PageRendererProps {
    * the student app's default. See VideoBlockRenderer.tsx.
    */
   videoOriginOverride?: string;
+  /**
+   * Running count of worked examples on chapter pages BEFORE this one. The
+   * reader (BookReader) passes this so worked-example numbering is continuous
+   * across the whole chapter — this page's examples are numbered
+   * exampleOffset + 1, +2, … in document order. Defaults to 0 (admin preview /
+   * standalone page → page-local numbering starting at 1).
+   */
+  exampleOffset?: number;
 }
 
-function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOverride }: PageRendererProps) {
+function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOverride, exampleOffset = 0 }: PageRendererProps) {
   const hasHinglish = Boolean(
     (page.hinglish_blocks && page.hinglish_blocks.length > 0) || hasAnalyticalHinglish(page.blocks)
   );
@@ -108,16 +105,76 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
 
   // Memoize expensive sort + split so it only recalculates when blocks change.
   // Only exam callouts are PULLED OUT of the main column. Media (audio/video)
-  // stays inline at its recorded section position AND is mirrored in the rail's
-  // Watch & Listen tab as a playlist (§15.5) — the inline copy gives "play this
-  // here" context, the rail gives skip-the-text convenience.
-  const { sorted, mainBlocks, examBlocks, mediaBlocks, hasRail } = useMemo(() => {
+  // stays inline at its recorded section position; instead of a separate rail
+  // playlist, each media block appears in the "On This Page" nav (below) as a
+  // stop that scrolls to its inline player — so the nav reflects the true shape
+  // of the page, media included.
+  const { sorted, mainBlocks, examBlocks, hasExamRail } = useMemo(() => {
     const s = [...page.blocks].sort((a, b) => a.order - b.order);
     const main = s.filter(b => !isExamBlock(b));
     const exam = s.filter(b => isExamBlock(b));
-    const media = s.filter(b => isMediaBlock(b));
-    return { sorted: s, mainBlocks: main, examBlocks: exam, mediaBlocks: media, hasRail: exam.length + media.length > 0 };
+    return { sorted: s, mainBlocks: main, examBlocks: exam, hasExamRail: exam.length > 0 };
   }, [page.blocks]);
+
+  // Chapter-continuous worked-example numbering. Walk blocks in display order
+  // (sorted by `order`, recursing into section columns so the count matches
+  // book-writer's stored worked_example_count) and assign each worked_example
+  // its number = exampleOffset + running index. Computed here, never stored in
+  // the block, so numbers auto-adjust when examples are added/removed/reordered.
+  const exampleNumbers = useMemo(() => {
+    const map = new Map<string, number>();
+    let n = exampleOffset;
+    const walk = (blocks: ContentBlock[]) => {
+      for (const b of blocks) {
+        if (b.type === 'section' && Array.isArray(b.columns)) {
+          for (const col of b.columns) walk(col as ContentBlock[]);
+        } else if (b.type === 'worked_example') {
+          map.set(b.id, ++n);
+        }
+      }
+    };
+    walk(sorted);
+    return map;
+  }, [sorted, exampleOffset]);
+
+  // "On This Page" rail navigation — a MAP of the page, not just a list of
+  // subtopics. Headings are top-level; the landmark special sections (worked
+  // examples, Think It Through prompts, Real-World Application cards) appear as
+  // indented, colour-dotted sub-items under their parent heading, so the shape
+  // of the page (where the examples and practice sit) is visible at a glance.
+  // Colours match the book system: Learn=amber, Think=violet, Connect=cyan.
+  const navItems = useMemo(() => {
+    const items: { id: string; label: string; kind: 'heading' | 'example' | 'think' | 'connect' | 'video' | 'audio' }[] = [];
+    const snippet = (s: string) =>
+      s.replace(/[*_$#>`~]/g, '').replace(/\s+/g, ' ').trim().slice(0, 34).replace(/\s\S*$/, '') + '…';
+    const walk = (blocks: ContentBlock[]) => {
+      for (const b of blocks) {
+        if (b.type === 'heading' && (b.level == null || b.level <= 2)) {
+          items.push({ id: b.id, label: b.text, kind: 'heading' });
+        } else if (b.type === 'worked_example') {
+          const n = exampleNumbers.get(b.id);
+          items.push({ id: b.id, label: n != null ? `Example ${n}` : (b.label || 'Example'), kind: 'example' });
+        } else if (b.type === 'reasoning_prompt') {
+          items.push({ id: b.id, label: snippet(b.prompt), kind: 'think' });
+        } else if (b.type === 'callout' && b.variant === 'real_world') {
+          items.push({ id: b.id, label: b.title || 'Real-World Application', kind: 'connect' });
+        } else if (b.type === 'video') {
+          items.push({ id: b.id, label: b.caption || 'Video lecture', kind: 'video' });
+        } else if (b.type === 'audio_note' && b.src?.trim()) {
+          items.push({ id: b.id, label: b.label || 'Audio note', kind: 'audio' });
+        } else if (b.type === 'section' && Array.isArray(b.columns)) {
+          for (const col of b.columns) walk(col as ContentBlock[]);
+        }
+      }
+    };
+    walk(sorted);
+    return items;
+  }, [sorted, exampleNumbers]);
+
+  // Show the nav lane only when there are ≥2 subtopic headings to jump between
+  // (sub-items alone don't justify a map).
+  const hasNav = navItems.filter((i) => i.kind === 'heading').length >= 2;
+  const showRail = hasExamRail || hasNav;
 
   return (
     // Outer shell: centers content and caps total width on large screens
@@ -127,7 +184,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
     <div className="book-page-content w-full max-w-[1495px] mx-auto px-3 sm:px-8 pt-8 pb-10">
 
       {/* Page header — always full width */}
-      <header className="mb-5 max-w-[1014px]">
+      <header className="mb-5 max-w-[912px]">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             {page.competency && (
@@ -185,16 +242,19 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
         Desktop : two columns — main prose (flex-1) + sticky sidebar (260px)
         ──────────────────────────────────────────────────────────────
       */}
-      <div className={hasRail ? 'xl:flex xl:gap-14 xl:items-start' : ''}>
+      <div className={showRail ? 'xl:flex xl:gap-14 xl:items-start' : ''}>
 
         {/* ── Main prose column ── */}
-        <article className="min-w-0 flex-1 max-w-[1014px]">
+        <article className="min-w-0 flex-1 max-w-[912px]">
           {/* Mobile/tablet: render ALL blocks inline including callouts + media
               (the rail doesn't exist below xl, so media stays in the flow). */}
           <div className="xl:hidden flex flex-col gap-1">
             {sorted.map(block => (
+              /* No anchor id here: the rail (and its "On This Page" nav) is
+                 desktop-only, and duplicate ids across the mobile + desktop
+                 copies would make getElementById target this hidden copy. */
               <div key={block.id}>
-                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} videoOriginOverride={videoOriginOverride} />
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} videoOriginOverride={videoOriginOverride} exampleNumber={exampleNumbers.get(block.id)} />
               </div>
             ))}
           </div>
@@ -202,18 +262,20 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
           {/* Desktop: main column = everything except exam callouts (media stays inline; it's also mirrored in the rail) */}
           <div className="hidden xl:flex xl:flex-col xl:gap-1">
             {mainBlocks.map(block => (
-              <div key={block.id}>
-                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} videoOriginOverride={videoOriginOverride} />
+              <div key={block.id} id={`block-${block.id}`} className="scroll-mt-20">
+                <BlockRenderer block={resolveBlock(block)} onQuizPass={onQuizPass} hinglish={activeHinglish} videoOriginOverride={videoOriginOverride} exampleNumber={exampleNumbers.get(block.id)} />
               </div>
             ))}
           </div>
         </article>
 
-        {/* ── Rail (desktop only): Exam Insight | Watch & Listen ── */}
-        {hasRail && (
-          <aside className="hidden xl:block w-[290px] shrink-0 sticky top-6 self-start">
+        {/* ── Rail (desktop only): On This Page (incl. media) | Exam Insight ── */}
+        {showRail && (
+          // Sticks below the 50px reader header (top-0, sticky) with a comfortable
+          // gap so the "On This Page" title isn't jammed under the header on scroll.
+          <aside className="hidden xl:block w-[290px] shrink-0 sticky top-[66px] self-start">
             <div className="pt-1">
-              <RailPanel examBlocks={examBlocks} mediaBlocks={mediaBlocks} onQuizPass={onQuizPass} videoOriginOverride={videoOriginOverride} />
+              <RailPanel navItems={hasNav ? navItems : []} examBlocks={examBlocks} onQuizPass={onQuizPass} />
             </div>
           </aside>
         )}

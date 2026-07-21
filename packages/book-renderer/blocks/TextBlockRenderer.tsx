@@ -67,7 +67,7 @@ const components: Components = {
     </ol>
   ),
   li: ({ children }) => (
-    <li className="text-[17px] leading-[1.75] text-white/78">{children}</li>
+    <li className="text-[17px] leading-[1.75] text-white/82">{children}</li>
   ),
   hr: () => <hr className="my-8 border-white/10" />,
   table: ({ children }) => (
@@ -92,7 +92,7 @@ const components: Components = {
     </th>
   ),
   td: ({ children }) => (
-    <td className="px-5 py-3.5 text-[17px] text-white/75 align-middle leading-[1.55] first:font-semibold first:text-white/90">
+    <td className="px-5 py-3.5 text-[17px] text-white/82 align-middle leading-[1.55] first:font-semibold first:text-white/90">
       {children}
     </td>
   ),

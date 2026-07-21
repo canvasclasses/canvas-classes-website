@@ -12,6 +12,13 @@ import { WorkedExampleBlock } from '@canvas/data/types/books';
 
 interface Props {
   block: WorkedExampleBlock;
+  /**
+   * Chapter-continuous example number computed by PageRenderer (offset + ordinal).
+   * When present it drives the heading ("Example N") so numbering auto-adjusts as
+   * examples are added/removed — the number is never stored in the block. When
+   * absent, the heading falls back to the label parsed from block.label.
+   */
+  exampleNumber?: number;
 }
 
 // ── Header parsing ─────────────────────────────────────────────────────────
@@ -62,7 +69,7 @@ const mdComponents = {
   // p = text-[17px] leading-[1.65]) so the question/solution text reads at the same
   // size as the rest of the page instead of a smaller, denser size.
   p: ({ children }: { children?: React.ReactNode }) => (
-    <p className="text-[17px] leading-[1.65] text-white/85 my-2.5">{children}</p>
+    <p className="text-[17px] leading-[1.65] text-white/82 my-2.5">{children}</p>
   ),
   strong: ({ children }: { children?: React.ReactNode }) => (
     <strong className="font-semibold text-white">{children}</strong>
@@ -77,12 +84,12 @@ const mdComponents = {
     <ol className="my-2 pl-5 space-y-1 list-decimal marker:text-white/40">{children}</ol>
   ),
   li: ({ children }: { children?: React.ReactNode }) => (
-    <li className="text-[17px] leading-[1.65] text-white/80">{children}</li>
+    <li className="text-[17px] leading-[1.65] text-white/82">{children}</li>
   ),
 };
 
 // ── Main renderer ──────────────────────────────────────────────────────────
-export default function WorkedExampleRenderer({ block }: Props) {
+export default function WorkedExampleRenderer({ block, exampleNumber }: Props) {
   const [revealed, setRevealed] = useState(block.reveal_mode === 'always_visible');
 
   const { labelMain, subtitle, badge } = parseLabel(
@@ -90,11 +97,17 @@ export default function WorkedExampleRenderer({ block }: Props) {
     block.variant,
   );
 
-  const isNcert = block.variant === 'ncert_intext';
-  // Blue accent for NCERT examples, a muted amber for solved/exam-PYQ examples — dialed
-  // down from the original #fbbf24 (amber-400) to match the softened amber-200/80 body
-  // highlight, so the amber reads as one consistent colour across the page.
-  const accent = isNcert ? '#60a5fa' : '#dba846';
+  // Chapter-continuous number wins when supplied (the SOLVED/NCERT badge already
+  // conveys the variant, so "Example N" avoids repeating "Solved Example"). Fall
+  // back to the label's own main text when no number is threaded through.
+  const headingMain = exampleNumber != null ? `Example ${exampleNumber}` : labelMain;
+
+  // "Learn" family — every worked example (solved or NCERT-intext) shares the
+  // same muted amber/gold. The SOLVED vs NCERT distinction is carried by the
+  // badge, NOT by colour, so worked examples read as one consistent section
+  // type across the book (see the Learn=amber / Think=violet / Connect=cyan /
+  // Remember=sky colour system).
+  const accent = '#dba846';
 
   return (
     <div
@@ -110,7 +123,7 @@ export default function WorkedExampleRenderer({ block }: Props) {
       <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <span className="text-[15px] font-bold" style={{ color: accent }}>
-            {labelMain}
+            {headingMain}
           </span>
           {subtitle && (
             <span className="text-[15px] text-white/70 font-normal leading-normal">
@@ -125,7 +138,7 @@ export default function WorkedExampleRenderer({ block }: Props) {
 
       {/* Problem statement — no label, no inner box. The worked-example card
           itself makes it obvious this is the question. */}
-      <div className="text-white/85 leading-relaxed">
+      <div className="text-white/82 leading-relaxed">
         <ReactMarkdown
           remarkPlugins={[remarkMath, remarkGfm]}
           rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
@@ -153,7 +166,7 @@ export default function WorkedExampleRenderer({ block }: Props) {
           >
             Solution
           </div>
-          <div className="text-white/85 leading-relaxed">
+          <div className="text-white/82 leading-relaxed">
             <ReactMarkdown
               remarkPlugins={[remarkMath, remarkGfm]}
               rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}

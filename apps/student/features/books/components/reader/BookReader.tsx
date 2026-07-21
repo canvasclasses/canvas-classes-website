@@ -47,6 +47,7 @@ interface PageSummary {
   page_number: number;
   published: boolean;
   page_type?: 'lesson' | 'chapter_opener';
+  worked_example_count?: number;
 }
 
 interface Props {
@@ -72,6 +73,16 @@ export default function BookReader({
   const isOpener = page.page_type === 'chapter_opener';
   const lessonPages = chapterPages.filter(p => p.page_type !== 'chapter_opener');
   const openerPage = chapterPages.find(p => p.page_type === 'chapter_opener');
+
+  // Chapter-continuous "Solved Example N" numbering: the running count of
+  // worked examples on all chapter pages BEFORE this one. PageRenderer numbers
+  // this page's examples starting at exampleOffset + 1, so numbers stay unique
+  // and auto-adjust across the whole chapter as examples are added/removed.
+  // chapterPages arrives pre-sorted (chapter_number, page_number) from the route.
+  const currentPageIdx = chapterPages.findIndex(p => p.slug === page.slug);
+  const exampleOffset = chapterPages
+    .slice(0, currentPageIdx < 0 ? 0 : currentPageIdx)
+    .reduce((sum, p) => sum + (p.worked_example_count ?? 0), 0);
 
   // Kicks off a single combined fetch for progress + bookmarks, seeding both
   // caches before the individual hooks would otherwise fire two round-trips.
@@ -374,6 +385,7 @@ export default function BookReader({
                   <PageRenderer
                     page={page}
                     onQuizPass={handleQuizPass}
+                    exampleOffset={exampleOffset}
                   />
                 </VaultProvider>
               </BookProvider>

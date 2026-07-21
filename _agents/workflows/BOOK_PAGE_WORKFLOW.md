@@ -202,14 +202,19 @@ The §3.4.1 quality bar applies equally to inline prompts. Never write vague pro
 }
 ```
 
+> **Read §14 (Visual Design System) before authoring any callout.** It defines the
+> book-wide colour families and the canonical label + look for each variant below.
+> The rules here must stay consistent with §14; if they ever conflict, §14 wins.
+
 Variants and when to use them:
-| Variant | Purpose | Placement |
-|---|---|---|
-| `fun_fact` | Real-life hook to open the page | Block 0 for 11–12; Block 1 for Class 9 |
-| `exam_tip` | JEE/NEET facts, tricky distinctions, what exams actually ask | Near end, before quiz (11–12 only) |
-| `remember` | Critical definitions or rules the student must not get wrong | After relevant explanation |
-| `note` | Additional context, not examinable | Optional |
-| `warning` | Common mistakes / misconceptions | Optional |
+| Variant | Renders as | Purpose | Placement |
+|---|---|---|---|
+| `fun_fact` | **"Did You Know"** (warm-neutral box) | Curiosity / real-life hook to open the page. **The fixed eyebrow is always "Did You Know" — do NOT rely on `title` for a headline; it is ignored for this variant** (§14). Put the hook in the body. | Block 0 for 11–12; Block 1 for Class 9 |
+| `real_world` | **"Real-World Application"** (teal boxed card) | The "Connect" enrichment card — where a concept shows up in real life / industry, or beyond-core depth. Supports text-left / image-right (set `image_prompt` or `image_src`). Default label is "Real-World Application"; override `title` only for a different enrichment flavour (e.g. history, "Beyond the …"). | Mid/after a concept, in the main column |
+| `exam_tip` | **"Quick Recap"** (amber-gradient header, collapsible) | JEE/NEET facts, tricky distinctions, what exams actually ask. `title` defaults to "Quick Recap"; do NOT write "JEE / NEET" into the title. | Near end, before quiz (11–12 only) |
+| `remember` | Sky left-bar | Critical definitions or rules the student must not get wrong | After relevant explanation |
+| `note` | Neutral card | Additional context, not examinable | Optional |
+| `warning` | Red left-bar | Common mistakes / misconceptions | Optional |
 
 **Class 9 NCERT "Exploration" callout variants** — each maps to a named feature of the textbook:
 
@@ -379,10 +384,11 @@ accent labels, clean technical illustration style.
   "reveal_mode": "tap_to_reveal"
 }
 ```
-- `variant`: `"ncert_intext"` for NCERT in-text problems; `"solved_example"` for other worked examples
+- `variant`: `"ncert_intext"` for NCERT in-text problems; `"solved_example"` for other worked examples. **Both render in the same amber "Learn" colour** — the variant only changes the SOLVED/NCERT badge, not the colour (§14).
 - `reveal_mode`: always `"tap_to_reveal"` so students attempt before seeing answer
 - `problem` and `solution` support full markdown + LaTeX
 - Format solution as clear numbered/bold steps, ending with boxed answer
+- **Numbering is automatic and chapter-continuous.** The reader renders the heading as "Example N" where N runs continuously across every worked example in the whole chapter (computed at render time from block order — never stored). **Do NOT hand-write "Example 3" / "Solved Example 5" into `label`.** Put only a descriptive suffix in `label` if you want one (e.g. `"— Empirical formula from % composition"`); the "Example N" prefix is added for you. When you add/remove/reorder examples, every number re-adjusts automatically — so never renumber by hand.
 
 ### 3.6 `inline_quiz`
 ```json
@@ -409,7 +415,9 @@ accent labels, clean technical illustration style.
 - Explanation must be educational — explain the concept, not just "C is correct because C"
 - Options: always exactly 4, and **every option must obey §3.6.1**
 - Questions should test understanding, not just memorisation
-- Tag each question with `difficulty_level` (1 = recall, 2 = application, 3 = reasoning) — the actual schema field (the older `reasoning_level` name is deprecated; write `difficulty_level`)
+- Tag each question with `difficulty_level` (1 = recall, 2 = application, 3 = reasoning) — the actual schema field (the older `reasoning_level` name is deprecated; write `difficulty_level`). **`inline_quiz` only allows 1–3 — never 4 or 5** (that range belongs to `reasoning_prompt`). A value of 4/5 here throws "Invalid block payload" and blocks the admin save.
+- **Multi-step explanations must use paragraph breaks.** Write `Step 1: …\n\nStep 2: …` (blank line between steps), not one run-on sentence — the renderer now shows each paragraph on its own line. A cramped single-paragraph explanation reads as a wall.
+- Correct/incorrect option colours are **solid muted panels, not neon** (handled by the renderer — nothing to author).
 
 ### 3.6.1 Option-Design Rules — every distractor must be a real trap
 
@@ -538,6 +546,7 @@ Use `simulation` in biology only when the topic is genuinely physics-flavoured (
 - Use for display equations — important formulas that deserve their own line
 - `latex` field: raw LaTeX without `$` delimiters
 - JSON escaping: `\\frac`, `\\times` (double backslash in JSON = single `\` in LaTeX)
+- **`"highlight": true`** renders the equation inside a boxed, amber-tinted card so a **key definitional formula** stands out from the surrounding prose (e.g. the `% by mass = …` formula). Use it for the ONE anchor formula per concept — not every intermediate calculation step, which would clutter the page. Omit it (or `false`) for ordinary display equations.
 
 ### 3.11 `meet_a_scientist`
 
@@ -1705,3 +1714,73 @@ It is **idempotent** — re-run any time content changes and numbers + reference
 
 ### 16.6 Topics / sub-topics are NOT numbered (decision 2026-06-10)
 Unlike NCERT (`1.4.2`), our Live Books are an Apple-Books-style *journey*, not a linear reference. Sub-topics have **titles + a position in the chapter-opener journey map (lessons 1…N) + the section objective line** — that's the wayfinding. No `1.4.2.1` heading prefixes (they'd drag the experience back toward a dry textbook). **Figures are the exception that must be numbered** because an image has no title to refer to. *(Optional future: a subtle per-page "NCERT §1.4" alignment chip for exam cross-reference — not built.)*
+
+---
+
+## 17. Visual Design System & Refinement Standard (project decision 2026-07-21)
+
+> **This section is the canonical visual language for every Live Book reading page, across all subjects.** When the founder asks to "refine a page to the latest workflow," bring it into line with everything here. These renderers are shared, so the rules apply to every book identically. Where any earlier section conflicts, **this section wins** (update the older section to match).
+
+### 17.1 The section colour system — four families + one neutral aside
+
+Every special section belongs to one of four **purpose families**, each with a fixed colour and meaning a student learns once. The **Chapter Overview page prints this legend** ("How to read this book"), so the colours must be used consistently or the legend lies.
+
+| Family | Meaning ("what do I do here?") | Colour | Sections |
+|---|---|---|---|
+| **Learn** | The teacher works it out — study it | **amber/gold** `#dba846` | `worked_example` (solved + NCERT), `exam_tip` ("Quick Recap") |
+| **Think** | Your turn — reason before revealing | **muted violet** `#a99bcf` | `reasoning_prompt` ("Think It Through"), `inline_quiz` |
+| **Connect** | Where it shows up in real life | **muted teal** `#7fd4c9` | `real_world` ("Real-World Application") |
+| **Remember** | A key fact to lock in | **sky** `#38bdf8` | `remember` callout |
+
+Plus one **neutral aside** outside the colour code: **"Did You Know"** (`fun_fact`) — a warm-neutral "paper" box (no cyan, no family colour). It's a light curiosity hook, deliberately quiet.
+
+**Do not invent new accent colours for sections.** If a new section type is needed, map it to one of these families.
+
+### 17.2 Canonical look + label for each section (what the renderer produces)
+
+Author the content; the renderer applies the look. Match your authoring to these so the output is consistent:
+
+- **"Did You Know"** (`fun_fact`) — warm-neutral solid box (`#201e1a`), fixed eyebrow **"Did You Know"**, warm-tan accents. **No per-instance headline** — `title` is ignored; lead with the hook in the body. Used as the page-opening curiosity/real-life hook.
+- **"Real-World Application"** (`real_world`) — muted-teal boxed card, soft-aqua header, solid fill (never a neon/translucent tint), white body. **Supports text-left / image-right** — set `image_prompt` (placeholder) or `image_src`. Default header "Real-World Application"; override `title` only for a different enrichment flavour (history, "Beyond the …").
+- **"Think It Through"** (`reasoning_prompt`) — muted-violet left-bar, single fixed label **"Think It Through"**. **No "Level N" and no reasoning sub-type shown** (logical/spatial/quantitative/analogical still exist in data but never drive the label or colour). MCQ and open-ended share identical chrome.
+- **Worked example** (`worked_example`) — amber "Learn" card, **auto "Example N"** chapter-continuous numbering (§3.5). Solved vs NCERT differ only by badge, not colour.
+- **"Quick Recap"** (`exam_tip`) — one-line amber-gradient collapsible header, no icon, no "JEE / NEET" text in the title.
+- **Remember** (`remember`) — sky left-bar. **Quiz** (`inline_quiz`) — "Think" family; solid (non-neon) correct/wrong panels.
+
+### 17.3 Emphasis & typography rules (page body)
+
+- **Bold + amber = key terms only** (glossary-worthy words). This is the single "highlight a term" mechanism in running prose.
+- **Italic is reserved** for genuine contrast pairs (*what* vs *how*) and titles of works/substances — **never decorative emphasis**. Don't sprinkle italic when bold-amber already exists.
+- **Body text brightness is standardised at `white/82`** across text blocks, worked examples, prompts, and table cells. Don't introduce other shades of white for body copy.
+- **Key formula → `latex_block` with `"highlight": true`** (one anchor formula per concept; §3.10).
+
+### 17.4 The enrichment-card pattern (`real_world`)
+
+The point of `real_world` is to lift the "exciting extra" (real-world application, or beyond-core depth) OUT of plain paragraphs where it gets skimmed past, into a distinct card.
+
+- **When refining a page:** scan the plain `text` blocks for buried enrichment — a real-world application, an industry use, a "beyond the syllabus" aside — and move it into a `real_world` card. Split the block if the enrichment is mixed with core theory (keep the core as text; card the enrichment).
+- **In-place conversion** (text → callout, same `id`) avoids a content-loss flag; **splitting** adds a new block (also clean). Always dry-run through `book-writer` first.
+- **Images:** author a dark-background, orange-accent `generation_prompt` (per §3.4.2 / the dark-bg image rule) so text-left/image-right renders once the image is generated.
+- **Don't force it.** Core-theory-dense pages may have little buried enrichment; a card that doesn't pop against surrounding theory (e.g. on an all-application page) isn't worth adding. Prefer proactively-authored enrichment where the concept has a strong real-life story (mole → medicine/fertiliser, sig figs → dosing precision, stoichiometry → rocket fuel, atomic mass → mass spectrometry).
+
+### 17.5 Right-rail "On This Page" nav (authoring implications)
+
+The rail is a **map of the page**, auto-built from block order: subtopic **headings** (top level) + landmark sub-items nested under them — worked examples (amber dot), Think It Through (violet dot), Real-World (teal dot), and **every video / audio note** (media markers) — each scrolling to its inline position. Consequences for authoring:
+
+- **Use real `heading` blocks for every subtopic** — they are the nav's skeleton. A subtopic written as bold text inside a `text` block won't appear in the nav.
+- **Media stays inline** at its section position (there is no separate "Watch & Listen" playlist anymore); the nav links to the inline player. Give each `video` a `caption` and each `audio_note` a `label` — that text becomes the nav item.
+
+### 17.6 Refinement checklist — run on any already-built page
+
+When asked to refine/upgrade a page to the latest workflow, verify and fix each of these:
+
+1. **Headings:** every subtopic is a real `heading` block (so it appears in the nav map).
+2. **Hook:** the opening `fun_fact` leads with the hook in its body; no reliance on a `title` headline.
+3. **Enrichment:** buried real-world/application/beyond-core passages moved into `real_world` cards (with image prompts); core theory left as text.
+4. **Worked examples:** `label` carries only a descriptive suffix (no hand-typed "Example N"); numbering is left to the renderer.
+5. **Reasoning prompts:** present (for practice), authored as "think then reveal"; no manual level/'sub-type' text in the content.
+6. **Key formulas:** the one anchor formula per concept is a `latex_block` with `"highlight": true`.
+7. **Emphasis:** bold+amber only for key terms; decorative italic removed; body copy not carrying stray brightness overrides.
+8. **Quiz:** `difficulty_level` is 1–3 only; multi-step explanations use `\n\n` between steps.
+9. **Exam tip:** `title` is "Quick Recap" (or omitted), never contains "JEE / NEET".
+10. **All mutations through `scripts/lib/book-writer.js`** with a dry-run first (§0.6 content protection). Refresh `_agents/state` / the project ledger after (§0.5, §3).

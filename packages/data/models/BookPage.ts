@@ -24,6 +24,9 @@ const BookPageSchema = new Schema<IBookPage>(
     tags: { type: [String], default: [] },
     published: { type: Boolean, default: false },
     reading_time_min: Number,
+    // Count of worked_example blocks on the page — powers chapter-continuous
+    // "Solved Example N" numbering in the reader (computed on save, book-writer.js).
+    worked_example_count: { type: Number, default: 0 },
     content_types: { type: [String], default: [] },
     video_title: { type: String, default: null },
     // §15.1 — 'chapter_opener' renders the bespoke cover + journey; absent = lesson.
