@@ -284,8 +284,16 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/MoleConverterSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  'mole-highway': dynamic(
+    () => import('./simulations/MoleHighwaySim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   'limiting-reagent': dynamic(
     () => import('./simulations/LimitingReagentSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'reaction-factory': dynamic(
+    () => import('./simulations/ReactionFactorySim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   'concentration-lab': dynamic(
@@ -537,7 +545,7 @@ function PredictionGate({
       </div>
 
       {/* Prompt */}
-      <p className="text-[15px] leading-relaxed text-white/85 font-medium mb-5">
+      <p className="text-[15px] leading-relaxed text-white/82 font-medium mb-5">
         {pred.prompt}
       </p>
 

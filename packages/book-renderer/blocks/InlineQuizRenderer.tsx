@@ -21,11 +21,31 @@ const remarkPlugins = [remarkMath, remarkGfm] as any[];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const rehypePlugins = [[rehypeKatex, REHYPE_KATEX_OPTIONS]] as any[];
 
+// Inline mode — collapses paragraphs to a <span> so question stems and options
+// stay inline beside their "Q1." / "A." labels.
 const Md = ({ children }: { children: string }) => (
   <ReactMarkdown
     remarkPlugins={remarkPlugins}
     rehypePlugins={rehypePlugins}
     components={{ p: ({ children: c }) => <span>{c}</span> }}
+  >
+    {children}
+  </ReactMarkdown>
+);
+
+// Block mode — for the explanation only. Renders each markdown paragraph as a
+// real <p> with spacing, so a multi-step explanation ("Step 1: ... \n\n Step 2:
+// ...") reads as separate lines instead of one run-on paragraph. Matches the
+// body-text convention used elsewhere in the book (text-white/82).
+const ExplanationMd = ({ children }: { children: string }) => (
+  <ReactMarkdown
+    remarkPlugins={remarkPlugins}
+    rehypePlugins={rehypePlugins}
+    components={{
+      p: ({ children: c }) => (
+        <p className="text-white/82 my-2 first:mt-0 last:mb-0">{c}</p>
+      ),
+    }}
   >
     {children}
   </ReactMarkdown>
@@ -182,14 +202,17 @@ export default function InlineQuizRenderer({ block, onPass }: Props) {
           if (!isAnswered) {
             // hover handled via CSS class below
           } else if (correct) {
-            bg = 'rgba(52,211,153,0.08)';
-            border = 'rgba(52,211,153,0.5)';
-            color = '#a7f3d0';
+            // Solid, muted emerald panel (not a bright glowing outline) — same
+            // dark-tint-plus-soft-border pattern used for correct/wrong feedback
+            // in ClassifyExerciseRenderer, kept consistent across the book.
+            bg = 'rgba(6,78,59,0.45)';
+            border = 'rgba(16,185,129,0.28)';
+            color = '#86efac';
             labelColor = '#34d399';
           } else if (chosen) {
-            bg = 'rgba(248,113,113,0.08)';
-            border = 'rgba(248,113,113,0.5)';
-            color = '#fecaca';
+            bg = 'rgba(69,10,10,0.45)';
+            border = 'rgba(239,68,68,0.25)';
+            color = '#fca5a5';
             labelColor = '#f87171';
           } else {
             color = 'rgba(255,255,255,0.18)';
@@ -204,7 +227,7 @@ export default function InlineQuizRenderer({ block, onPass }: Props) {
               className={`text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-150 ${
                 !isAnswered ? 'hover:border-indigo-500/40 hover:bg-indigo-500/5' : ''
               }`}
-              style={{ border: `1.5px solid ${border}`, background: bg, color }}
+              style={{ border: `1px solid ${border}`, background: bg, color }}
             >
               <span className="text-xs font-bold mr-2" style={{ color: labelColor }}>
                 {String.fromCharCode(65 + i)}.
@@ -221,17 +244,17 @@ export default function InlineQuizRenderer({ block, onPass }: Props) {
         })}
       </div>
 
-      {/* Explanation */}
+      {/* Explanation — block-level paragraphs so a multi-step explanation gets
+          real line spacing instead of running together as one paragraph. */}
       {isAnswered && q.explanation && (
         <div
           className="text-sm leading-relaxed rounded-xl px-4 py-3 mb-4"
           style={{
             background: isCorrect ? 'rgba(52,211,153,0.04)' : 'rgba(255,255,255,0.03)',
             border: `1px solid ${isCorrect ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.07)'}`,
-            color: 'rgba(255,255,255,0.55)',
           }}
         >
-          <Md>{q.explanation}</Md>
+          <ExplanationMd>{q.explanation}</ExplanationMd>
         </div>
       )}
 

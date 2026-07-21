@@ -38,7 +38,7 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
         <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-orange-400/70 mb-1.5 select-none">
           From your teacher&rsquo;s quick question
         </p>
-        <p className="text-[17px] font-semibold text-white/90 leading-snug">
+        <p className="text-[17px] font-semibold text-white/82 leading-snug">
           <InlineMarkdown>{block.question}</InlineMarkdown>
         </p>
       </div>

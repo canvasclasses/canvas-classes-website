@@ -139,10 +139,32 @@ export default function ChapterOpener({
           ))}
         </ol>
 
+        {/* Colour-coding legend — defined once so students learn what each
+            coloured section signals across every page of the book. */}
+        <div className="mt-9 rounded-2xl border border-white/8 bg-white/[0.02] p-5">
+          <h2 className="text-[13px] font-black uppercase tracking-widest text-white/40 mb-4">How to read this book</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+            {[
+              { color: '#dba846', name: 'Learn', desc: 'Worked examples & exam tips — study how it’s done' },
+              { color: '#a99bcf', name: 'Think', desc: 'Your turn — reason it out, then reveal' },
+              { color: '#7fd4c9', name: 'Connect', desc: 'Real-World Application — where it shows up in life' },
+              { color: '#38bdf8', name: 'Remember', desc: 'A key fact worth locking in' },
+            ].map((f) => (
+              <div key={f.name} className="flex items-start gap-2.5">
+                <span className="mt-1 w-3 h-3 rounded-full shrink-0" style={{ background: f.color }} />
+                <div>
+                  <span className="text-[13px] font-bold" style={{ color: f.color }}>{f.name}</span>
+                  <span className="text-[13px] text-white/50"> — {f.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Start CTA */}
         <Link
           href={startHref}
-          className="mt-9 flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl
+          className="mt-6 flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl
             bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-[15px]
             hover:opacity-90 transition-opacity"
         >

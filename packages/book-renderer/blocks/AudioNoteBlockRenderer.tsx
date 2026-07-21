@@ -59,8 +59,11 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
   // ── Compact card (rail "Watch & Listen") — same footprint as a video card,
   //    with a headphones icon so audio reads as audio at a glance. ──
   if (compact) {
+    // Plain row (no card border/fill), matching the quiet nav list. Small
+    // headphone glyph instead of a bright icon circle; the progress track only
+    // appears once playing so a quiet row stays quiet.
     return (
-      <div className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden">
+      <div>
         <audio
           ref={audioRef}
           src={block.src}
@@ -70,27 +73,27 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
         />
         <button
           onClick={toggle}
-          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.03] transition-colors"
+          className="w-full flex items-center gap-2.5 py-1.5 pl-3 pr-2 rounded-md hover:bg-white/[0.03] transition-colors text-left"
           aria-label={playing ? 'Pause audio' : 'Play audio'}
         >
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-500 to-cyan-400
-            flex items-center justify-center shrink-0 text-black">
-            {playing ? <Pause size={13} fill="black" /> : <Headphones size={15} />}
-          </div>
-          <span className="flex-1 text-left text-[15px] font-medium text-white/70 leading-snug line-clamp-2">
+          <span className="shrink-0 text-sky-400/90">
+            {playing ? <Pause size={13} fill="currentColor" /> : <Headphones size={14} />}
+          </span>
+          <span className="flex-1 text-left text-[14px] font-medium text-white/70 leading-snug line-clamp-2">
             {block.label ?? 'Audio Explanation'}
           </span>
           <span className="text-[12px] text-white/30 tabular-nums shrink-0">
             {formatTime(playing ? currentTime : block.duration_sec)}
           </span>
         </button>
-        {/* thin progress track at the card foot */}
-        <div className="h-0.5 bg-white/8">
-          <div
-            className="h-full transition-all duration-100"
-            style={{ width: `${progress}%`, background: 'linear-gradient(to right, #38bdf8, #22d3ee)' }}
-          />
-        </div>
+        {playing && (
+          <div className="h-0.5 bg-white/8 ml-3 rounded-full overflow-hidden">
+            <div
+              className="h-full transition-all duration-100"
+              style={{ width: `${progress}%`, background: 'linear-gradient(to right, #38bdf8, #22d3ee)' }}
+            />
+          </div>
+        )}
       </div>
     );
   }

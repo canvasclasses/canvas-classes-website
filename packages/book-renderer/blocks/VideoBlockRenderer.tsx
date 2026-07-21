@@ -54,29 +54,58 @@ export default function VideoBlockRenderer({
   return (
     <div className={compact ? '' : 'my-4'}>
 
-      {/* Collapsed trigger */}
-      <button
-        onClick={() => setExpanded(e => !e)}
-        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
-          border border-white/10 bg-white/[0.04] hover:bg-white/[0.07] transition-colors group"
-      >
-        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-500 to-amber-500
-          flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-          <Play size={12} fill="black" className="text-black ml-0.5" />
-        </div>
-        <span className="flex-1 text-left text-[15px] font-medium text-white/65
-          group-hover:text-white/85 transition-colors">
-          {block.caption ?? 'Watch Video Explanation'}
-        </span>
-        {block.duration_sec > 0 && (
-          <span className="text-[12px] text-white/30 tabular-nums shrink-0">
-            {formatDuration(block.duration_sec)}
+      {/* Collapsed trigger. In the rail (compact) this is a PLAIN ROW to match
+          the quiet nav list. Inline (non-compact) is a prominent "Video Lecture"
+          card — warm gradient, a clear label, and a play button that pulses on
+          hover — so a fast scroller can't miss that a lecture lives here. */}
+      {compact ? (
+        <button
+          onClick={() => setExpanded(e => !e)}
+          className="w-full flex items-center gap-2.5 py-1.5 pl-3 pr-2 rounded-md hover:bg-white/[0.03] transition-colors group text-left"
+        >
+          <Play size={13} fill="currentColor" className="text-orange-400/90 shrink-0" />
+          <span className="flex-1 text-left text-[14px] font-medium text-white/65 group-hover:text-white/85 transition-colors">
+            {block.caption ?? 'Watch Video Explanation'}
           </span>
-        )}
-        {expanded
-          ? <ChevronUp size={15} className="text-white/25 shrink-0" />
-          : <ChevronDown size={15} className="text-white/25 shrink-0" />}
-      </button>
+          {block.duration_sec > 0 && (
+            <span className="text-[12px] text-white/30 tabular-nums shrink-0">{formatDuration(block.duration_sec)}</span>
+          )}
+          {expanded ? <ChevronUp size={15} className="text-white/25 shrink-0" /> : <ChevronDown size={15} className="text-white/25 shrink-0" />}
+        </button>
+      ) : (
+        <button
+          onClick={() => setExpanded(e => !e)}
+          className="w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all group"
+          style={{
+            background: 'linear-gradient(135deg, rgba(249,115,22,0.16) 0%, rgba(217,119,6,0.05) 55%, rgba(217,119,6,0.015) 100%)',
+            border: '1px solid rgba(249,115,22,0.30)',
+          }}
+        >
+          <span className="relative shrink-0 flex items-center justify-center">
+            <span className="vid-pulse absolute inset-0 rounded-full" style={{ background: 'rgba(249,115,22,0.45)' }} aria-hidden />
+            <span className="relative w-11 h-11 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Play size={16} fill="black" className="text-black ml-0.5" />
+            </span>
+          </span>
+          <span className="flex-1 text-left">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-orange-400/85 mb-0.5">
+              Video Lecture
+            </span>
+            <span className="block text-[15px] font-semibold text-white/90 leading-snug group-hover:text-white transition-colors">
+              {block.caption ?? 'Watch Video Explanation'}
+            </span>
+          </span>
+          {block.duration_sec > 0 && (
+            <span className="text-[12px] text-orange-200/50 tabular-nums shrink-0">{formatDuration(block.duration_sec)}</span>
+          )}
+          {expanded ? <ChevronUp size={16} className="text-orange-300/50 shrink-0" /> : <ChevronDown size={16} className="text-orange-300/50 shrink-0" />}
+          <style>{`
+            .vid-pulse { animation: vidPulse 2.6s ease-out infinite; }
+            @keyframes vidPulse { 0% { transform: scale(1); opacity: 0.5; } 70%,100% { transform: scale(1.55); opacity: 0; } }
+            @media (prefers-reduced-motion: reduce) { .vid-pulse { animation: none; opacity: 0; } }
+          `}</style>
+        </button>
+      )}
 
       {/* Expanded video */}
       {expanded && (

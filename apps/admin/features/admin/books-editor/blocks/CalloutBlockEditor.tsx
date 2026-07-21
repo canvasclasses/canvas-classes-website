@@ -10,7 +10,8 @@ const VARIANTS: { value: CalloutVariant; label: string; icon: string }[] = [
   { value: 'remember',  label: 'Remember',  icon: '🔁' },
   { value: 'warning',   label: 'Warning',   icon: '⚠️' },
   { value: 'exam_tip',  label: 'Exam Tip',  icon: '🎯' },
-  { value: 'fun_fact',  label: 'Fun Fact',  icon: '💡' },
+  { value: 'fun_fact',  label: 'Did You Know', icon: '💡' },
+  { value: 'real_world', label: 'Real-World', icon: '🌍' },
 ];
 
 interface Props {

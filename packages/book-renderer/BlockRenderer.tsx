@@ -73,6 +73,7 @@ export default function BlockRenderer({
   onQuizPass,
   hinglish,
   videoOriginOverride,
+  exampleNumber,
 }: {
   block: ContentBlock;
   onQuizPass?: (blockId: string, score: number) => void;
@@ -81,6 +82,9 @@ export default function BlockRenderer({
   // required in the admin editor, whose origin never matches the student
   // app's default. See VideoBlockRenderer.tsx for why this exists.
   videoOriginOverride?: string;
+  // Chapter-continuous number for a worked_example block, computed by
+  // PageRenderer. Undefined for every other block type.
+  exampleNumber?: number;
 }) {
   switch (block.type) {
     case 'text':              return <TextBlockRenderer block={block} />;
@@ -100,7 +104,7 @@ export default function BlockRenderer({
     case 'comparison_card':   return <ComparisonCardBlockRenderer block={block} />;
     case 'animation':         return <AnimationBlockRenderer block={block} />;
     case 'inline_quiz':       return <InlineQuizRenderer block={block} onPass={score => onQuizPass?.(block.id, score)} />;
-    case 'worked_example':    return <WorkedExampleRenderer block={block} />;
+    case 'worked_example':    return <WorkedExampleRenderer block={block} exampleNumber={exampleNumber} />;
     case 'simulation':        return <SimulationBlockRenderer block={block} />;
     case 'section':           return <SectionBlockRenderer block={block} onQuizPass={onQuizPass} />;
     case 'reasoning_prompt':   return <ReasoningPromptRenderer block={block} />;

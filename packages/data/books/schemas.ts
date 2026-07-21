@@ -156,6 +156,10 @@ const LatexBlockSchema = BaseBlockSchema.extend({
   note: z.string().optional(),
   figure_key: z.string().optional(),
   figure_number: z.string().optional(),
+  // Renders inside a boxed, tinted card so a key definitional formula stands
+  // out from surrounding prose — for the one formula per concept worth
+  // anchoring visually, not every intermediate calculation step.
+  highlight: z.boolean().optional(),
 });
 
 const PracticeLinkBlockSchema = BaseBlockSchema.extend({
@@ -175,6 +179,8 @@ const CalloutBlockSchema = BaseBlockSchema.extend({
     // English-track variants — see ENGLISH_BOOK_PAGE_WORKFLOW.md §3.1
     'india_voice', 'literature_in_life',
     'voices_that_inspire',
+    // "Real-World Application" — boxed "Connect"-family enrichment card.
+    'real_world',
     // Social Science engagement-plan variant (2026-07-08) — renders via the
     // default NoteCallout card, no new renderer needed. See
     // _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement retrofit" section.

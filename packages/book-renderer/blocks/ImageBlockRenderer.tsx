@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
@@ -81,7 +81,7 @@ const sideTextComponents: Components = {
     <ol className="my-3 pl-5 space-y-2 list-decimal marker:text-white/40">{children}</ol>
   ),
   li: ({ children }) => (
-    <li className="text-[17px] leading-[1.75] text-white/78">{children}</li>
+    <li className="text-[17px] leading-[1.75] text-white/82">{children}</li>
   ),
   a: ({ href, children }) => (
     <a href={href} className="text-orange-400 no-underline hover:underline">{children}</a>
@@ -92,6 +92,19 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
   const [copied, setCopied] = useState(false);
   const [loaded, setLoaded] = useState(false); // §15.6 blur-up fade-in
   const [zoom, setZoom] = useState(false);      // §15.6 tap-to-zoom lightbox
+
+  // Plain <img> (the no-aspect_ratio fallback below) only reveals on `onLoad`.
+  // If the browser already has the image cached — e.g. the same browser just
+  // viewed/uploaded it in the admin editor — the image can finish loading
+  // synchronously, before React's onLoad listener attaches. onLoad then never
+  // fires, `loaded` stays false, and the image sits invisible at opacity-0
+  // forever, even though it's fully present in the DOM (clicking it still
+  // opens the lightbox, which loads fresh and isn't affected). This ref
+  // callback checks `img.complete` the moment the element mounts, catching
+  // the already-cached case that onLoad alone misses.
+  const checkAlreadyLoaded = useCallback((img: HTMLImageElement | null) => {
+    if (img && img.complete && img.naturalWidth > 0) setLoaded(true);
+  }, []);
   const width = block.width ?? 'full';
   const align = block.align ?? 'center';
   const hasSideText = (align === 'left' || align === 'right') && !!block.side_text?.trim();
@@ -207,6 +220,7 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
           // the minority of blocks that don't pin an aspect ratio.
           // eslint-disable-next-line @next/next/no-img-element
           <img
+            ref={checkAlreadyLoaded}
             src={block.src}
             alt={block.alt}
             className={`w-full h-auto object-contain block transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}

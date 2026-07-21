@@ -73,7 +73,7 @@ export default async function Class9PageRoute({ params }: Props) {
         chapter_number: { $in: publishedChapterNumbers },
         published: true,
       })
-      .select('_id slug title chapter_number page_number published')
+      .select('_id slug title chapter_number page_number published worked_example_count')
       .sort({ chapter_number: 1, page_number: 1 })
       .limit(MAX_NAV_PAGES)
       .lean(),
