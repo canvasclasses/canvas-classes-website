@@ -40,6 +40,7 @@ import { join } from 'node:path';
 
 const ROOT = process.cwd();
 const SIM_DIR = 'packages/book-renderer/blocks/simulations';
+const EXTRA_SIMULATORS_FILE = 'apps/student/features/books/lib/extraSimulators.tsx';
 const ALL = process.argv.includes('--all');
 const REPORT_ONLY = process.argv.includes('--report');
 
@@ -49,8 +50,31 @@ const SKIP = [
   `${SIM_DIR}/_typography.tsx`,
 ];
 
+// "Extra simulators" are sims that can't live in the book-renderer package
+// (app-only deps like three/drei, or the `@/` alias) and are instead injected
+// at runtime via ExtraSimulatorsProvider — see EXTRA_SIMULATORS_FILE's own
+// header comment. They live scattered across apps/student (physical-
+// chemistry-hub, features/anatomy, inorganic-chemistry-hub, …), so rather
+// than hardcode/guess directories, this reads the actual dynamic-import
+// specifiers out of that registry file — self-updating as sims are added.
+function extraSimulatorFiles() {
+  const path = join(ROOT, EXTRA_SIMULATORS_FILE);
+  if (!existsSync(path)) return [];
+  const src = readFileSync(path, 'utf8');
+  const files = new Set();
+  // matches: import('@/app/foo/Bar') or import('@/foo/Bar').then(...)
+  for (const m of src.matchAll(/import\(\s*['"]@\/([^'"]+)['"]\s*\)/g)) {
+    files.add(`apps/student/${m[1]}.tsx`);
+  }
+  return [...files];
+}
+
+const EXTRA_SIM_FILES = new Set(extraSimulatorFiles());
+
 const isSimFile = (p) =>
-  p.startsWith(SIM_DIR) && p.endsWith('.tsx') && !SKIP.some((s) => p.startsWith(s) || p === s);
+  (p.startsWith(SIM_DIR) && p.endsWith('.tsx') && !SKIP.some((s) => p.startsWith(s) || p === s))
+  || EXTRA_SIM_FILES.has(p);
+
 
 // ── Collect the file list ──────────────────────────────────────────────────
 function sh(cmd) {
@@ -61,7 +85,16 @@ function sh(cmd) {
 function changedFiles() {
   const set = new Set();
   const add = (out) => out.split('\n').map((l) => l.trim()).filter(Boolean).forEach((f) => set.add(f));
-  // committed on this branch vs main, plus staged + unstaged working-tree edits
+  // committed on this branch vs main, staged (incl. NEW files via --cached),
+  // and unstaged edits to already-tracked files.
+  //
+  // Deliberately NOT `git ls-files --others` (all untracked files): a repo
+  // this size always has stray untracked scratch/WIP files sitting around
+  // that have nothing to do with the current push. Blanket-scanning them
+  // would make the pre-push hook block on files that were never even going
+  // to be pushed. `--cached` already covers a brand-new sim file correctly —
+  // just `git add` it before running the gate (you have to add it before
+  // committing anyway).
   add(sh('git diff --name-only main...HEAD'));
   add(sh('git diff --name-only'));
   add(sh('git diff --cached --name-only'));
@@ -72,7 +105,11 @@ function allSimFiles() {
   // NB: `git ls-files "dir/**/*.tsx"` under-matches (pathspec globbing quirk).
   // List the whole subtree and filter to .tsx ourselves.
   const out = sh(`git ls-files -- ${SIM_DIR}`);
-  return out.split('\n').map((l) => l.trim()).filter((p) => p.endsWith('.tsx')).filter(isSimFile);
+  const bookRendererFiles = out.split('\n').map((l) => l.trim()).filter((p) => p.endsWith('.tsx')).filter(isSimFile);
+  // Extra simulators live outside SIM_DIR entirely — add them directly rather
+  // than globbing apps/student (which contains plenty of non-sim files too).
+  const extraFiles = [...EXTRA_SIM_FILES].filter((p) => existsSync(join(ROOT, p)));
+  return [...new Set([...bookRendererFiles, ...extraFiles])];
 }
 
 const files = (ALL ? allSimFiles() : changedFiles()).filter((f) => existsSync(join(ROOT, f)));
@@ -171,7 +208,7 @@ for (const file of files) {
   const lines = src.split('\n');
 
   // Rule 7 (root bg) is file-level: warn if no #0d1117 / SIM_BG anywhere.
-  if (!/#0d1117|SIM_BG/.test(src)) {
+  if (!/#0d1117\b|SIM_BG\b|<SimShell/.test(src)) {
     warnings++;
     findings.push({ file, line: 1, level: 'warn', id: 'root-bg',
       msg: "Root wrapper background should be #0d1117 (or SIM_BG token) — none found." });

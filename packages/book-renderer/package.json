@@ -10,14 +10,17 @@
     "./BlockRenderer": "./BlockRenderer.tsx",
     "./blocks/InteractiveImageBlockRenderer": "./blocks/InteractiveImageBlockRenderer.tsx",
     "./simulators-context": "./simulators-context.tsx",
+    "./math-graph": "./blocks/math-graph/archetypes.ts",
     "./glossary-context": "./glossary-context.tsx",
     "./simulations/vector-lab": "./blocks/simulations/vector-lab/VectorLabSim.tsx",
+    "./simulations/_shared": "./blocks/simulations/_shared/index.ts",
     "./vault-context": "./vault-context.tsx",
     "./book-context": "./book-context.tsx"
   },
   "dependencies": {
     "@canvas/data": "*",
     "@canvas/ui": "*",
+    "jsxgraph": "^1.12.2",
     "katex": "^0.16.28",
     "lottie-react": "^2.4.1",
     "planck": "^1.5.0",
