@@ -13,6 +13,7 @@ import type { ExtraSimulators } from '@canvas/book-renderer/simulators-context';
 // (e.g. @canvas/data/simulations/biologySimulations).
 
 const AtomicModels = dynamic(() => import('@/app/physical-chemistry-hub/AtomicModels'), { ssr: false });
+const QuantumOrbital3DViewer = dynamic(() => import('@/app/physical-chemistry-hub/QuantumOrbital3DViewer'), { ssr: false });
 const Heart3DViewer = dynamic(() => import('@/features/anatomy/Heart3DViewer'), { ssr: false });
 const Skeleton3DViewer = dynamic(() => import('@/features/anatomy/Skeleton3DViewer'), { ssr: false });
 const AnatomyExplorer = dynamic(() => import('@/features/anatomy/AnatomyExplorer'), { ssr: false });
@@ -40,6 +41,7 @@ const PancreasViewer = dynamic(() => import('@/features/anatomy/SimpleModelViewe
 
 export const EXTRA_SIMULATORS: ExtraSimulators = {
   'atomic-models': AtomicModels,
+  'quantum-orbital-3d': QuantumOrbital3DViewer,
   'heart-3d': Heart3DViewer,
   'skeleton-3d': Skeleton3DViewer,
   'anatomy-explorer': AnatomyExplorer,

@@ -1,6 +1,6 @@
 'use client';
 
-import { Play } from 'lucide-react';
+import { Play, SlidersHorizontal } from 'lucide-react';
 import { ContentBlock } from '@canvas/data/types/books';
 import BlockRenderer from '../BlockRenderer';
 
@@ -17,7 +17,7 @@ import BlockRenderer from '../BlockRenderer';
 interface NavItem {
   id: string;
   label: string;
-  kind: 'heading' | 'example' | 'think' | 'connect' | 'video' | 'audio';
+  kind: 'heading' | 'example' | 'think' | 'connect' | 'video' | 'audio' | 'sim';
 }
 
 // Colour dots for the section sub-item kinds — match the book colour system
@@ -28,11 +28,14 @@ const KIND_DOT: Record<string, string> = {
   think: '#a99bcf',
   connect: '#7fd4c9',
 };
-// Media markers mirror their inline players' play buttons: video = warm
-// orange→amber gradient (with a breathing pulse, matching the inline Video
-// Lecture card); audio = sky→cyan gradient (matching the inline audio player).
+// Interactive markers mirror their inline blocks: video = warm orange→amber
+// gradient (with a breathing pulse, matching the inline Video Lecture card);
+// audio = sky→cyan gradient (matching the inline audio player); simulation =
+// violet→indigo with a sliders glyph, matching the sim canvases' own indigo
+// accent. An icon (not a dot) marks anything the student can interact with.
 const VIDEO_GRADIENT = 'linear-gradient(135deg,#f97316,#f59e0b)';
 const AUDIO_GRADIENT = 'linear-gradient(135deg,#0ea5e9,#22d3ee)';
+const SIM_GRADIENT = 'linear-gradient(135deg,#8b5cf6,#6366f1)';
 
 function scrollToBlock(id: string) {
   document.getElementById(`block-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -84,6 +87,13 @@ export default function RailPanel({
                        pulse ring, so the nav marker stays calm). */
                     <span className="shrink-0 flex items-center justify-center rounded-full mt-[1px]" style={{ width: 18, height: 18, background: AUDIO_GRADIENT }}>
                       <Play size={9} fill="black" className="text-black" style={{ marginLeft: 1 }} />
+                    </span>
+                  ) : item.kind === 'sim' ? (
+                    /* Simulations are a headline feature of these pages — they get
+                       a rounded-square sliders glyph so they read as "something you
+                       drive", distinct from the round play buttons of video/audio. */
+                    <span className="shrink-0 flex items-center justify-center mt-[1px]" style={{ width: 18, height: 18, borderRadius: 5, background: SIM_GRADIENT }}>
+                      <SlidersHorizontal size={10} className="text-black" strokeWidth={2.75} />
                     </span>
                   ) : !isHeading ? (
                     <span className="mt-[6px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: KIND_DOT[item.kind] }} />

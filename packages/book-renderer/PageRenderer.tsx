@@ -136,10 +136,16 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
   // indented, colour-dotted sub-items under their parent heading, so the shape
   // of the page (where the examples and practice sit) is visible at a glance.
   // Colours match the book system: Learn=amber, Think=violet, Connect=cyan.
+  // Interactive landmarks (video, audio, simulation) get an icon marker instead
+  // of a dot — simulations are a headline feature of these pages, so they must
+  // be findable from the map, not just discovered by scrolling.
   const navItems = useMemo(() => {
-    const items: { id: string; label: string; kind: 'heading' | 'example' | 'think' | 'connect' | 'video' | 'audio' }[] = [];
+    const items: { id: string; label: string; kind: 'heading' | 'example' | 'think' | 'connect' | 'video' | 'audio' | 'sim' }[] = [];
     const snippet = (s: string) =>
       s.replace(/[*_$#>`~]/g, '').replace(/\s+/g, ' ').trim().slice(0, 34).replace(/\s\S*$/, '') + '…';
+    // 'reaction-factory' → 'Reaction Factory' (fallback when a sim has no title)
+    const titleFromId = (id: string) =>
+      id.replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
     const walk = (blocks: ContentBlock[]) => {
       for (const b of blocks) {
         if (b.type === 'heading' && (b.level == null || b.level <= 2)) {
@@ -155,6 +161,8 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
           items.push({ id: b.id, label: b.caption || 'Video lecture', kind: 'video' });
         } else if (b.type === 'audio_note' && b.src?.trim()) {
           items.push({ id: b.id, label: b.label || 'Audio note', kind: 'audio' });
+        } else if (b.type === 'simulation') {
+          items.push({ id: b.id, label: b.title || titleFromId(b.simulation_id), kind: 'sim' });
         } else if (b.type === 'section' && Array.isArray(b.columns)) {
           for (const col of b.columns) walk(col as ContentBlock[]);
         }

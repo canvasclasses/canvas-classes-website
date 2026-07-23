@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { InteractiveImageBlock, Hotspot } from '@canvas/data/types/books';
 import ReactMarkdown from 'react-markdown';
@@ -29,8 +29,17 @@ const OUTER_WIDTH_CLASS: Record<NonNullable<InteractiveImageBlock['width']>, str
 // Caps a tall/portrait diagram's rendered height so it can never blow up the
 // page (the bug: an unconstrained portrait image rendered at full container
 // width could be 1000px+ tall, pushing the tap-to-reveal panel off-screen).
-// Landscape diagrams (the common case) rarely hit this cap at normal reading
-// widths, so their layout is unaffected.
+//
+// This cap must only apply to portrait images. A previous version applied it
+// unconditionally, which — for a wide/landscape diagram in a wide container
+// (e.g. the admin preview pane, or any reading column wider than roughly
+// 1130px for a 16:9-ish image) — bound on HEIGHT before it bound on WIDTH,
+// silently shrinking a block set to width:'full' down to a fraction of the
+// column. Found 2026-07-21 on the Atomic Timeline interactive image, which
+// rendered far narrower than its "100%" setting. See the `tall` state below,
+// which measures the actual image and only applies this cap when it's
+// portrait (naturalHeight > naturalWidth) — landscape images now scale purely
+// by width, matching ImageBlockRenderer's (uncapped) behaviour.
 const MAX_IMAGE_HEIGHT = 'min(68vh, 640px)';
 
 // Label Sprint (quiz mode) is only worth offering when there are enough
@@ -63,6 +72,59 @@ export default function InteractiveImageBlockRenderer({
   const containerRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const completeFiredRef = useRef(false);
+
+  // Portrait detection for MAX_IMAGE_HEIGHT (see its comment above) — starts
+  // false so a landscape image (the common case) never flashes capped-then-
+  // uncapped; a genuinely portrait image gets the cap applied the moment its
+  // dimensions are known, well before layout settles.
+  const [isPortrait, setIsPortrait] = useState(false);
+  const handleImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const t = e.currentTarget;
+    if (t.naturalWidth && t.naturalHeight) setIsPortrait(t.naturalHeight > t.naturalWidth);
+  }, []);
+
+  // ── Hotspot alignment: MEASURE, don't assume ────────────────────────────
+  // Hotspots are authored as fractions (0–1) of the source image, so they must
+  // be positioned against the image's *actual rendered box*. Previous attempts
+  // positioned them against an ancestor container in the hope that the two
+  // boxes matched, and tried to force that match with `w-full` + an explicit
+  // `aspect-ratio`. They never reliably matched: the wrapper carries a 1px
+  // border, `object-contain` can letterbox the content inside its own element
+  // box, and next/image does its own intrinsic sizing. Any of those makes the
+  // reference box a slightly different size from the image, which shows up as
+  // hotspots that sit correctly at the left edge and drift progressively
+  // further off toward the right (reported twice, 2026-07-21).
+  //
+  // So: measure the image's real rect relative to the positioned container and
+  // place every hotspot in explicit pixels. This is correct regardless of what
+  // the surrounding CSS does — borders, letterboxing, width presets, resizes.
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [imgBox, setImgBox] = useState<{ left: number; top: number; width: number; height: number } | null>(null);
+
+  useEffect(() => {
+    const el = imgRef.current;
+    const cont = containerRef.current;
+    if (!el || !cont) return;
+    const measure = () => {
+      const ir = el.getBoundingClientRect();
+      const cr = cont.getBoundingClientRect();
+      if (!ir.width || !ir.height) return;
+      setImgBox({ left: ir.left - cr.left, top: ir.top - cr.top, width: ir.width, height: ir.height });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    ro.observe(cont);
+    return () => ro.disconnect();
+  }, [block.src, isPortrait]);
+
+  // Position for a hotspot: exact pixels once measured, percentage as a
+  // pre-measurement fallback so nothing jumps on first paint.
+  const spotPos = useCallback((h: Hotspot) => (
+    imgBox
+      ? { left: imgBox.left + h.x * imgBox.width, top: imgBox.top + h.y * imgBox.height }
+      : { left: `${h.x * 100}%`, top: `${h.y * 100}%` }
+  ), [imgBox]);
 
   // --- Label Sprint (quiz mode) state ---
   const [mode, setMode] = useState<'explore' | 'quiz'>('explore');
@@ -203,25 +265,45 @@ export default function InteractiveImageBlockRenderer({
     : activeHotspot.x < 0.35 ? 'left' : activeHotspot.x > 0.65 ? 'right' : 'center';
   const anchorV: 'above' | 'below' = activeHotspot && activeHotspot.y > 0.6 ? 'above' : 'below';
 
+  // Portrait: shrink-to-fit with a height ceiling (width:auto lets it sit
+  // narrower than the column rather than blow up vertically).
+  // Landscape (the common case): FILL the column width like ImageBlockRenderer
+  // does — width:'auto' here would only ever shrink-to-intrinsic-size, so
+  // raising the outer max-width preset (the actual width picker) from 50% to
+  // 100% did nothing once the image was already narrower than 50%. Forcing
+  // width:'100%' makes the block's own width preset the thing that actually
+  // controls size, same as every other image block.
+  //
+  // height stays 'auto' in BOTH cases so the element's box always equals its
+  // rendered content box — no letterboxing inside the element, which keeps
+  // getBoundingClientRect() (used to place the hotspots) exactly truthful.
+  const imageStyle = isPortrait
+    ? { maxHeight: MAX_IMAGE_HEIGHT, maxWidth: '100%', width: 'auto', height: 'auto' } as const
+    : { width: '100%', height: 'auto' } as const;
+
   const imageEl = isSvg ? (
     // eslint-disable-next-line @next/next/no-img-element
     <img
+      ref={imgRef}
       src={block.src}
       alt={block.alt}
       className="block object-contain"
-      style={{ maxHeight: MAX_IMAGE_HEIGHT, maxWidth: '100%', width: 'auto', height: 'auto' }}
+      style={imageStyle}
       draggable={false}
+      onLoad={handleImageLoad}
     />
   ) : (
     <Image
+      ref={imgRef}
       src={block.src}
       alt={block.alt}
       width={0}
       height={0}
       sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 960px"
-      style={{ maxHeight: MAX_IMAGE_HEIGHT, maxWidth: '100%', width: 'auto', height: 'auto' }}
+      style={imageStyle}
       className="object-contain block"
       draggable={false}
+      onLoad={handleImageLoad}
     />
   );
 
@@ -273,13 +355,24 @@ export default function InteractiveImageBlockRenderer({
         </div>
       )}
 
-      {/* Centers the diagram and — critically — shrink-wraps to its actual
-          rendered box (capped by MAX_IMAGE_HEIGHT for tall/portrait sources)
-          so the hotspot dots below, positioned by percentage against this
-          same box, land exactly where they were authored regardless of the
-          image's natural aspect ratio. */}
+      {/* Centers the diagram. For a PORTRAIT image this shrink-wraps to its
+          actual rendered box (`max-w-full` is a ceiling, not a width — the
+          image inside sizes itself intrinsically, capped by MAX_IMAGE_HEIGHT,
+          and the box shrinks to match). For a LANDSCAPE image the container
+          instead FILLS the outer width preset (`w-full`) to match the image
+          itself now being forced to width:100% — a shrink-wrapping parent
+          around a width:100% child is circular sizing (the browser can't
+          decide who sizes whom first), which is what caused 100% and 50% to
+          render identically before that fix.
+          This box is only the POSITIONING CONTEXT for the hotspots; it does
+          not have to match the image's box exactly, because each hotspot is
+          placed at a pixel offset measured from the image's real rect (see
+          `spotPos`). */}
       <div className={`flex justify-center ${outerWidthClass} mx-auto`}>
-        <div ref={containerRef} className="relative select-none max-w-full">
+        <div
+          ref={containerRef}
+          className={`relative select-none ${isPortrait ? 'max-w-full' : 'w-full'}`}
+        >
           {/* Rounded-corner clipping lives on this inner wrapper only, so the
               hotspot dots and the popover below (siblings, not children, of
               this div) are free to sit slightly outside the image's own box
@@ -288,25 +381,30 @@ export default function InteractiveImageBlockRenderer({
             {imageEl}
           </div>
 
-          {/* EXPLORE MODE — reveal hotspots */}
+          {/* EXPLORE MODE — reveal hotspots.
+              The wrapper owns POSITION (measured pixels + a centring
+              translate); the button keeps its own transforms so the
+              scale-on-hover/active still works — an inline transform on the
+              button itself would silently override those Tailwind classes. */}
           {mode === 'explore' && block.hotspots.map((hotspot, idx) => (
-            <button
+            <span
               key={hotspot.id}
-              className={`absolute flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold
-                border-2 transition-all duration-150 cursor-pointer z-10
-                ${activeId === hotspot.id
-                  ? 'bg-orange-500 border-orange-300 scale-110 text-black'
-                  : 'bg-[#0B0F15]/80 border-orange-500 text-orange-400 hover:scale-110'
-                }`}
-              style={{
-                left: `calc(${hotspot.x * 100}% - 14px)`,
-                top: `calc(${hotspot.y * 100}% - 14px)`,
-              }}
-              onClick={() => setActiveId(activeId === hotspot.id ? null : hotspot.id)}
-              aria-label={hotspot.label}
+              className="absolute z-10"
+              style={{ ...spotPos(hotspot), transform: 'translate(-50%,-50%)' }}
             >
-              {hotspot.icon ? iconShape[hotspot.icon] : idx + 1}
-            </button>
+              <button
+                className={`flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold
+                  border-2 transition-all duration-150 cursor-pointer
+                  ${activeId === hotspot.id
+                    ? 'bg-orange-500 border-orange-300 scale-110 text-black'
+                    : 'bg-[#0B0F15]/80 border-orange-500 text-orange-400 hover:scale-110'
+                  }`}
+                onClick={() => setActiveId(activeId === hotspot.id ? null : hotspot.id)}
+                aria-label={hotspot.label}
+              >
+                {hotspot.icon ? iconShape[hotspot.icon] : idx + 1}
+              </button>
+            </span>
           ))}
 
           {/* EXPLORE MODE — popover next to the tapped dot */}
@@ -315,13 +413,27 @@ export default function InteractiveImageBlockRenderer({
               ref={detailRef}
               className="absolute z-20 w-[min(85vw,280px)] p-3 rounded-xl border border-orange-500/40
                 bg-[#151E32] shadow-xl shadow-black/40 scroll-mt-20"
-              style={{
-                left: anchorH !== 'right' ? `${activeHotspot.x * 100}%` : undefined,
-                right: anchorH === 'right' ? `${(1 - activeHotspot.x) * 100}%` : undefined,
-                top: anchorV === 'below' ? `calc(${activeHotspot.y * 100}% + 18px)` : undefined,
-                bottom: anchorV === 'above' ? `calc(${(1 - activeHotspot.y) * 100}% + 18px)` : undefined,
-                transform: anchorH === 'center' ? 'translateX(-50%)' : anchorH === 'left' ? 'translateX(-6px)' : 'translateX(6px)',
-              }}
+              /* Anchored off the SAME measured image box as the dots, so the
+                 popover always opens from the dot it belongs to. */
+              style={(() => {
+                const p = spotPos(activeHotspot);
+                const hasBox = imgBox != null;
+                const rightPx = hasBox ? imgBox.left + imgBox.width - (imgBox.left + activeHotspot.x * imgBox.width) : 0;
+                const bottomPx = hasBox ? imgBox.top + imgBox.height - (imgBox.top + activeHotspot.y * imgBox.height) : 0;
+                return {
+                  left: anchorH !== 'right' ? p.left : undefined,
+                  right: anchorH === 'right'
+                    ? (hasBox ? rightPx : `${(1 - activeHotspot.x) * 100}%`)
+                    : undefined,
+                  top: anchorV === 'below'
+                    ? (hasBox ? (p.top as number) + 18 : `calc(${activeHotspot.y * 100}% + 18px)`)
+                    : undefined,
+                  bottom: anchorV === 'above'
+                    ? (hasBox ? bottomPx + 18 : `calc(${(1 - activeHotspot.y) * 100}% + 18px)`)
+                    : undefined,
+                  transform: anchorH === 'center' ? 'translateX(-50%)' : anchorH === 'left' ? 'translateX(-6px)' : 'translateX(6px)',
+                };
+              })()}
             >
               <div className="flex items-start justify-between gap-2">
                 <p className="text-sm font-semibold text-orange-400 mb-1">{activeHotspot.label}</p>
@@ -355,7 +467,7 @@ export default function InteractiveImageBlockRenderer({
                       ? 'bg-[#0B0F15]/85 border-red-500 text-red-400 w-6 h-6 rounded-md'
                       : `bg-[#0B0F15]/85 w-6 h-6 rounded-md ${armedId ? 'border-orange-400/70 text-orange-300 hover:scale-110 cursor-pointer' : 'border-white/40 text-white/60'}`
                   }`}
-                style={{ left: `${hotspot.x * 100}%`, top: `${hotspot.y * 100}%`, transform: 'translate(-50%,-50%)' }}
+                style={{ ...spotPos(hotspot), transform: 'translate(-50%,-50%)' }}
                 onClick={() => tapTarget(hotspot.id)}
                 aria-label={isPlaced ? hotspot.label : `Spot ${idx + 1}`}
               >

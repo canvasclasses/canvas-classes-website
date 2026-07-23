@@ -496,8 +496,13 @@ function RealWorldCallout({ block }: { block: CalloutBlock }) {
     ul: ({ children }: { children?: React.ReactNode }) => (
       <ul className="my-2.5 pl-5 space-y-1.5 list-disc" style={{ color: 'rgba(255,255,255,0.88)' }}>{children}</ul>
     ),
+    // Numbered variant of the list above — this card is also used for plain
+    // ordered lists of facts (e.g. "Properties of X"), not just prose.
+    ol: ({ children }: { children?: React.ReactNode }) => (
+      <ol className="my-2.5 pl-5 space-y-2 list-decimal" style={{ color: 'rgba(255,255,255,0.88)' }}>{children}</ol>
+    ),
     li: ({ children }: { children?: React.ReactNode }) => (
-      <li className="text-[16px] leading-[1.75] text-white/88">{children}</li>
+      <li className="text-[16px] leading-[1.75] text-white/88 pl-1">{children}</li>
     ),
     hr: () => <div className="my-4 h-px" style={{ background: 'rgba(255,255,255,0.10)' }} />,
   };

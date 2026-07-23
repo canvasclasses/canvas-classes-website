@@ -33,11 +33,26 @@ const Md = ({ children }: { children: string }) => (
   <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins}
     components={{ p: ({ children: c }) => <span>{c}</span> }}>{children}</ReactMarkdown>
 );
-// block markdown (keeps paragraphs / lists — for worked solutions)
+// block markdown (keeps paragraphs / lists — for worked solutions).
+// Explicit component overrides — not a `prose`/`prose-practice` wrapper class,
+// which has no matching CSS rule in this Tailwind v4 app and silently collapses
+// every paragraph's margin to 0 (see TextBlockRenderer.tsx's own note on why
+// prose modifier classes are unreliable here).
+const mdBlockComponents = {
+  p: ({ children: c }: { children?: React.ReactNode }) => (
+    <p className="mb-3 last:mb-0">{c}</p>
+  ),
+  ul: ({ children: c }: { children?: React.ReactNode }) => (
+    <ul className="list-disc pl-5 mb-3 last:mb-0 space-y-1.5">{c}</ul>
+  ),
+  ol: ({ children: c }: { children?: React.ReactNode }) => (
+    <ol className="list-decimal pl-5 mb-3 last:mb-0 space-y-1.5">{c}</ol>
+  ),
+};
 const MdBlock = ({ children }: { children: string }) => (
-  <div className="prose-practice">
-    <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins}>{children}</ReactMarkdown>
-  </div>
+  <ReactMarkdown remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} components={mdBlockComponents}>
+    {children}
+  </ReactMarkdown>
 );
 
 const SOURCE_META: Record<PracticeSource, { label: string; color: string; bg: string; border: string }> = {
