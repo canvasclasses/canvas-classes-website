@@ -313,7 +313,7 @@ function SceneFallback() {
 function Scene({ n, l, ml, showNodes }: OrbState & { showNodes: boolean }) {
   const bounds = boundsFor(n);
   return (
-    <Canvas camera={{ position: [bounds * 2, bounds * 1.4, bounds * 2], fov: 45, far: 2000 }} style={{ minHeight: 460 }}>
+    <Canvas camera={{ position: [bounds * 2, bounds * 1.4, bounds * 2], fov: 45, far: 2000 }} style={{ width: '100%', height: '100%' }}>
       <CameraRig bounds={bounds} />
       <ColoredAxes bounds={bounds} />
       <mesh>
@@ -329,10 +329,17 @@ function Scene({ n, l, ml, showNodes }: OrbState & { showNodes: boolean }) {
 
 /* ── 2D curves (hand-rolled SVG — no chart library) ─────────────────────── */
 
-const GW = 420, GH = 150;
-const GPAD = { top: 12, right: 16, bottom: 26, left: 16 };
+const GW = 440, GH = 160;
+const GPAD = { top: 12, right: 14, bottom: 26, left: 48 };
 const GCW = GW - GPAD.left - GPAD.right;
 const GCH = GH - GPAD.top - GPAD.bottom;
+
+// Compact numeric tick label — no exponential (workflow §2); handles the tiny
+// density values (~0.002) and the O(1) radial-distribution values alike.
+function fmtTick(v: number): string {
+  if (!v) return '0';
+  return String(Number(v.toPrecision(2)));
+}
 
 interface PlotInfo { data: { r: number; density: number; radial: number }[]; peakR: number; maxR: number }
 
@@ -377,10 +384,21 @@ function Curve({
         {title} <span style={{ color: TEXT.ghost, fontWeight: 500 }}>({unit})</span>
       </div>
       <svg viewBox={`0 0 ${GW} ${GH}`} width="100%" height={GH} style={{ display: 'block' }}>
+        {/* y-axis + ticks (0, half, max) */}
+        <line x1={GPAD.left} y1={GPAD.top} x2={GPAD.left} y2={GPAD.top + GCH} stroke={BORDER.card} strokeWidth={1} />
+        {[0, 0.5, 1].map((frac) => {
+          const y = GPAD.top + GCH - frac * 0.9 * GCH;
+          return (
+            <g key={frac}>
+              <line x1={GPAD.left - 4} y1={y} x2={GPAD.left} y2={y} stroke={BORDER.card} strokeWidth={1} />
+              <text x={GPAD.left - 6} y={y + 3} fontSize={10} fill={TEXT.ghost} textAnchor="end">{fmtTick(frac * maxV)}</text>
+            </g>
+          );
+        })}
+        {/* x-axis (baseline) */}
         <line x1={GPAD.left} y1={GPAD.top + GCH} x2={GPAD.left + GCW} y2={GPAD.top + GCH} stroke={BORDER.card} strokeWidth={1} />
         {compare && <path d={pathFor(compare, curKey, maxV, domainR)} fill="none" stroke={GREEN} strokeWidth={2} opacity={0.9} />}
         <path d={pathFor(current, curKey, maxV, domainR)} fill="none" stroke={ACCENT} strokeWidth={2} />
-        <text x={GPAD.left} y={GH - 6} fontSize={10} fill={TEXT.ghost}>0</text>
         <text x={GPAD.left + GCW} y={GH - 6} fontSize={10} fill={TEXT.ghost} textAnchor="end">{Math.round(domainR)} a₀</text>
       </svg>
     </div>
@@ -402,7 +420,11 @@ function FormulaBlock({ n, l }: { n: number; l: number }) {
     }
   }, [n, l]);
   return (
-    <div className="w-full overflow-x-auto text-center" style={{ color: TEXT.primary }}
+    // overflowY hidden kills the stray vertical scrollbar KaTeX's display block
+    // otherwise showed; a smaller em keeps the wide R_nl formula inside the card
+    // on desktop, with horizontal scroll only as a narrow-screen fallback.
+    <div className="w-full text-center"
+      style={{ color: TEXT.primary, fontSize: 13, overflowX: 'auto', overflowY: 'hidden' }}
       dangerouslySetInnerHTML={{ __html: html }} />
   );
 }
@@ -446,7 +468,7 @@ export default function OrbitalCloudGraphSim() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* ── LEFT: tabs + pills + 3D ─────────────────────────────────────── */}
         <div className="flex flex-col gap-4">
           <div className="flex gap-6 text-sm font-bold" style={{ borderBottom: `1px solid ${BORDER.divider}` }}>
@@ -494,7 +516,7 @@ export default function OrbitalCloudGraphSim() {
                 <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: AMBER }}>Nodal Planes</span>
               </label>
             </div>
-            <div style={{ background: SIM_CANVAS_BG, minHeight: 460 }}>
+            <div style={{ background: SIM_CANVAS_BG, height: 460 }}>
               <SceneBoundary fallback={<SceneFallback />}>
                 <Suspense fallback={<SceneFallback />}>
                   <Scene n={orb.n} l={orb.l} ml={orb.ml} showNodes={showNodes} />
