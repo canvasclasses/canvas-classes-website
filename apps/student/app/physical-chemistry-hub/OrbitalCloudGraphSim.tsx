@@ -287,8 +287,11 @@ function coneAlongZ(h: number, r: number, up: boolean): THREE.ConeGeometry {
 
 function NodalCones({ bounds }: { bounds: number }) {
   const cones = useMemo(() => {
-    const alpha = Math.acos(1 / Math.sqrt(3)); // ≈ 54.7°
-    const h = bounds * 1.25;
+    const alpha = Math.acos(1 / Math.sqrt(3)); // ≈ 54.7° — the physical node angle
+    // Keep the angle exact but the cones COMPACT: sized to sit within the cloud
+    // rather than sprawling past it (they used to be ~1.8× bounds wide and
+    // buried the electron cloud). Height 0.45× bounds ⇒ base radius ~0.64×.
+    const h = bounds * 0.45;
     const r = h * Math.tan(alpha);
     return [coneAlongZ(h, r, true), coneAlongZ(h, r, false)];
   }, [bounds]);
@@ -296,8 +299,9 @@ function NodalCones({ bounds }: { bounds: number }) {
     <>
       {cones.map((geo, i) => (
         <mesh key={i} geometry={geo}>
-          {/* sim-lint-ok — amber nodal-cone surface (data, not chrome) */}
-          <meshBasicMaterial color={AMBER} transparent opacity={0.16} side={THREE.DoubleSide} depthWrite={false} />
+          {/* sim-lint-ok — amber nodal-cone surface (data, not chrome); low
+              opacity so the electron cloud reads clearly through it */}
+          <meshBasicMaterial color={AMBER} transparent opacity={0.12} side={THREE.DoubleSide} depthWrite={false} />
         </mesh>
       ))}
     </>
@@ -376,7 +380,8 @@ function Scene({ n, l, ml, showNodes }: OrbState & { showNodes: boolean }) {
       {showNodes && (l === 2 && ml === 0
         ? <NodalCones bounds={bounds} />
         : <NodalPlanes l={l} ml={ml} bounds={bounds} />)}
-      <OrbitControls enableDamping dampingFactor={0.05} autoRotate autoRotateSpeed={0.5} enablePan={false} />
+      {/* No auto-rotate — opens on a clear, steady 3/4 view; user can drag to rotate. */}
+      <OrbitControls enableDamping dampingFactor={0.05} enablePan={false} />
     </Canvas>
   );
 }
