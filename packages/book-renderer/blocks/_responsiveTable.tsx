@@ -63,10 +63,19 @@ export function buildResponsiveTableComponents(allHeaders: string[][]) {
     table: ({ children }: { children?: ReactNode }) => {
       currentHeaders = allHeaders[tableIndex++] ?? [];
       return (
+        // Bug fix: the outer wrapper was `overflow-hidden`, which — on wide-
+        // enough screens that the mobile card layout doesn't kick in — SILENTLY
+        // CLIPS content that's still too wide for the container instead of
+        // letting it scroll, cutting text off mid-word with no scrollbar at
+        // all. The inner overflow-x-auto div (matching TextBlockRenderer's
+        // table) is the real safety net; overflow-hidden on the outer div is
+        // only for rounding the corners.
         <div className="my-4 rounded-xl overflow-hidden border border-white/10 bg-[#0d1320]">
-          <table className="w-full text-[13px] sm:text-[14px] border-collapse block sm:table">
-            {children}
-          </table>
+          <div className="overflow-x-auto">
+            <table className="w-full text-[13px] sm:text-[14px] border-collapse block sm:table">
+              {children}
+            </table>
+          </div>
         </div>
       );
     },
