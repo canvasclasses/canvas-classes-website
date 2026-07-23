@@ -252,6 +252,36 @@ function NodalPlanes({ l, ml, bounds }: { l: number; ml: number; bounds: number 
   );
 }
 
+// d_z² has NO nodal plane — its angular node is a pair of nodal CONES. The
+// angular part ∝ (3cos²θ − 1) vanishes at 3cos²θ = 1 → θ ≈ 54.7° (and its
+// mirror ≈ 125.3°) from the z-axis: two cones meeting apex-to-apex at the
+// nucleus. Built as two open cones with apex at the origin, opening along ±z.
+function coneAlongZ(h: number, r: number, up: boolean): THREE.ConeGeometry {
+  const g = new THREE.ConeGeometry(r, h, 48, 1, true); // apex +y, base −y, open
+  g.translate(0, -h / 2, 0);                            // apex → origin, opens −y
+  g.rotateX(up ? -Math.PI / 2 : Math.PI / 2);           // −y → +z (up) or −z (down)
+  return g;
+}
+
+function NodalCones({ bounds }: { bounds: number }) {
+  const cones = useMemo(() => {
+    const alpha = Math.acos(1 / Math.sqrt(3)); // ≈ 54.7°
+    const h = bounds * 1.25;
+    const r = h * Math.tan(alpha);
+    return [coneAlongZ(h, r, true), coneAlongZ(h, r, false)];
+  }, [bounds]);
+  return (
+    <>
+      {cones.map((geo, i) => (
+        <mesh key={i} geometry={geo}>
+          {/* sim-lint-ok — amber nodal-cone surface (data, not chrome) */}
+          <meshBasicMaterial color={AMBER} transparent opacity={0.16} side={THREE.DoubleSide} depthWrite={false} />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
 function makeAxisLabel(text: string, color: string): THREE.Sprite {
   const canvas = document.createElement('canvas');
   canvas.width = 64;
@@ -321,7 +351,9 @@ function Scene({ n, l, ml, showNodes }: OrbState & { showNodes: boolean }) {
         <meshBasicMaterial color="#ffffff" />
       </mesh>
       <OrbitalCloud n={n} l={l} ml={ml} />
-      {showNodes && <NodalPlanes l={l} ml={ml} bounds={bounds} />}
+      {showNodes && (l === 2 && ml === 0
+        ? <NodalCones bounds={bounds} />
+        : <NodalPlanes l={l} ml={ml} bounds={bounds} />)}
       <OrbitControls enableDamping dampingFactor={0.05} autoRotate autoRotateSpeed={0.5} enablePan={false} />
     </Canvas>
   );
@@ -358,32 +390,55 @@ function plotData(n: number, l: number): PlotInfo {
 }
 
 function pathFor(info: PlotInfo, key: 'density' | 'radial', maxV: number, domainR: number): string {
+  // NB: no top clamp — for the density 'reveal' scale the near-nucleus cusp
+  // deliberately runs off the top of the frame (clipped by the SVG viewport),
+  // exactly the schematic textbook shape.
   return info.data
     .map((p, i) => {
       const x = GPAD.left + (p.r / domainR) * GCW;
       const y = GPAD.top + GCH - (p[key] / maxV) * GCH * 0.9;
-      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${Math.max(GPAD.top, y).toFixed(1)}`;
+      return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
     })
     .join(' ');
 }
 
+// For s-orbital density, R(r)² has a huge near-nucleus cusp that flattens the
+// outer node structure to nothing when you scale to the global max. Instead we
+// scale to the tallest feature AFTER the first radial node (the first local
+// minimum), so the outer humps fill the frame and the zero-touches (nodes) are
+// clearly visible — the way textbooks draw it. For l ≥ 1 (no cusp) this reduces
+// to the ordinary max, so those curves are unaffected.
+function densityDisplayMax(info: PlotInfo): number {
+  const d = info.data;
+  let firstMin = 0;
+  for (let i = 1; i < d.length - 1; i++) {
+    if (d[i].density <= d[i - 1].density && d[i].density <= d[i + 1].density) { firstMin = i; break; }
+  }
+  let m = 1e-12;
+  for (let i = firstMin; i < d.length; i++) m = Math.max(m, d[i].density);
+  return m;
+}
+
 function Curve({
-  title, unit, curKey, current, compare, domainR,
+  title, unit, curKey, scaleMode, current, compare, domainR,
 }: {
   title: string; unit: string; curKey: 'density' | 'radial';
+  scaleMode: 'reveal' | 'normal';
   current: PlotInfo; compare: PlotInfo | null; domainR: number;
 }) {
-  const maxV = Math.max(
-    ...current.data.map((p) => p[curKey]),
-    ...(compare ? compare.data.map((p) => p[curKey]) : [0]),
-    1e-12,
-  );
+  const maxV = scaleMode === 'reveal'
+    ? Math.max(densityDisplayMax(current), compare ? densityDisplayMax(compare) : 0, 1e-12)
+    : Math.max(
+        ...current.data.map((p) => p[curKey]),
+        ...(compare ? compare.data.map((p) => p[curKey]) : [0]),
+        1e-12,
+      );
   return (
     <div>
       <div className="text-base font-bold mb-2" style={{ color: TEXT.primary }}>
         {title} <span style={{ color: TEXT.ghost, fontWeight: 500 }}>({unit})</span>
       </div>
-      <svg viewBox={`0 0 ${GW} ${GH}`} width="100%" height={GH} style={{ display: 'block' }}>
+      <svg viewBox={`0 0 ${GW} ${GH}`} width="100%" height={GH} style={{ display: 'block', overflow: 'hidden' }}>
         {/* y-axis + ticks (0, half, max) */}
         <line x1={GPAD.left} y1={GPAD.top} x2={GPAD.left} y2={GPAD.top + GCH} stroke={BORDER.card} strokeWidth={1} />
         {[0, 0.5, 1].map((frac) => {
@@ -419,13 +474,35 @@ function FormulaBlock({ n, l }: { n: number; l: number }) {
       return '';
     }
   }, [n, l]);
+  // KaTeX renders at its full display size (crisp), then we scale the whole
+  // block uniformly to fit the card width. Because it's a CSS transform on
+  // vector text it stays sharp at any scale — no rasterization, no scrollbar,
+  // and it's as large as the column allows. outer height tracks the scaled
+  // height so there's no dead vertical space.
+  const outerRef = useRef<HTMLDivElement>(null);
+  const [dims, setDims] = useState<{ scale: number; height: number }>({ scale: 1, height: 0 });
+  useEffect(() => {
+    const measure = () => {
+      const outer = outerRef.current;
+      const kx = outer?.querySelector('.katex') as HTMLElement | null;
+      if (!outer || !kx) return;
+      const kw = kx.offsetWidth, kh = kx.offsetHeight;
+      if (kw > 0) {
+        const scale = Math.min(1, (outer.clientWidth - 2) / kw);
+        setDims({ scale, height: Math.ceil(kh * scale) });
+      }
+    };
+    measure();
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null;
+    if (ro && outerRef.current) ro.observe(outerRef.current);
+    return () => ro?.disconnect();
+  }, [html]);
+
   return (
-    // overflowY hidden kills the stray vertical scrollbar KaTeX's display block
-    // otherwise showed; a smaller em keeps the wide R_nl formula inside the card
-    // on desktop, with horizontal scroll only as a narrow-screen fallback.
-    <div className="w-full text-center"
-      style={{ color: TEXT.primary, fontSize: 13, overflowX: 'auto', overflowY: 'hidden' }}
-      dangerouslySetInnerHTML={{ __html: html }} />
+    <div ref={outerRef} className="w-full" style={{ overflow: 'hidden', height: dims.height || undefined }}>
+      <div style={{ transform: `scale(${dims.scale})`, transformOrigin: 'top center', color: TEXT.primary }}
+        dangerouslySetInnerHTML={{ __html: html }} />
+    </div>
   );
 }
 
@@ -442,6 +519,8 @@ export default function OrbitalCloudGraphSim() {
   const radialNodes = orb.n - orb.l - 1;
   const angularNodes = orb.l;
   const totalNodes = orb.n - 1;
+  const isDzSquared = orb.l === 2 && orb.ml === 0;
+  const nodalLabel = isDzSquared ? 'Nodal Cones' : 'Nodal Planes';
 
   const curInfo = useMemo(() => plotData(orb.n, orb.l), [orb.n, orb.l]);
   const cmpInfo = useMemo(() => plotData(cmp.n, cmp.l), [cmp.n, cmp.l]);
@@ -502,6 +581,29 @@ export default function OrbitalCloudGraphSim() {
             })}
           </div>
 
+          {/* d-orbital shape selector — the three shapes students study: the
+              between-axes cloverleaf (d_xy), the along-axes cloverleaf
+              (d_x²−y²), and the unique dumbbell+torus (d_z², nodal cones). */}
+          {orb.l === 2 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] uppercase tracking-widest mr-1" style={{ color: TEXT.ghost }}>d-orbital shape:</span>
+              {[{ ml: 2, label: 'd_xy' }, { ml: -2, label: 'd_x²−y²' }, { ml: 0, label: 'd_z²' }].map((v) => {
+                const active = orb.ml === v.ml;
+                return (
+                  <button key={v.ml} onClick={() => setOrb({ ...orb, ml: v.ml })}
+                    className="px-3 py-1 rounded-full text-[12px] font-semibold transition-all"
+                    style={{
+                      background: active ? 'rgba(196,181,253,0.14)' : 'rgba(255,255,255,0.04)',
+                      border: `1px solid ${active ? 'rgba(196,181,253,0.45)' : 'rgba(255,255,255,0.08)'}`,
+                      color: active ? ACCENT : TEXT.secondary,
+                    }}>
+                    {v.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${BORDER.card}`, background: 'rgba(255,255,255,0.02)' }}>
             <div className="px-4 py-3 flex justify-between items-center" style={{ borderBottom: `1px solid ${BORDER.divider}` }}>
               <div>
@@ -512,8 +614,8 @@ export default function OrbitalCloudGraphSim() {
                 style={{ background: 'rgba(245,158,11,0.10)', border: `1px solid rgba(245,158,11,0.35)` }}>
                 <input type="checkbox" checked={showNodes} onChange={(e) => setShowNodes(e.target.checked)}
                   style={{ accentColor: AMBER, width: 15, height: 15, cursor: 'pointer' }} />
-                {/* sim-lint-ok — amber label pairs with the amber nodal planes (data) */}
-                <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: AMBER }}>Nodal Planes</span>
+                {/* sim-lint-ok — amber label pairs with the amber nodal surfaces (data) */}
+                <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: AMBER }}>{nodalLabel}</span>
               </label>
             </div>
             <div style={{ background: SIM_CANVAS_BG, height: 460 }}>
@@ -560,8 +662,8 @@ export default function OrbitalCloudGraphSim() {
             </div>
           )}
 
-          <Curve title="Probability Density" unit="R(r)²" curKey="density" current={curInfo} compare={compareOn ? cmpInfo : null} domainR={domainR} />
-          <Curve title="Radial Probability Distribution" unit="4πr²R(r)²" curKey="radial" current={curInfo} compare={compareOn ? cmpInfo : null} domainR={domainR} />
+          <Curve title="Probability Density" unit="R(r)²" curKey="density" scaleMode="reveal" current={curInfo} compare={compareOn ? cmpInfo : null} domainR={domainR} />
+          <Curve title="Radial Probability Distribution" unit="4πr²R(r)²" curKey="radial" scaleMode="normal" current={curInfo} compare={compareOn ? cmpInfo : null} domainR={domainR} />
 
           {/* Formula + analysis */}
           <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.025)', border: `1px solid ${BORDER.card}` }}>
