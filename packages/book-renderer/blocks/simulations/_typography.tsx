@@ -45,6 +45,21 @@ export function prettyExp(eNotation: string): string {
 }
 
 /**
+ * Standard number formatter for simulator readouts. Keeps sensible precision by
+ * magnitude and routes anything very large/small through prettyExp so students
+ * never see "6.02e+23". Reused by calc-style sims instead of each re-deriving it.
+ */
+export function fmt(v: number, digits = 3): string {
+  if (!isFinite(v) || isNaN(v)) return '—';
+  if (v === 0) return '0';
+  const abs = Math.abs(v);
+  if (abs < 0.001 || abs > 1e5) return prettyExp(v.toExponential(2));
+  if (abs >= 100) return v.toFixed(1);
+  if (abs >= 10) return v.toFixed(2);
+  return v.toFixed(digits);
+}
+
+/**
  * Inline vertical fraction. Renders num stacked over den separated by a
  * horizontal divider line in the current text colour. Use anywhere a
  * division would otherwise be written with ÷.

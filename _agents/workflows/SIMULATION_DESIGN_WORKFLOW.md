@@ -18,16 +18,25 @@ description: Simulation Design Workflow — Canvas Classes Interactive Labs
 
 ```
 BACKGROUND HIERARCHY    #0d1117 → #0B0F15 → #151E32
-PRIMARY ACCENT          indigo  → #6366f1 / #818cf8 / #c4b5fd
-SUCCESS STATE           emerald → #10b981 / #34d399 / #6ee7b7
-WARNING / HIGHLIGHT     amber   → #d97706 / #fbbf24
-ERROR / L-SERIES        red     → #dc2626 / #f87171
-EPIMER / TOGGLE         pink    → #ec4899 / #f472b6
-ATOM: Carbon            fill #2d3a5a  stroke #6366f1
+PRIMARY ACCENT (fg)     violet-300 #c4b5fd   ← light tier ONLY on the dark bg
+SECONDARY ACCENT (fg)   sky-300    #7dd3fc   ← at most ONE, for a 2nd axis
+SUCCESS / OK            #6ee7b7      ERROR / BAD   #fca5a5   (pass/fail only)
+TEXT                    #e2e8f0 → #94a3b8 → #64748b → #475569
+ATOM: Carbon            fill #2d3a5a  stroke #6366f1   (viz-internal, not fg text)
 ATOM: Oxygen            fill #d64545  stroke #991b1b
 ATOM: Hydrogen          fill #0a2218  stroke #34d399
 ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
 ```
+
+> **Two-colour rule + tokens (2026-07-23):** the CANONICAL source of truth for
+> colour and typography is now code, not this table:
+> **`packages/book-renderer/blocks/simulations/_shared/tokens.ts`** (imported via
+> `_shared`). A sim uses ONE primary accent + AT MOST ONE secondary, both LIGHT
+> tier; mid/dark tiers (`#6366f1`, `#7c3aed`, …) may only be low-opacity fills or
+> SVG-internal, never foreground text. Compose the shared chrome components
+> (`SimShell`, `SimHeader`, `StepBar`, `SimTabs`, `SimSlider`, `NavButtons`,
+> `ExpertTip`, `SectionLabel`) instead of hand-rolling — see §4. An automated gate
+> (`npm run lint:sims`, and the pre-push hook) enforces this; see §12.
 
 ---
 
@@ -121,21 +130,32 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
 
 | Element | Tailwind class | Additional style |
 |---|---|---|
-| Simulator title (e.g. "Biomolecules Lab") | `text-3xl font-black tracking-tight text-white` | Accent word in `color:#7c3aed` |
+| Simulator title (e.g. "Biomolecules Lab") | `text-2xl md:text-3xl font-black tracking-tight text-white` | Accent word in `color:#c4b5fd` (light-tier ACCENT — NOT the old dark `#7c3aed`) |
 | Subtitle / descriptor | `text-[11px] font-bold uppercase tracking-widest` | `color:#475569` |
 | Section heading (sidebar) | `text-xl font-black uppercase tracking-tighter` | `color:#e2e8f0` |
 | Phase concept heading | `text-lg font-bold leading-snug text-white` | — |
-| Step / rule label | `text-xs font-black uppercase tracking-widest` | accent color per phase |
+| Step / rule label | `text-xs font-semibold uppercase tracking-widest` | accent color per phase |
 | Body / explanation text | `text-base leading-snug` | `color:#94a3b8` |
-| Metadata / badge text | `text-[10px] font-black uppercase tracking-widest` | `color:#64748b` |
+| Metadata / badge text | `text-[10px] font-semibold uppercase tracking-widest` | `color:#64748b` |
 | StepBar pill label | `text-[11px] font-black uppercase tracking-wider` | — |
 | Sub-label under elements | `text-[10px]` | `color:#475569` |
 
 **Rule:** Never go below `text-[10px]`. Never use `text-[9px]` for anything a student must read — only decorative labels.
 
+**Rule — weight must scale DOWN with size (added 2026-07-21):** `font-black` (900) is reserved for `text-lg` and above — titles, headings, big numeric readouts. At `text-xs` / `text-[10px]` / `text-[11px]`, the heaviest weight a label may use is `font-semibold` (600); `font-black` at that size renders as a dense, hard-to-read smudge, especially in all-caps tracking-widest labels stacked near each other (found during the Eudiometer Lab v3 redesign — every section label on that sim was `text-[10px] font-black`, which was flagged as looking bad and heavy). The StepBar pill label keeps `font-black` as an exception because it sits alone inside a bordered pill, not stacked with other caption text. This applies to SVG `<text>` labels too: match the same weight ceiling to the pixel `fontSize`.
+
 ---
 
 ## 3. COLOR PALETTE — FULL REFERENCE
+
+> **Canonical source: [`_shared/tokens.ts`](../../packages/book-renderer/blocks/simulations/_shared/tokens.ts).** Import colours from there (`ACCENT`, `ACCENT_2`, `ACCENTS`, `TEXT`, `OK`, `BAD`, `BORDER`) rather than pasting hex. The tables below are the human-readable reference; the file is what the code and the validator use.
+
+### The two-colour rule (2026-07-23) — READ THIS
+
+A simulator uses **ONE primary accent** plus **AT MOST ONE secondary accent**, and both must be **light-tier** colours, because they sit as foreground on a near-black background — a mid/dark tier (`#6366f1`, `#7c3aed`) reads muddy and pulls focus. Everything else is white/gray. Default primary is violet `#c4b5fd` (`ACCENT`); pick a secondary from `ACCENTS` only when the content has a genuine second axis (water vs solute, acid vs base, reactant vs product).
+
+- **Base/mid/dark tiers** (`#6366f1`, `#7c3aed`, `#818cf8`, …) may appear ONLY as low-opacity background tints / active borders (`accentTint(ACCENT, 0.15)`) or inside the SVG visualization — **never as foreground text on the dark bg.**
+- **Two sanctioned exceptions** (mark them `// sim-lint-ok` at the usage site): a real-world identity colour shown *inside the visualization* (a solute's true solution colour, an atom's periodic-table colour), and the `OK`/`BAD` pass-fail pair. These are data, not chrome.
 
 ### Accent / Semantic Colors
 
@@ -170,18 +190,28 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
 <div className="p-4 md:p-6" style={{background:'#0d1117',color:'#e2e8f0',minHeight:'80vh'}}>
 ```
 
-### 4b. Simulator Header
+> **Prefer the shared components (2026-07-23).** The snippets in §4 are the
+> reference for how the chrome looks; for NEW sims, import the ready-made
+> components from `_shared` instead of pasting these — they bake in the correct
+> font sizes/weights/colours so nothing can drift:
+> ```tsx
+> import { SimShell, SimHeader, SimTabs, StepBar, NavButtons, SimSlider, ExpertTip, SectionLabel, ACCENT, ACCENT_2, TEXT } from '../_shared';
+> ```
+> Each takes an optional `accent` prop (defaults to the violet `ACCENT`). Drop to
+> raw markup only for the sim's bespoke canvas/visualization.
+
+### 4b. Simulator Header  → prefer `<SimHeader title="…" accentWord="Lab" subtitle="…" badge={…} />`
 ```tsx
-<div className="mb-3 flex justify-between items-start flex-wrap gap-2">
+<div className="mb-4 flex justify-between items-start flex-wrap gap-2">
   <div>
-    <h1 className="text-3xl font-black tracking-tight text-white">
-      [Subject] <span style={{color:'#7c3aed'}}>Lab</span>
-    </h1>
-    <p className="text-[11px] font-bold uppercase tracking-widest mt-0.5" style={{color:'#475569'}}>
+    <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white">
+      [Subject] <span style={{color:'#c4b5fd'}}>Lab</span>
+    </h2>
+    <p className="text-[11px] font-semibold uppercase tracking-widest mt-0.5" style={{color:'#475569'}}>
       [Descriptor — e.g. "Interactive Glucose Explorer"]
     </p>
   </div>
-  <div className="text-[10px] font-black uppercase tracking-widest pt-1" style={{color:'#64748b'}}>
+  <div className="text-[10px] font-semibold uppercase tracking-widest pt-1" style={{color:'#64748b'}}>
     [Current molecule / topic badge]
   </div>
 </div>
@@ -312,13 +342,17 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
       </div>
     ))}
   </div>
-  {/* Expert Tip — always at bottom */}
+  {/* Expert Tip — always at bottom.  Prefer <ExpertTip>…</ExpertTip>. */}
   <div className="pt-4" style={{borderTop:'1px solid rgba(255,255,255,0.05)'}}>
-    <h5 className="text-[9px] font-black uppercase tracking-widest mb-1.5" style={{color:'#6366f1'}}>Expert Tip</h5>
-    <p className="text-white text-base font-bold leading-tight italic">&ldquo;[Mnemonic or key insight]&rdquo;</p>
+    <div className="text-[10px] font-semibold uppercase tracking-widest mb-1.5" style={{color:'#c4b5fd'}}>Expert Tip</div>
+    <p className="text-sm font-medium leading-snug italic" style={{color:'#e2e8f0'}}>&ldquo;[Mnemonic or key insight]&rdquo;</p>
   </div>
 </div>
 ```
+> Note: the old version of this block used `text-[9px] font-black … text-white
+> font-bold` — three violations of this doc's own §2 rules (sub-10px text,
+> font-black at tiny size, pure-white heavy body). Corrected 2026-07-23; the
+> `<ExpertTip>` component is the drift-proof version.
 
 ### 4k. Atom Node (SVG)
 ```tsx
@@ -459,7 +493,9 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
 - [ ] **No `font-mono` class or `fontFamily: 'monospace'` anywhere in the simulator.** Use `tabular-nums` for column alignment, `fontStyle: 'italic'` for math variables.
 - [ ] **No `÷` symbol anywhere in formulas or calc steps.** Use the `Frac` component (numerator stacked over denominator) — see §2 "Division & Fractions". The `÷` glyph reads as `+` from a distance.
 - [ ] **No `e+N` / `e-N` programming-style scientific notation rendered to students.** Use `prettyExp(value.toExponential(n))` so values appear as `6.022 × 10²³`, never `6.022e+23`.
-- [ ] No colors outside the defined palette (Section 3)
+- [ ] **ONE primary accent + at most ONE secondary, both light-tier** (§3 two-colour rule). Imported from `_shared` tokens, not hardcoded. No mid/dark tier as foreground text.
+- [ ] **`font-black` only at `text-lg`+** — `font-semibold` is the ceiling at `text-xs` / `text-[10px]` / `text-[11px]` (§2 weight rule). The StepBar pill is the sole exception and lives in the shared component.
+- [ ] `npm run lint:sims` passes for your file (§12) — the pre-push hook runs it automatically.
 - [ ] StepBar uses pill pattern from Section 4c
 - [ ] Back/Next buttons use pattern from Section 4d
 - [ ] No card-in-card nesting anywhere in the phase content
@@ -469,3 +505,35 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
 - [ ] Expert Tip block present in any mechanism sidebar
 - [ ] LaTeX uses `$...$` and `\frac` — no double dollar, no `\dfrac`
 - [ ] Atom colors match the defined atom palette (Section 4k)
+
+---
+
+## 11. SHARED MODULE — WHAT TO IMPORT (don't hand-roll)
+
+Everything reusable lives under `packages/book-renderer/blocks/simulations/_shared` and is re-exported from its `index.ts` barrel. Import from `../_shared` (or `./_shared`), never reach into individual files.
+
+| Import | What it is |
+|---|---|
+| `ACCENT`, `ACCENT_2`, `ACCENTS`, `TEXT`, `OK`, `BAD`, `BORDER`, `SIM_BG`, `accentTint` | Design tokens (`tokens.ts`) — the single source of truth for colour |
+| `TYPE` | Typography className strings (title, subtitle, sectionLabel, body, …) with the weight-scale-down rule baked in |
+| `SimShell` | Outer wrapper (`#0d1117`, padding, radius, font) |
+| `SimHeader` | Title + accent word + subtitle + optional badge |
+| `SimTabs`, `StepBar`, `NavButtons` | Tab selector, phase pills, back/next |
+| `SimSlider` | Labeled range input with a tabular-nums readout |
+| `SectionLabel`, `ExpertTip` | Uppercase mini-heading; the calm closing tip |
+| `Frac`, `prettyExp`, `fmt` | No-÷ fraction, `6.022 × 10²³` formatter, standard number formatter |
+| `useResolvedFont`, `useCanvasSize`, `useAnimationFrame`, `mulberry32`, spectrum helpers | Canvas/animation utilities |
+
+Each chrome component takes an optional `accent` prop (defaults to `ACCENT`). Write raw markup only for the sim's bespoke canvas/visualization — the frame around it should be composed from the above.
+
+---
+
+## 12. AUTOMATED ENFORCEMENT — the design gate
+
+Consistency across hundreds of sims cannot rely on anyone reading this doc. It is enforced by **`scripts/validate-sims.mjs`**:
+
+- **`npm run lint:sims`** — checks only the simulator files changed on this branch / in your working tree (so untouched legacy sims are never blocked; they convert when next edited — "migrate when touched").
+- **`npm run lint:sims:all`** — audits the whole library (report only). Use to see outstanding debt.
+- The **pre-push git hook** runs the changed-file gate automatically and **blocks the push** on any error.
+
+It flags: monospace fonts, the `÷` glyph, sub-`text-[10px]` text, `font-black` at `text-xs`/`text-[10px]`, the dark-violet `#7c3aed` as foreground, and `.toExponential()` not wrapped in `prettyExp()`. Mark a deliberate exception with a `// sim-lint-ok` comment on that line (reserve this for the two sanctioned cases in §3). The rule set is intentionally high-confidence; it will tighten (e.g. banning all non-token hex) as the library migrates onto the shared components.

@@ -15,6 +15,8 @@
     "start:admin": "npm run start -w admin",
     "lint": "npm run lint -w student",
     "lint:admin": "npm run lint -w admin",
+    "lint:sims": "node scripts/validate-sims.mjs",
+    "lint:sims:all": "node scripts/validate-sims.mjs --all --report",
     "backup:local": "tsx scripts/mongodb-backup.ts --local",
     "backup:r2": "tsx scripts/mongodb-backup.ts --r2",
     "backup:full": "tsx scripts/mongodb-backup.ts --local --r2",

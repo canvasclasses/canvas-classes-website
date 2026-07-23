@@ -19,3 +19,19 @@ export {
   rgbString,
 } from './spectrum';
 export type { RGB, ColorStops } from './spectrum';
+
+// Design tokens — single source of truth for sim colour + typography.
+export {
+  SIM_BG, SIM_SURFACE, SIM_INPUT, SIM_CANVAS_BG,
+  ACCENT, ACCENT_2, ACCENTS, TEXT, OK, BAD, BORDER, TYPE, accentTint,
+} from './tokens';
+
+// Shared chrome components — compose these instead of hand-rolling sim chrome.
+export {
+  SimShell, SimHeader, SectionLabel, SimTabs, StepBar, NavButtons, SimSlider, ExpertTip,
+} from './components';
+export type { TabDef, StepDef } from './components';
+
+// Math/format helpers (re-exported from the sibling _typography module so the
+// barrel is the one import surface a sim needs).
+export { prettyExp, fmt, Frac } from '../_typography';
