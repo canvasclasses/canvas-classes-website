@@ -30,12 +30,10 @@
  * series are DATA colours, not chrome (marked `// sim-lint-ok`).
  */
 
-import { Suspense, useEffect, useMemo, useRef, useState, Component, type ReactNode } from 'react';
+import { Suspense, useEffect, useMemo, useState, Component, type ReactNode } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Edges } from '@react-three/drei';
 import * as THREE from 'three';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
 import { ACCENT, ACCENT_2, TEXT, BORDER, SIM_CANVAS_BG } from '@canvas/book-renderer/simulations/_shared';
 
 const A0 = 1;
@@ -144,7 +142,21 @@ function generateCloud(n: number, l: number, ml: number) {
     const d = Math.pow(radialWavefunction(n, l, r), 2);
     if (d > maxRadDens) maxRadDens = d;
   }
-  const maxProb = maxRadDens * 1.1;
+  // The angular part's PEAK differs a lot between d-orbitals — d_xy tops out at
+  // 0.25, d_x²−y² at 1, d_z² at 4 — so normalising only by the radial max (as
+  // before) made d_x²−y² 4× and d_z² 16× denser than d_xy at their peaks, which
+  // buried the nodal gaps. Normalise by the FULL peak (radial × angular),
+  // measured numerically, so every orbital's densest region maps to the same
+  // acceptance and the clouds read at a consistent, legible density.
+  let maxAngDens = 1e-9;
+  for (let k = 0; k < 3000; k++) {
+    const ux = Math.random() - 0.5, uy = Math.random() - 0.5, uz = Math.random() - 0.5;
+    const ur = Math.sqrt(ux * ux + uy * uy + uz * uz);
+    if (ur < 1e-6) continue;
+    maxAngDens = Math.max(maxAngDens, angularDensitySq(l, ml, ux, uy, uz, ur));
+  }
+  const totalMax = maxRadDens * maxAngDens;
+  const GAMMA = 0.8; // <1 lifts diffuse regions so lobes aren't only a hot core
 
   const positions: number[] = [];
   const colors: number[] = [];
@@ -162,9 +174,9 @@ function generateCloud(n: number, l: number, ml: number) {
 
     const rProb = Math.pow(radialWavefunction(n, l, r), 2);
     const aProb = angularDensitySq(l, ml, x, y, z, r);
-    const total = rProb * aProb;
+    const norm = (rProb * aProb) / totalMax; // in [0, 1], consistent across orbitals
 
-    if (Math.random() * maxProb < Math.pow(total, 0.85)) {
+    if (Math.random() < Math.pow(norm, GAMMA)) {
       positions.push(x, y, z);
       const mix = Math.min(1, r / (bounds * 0.8));
       const c = cA.clone().lerp(cB, mix * 0.6);
@@ -219,22 +231,32 @@ function OrbitalCloud({ n, l, ml }: OrbState) {
   );
 }
 
-// Nodal planes for p / d orbitals (in the canonical orientations above).
+// Nodal planes for p / d orbitals, defined by each plane's NORMAL vector (a
+// default plane lies in xy with normal +z; we rotate it so its normal points
+// along the given vector). This is unambiguous — deriving Euler tuples by hand
+// got d_x²−y² wrong before. Each plane passes through the nucleus.
 function NodalPlanes({ l, ml, bounds }: { l: number; ml: number; bounds: number }) {
   const rotations = useMemo<[number, number, number][]>(() => {
+    let normals: [number, number, number][] = [];
     if (l === 1) {
-      if (ml === 0) return [[0, 0, 0]];                 // p_z → xy plane
-      if (ml === 1) return [[0, Math.PI / 2, 0]];       // p_x → yz plane
-      if (ml === -1) return [[Math.PI / 2, 0, 0]];      // p_y → xz plane
+      if (ml === 0) normals = [[0, 0, 1]];            // p_z  → z = 0 (xy plane)
+      else if (ml === 1) normals = [[1, 0, 0]];       // p_x  → x = 0 (yz plane)
+      else if (ml === -1) normals = [[0, 1, 0]];      // p_y  → y = 0 (xz plane)
+    } else if (l === 2) {
+      if (ml === 2) normals = [[0, 1, 0], [1, 0, 0]];          // d_xy    → y=0 & x=0
+      else if (ml === -2) normals = [[-1, 1, 0], [1, 1, 0]];   // d_x²−y² → y=x & y=−x (45°, contain z)
+      else if (ml === 1) normals = [[0, 0, 1], [1, 0, 0]];     // d_xz    → z=0 & x=0
+      else if (ml === -1) normals = [[0, 0, 1], [0, 1, 0]];    // d_yz    → z=0 & y=0
+      // ml === 0 (d_z²) has nodal cones, not planes — handled by <NodalCones>.
     }
-    if (l === 2) {
-      if (ml === 2) return [[Math.PI / 2, 0, 0], [0, Math.PI / 2, 0]];          // d_xy
-      if (ml === -2) return [[0, Math.PI / 2, Math.PI / 4], [0, Math.PI / 2, -Math.PI / 4]]; // d_x²-y²
-      if (ml === 1) return [[0, 0, 0], [0, Math.PI / 2, 0]];                    // d_xz
-      if (ml === -1) return [[0, 0, 0], [Math.PI / 2, 0, 0]];                   // d_yz
-      // ml === 0 (d_z²) has nodal cones, not planes — none drawn.
-    }
-    return [];
+    const up = new THREE.Vector3(0, 0, 1);
+    return normals.map((nrm) => {
+      const q = new THREE.Quaternion().setFromUnitVectors(
+        up, new THREE.Vector3(nrm[0], nrm[1], nrm[2]).normalize(),
+      );
+      const e = new THREE.Euler().setFromQuaternion(q);
+      return [e.x, e.y, e.z] as [number, number, number];
+    });
   }, [l, ml]);
 
   const s = bounds * 1.8;
@@ -426,8 +448,12 @@ function Curve({
   scaleMode: 'reveal' | 'normal';
   current: PlotInfo; compare: PlotInfo | null; domainR: number;
 }) {
+  // REVEAL_HEADROOM > 1 scales the axis a bit taller than the outer hump so the
+  // revealed hump sits around 60% of the frame (textbook proportion) instead of
+  // nearly touching the top; the near-nucleus cusp still runs off-frame.
+  const REVEAL_HEADROOM = 1.5;
   const maxV = scaleMode === 'reveal'
-    ? Math.max(densityDisplayMax(current), compare ? densityDisplayMax(compare) : 0, 1e-12)
+    ? REVEAL_HEADROOM * Math.max(densityDisplayMax(current), compare ? densityDisplayMax(compare) : 0, 1e-12)
     : Math.max(
         ...current.data.map((p) => p[curKey]),
         ...(compare ? compare.data.map((p) => p[curKey]) : [0]),
@@ -460,48 +486,14 @@ function Curve({
   );
 }
 
-/* ── Formula (KaTeX) ────────────────────────────────────────────────────── */
+/* ── Stat card (analysis) ───────────────────────────────────────────────── */
 
-function FormulaBlock({ n, l }: { n: number; l: number }) {
-  const html = useMemo(() => {
-    const radialNodes = n - l - 1;
-    const latex =
-      `R_{${n}${l}}(r) = \\sqrt{\\left(\\frac{2}{${n}a_0}\\right)^3 \\frac{${radialNodes}!}{2(${n})(${n + l})!}}\\; ` +
-      `e^{-\\frac{r}{${n}a_0}} \\left(\\frac{2r}{${n}a_0}\\right)^{${l}} L_{${radialNodes}}^{${2 * l + 1}}\\!\\left(\\frac{2r}{${n}a_0}\\right)`;
-    try {
-      return katex.renderToString(latex, { throwOnError: false, displayMode: true });
-    } catch {
-      return '';
-    }
-  }, [n, l]);
-  // KaTeX renders at its full display size (crisp), then we scale the whole
-  // block uniformly to fit the card width. Because it's a CSS transform on
-  // vector text it stays sharp at any scale — no rasterization, no scrollbar,
-  // and it's as large as the column allows. outer height tracks the scaled
-  // height so there's no dead vertical space.
-  const outerRef = useRef<HTMLDivElement>(null);
-  const [dims, setDims] = useState<{ scale: number; height: number }>({ scale: 1, height: 0 });
-  useEffect(() => {
-    const measure = () => {
-      const outer = outerRef.current;
-      const kx = outer?.querySelector('.katex') as HTMLElement | null;
-      if (!outer || !kx) return;
-      const kw = kx.offsetWidth, kh = kx.offsetHeight;
-      if (kw > 0) {
-        const scale = Math.min(1, (outer.clientWidth - 2) / kw);
-        setDims({ scale, height: Math.ceil(kh * scale) });
-      }
-    };
-    measure();
-    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null;
-    if (ro && outerRef.current) ro.observe(outerRef.current);
-    return () => ro?.disconnect();
-  }, [html]);
-
+function Stat({ label, value, sub }: { label: string; value: ReactNode; sub?: ReactNode }) {
   return (
-    <div ref={outerRef} className="w-full" style={{ overflow: 'hidden', height: dims.height || undefined }}>
-      <div style={{ transform: `scale(${dims.scale})`, transformOrigin: 'top center', color: TEXT.primary }}
-        dangerouslySetInnerHTML={{ __html: html }} />
+    <div className="rounded-lg px-3 py-2.5" style={{ background: 'rgba(255,255,255,0.03)', border: `1px solid ${BORDER.card}` }}>
+      <div className="text-[10px] uppercase tracking-wider mb-1" style={{ color: TEXT.ghost }}>{label}</div>
+      <div className="text-lg font-bold tabular-nums" style={{ color: ACCENT }}>{value}</div>
+      {sub != null && <div className="text-[11px] mt-0.5" style={{ color: GREEN }}>{sub}</div>}
     </div>
   );
 }
@@ -629,20 +621,10 @@ export default function OrbitalCloudGraphSim() {
           <div className="text-[10px] italic" style={{ color: TEXT.ghost }}>Scroll to zoom · drag to rotate.</div>
         </div>
 
-        {/* ── RIGHT: focus + graphs + formula + analysis ──────────────────── */}
+        {/* ── RIGHT: probability graphs ───────────────────────────────────── */}
         <div className="flex flex-col gap-5">
           <div className="text-sm font-bold uppercase tracking-widest" style={{ color: TEXT.secondary }}>
             Probability Distribution{compareOn ? ' & Comparison' : ''}
-          </div>
-
-          {/* Focus chips */}
-          <div className="flex flex-wrap gap-2 text-[12px]">
-            {[['Orbital', name], ['n', String(orb.n)], ['l', String(orb.l)],
-              ['Radial nodes', String(radialNodes)], ['Angular nodes', String(angularNodes)]].map(([k, v]) => (
-              <div key={k} className="px-3 py-1.5 rounded flex gap-2" style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${BORDER.card}` }}>
-                <span style={{ color: TEXT.ghost }}>{k}=</span><span className="font-bold" style={{ color: TEXT.primary }}>{v}</span>
-              </div>
-            ))}
           </div>
 
           {/* Compare legend / selector */}
@@ -664,41 +646,30 @@ export default function OrbitalCloudGraphSim() {
 
           <Curve title="Probability Density" unit="R(r)²" curKey="density" scaleMode="reveal" current={curInfo} compare={compareOn ? cmpInfo : null} domainR={domainR} />
           <Curve title="Radial Probability Distribution" unit="4πr²R(r)²" curKey="radial" scaleMode="normal" current={curInfo} compare={compareOn ? cmpInfo : null} domainR={domainR} />
-
-          {/* Formula + analysis */}
-          <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.025)', border: `1px solid ${BORDER.card}` }}>
-            <div className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: TEXT.ghost }}>The Formula</div>
-            <FormulaBlock n={orb.n} l={orb.l} />
-
-            <div className="text-[10px] font-semibold uppercase tracking-widest mt-5 mb-2" style={{ color: TEXT.ghost }}>Step-by-step analysis</div>
-            <ol className="text-[13px] space-y-2 list-decimal list-inside" style={{ color: TEXT.secondary }}>
-              <li>
-                <span style={{ color: TEXT.ghost }}>Peak position: </span>
-                <b style={{ color: ACCENT }}>{name}</b> ~{curInfo.peakR.toFixed(1)} a₀
-                {compareOn && <> vs <b style={{ color: GREEN }}>{cmpName}</b> ~{cmpInfo.peakR.toFixed(1)} a₀</>}
-                . The most probable radius shifts outward with higher n.
-              </li>
-              <li>
-                <span style={{ color: TEXT.ghost }}>Nodes: </span>
-                radial <b style={{ color: ACCENT }}>{radialNodes}</b>{compareOn && <> vs <b style={{ color: GREEN }}>{cmp.n - cmp.l - 1}</b></>},
-                {' '}angular <b style={{ color: ACCENT }}>{angularNodes}</b>{compareOn && <> vs <b style={{ color: GREEN }}>{cmp.l}</b></>}.
-              </li>
-              <li><span style={{ color: TEXT.ghost }}>Interpretation: </span>higher quantum numbers spread the probability over a larger volume with more complex nodal structure.</li>
-            </ol>
-
-            <div className="mt-5 pt-4 flex justify-between items-end" style={{ borderTop: `1px solid ${BORDER.divider}` }}>
-              <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: TEXT.ghost }}>Final value</div>
-              <div className="text-right">
-                <div className="text-2xl font-bold" style={{ color: ACCENT }}>Nodes for {name}</div>
-                <div className="text-[13px] mt-1 flex gap-2 justify-end tabular-nums" style={{ color: TEXT.secondary }}>
-                  <span>Total: <b style={{ color: TEXT.primary }}>{totalNodes}</b></span><span style={{ color: TEXT.muted }}>|</span>
-                  <span>Radial: <b style={{ color: TEXT.primary }}>{radialNodes}</b></span><span style={{ color: TEXT.muted }}>|</span>
-                  <span>Angular: <b style={{ color: TEXT.primary }}>{angularNodes}</b></span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+      </div>
+
+      {/* ── Analysis band — full width below both columns (uses the space that
+          the removed formula freed up; keeps peak / nodes / interpretation) ─── */}
+      <div className="mt-6 rounded-2xl p-4 md:p-5" style={{ background: 'rgba(255,255,255,0.025)', border: `1px solid ${BORDER.card}` }}>
+        <div className="flex items-baseline justify-between flex-wrap gap-2 mb-4">
+          <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: TEXT.ghost }}>
+            Analysis · <span style={{ color: ACCENT }}>{name}</span>{compareOn && <> vs <span style={{ color: GREEN }}>{cmpName}</span></>}
+          </div>
+          <div className="text-[12px]" style={{ color: TEXT.ghost }}>n = {orb.n} · l = {orb.l}</div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <Stat label="Peak (radial)" value={`${curInfo.peakR.toFixed(1)} a₀`} sub={compareOn ? `${cmpName}: ${cmpInfo.peakR.toFixed(1)} a₀` : undefined} />
+          <Stat label="Radial nodes" value={radialNodes} sub={compareOn ? `${cmpName}: ${cmp.n - cmp.l - 1}` : undefined} />
+          <Stat label="Angular nodes" value={angularNodes} sub={compareOn ? `${cmpName}: ${cmp.l}` : undefined} />
+          <Stat label="Total nodes" value={totalNodes} sub={compareOn ? `${cmpName}: ${cmp.n - 1}` : undefined} />
+        </div>
+        <p className="mt-4 text-[13px] leading-relaxed" style={{ color: TEXT.secondary }}>
+          <span className="font-semibold" style={{ color: TEXT.primary }}>Reading it: </span>
+          the most probable radius (the peak of the radial-distribution curve) shifts outward with higher n.
+          Radial nodes are spherical shells where R(r) = 0 — the density curve touches zero and rises again.
+          Angular nodes are the {nodalLabel.toLowerCase()} through the nucleus ({angularNodes} for this orbital).
+        </p>
       </div>
     </div>
   );
