@@ -300,13 +300,13 @@ export default function MoleHighwaySim() {
       <div className="mb-4 flex justify-between items-start flex-wrap gap-2">
         <div>
           <h2 className="text-2xl font-black tracking-tight text-white">
-            The Mole <span style={{ color: '#7c3aed' }}>Highway</span>
+            The Mole <span style={{ color: '#c4b5fd' }}>Highway</span>
           </h2>
           <p className="text-[11px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#475569' }}>
             Drive the conversion · pick the factor whose units cancel · NCERT Class 11 Ch. 1
           </p>
         </div>
-        <div className="text-[10px] font-black uppercase tracking-widest pt-1" style={{ color: '#64748b' }}>
+        <div className="text-[10px] font-semibold uppercase tracking-widest pt-1" style={{ color: '#64748b' }}>
           Challenge {challengeIdx + 1} / {CHALLENGES.length}
         </div>
       </div>
@@ -324,7 +324,7 @@ export default function MoleHighwaySim() {
                 border: `1px solid ${active ? 'rgba(129,140,248,0.45)' : solved ? 'rgba(52,211,153,0.25)' : 'rgba(255,255,255,0.07)'}`,
                 color: active ? '#c4b5fd' : solved ? '#6ee7b7' : 'rgba(255,255,255,0.35)',
               }}>
-              <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black shrink-0"
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold shrink-0"
                 style={{ background: active ? '#6366f1' : solved ? '#059669' : 'rgba(255,255,255,0.06)', color: 'white' }}>
                 {solved ? '✓' : i + 1}
               </span>
@@ -336,7 +336,7 @@ export default function MoleHighwaySim() {
 
       {/* ── Prompt ──────────────────────────────────────────────────────── */}
       <div className="mb-5">
-        <p className="text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: '#fbbf24' }}>
+        <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: '#fbbf24' }}>
           The Challenge
         </p>
         <p className="text-white font-bold text-lg leading-snug">{ch.prompt}</p>
@@ -365,7 +365,7 @@ export default function MoleHighwaySim() {
                     boxShadow: isCurrent ? `0 0 0 3px ${meta.accent}22` : 'none',
                     opacity: reached ? 1 : 0.55,
                   }}>
-                  <div className="text-[10px] font-black uppercase tracking-widest mb-1"
+                  <div className="text-[10px] font-semibold uppercase tracking-widest mb-1"
                     style={{ color: reached ? meta.accent : '#475569' }}>
                     {node === 'atoms' && ch.element ? `${ch.element.symbol} Atoms` : meta.label}
                     {isTarget && <span style={{ marginLeft: 4 }}>🏁</span>}
@@ -422,7 +422,7 @@ export default function MoleHighwaySim() {
           {wrong && (
             <div className="mt-4 rounded-xl px-4 py-3"
               style={{ background: 'rgba(220,38,38,0.10)', border: '1px solid rgba(248,113,113,0.35)' }}>
-              <p className="text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: '#f87171' }}>
+              <p className="text-[10px] font-semibold uppercase tracking-widest mb-1" style={{ color: '#f87171' }}>
                 Not quite — think in units
               </p>
               <p className="text-sm leading-snug" style={{ color: '#fca5a5' }}>{wrong}</p>
@@ -433,7 +433,7 @@ export default function MoleHighwaySim() {
         // ── Solved state — show the full chain the student built ─────────
         <div className="rounded-xl px-4 py-4"
           style={{ background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.30)' }}>
-          <p className="text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: '#34d399' }}>
+          <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: '#34d399' }}>
             🏁 Solved — here's the road you drove
           </p>
           <div className="flex items-center gap-x-2 gap-y-1 flex-wrap text-[14px]" style={{ color: '#cbd5e1' }}>
@@ -469,7 +469,7 @@ export default function MoleHighwaySim() {
 
       {/* ── Expert Tip ──────────────────────────────────────────────────── */}
       <div className="mt-5 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <div className="text-[10px] font-black uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>
+        <div className="text-[10px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>
           Expert Tip
         </div>
         <p className="text-sm font-bold leading-snug italic text-white">

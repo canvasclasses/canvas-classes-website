@@ -39,6 +39,23 @@ import { useEffect, useMemo, useState } from 'react';
 const DENSITY_WATER = 1.0;    // g / mL
 const M_WATER = 18.015;       // g / mol
 
+// ── Two-colour palette (project decision 2026-07-23) ───────────────────────
+// The entire sim runs on exactly TWO accent colours plus white/gray — the
+// same soft, light-tier shades the derivation box already used, so nothing on
+// screen is bright enough to pull focus off the reading. All UI chrome
+// (headings, active states, selected pills, sliders, accents, borders) draws
+// from these; per-unit and per-solute accent colours were removed.
+//   VIO  — primary accent (headings, active/selected, the focused unit, results)
+//   CYAN — secondary accent, reserved for the WATER / solvent axis
+// Two deliberate exceptions that are DATA, not chrome:
+//   • the beaker fill shows the solute's real solution colour (KMnO₄ purple,
+//     CuSO₄ blue …) — that is information, not decoration.
+//   • the predict-first ✓/✗ tick keeps a soft emerald/red — a learner must be
+//     able to read "right vs wrong" at a glance.
+const VIO = '#c4b5fd';   // violet-300
+const CYAN = '#7dd3fc';  // sky-300
+// Gray text tiers (unchanged): #e2e8f0 primary · #94a3b8 secondary · #64748b ghost
+
 // ── Solute catalogue ─────────────────────────────────────────────────────
 interface Solute {
   id: string;
@@ -79,10 +96,10 @@ const SOLUTES: Solute[] = [
     name: 'Hydrochloric acid', molarMass: 36.46, nFactor: 1, color: '#bbf7d0', phase: 'liquid',
     note: 'Monoprotic — normality equals molarity.' },
   { id: 'kmno4',   formula: 'KMnO₄',    formulaDisplay: f(['KMnO', {sub: 4}]),
-    name: 'Potassium permanganate', molarMass: 158.03, nFactor: 5, color: '#a855f7', phase: 'solid',
+    name: 'Potassium permanganate', molarMass: 158.03, nFactor: 5, color: '#c084fc', phase: 'solid',
     note: 'Strong oxidant. n=5 in acidic medium (Mn⁷⁺ → Mn²⁺). Deep purple.' },
   { id: 'cuso4',   formula: 'CuSO₄·5H₂O', formulaDisplay: f(['CuSO', {sub: 4}, '·5H', {sub: 2}, 'O']),
-    name: 'Copper sulphate pentahydrate', molarMass: 249.69, nFactor: 2, color: '#06b6d4', phase: 'solid',
+    name: 'Copper sulphate pentahydrate', molarMass: 249.69, nFactor: 2, color: '#67e8f9', phase: 'solid',
     note: 'Hydrated salt — molar mass includes 5 H₂O. Blue solution.' },
   { id: 'na2co3',  formula: 'Na₂CO₃',   formulaDisplay: f(['Na', {sub: 2}, 'CO', {sub: 3}]),
     name: 'Sodium carbonate', molarMass: 105.99, nFactor: 2, color: '#e2e8f0', phase: 'solid',
@@ -497,14 +514,23 @@ function NumSlider({ label, value, min, max, step, color, onChange, unit, disabl
 }
 
 // ── Focused derivation panel ─────────────────────────────────────────────
-function DerivationPanel({ derivation, accent }: { derivation: Derivation; accent: string }) {
+// This is the ONE bordered box on the right-hand side. Predict-first (dilute
+// mode) and Before→After render as headerSlot/footerSlot INSIDE it, divided
+// by hairlines rather than their own nested borders — card-in-card is an
+// anti-pattern (SIMULATION_DESIGN_WORKFLOW.md §8).
+function DerivationPanel({ derivation, accent, headerSlot, footerSlot }:
+                         { derivation: Derivation; accent: string;
+                           headerSlot?: React.ReactNode; footerSlot?: React.ReactNode }) {
   return (
     <div className="rounded-xl p-4 flex flex-col gap-3"
       style={{ background: 'rgba(255,255,255,0.025)',
                border: '1px solid rgba(255,255,255,0.07)' }}>
+      {headerSlot}
+      {headerSlot && <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }} />}
+
       {/* Formula header */}
       <div>
-        <div className="text-[10px] font-black uppercase tracking-widest mb-1"
+        <div className="text-[10px] font-semibold uppercase tracking-widest mb-1"
           style={{ color: accent }}>The Formula</div>
         <div className="text-[14px] font-bold leading-snug" style={{ color: '#e2e8f0' }}>
           {derivation.formula}
@@ -521,7 +547,7 @@ function DerivationPanel({ derivation, accent }: { derivation: Derivation; accen
           items-center keeps the step number + result aligned with the
           vertical centre of any inline <Frac> in the calc column. */}
       <div>
-        <div className="text-[10px] font-black uppercase tracking-widest mb-2"
+        <div className="text-[10px] font-semibold uppercase tracking-widest mb-2"
           style={{ color: '#94a3b8' }}>Step-by-step with your numbers</div>
         <div className="flex flex-col gap-2.5">
           {derivation.steps.map((step, i) => (
@@ -540,7 +566,7 @@ function DerivationPanel({ derivation, accent }: { derivation: Derivation; accen
 
       {/* Final value — emphasised */}
       <div className="flex items-baseline justify-between">
-        <div className="text-[10px] font-black uppercase tracking-widest" style={{ color: accent }}>
+        <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: accent }}>
           Final Value
         </div>
         <div>
@@ -557,12 +583,15 @@ function DerivationPanel({ derivation, accent }: { derivation: Derivation; accen
       {/* Cross-unit insight */}
       {derivation.insight && (
         <div className="rounded-lg px-3 py-2.5 text-[12px] leading-snug"
-          style={{ background: 'rgba(99,102,241,0.07)',
-                   border: '1px solid rgba(99,102,241,0.20)', color: '#c7d2fe' }}>
-          <span className="font-black mr-1" style={{ color: '#818cf8' }}>WHY:</span>
+          style={{ background: 'rgba(196,181,253,0.06)',
+                   border: '1px solid rgba(196,181,253,0.18)', color: '#cbd5e1' }}>
+          <span className="font-semibold mr-1" style={{ color: VIO }}>WHY:</span>
           {derivation.insight}
         </div>
       )}
+
+      {footerSlot && <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }} />}
+      {footerSlot}
     </div>
   );
 }
@@ -586,22 +615,24 @@ function PredictWidget({ unitName, prediction, onPredict, beforeValue, afterValu
   const correct = prediction && actual && prediction === actual;
   const wrong   = prediction && actual && prediction !== actual && locked;
 
+  // The three prediction buttons are deliberately NEUTRAL (violet-when-picked,
+  // gray otherwise) — pre-tinting ↑ green / ↓ red would bias the guess before
+  // the student commits. The right/wrong verdict AFTER committing is where the
+  // emerald/red lives.
   const arrows: { key: Prediction; label: string; symbol: string; color: string }[] = [
-    { key: 'up',   label: 'Increases', symbol: '↑',  color: '#34d399' },
-    { key: 'same', label: 'No change', symbol: '→', color: '#94a3b8' },
-    { key: 'down', label: 'Decreases', symbol: '↓',  color: '#f87171' },
+    { key: 'up',   label: 'Increases', symbol: '↑',  color: VIO },
+    { key: 'same', label: 'No change', symbol: '→', color: VIO },
+    { key: 'down', label: 'Decreases', symbol: '↓',  color: VIO },
   ];
 
   return (
-    <div className="rounded-lg p-3 flex flex-col gap-2"
-      style={{ background: 'rgba(167,139,250,0.07)',
-               border: '1px solid rgba(167,139,250,0.25)' }}>
+    <div className="flex flex-col gap-2">
       <div className="flex justify-between items-baseline">
-        <div className="text-[11px] font-black uppercase tracking-widest" style={{ color: '#a78bfa' }}>
+        <div className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: VIO }}>
           Predict first
         </div>
         <div className="text-[10px]" style={{ color: '#64748b' }}>
-          What will <b style={{ color: '#c4b5fd' }}>{unitName}</b> do?
+          What will <b style={{ color: VIO }}>{unitName}</b> do?
         </div>
       </div>
       <div className="grid grid-cols-3 gap-1.5">
@@ -642,7 +673,7 @@ function PredictWidget({ unitName, prediction, onPredict, beforeValue, afterValu
             border: correct ? '1px solid rgba(52,211,153,0.35)' : '1px solid rgba(248,113,113,0.35)',
             color: correct ? '#6ee7b7' : '#fca5a5',
           }}>
-          <span className="font-black mr-1">{correct ? '✓' : '✗'}</span>
+          <span className="font-semibold mr-1">{correct ? '✓' : '✗'}</span>
           {correct
             ? `Correct — ${unitName} ${actual === 'up' ? 'went up' : actual === 'down' ? 'went down' : 'stayed the same'} (${beforeValue} → ${afterValue}).`
             : `Not quite — ${unitName} ${actual === 'up' ? 'increased' : actual === 'down' ? 'decreased' : 'stayed about the same'} (${beforeValue} → ${afterValue}).`}
@@ -712,17 +743,10 @@ export default function ConcentrationLabSim() {
     if (s) setSoluteMass(parseFloat((0.1 * s.molarMass).toFixed(2)));
   }
 
-  // Concentration unit accent (matches palette)
-  const focusAccent: Record<UnitKey, string> = {
-    mass_pct:       '#fbbf24',
-    wv:             '#fb923c',
-    molarity:       '#a78bfa',
-    molality:       '#22d3ee',
-    normality:      '#34d399',
-    mole_fraction:  '#f472b6',
-    ppm:            '#94a3b8',
-  };
-  const accent = focusAccent[focusUnit];
+  // Every unit uses the SAME accent (violet) when focused — the two-colour
+  // rule means the pill picker distinguishes "focused vs not" by fill/border
+  // weight, not by seven different hues.
+  const accent = VIO;
 
   return (
     <div className="p-4 md:p-6 not-prose"
@@ -733,15 +757,15 @@ export default function ConcentrationLabSim() {
       <div className="mb-4 flex justify-between items-start flex-wrap gap-2">
         <div>
           <h2 className="text-2xl font-black tracking-tight text-white">
-            Concentration & <span style={{ color: '#7c3aed' }}>Dilution Lab</span>
+            Concentration & <span style={{ color: VIO }}>Dilution Lab</span>
           </h2>
           <p className="text-[11px] font-bold uppercase tracking-widest mt-0.5"
             style={{ color: '#475569' }}>
             See the working · NCERT Class 11 Ch. 1
           </p>
         </div>
-        <div className="text-[10px] font-black uppercase tracking-widest pt-1"
-          style={{ color: solute.color }}>
+        <div className="text-[10px] font-semibold uppercase tracking-widest pt-1"
+          style={{ color: '#94a3b8' }}>
           {solute.name}
         </div>
       </div>
@@ -759,11 +783,11 @@ export default function ConcentrationLabSim() {
               className="px-4 py-3 text-left transition-all"
               style={{
                 background: 'none', outline: 'none',
-                borderBottom: `2px solid ${active ? '#6366f1' : 'rgba(255,255,255,0.06)'}`,
+                borderBottom: `2px solid ${active ? VIO : 'rgba(255,255,255,0.06)'}`,
                 opacity: active ? 1 : 0.55,
                 marginBottom: -1,
               }}>
-              <div className="text-sm font-black" style={{ color: active ? '#818cf8' : '#94a3b8' }}>
+              <div className="text-sm font-bold" style={{ color: active ? VIO : '#94a3b8' }}>
                 {label}
               </div>
               <div className="text-xs" style={{ color: '#475569' }}>{sub}</div>
@@ -773,6 +797,10 @@ export default function ConcentrationLabSim() {
       </div>
 
       {/* ── Solute pills ───────────────────────────────────────────────── */}
+      {/* Selection state uses the one accent (violet), same as every other
+          picker in the sim. The solute's REAL chemical colour is reserved for
+          the beaker fill only — that's data (what the solution looks like),
+          not UI chrome, so it's the one place a non-palette colour is allowed. */}
       <div className="flex flex-wrap gap-2 mb-5">
         {SOLUTES.map(s => {
           const active = s.id === soluteId;
@@ -780,9 +808,9 @@ export default function ConcentrationLabSim() {
             <button key={s.id} onClick={() => selectSolute(s.id)}
               className="px-3 py-1.5 rounded-full text-[13px] font-bold transition-all"
               style={{
-                background: active ? `${s.color}22` : 'rgba(255,255,255,0.04)',
-                border: `1px solid ${active ? `${s.color}66` : 'rgba(255,255,255,0.08)'}`,
-                color: active ? s.color : '#94a3b8',
+                background: active ? 'rgba(196,181,253,0.14)' : 'rgba(255,255,255,0.04)',
+                border: `1px solid ${active ? 'rgba(196,181,253,0.45)' : 'rgba(255,255,255,0.08)'}`,
+                color: active ? VIO : '#94a3b8',
                 fontFamily: 'system-ui',
               }}>
               {s.formula}
@@ -797,7 +825,7 @@ export default function ConcentrationLabSim() {
         {/* LEFT — beaker + controls */}
         <div className="flex flex-col gap-3 rounded-2xl p-4"
           style={{ background: 'radial-gradient(circle at center,#1e204a 0%,#050614 100%)',
-                   border: '1px solid rgba(99,102,241,0.2)' }}>
+                   border: '1px solid rgba(196,181,253,0.18)' }}>
 
           {/* Beaker centered at top */}
           <div className="flex justify-center">
@@ -808,11 +836,12 @@ export default function ConcentrationLabSim() {
               capacityMarks={mode === 'dilute' ? [100, 200, 300, 400, 500] : [50, 100, 150, 200, 250]} />
           </div>
 
-          {/* Current state card */}
-          <div className="rounded-lg p-3"
-            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+          {/* Current state — plain row, no nested box (the outer bench panel
+              is already one box; a bordered card inside it would be
+              card-in-card, an anti-pattern per §8). */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 10 }}>
             <div className="flex justify-between items-baseline mb-1.5">
-              <div className="text-[10px] font-black uppercase tracking-widest" style={{ color: '#475569' }}>
+              <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: '#64748b' }}>
                 Current Solution
               </div>
               <div style={{ fontSize: 18, fontWeight: 800, color: solute.color, lineHeight: 1 }}>
@@ -821,15 +850,15 @@ export default function ConcentrationLabSim() {
             </div>
             <div className="grid grid-cols-3 gap-2 mt-1 tabular-nums text-[13px] text-center">
               <div>
-                <div className="text-[9px] uppercase tracking-wider" style={{ color: '#64748b' }}>Solute</div>
+                <div className="text-[10px] uppercase tracking-wider" style={{ color: '#64748b' }}>Solute</div>
                 <div style={{ color: '#cbd5e1' }}>{fmt(currentSoluteG)} g</div>
               </div>
               <div>
-                <div className="text-[9px] uppercase tracking-wider" style={{ color: '#64748b' }}>Solvent</div>
+                <div className="text-[10px] uppercase tracking-wider" style={{ color: '#64748b' }}>Solvent</div>
                 <div style={{ color: '#cbd5e1' }}>{fmt(currentState.totalSolventML, 0)} mL</div>
               </div>
               <div>
-                <div className="text-[9px] uppercase tracking-wider" style={{ color: '#64748b' }}>Moles</div>
+                <div className="text-[10px] uppercase tracking-wider" style={{ color: '#64748b' }}>Moles</div>
                 <div style={{ color: '#cbd5e1' }}>{fmt(currentState.moles)} mol</div>
               </div>
             </div>
@@ -837,13 +866,13 @@ export default function ConcentrationLabSim() {
 
           {/* Build-mode sliders */}
           {mode === 'build' && (
-            <div className="rounded-lg p-3 flex flex-col gap-3"
-              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <div className="text-[10px] font-black uppercase tracking-widest"
+            <div className="flex flex-col gap-3"
+              style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 10 }}>
+              <div className="text-[10px] font-semibold uppercase tracking-widest"
                 style={{ color: '#94a3b8' }}>Make Your Solution</div>
-              <NumSlider label="Mass of solute" color={solute.color} unit="g"
+              <NumSlider label="Mass of solute" color={VIO} unit="g"
                 value={soluteMass} min={0} max={50} step={0.1} onChange={setSoluteMass} />
-              <NumSlider label="Volume of water" color="#22d3ee" unit="mL"
+              <NumSlider label="Volume of water" color={CYAN} unit="mL"
                 value={solventVol} min={10} max={300} step={5} onChange={setSolventVol} />
               <div className="text-[10px] italic" style={{ color: '#64748b' }}>
                 Tip: move a slider and watch the step-by-step calc on the right update.
@@ -854,35 +883,33 @@ export default function ConcentrationLabSim() {
           {/* Dilute-mode controls — sliders are visually enabled but a banner reminds
               the student to predict first if they haven't yet */}
           {mode === 'dilute' && (
-            <div className="rounded-lg p-3 flex flex-col gap-3"
-              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="flex flex-col gap-3"
+              style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 10 }}>
               <div className="flex justify-between items-center">
-                <div className="text-[10px] font-black uppercase tracking-widest"
+                <div className="text-[10px] font-semibold uppercase tracking-widest"
                   style={{ color: '#94a3b8' }}>
                   Modify the Solution
                 </div>
                 <button onClick={resetDilution}
-                  className="text-[10px] font-bold px-2 py-1 rounded"
-                  style={{ background: 'rgba(167,139,250,0.10)',
-                           border: '1px solid rgba(167,139,250,0.30)',
-                           color: '#c4b5fd', cursor: 'pointer' }}>
+                  className="text-[10px] font-semibold px-2 py-1 rounded"
+                  style={{ background: 'rgba(196,181,253,0.10)',
+                           border: '1px solid rgba(196,181,253,0.30)',
+                           color: VIO, cursor: 'pointer' }}>
                   ↺ Reset
                 </button>
               </div>
               {!prediction && (
-                <div className="text-[11px] italic px-2 py-1.5 rounded"
-                  style={{ background: 'rgba(251,191,36,0.07)',
-                           border: '1px solid rgba(251,191,36,0.25)', color: '#fcd34d' }}>
+                <div className="text-[11px] italic" style={{ color: VIO }}>
                   👉 Make a prediction on the right first, THEN slide.
                 </div>
               )}
-              <NumSlider label="+ Add water" color="#22d3ee" unit="mL"
+              <NumSlider label="+ Add water" color={CYAN} unit="mL"
                 value={addedWater} min={0} max={500} step={5} onChange={setAddedWater}
                 disabled={!prediction} />
-              <NumSlider label="+ Add solute" color={solute.color} unit="g"
+              <NumSlider label="+ Add solute" color={VIO} unit="g"
                 value={addedSolute} min={0} max={20} step={0.1} onChange={setAddedSolute}
                 disabled={!prediction} />
-              <NumSlider label="− Evaporate" color="#fbbf24" unit="mL"
+              <NumSlider label="− Evaporate" color={CYAN} unit="mL"
                 value={evaporated} min={0}
                 max={Math.max(0, solventVol + addedWater - 5)}
                 step={5} onChange={setEvaporated}
@@ -894,7 +921,8 @@ export default function ConcentrationLabSim() {
           )}
 
           {solute.note && (
-            <div className="text-[11px] italic px-2" style={{ color: '#94a3b8' }}>
+            <div className="text-[11px] italic"
+              style={{ color: '#94a3b8', borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 10 }}>
               <span style={{ color: solute.color, fontWeight: 700 }}>{solute.formula}:</span> {solute.note}
             </div>
           )}
@@ -905,83 +933,82 @@ export default function ConcentrationLabSim() {
 
           {/* Unit picker pills */}
           <div>
-            <div className="text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: '#94a3b8' }}>
+            <div className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: '#94a3b8' }}>
               Focus on this unit
             </div>
             <div className="flex flex-wrap gap-1.5">
               {UNITS.map(u => {
                 const active = u.key === focusUnit;
-                const c = focusAccent[u.key];
                 return (
                   <button key={u.key} onClick={() => setFocusUnit(u.key)}
                     className="px-2.5 py-1.5 rounded-lg text-[12px] font-bold transition-all"
                     style={{
-                      background: active ? `${c}1f` : 'rgba(255,255,255,0.04)',
-                      border: `1px solid ${active ? `${c}66` : 'rgba(255,255,255,0.08)'}`,
-                      color: active ? c : '#94a3b8',
+                      background: active ? 'rgba(196,181,253,0.12)' : 'rgba(255,255,255,0.04)',
+                      border: `1px solid ${active ? 'rgba(196,181,253,0.40)' : 'rgba(255,255,255,0.08)'}`,
+                      color: active ? VIO : '#94a3b8',
                       minWidth: 56,
                     }}>
                     <span style={{ fontStyle: 'italic' }}>{u.shortName}</span>
-                    <span className="text-[9px] block mt-0.5" style={{ opacity: 0.7 }}>{u.fullName}</span>
+                    <span className="text-[10px] block mt-0.5" style={{ opacity: 0.7 }}>{u.fullName}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Predict widget (only in Dilute mode) */}
-          {mode === 'dilute' && (
-            <PredictWidget
-              unitName={focusedDef.shortName}
-              prediction={prediction}
-              onPredict={setPrediction}
-              beforeValue={`${builtDeriv.finalValue} ${builtDeriv.finalUnit}`}
-              afterValue={`${currentDeriv.finalValue} ${currentDeriv.finalUnit}`}
-              locked={predictionLocked}
-            />
-          )}
-
-          {/* Derivation panel for the focused unit */}
-          <DerivationPanel derivation={currentDeriv} accent={accent} />
-
-          {/* Before vs After (only in Dilute mode, only if modifications exist) */}
-          {mode === 'dilute' && hasModification && (
-            <div className="rounded-lg px-4 py-3"
-              style={{ background: 'rgba(167,139,250,0.06)',
-                       border: '1px solid rgba(167,139,250,0.18)' }}>
-              <div className="text-[10px] font-black uppercase tracking-widest mb-2"
-                style={{ color: '#a78bfa' }}>Before → After</div>
-              <div className="grid grid-cols-2 gap-3 tabular-nums text-[13px]">
-                <div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>
-                    BUILT
+          {/* Derivation panel for the focused unit — Predict-first (dilute mode)
+              and Before→After render INSIDE this one box via header/footer
+              slots, so the right column stays a single bordered box instead
+              of three stacked ones. */}
+          <DerivationPanel
+            derivation={currentDeriv}
+            accent={accent}
+            headerSlot={mode === 'dilute' ? (
+              <PredictWidget
+                unitName={focusedDef.shortName}
+                prediction={prediction}
+                onPredict={setPrediction}
+                beforeValue={`${builtDeriv.finalValue} ${builtDeriv.finalUnit}`}
+                afterValue={`${currentDeriv.finalValue} ${currentDeriv.finalUnit}`}
+                locked={predictionLocked}
+              />
+            ) : undefined}
+            footerSlot={mode === 'dilute' && hasModification ? (
+              <div>
+                <div className="text-[10px] font-semibold uppercase tracking-widest mb-2"
+                  style={{ color: VIO }}>Before → After</div>
+                <div className="grid grid-cols-2 gap-3 tabular-nums text-[13px]">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>
+                      BUILT
+                    </div>
+                    <div style={{ color: '#cbd5e1' }}>
+                      {builtDeriv.finalValue} {builtDeriv.finalUnit}
+                    </div>
                   </div>
-                  <div style={{ color: '#cbd5e1' }}>
-                    {builtDeriv.finalValue} {builtDeriv.finalUnit}
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>
+                      NOW
+                    </div>
+                    <div style={{ color: accent, fontWeight: 800 }}>
+                      {currentDeriv.finalValue} {currentDeriv.finalUnit}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: '#94a3b8' }}>
-                    NOW
+                {addedSolute === 0 && (
+                  <div className="text-[11px] italic mt-2" style={{ color: '#94a3b8' }}>
+                    Moles of solute were conserved (you only added/removed water) — so
+                    {' '}{focusedDef.shortName} {focusUnit === 'molality' || focusUnit === 'mole_fraction' ? 'changed because solvent mass changed' : focusUnit === 'normality' ? 'tracks molarity (= n × M)' : 'changed because volume of solution changed'}.
                   </div>
-                  <div style={{ color: accent, fontWeight: 800 }}>
-                    {currentDeriv.finalValue} {currentDeriv.finalUnit}
+                )}
+                {addedSolute > 0 && (
+                  <div className="text-[11px] italic mt-2" style={{ color: VIO }}>
+                    You added more solute, so total moles changed.
                   </div>
-                </div>
+                )}
               </div>
-              {addedSolute === 0 && (
-                <div className="text-[11px] italic mt-2" style={{ color: '#94a3b8' }}>
-                  Moles of solute were conserved (you only added/removed water) — so
-                  {' '}{focusedDef.shortName} {focusUnit === 'molality' || focusUnit === 'mole_fraction' ? 'changed because solvent mass changed' : focusUnit === 'normality' ? 'tracks molarity (= n × M)' : 'changed because volume of solution changed'}.
-                </div>
-              )}
-              {addedSolute > 0 && (
-                <div className="text-[11px] italic mt-2" style={{ color: '#fcd34d' }}>
-                  You added more solute, so total moles changed.
-                </div>
-              )}
-            </div>
-          )}
+            ) : undefined}
+          />
 
         </div>
       </div>
@@ -989,9 +1016,9 @@ export default function ConcentrationLabSim() {
       {/* ── Expert tip ─────────────────────────────────────────────────── */}
       <div className="mt-5 pt-4"
         style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <div className="text-[10px] font-black uppercase tracking-widest mb-1.5"
-          style={{ color: '#6366f1' }}>Expert Tip</div>
-        <p className="text-sm font-bold leading-snug italic text-white">
+        <div className="text-[10px] font-semibold uppercase tracking-widest mb-1.5"
+          style={{ color: VIO }}>Expert Tip</div>
+        <p className="text-sm font-medium leading-snug italic" style={{ color: '#e2e8f0' }}>
           &ldquo;Don't memorise concentration units — derive them. Every unit is just &lsquo;something of solute&rsquo;
           divided by &lsquo;something of solvent or solution&rsquo;. Knowing which goes in the numerator and which
           in the denominator is 90% of the battle.&rdquo;
