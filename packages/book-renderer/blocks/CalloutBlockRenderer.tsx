@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Globe } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
+import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
 import 'katex/dist/katex.min.css';
@@ -204,7 +205,7 @@ function RememberCallout({ block }: { block: CalloutBlock }) {
         {block.title ?? 'Remember'}
       </p>
       <ReactMarkdown
-        remarkPlugins={[remarkMath]}
+        remarkPlugins={[remarkMath, remarkGfm]}
         rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
         components={{
           // --- renders as a clearly visible hairline rule
@@ -228,6 +229,31 @@ function RememberCallout({ block }: { block: CalloutBlock }) {
             <strong className="font-semibold text-white/88 not-italic">
               {children}
             </strong>
+          ),
+          // GFM tables — same styling as TextBlockRenderer, sized for the callout
+          table: ({ children }) => (
+            <div className="my-4 rounded-xl overflow-hidden border border-white/10 bg-[#0d1320]">
+              <div className="overflow-x-auto">
+                <table className="w-full text-[14px] border-collapse">{children}</table>
+              </div>
+            </div>
+          ),
+          thead: ({ children }) => (
+            <thead className="bg-[#151e32] border-b border-white/10">{children}</thead>
+          ),
+          tbody: ({ children }) => <tbody>{children}</tbody>,
+          tr: ({ children }) => (
+            <tr className="border-b border-white/[0.06] last:border-0">{children}</tr>
+          ),
+          th: ({ children }) => (
+            <th className="px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-white/55 whitespace-nowrap">
+              {children}
+            </th>
+          ),
+          td: ({ children }) => (
+            <td className="px-4 py-2.5 text-[14px] text-white/82 align-middle leading-[1.5] first:font-semibold first:text-white/90">
+              {children}
+            </td>
           ),
         }}
       >
