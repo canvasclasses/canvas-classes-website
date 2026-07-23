@@ -388,7 +388,10 @@ function Scene({ n, l, ml, showNodes }: OrbState & { showNodes: boolean }) {
 
 /* ── 2D curves (hand-rolled SVG — no chart library) ─────────────────────── */
 
-const GW = 440, GH = 160;
+// Taller than the original 160 — with the formula card removed, the right
+// column had noticeably more empty space below the graphs than the 3D view
+// on the left; a taller curve fills that instead of leaving it blank.
+const GW = 440, GH = 220;
 const GPAD = { top: 12, right: 14, bottom: 26, left: 48 };
 const GCW = GW - GPAD.left - GPAD.right;
 const GCH = GH - GPAD.top - GPAD.bottom;
@@ -400,7 +403,7 @@ function fmtTick(v: number): string {
   return String(Number(v.toPrecision(2)));
 }
 
-interface PlotInfo { data: { r: number; density: number; radial: number }[]; peakR: number; maxR: number }
+interface PlotInfo { data: { r: number; density: number; radial: number }[]; peakR: number; maxR: number; l: number }
 
 function plotData(n: number, l: number): PlotInfo {
   const maxR = Math.max(30, n * n * 2.5);
@@ -413,7 +416,7 @@ function plotData(n: number, l: number): PlotInfo {
     if (radial > peakVal) { peakVal = radial; peakR = r; }
     data.push({ r, density, radial });
   }
-  return { data, peakR, maxR };
+  return { data, peakR, maxR, l };
 }
 
 function pathFor(info: PlotInfo, key: 'density' | 'radial', maxV: number, domainR: number): string {
@@ -429,14 +432,21 @@ function pathFor(info: PlotInfo, key: 'density' | 'radial', maxV: number, domain
     .join(' ');
 }
 
-// For s-orbital density, R(r)² has a huge near-nucleus cusp that flattens the
-// outer node structure to nothing when you scale to the global max. Instead we
-// scale to the tallest feature AFTER the first radial node (the first local
-// minimum), so the outer humps fill the frame and the zero-touches (nodes) are
-// clearly visible — the way textbooks draw it. For l ≥ 1 (no cusp) this reduces
-// to the ordinary max, so those curves are unaffected.
+// For s-orbital (l=0) density ONLY, R(r)² has a huge near-nucleus cusp that
+// flattens the outer node structure to nothing when you scale to the global
+// max. For those, scale to the tallest feature AFTER the first radial node
+// (first local minimum) so the outer humps fill the frame and the zero-
+// touches are clearly visible — the way textbooks draw it.
+//
+// p/d orbitals (l ≥ 1) do NOT have this cusp — R(r) is 0 at the nucleus, not
+// maximal there — so their inner hump (before the first node, if n-l-1 ≥ 1)
+// is a real, comparably-sized feature, not a spike to hide. Applying the
+// "skip past the first node" trick to them anyway (an earlier bug) excluded
+// that inner hump from the max calculation and made it overflow the frame
+// (seen on 3p). So for l ≥ 1 this is always the plain global max.
 function densityDisplayMax(info: PlotInfo): number {
   const d = info.data;
+  if (info.l > 0) return Math.max(...d.map((p) => p.density), 1e-12);
   let firstMin = 0;
   for (let i = 1; i < d.length - 1; i++) {
     if (d[i].density <= d[i - 1].density && d[i].density <= d[i + 1].density) { firstMin = i; break; }
