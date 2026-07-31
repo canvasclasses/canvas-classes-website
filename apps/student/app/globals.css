@@ -905,7 +905,11 @@ sub {
 .lb-band { position: relative; isolation: isolate; }
 
 .lb-section { margin-top: 0; }
-.lb-stage { position: relative; padding-top: 70px; }
+/* Space above the first row of books. The books hang 58px above their cards
+   (.lb-scene top), so this padding MINUS 58 is the actual clear gap between
+   the tagline and the top of a book — at 70 that was only 12px, which read as
+   the two colliding. 116 gives ~58px of real breathing room. */
+.lb-stage { position: relative; padding-top: 116px; }
 
 /* subject-reactive aurora — colour comes from --lb-ambient (the selected
    book) and every blob drifts on its own clock. Light, never iconography. */
@@ -1276,7 +1280,8 @@ sub {
   /* mobile overhang is 48px (.lb-scene top) */
   .lb-grid  { grid-template-columns: repeat(auto-fit, minmax(136px, 1fr)); gap: 88px 12px; }
   .lb-card  { max-width: none; }
-  .lb-stage { padding-top: 58px; }
+  /* mobile overhang is 48px → 92 - 48 = ~44px of clear gap */
+  .lb-stage { padding-top: 92px; }
   .lb-card  { padding: 96px 12px 14px; border-radius: 14px; }
   .lb-scene { top: -48px; }
   .lb-book  { --lb-w: 94px; --lb-h: 134px; --lb-t: 24px; }
