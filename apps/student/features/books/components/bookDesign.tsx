@@ -22,99 +22,75 @@ export interface SubjectTheme {
   badge: string;
   gradient: string;
   ring: string;
+  /** Bookbinding cloth for the 3D cover on the shelf — a CSS gradient. */
+  cloth: string;
+  /**
+   * Ambient light colour the shelf takes on while THIS book is selected.
+   * A single rgb() the wash tints toward — deliberately light-and-colour, not
+   * floating subject icons (see BookShelf.tsx header for why).
+   */
+  ambient: string;
 }
 
+/* ─── Plum is the standard (design system v1, locked 2026-07-09) ───────────
+ *
+ * Every subject shares ONE interaction colour. The old per-subject rainbow
+ * (sky / violet / emerald / orange / rose / amber / fuchsia / indigo) is gone:
+ * it made the landing read as decoration rather than information, and it put
+ * eight competing hues on a reading surface. Under the plum system, colour
+ * carries meaning — plum = interaction, gold = reward, green/red = outcomes —
+ * so it cannot also be used to say "this is chemistry".
+ *
+ * Subjects stay distinguishable by the two channels that do NOT spend the
+ * colour budget: the ICON, and the CLOTH of the book's cover on the shelf.
+ * Cloth is depicted physical material (the same content exemption the system
+ * grants chemistry flame-test colours), not UI chrome — so it may carry hue.
+ * All cloth is low-saturation and dark: one publisher's matched set.
+ *
+ * These read through the CSS variables in globals.css, so retuning the brand
+ * there restyles every Live Books surface at once.
+ */
+const PLUM = {
+  accent:   'text-[var(--plum-text)]',
+  bg:       'bg-[var(--plum-tint)]',
+  border:   'border-[var(--plum-line)]',
+  bar:      'from-[var(--plum)] to-[var(--plum-hover)]',
+  badge:    'bg-[var(--plum-tint)] text-[var(--plum-text)]',
+  gradient: 'from-[var(--plum-tint)] via-transparent to-transparent',
+  ring:     'ring-[var(--plum-line)]',
+} as const;
+
+/**
+ * [cloth gradient, ambient light] per binding.
+ *
+ * Deliberately brighter and more saturated than the first pass: against the
+ * lifted #121316 reading ground the earlier near-black bindings read as dull
+ * and barely separated from the page. These are still real bookcloth tones —
+ * the value range of a good hardback under gallery light, not neon.
+ */
+const CLOTH = {
+  slate:     ['linear-gradient(152deg,#3E4A73 0%,#2A3252 46%,#1B2036 100%)', '110, 145, 220'],
+  plum:      ['linear-gradient(152deg,#7A3560 0%,#542242 46%,#331428 100%)', '206,  96, 162'],
+  forest:    ['linear-gradient(152deg,#2C5A46 0%,#1E3F31 46%,#132719 100%)', ' 92, 190, 140'],
+  umber:     ['linear-gradient(152deg,#6B5327 0%,#4A391A 46%,#2C2110 100%)', '214, 166,  86'],
+  aubergine: ['linear-gradient(152deg,#553770 0%,#3B2650 46%,#241633 100%)', '176, 128, 220'],
+  oxblood:   ['linear-gradient(152deg,#6E2E2C 0%,#4C1F1E 46%,#2D1211 100%)', '214, 110, 100'],
+  teal:      ['linear-gradient(152deg,#255A5F 0%,#183E42 46%,#0F262A 100%)', ' 98, 190, 196'],
+} as const;
+
+const subject = (icon: LucideIcon, [cloth, ambient]: readonly [string, string]): SubjectTheme =>
+  ({ icon, cloth, ambient, ...PLUM });
+
 export const SUBJECT_THEME: Record<string, SubjectTheme> = {
-  physics: {
-    icon: Atom,
-    accent: 'text-sky-400',
-    bg: 'bg-sky-500/10',
-    border: 'border-sky-500/20',
-    bar: 'from-sky-500 to-cyan-400',
-    badge: 'bg-sky-500/15 text-sky-400',
-    gradient: 'from-sky-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-sky-500/30',
-  },
-  mathematics: {
-    icon: Calculator,
-    accent: 'text-violet-400',
-    bg: 'bg-violet-500/10',
-    border: 'border-violet-500/20',
-    bar: 'from-violet-500 to-purple-400',
-    badge: 'bg-violet-500/15 text-violet-400',
-    gradient: 'from-violet-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-violet-500/30',
-  },
-  science: {
-    icon: Microscope,
-    accent: 'text-emerald-400',
-    bg: 'bg-emerald-500/10',
-    border: 'border-emerald-500/20',
-    bar: 'from-emerald-500 to-teal-400',
-    badge: 'bg-emerald-500/15 text-emerald-400',
-    gradient: 'from-emerald-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-emerald-500/30',
-  },
-  chemistry: {
-    icon: Beaker,
-    accent: 'text-orange-400',
-    bg: 'bg-orange-500/10',
-    border: 'border-orange-500/20',
-    bar: 'from-orange-500 to-amber-400',
-    badge: 'bg-orange-500/15 text-orange-400',
-    gradient: 'from-orange-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-orange-500/30',
-  },
-  biology: {
-    icon: Microscope,
-    accent: 'text-emerald-400',
-    bg: 'bg-emerald-500/10',
-    border: 'border-emerald-500/20',
-    bar: 'from-emerald-500 to-teal-400',
-    badge: 'bg-emerald-500/15 text-emerald-400',
-    gradient: 'from-emerald-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-emerald-500/30',
-  },
-  'social science': {
-    icon: Globe,
-    accent: 'text-rose-400',
-    bg: 'bg-rose-500/10',
-    border: 'border-rose-500/20',
-    bar: 'from-rose-500 to-pink-400',
-    badge: 'bg-rose-500/15 text-rose-400',
-    gradient: 'from-rose-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-rose-500/30',
-  },
-  english: {
-    icon: Languages,
-    accent: 'text-amber-400',
-    bg: 'bg-amber-500/10',
-    border: 'border-amber-500/20',
-    bar: 'from-amber-500 to-yellow-400',
-    badge: 'bg-amber-500/15 text-amber-400',
-    gradient: 'from-amber-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-amber-500/30',
-  },
-  ai: {
-    icon: Sparkles,
-    accent: 'text-fuchsia-400',
-    bg: 'bg-fuchsia-500/10',
-    border: 'border-fuchsia-500/20',
-    bar: 'from-fuchsia-500 to-pink-400',
-    badge: 'bg-fuchsia-500/15 text-fuchsia-400',
-    gradient: 'from-fuchsia-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-fuchsia-500/30',
-  },
-  ict: {
-    icon: Cpu,
-    accent: 'text-indigo-400',
-    bg: 'bg-indigo-500/10',
-    border: 'border-indigo-500/20',
-    bar: 'from-indigo-500 to-blue-400',
-    badge: 'bg-indigo-500/15 text-indigo-400',
-    gradient: 'from-indigo-500/[0.08] via-transparent to-transparent',
-    ring: 'ring-indigo-500/30',
-  },
+  physics:          subject(Atom,       CLOTH.slate),
+  mathematics:      subject(Calculator, CLOTH.forest),
+  science:          subject(Microscope, CLOTH.teal),
+  chemistry:        subject(Beaker,     CLOTH.plum),
+  biology:          subject(Leaf,       CLOTH.umber),
+  'social science': subject(Globe,      CLOTH.oxblood),
+  english:          subject(Languages,  CLOTH.aubergine),
+  ai:               subject(Sparkles,   CLOTH.aubergine),
+  ict:              subject(Cpu,        CLOTH.slate),
 };
 
 export function getTheme(subject: string): SubjectTheme {

@@ -70,7 +70,7 @@ export default function ChapterOpener({
             {chapterTitle}
           </h1>
           {intro && (
-            <p className="mt-4 text-[17px] sm:text-[19px] text-white/75 leading-snug max-w-[680px]">
+            <p className="mt-4 text-[17px] sm:text-[19px] text-white/60 leading-snug max-w-[680px]">
               {intro}
             </p>
           )}
@@ -92,10 +92,10 @@ export default function ChapterOpener({
         {/* What you'll master */}
         {outcomes && outcomes.length > 0 && (
           <div className="mb-10">
-            <h2 className="text-[13px] font-black uppercase tracking-widest text-white/40 mb-4">What you'll master</h2>
+            <h2 className="text-[13px] font-black uppercase tracking-widest text-white/45 mb-4">What you'll master</h2>
             <ul className="space-y-2.5">
               {outcomes.map((o, i) => (
-                <li key={i} className="flex items-start gap-3 text-[16px] text-white/80 leading-snug">
+                <li key={i} className="flex items-start gap-3 text-[16px] text-white/82 leading-snug">
                   <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                   <span>{renderInline(o)}</span>
                 </li>
@@ -105,7 +105,7 @@ export default function ChapterOpener({
         )}
 
         {/* Journey */}
-        <h2 className="text-[13px] font-black uppercase tracking-widest text-white/40 mb-5">Your journey through this chapter</h2>
+        <h2 className="text-[13px] font-black uppercase tracking-widest text-white/45 mb-5">Your journey through this chapter</h2>
         <ol className="relative flex flex-col gap-3">
           {entries.map((e, i) => (
             <li key={e.slug}>
@@ -119,7 +119,7 @@ export default function ChapterOpener({
                   {i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[16px] font-semibold text-white/90 leading-snug group-hover:text-white">
+                  <p className="text-[16px] font-semibold text-white/85 leading-snug group-hover:text-white">
                     {e.title}
                   </p>
                   {e.subtitle && (
@@ -133,7 +133,7 @@ export default function ChapterOpener({
                     </div>
                   )}
                 </div>
-                <ArrowRight size={16} className="text-white/20 group-hover:text-white/50 shrink-0 mt-1 transition-colors" />
+                <ArrowRight size={16} className="text-white/45 group-hover:text-white/60 shrink-0 mt-1 transition-colors" />
               </Link>
             </li>
           ))}
@@ -142,7 +142,7 @@ export default function ChapterOpener({
         {/* Colour-coding legend — defined once so students learn what each
             coloured section signals across every page of the book. */}
         <div className="mt-9 rounded-2xl border border-white/8 bg-white/[0.02] p-5">
-          <h2 className="text-[13px] font-black uppercase tracking-widest text-white/40 mb-4">How to read this book</h2>
+          <h2 className="text-[13px] font-black uppercase tracking-widest text-white/45 mb-4">How to read this book</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
             {[
               { color: '#dba846', name: 'Learn', desc: 'Worked examples & exam tips — study how it’s done' },
@@ -154,7 +154,7 @@ export default function ChapterOpener({
                 <span className="mt-1 w-3 h-3 rounded-full shrink-0" style={{ background: f.color }} />
                 <div>
                   <span className="text-[13px] font-bold" style={{ color: f.color }}>{f.name}</span>
-                  <span className="text-[13px] text-white/50"> — {f.desc}</span>
+                  <span className="text-[13px] text-white/60"> — {f.desc}</span>
                 </div>
               </div>
             ))}
@@ -190,7 +190,7 @@ function Stat({ icon, value, label }: { icon: React.ReactNode; value: number | s
     <div className="flex items-center gap-2">
       {icon}
       <span className="text-white font-bold tabular-nums">{value}</span>
-      <span className="text-white/40 text-[13px]">{label}</span>
+      <span className="text-white/45 text-[13px]">{label}</span>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import {
-  ChevronRight, ChevronDown, Play, CheckCircle2, Search, PlayCircle,
+  ChevronRight, ChevronDown, CheckCircle2, Search, PlayCircle, BookOpen,
   FlaskConical, Video, Brain, ClipboardCheck, Gamepad2, Clock,
   ArrowRight, X, Sparkles, Bookmark, Languages, Zap,
 } from 'lucide-react';
@@ -12,8 +12,9 @@ import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
 import { useBookTheme } from '@/features/books/hooks/useBookTheme';
 import { BlockType } from '@canvas/data/types/books';
 import {
-  type SubjectTheme, getTheme, getDecor, LiveBooksLogo,
+  type SubjectTheme, getTheme, LiveBooksLogo,
 } from './bookDesign';
+import BookShelf from './BookShelf';
 
 /* ─── Serialisable types ──────────────────────────────────────────────────── */
 
@@ -32,14 +33,26 @@ export interface GradeChapter {
   number: number;
   title: string;
   slug: string;
+  /** Editorial one-liner already authored in the DB — real prose beats none. */
+  description?: string | null;
+  /** First image inside the chapter, used as the row thumbnail. */
+  thumbnail?: string | null;
 }
 
 export interface GradeBook {
   _id: string;
   slug: string;
+  /**
+   * URL segment for this book under basePath, when it differs from `slug`.
+   * Class 11/12 Chemistry lives at /class-11/chemistry but its DB slug is
+   * `ncert-simplified`, so linking by slug would 404. Defaults to `slug`.
+   */
+  url_segment?: string;
   title: string;
   subject: string;
   grade: number;
+  /** Cover artwork — an explicit book cover if set, else chapter 1's first image. */
+  cover_image?: string | null;
   chapters: GradeChapter[];
 }
 
@@ -51,16 +64,26 @@ interface Props {
   basePath: string;
 }
 
+/** URL segment for a book — `url_segment` when set, else the slug. */
+const seg = (b: GradeBook) => b.url_segment ?? b.slug;
+
 /* ─── Content type icons ──────────────────────────────────────────────────── */
 
+/* These are content LABELS, not statuses, so they don't each get a hue — that
+   seven-colour rainbow was the loudest thing on the old page. Everything is
+   neutral except the hands-on formats, which lift to plum so a student can
+   scan for "pages I can actually poke at". */
+const NEUTRAL = 'text-white/45';
+const HANDS_ON = 'text-[var(--plum-text)]';
+
 const CONTENT_ICONS: Partial<Record<BlockType, { icon: typeof FlaskConical; label: string; color: string }>> = {
-  inline_quiz:       { icon: ClipboardCheck, label: 'Quiz',           color: 'text-amber-400' },
-  simulation:        { icon: Gamepad2,       label: 'Simulation',     color: 'text-sky-400'   },
-  video:             { icon: Video,          label: 'Video',          color: 'text-rose-400'  },
-  molecule_3d:       { icon: FlaskConical,   label: '3D Molecule',    color: 'text-violet-400'},
-  reasoning_prompt:  { icon: Brain,          label: 'Reasoning',      color: 'text-emerald-400'},
-  worked_example:    { icon: Sparkles,       label: 'Worked Example', color: 'text-orange-400'},
-  classify_exercise: { icon: ClipboardCheck, label: 'Exercise',       color: 'text-teal-400'  },
+  inline_quiz:       { icon: ClipboardCheck, label: 'Quiz',           color: NEUTRAL  },
+  simulation:        { icon: Gamepad2,       label: 'Simulation',     color: HANDS_ON },
+  video:             { icon: Video,          label: 'Video',          color: NEUTRAL  },
+  molecule_3d:       { icon: FlaskConical,   label: '3D Molecule',    color: HANDS_ON },
+  reasoning_prompt:  { icon: Brain,          label: 'Reasoning',      color: HANDS_ON },
+  worked_example:    { icon: Sparkles,       label: 'Worked Example', color: NEUTRAL  },
+  classify_exercise: { icon: ClipboardCheck, label: 'Exercise',       color: HANDS_ON },
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -142,26 +165,26 @@ function ProgressBand({ books, pages, basePath }: { books: GradeBook[]; pages: G
         {/* Stats block */}
         <div className="flex items-center gap-5 md:gap-7 md:pr-7 md:border-r md:border-white/[0.06]">
           <div className="flex flex-col">
-            <span className="text-[11px] uppercase tracking-wider text-zinc-500 font-semibold">
+            <span className="text-[11px] uppercase tracking-wider text-white/55 font-semibold">
               Completed
             </span>
             <span className="text-2xl md:text-3xl font-black text-white tabular-nums leading-tight">
               {totalCompleted}
-              <span className="text-zinc-600 font-bold text-lg">/{totalPages}</span>
+              <span className="text-white/45 font-bold text-lg">/{totalPages}</span>
             </span>
-            <span className="text-xs text-zinc-400 tabular-nums">{overallPct}% done</span>
+            <span className="text-xs text-white/60 tabular-nums">{overallPct}% done</span>
           </div>
 
           {totalRemainingMin > 0 && (
             <div className="flex flex-col">
-              <span className="text-[11px] uppercase tracking-wider text-zinc-500 font-semibold">
+              <span className="text-[11px] uppercase tracking-wider text-white/55 font-semibold">
                 Remaining
               </span>
               <span className="text-2xl md:text-3xl font-black text-white tabular-nums leading-tight">
                 {totalRemainingMin}
-                <span className="text-zinc-600 font-bold text-lg"> min</span>
+                <span className="text-white/45 font-bold text-lg"> min</span>
               </span>
-              <span className="text-xs text-zinc-400">of reading left</span>
+              <span className="text-xs text-white/60">of reading left</span>
             </div>
           )}
         </div>
@@ -172,7 +195,7 @@ function ProgressBand({ books, pages, basePath }: { books: GradeBook[]; pages: G
           const Icon = theme.icon;
           return (
             <Link
-              href={`${basePath}/${continueReading.book.slug}/${continueReading.page.slug}`}
+              href={`${basePath}/${seg(continueReading.book)}/${continueReading.page.slug}`}
               className={`flex-1 flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.08]
                 bg-gradient-to-br ${theme.gradient} hover:border-white/[0.18] transition-all group`}
             >
@@ -186,7 +209,7 @@ function ProgressBand({ books, pages, basePath }: { books: GradeBook[]; pages: G
                 <p className="text-sm md:text-base text-white font-semibold truncate">
                   {continueReading.page.title}
                 </p>
-                <p className="text-xs text-zinc-400 truncate">
+                <p className="text-xs text-white/60 truncate">
                   {continueReading.book.title}
                 </p>
               </div>
@@ -227,16 +250,16 @@ function PageRow({
     <Link
       href={`${basePath}/${bookSlug}/${page.slug}`}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors group ${
-        done ? 'hover:bg-emerald-500/[0.06]' : 'hover:bg-white/[0.04]'
+        done ? 'hover:bg-[var(--plum-tint)]' : 'hover:bg-white/[0.04]'
       }`}
     >
       <div className="shrink-0 w-5 flex items-center justify-center">
         {done ? (
-          <CheckCircle2 size={16} className="text-emerald-400" />
+          <CheckCircle2 size={16} className="text-[var(--plum-text)]" />
         ) : (
           <span className={`w-5 h-5 rounded-full border flex items-center justify-center
             text-[10px] font-semibold transition-colors ${
-            loading ? 'border-white/10 text-zinc-600' : 'border-white/15 text-zinc-400'
+            loading ? 'border-white/10 text-white/40' : 'border-white/15 text-white/60'
           }`}>
             {index + 1}
           </span>
@@ -245,14 +268,14 @@ function PageRow({
 
       <div className="flex-1 min-w-0">
         <span className={`text-sm leading-snug transition-colors block ${
-          done ? 'text-zinc-400' : 'text-white/90 group-hover:text-white'
+          done ? 'text-white/55' : 'text-white/85 group-hover:text-white'
         }`}>
           {page.title}
         </span>
         {page.video_title && (
           <span className="flex items-center gap-1 mt-1">
-            <PlayCircle size={11} className="text-rose-400 shrink-0" />
-            <span className="text-[11px] text-rose-400/80 truncate">{page.video_title}</span>
+            <PlayCircle size={11} className="text-white/40 shrink-0" />
+            <span className="text-[11px] text-white/45 truncate">{page.video_title}</span>
           </span>
         )}
         {contentIcons.filter(ci => ci!.label !== 'Video').length > 0 && (
@@ -284,16 +307,16 @@ function PageRow({
         onClick={onBookmark}
         className={`shrink-0 p-1 rounded-md transition-colors ${
           isBookmarked
-            ? 'text-amber-400 hover:text-amber-300'
-            : 'text-zinc-600 hover:text-zinc-300 opacity-0 group-hover:opacity-100'
+            ? 'text-[var(--gold)] hover:brightness-125'
+            : 'text-white/35 hover:text-white/70 opacity-0 group-hover:opacity-100'
         }`}
         title={isBookmarked ? 'Remove bookmark' : 'Bookmark this page'}
       >
-        <Bookmark size={13} className={isBookmarked ? 'fill-amber-400' : ''} />
+        <Bookmark size={13} className={isBookmarked ? 'fill-[var(--gold)]' : ''} />
       </button>
 
       <ChevronRight size={14} className={`shrink-0 transition-colors ${
-        done ? 'text-emerald-500/40' : `text-zinc-600 group-hover:text-white`
+        done ? 'text-[var(--plum-text)]/50' : `text-white/35 group-hover:text-white`
       }`} />
     </Link>
   );
@@ -347,22 +370,38 @@ function ChapterRow({
           hover:bg-white/[0.02] transition-colors group disabled:cursor-default disabled:hover:bg-transparent"
         disabled={total === 0}
       >
-        {/* Chapter number — text only, no box */}
-        <div className="shrink-0 flex flex-col items-center justify-center min-w-[40px]">
-          <span className={`text-[9px] uppercase tracking-[0.18em] font-bold leading-none mb-0.5 ${
-            isDone ? 'text-emerald-400/70' : `${theme.accent} opacity-70`
-          }`}>
-            Ch
-          </span>
-          <span className={`text-2xl md:text-3xl font-black tabular-nums leading-none ${
-            isDone ? 'text-emerald-400' : theme.accent
-          }`}>
+        {/* Thumbnail — a real image from inside the chapter. This is the
+            single biggest thing separating a list of titles from something
+            that looks made by a person. Falls back to the number alone. */}
+        <div className="shrink-0 relative w-[74px] h-[52px] md:w-[92px] md:h-[62px] rounded-lg
+          overflow-hidden border border-white/[0.08] bg-white/[0.03]">
+          {chapter.thumbnail ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={chapter.thumbnail}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover opacity-80
+                  group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+            </>
+          ) : (
+            /* Not every chapter has an in-book image yet. A bare box with only
+               the darkening gradient below read as a broken/failed thumbnail
+               rather than "none exists" — this glyph makes the empty state
+               legible as a deliberate placeholder. */
+            <div className="absolute inset-0 flex items-center justify-center">
+              <BookOpen size={16} className="text-white/15" strokeWidth={1.5} />
+            </div>
+          )}
+          <span className={`absolute bottom-1 left-1.5 text-[11px] font-black tabular-nums leading-none
+            drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] ${isDone ? 'text-[var(--gold)]' : theme.accent}`}>
             {chapter.number}
           </span>
         </div>
-
-        {/* Subtle vertical divider */}
-        <div className="w-px self-stretch bg-white/[0.06] shrink-0" />
 
         {/* Title + progress */}
         <div className="flex-1 min-w-0">
@@ -371,13 +410,19 @@ function ChapterRow({
               {chapter.title}
             </h4>
             {isDone && (
-              <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-400
-                bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded-full">
+              <span className="flex items-center gap-1 text-[10px] font-semibold text-[var(--gold)]
+                bg-[var(--gold-tint)] border border-[rgba(199,154,74,0.30)] px-1.5 py-0.5 rounded-full">
                 <CheckCircle2 size={10} />
                 Complete
               </span>
             )}
           </div>
+
+          {chapter.description && (
+            <p className="text-[13px] text-white/45 leading-snug mb-2 line-clamp-2 max-w-2xl">
+              {chapter.description}
+            </p>
+          )}
 
           {total > 0 ? (
             <div className="flex items-center gap-3 flex-wrap">
@@ -387,17 +432,17 @@ function ChapterRow({
                 ) : (
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
-                      isDone ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`
+                      isDone ? 'bg-[var(--gold)]' : `bg-gradient-to-r ${theme.bar}`
                     }`}
                     style={{ width: `${pct}%` }}
                   />
                 )}
               </div>
-              <span className="text-xs text-zinc-400 tabular-nums font-medium">
-                {completed}/{total}<span className="text-zinc-500"> pages</span>
+              <span className="text-xs text-white/60 tabular-nums font-medium">
+                {completed}/{total}<span className="text-white/45"> pages</span>
               </span>
               {totalMin > 0 && (
-                <span className="text-xs text-zinc-500 flex items-center gap-1 tabular-nums">
+                <span className="text-xs text-white/55 flex items-center gap-1 tabular-nums">
                   <Clock size={11} />
                   {isDone
                     ? `${totalMin} min`
@@ -408,14 +453,14 @@ function ChapterRow({
               )}
             </div>
           ) : (
-            <p className="text-xs text-zinc-500 italic">Pages coming soon</p>
+            <p className="text-xs text-white/50 italic">Pages coming soon</p>
           )}
         </div>
 
         {total > 0 && (
           <ChevronDown
             size={18}
-            className={`shrink-0 text-zinc-500 group-hover:text-zinc-200 transition-all duration-200
+            className={`shrink-0 text-white/45 group-hover:text-white/80 transition-all duration-200
               ${isOpen ? 'rotate-180 text-zinc-200' : ''}`}
           />
         )}
@@ -443,7 +488,7 @@ function ChapterRow({
                   hasQuiz={hasRealQuiz}
                   isBookmarked={isBookmarked}
                   basePath={basePath}
-                  bookSlug={book.slug}
+                  bookSlug={seg(book)}
                   onBookmark={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -492,9 +537,6 @@ function SubjectSection({
   }).length;
   const pct = totalPages > 0 ? Math.round((donePages / totalPages) * 100) : 0;
 
-  const decor = getDecor(book.subject);
-  const decorScale = singleBook ? 1.25 : 1;
-
   return (
     <section
       id={`subject-${book.slug}`}
@@ -517,28 +559,10 @@ function SubjectSection({
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r
             from-transparent via-white/[0.18] to-transparent" />
 
-          {/* Floating subject decor icons — scoped to the header only */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {decor.map((d, i) => {
-              const DecorI = d.Icon;
-              return (
-                <DecorI
-                  key={i}
-                  size={d.size * decorScale}
-                  strokeWidth={1.3}
-                  className={theme.accent}
-                  style={{
-                    position: 'absolute',
-                    top: d.top,
-                    left: d.left,
-                    transform: `rotate(${d.rotate}deg)`,
-                    opacity: d.opacity,
-                    filter: 'blur(0.4px)',
-                  }}
-                />
-              );
-            })}
-          </div>
+          {/* The floating subject decor icons that used to drift here are gone.
+              Low-opacity outline glyphs on a dark ground are the strongest
+              "AI-generated page" tell, and they carried no information. The
+              shelf's ambient light now does the subject-signalling instead. */}
 
           {singleBook ? (
             /* Single-book — spacious hero header */
@@ -560,19 +584,19 @@ function SubjectSection({
                 <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-zinc-300 tabular-nums">
                   <span>
                     <span className="font-bold text-white">{book.chapters.length}</span>
-                    <span className="text-zinc-400"> chapters</span>
+                    <span className="text-white/55"> chapters</span>
                   </span>
                   <span className="w-1 h-1 rounded-full bg-zinc-600" />
                   <span>
                     <span className="font-bold text-white">{totalPages}</span>
-                    <span className="text-zinc-400"> pages</span>
+                    <span className="text-white/55"> pages</span>
                   </span>
                   {totalMin > 0 && (
                     <>
                       <span className="w-1 h-1 rounded-full bg-zinc-600" />
                       <span>
                         <span className="font-bold text-white">~{Math.round(totalMin / 60) || 1}h</span>
-                        <span className="text-zinc-400"> reading</span>
+                        <span className="text-white/55"> reading</span>
                       </span>
                     </>
                   )}
@@ -582,14 +606,14 @@ function SubjectSection({
                     <div className="flex-1 max-w-md h-2 bg-white/[0.08] rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all duration-700 ${
-                          pct === 100 ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`
+                          pct === 100 ? 'bg-[var(--gold)]' : `bg-gradient-to-r ${theme.bar}`
                         }`}
                         style={{ width: `${pct}%` }}
                       />
                     </div>
                     <span className="text-sm text-zinc-300 tabular-nums font-medium">
                       {doneChapters}/{book.chapters.length}
-                      <span className="text-zinc-500"> chapters · </span>
+                      <span className="text-white/50"> chapters · </span>
                       {pct}%
                     </span>
                   </div>
@@ -613,7 +637,7 @@ function SubjectSection({
                 <h2 className="text-lg md:text-xl font-bold text-white leading-tight truncate">
                   {book.title}
                 </h2>
-                <p className="text-[11px] text-zinc-400 mt-0.5 tabular-nums">
+                <p className="text-[11px] text-white/55 mt-0.5 tabular-nums">
                   {book.chapters.length} {book.chapters.length === 1 ? 'chapter' : 'chapters'}
                   {totalPages > 0 && ` · ${totalPages} pages`}
                   {totalMin > 0 && ` · ~${Math.max(1, Math.round(totalMin / 60))}h read`}
@@ -622,20 +646,20 @@ function SubjectSection({
               {totalPages > 0 ? (
                 <div className="hidden sm:flex flex-col items-end gap-1.5 shrink-0">
                   <span className="text-xs text-zinc-200 tabular-nums font-semibold">
-                    {donePages}<span className="text-zinc-500">/{totalPages}</span>
+                    {donePages}<span className="text-white/45">/{totalPages}</span>
                     {pct > 0 && <span className={`ml-1.5 ${theme.accent}`}>{pct}%</span>}
                   </span>
                   <div className="w-28 md:w-44 h-1.5 bg-white/[0.1] rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all duration-700 ${
-                        pct === 100 ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`
+                        pct === 100 ? 'bg-[var(--gold)]' : `bg-gradient-to-r ${theme.bar}`
                       }`}
                       style={{ width: `${pct}%` }}
                     />
                   </div>
                 </div>
               ) : (
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-white/50
                   bg-white/[0.06] border border-white/[0.08] px-2 py-1 rounded-full shrink-0 backdrop-blur-sm">
                   Coming soon
                 </span>
@@ -647,7 +671,7 @@ function SubjectSection({
         {/* Chapter rows — flat, divider-separated, inside the same card */}
         {book.chapters.length === 0 ? (
           <div className="border-t border-white/[0.06] px-5 py-8 text-center">
-            <p className="text-sm text-zinc-400">No chapters published yet.</p>
+            <p className="text-sm text-white/55">No chapters published yet.</p>
           </div>
         ) : (
           <div className="relative border-t border-white/[0.08]">
@@ -680,46 +704,6 @@ function SubjectSection({
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
-/* ─── SubjectNav — sticky horizontal jump-tabs                              */
-/* Hidden when there is only one book.                                       */
-/* ═══════════════════════════════════════════════════════════════════════════ */
-
-function SubjectNav({
-  books, activeSlug, onSelect,
-}: {
-  books: GradeBook[];
-  activeSlug: string | null;
-  onSelect: (slug: string) => void;
-}) {
-  return (
-    <div className="sticky top-[72px] z-30 border-b border-white/[0.06] bg-[var(--book-bg)] backdrop-blur-md shrink-0">
-      <div className="max-w-6xl mx-auto px-4 md:px-8 py-2.5 flex gap-2 overflow-x-auto scrollbar-hide">
-        {books.map(book => {
-          const theme = getTheme(book.subject);
-          const Icon = theme.icon;
-          const isActive = activeSlug === book.slug;
-          return (
-            <button
-              key={book.slug}
-              onClick={() => onSelect(book.slug)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold
-                whitespace-nowrap border transition-all shrink-0 ${
-                isActive
-                  ? `${theme.bg} ${theme.border} ${theme.accent}`
-                  : 'border-white/[0.08] text-zinc-400 hover:text-white hover:border-white/[0.18]'
-              }`}
-            >
-              <Icon size={13} className={isActive ? theme.accent : 'text-zinc-500'} />
-              <span className="capitalize">{book.subject}</span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════ */
 /* ─── Main Component                                                         */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -729,8 +713,26 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
   const [openChapter,  setOpenChapter]  = useState<{ bookSlug: string; chapterNum: number } | null>(null);
   const [activeSubject, setActiveSubject] = useState<string | null>(books[0]?.slug ?? null);
 
-  const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const singleBook = books.length === 1;
+
+  /* One ordered shelf, not two labelled sections.
+   *
+   * The Core / Languages split only earns its space where it tells a student
+   * something they'd act on. At Class 11-12 it does — core is exactly the four
+   * exam subjects — but there it also happens to be exactly one row, so the
+   * ORDER alone conveys it. At Class 9-10 every subject is compulsory, core is
+   * only 3, and the heading just cost a row to say nothing: 6 books became two
+   * half-empty rows, and adding two electives would have made it three.
+   *
+   * So we keep the ordering (core first) and drop the headings. Class 9 fills
+   * row one with Maths / Science / Social Science / English; Class 11 fills it
+   * with P/C/M/B. Eight books land in exactly two full rows either way. */
+  const orderedBooks = useMemo(() => {
+    const ELECTIVE = new Set(['english', 'hindi', 'sanskrit', 'ai', 'ict', 'life_skills']);
+    const isElective = (b: GradeBook) => ELECTIVE.has(b.subject.toLowerCase());
+    // Unknown subjects sort as core, so a newly added book is never buried.
+    return [...books].sort((a, b) => Number(isElective(a)) - Number(isElective(b)));
+  }, [books]);
 
   /* ── Derived data ─────────────────────────────────────────────────── */
 
@@ -740,15 +742,10 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
     return map;
   }, [books, pages]);
 
-  const startHref = useMemo(() => {
-    for (const b of books) {
-      const sorted = (pagesForBook.get(b._id) ?? [])
-        .slice()
-        .sort((a, b2) => a.chapter_number - b2.chapter_number || a.page_number - b2.page_number);
-      if (sorted.length) return `${basePath}/${b.slug}/${sorted[0].slug}`;
-    }
-    return null;
-  }, [books, pagesForBook, basePath]);
+  const activeBook = useMemo(
+    () => books.find(b => b.slug === activeSubject) ?? books[0] ?? null,
+    [books, activeSubject],
+  );
 
   const toggleChapter = useCallback((bookSlug: string, chapterNum: number) => {
     setOpenChapter(prev =>
@@ -758,34 +755,13 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
     );
   }, []);
 
+  /* Picking a book swaps the chapter list below the shelf. It does NOT scroll
+     and does NOT stack every book's chapters: at 15-16 chapters x 4 subjects
+     that was ~60 rows of accordion nobody reads. One book at a time. */
   const jumpToSubject = useCallback((slug: string) => {
-    const el = sectionRefs.current.get(slug);
-    if (!el) return;
-    // Offset accounts for top bar (72px) + sticky subject nav (~50px)
-    const y = el.getBoundingClientRect().top + window.scrollY - 136;
-    window.scrollTo({ top: y, behavior: 'smooth' });
     setActiveSubject(slug);
+    setOpenChapter(null);
   }, []);
-
-  /* ── Scroll-spy for sticky subject tabs ───────────────────────────── */
-
-  useEffect(() => {
-    if (singleBook || books.length === 0) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]) {
-          const slug = (visible[0].target as HTMLElement).dataset.subjectSection;
-          if (slug) setActiveSubject(slug);
-        }
-      },
-      { rootMargin: '-140px 0px -55% 0px', threshold: [0.1, 0.25, 0.5] },
-    );
-    sectionRefs.current.forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, [singleBook, books]);
 
   /* ── Search ───────────────────────────────────────────────────────── */
 
@@ -798,7 +774,7 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
         const chPages = pages.filter(p => p.book_id === book._id && p.chapter_number === ch.number);
         for (const pg of chPages) {
           if (pg.title.toLowerCase().includes(q) || ch.title.toLowerCase().includes(q)) {
-            results.push({ ...pg, bookSlug: book.slug, bookTitle: book.title, chapterTitle: ch.title });
+            results.push({ ...pg, bookSlug: seg(book), bookTitle: book.title, chapterTitle: ch.title });
           }
         }
       }
@@ -811,14 +787,15 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
   return (
     <div className="relative min-h-screen bg-[var(--book-bg)] text-white flex flex-col pt-[72px]">
 
-      {/* ── Ambient background — fixed glows + faint dot grid ────────── */}
+      {/* ── Ambient background — fixed glows + faint dot grid ──────────
+          Plum only. This used to be three competing glows (orange / violet /
+          emerald); under the plum system a background wash is decoration, so
+          it gets one hue and stays near-invisible. */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-[18%] -left-[8%] w-[560px] h-[560px] rounded-full
-          bg-orange-500/[0.04] blur-[130px]" />
+          bg-[var(--plum)] opacity-[0.05] blur-[130px]" />
         <div className="absolute top-[55%] -right-[10%] w-[500px] h-[500px] rounded-full
-          bg-violet-500/[0.035] blur-[130px]" />
-        <div className="absolute bottom-[5%] left-[30%] w-[420px] h-[420px] rounded-full
-          bg-emerald-500/[0.025] blur-[120px]" />
+          bg-[var(--plum)] opacity-[0.035] blur-[130px]" />
         <div
           className="absolute inset-0 opacity-[0.25]"
           style={{
@@ -832,106 +809,90 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
       {/* Content wrapper — sits above the ambient layer */}
       <div className="relative z-10 flex-1 flex flex-col">
 
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <header className="relative border-b border-white/[0.06] shrink-0 overflow-hidden">
-        {/* Decorative hero backdrop */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-16 -left-16 w-[260px] h-[260px] md:w-[520px] md:h-[520px] rounded-full
-            bg-orange-500/[0.07] md:bg-orange-500/[0.08] blur-[80px] md:blur-[100px]" />
-          <div className="absolute top-0 right-0 w-[200px] h-[200px] md:w-[420px] md:h-[420px] rounded-full
-            bg-amber-500/[0.04] md:bg-amber-500/[0.05] blur-[70px] md:blur-[100px]" />
-          <div
-            className="absolute inset-0 opacity-[0.35]"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)',
-              backgroundSize: '28px 28px',
-              maskImage: 'linear-gradient(to bottom, black, transparent)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black, transparent)',
-            }}
-          />
-        </div>
-
-        <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-5 md:py-10 flex flex-col md:flex-row md:items-end gap-5 md:gap-6">
-          <div className="flex-1 min-w-0">
-            {/* Eyebrow pill */}
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-              bg-orange-500/10 border border-orange-500/20 mb-3">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-400">
-                Live Books
-              </span>
-            </div>
-
-            {/* Logo + title row — visually paired */}
-            <div className="flex items-center gap-4 md:gap-5">
-              <div className="relative shrink-0">
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500
-                  blur-xl opacity-30 md:blur-2xl md:opacity-50" />
-                <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-2xl
-                  bg-gradient-to-br from-orange-500 to-amber-500
-                  flex items-center justify-center shadow-lg shadow-orange-500/20
-                  ring-1 ring-orange-300/30">
-                  <LiveBooksLogo size={34} className="text-black md:hidden" />
-                  <LiveBooksLogo size={46} className="text-black hidden md:block" />
+      {/* ── Masthead ──────────────────────────────────────────────────
+          The old hero (big logo tile, four feature chips, Start-learning CTA)
+          pushed the books ~460px below the fold. This keeps one real brand
+          lockup and the claim, and hands the page straight to the books. */}
+      <header className="relative shrink-0 overflow-hidden">
+        <div className="relative max-w-6xl mx-auto px-4 md:px-8 pt-6 pb-6 md:pt-8 md:pb-7">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div className="min-w-0">
+              {/* Brand lockup — a mark, a wordmark and a live state, in one
+                  object. The previous version was a bare text pill. */}
+              <div className="inline-flex items-center gap-2.5 rounded-2xl p-[1px]
+                bg-gradient-to-br from-[var(--plum-line)] via-white/10 to-transparent">
+                <div className="flex items-center gap-2.5 rounded-[15px] pl-2 pr-3.5 py-2
+                  bg-[#15121a]/90 backdrop-blur-sm">
+                  <span className="grid place-items-center w-8 h-8 rounded-xl
+                    bg-gradient-to-br from-[var(--plum)] to-[#5d2145]
+                    ring-1 ring-inset ring-white/15 shadow-lg shadow-black/40">
+                    <LiveBooksLogo size={18} />
+                  </span>
+                  <span className="leading-none">
+                    <span className="block text-[15px] font-bold tracking-tight text-white">
+                      Live<span className="text-[var(--plum-text)]">Books</span>
+                    </span>
+                    <span className="mt-1 flex items-center gap-1.5">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70 animate-ping" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+                      </span>
+                      <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/45">
+                        Interactive · NCERT
+                      </span>
+                    </span>
+                  </span>
                 </div>
               </div>
-              <h1 className="text-2xl md:text-4xl font-black tracking-tight text-white leading-[1.05] min-w-0">
-                Class {grade}{' '}
-                <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
-                  Library
-                </span>
+
+              <h1 className="mt-4 text-[2rem] md:text-[2.6rem] font-extrabold tracking-[-0.025em] leading-[1.0]
+                bg-gradient-to-br from-white via-white to-white/50 bg-clip-text text-transparent">
+                Class {grade}
               </h1>
+
+              <p className="mt-2 text-[15px] md:text-lg font-medium text-white/70 max-w-xl text-balance leading-snug">
+                The NCERT syllabus, rebuilt to actually teach.
+              </p>
             </div>
 
-            {/* Tagline */}
-            <p className="mt-4 text-sm md:text-base text-zinc-400 leading-relaxed max-w-xl">
-              NCERT-aligned chapters as interactive live books — with simulations, worked examples,
-              quizzes, and Hinglish mode. Free, forever.
-            </p>
-
-            {/* Feature chips */}
-            <div className="mt-4 flex flex-wrap gap-1.5">
+            {/* The claim, itemised. Reads as a sentence, not a chip rack — the
+                four coloured chips this replaces were pure decoration. */}
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-1 shrink-0 lg:pb-1">
               {[
-                { icon: Gamepad2,       label: 'Simulations',   color: 'text-sky-400',    bg: 'bg-sky-500/10',    border: 'border-sky-500/20' },
-                { icon: ClipboardCheck, label: 'Quizzes',       color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20' },
-                { icon: Languages,      label: 'Hinglish mode', color: 'text-emerald-400',bg: 'bg-emerald-500/10',border: 'border-emerald-500/20' },
-                { icon: Zap,            label: 'Adaptive',      color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
-              ].map(chip => {
-                const Icon = chip.icon;
-                return (
-                  <span
-                    key={chip.label}
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full
-                      text-[10px] font-semibold border ${chip.bg} ${chip.border} ${chip.color}`}
-                  >
-                    <Icon size={10} />
-                    {chip.label}
-                  </span>
-                );
-              })}
-            </div>
+                'Visuals that explain',
+                'Simulations you push on',
+                'Reasoning questions',
+                'Worked examples',
+                'Video walkthroughs',
+                'Quizzes that check you',
+                'Hinglish mode',
+                'Every NCERT chapter',
+              ].map(item => (
+                <li key={item} className="flex items-center gap-2 text-[12.5px] text-white/50">
+                  <span className="h-1 w-1 rounded-full bg-[var(--plum-text)] shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
-
-          {startHref && (
-            <Link
-              href={startHref}
-              className="group relative flex items-center justify-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-xl
-                bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-sm
-                hover:scale-[1.03] transition-transform shrink-0 shadow-md shadow-orange-500/15 md:shadow-lg md:shadow-orange-500/25
-                ring-1 ring-orange-300/30 self-stretch md:self-end"
-            >
-              <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 to-amber-400
-                opacity-0 group-hover:opacity-100 blur-md transition-opacity -z-10" />
-              <Play size={14} className="fill-black" />
-              <span>Start Learning</span>
-            </Link>
-          )}
         </div>
       </header>
+
+      {/* ── Book chooser ────────────────────────────────────────────────
+          Picking a book swaps the chapter list below. This is the only
+          chooser on the page — the sticky subject pills it replaced were a
+          second control for the same job. */}
+      <div className="px-4 md:px-8 shrink-0">
+        <div className="max-w-6xl mx-auto pb-2">
+          <BookShelf
+            heading="Subjects"
+            books={orderedBooks}
+            pages={pages}
+            activeSlug={activeSubject}
+            onSelect={jumpToSubject}
+          />
+        </div>
+      </div>
 
       {/* ── Stats + Continue reading (hidden for fresh users) ───────── */}
       <ProgressBand books={books} pages={pages} basePath={basePath} />
@@ -940,20 +901,20 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
       <div className="border-b border-white/[0.06] px-4 md:px-8 shrink-0">
         <div className="max-w-6xl mx-auto py-3">
           <div className="relative">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
             <input
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder={`Search topics across ${singleBook ? (books[0]?.title ?? 'this book') : 'all books'}...`}
               className="w-full pl-9 pr-8 py-2 text-sm bg-white/[0.03] border border-white/[0.08] rounded-lg
-                text-white placeholder:text-zinc-500 focus:outline-none focus:border-white/25
+                text-white placeholder:text-white/40 focus:outline-none focus:border-white/25
                 focus:bg-white/[0.05] transition-colors"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-200"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80"
               >
                 <X size={14} />
               </button>
@@ -974,12 +935,12 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
                   >
                     <div className={`w-1 h-8 rounded-full ${theme.bg}`} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-white/90 truncate">{pg.title}</p>
-                      <p className="text-[11px] text-zinc-500 truncate">
+                      <p className="text-sm text-white/85 truncate">{pg.title}</p>
+                      <p className="text-[11px] text-white/50 truncate">
                         {pg.bookTitle} · {pg.chapterTitle}
                       </p>
                     </div>
-                    <ChevronRight size={12} className="text-zinc-600 shrink-0" />
+                    <ChevronRight size={12} className="text-white/35 shrink-0" />
                   </Link>
                 );
               })}
@@ -987,40 +948,27 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
           )}
 
           {searchResults && searchResults.length === 0 && (
-            <p className="text-xs text-zinc-500 py-2 px-1">
+            <p className="text-xs text-white/50 py-2 px-1">
               No topics found for &ldquo;{searchQuery}&rdquo;
             </p>
           )}
         </div>
       </div>
 
-      {/* ── Sticky subject nav (hidden when only 1 book) ────────────── */}
-      {!singleBook && (
-        <SubjectNav
-          books={books}
-          activeSlug={activeSubject}
-          onSelect={jumpToSubject}
-        />
-      )}
-
-      {/* ── Main content: stacked subject sections ──────────────────── */}
-      <main className="flex-1 px-4 md:px-8 py-6 md:py-10">
-        <div className="max-w-6xl mx-auto flex flex-col gap-10 md:gap-14">
-          {books.map(book => (
+      {/* ── Chapters for the SELECTED book only ─────────────────────── */}
+      <main className="flex-1 px-4 md:px-8 pt-6 pb-10 md:pt-8 md:pb-14">
+        <div className="max-w-6xl mx-auto">
+          {activeBook && (
             <SubjectSection
-              key={book.slug}
-              book={book}
-              bookPages={pagesForBook.get(book._id) ?? []}
+              key={activeBook.slug}
+              book={activeBook}
+              bookPages={pagesForBook.get(activeBook._id) ?? []}
               basePath={basePath}
               singleBook={singleBook}
               openChapter={openChapter}
               onToggleChapter={toggleChapter}
-              sectionRef={(el) => {
-                if (el) sectionRefs.current.set(book.slug, el);
-                else sectionRefs.current.delete(book.slug);
-              }}
             />
-          ))}
+          )}
         </div>
       </main>
       </div>

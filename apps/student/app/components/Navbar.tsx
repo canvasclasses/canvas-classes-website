@@ -59,8 +59,8 @@ const liveBooksMenu: MegaMenuDef = {
       links: [
         { label: 'Class 9', href: '/class-9' },
         { label: 'Class 10', href: '/class-10' },
-        { label: 'Class 11 Chemistry', href: '/class-11/chemistry', badge: 'new' },
-        { label: 'Class 12 Chemistry', href: '/class-12/chemistry' },
+        { label: 'Class 11', href: '/class-11', badge: 'new' },
+        { label: 'Class 12', href: '/class-12' },
         { label: 'NCERT Book PDFs', href: '/download-ncert-books' },
       ],
     },

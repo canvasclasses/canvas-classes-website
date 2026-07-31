@@ -7,6 +7,7 @@ import GradeLandingPage, {
   type GradePage,
 } from '@/features/books/components/GradeLandingPage';
 import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon';
+import { loadChapterImagery } from '@/features/books/lib/bookImagery';
 
 export const revalidate = 86400;
 
@@ -17,6 +18,16 @@ export const metadata: Metadata = {
 };
 
 const EXPECTED_SUBJECTS = ['Chemistry', 'Physics', 'Mathematics', 'Biology'];
+
+/**
+ * Books whose URL segment under /class-12 differs from their DB slug.
+ * Chemistry shipped first at /class-12/chemistry with the slug
+ * `ncert-simplified-12`; those URLs are indexed, so the segment is pinned
+ * here rather than migrated. New books should just use their slug.
+ */
+const URL_SEGMENTS: Record<string, string> = {
+  'ncert-simplified-12': 'chemistry',
+};
 
 export default async function Class12Page() {
   await connectToDatabase();
@@ -32,13 +43,15 @@ export default async function Class12Page() {
   const books: GradeBook[] = rawBooks.map((b) => ({
     _id: String(b._id),
     slug: String(b.slug),
+    cover_image: ((b as Record<string, unknown>).cover_image as string) ?? null,
+    url_segment: URL_SEGMENTS[String(b.slug)],
     title: String(b.title),
     subject: String(b.subject),
     grade: Number(b.grade),
     chapters: b.chapters
       .filter((c) => c.is_published)
       .sort((a, b) => a.number - b.number)
-      .map((c) => ({ number: c.number, title: c.title, slug: c.slug })),
+      .map((c) => ({ number: c.number, title: c.title, slug: c.slug, description: c.description ?? null })),
   }));
 
   const bookIds = books.map((b) => b._id);
@@ -66,6 +79,20 @@ export default async function Class12Page() {
     content_types: (p as Record<string, unknown>).content_types as GradePage['content_types'] ?? null,
     video_title: (p as Record<string, unknown>).video_title as string ?? null,
   }));
+
+  // Real artwork from inside the books — see features/books/lib/bookImagery.ts.
+  // One page per chapter, bounded, behind this page's 24h ISR cache.
+  const imagery = await loadChapterImagery(
+    books.map((b) => ({ _id: b._id, chapterNumbers: b.chapters.map((c) => c.number) })),
+  );
+
+  for (const b of books) {
+    // a cover set by hand on the book document always wins
+    b.cover_image = b.cover_image ?? imagery.covers.get(b._id) ?? null;
+    for (const c of b.chapters) {
+      c.thumbnail = imagery.thumbnails.get(`${b._id}:${c.number}`) ?? null;
+    }
+  }
 
   return <GradeLandingPage grade={12} books={books} pages={pages} basePath="/class-12" />;
 }

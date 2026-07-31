@@ -53,7 +53,7 @@ export default function BioDeckClient({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-serif italic text-white/40">{bookTitle}</p>
+          <p className="text-xs font-serif italic text-white/45">{bookTitle}</p>
           <h1 className="text-xl font-bold tracking-tight">Bio Deck</h1>
         </div>
         <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-[var(--book-surface)] px-3 py-1.5 font-mono text-sm font-semibold text-amber-400">
@@ -64,7 +64,7 @@ export default function BioDeckClient({
       {/* Due card */}
       <div className="mt-4 rounded-2xl border border-orange-500/30 bg-gradient-to-br from-[#221a12] to-[var(--book-surface)] p-5">
         <div className="text-5xl font-extrabold leading-none tabular-nums">{summary.due}</div>
-        <div className="mt-1 text-sm text-white/50">
+        <div className="mt-1 text-sm text-white/60">
           {summary.due === 0 ? 'all caught up — nothing due' : 'diagrams due for review'}
         </div>
         {firstDue && (
@@ -80,7 +80,7 @@ export default function BioDeckClient({
       {/* XP */}
       <div className="mt-4">
         <div className="mb-1.5 flex items-baseline justify-between text-xs text-white/45">
-          <span>Level <b className="text-white/80">{deck.level}</b></span>
+          <span>Level <b className="text-white/60">{deck.level}</b></span>
           <span className="font-mono">{deck.xp} / {LEVEL_XP} XP</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-white/8">
@@ -92,7 +92,7 @@ export default function BioDeckClient({
       </div>
 
       {/* Sprint list */}
-      <p className="mt-6 mb-2 text-[11px] font-semibold uppercase tracking-[0.09em] text-white/30">
+      <p className="mt-6 mb-2 text-[11px] font-semibold uppercase tracking-[0.09em] text-white/45">
         Label Sprints · {summary.total}
       </p>
       <div className="space-y-2">
@@ -109,12 +109,12 @@ export default function BioDeckClient({
             >
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold">{s.pageTitle}</p>
-                <p className="truncate text-xs text-white/40">{s.block.alt}</p>
+                <p className="truncate text-xs text-white/45">{s.block.alt}</p>
                 <div className="mt-1.5 flex items-center gap-2">
                   <span className="h-1.5 w-20 overflow-hidden rounded-full bg-white/10">
                     <span className="block h-full rounded-full bg-orange-500/70" style={{ width: `${mastery}%` }} />
                   </span>
-                  <span className="font-mono text-[11px] text-white/35">{mastery}%</span>
+                  <span className="font-mono text-[11px] text-white/45">{mastery}%</span>
                 </div>
               </div>
               <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${chip.cls}`}>
@@ -128,11 +128,11 @@ export default function BioDeckClient({
       {/* Spacing-curve footnote */}
       <div className="mt-5 rounded-xl border border-dashed border-white/10 bg-[var(--book-surface)] px-4 py-3">
         <p className="mb-2 text-xs text-white/45">Every diagram you clear comes back on a spacing curve, so it sticks.</p>
-        <div className="flex items-center gap-1 font-mono text-[11px] text-white/35">
+        <div className="flex items-center gap-1 font-mono text-[11px] text-white/45">
           {REVIEW_INTERVALS_DAYS.map((d, i) => (
             <span key={d} className="flex items-center gap-1">
               <span className="rounded bg-white/8 px-1.5 py-0.5">{d}d</span>
-              {i < REVIEW_INTERVALS_DAYS.length - 1 && <span className="text-white/20">→</span>}
+              {i < REVIEW_INTERVALS_DAYS.length - 1 && <span className="text-white/45">→</span>}
             </span>
           ))}
         </div>
@@ -153,7 +153,7 @@ export default function BioDeckClient({
               <button
                 onClick={() => setPlayId(null)}
                 aria-label="Close"
-                className="text-lg leading-none text-white/45 hover:text-white/90"
+                className="text-lg leading-none text-white/45 hover:text-white/85"
               >
                 ✕
               </button>

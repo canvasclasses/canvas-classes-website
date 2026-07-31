@@ -110,7 +110,7 @@ export default function FreeGate({ bookSlug, pageSlug, basePath }: Props) {
         <h2 className="text-xl font-bold text-white text-center mb-2">
           You&apos;re enjoying this book!
         </h2>
-        <p className="text-sm text-white/50 text-center mb-6">
+        <p className="text-sm text-white/60 text-center mb-6">
           Create a free account to continue reading and unlock all features.
         </p>
 
@@ -140,7 +140,7 @@ export default function FreeGate({ bookSlug, pageSlug, basePath }: Props) {
           Sign in to continue <ArrowRight size={15} />
         </Link>
 
-        <p className="text-[11px] text-white/25 text-center">
+        <p className="text-[11px] text-white/45 text-center">
           Free forever. No credit card required.
         </p>
       </div>

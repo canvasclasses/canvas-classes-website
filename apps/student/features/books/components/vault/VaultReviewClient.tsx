@@ -98,10 +98,10 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
     return (
       <div className="min-h-screen bg-[var(--book-bg)] text-white flex flex-col items-center px-4 py-6">
         <div className="w-full max-w-lg flex items-center justify-between mb-8">
-          <button onClick={() => setSession(null)} className="text-white/40 hover:text-white/70 flex items-center gap-1 text-sm">
+          <button onClick={() => setSession(null)} className="text-white/45 hover:text-white/82 flex items-center gap-1 text-sm">
             <ChevronLeft size={16} /> End session
           </button>
-          <span className="text-xs text-white/40 tabular-nums">{idx + 1} / {session.length}</span>
+          <span className="text-xs text-white/45 tabular-nums">{idx + 1} / {session.length}</span>
         </div>
 
         <div className="w-full max-w-lg flex-1 flex flex-col items-center justify-center">
@@ -114,21 +114,21 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
           {word.pronunciation && (
             <p className="text-sm font-mono text-sky-400/60 mb-2">{word.pronunciation}</p>
           )}
-          {word.pos && <p className="text-[11px] uppercase tracking-wider text-white/35 mb-8">{word.pos}</p>}
+          {word.pos && <p className="text-[11px] uppercase tracking-wider text-white/45 mb-8">{word.pos}</p>}
 
           {!revealed ? (
             <button
               onClick={() => setRevealed(true)}
-              className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm text-white/70"
+              className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm text-white/82"
             >
               Show meaning
             </button>
           ) : (
             <div className="w-full text-center">
-              <p className="text-lg font-semibold text-white/90 mb-2">{word.meaning}</p>
+              <p className="text-lg font-semibold text-white/85 mb-2">{word.meaning}</p>
               {word.hindi && <p className="text-base text-sky-300/85 mb-3">हिंदी: {word.hindi}</p>}
               {word.example && (
-                <p className="text-sm italic text-white/50 border-t border-white/8 pt-3 mt-3">“{word.example}”</p>
+                <p className="text-sm italic text-white/60 border-t border-white/8 pt-3 mt-3">“{word.example}”</p>
               )}
             </div>
           )}
@@ -157,23 +157,23 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
     <div className="min-h-screen bg-[var(--book-bg)] text-white">
       <header className="sticky top-0 z-30 bg-[var(--book-surface)]/95 backdrop-blur border-b border-white/8">
         <div className="max-w-2xl mx-auto px-4 h-12 flex items-center gap-3">
-          <Link href={basePath} className="text-white/40 hover:text-white/70"><ChevronLeft size={18} /></Link>
+          <Link href={basePath} className="text-white/45 hover:text-white/82"><ChevronLeft size={18} /></Link>
           <Library size={15} className="text-sky-400" />
-          <span className="text-sm text-white/70 font-medium">Word Vault</span>
-          <span className="text-xs text-white/30 truncate">· {bookTitle}</span>
+          <span className="text-sm text-white/82 font-medium">Word Vault</span>
+          <span className="text-xs text-white/45 truncate">· {bookTitle}</span>
         </div>
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-8">
         {loading ? (
-          <p className="text-center text-white/40 py-20">Loading your vault…</p>
+          <p className="text-center text-white/45 py-20">Loading your vault…</p>
         ) : savedWords.length === 0 ? (
           <div className="text-center py-20">
             <div className="w-16 h-16 rounded-2xl bg-sky-500/10 flex items-center justify-center mx-auto mb-5">
               <Library size={28} className="text-sky-400" />
             </div>
             <h2 className="text-xl font-bold mb-2">Your Word Vault is empty</h2>
-            <p className="text-sm text-white/50 max-w-sm mx-auto mb-6">
+            <p className="text-sm text-white/60 max-w-sm mx-auto mb-6">
               While you read, tap any <span className="underline decoration-dotted decoration-amber-400/60">underlined word</span> in a
               passage — or a vocabulary card — and choose <span className="text-sky-300 font-medium">“Save to Word Vault.”</span> Saved
               words come back here for spaced-repetition review so they stick.
@@ -189,7 +189,7 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
             <div className="grid grid-cols-3 gap-3 mb-6">
               <div className="rounded-2xl bg-white/[0.03] border border-white/8 p-4 text-center">
                 <div className="text-2xl font-bold text-white">{savedWords.length}</div>
-                <div className="text-[11px] text-white/40 uppercase tracking-wide">Saved</div>
+                <div className="text-[11px] text-white/45 uppercase tracking-wide">Saved</div>
               </div>
               <div className="rounded-2xl bg-sky-500/[0.06] border border-sky-500/20 p-4 text-center">
                 <div className="text-2xl font-bold text-sky-300">{dueWords.length}</div>
@@ -217,7 +217,7 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
             )}
 
             {/* Browse all saved words */}
-            <h3 className="text-[11px] font-bold uppercase tracking-widest text-white/35 mb-3">All saved words</h3>
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-white/45 mb-3">All saved words</h3>
             <div className="space-y-2">
               {savedWords.map((w) => {
                 const card = vault.cards[w.wordId];
@@ -228,7 +228,7 @@ export default function VaultReviewClient({ bookSlug, bookTitle, basePath }: Pro
                     <button onClick={() => speak(w.word, undefined)} className="text-sky-300 font-semibold shrink-0">
                       {w.word}
                     </button>
-                    <span className="text-sm text-white/50 truncate flex-1">{w.meaning}</span>
+                    <span className="text-sm text-white/60 truncate flex-1">{w.meaning}</span>
                     <span
                       className="text-[10px] uppercase tracking-wide shrink-0 px-2 py-0.5 rounded-full"
                       style={

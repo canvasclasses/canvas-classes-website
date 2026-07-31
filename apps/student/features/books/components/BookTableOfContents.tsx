@@ -51,13 +51,13 @@ interface Props {
 /* ─── Content type icon mapping ─────────────────────────────────────────── */
 
 const CONTENT_ICONS: Partial<Record<BlockType, { icon: typeof FlaskConical; label: string; color: string }>> = {
-  inline_quiz:       { icon: ClipboardCheck, label: 'Quiz',           color: 'text-amber-400' },
-  simulation:        { icon: Gamepad2,       label: 'Simulation',     color: 'text-sky-400'   },
-  video:             { icon: Video,          label: 'Video',          color: 'text-rose-400'  },
-  molecule_3d:       { icon: FlaskConical,   label: '3D Molecule',    color: 'text-violet-400'},
-  reasoning_prompt:  { icon: Brain,          label: 'Reasoning',      color: 'text-emerald-400'},
-  worked_example:    { icon: Sparkles,       label: 'Worked Example', color: 'text-orange-400'},
-  classify_exercise: { icon: ClipboardCheck, label: 'Exercise',       color: 'text-teal-400'  },
+  inline_quiz:       { icon: ClipboardCheck, label: 'Quiz',           color: 'text-white/45' },
+  simulation:        { icon: Gamepad2,       label: 'Simulation',     color: 'text-[var(--plum-text)]' },
+  video:             { icon: Video,          label: 'Video',          color: 'text-white/45' },
+  molecule_3d:       { icon: FlaskConical,   label: '3D Molecule',    color: 'text-[var(--plum-text)]' },
+  reasoning_prompt:  { icon: Brain,          label: 'Reasoning',      color: 'text-[var(--plum-text)]' },
+  worked_example:    { icon: Sparkles,       label: 'Worked Example', color: 'text-white/45' },
+  classify_exercise: { icon: ClipboardCheck, label: 'Exercise',       color: 'text-[var(--plum-text)]' },
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
@@ -167,11 +167,11 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
       {/* ── Ambient background — fixed glows + faint dot grid ─────────────── */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-[18%] -left-[8%] w-[560px] h-[560px] rounded-full
-          bg-orange-500/[0.04] blur-[130px]" />
+          bg-[var(--plum)] opacity-[0.05] blur-[130px]" />
         <div className="absolute top-[55%] -right-[10%] w-[500px] h-[500px] rounded-full
           bg-violet-500/[0.035] blur-[130px]" />
         <div className="absolute bottom-[5%] left-[30%] w-[420px] h-[420px] rounded-full
-          bg-emerald-500/[0.025] blur-[120px]" />
+          bg-[var(--plum)] opacity-[0.03] blur-[120px]" />
         <div
           className="absolute inset-0 opacity-[0.25]"
           style={{
@@ -188,9 +188,9 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
         <header className="relative border-b border-white/[0.06] shrink-0 overflow-hidden">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute -top-24 -left-24 w-[520px] h-[520px] rounded-full
-              bg-orange-500/[0.08] blur-[100px]" />
+              bg-[var(--plum)] opacity-[0.09] blur-[100px]" />
             <div className="absolute top-0 right-0 w-[420px] h-[420px] rounded-full
-              bg-amber-500/[0.05] blur-[100px]" />
+              bg-[var(--plum-hover)] opacity-[0.05] blur-[100px]" />
             <div
               className="absolute inset-0 opacity-[0.35]"
               style={{
@@ -208,12 +208,12 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
             <div className="flex-1 min-w-0">
               {/* Live Books pill */}
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-                bg-orange-500/10 border border-orange-500/20 mb-3">
+                bg-[var(--plum-tint)] border border-[var(--plum-line)] mb-3">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping" />
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-400">
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--plum-text)]">
                   Live Book
                 </span>
               </div>
@@ -221,12 +221,12 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
               {/* Logo + title */}
               <div className="flex items-center gap-4 md:gap-5">
                 <div className="relative shrink-0">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500
+                  <div className="absolute inset-0 rounded-2xl bg-[var(--plum)]
                     blur-2xl opacity-50" />
                   <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl
-                    bg-gradient-to-br from-orange-500 to-amber-500
-                    flex items-center justify-center shadow-xl shadow-orange-500/30
-                    ring-1 ring-orange-300/40">
+                    bg-gradient-to-br from-[var(--plum)] to-[var(--plum-hover)]
+                    flex items-center justify-center shadow-xl shadow-black/40
+                    ring-1 ring-[var(--plum-line)]">
                     <LiveBooksLogo size={38} className="md:hidden" />
                     <LiveBooksLogo size={46} className="hidden md:block" />
                   </div>
@@ -248,10 +248,10 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
 
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {[
-                  { icon: Gamepad2,       label: 'Simulations',   color: 'text-sky-400',    bg: 'bg-sky-500/10',    border: 'border-sky-500/20' },
-                  { icon: ClipboardCheck, label: 'Quizzes',       color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20' },
-                  { icon: Languages,      label: 'Hinglish mode', color: 'text-emerald-400',bg: 'bg-emerald-500/10',border: 'border-emerald-500/20' },
-                  { icon: Zap,            label: 'Adaptive',      color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20' },
+                  { icon: Gamepad2,       label: 'Simulations',   color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
+                  { icon: ClipboardCheck, label: 'Quizzes',       color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
+                  { icon: Languages,      label: 'Hinglish mode', color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
+                  { icon: Zap,            label: 'Adaptive',      color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
                 ].map(chip => {
                   const Ic = chip.icon;
                   return (
@@ -272,11 +272,11 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
               <Link
                 href={`${bp}/${continueReading?.slug ?? firstPageSlug}`}
                 className="group relative flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-xl
-                  bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold text-sm
-                  hover:scale-[1.03] transition-transform shrink-0 shadow-xl shadow-orange-500/30
-                  ring-1 ring-orange-300/40 self-start md:self-end"
+                  bg-[var(--plum)] hover:bg-[var(--plum-hover)] text-white font-semibold text-sm
+                  transition-colors shrink-0 shadow-xl shadow-black/30
+                  ring-1 ring-[var(--plum-line)] self-start md:self-end"
               >
-                <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 to-amber-400
+                <span className="absolute inset-0 rounded-xl bg-[var(--plum-hover)]
                   opacity-0 group-hover:opacity-100 blur-md transition-opacity -z-10" />
                 <Play size={14} className="fill-black" />
                 <span>{continueReading ? 'Continue Reading' : 'Start Learning'}</span>
@@ -322,7 +322,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                   <div className="flex flex-col">
                     <span className="text-[11px] uppercase tracking-wider text-zinc-500 font-semibold
                       flex items-center gap-1">
-                      <Flame size={11} className="text-orange-400" /> Streak
+                      <Flame size={11} className="text-[var(--gold)]" /> Streak
                     </span>
                     <span className="text-2xl md:text-3xl font-black text-white tabular-nums leading-tight">
                       {stats.streak_days}
@@ -411,12 +411,12 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                         border-b border-white/[0.05] last:border-0"
                     >
                       {done ? (
-                        <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                        <CheckCircle2 size={14} className="text-[var(--plum-text)] shrink-0" />
                       ) : (
                         <div className="w-3.5 h-3.5 rounded-full border border-white/20 shrink-0" />
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-white/90 truncate">{pg.title}</p>
+                        <p className="text-sm text-white/85 truncate">{pg.title}</p>
                         <p className="text-[11px] text-zinc-500 truncate">{pg.chapterTitle}</p>
                       </div>
                       <ChevronRight size={12} className="text-zinc-600 shrink-0" />
@@ -457,7 +457,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                 >
                   {isLocked
                     ? <Lock size={10} className="text-zinc-600" />
-                    : prog.pct === 100 && <CheckCircle2 size={10} className="text-emerald-400" />}
+                    : prog.pct === 100 && <CheckCircle2 size={10} className="text-[var(--gold)]" />}
                   <span>Ch {ch.number}</span>
                 </button>
               );
@@ -536,12 +536,12 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                           <span className={`text-[10px] font-bold uppercase tracking-[0.15em] leading-none
                             transition-colors ${
                             isDone
-                              ? 'text-emerald-400/70'
+                              ? 'text-[var(--gold)]/80'
                               : isActive ? theme.accent : `${theme.accent} opacity-60 group-hover:opacity-90`
                           }`}>
                             Ch {ch.number}
                           </span>
-                          {isDone && <CheckCircle2 size={11} className="text-emerald-400 ml-auto" />}
+                          {isDone && <CheckCircle2 size={11} className="text-[var(--gold)] ml-auto" />}
                         </div>
 
                         <p className={`text-[13px] leading-snug transition-colors ${
@@ -555,7 +555,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                             <div className="h-[3px] bg-white/[0.06] rounded-full overflow-hidden">
                               <div
                                 className={`h-full rounded-full transition-all duration-500 ${
-                                  isDone ? 'bg-emerald-500' : `bg-gradient-to-r ${theme.bar}`
+                                  isDone ? 'bg-[var(--gold)]' : `bg-gradient-to-r ${theme.bar}`
                                 }`}
                                 style={{ width: `${prog.pct}%` }}
                               />
@@ -579,15 +579,15 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                     onClick={() => setShowBookmarks(!showBookmarks)}
                     className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg text-xs transition-colors ${
                       showBookmarks
-                        ? 'text-amber-400 bg-amber-500/10'
+                        ? 'text-[var(--gold)] bg-[var(--gold-tint)]'
                         : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
                     }`}
                   >
-                    <Bookmark size={13} className={showBookmarks ? 'fill-amber-400' : ''} />
+                    <Bookmark size={13} className={showBookmarks ? 'fill-[var(--gold)]' : ''} />
                     <span className="font-semibold">Bookmarks</span>
                     {bookmarks.length > 0 && (
                       <span className={`ml-auto text-[10px] px-1.5 py-0.5 rounded-full ${
-                        showBookmarks ? 'bg-amber-500/20 text-amber-400' : 'bg-white/[0.06] text-zinc-400'
+                        showBookmarks ? 'bg-[var(--gold-tint)] text-[var(--gold)]' : 'bg-white/[0.06] text-zinc-400'
                       }`}>
                         {bookmarks.length}
                       </span>
@@ -605,19 +605,19 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                 <div className="relative rounded-2xl border border-white/[0.09] overflow-hidden
                   bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/40">
                   <div className="relative px-6 md:px-8 py-6 md:py-7 border-b border-white/[0.06]">
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/[0.08] via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold-tint)] via-transparent to-transparent pointer-events-none" />
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r
                       from-transparent via-white/[0.18] to-transparent" />
                     <div className="relative flex items-center gap-4">
                       <div className="relative shrink-0">
-                        <div className="absolute inset-0 rounded-xl bg-amber-500/10 blur-xl opacity-90" />
-                        <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-xl bg-amber-500/10
-                          border border-amber-500/20 flex items-center justify-center">
-                          <Bookmark size={22} className="text-amber-400 fill-amber-400" />
+                        <div className="absolute inset-0 rounded-xl bg-[var(--gold-tint)] blur-xl opacity-90" />
+                        <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-xl bg-[var(--gold-tint)]
+                          border border-[rgba(199,154,74,0.30)] flex items-center justify-center">
+                          <Bookmark size={22} className="text-[var(--gold)] fill-[var(--gold)]" />
                         </div>
                       </div>
                       <div>
-                        <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-amber-400">
+                        <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[var(--gold)]">
                           Saved
                         </p>
                         <h2 className="text-xl md:text-2xl font-black text-white leading-tight">
@@ -643,16 +643,16 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                           key={bm.page_slug}
                           href={`${bp}/${bm.page_slug}`}
                           className="flex items-center gap-3 px-5 md:px-8 py-3.5 transition-colors
-                            border-b border-white/[0.04] last:border-b-0 hover:bg-amber-500/[0.04] group"
+                            border-b border-white/[0.04] last:border-b-0 hover:bg-[var(--gold-tint)] group"
                         >
-                          <Bookmark size={14} className="text-amber-400 shrink-0 fill-amber-400" />
+                          <Bookmark size={14} className="text-[var(--gold)] shrink-0 fill-[var(--gold)]" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm text-white/90 group-hover:text-white truncate">
+                            <p className="text-sm text-white/85 group-hover:text-white truncate">
                               {bm.page_title}
                             </p>
                             <p className="text-[11px] text-zinc-500">Chapter {bm.chapter_number}</p>
                           </div>
-                          <ChevronRight size={14} className="text-zinc-600 group-hover:text-amber-400/60 shrink-0" />
+                          <ChevronRight size={14} className="text-zinc-600 group-hover:text-[var(--gold)] shrink-0" />
                         </Link>
                       ))}
                     </div>
@@ -722,7 +722,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                               <div
                                 className={`h-full rounded-full transition-all duration-700 ${
                                   chapterProgress[activeIdx].pct === 100
-                                    ? 'bg-emerald-500'
+                                    ? 'bg-[var(--gold)]'
                                     : `bg-gradient-to-r ${theme.bar}`
                                 }`}
                                 style={{ width: `${chapterProgress[activeIdx].pct}%` }}
@@ -779,14 +779,14 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                             href={`${bp}/${pg.slug}`}
                             className={`flex items-center gap-4 px-5 md:px-8 py-3.5 md:py-4
                               border-b border-white/[0.05] last:border-b-0 transition-colors group
-                              ${done ? 'hover:bg-emerald-500/[0.04]' : 'hover:bg-white/[0.02]'}`}
+                              ${done ? 'hover:bg-[var(--plum-tint)]' : 'hover:bg-white/[0.02]'}`}
                           >
                             {/* Status icon */}
                             <div className="shrink-0 w-5 flex items-center justify-center">
                               {isOpenerRow ? (
-                                <Sparkles size={16} className="text-amber-300" />
+                                <Sparkles size={16} className="text-[var(--gold)]" />
                               ) : done ? (
-                                <CheckCircle2 size={17} className="text-emerald-400" />
+                                <CheckCircle2 size={17} className="text-[var(--plum-text)]" />
                               ) : (
                                 <span className={`w-5 h-5 rounded-full border flex items-center justify-center
                                   text-[10px] font-semibold transition-colors ${
@@ -802,14 +802,14 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                             {/* Title + video preview + content chips */}
                             <div className="flex-1 min-w-0">
                               <span className={`text-sm md:text-[15px] leading-snug transition-colors block ${
-                                isOpenerRow ? 'text-amber-200/90 font-medium' : done ? 'text-zinc-400' : 'text-white/90 group-hover:text-white'
+                                isOpenerRow ? 'text-[var(--gold)] font-medium' : done ? 'text-zinc-400' : 'text-white/85 group-hover:text-white'
                               }`}>
                                 {isOpenerRow ? 'Chapter Overview' : pg.title}
                               </span>
                               {pg.video_title && (
                                 <span className="flex items-center gap-1 mt-1">
-                                  <PlayCircle size={11} className="text-rose-400 shrink-0" />
-                                  <span className="text-[11px] text-rose-400/80 truncate">{pg.video_title}</span>
+                                  <PlayCircle size={11} className="text-white/40 shrink-0" />
+                                  <span className="text-[11px] text-white/45 truncate">{pg.video_title}</span>
                                 </span>
                               )}
                               {contentIcons.filter(ci => ci!.label !== 'Video').length > 0 && (
@@ -845,19 +845,19 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                               onClick={(e) => handleBookmark(e, pg)}
                               className={`shrink-0 p-1 rounded-md transition-colors ${
                                 isBookmarked
-                                  ? 'text-amber-400 hover:text-amber-300'
+                                  ? 'text-[var(--gold)] hover:brightness-125'
                                   : 'text-zinc-600 hover:text-zinc-300 opacity-0 group-hover:opacity-100'
                               }`}
                               title={isBookmarked ? 'Remove bookmark' : 'Bookmark this page'}
                             >
-                              <Bookmark size={13} className={isBookmarked ? 'fill-amber-400' : ''} />
+                              <Bookmark size={13} className={isBookmarked ? 'fill-[var(--gold)]' : ''} />
                             </button>
 
 
                             <ChevronRight
                               size={14}
                               className={`shrink-0 transition-colors ${
-                                done ? 'text-emerald-500/40' : 'text-zinc-600 group-hover:text-white'
+                                done ? 'text-[var(--plum-text)]/50' : 'text-white/35 group-hover:text-white'
                               }`}
                             />
                           </Link>

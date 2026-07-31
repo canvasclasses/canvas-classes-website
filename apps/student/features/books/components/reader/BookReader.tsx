@@ -194,13 +194,13 @@ export default function BookReader({
       <header className="sticky top-0 z-40 bg-[var(--book-surface)] backdrop-blur border-b border-white/8">
         <div className="max-w-[1060px] mx-auto px-4 h-12 flex items-center gap-3">
           <Link href={bp}
-            className="text-white/40 hover:text-white/70 transition-colors shrink-0">
+            className="text-white/45 hover:text-white/82 transition-colors shrink-0">
             <ChevronLeft size={18} />
           </Link>
 
           <BookOpen size={14} className="text-orange-400 shrink-0" />
-          <span className="text-xs text-white/50 truncate flex-1">{chapterTitle}</span>
-          <span className="text-xs text-white/30 shrink-0">
+          <span className="text-xs text-white/60 truncate flex-1">{chapterTitle}</span>
+          <span className="text-xs text-white/45 shrink-0">
             {completedInChapter}/{lessonPages.length}
           </span>
           <button
@@ -208,7 +208,7 @@ export default function BookReader({
             className={`shrink-0 p-1.5 rounded-lg transition-colors ${
               bookmarkedSlugs.has(page.slug)
                 ? 'text-amber-400 bg-amber-500/10'
-                : 'text-white/25 hover:text-white/50 hover:bg-white/5'
+                : 'text-white/45 hover:text-white/60 hover:bg-white/5'
             }`}
             title={bookmarkedSlugs.has(page.slug) ? 'Remove bookmark' : 'Bookmark this page'}
           >
@@ -273,7 +273,7 @@ export default function BookReader({
                       style={{ width: `${progressPct}%` }}
                     />
                   </div>
-                  <p className="text-[10px] text-white/25">
+                  <p className="text-[10px] text-white/45">
                     {completedInChapter} of {lessonPages.length} completed
                   </p>
                 </div>
@@ -290,8 +290,8 @@ export default function BookReader({
                           : 'hover:bg-white/[0.04] border border-transparent'
                       }`}
                     >
-                      <BookOpen size={13} className={isOpener ? 'text-orange-400 shrink-0' : 'text-white/35 shrink-0'} />
-                      <span className={`text-[12px] font-medium leading-snug ${isOpener ? 'text-orange-300' : 'text-white/55'}`}>
+                      <BookOpen size={13} className={isOpener ? 'text-orange-400 shrink-0' : 'text-white/45 shrink-0'} />
+                      <span className={`text-[12px] font-medium leading-snug ${isOpener ? 'text-orange-300' : 'text-white/60'}`}>
                         Chapter Overview
                       </span>
                     </Link>
@@ -320,7 +320,7 @@ export default function BookReader({
                           ) : isCurrent ? (
                             <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />
                           ) : (
-                            <span className="text-[9px] text-white/25 font-medium">
+                            <span className="text-[9px] text-white/45 font-medium">
                               {i + 1}
                             </span>
                           )}
@@ -331,8 +331,8 @@ export default function BookReader({
                           isCurrent
                             ? 'text-orange-300 font-medium'
                             : isDone
-                              ? 'text-white/35 group-hover:text-white/50'
-                              : 'text-white/50 group-hover:text-white/70'
+                              ? 'text-white/45 group-hover:text-white/60'
+                              : 'text-white/60 group-hover:text-white/82'
                         }`}>
                           {pg.title}
                         </span>
@@ -353,7 +353,7 @@ export default function BookReader({
               className="flex items-center justify-center
                 w-5 h-12 rounded-r-lg -ml-px
                 bg-[var(--book-surface)] border border-l-0 border-white/10
-                text-white/30 hover:text-white/70 hover:bg-[#151E32]
+                text-white/45 hover:text-white/82 hover:bg-[#151E32]
                 transition-colors"
             >
               {sidebarOpen ? <ChevronLeft size={11} /> : <ChevronRight size={11} />}
@@ -406,7 +406,7 @@ export default function BookReader({
 
           {/* Quiz gate hint */}
           {hasQuiz && !quizPassed && (
-            <p className="text-xs text-white/30 text-center">
+            <p className="text-xs text-white/45 text-center">
               Complete the quiz to unlock the next topic
             </p>
           )}
@@ -424,7 +424,7 @@ export default function BookReader({
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-colors
                 ${canGoNext
                   ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold hover:opacity-90'
-                  : 'border border-white/10 bg-white/5 text-white/25 cursor-not-allowed'}`}
+                  : 'border border-white/10 bg-white/5 text-white/45 cursor-not-allowed'}`}
             >
               Next <ChevronRight size={15} />
             </Link>
@@ -463,14 +463,14 @@ export default function BookReader({
             text-center shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="text-6xl mb-4">🎉</div>
             <h2 className="text-2xl font-bold text-white mb-1">Milestone Unlocked!</h2>
-            <p className="text-white/50 text-sm mb-2">{page.title}</p>
+            <p className="text-white/60 text-sm mb-2">{page.title}</p>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full
               bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-sm font-medium mb-6">
               <Trophy size={13} /> {milestoneScore}% score
             </div>
 
             <div className="mb-6">
-              <div className="flex justify-between text-xs text-white/40 mb-1.5">
+              <div className="flex justify-between text-xs text-white/45 mb-1.5">
                 <span>{chapterTitle}</span>
                 <span>{completedInChapter}/{lessonPages.length} pages</span>
               </div>
@@ -484,7 +484,7 @@ export default function BookReader({
 
             <div className="flex gap-3">
               <button onClick={() => setShowMilestone(false)}
-                className="flex-1 py-2.5 rounded-xl border border-white/10 text-sm text-white/50 hover:text-white/80">
+                className="flex-1 py-2.5 rounded-xl border border-white/10 text-sm text-white/60 hover:text-white/82">
                 Stay here
               </button>
               {nextPageSlug && (
@@ -513,8 +513,8 @@ export default function BookReader({
             {/* Dismiss */}
             <button
               onClick={() => setShowSignInPrompt(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-lg text-white/30
-                hover:text-white/70 hover:bg-white/5 transition-colors"
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-white/45
+                hover:text-white/82 hover:bg-white/5 transition-colors"
               title="Close"
             >
               <X size={16} />
@@ -528,7 +528,7 @@ export default function BookReader({
             <h2 className="text-xl font-bold text-white text-center mb-2">
               Sign in to keep reading
             </h2>
-            <p className="text-sm text-white/50 text-center mb-6">
+            <p className="text-sm text-white/60 text-center mb-6">
               You can read the first page for free. Create a free account to continue to
               the next page — and so your progress is saved as you go.
             </p>
@@ -559,7 +559,7 @@ export default function BookReader({
 
             <button
               onClick={() => setShowSignInPrompt(false)}
-              className="w-full py-2 text-[13px] text-white/40 hover:text-white/70 transition-colors"
+              className="w-full py-2 text-[13px] text-white/45 hover:text-white/82 transition-colors"
             >
               Maybe later
             </button>

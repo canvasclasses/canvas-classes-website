@@ -7,6 +7,7 @@ import GradeLandingPage, {
   type GradePage,
 } from '@/features/books/components/GradeLandingPage';
 import LiveBooksComingSoon from '@/features/books/components/LiveBooksComingSoon';
+import { loadChapterImagery } from '@/features/books/lib/bookImagery';
 
 const EXPECTED_SUBJECTS = ['Science', 'Mathematics', 'Social Science'];
 
@@ -82,6 +83,7 @@ export default async function Class9Page() {
   const books: GradeBook[] = rawBooks.map((b) => ({
     _id: String(b._id),
     slug: String(b.slug),
+    cover_image: ((b as Record<string, unknown>).cover_image as string) ?? null,
     title: String(b.title),
     subject: String(b.subject),
     grade: Number(b.grade),
@@ -92,6 +94,7 @@ export default async function Class9Page() {
         number: c.number,
         title: c.title,
         slug: c.slug,
+        description: c.description ?? null,
       })),
   }));
 
@@ -135,6 +138,20 @@ export default async function Class9Page() {
   //
   // The FAQ content is chosen deliberately to map to searches that are
   // spiking while the official NCERT site hasn't published the new books.
+  // Real artwork from inside the books — see features/books/lib/bookImagery.ts.
+  // One page per chapter, bounded, behind this page's 24h ISR cache.
+  const imagery = await loadChapterImagery(
+    books.map((b) => ({ _id: b._id, chapterNumbers: b.chapters.map((c) => c.number) })),
+  );
+
+  for (const b of books) {
+    // a cover set by hand on the book document always wins
+    b.cover_image = b.cover_image ?? imagery.covers.get(b._id) ?? null;
+    for (const c of b.chapters) {
+      c.thumbnail = imagery.thumbnails.get(`${b._id}:${c.number}`) ?? null;
+    }
+  }
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
