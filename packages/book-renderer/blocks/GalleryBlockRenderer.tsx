@@ -127,7 +127,7 @@ export default function GalleryBlockRenderer({ block }: { block: GalleryBlock })
             </button>
             {/* Counter */}
             <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[11px] font-semibold tabular-nums
-              bg-black/45 border border-white/15 text-white/80 z-10">
+              bg-black/45 border border-white/15 text-white/60 z-10">
               {idx + 1} / {items.length}
             </div>
           </>
@@ -154,8 +154,8 @@ export default function GalleryBlockRenderer({ block }: { block: GalleryBlock })
         if (!lab && !current.caption) return null;
         const panel = lab && items.length > 1 ? ` (${String.fromCharCode(97 + idx)})` : '';
         return (
-          <figcaption className="mt-2 text-center text-sm text-white/50 italic">
-            {lab && <span className="font-semibold not-italic text-white/70">{lab}{panel}</span>}
+          <figcaption className="mt-2 text-center text-sm text-white/45 italic">
+            {lab && <span className="font-semibold not-italic text-white/60">{lab}{panel}</span>}
             {lab && current.caption ? ' — ' : ''}
             {current.caption}
           </figcaption>

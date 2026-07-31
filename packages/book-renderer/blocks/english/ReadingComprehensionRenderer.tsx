@@ -102,7 +102,7 @@ function McqView({ q, n }: { q: ReadingMCQ; n: number }) {
   const [chosen, setChosen] = useState<number | null>(null);
   return (
     <div>
-      <p className="text-[15px] leading-relaxed text-white/88"><span className="text-xs font-bold mr-2" style={{ color: ACCENT }}>Q{n}.</span><MdInline>{q.question}</MdInline></p>
+      <p className="text-[15px] leading-relaxed text-white/85"><span className="text-xs font-bold mr-2" style={{ color: ACCENT }}>Q{n}.</span><MdInline>{q.question}</MdInline></p>
       <OptionList options={q.options} correctIndex={q.correct_index} chosen={chosen} onChoose={setChosen} />
       {chosen !== null && <Feedback correct={chosen === q.correct_index} explanation={q.explanation} />}
     </div>
@@ -113,7 +113,7 @@ function AssertionReasonView({ q, n, hindi }: { q: ReadingAssertionReason; n: nu
   const [chosen, setChosen] = useState<number | null>(null);
   return (
     <div>
-      <p className="text-xs font-bold mb-2" style={{ color: ACCENT }}>Q{n}. <span className="text-white/40 font-semibold uppercase tracking-wider">{hindi ? 'कथन–कारण' : 'Assertion–Reason'}</span></p>
+      <p className="text-xs font-bold mb-2" style={{ color: ACCENT }}>Q{n}. <span className="text-white/45 font-semibold uppercase tracking-wider">{hindi ? 'कथन–कारण' : 'Assertion–Reason'}</span></p>
       <div className="rounded-xl px-4 py-3 mb-1 text-[14px] leading-relaxed" style={{ background: 'rgba(56,189,248,0.05)', border: '1px solid rgba(56,189,248,0.15)', color: 'rgba(255,255,255,0.82)' }}>
         <p className="mb-1.5"><span className="font-semibold text-sky-300">{hindi ? 'कथन (A): ' : 'Assertion (A): '}</span><MdInline>{q.assertion}</MdInline></p>
         <p><span className="font-semibold text-sky-300">{hindi ? 'कारण (R): ' : 'Reason (R): '}</span><MdInline>{q.reason}</MdInline></p>
@@ -128,8 +128,8 @@ function ShortAnswerView({ q, n }: { q: ReadingShortAnswer; n: number }) {
   const [revealed, setRevealed] = useState(false);
   return (
     <div>
-      <p className="text-[15px] leading-relaxed text-white/88"><span className="text-xs font-bold mr-2" style={{ color: ACCENT }}>Q{n}.</span><MdInline>{q.question}</MdInline></p>
-      {q.hint && !revealed && <p className="mt-1.5 text-[12px] text-white/35">💡 {q.hint}</p>}
+      <p className="text-[15px] leading-relaxed text-white/85"><span className="text-xs font-bold mr-2" style={{ color: ACCENT }}>Q{n}.</span><MdInline>{q.question}</MdInline></p>
+      {q.hint && !revealed && <p className="mt-1.5 text-[12px] text-white/45">💡 {q.hint}</p>}
       {!revealed ? (
         <button onClick={() => setRevealed(true)}
           className="mt-3 text-sm font-semibold px-4 py-2 rounded-xl transition-all"
@@ -140,7 +140,7 @@ function ShortAnswerView({ q, n }: { q: ReadingShortAnswer; n: number }) {
         <div className="mt-3 rounded-xl px-4 py-3 text-[14px] leading-relaxed" style={{ background: 'rgba(52,211,153,0.05)', border: '1px solid rgba(52,211,153,0.18)', color: 'rgba(255,255,255,0.7)' }}>
           <p className="text-[11px] uppercase tracking-wide text-emerald-400/70 font-semibold mb-1.5">Ek achha jawab aisa ho sakta hai</p>
           <MdInline>{q.model_answer}</MdInline>
-          <p className="mt-2 text-[12px] text-white/40">Apne jawab se milao — kya tumne yeh baat cover ki?</p>
+          <p className="mt-2 text-[12px] text-white/45">Apne jawab se milao — kya tumne yeh baat cover ki?</p>
         </div>
       )}
     </div>
@@ -158,11 +158,11 @@ export default function ReadingComprehensionRenderer({ block }: { block: Reading
           <span style={{ color: ACCENT }} className="font-bold">📖</span>
           <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'rgba(56,189,248,0.8)' }}>{(hindi ? TYPE_LABEL_HI : TYPE_LABEL)[block.passage_type] || (hindi ? 'गद्यांश' : 'Reading Passage')}</span>
         </div>
-        {block.word_count ? <span className="text-[11px] text-white/35 tabular-nums">{block.word_count} {hindi ? 'शब्द' : 'words'}</span> : null}
+        {block.word_count ? <span className="text-[11px] text-white/45 tabular-nums">{block.word_count} {hindi ? 'शब्द' : 'words'}</span> : null}
       </div>
 
-      {block.title && <h3 className="text-lg font-bold text-white/90 mb-1">{block.title}</h3>}
-      {block.intro && <div className="mb-3"><p className="text-[13.5px] leading-relaxed text-white/55"><MdInline>{block.intro}</MdInline></p></div>}
+      {block.title && <h3 className="text-lg font-bold text-white/85 mb-1">{block.title}</h3>}
+      {block.intro && <div className="mb-3"><p className="text-[13.5px] leading-relaxed text-white/60"><MdInline>{block.intro}</MdInline></p></div>}
 
       {/* passage card — prose paragraphs are numbered (CBSE style); table chunks
           render as a styled data table, not inside a <p>. */}
@@ -182,7 +182,7 @@ export default function ReadingComprehensionRenderer({ block }: { block: Reading
             );
           });
         })()}
-        {block.source_note && <p className="mt-2 text-[11px] italic text-white/30">{block.source_note}</p>}
+        {block.source_note && <p className="mt-2 text-[11px] italic text-white/45">{block.source_note}</p>}
       </div>
 
       {/* questions */}

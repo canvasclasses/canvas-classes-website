@@ -246,6 +246,10 @@ const ClassifyExerciseBlockSchema = BaseBlockSchema.extend({
   question: z.string().min(1),
   column_label: z.string().optional(),
   rows: z.array(ClassifyExerciseRowSchema).min(1),
+  // Subject-agnostic verdict wording — see ClassifyExerciseBlock in types/books.ts.
+  verdict_label: z.string().optional(),
+  yes_label: z.string().optional(),
+  no_label: z.string().optional(),
 });
 
 const InlineQuizBlockSchema = BaseBlockSchema.extend({
@@ -264,6 +268,38 @@ const WorkedExampleBlockSchema = BaseBlockSchema.extend({
   video_src: z.string().optional(),
 });
 
+// STEP SOLVER — see StepSolverBlock in types/books.ts. All sub-fields beyond the
+// discriminant kept minimal + optional so a stray null never trips the
+// Zod-rejects-null trap on a raw-driver write.
+const StepSolverCheckSchema = z.object({
+  kind: z.enum(['pick_op', 'mcq', 'fill_blank']),
+  prompt: z.string().min(1),
+  options: z.array(z.string()).optional(),
+  answer_index: z.number().int().nonnegative().optional(),
+  blank_answer: z.string().optional(),
+  feedback_right: z.string().optional(),
+  feedback_wrong: z.string().optional(),
+});
+const StepSolverStepSchema = z.object({
+  id: z.string().min(1),
+  math: z.string().min(1),
+  say: z.string().optional(),
+  why: z.string().optional(),
+  check: StepSolverCheckSchema.optional(),
+});
+const StepSolverBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('step_solver'),
+  title: z.string().optional(),
+  problem: z.string().min(1),
+  intro: z.string().optional(),
+  steps: z.array(StepSolverStepSchema).min(1),
+  now_you_try: z.object({
+    problem: z.string().min(1),
+    answer: z.string().min(1),
+    solution: z.string().optional(),
+  }).optional(),
+});
+
 const SimulationPredictionSchema = z.object({
   prompt: z.string().min(1),
   options: z.array(z.string()).min(2),
@@ -277,11 +313,440 @@ const SimulationBlockSchema = BaseBlockSchema.extend({
   prediction: SimulationPredictionSchema.optional(),
 });
 
+// MATH GRAPH — see MathGraphBlock in types/books.ts. All sub-fields optional so
+// a null (from a raw-driver write) never trips the Zod-rejects-null trap; the
+// save-path stripNulls heal + the renderer's own defaults cover partial specs.
+const MathAccentSchema = z.enum(['violet', 'sky', 'emerald', 'amber', 'pink', 'orange']);
+const MathGraphSpecSchema = z.object({
+  bounds: z.object({
+    xmin: z.number(), xmax: z.number(), ymin: z.number(), ymax: z.number(),
+  }).optional(),
+  functions: z.array(z.object({
+    expr: z.string(),
+    color: MathAccentSchema.optional(),
+    dashed: z.boolean().optional(),
+    label: z.string().optional(),
+  })).optional(),
+  sliders: z.array(z.object({
+    name: z.string().min(1),
+    min: z.number(), max: z.number(), value: z.number(),
+    step: z.number().optional(),
+  })).optional(),
+  points: z.array(z.object({
+    x: z.number(), y: z.number(),
+    label: z.string().optional(),
+    draggable: z.boolean().optional(),
+    color: MathAccentSchema.optional(),
+  })).optional(),
+  segments: z.array(z.object({
+    from: z.object({ x: z.number(), y: z.number() }),
+    to: z.object({ x: z.number(), y: z.number() }),
+    color: MathAccentSchema.optional(),
+    dashed: z.boolean().optional(),
+    label: z.string().optional(),
+  })).optional(),
+  regions: z.array(z.object({
+    expr: z.string(),
+    op: z.enum(['<', '>', '<=', '>=']),
+    color: MathAccentSchema.optional(),
+  })).optional(),
+  annotations: z.array(z.object({
+    x: z.number(), y: z.number(), text: z.string(),
+    color: MathAccentSchema.optional(),
+  })).optional(),
+  showGrid: z.boolean().optional(),
+  showAxes: z.boolean().optional(),
+  keepSquare: z.boolean().optional(),
+  table: z.object({
+    expr: z.string(), from: z.number(), to: z.number(), step: z.number(),
+    label: z.string().optional(),
+  }).optional(),
+});
+const MathGraphBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('math_graph'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  archetype: z.string().optional(),
+  archetype_params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+  spec: MathGraphSpecSchema.optional(),
+  predict: z.object({
+    prompt: z.string().min(1),
+    options: z.array(z.string()).min(2),
+    answer_index: z.number().int().optional(),
+    reveal: z.string().optional(),
+  }).optional(),
+  compare: z.boolean().optional(),
+  challenge: z.object({
+    targets: z.record(z.string(), z.number()),
+    tolerance: z.number().optional(),
+    prompt: z.string().optional(),
+    success: z.string().optional(),
+  }).optional(),
+  identify: z.object({
+    prompt: z.string().min(1),
+    correct_index: z.number().int().min(0),
+    explanation: z.string().min(1),
+  }).optional(),
+  height: z.number().optional(),
+});
+
+// ── VECTOR BOARD (physics) — sibling of math_graph; see types/books.ts §18c ──
+const VectorAccentSchema = z.enum(['indigo', 'amber', 'emerald', 'pink', 'red', 'violet', 'ghost']);
+const VectorSpecSchema = z.object({
+  label: z.string().min(1),
+  mag: z.number(),
+  angle: z.number(),
+  color: VectorAccentSchema.optional(),
+  draggable: z.boolean().optional(),
+  tail: z.enum(['origin', 'chain']).optional(),
+});
+const VectorBoardBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('vector_board'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  archetype: z.string().min(1),
+  params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+  vectors: z.array(VectorSpecSchema).optional(),
+  units: z.string().optional(),
+  show: z.object({
+    grid: z.boolean().optional(),
+    axes: z.boolean().optional(),
+    components: z.boolean().optional(),
+    angleArc: z.boolean().optional(),
+    readout: z.boolean().optional(),
+    formula: z.boolean().optional(),
+    compass: z.boolean().optional(),
+  }).optional(),
+  guided: z.boolean().optional(),
+  steps: z.array(z.object({ say: z.string().min(1), cta: z.string().min(1) })).optional(),
+  predict: z.object({
+    prompt: z.string().min(1),
+    options: z.array(z.string()).min(2),
+    answer_index: z.number().int().optional(),
+    reveal: z.string().optional(),
+  }).optional(),
+  target: z.object({
+    prompt: z.string().min(1),
+    resultant_mag: z.number().optional(),
+    resultant_angle: z.number().optional(),
+    tolerance: z.number().optional(),
+    angle_tolerance: z.number().optional(),
+    show_goal: z.boolean().optional(),
+    success: z.string().min(1),
+  }).optional(),
+  identify: z.object({
+    prompt: z.string().min(1),
+    options: z.array(z.object({
+      vectors: z.array(VectorSpecSchema).min(1),
+      caption: z.string().optional(),
+    })).min(2),
+    correct_index: z.number().int().min(0),
+    explanation: z.string().min(1),
+  }).optional(),
+  numeric: z.object({
+    prompt: z.string().min(1),
+    answer: z.number(),
+    tolerance: z.number().optional(),
+    unit: z.string().optional(),
+    worked_reveal: z.string().min(1),
+  }).optional(),
+  height: z.number().optional(),
+});
+
+// ── MECHANICS BENCH (E1) + MOTION LAB (E2) ───────────────────────────────────
+// Config-carrying engine blocks — see packages/book-renderer/blocks/
+// mechanics-bench/types.ts and motion-lab/types.ts for the engine contracts,
+// and _agents/plans/PHYSICS_SIMULATION_PROGRAM.md §3 for why these are blocks
+// rather than `simulation` registry entries.
+//
+// NOTE (recurring trap): blocks are Mixed-stored but Zod-validated with
+// `.optional()`, which REJECTS an explicit null. Never write null into these
+// fields from a raw-driver script — omit the key instead.
+
+const MechanicsPredictSchema = z.object({
+  prompt: z.string().min(1),
+  options: z.array(z.string()).min(2),
+  answer_index: z.number().int().optional(),
+  reveal: z.string().optional(),
+});
+
+const MechanicsNumericSchema = z.object({
+  prompt: z.string().min(1),
+  answer: z.number(),
+  tolerance: z.number().optional(),
+  unit: z.string().optional(),
+  worked_reveal: z.string().min(1),
+});
+
+const MechanicsBodySpecSchema = z.object({
+  id: z.string().min(1),
+  shape: z.enum(['block', 'sphere', 'wedge', 'rod', 'pulley']),
+  mass: z.number().min(0),
+  x: z.number(),
+  y: z.number(),
+  w: z.number().optional(),
+  h: z.number().optional(),
+  radius: z.number().optional(),
+  angle: z.number().optional(),
+  inertia: z.number().optional(),
+  fixed: z.boolean().optional(),
+  dof: z.number().optional(),
+  label: z.string().optional(),
+});
+
+const MechanicsContactSpecSchema = z.object({
+  id: z.string().min(1),
+  a: z.string().min(1),
+  b: z.string().min(1),
+  normal: z.number(),
+  mu_s: z.number().min(0).optional(),
+  mu_k: z.number().min(0).optional(),
+  sliding: z.union([z.literal(-1), z.literal(0), z.literal(1)]).optional(),
+});
+
+const MechanicsStringSpecSchema = z.object({
+  id: z.string().min(1),
+  path: z.array(z.string().min(1)).min(2),
+  taut: z.boolean().optional(),
+  massless: z.boolean().optional(),
+  label: z.string().optional(),
+});
+
+const MechanicsAppliedSpecSchema = z.object({
+  id: z.string().min(1),
+  body: z.string().min(1),
+  from: z.string().min(1),
+  mag: z.number(),
+  angle: z.number(),
+  label: z.string().optional(),
+});
+
+const MechanicsSceneSpecSchema = z.object({
+  bodies: z.array(MechanicsBodySpecSchema).min(1),
+  contacts: z.array(MechanicsContactSpecSchema).optional(),
+  strings: z.array(MechanicsStringSpecSchema).optional(),
+  applied: z.array(MechanicsAppliedSpecSchema).optional(),
+  g: z.number().optional(),
+  frame: z.enum(['inertial', 'accelerating', 'rotating']).optional(),
+  frame_accel: z.object({ x: z.number(), y: z.number() }).optional(),
+  frame_omega: z.number().optional(),
+});
+
+const MechanicsBenchBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('mechanics_bench'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  mode: z.enum(['fbd', 'pulley', 'solve', 'energy', 'rotation']),
+  archetype: z.string().optional(),
+  params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+  scene: MechanicsSceneSpecSchema.optional(),
+  fbd: z.object({
+    body: z.string().min(1),
+    prompt: z.string().min(1),
+    require_agent: z.boolean().optional(),
+    allow_cut: z.boolean().optional(),
+    then_solve: z.boolean().optional(),
+    success: z.string().optional(),
+  }).optional(),
+  pulley: z.object({
+    prompt: z.string().min(1),
+    predict_body: z.string().optional(),
+    show_constraint_ledger: z.boolean().optional(),
+    allow_extend: z.boolean().optional(),
+    success: z.string().optional(),
+  }).optional(),
+  show: z.object({
+    grid: z.boolean().optional(),
+    axes: z.boolean().optional(),
+    components: z.boolean().optional(),
+    readout: z.boolean().optional(),
+    equations: z.boolean().optional(),
+    values: z.boolean().optional(),
+  }).optional(),
+  guided: z.boolean().optional(),
+  steps: z.array(z.object({ say: z.string().min(1), cta: z.string().min(1) })).optional(),
+  predict: MechanicsPredictSchema.optional(),
+  numeric: MechanicsNumericSchema.optional(),
+  height: z.number().optional(),
+});
+
+const MotionBenchBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('motion_lab'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  scenario: z.enum([
+    'projectile', 'projectile-incline', 'monkey-hunter', 'relative',
+    'circular', 'vertical-circle', 'banked-road', 'graphs',
+  ]),
+  archetype: z.string().optional(),
+  params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+  projectile: z.object({
+    speed: z.number(),
+    angle: z.number(),
+    height: z.number().optional(),
+    g: z.number().optional(),
+    drag: z.object({ k: z.number(), quadratic: z.boolean().optional() }).optional(),
+    incline: z.number().optional(),
+    target: z.object({ x: z.number(), y: z.number() }).optional(),
+  }).optional(),
+  circular: z.object({
+    radius: z.number().positive(),
+    mass: z.number().positive(),
+    speed: z.number(),
+    plane: z.enum(['vertical', 'horizontal']).optional(),
+    agent: z.enum(['string', 'rod', 'track-inside', 'track-outside', 'friction', 'gravity']).optional(),
+    bank: z.number().optional(),
+    mu_s: z.number().min(0).optional(),
+    alpha: z.number().optional(),
+  }).optional(),
+  strips: z.array(z.object({
+    axis: z.enum(['x', 'y', 'speed', 'vx', 'vy', 'ax', 'ay']),
+    label: z.string().min(1),
+    mode: z.enum(['line', 'graph']),
+    unit: z.string().optional(),
+  })).optional(),
+  frames: z.array(z.enum(['ground', 'translating', 'accelerating', 'rotating'])).optional(),
+  show: z.object({
+    grid: z.boolean().optional(),
+    trail: z.boolean().optional(),
+    vectors: z.boolean().optional(),
+    components: z.boolean().optional(),
+    readout: z.boolean().optional(),
+    envelope: z.boolean().optional(),
+  }).optional(),
+  allow_release: z.boolean().optional(),
+  guided: z.boolean().optional(),
+  steps: z.array(z.object({ say: z.string().min(1), cta: z.string().min(1) })).optional(),
+  predict: MechanicsPredictSchema.optional(),
+  numeric: MechanicsNumericSchema.optional(),
+  height: z.number().optional(),
+});
+
+// ── CIRCUIT (E3) · OPTICS (E4) · FIELD (E5) engine blocks ────────────────────
+// Same null trap as the other engine blocks: Mixed-stored, Zod-validated with
+// `.optional()`, which REJECTS an explicit null. Omit keys, never write null.
+
+const CircuitBenchBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('circuit_bench'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  archetype: z.string().optional(),
+  params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+  nodes: z.array(z.object({
+    id: z.string().min(1), x: z.number().optional(), y: z.number().optional(),
+    label: z.string().optional(), ground: z.boolean().optional(),
+  })).optional(),
+  components: z.array(z.object({
+    id: z.string().min(1),
+    kind: z.enum(['resistor', 'battery', 'wire', 'capacitor', 'inductor',
+      'ammeter', 'voltmeter', 'switch', 'bulb', 'galvanometer']),
+    a: z.string().min(1), b: z.string().min(1),
+    value: z.number(), internal: z.number().optional(),
+    label: z.string().optional(), open: z.boolean().optional(),
+    x: z.number().optional(), y: z.number().optional(),
+  })).optional(),
+  probes: z.tuple([z.string(), z.string()]).optional(),
+  show: z.object({
+    redraw: z.boolean().optional(),
+    potentialHeatmap: z.boolean().optional(),
+    currentWidth: z.boolean().optional(),
+    values: z.boolean().optional(),
+    equations: z.boolean().optional(),
+  }).optional(),
+  guided: z.boolean().optional(),
+  steps: z.array(z.object({ say: z.string().min(1), cta: z.string().min(1) })).optional(),
+  predict: MechanicsPredictSchema.optional(),
+  numeric: MechanicsNumericSchema.optional(),
+  height: z.number().optional(),
+});
+
+const OpticsBenchBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('optics_bench'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  mode: z.enum(['bench', 'assembler', 'wave']),
+  archetype: z.string().optional(),
+  params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+  elements: z.array(z.object({
+    id: z.string().min(1),
+    kind: z.enum(['thin-lens', 'thick-lens', 'mirror-spherical', 'mirror-plane',
+      'aperture', 'screen', 'prism', 'slab', 'eye', 'grating']),
+    x: z.number(), y: z.number().optional(),
+    focal: z.number().optional(), aperture: z.number().optional(),
+    radius: z.number().optional(), n: z.number().optional(),
+    apex: z.number().optional(), tilt: z.number().optional(),
+    label: z.string().optional(),
+  })).optional(),
+  source: z.object({
+    x: z.number(), y: z.number(), rays: z.number().optional(),
+    wavelength: z.number().optional(),
+    kind: z.enum(['point', 'extended', 'parallel-beam']).optional(),
+    beamAngle: z.number().optional(),
+  }).optional(),
+  nMedium: z.number().optional(),
+  show: z.object({
+    constructionRays: z.boolean().optional(),
+    realFan: z.boolean().optional(),
+    image: z.boolean().optional(),
+    labels: z.boolean().optional(),
+    magnification: z.boolean().optional(),
+  }).optional(),
+  guided: z.boolean().optional(),
+  steps: z.array(z.object({ say: z.string().min(1), cta: z.string().min(1) })).optional(),
+  predict: MechanicsPredictSchema.optional(),
+  numeric: MechanicsNumericSchema.optional(),
+  height: z.number().optional(),
+});
+
+const FieldBenchBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('field_bench'),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  kind: z.enum(['electric', 'magnetic', 'gravitational']),
+  mode: z.enum(['sculptor', 'gauss', 'trajectory', 'photoelectric', 'emi']),
+  archetype: z.string().optional(),
+  params: z.record(z.string(), z.union([z.number(), z.string(), z.boolean()])).optional(),
+  sources: z.array(z.object({
+    id: z.string().min(1),
+    kind: z.enum(['point-charge', 'dipole', 'line-charge', 'sheet-charge', 'ring-charge',
+      'point-mass', 'current-wire', 'current-loop', 'solenoid', 'bar-magnet',
+      'uniform-E', 'uniform-B']),
+    x: z.number(), y: z.number(), strength: z.number(),
+    angle: z.number().optional(), radius: z.number().optional(),
+    length: z.number().optional(), label: z.string().optional(),
+    fixed: z.boolean().optional(),
+  })).optional(),
+  testCharges: z.array(z.object({
+    id: z.string().min(1), x: z.number(), y: z.number(),
+    vx: z.number().optional(), vy: z.number().optional(),
+    charge: z.number(), mass: z.number(), label: z.string().optional(),
+  })).optional(),
+  surfaces: z.array(z.object({
+    id: z.string().min(1), shape: z.enum(['circle', 'rectangle']),
+    x: z.number(), y: z.number(), radius: z.number().optional(),
+    w: z.number().optional(), h: z.number().optional(), label: z.string().optional(),
+  })).optional(),
+  show: z.object({
+    fieldLines: z.boolean().optional(),
+    equipotentials: z.boolean().optional(),
+    vectors: z.boolean().optional(),
+    flux: z.boolean().optional(),
+    magnitudeHeatmap: z.boolean().optional(),
+  }).optional(),
+  allow_drag_surface: z.boolean().optional(),
+  guided: z.boolean().optional(),
+  steps: z.array(z.object({ say: z.string().min(1), cta: z.string().min(1) })).optional(),
+  predict: MechanicsPredictSchema.optional(),
+  numeric: MechanicsNumericSchema.optional(),
+  height: z.number().optional(),
+});
+
 const ReasoningPromptBlockSchema = BaseBlockSchema.extend({
   type: z.literal('reasoning_prompt'),
   reasoning_type: z.enum(['logical', 'spatial', 'quantitative', 'analogical']),
   prompt: z.string(),
   options: z.array(z.string()).optional(),
+  correct_index: z.number().int().nonnegative().optional(),
   reveal: z.string(),
   difficulty_level: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
 });
@@ -793,6 +1258,42 @@ const GuidedRevealBlockSchema = BaseBlockSchema.extend({
   outro: z.string().optional(),
 });
 
+// Estimate Reveal — "discover, don't display" a statistic (LS8). See
+// EstimateRevealBlock in types/books.ts.
+const EstimateRevealBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('estimate_reveal'),
+  question: z.string().min(1),
+  unit: z.string().min(1),
+  min: z.number(),
+  max: z.number(),
+  step: z.number().positive().optional(),
+  default_guess: z.number().optional(),
+  truth: z.number(),
+  reveal_unit: z.string().optional(),
+  source: z.string().optional(),
+  reveal: z.string().min(1),
+  caption: z.string().optional(),
+});
+
+// Comparison Feed — the self-image instrument (LS9). See ComparisonFeedBlock in
+// types/books.ts.
+const ComparisonFeedPostSchema = z.object({
+  id: z.string().min(1),
+  who: z.string().min(1),
+  meta: z.string().optional(),
+  front: z.string().min(1),
+  reveal_label: z.string().optional(),
+  back: z.string().min(1),
+});
+const ComparisonFeedBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('comparison_feed'),
+  title: z.string().optional(),
+  intro: z.string().optional(),
+  meter_label: z.string().optional(),
+  posts: z.array(ComparisonFeedPostSchema).min(2).max(8),
+  closing: z.string().min(1),
+});
+
 // Perspective Scenario — Social Science engagement mechanic (2026-07-08, founder
 // design). See PerspectiveScenarioBlock in types/books.ts for the full rationale.
 const PerspectiveScenarioOptionSchema = z.object({
@@ -851,6 +1352,29 @@ const YouSolveItBlockSchema = BaseBlockSchema.extend({
   reality_check: z.string().min(1),
 });
 
+// Mind map — chapter-end revision aid (2026-07-26). See MindMapBlock in
+// types/books.ts for the full rationale.
+const MindMapLeafSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  formula: z.string().optional(),
+  summary: z.string().min(1),
+  flashcardTopic: z.string().optional(),
+});
+const MindMapBranchSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  children: z.array(MindMapLeafSchema).min(1).max(10),
+});
+const MindMapBlockSchema = BaseBlockSchema.extend({
+  type: z.literal('mind_map'),
+  title: z.string().min(1),
+  root_label: z.string().min(1),
+  intro: z.string().optional(),
+  branches: z.array(MindMapBranchSchema).min(2).max(12),
+  flashcardChapterSlug: z.string().optional(),
+});
+
 // ─── Child block union (excludes section to prevent nesting) ─────────────────
 
 const ChildContentBlockSchema = z.discriminatedUnion('type', [
@@ -874,6 +1398,14 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   InlineQuizBlockSchema,
   WorkedExampleBlockSchema,
   SimulationBlockSchema,
+  MathGraphBlockSchema,
+  VectorBoardBlockSchema,
+  MechanicsBenchBlockSchema,
+  MotionBenchBlockSchema,
+  CircuitBenchBlockSchema,
+  OpticsBenchBlockSchema,
+  FieldBenchBlockSchema,
+  StepSolverBlockSchema,
   ReasoningPromptBlockSchema,
   CuriosityPromptBlockSchema,
   MeetAScientistBlockSchema,
@@ -901,9 +1433,12 @@ const ChildContentBlockSchema = z.discriminatedUnion('type', [
   AttentionXrayBlockSchema,
   SelfExperimentBlockSchema,
   GuidedRevealBlockSchema,
+  EstimateRevealBlockSchema,
+  ComparisonFeedBlockSchema,
   PerspectiveScenarioBlockSchema,
   CareerSpotlightBlockSchema,
   YouSolveItBlockSchema,
+  MindMapBlockSchema,
 ]);
 
 const SectionBlockSchema = BaseBlockSchema.extend({
@@ -936,6 +1471,14 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   InlineQuizBlockSchema,
   WorkedExampleBlockSchema,
   SimulationBlockSchema,
+  MathGraphBlockSchema,
+  VectorBoardBlockSchema,
+  MechanicsBenchBlockSchema,
+  MotionBenchBlockSchema,
+  CircuitBenchBlockSchema,
+  OpticsBenchBlockSchema,
+  FieldBenchBlockSchema,
+  StepSolverBlockSchema,
   SectionBlockSchema,
   ReasoningPromptBlockSchema,
   CuriosityPromptBlockSchema,
@@ -966,9 +1509,12 @@ export const ContentBlockSchema = z.discriminatedUnion('type', [
   AttentionXrayBlockSchema,
   SelfExperimentBlockSchema,
   GuidedRevealBlockSchema,
+  EstimateRevealBlockSchema,
+  ComparisonFeedBlockSchema,
   PerspectiveScenarioBlockSchema,
   CareerSpotlightBlockSchema,
   YouSolveItBlockSchema,
+  MindMapBlockSchema,
 ]);
 
 export const ContentBlocksArraySchema = z.array(ContentBlockSchema);

@@ -34,7 +34,7 @@ export default function AnimationBlockRenderer({ block }: { block: AnimationBloc
     return (
       <div className={`${wClass} my-4 aspect-video bg-[#0B0F15] border border-white/10 rounded-xl
         flex items-center justify-center`}>
-        <span className="text-white/30 text-sm">Loading animation…</span>
+        <span className="text-white/45 text-sm">Loading animation…</span>
       </div>
     );
   }
@@ -59,7 +59,7 @@ export default function AnimationBlockRenderer({ block }: { block: AnimationBloc
         )}
       </div>
       {block.caption && (
-        <figcaption className="mt-2 text-center text-sm text-white/50 italic">
+        <figcaption className="mt-2 text-center text-sm text-white/45 italic">
           {block.caption}
         </figcaption>
       )}

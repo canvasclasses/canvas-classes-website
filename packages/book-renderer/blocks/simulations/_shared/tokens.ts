@@ -50,11 +50,36 @@ export const ACCENTS = {
 } as const;
 
 // ── Text tiers ─────────────────────────────────────────────────────────────
+//
+// CONTRAST (revised 2026-07-30 after a browser audit measured every tier).
+// `ghost` and `muted` were failing WCAG AA badly — 4.04 and **2.53** against the
+// card surface, against the 4.5 a body-size string needs. They are not used for
+// decoration: they carried real instructional sentences ("the eight faint dots
+// on each track are equally spaced IN TIME"), every tab sub-label, and every
+// sim subtitle. On a product a student reads for hours, 2.53 is not a style
+// choice, it is text they have to squint at.
+//
+// The ratios below are measured against the LIGHTEST background a sim paints
+// text on — the accent-tinted "active" card, ~rgb(39,40,55). That is the real
+// worst case: a translucent violet tint over a dark card raises the background
+// luminance and eats the margin. A first pass tuned against SIM_INPUT #151E32
+// looked fine and still failed there at 4.26, which is why these are quoted
+// against the tint:
+//   primary 11.7 · secondary 5.7 · ghost 5.0 · muted 4.65   (all ≥ 4.5 = AA)
+// On the flat surfaces (#0B0F15 / #0d1117 / #151E32) every tier is higher.
+//
+// The lower three tiers sit closer together than before. That is inherent: on a
+// near-black surface there is only so much room below "readable". Keep using
+// SIZE and WEIGHT to carry hierarchy (see TYPE below) rather than reaching for
+// a dimmer grey — there isn't one left that is still legible.
 export const TEXT = {
   primary:   '#e2e8f0',   // headings / primary readouts (use instead of pure white)
   secondary: '#94a3b8',   // body / explanation
-  ghost:     '#64748b',   // micro-labels, units, tips
-  muted:     '#475569',   // dimmest — subtitles, sub-labels
+  ghost:     '#8b99ad',   // micro-labels, units, tips
+  muted:     '#8493a8',   // dimmest tier — subtitles, sub-labels. This is the AA FLOOR:
+                          // nothing in a sim may be dimmer than this and still be text,
+                          // and nothing may re-dim it with an `opacity` below ~0.9 either
+                          // (see the dimmed-readout note in circular/parts.tsx).
 } as const;
 
 // ── Semantic pass/fail (the ONE non-accent colour pair — mark sim-lint-ok) ──

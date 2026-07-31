@@ -54,7 +54,7 @@ function ThemePanel({ theme, hinglish }: { theme: ThemeCard; hinglish?: boolean 
           <div className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: 'rgba(252,211,77,0.6)' }}>
             For You
           </div>
-          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/75">
+          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/82">
             {reflection}
           </InlineMarkdown>
         </div>
@@ -75,7 +75,7 @@ export default function ThemeExplorerRenderer({ block, hinglish }: { block: Them
 
       {block.intro && (
         <div className="mb-4">
-          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/65">
+          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/60">
             {block.intro}
           </InlineMarkdown>
         </div>

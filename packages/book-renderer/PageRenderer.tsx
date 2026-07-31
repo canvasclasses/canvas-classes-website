@@ -203,7 +203,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
               {page.title}
             </h1>
             {page.subtitle && (
-              <p className="mt-3 text-[17px] text-white/55 leading-snug">{page.subtitle}</p>
+              <p className="mt-3 text-[17px] text-white/60 leading-snug">{page.subtitle}</p>
             )}
           </div>
 
@@ -216,7 +216,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
                 className={`px-3 py-1.5 transition-colors ${
                   !activeHinglish
                     ? 'bg-orange-500 text-black'
-                    : 'bg-transparent text-white/40 hover:text-white/70'
+                    : 'bg-transparent text-white/45 hover:text-white/60'
                 }`}
               >
                 EN
@@ -226,7 +226,7 @@ function PageRendererInner({ page, onQuizPass, hinglishOverride, videoOriginOver
                 className={`px-3 py-1.5 transition-colors ${
                   activeHinglish
                     ? 'bg-orange-500 text-black'
-                    : 'bg-transparent text-white/40 hover:text-white/70'
+                    : 'bg-transparent text-white/45 hover:text-white/60'
                 }`}
               >
                 HI

@@ -120,7 +120,12 @@ export function StepBar({ steps, currentId, onGo, accent = ACCENT }:
             style={{
               background: active ? accentTint(accent, 0.15) : done ? 'rgba(52,211,153,0.08)' : 'rgba(255,255,255,0.03)',
               border: `1px solid ${active ? accentTint(accent, 0.45) : done ? 'rgba(52,211,153,0.25)' : BORDER.card}`,
-              color: active ? accent : done ? '#6ee7b7' : 'rgba(255,255,255,0.25)',
+              // Upcoming steps were rgba(255,255,255,0.25) — a magic value that
+              // measured 2.26:1, half of AA. These pills tell a student what is
+              // coming next in the exercise, so they have to be readable, not a
+              // ghost. TEXT.muted is the AA floor and keeps them clearly
+              // subordinate to the active and completed states.
+              color: active ? accent : done ? '#6ee7b7' : TEXT.muted,
               cursor: done ? 'pointer' : 'default',
             }}>
             <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0"
@@ -166,9 +171,24 @@ export function SimSlider({ label, value, min, max, step, onChange, unit = '', a
   return (
     <div className="flex items-center gap-3" style={{ opacity: disabled ? 0.4 : 1 }}>
       <div style={{ minWidth: 88, fontSize: 12, fontWeight: 600, color: accent }}>{label}</div>
+      {/*
+        TOUCH TARGET (2026-07-30). A bare range input renders ~16px tall, less
+        than half the ~44px a finger needs — measured on every slider in every
+        sim during a browser audit. The track stays visually thin; the ELEMENT
+        is padded out to 44px so the whole band is grabbable. `touchAction:
+        none` stops a drag along the slider from scrolling the page instead,
+        which is what makes a thin slider feel broken on a phone rather than
+        merely fiddly.
+      */}
       <input type="range" min={min} max={max} step={step} value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))} disabled={disabled}
-        className="flex-1" style={{ accentColor: accent, cursor: disabled ? 'not-allowed' : 'pointer' }} />
+        aria-label={label}
+        className="flex-1" style={{
+          accentColor: accent,
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          minHeight: 44,
+          touchAction: 'none',
+        }} />
       <div className="tabular-nums" style={{ minWidth: 70, textAlign: 'right', fontSize: 13, fontWeight: 700, color: accent }}>
         {format ? format(value) : value}
         {unit && <span style={{ color: TEXT.ghost, fontWeight: 500 }}> {unit}</span>}

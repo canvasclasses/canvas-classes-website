@@ -13,9 +13,9 @@ export default function PracticeLinkBlockRenderer({ block }: { block: PracticeLi
   return (
     <div className="my-4 p-4 bg-[#151E32] border border-orange-500/20 rounded-xl flex items-center justify-between gap-4">
       <div>
-        <p className="text-sm font-semibold text-white/90">{block.label}</p>
+        <p className="text-sm font-semibold text-white/85">{block.label}</p>
         {count > 0 && (
-          <p className="text-xs text-white/50 mt-0.5">
+          <p className="text-xs text-white/60 mt-0.5">
             {count} question{count !== 1 ? 's' : ''}
           </p>
         )}

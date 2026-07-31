@@ -43,7 +43,7 @@ function FillBlankView({ ch, done, onResult }: { ch: FillBlankChallenge; done: b
     const chosen = vals[0];
     return (
       <div>
-        <p className="text-[15px] leading-[1.9] text-white/90">
+        <p className="text-[15px] leading-[1.9] text-white/85">
           <InlineMarkdown>{parts[0]}</InlineMarkdown>
           <span className="inline-block mx-1 px-2.5 py-0.5 rounded-md font-semibold align-baseline"
             style={{
@@ -72,7 +72,7 @@ function FillBlankView({ ch, done, onResult }: { ch: FillBlankChallenge; done: b
             );
           })}
         </div>
-        {ch.hint && !done && <p className="mt-2 text-[12px] text-white/35">💡 {ch.hint}</p>}
+        {ch.hint && !done && <p className="mt-2 text-[12px] text-white/45">💡 {ch.hint}</p>}
         {!done && <CheckButton disabled={!allFilled} onClick={() => onResult(correct)} />}
       </div>
     );
@@ -80,7 +80,7 @@ function FillBlankView({ ch, done, onResult }: { ch: FillBlankChallenge; done: b
 
   return (
     <div>
-      <p className="text-[15px] leading-[1.9] text-white/90">
+      <p className="text-[15px] leading-[1.9] text-white/85">
         {parts.map((part, i) => (
           <span key={i}>
             <InlineMarkdown>{part}</InlineMarkdown>
@@ -100,7 +100,7 @@ function FillBlankView({ ch, done, onResult }: { ch: FillBlankChallenge; done: b
           </span>
         ))}
       </p>
-      {ch.hint && !done && <p className="mt-2 text-[12px] text-white/35">💡 {ch.hint}</p>}
+      {ch.hint && !done && <p className="mt-2 text-[12px] text-white/45">💡 {ch.hint}</p>}
       {done && !correct && (
         <p className="mt-3 text-[13px] text-emerald-300/90">Answer: {ch.answers.map((a) => a[0]).join(', ')}</p>
       )}
@@ -116,7 +116,7 @@ function PredictWordView({ ch, done, onResult }: { ch: PredictWordChallenge; don
   const correct = accepts(ch.answers, val);
   return (
     <div>
-      <p className="text-[15px] leading-relaxed text-white/90">
+      <p className="text-[15px] leading-relaxed text-white/85">
         <span className="text-violet-300/70 text-[11px] uppercase tracking-wider block mb-1">Predict the next word</span>
         “<InlineMarkdown>{ch.lead}</InlineMarkdown>{' '}
         <input
@@ -132,7 +132,7 @@ function PredictWordView({ ch, done, onResult }: { ch: PredictWordChallenge; don
           }}
         />”
       </p>
-      {done && ch.full_line && <p className="mt-3 text-[13px] italic text-white/55">“{ch.full_line}”</p>}
+      {done && ch.full_line && <p className="mt-3 text-[13px] italic text-white/60">“{ch.full_line}”</p>}
       {done && !correct && <p className="mt-1 text-[13px] text-emerald-300/90">Accepted: {ch.answers.join(' / ')}</p>}
       {!done && <CheckButton disabled={!val.trim()} onClick={() => onResult(correct)} />}
     </div>
@@ -145,12 +145,12 @@ function WordBuilderView({ ch, done, onResult }: { ch: WordBuilderChallenge; don
   const correct = picked === ch.correct;
   return (
     <div>
-      <p className="text-[13px] text-white/55 mb-1">Pick the {isSuffix ? 'suffix' : 'prefix'} that builds the right word{ch.meaning_hint ? ` — “${ch.meaning_hint}”` : ''}:</p>
+      <p className="text-[13px] text-white/60 mb-1">Pick the {isSuffix ? 'suffix' : 'prefix'} that builds the right word{ch.meaning_hint ? ` — “${ch.meaning_hint}”` : ''}:</p>
       <div className="flex items-center gap-2 mb-4 text-[20px] font-semibold flex-wrap">
         {!isSuffix && <span className="text-violet-300">{picked ?? '___'}</span>}
-        <span className="text-white/90">{ch.base}</span>
+        <span className="text-white/85">{ch.base}</span>
         {isSuffix && <span className="text-violet-300">{picked ?? '___'}</span>}
-        {done && <span className="text-white/40 text-[15px]">→ <span className="text-emerald-300 font-bold">{ch.target}</span></span>}
+        {done && <span className="text-white/45 text-[15px]">→ <span className="text-emerald-300 font-bold">{ch.target}</span></span>}
       </div>
       <div className="flex gap-2 flex-wrap">
         {ch.affixes.map((af) => {
@@ -181,10 +181,10 @@ function UnscrambleView({ ch, done, onResult }: { ch: UnscrambleChallenge; done:
 
   return (
     <div>
-      <p className="text-[13px] text-white/55 mb-3">Tap the words in order to rebuild the line:</p>
+      <p className="text-[13px] text-white/60 mb-3">Tap the words in order to rebuild the line:</p>
       <div className="min-h-[44px] rounded-xl border border-violet-500/25 bg-violet-500/[0.04] px-3 py-2 mb-3 flex flex-wrap gap-1.5 items-center"
         style={done ? { borderColor: correct ? 'rgba(16,185,129,0.5)' : 'rgba(248,113,113,0.5)' } : undefined}>
-        {placed.length === 0 && <span className="text-white/25 text-[13px]">…</span>}
+        {placed.length === 0 && <span className="text-white/45 text-[13px]">…</span>}
         {placed.map((ti, pos) => (
           <button key={pos} disabled={done} onClick={() => setPlaced((p) => p.filter((_, k) => k !== pos))}
             className="px-2.5 py-1 rounded-md text-[14px] bg-white/8 border border-white/12 text-white/85"
@@ -248,7 +248,7 @@ function WordMatchView({ ch, done, onResult }: { ch: WordMatchChallenge; done: b
 
   return (
     <div>
-      <p className="text-[13px] text-white/55 mb-3">{ch.instruction || 'Tap a word, then tap its meaning:'}</p>
+      <p className="text-[13px] text-white/60 mb-3">{ch.instruction || 'Tap a word, then tap its meaning:'}</p>
       <div className="grid grid-cols-2 gap-3">
         {/* words */}
         <div className="space-y-2">
@@ -295,7 +295,7 @@ function WordMatchView({ ch, done, onResult }: { ch: WordMatchChallenge; done: b
       {done && (
         <div className="mt-3 space-y-1">
           {ch.pairs.map((p, i) => (
-            <p key={i} className="text-[12px] text-white/55"><span className="text-emerald-300/90 font-medium">{p.left}</span> — {p.right}</p>
+            <p key={i} className="text-[12px] text-white/60"><span className="text-emerald-300/90 font-medium">{p.left}</span> — {p.right}</p>
           ))}
         </div>
       )}
@@ -317,7 +317,7 @@ function SentenceComposeView({ ch, done, onResult }: { ch: SentenceComposeChalle
 
   return (
     <div>
-      <p className="text-[14px] text-white/80 mb-1">{ch.instruction}</p>
+      <p className="text-[14px] text-white/82 mb-1">{ch.instruction}</p>
       <p className="text-[12px] text-violet-300/70 mb-2">Use: <span className="font-semibold">{ch.word}</span></p>
       <textarea
         value={text}
@@ -329,7 +329,7 @@ function SentenceComposeView({ ch, done, onResult }: { ch: SentenceComposeChalle
         style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${done ? (passes ? 'rgba(16,185,129,0.5)' : 'rgba(251,191,36,0.5)') : 'rgba(167,139,250,0.4)'}`, color: '#fff' }}
       />
       {!done && (
-        <div className="flex items-center gap-3 mt-1.5 text-[11px] text-white/35">
+        <div className="flex items-center gap-3 mt-1.5 text-[11px] text-white/45">
           <span className={usesWord ? 'text-emerald-400' : ''}>{usesWord ? '✓' : '○'} uses the word</span>
           <span className={longEnough ? 'text-emerald-400' : ''}>{longEnough ? '✓' : '○'} {wordCount}/{minWords} words</span>
           <span className={endsWell ? 'text-emerald-400' : ''}>{endsWell ? '✓' : '○'} full sentence</span>
@@ -337,13 +337,13 @@ function SentenceComposeView({ ch, done, onResult }: { ch: SentenceComposeChalle
       )}
       {done && (
         <div className="mt-3">
-          <p className="text-[12px] uppercase tracking-wide text-white/35 mb-1">A model sentence</p>
-          <p className="text-[14px] italic text-white/70 mb-3">“{ch.model_answer}”</p>
-          <p className="text-[12px] uppercase tracking-wide text-white/35 mb-1.5">Check your own:</p>
+          <p className="text-[12px] uppercase tracking-wide text-white/45 mb-1">A model sentence</p>
+          <p className="text-[14px] italic text-white/82 mb-3">“{ch.model_answer}”</p>
+          <p className="text-[12px] uppercase tracking-wide text-white/45 mb-1.5">Check your own:</p>
           <div className="space-y-1.5">
             {ch.rubric.map((r, i) => (
               <button key={i} onClick={() => setChecked((c) => c.map((x, j) => (j === i ? !x : x)))}
-                className="flex items-center gap-2 text-left text-[13px] text-white/70">
+                className="flex items-center gap-2 text-left text-[13px] text-white/82">
                 <span className="w-4 h-4 rounded flex items-center justify-center text-[10px]"
                   style={{ background: checked[i] ? 'rgba(16,185,129,0.2)' : 'rgba(255,255,255,0.06)', border: `1px solid ${checked[i] ? 'rgba(16,185,129,0.5)' : 'rgba(255,255,255,0.15)'}`, color: '#34d399' }}>
                   {checked[i] ? '✓' : ''}
@@ -393,11 +393,11 @@ function TransformView({ ch, done, onResult }: { ch: TransformChallenge; done: b
         className="w-full rounded-xl px-3 py-2 text-[15px] resize-none"
         style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${done ? (correct ? 'rgba(16,185,129,0.5)' : 'rgba(248,113,113,0.5)') : 'rgba(16,185,129,0.4)'}`, color: '#fff' }}
       />
-      {ch.hint && !done && <p className="mt-2 text-[12px] text-white/35">💡 {ch.hint}</p>}
+      {ch.hint && !done && <p className="mt-2 text-[12px] text-white/45">💡 {ch.hint}</p>}
       {done && (
         <div className="mt-3">
           {!correct && <p className="text-[13px] text-emerald-300/90 mb-1">Model answer: <span className="italic">“{ch.answers[0]}”</span></p>}
-          {ch.rule && <p className="text-[12px] text-white/50 leading-relaxed"><span className="text-emerald-400/80 font-semibold">Rule · </span>{ch.rule}</p>}
+          {ch.rule && <p className="text-[12px] text-white/60 leading-relaxed"><span className="text-emerald-400/80 font-semibold">Rule · </span>{ch.rule}</p>}
         </div>
       )}
       {!done && <CheckButton disabled={!text.trim()} onClick={() => onResult(correct)} />}
@@ -416,7 +416,7 @@ function SpotErrorView({ ch, done, onResult }: { ch: SpotErrorChallenge; done: b
 
   return (
     <div>
-      <p className="text-[13px] text-white/55 mb-2">Tap the word that is grammatically wrong:</p>
+      <p className="text-[13px] text-white/60 mb-2">Tap the word that is grammatically wrong:</p>
       <div className="flex flex-wrap gap-1.5 mb-3">
         {ch.tokens.map((tok, i) => {
           const isTapped = tapped === i;
@@ -435,7 +435,7 @@ function SpotErrorView({ ch, done, onResult }: { ch: SpotErrorChallenge; done: b
       </div>
       {tapped !== null && !done && (
         <div className="mb-1">
-          <p className="text-[13px] text-white/55 mb-1.5">Now choose the correction:</p>
+          <p className="text-[13px] text-white/60 mb-1.5">Now choose the correction:</p>
           {hasOptions ? (
             <div className="flex flex-wrap gap-2">
               {ch.fix_options!.map((opt) => (
@@ -454,8 +454,8 @@ function SpotErrorView({ ch, done, onResult }: { ch: SpotErrorChallenge; done: b
       )}
       {done && (
         <div className="mt-2">
-          <p className="text-[13px] text-emerald-300/90 mb-1">Correct: replace <span className="line-through text-white/40">{ch.tokens[ch.error_index]}</span> with <span className="font-semibold">{ch.fix}</span></p>
-          {ch.rule && <p className="text-[12px] text-white/50 leading-relaxed"><span className="text-emerald-400/80 font-semibold">Rule · </span>{ch.rule}</p>}
+          <p className="text-[13px] text-emerald-300/90 mb-1">Correct: replace <span className="line-through text-white/45">{ch.tokens[ch.error_index]}</span> with <span className="font-semibold">{ch.fix}</span></p>
+          {ch.rule && <p className="text-[12px] text-white/60 leading-relaxed"><span className="text-emerald-400/80 font-semibold">Rule · </span>{ch.rule}</p>}
         </div>
       )}
       {!done && <CheckButton disabled={!ready} onClick={() => onResult(correct)} />}
@@ -469,7 +469,7 @@ function FormSelectView({ ch, done, onResult }: { ch: FormSelectChallenge; done:
   const correct = picked === ch.correct_index;
   return (
     <div>
-      <p className="text-[15px] leading-relaxed text-white/90 mb-3">
+      <p className="text-[15px] leading-relaxed text-white/85 mb-3">
         {parts.map((part, i) => (
           <span key={i}>
             <InlineMarkdown>{part}</InlineMarkdown>
@@ -498,7 +498,7 @@ function FormSelectView({ ch, done, onResult }: { ch: FormSelectChallenge; done:
                 {opt}
               </button>
               {done && ch.option_reasons?.[i] && (isAnswer || isChosen) && (
-                <p className="text-[12px] text-white/50 leading-relaxed mt-1 px-1">{ch.option_reasons[i]}</p>
+                <p className="text-[12px] text-white/60 leading-relaxed mt-1 px-1">{ch.option_reasons[i]}</p>
               )}
             </div>
           );
@@ -626,7 +626,7 @@ export default function ApplyExpressRenderer({
           </span>
         </div>
         {block.intro && (
-          <div className="mb-4"><InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/70">{block.intro}</InlineMarkdown></div>
+          <div className="mb-4"><InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/82">{block.intro}</InlineMarkdown></div>
         )}
         <p className="text-[13px] text-white/45 mb-5">{t.desc}</p>
         <button onClick={() => setPhase('play')}
@@ -643,13 +643,13 @@ export default function ApplyExpressRenderer({
     const stars = score >= 80 ? 3 : score >= 50 ? 2 : 1;
     return (
       <div className={`my-8 rounded-2xl border ${t.shell} px-5 py-8 text-center`}>
-        <div className="text-[40px] mb-1 tracking-widest">{'★'.repeat(stars)}<span className="text-white/15">{'★'.repeat(3 - stars)}</span></div>
+        <div className="text-[40px] mb-1 tracking-widest">{'★'.repeat(stars)}<span className="text-white/45">{'★'.repeat(3 - stars)}</span></div>
         <h3 className="text-xl font-bold mb-1">{score >= 80 ? 'Brilliant!' : score >= 50 ? 'Well played!' : 'Good start!'}</h3>
-        <p className="text-white/50 text-sm mb-1">{correctCount} of {challenges.length} nailed</p>
+        <p className="text-white/60 text-sm mb-1">{correctCount} of {challenges.length} nailed</p>
         <p className={`${t.scoreText} font-bold text-lg mb-5`}>{xp} XP earned</p>
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <button onClick={() => { setPhase('intro'); setIdx(0); setAnswered(false); setXp(0); setStreak(0); setCorrectCount(0); }}
-            className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70">
+            className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/82">
             {gym ? 'Train again' : 'Play again'}
           </button>
           {onExit && (
@@ -672,7 +672,7 @@ export default function ApplyExpressRenderer({
         <div className="flex items-center gap-3 text-[12px]">
           {streak >= 2 && <span className="text-amber-400 font-semibold">🔥 {streak}</span>}
           <span className={`${t.scoreText} font-bold tabular-nums`}>{xp} XP</span>
-          <span className="text-white/35 tabular-nums">{idx + 1}/{challenges.length}</span>
+          <span className="text-white/45 tabular-nums">{idx + 1}/{challenges.length}</span>
         </div>
       </div>
       <div className="h-1 rounded-full bg-white/8 mb-5 overflow-hidden">
@@ -691,7 +691,7 @@ export default function ApplyExpressRenderer({
           <p className="text-sm font-semibold mb-1" style={{ color: lastOk ? '#34d399' : '#f87171' }}>
             {lastOk ? `Nice! +${gain} XP${streak >= 2 ? ` · 🔥 ${streak} streak` : ''}` : 'Not quite — but you’ll remember it now.'}
           </p>
-          {current.explanation && <p className="text-[13px] text-white/55 leading-relaxed mb-3">{current.explanation}</p>}
+          {current.explanation && <p className="text-[13px] text-white/60 leading-relaxed mb-3">{current.explanation}</p>}
           <button onClick={next}
             className={`px-5 py-2.5 rounded-xl ${t.btn} text-black font-bold text-sm`}>
             {idx + 1 >= challenges.length ? 'See results' : 'Next →'}

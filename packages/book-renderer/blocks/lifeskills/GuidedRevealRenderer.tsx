@@ -61,11 +61,11 @@ function CostChecker({ checker }: { checker: GuidedRevealChecker }) {
 
   return (
     <div onClick={stop} className="mt-4 rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-      <div className="text-[11px] font-bold uppercase tracking-widest text-white/35 mb-2">{checker.task_label}</div>
+      <div className="text-[11px] font-bold uppercase tracking-widest text-white/45 mb-2">{checker.task_label}</div>
       <div className="flex flex-wrap gap-2 mb-4">
         {checker.tasks.map((o, i) => <Chip key={o.id} on={i === t} label={o.label} onClick={() => setT(i)} />)}
       </div>
-      <div className="text-[11px] font-bold uppercase tracking-widest text-white/35 mb-2">{checker.audio_label}</div>
+      <div className="text-[11px] font-bold uppercase tracking-widest text-white/45 mb-2">{checker.audio_label}</div>
       <div className="flex flex-wrap gap-2 mb-4">
         {checker.audios.map((o, i) => <Chip key={o.id} on={i === a} label={o.label} onClick={() => setA(i)} />)}
       </div>
@@ -74,7 +74,7 @@ function CostChecker({ checker }: { checker: GuidedRevealChecker }) {
           style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}>
           {meta.label}
         </span>
-        <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/80">{checker.verdicts[tier]}</InlineMarkdown>
+        <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/82">{checker.verdicts[tier]}</InlineMarkdown>
       </div>
     </div>
   );
@@ -91,12 +91,12 @@ function StepView({ step, active }: { step: GuidedRevealStep; active: boolean })
           {step.kicker}
         </div>
       )}
-      <h4 className="text-lg sm:text-xl font-bold text-white/90 leading-snug mb-1.5">{step.headline}</h4>
+      <h4 className="text-lg sm:text-xl font-bold text-white/85 leading-snug mb-1.5">{step.headline}</h4>
       {step.image_src && (
         <img src={step.image_src} alt="" className="rounded-xl my-3 w-full max-w-lg" style={{ border: '1px solid rgba(255,255,255,0.08)' }} />
       )}
       {step.body && (
-        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/70 mb-2">{step.body}</InlineMarkdown>
+        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/82 mb-2">{step.body}</InlineMarkdown>
       )}
       {step.kind === 'cost_checker' && step.checker && <CostChecker checker={step.checker} />}
     </div>
@@ -126,11 +126,11 @@ export default function GuidedRevealRenderer({ block }: { block: GuidedRevealBlo
         <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full" style={{ background: ACCENT_BG, color: ACCENT }}>
           Walkthrough
         </span>
-        <span className="text-[10px] text-white/30 font-medium uppercase tracking-widest tabular-nums">{Math.min(revealed, steps.length)} / {steps.length}</span>
+        <span className="text-[10px] text-white/45 font-medium uppercase tracking-widest tabular-nums">{Math.min(revealed, steps.length)} / {steps.length}</span>
       </div>
-      <h3 className="text-xl font-bold text-white/90 mb-1">{block.title}</h3>
+      <h3 className="text-xl font-bold text-white/85 mb-1">{block.title}</h3>
       {block.intro && revealed === 1 && (
-        <div className="mb-3"><InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/55">{block.intro}</InlineMarkdown></div>
+        <div className="mb-3"><InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/60">{block.intro}</InlineMarkdown></div>
       )}
 
       {/* Progress track */}
@@ -169,17 +169,17 @@ export default function GuidedRevealRenderer({ block }: { block: GuidedRevealBlo
               {revealed === 1 ? 'Start →' : 'Next →'}
             </button>
             {revealed > 1 && (
-              <button onClick={(e) => { e.stopPropagation(); prev(); }} className="text-xs text-white/40 hover:text-white/60 underline underline-offset-2">
+              <button onClick={(e) => { e.stopPropagation(); prev(); }} className="text-xs text-white/45 hover:text-white/60 underline underline-offset-2">
                 ← Back
               </button>
             )}
-            <span className="ml-auto text-[11px] text-white/25 hidden sm:block">Tap anywhere, or use ← → keys</span>
+            <span className="ml-auto text-[11px] text-white/45 hidden sm:block">Tap anywhere, or use ← → keys</span>
           </>
         ) : (
           <div className="w-full">
             {block.outro && (
               <div className="rounded-xl px-4 py-3 mb-3" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}` }}>
-                <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/80">{block.outro}</InlineMarkdown>
+                <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/82">{block.outro}</InlineMarkdown>
               </div>
             )}
             <button onClick={() => setRevealed(1)} className="text-xs font-semibold px-4 py-2 rounded-xl"

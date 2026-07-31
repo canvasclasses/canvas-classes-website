@@ -180,8 +180,8 @@ export default function EudiometerLabSim() {
 
       {/* Header — plain text, no badges, no card */}
       <div className="mb-5">
-        <h2 className="text-2xl font-black tracking-tight text-white">Eudiometer Lab</h2>
-        <p className="text-[11px] font-bold uppercase tracking-widest mt-0.5" style={{ color: C_MUTED }}>
+        <h2 className="text-2xl font-black tracking-tight" style={{ color: C_TEXT }}>Eudiometer Lab</h2>
+        <p className="text-xs font-bold uppercase tracking-widest mt-0.5" style={{ color: C_MUTED }}>
           Deduce a hydrocarbon from gas volumes alone
         </p>
       </div>
@@ -192,7 +192,7 @@ export default function EudiometerLabSim() {
           const cur = step === i, done = step > i;
           return (
             <button key={name} type="button" onClick={() => { if (i <= step) setStep(i); }}
-              className="text-xs font-semibold uppercase tracking-widest transition-colors pb-1"
+              className="text-sm font-semibold uppercase tracking-widest transition-colors pb-1"
               style={{
                 color: cur ? C_ACCENT : done ? C_GAS : C_MUTED,
                 borderBottom: `2px solid ${cur ? C_ACCENT : 'transparent'}`,
@@ -209,28 +209,28 @@ export default function EudiometerLabSim() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
         {/* ── Controls ── */}
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: C_GHOST }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: C_GHOST }}>
             Hydrocarbon
           </p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2 mb-5">
+          <div className="flex flex-wrap gap-2 mb-5">
             {(Object.keys(GASES) as GasKey[]).map((k) => {
               const g = GASES[k] as Gas;
               const on = k === gasKey;
               return (
                 <button key={k} type="button" onClick={() => setGasKey(k)}
-                  className="text-sm font-bold transition-colors pb-0.5"
+                  className="text-sm font-bold px-3 py-1.5 rounded-lg transition-all"
                   style={{
-                    color: on ? C_TEXT : C_MUTED,
-                    borderBottom: `1px solid ${on ? 'rgba(129,140,248,0.6)' : 'transparent'}`,
-                    background: 'none', outline: 'none',
+                    background: on ? C_GAS : 'rgba(255,255,255,0.04)',
+                    border: `1px solid ${on ? C_GAS : 'rgba(255,255,255,0.08)'}`,
+                    color: on ? '#052e1f' : C_DIM,
                   }}>
                   {g.name}
-                  <span className="ml-1.5 font-semibold" style={{ color: on ? C_GAS : C_MUTED }}>{g.formula}</span>
+                  <span className="ml-1.5 font-semibold" style={{ color: on ? '#0a4a30' : C_MUTED }}>{g.formula}</span>
                 </button>
               );
             })}
           </div>
-          <p className="text-sm mb-6" style={{ color: C_DIM }}>{gas.desc}</p>
+          <p className="text-base mb-6" style={{ color: C_DIM }}>{gas.desc}</p>
 
           <div style={{ borderTop: HAIR }} className="pt-5 flex flex-col gap-5">
             <Dial label={<>Volume of {gas.formula}</>} value={vGas} min={5} max={30} step={1}
@@ -240,10 +240,10 @@ export default function EudiometerLabSim() {
           </div>
 
           {/* Charge verdict — one line, no box */}
-          <p className="text-sm mt-5" style={{ color: enoughO2 ? C_DIM : C_WARN }}>
+          <p className="text-base mt-5" style={{ color: enoughO2 ? C_DIM : C_WARN }}>
             {enoughO2 ? (
-              <>Needs <b className="text-white tabular-nums">{fmt1(o2Needed)} mL</b> of O<sub>2</sub> to burn fully —
-                {' '}<b className="text-white tabular-nums">{fmt1(excessO2)} mL</b> will be left over in excess.</>
+              <>Needs <b className="tabular-nums" style={{ color: C_TEXT }}>{fmt1(o2Needed)} mL</b> of O<sub>2</sub> to burn fully —
+                {' '}<b className="tabular-nums" style={{ color: C_TEXT }}>{fmt1(excessO2)} mL</b> will be left over in excess.</>
             ) : (
               <>Not enough O<sub>2</sub>. This charge needs <b className="tabular-nums">{fmt1(o2Needed)} mL</b> for complete
                 combustion — add more before sparking.</>
@@ -252,7 +252,7 @@ export default function EudiometerLabSim() {
 
           {/* Readings — inline, hairline separated */}
           <div className="mt-6 pt-5" style={{ borderTop: HAIR }}>
-            <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: C_GHOST }}>Readings</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: C_GHOST }}>Readings</p>
             <div className="flex flex-wrap gap-x-8 gap-y-3">
               <Reading label="Initial" sub="V₀" value={vInitial} active={step === 0} />
               <Reading label="After ignition" sub="V₁" value={step >= 1 ? vAfterIgnition : null} active={step === 1}
@@ -265,8 +265,47 @@ export default function EudiometerLabSim() {
 
         {/* ── Tube ── */}
         <div className="flex flex-col items-center">
+          {/* ONE action button, always in this one spot right above the apparatus
+              it acts on — it used to be split between here and a bottom action
+              bar far below (founder feedback 2026-07-24: every step's action
+              should live in the same place, not jump around the page). Solid
+              pastel fill per step, not a translucent tint, so it reads as a
+              real button rather than a glowing chip. */}
+          {step === 0 && (
+            <button type="button" onClick={goNext} disabled={!enoughO2}
+              className="mb-3 px-5 py-2.5 rounded-lg text-base font-bold transition-all w-full"
+              style={{
+                background: enoughO2 ? C_CO2 : 'rgba(255,255,255,0.05)',
+                border: `1px solid ${enoughO2 ? C_CO2 : 'rgba(255,255,255,0.08)'}`,
+                color: enoughO2 ? '#402c02' : C_MUTED,
+                cursor: enoughO2 ? 'pointer' : 'not-allowed',
+              }}>
+              ⚡ Spark ignition
+            </button>
+          )}
+          {step === 1 && (
+            <button type="button" onClick={goNext}
+              className="mb-3 px-5 py-2.5 rounded-lg text-base font-bold transition-all w-full"
+              style={{ background: C_ACCENT_HI, border: `1px solid ${C_ACCENT_HI}`, color: '#2e1065' }}>
+              Introduce KOH solution
+            </button>
+          )}
+          {step === 2 && (
+            <button type="button" onClick={goNext}
+              className="mb-3 px-5 py-2.5 rounded-lg text-base font-bold transition-all w-full"
+              style={{ background: C_GAS, border: `1px solid ${C_GAS}`, color: '#052e1f' }}>
+              Deduce the formula →
+            </button>
+          )}
+          {step === 3 && (
+            <button type="button" onClick={reset}
+              className="mb-3 px-5 py-2.5 rounded-lg text-base font-bold transition-all w-full"
+              style={{ background: C_ACCENT_HI, border: `1px solid ${C_ACCENT_HI}`, color: '#2e1065' }}>
+              ↺ Run another experiment
+            </button>
+          )}
           <Eudiometer layers={layers} totalGas={totalGas} step={step} firing={firing} />
-          <p className="text-[11px] mt-3 text-center" style={{ color: C_GHOST }}>
+          <p className="text-sm mt-3 text-center" style={{ color: C_GHOST }}>
             {step === 0 && 'Gas collects at the sealed top; mercury seals it from below.'}
             {step === 1 && 'Water condensed to a liquid — its volume vanishes from the reading.'}
             {step === 2 && 'KOH solution has entered the tube and is absorbing the CO₂.'}
@@ -281,54 +320,29 @@ export default function EudiometerLabSim() {
           vInitial={vInitial} vAfterIgnition={vAfterIgnition} vAfterKOH={vAfterKOH} />
       </div>
 
-      {/* ── Actions ── */}
+      {/* ── Back / reset hint — the step's action button lives in ONE place only
+          (above the tube), so this bar is just secondary navigation now. ── */}
       <div className="mt-7 pt-5 flex items-center justify-between flex-wrap gap-3" style={{ borderTop: HAIR }}>
-        <span className="text-[11px]" style={{ color: C_MUTED }}>← → step · R reset</span>
-        <div className="flex items-center gap-5">
-          {step > 0 && (
-            <button type="button" onClick={goBack} className="text-xs font-bold pb-0.5"
-              style={{ color: C_DIM, borderBottom: '1px solid rgba(255,255,255,0.15)', background: 'none' }}>
-              ← Back
-            </button>
-          )}
-          {step === 0 && (
-            <button type="button" onClick={goNext} disabled={!enoughO2}
-              className="px-4 py-2 rounded-lg text-sm font-bold transition-all"
-              style={{
-                background: enoughO2 ? 'rgba(252,211,77,0.10)' : 'none',
-                border: `1px solid ${enoughO2 ? 'rgba(252,211,77,0.38)' : 'rgba(255,255,255,0.08)'}`,
-                color: enoughO2 ? C_CO2 : C_MUTED,
-                cursor: enoughO2 ? 'pointer' : 'not-allowed',
-              }}>
-              Spark ignition
-            </button>
-          )}
-          {step === 1 && <PrimaryBtn onClick={goNext}>Introduce KOH solution</PrimaryBtn>}
-          {step === 2 && <PrimaryBtn onClick={goNext}>Deduce the formula →</PrimaryBtn>}
-          {step === 3 && <PrimaryBtn onClick={reset}>↺ Run another experiment</PrimaryBtn>}
-        </div>
+        <span className="text-xs" style={{ color: C_MUTED }}>← → step · R reset</span>
+        {step > 0 && (
+          <button type="button" onClick={goBack} className="text-sm font-bold pb-0.5"
+            style={{ color: C_DIM, borderBottom: '1px solid rgba(255,255,255,0.15)', background: 'none' }}>
+            ← Back
+          </button>
+        )}
       </div>
 
-      {/* Expert Tip (workflow §4j) */}
+      {/* Expert Tip (workflow §4j) — regular weight, not bold: bold text at this
+          size read as heavy/cramped (founder feedback 2026-07-24). */}
       <div className="mt-7 pt-4" style={{ borderTop: HAIR }}>
-        <div className="text-[10px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>Expert Tip</div>
-        <p className="text-sm font-bold leading-snug italic text-white">
+        <div className="text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: '#6366f1' }}>Expert Tip</div>
+        <p className="text-base leading-snug italic" style={{ color: C_TEXT }}>
           &ldquo;Water is a <span style={{ color: C_ACCENT_HI }}>liquid</span> at room temperature, so its volume simply disappears
           from the reading — that first contraction is what hands you the hydrogens. The second contraction, the part KOH swallows,
           is pure <span style={{ color: C_CO2 }}>CO₂</span> — and that hands you the carbons.&rdquo;
         </p>
       </div>
     </div>
-  );
-}
-
-function PrimaryBtn({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button type="button" onClick={onClick}
-      className="px-4 py-2 rounded-lg text-sm font-bold transition-all"
-      style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(129,140,248,0.4)', color: C_ACCENT_HI }}>
-      {children}
-    </button>
   );
 }
 
@@ -340,8 +354,8 @@ function Dial({ label, value, min, max, step, color, onChange, disabled }: {
   return (
     <div style={{ opacity: disabled ? 0.45 : 1 }}>
       <div className="flex items-baseline justify-between mb-2">
-        <span className="text-sm font-bold" style={{ color: C_DIM }}>{label}</span>
-        <span className="text-xl font-bold tabular-nums text-white">
+        <span className="text-base font-bold" style={{ color: C_DIM }}>{label}</span>
+        <span className="text-xl font-bold tabular-nums" style={{ color: C_TEXT }}>
           {value}<span className="text-sm font-semibold ml-1" style={{ color: C_MUTED }}>mL</span>
         </span>
       </div>
@@ -358,14 +372,14 @@ function Reading({ label, sub, value, active, delta }: {
 }) {
   return (
     <div style={{ opacity: value == null ? 0.4 : 1 }}>
-      <div className="text-[10px] font-semibold uppercase tracking-widest mb-0.5" style={{ color: active ? C_ACCENT : C_GHOST }}>
+      <div className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: active ? C_ACCENT : C_GHOST }}>
         {sub} · {label}
       </div>
-      <div className="text-xl font-bold tabular-nums text-white">
+      <div className="text-xl font-bold tabular-nums" style={{ color: C_TEXT }}>
         {value == null ? '—' : <>{fmt1(value)}<span className="text-sm font-semibold ml-1" style={{ color: C_MUTED }}>mL</span></>}
       </div>
       {delta != null && (
-        <div className="text-[11px] font-bold tabular-nums mt-0.5" style={{ color: C_CO2 }}>
+        <div className="text-xs font-bold tabular-nums mt-0.5" style={{ color: C_CO2 }}>
           {delta > 0 ? '+' : '−'}{fmt1(Math.abs(delta))} mL
         </div>
       )}
@@ -389,16 +403,16 @@ function Notebook({ step, gas, x, y, vGas, vInitial, vAfterIgnition, vAfterKOH }
       {/* Indigo, not C_GHOST — matches the "Expert Tip" heading below the sim.
           A section title needs to visibly outrank the body copy under it; the
           same muted grey used for both left them indistinguishable. */}
-      <p className="text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: '#818cf8' }}>Lab notebook</p>
+      <p className="text-sm font-bold uppercase tracking-widest mb-3" style={{ color: '#818cf8' }}>Lab notebook</p>
 
       {/* Balanced equation — inherited sans, NOT monospace. One colour for the
           whole equation (2026-07-21): a colour per substance fought the "+" and
           "→" for attention and made the equation read as scattered fragments
           rather than one reaction. The tube above is where colour-coding by
           substance earns its keep (it's mapped to physical bands you watch
-          change); here, in written form, uniform white reads as a single
+          change); here, in written form, a single off-white reads as one
           statement and the operators stay clearly visible. */}
-      <div className="text-xl font-bold mb-2 text-white">
+      <div className="text-2xl font-bold mb-2" style={{ color: C_TEXT }}>
         {gas.formula}
         <span className="mx-2">+</span>
         {coef(o2Coef)}O<sub>2</sub>
@@ -406,9 +420,9 @@ function Notebook({ step, gas, x, y, vGas, vInitial, vAfterIgnition, vAfterKOH }
         {coef(x)}CO<sub>2</sub>
         <span className="mx-2">+</span>
         {coef(waterCoef)}H<sub>2</sub>O
-        <span className="text-sm font-semibold ml-1.5" style={{ color: C_MUTED }}>(liquid)</span>
+        <span className="text-base font-semibold ml-1.5" style={{ color: C_MUTED }}>(liquid)</span>
       </div>
-      <p className="text-sm mb-6" style={{ color: C_DIM }}>
+      <p className="text-base mb-6" style={{ color: C_DIM }}>
         By Avogadro&apos;s law, equal volumes hold equal moles — so these coefficients are volume ratios too.
       </p>
 
@@ -426,10 +440,10 @@ function Notebook({ step, gas, x, y, vGas, vInitial, vAfterIgnition, vAfterKOH }
             <Derived label={<>x = (V<sub>1</sub> − V<sub>2</sub>) / V<sub>gas</sub></>} raw={dedX} />
             <Derived label={<>y = 4 × ((V<sub>0</sub> − V<sub>1</sub>) / V<sub>gas</sub> − 1)</>} raw={dedY} />
           </div>
-          <div className="text-2xl font-bold text-white">
+          <div className="text-2xl font-bold" style={{ color: C_TEXT }}>
             Deduced formula: <span style={{ color: C_GAS }}>C<Sub n={Math.round(dedX)} />H<Sub n={Math.round(dedY)} /></span>
           </div>
-          <p className="text-sm mt-1.5" style={{ color: C_DIM }}>
+          <p className="text-base mt-1.5" style={{ color: C_DIM }}>
             {gas.mystery ? <>↳ {gas.name} unmasked — it was {gas.mystery}.</> : <>↳ matches {gas.name} ({gas.formula}).</>}
           </p>
         </div>
@@ -441,8 +455,8 @@ function Notebook({ step, gas, x, y, vGas, vInitial, vAfterIgnition, vAfterKOH }
 function Row({ label, value, on }: { label: React.ReactNode; value: string; on: boolean }) {
   return (
     <div className="flex items-baseline justify-between gap-4 py-2.5" style={{ borderBottom: HAIR, opacity: on ? 1 : 0.4 }}>
-      <span className="text-sm" style={{ color: C_DIM }}>{label}</span>
-      <span className="text-sm font-bold tabular-nums shrink-0" style={{ color: on ? C_TEXT : C_MUTED }}>{value}</span>
+      <span className="text-base" style={{ color: C_DIM }}>{label}</span>
+      <span className="text-base font-bold tabular-nums shrink-0" style={{ color: on ? C_TEXT : C_MUTED }}>{value}</span>
     </div>
   );
 }
@@ -453,10 +467,10 @@ function Derived({ label, raw }: { label: React.ReactNode; raw: number }) {
       {/* Was text-[11px]/C_GHOST — the dimmest token in the palette at the
           smallest readable size. This is the formula the student needs to
           actually read to follow the derivation, not a caption to skim past. */}
-      <div className="text-sm mb-1" style={{ color: C_DIM }}>{label}</div>
+      <div className="text-base mb-1" style={{ color: C_DIM }}>{label}</div>
       <div className="text-xl font-bold tabular-nums" style={{ color: C_DIM }}>
         {raw.toFixed(2)} <span style={{ color: '#818cf8' }}>→</span>{' '}
-        <span className="text-white">{Math.round(raw)}</span>
+        <span style={{ color: C_TEXT }}>{Math.round(raw)}</span>
       </div>
     </div>
   );
@@ -546,7 +560,7 @@ function Eudiometer({ layers, totalGas, step, firing }: {
           band — with a single band the label would just repeat the meniscus reading. */}
       {bands.length > 1 && bands.filter(b => b.h > 22).map((b) => (
         <text key={b.id + '-lab'} x={cx} y={b.mid} textAnchor="middle" dominantBaseline="middle"
-          style={{ fontSize: 13, fontWeight: 600, fill: b.color, fontVariantNumeric: 'tabular-nums' }}>
+          style={{ fontSize: 14, fontWeight: 600, fill: b.color, fontVariantNumeric: 'tabular-nums' }}>
           {b.volume % 1 === 0 ? b.volume : b.volume.toFixed(1)} mL
         </text>
       ))}
@@ -584,7 +598,7 @@ function Eudiometer({ layers, totalGas, step, firing }: {
         x1={cx - 9} y1={tubeTop + 30} x2={cx + 9} y2={tubeTop + 30}
         stroke={C_CO2} strokeWidth="2.5" strokeDasharray="3 3" strokeLinecap="round" />
       <text x={cx} y={tubeTop - 34} textAnchor="middle"
-        style={{ fontSize: 12, fontWeight: 500, fill: C_GHOST }}>
+        style={{ fontSize: 13, fontWeight: 500, fill: C_GHOST }}>
         Sealed end · Pt electrodes
       </text>
 
@@ -598,7 +612,7 @@ function Eudiometer({ layers, totalGas, step, firing }: {
               stroke="rgba(255,255,255,0.26)" strokeWidth={major ? 1.5 : 1} />
             {major && (
               <text x={tubeX - 16} y={yy} textAnchor="end" dominantBaseline="middle"
-                style={{ fontSize: 12, fontWeight: 400, fill: C_MUTED, fontVariantNumeric: 'tabular-nums' }}>
+                style={{ fontSize: 13, fontWeight: 400, fill: C_MUTED, fontVariantNumeric: 'tabular-nums' }}>
                 {ml}
               </text>
             )}
@@ -606,23 +620,23 @@ function Eudiometer({ layers, totalGas, step, firing }: {
         );
       })}
       <text x={tubeX - 16} y={tubeBottom + 20} textAnchor="end"
-        style={{ fontSize: 11, fontWeight: 400, fill: C_MUTED }}>mL</text>
+        style={{ fontSize: 12, fontWeight: 400, fill: C_MUTED }}>mL</text>
 
       {/* ── The reading (right) — leader from the meniscus, clear of everything ── */}
       <line x1={tubeX + tubeW} y1={liquidTop} x2={tubeX + tubeW + 20} y2={liquidTop}
         stroke={C_LIQ} strokeWidth="1" opacity="0.5" />
       <text x={tubeX + tubeW + 26} y={liquidTop - 6}
-        style={{ fontSize: 16, fontWeight: 700, fill: C_TEXT, fontVariantNumeric: 'tabular-nums' }}>
+        style={{ fontSize: 18, fontWeight: 700, fill: C_TEXT, fontVariantNumeric: 'tabular-nums' }}>
         {totalGas.toFixed(1)} mL
       </text>
       <text x={tubeX + tubeW + 26} y={liquidTop + 11}
-        style={{ fontSize: 11, fontWeight: 500, fill: C_GHOST }}>
+        style={{ fontSize: 12, fontWeight: 500, fill: C_GHOST }}>
         gas remaining
       </text>
 
       {/* Which liquid is confining the gas */}
       <text x={W / 2} y={troughBot + 22} textAnchor="middle"
-        style={{ fontSize: 13, fontWeight: 500, fill: koh ? C_TEXT : C_GHOST }}>
+        style={{ fontSize: 14, fontWeight: 500, fill: koh ? C_TEXT : C_GHOST }}>
         {koh ? 'KOH solution' : 'Mercury'}
       </text>
     </svg>

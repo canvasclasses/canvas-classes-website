@@ -16,12 +16,12 @@ export default function Molecule2DBlockRenderer({ block }: { block: Molecule2DBl
       </div>
 
       <div className="mt-2 text-center">
-        <p className="text-sm font-semibold text-white/90">{block.name}</p>
+        <p className="text-sm font-semibold text-white/85">{block.name}</p>
         {block.iupac && (
-          <p className="text-xs text-white/50 mt-0.5 italic">{block.iupac}</p>
+          <p className="text-xs text-white/45 mt-0.5 italic">{block.iupac}</p>
         )}
         {block.caption && (
-          <p className="text-xs text-white/50 mt-1">{block.caption}</p>
+          <p className="text-xs text-white/45 mt-1">{block.caption}</p>
         )}
       </div>
     </figure>

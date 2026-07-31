@@ -30,7 +30,7 @@ function Section({ label, children }: { label: string; children: string }) {
       <div className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(245,166,35,0.7)' }}>
         {label}
       </div>
-      <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/72">
+      <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/82">
         {children}
       </InlineMarkdown>
     </div>
@@ -77,7 +77,7 @@ export default function MeetAScientistRenderer({ block }: { block: MeetAScientis
             {block.nationality ? ` · ${block.nationality}` : ''}
           </div>
 
-          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/78">
+          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/82">
             {block.contribution}
           </InlineMarkdown>
 

@@ -44,11 +44,11 @@ export default function AttentionXrayRenderer({ block }: { block: AttentionXrayB
           style={{ background: SURFACE_ON, color: ACCENT }}>
           The Machine
         </span>
-        <span className="text-[11px] text-white/30 font-medium uppercase tracking-widest tabular-nums">
+        <span className="text-[11px] text-white/45 font-medium uppercase tracking-widest tabular-nums">
           {flipped.size} / {block.cards.length} revealed
         </span>
       </div>
-      <h3 className="text-xl font-bold text-white/90 mb-1.5">{block.title}</h3>
+      <h3 className="text-xl font-bold text-white/85 mb-1.5">{block.title}</h3>
       {block.intro && (
         <div className="mb-5">
           <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/60">{block.intro}</InlineMarkdown>
@@ -74,15 +74,15 @@ export default function AttentionXrayRenderer({ block }: { block: AttentionXrayB
               {!isFlipped ? (
                 <div className="flex flex-col items-center justify-center flex-1 text-center gap-2">
                   <span className="text-3xl leading-none">{card.front}</span>
-                  <span className="text-[15px] font-semibold text-white/75 leading-tight">{card.label}</span>
-                  <span className="text-[10px] uppercase tracking-widest text-white/30 mt-0.5">Tap to reveal</span>
+                  <span className="text-[15px] font-semibold text-white/82 leading-tight">{card.label}</span>
+                  <span className="text-[10px] uppercase tracking-widest text-white/45 mt-0.5">Tap to reveal</span>
                 </div>
               ) : (
                 <div className="flex flex-col flex-1">
                   <span className="text-xs font-bold uppercase tracking-wide mb-1.5" style={{ color: ACCENT }}>
                     {card.label}
                   </span>
-                  <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/75">{card.reveal}</InlineMarkdown>
+                  <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/82">{card.reveal}</InlineMarkdown>
                 </div>
               )}
             </button>
@@ -93,8 +93,8 @@ export default function AttentionXrayRenderer({ block }: { block: AttentionXrayB
       {/* Gated closing reveal */}
       <div className="mt-5">
         {!allFlipped ? (
-          <p className="text-[13px] text-white/35 italic text-center py-2">
-            Flip all {block.cards.length} to see <span className="text-white/55">why</span> they go to all this trouble →
+          <p className="text-[13px] text-white/45 italic text-center py-2">
+            Flip all {block.cards.length} to see <span className="text-white/60">why</span> they go to all this trouble →
           </p>
         ) : (
           <div className="rounded-xl px-5 py-4 transition-all duration-300"
@@ -102,10 +102,10 @@ export default function AttentionXrayRenderer({ block }: { block: AttentionXrayB
             <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: ACCENT }}>
               So why do all this?
             </div>
-            <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/80 mb-2.5">{block.closing}</InlineMarkdown>
+            <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/82 mb-2.5">{block.closing}</InlineMarkdown>
             {block.watch_note && (
               <div className="mt-2.5 pt-2.5" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                <InlineMarkdown paragraphClassName="text-[13px] leading-relaxed text-white/50">{block.watch_note}</InlineMarkdown>
+                <InlineMarkdown paragraphClassName="text-[13px] leading-relaxed text-white/60">{block.watch_note}</InlineMarkdown>
               </div>
             )}
           </div>

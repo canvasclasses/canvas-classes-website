@@ -24,7 +24,7 @@ export default function CuriosityPromptRenderer({ block }: { block: CuriosityPro
 
       {block.hint && !revealed && (
         <div className="mb-3">
-          <InlineMarkdown paragraphClassName="text-[13px] text-white/35 italic">{block.hint}</InlineMarkdown>
+          <InlineMarkdown paragraphClassName="text-[13px] text-white/45 italic">{block.hint}</InlineMarkdown>
         </div>
       )}
 

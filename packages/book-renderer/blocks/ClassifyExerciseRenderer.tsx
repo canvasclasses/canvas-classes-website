@@ -44,10 +44,10 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
       </div>
 
       {/* Column labels */}
-      <div className="grid gap-x-3 px-4 py-1.5 mb-1.5 text-[10px] font-bold tracking-[0.12em] uppercase text-white/25 select-none"
+      <div className="grid gap-x-3 px-4 py-1.5 mb-1.5 text-[10px] font-bold tracking-[0.12em] uppercase text-white/45 select-none"
         style={{ gridTemplateColumns: '1fr auto' }}>
         <span>{block.column_label ?? 'Substance'}</span>
-        <span>Solution?</span>
+        <span>{block.verdict_label ?? 'Solution?'}</span>
       </div>
 
       {/* Rows */}
@@ -76,8 +76,8 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
                   )}
                   <span className={`text-[15px] font-medium truncate
                     ${state.answered
-                      ? state.wasCorrect ? 'text-white/88' : 'text-white/65'
-                      : 'text-white/80'
+                      ? state.wasCorrect ? 'text-white/85' : 'text-white/60'
+                      : 'text-white/82'
                     }`}>
                     <InlineMarkdown>{row.substance}</InlineMarkdown>
                   </span>
@@ -112,7 +112,9 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
                         ? 'bg-emerald-500/12 text-emerald-300 border border-emerald-500/20'
                         : 'bg-red-500/12 text-red-300 border border-red-500/20'
                       }`}>
-                      {row.is_solution ? '✓ Solution' : '✗ Not a solution'}
+                      {row.is_solution
+                        ? (block.yes_label ?? '✓ Solution')
+                        : (block.no_label ?? '✗ Not a solution')}
                     </div>
                   )}
                 </div>
@@ -127,7 +129,7 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
                         {state.studentSaidYes ? 'Not quite —' : 'Actually —'}
                       </span>
                     )}
-                    <p className="text-[13px] leading-[1.65] text-white/52">
+                    <p className="text-[13px] leading-[1.65] text-white/60">
                       <InlineMarkdown>{row.explanation}</InlineMarkdown>
                     </p>
                   </div>
@@ -141,7 +143,7 @@ export default function ClassifyExerciseRenderer({ block }: { block: ClassifyExe
       {/* Score footer */}
       {answeredCount > 0 && (
         <div className="mt-4 flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/[0.025] border border-white/5">
-          <span className="text-[12px] text-white/35">
+          <span className="text-[12px] text-white/45">
             {answeredCount} of {block.rows.length} answered
           </span>
           <span className={`text-[13px] font-semibold

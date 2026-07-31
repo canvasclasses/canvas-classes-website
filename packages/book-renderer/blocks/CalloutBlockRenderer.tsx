@@ -35,10 +35,10 @@ function CalloutImage({ block }: { block: CalloutBlock }) {
   // Placeholder — show the generation prompt until the image is uploaded
   return (
     <div className="mt-4 rounded-lg border border-dashed border-white/12 bg-white/[0.02] px-3 py-2.5">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-white/25 mb-1.5">
+      <p className="text-[10px] font-bold uppercase tracking-widest text-white/45 mb-1.5">
         Image needed — generation prompt:
       </p>
-      <p className="text-[12px] text-white/38 font-mono leading-relaxed select-all">
+      <p className="text-[12px] text-white/45 font-mono leading-relaxed select-all">
         {block.image_prompt}
       </p>
     </div>
@@ -72,7 +72,7 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
         className="w-full px-4 py-3 flex items-center gap-2 text-left transition-opacity hover:opacity-90"
         style={{ background: 'linear-gradient(135deg, rgba(217,119,6,0.18) 0%, rgba(217,119,6,0.04) 100%)' }}
       >
-        <span className="flex-1 text-[13px] font-bold tracking-[0.14em] uppercase whitespace-nowrap" style={{ color: '#fcd34d' }}>
+        <span className="flex-1 min-w-0 text-[13px] font-bold tracking-[0.14em] uppercase" style={{ color: '#fcd34d' }}>
           {block.title ?? 'Quick Recap'}
         </span>
         {expanded
@@ -88,14 +88,14 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
             rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
             components={{
               p: ({ children }) => (
-                <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/72 mb-2.5 last:mb-0">
+                <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/82 mb-2.5 last:mb-0">
                   <span className="text-amber-300/40 mt-[4px] shrink-0 text-[8px]">◆</span>
                   <span>{children}</span>
                 </div>
               ),
               ul: ({ children }) => <ul className="space-y-2">{children}</ul>,
               li: ({ children }) => (
-                <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/72">
+                <div className="flex gap-2.5 items-start text-[14px] leading-[1.7] text-white/82">
                   <span className="text-amber-300/40 mt-[4px] shrink-0 text-[8px]">◆</span>
                   <span>{children}</span>
                 </div>
@@ -104,7 +104,7 @@ function ExamTipCallout({ block }: { block: CalloutBlock }) {
                 <strong className="font-semibold text-amber-200/80">{children}</strong>
               ),
               em: ({ children }) => (
-                <em className="italic text-white/55">{children}</em>
+                <em className="italic text-white/60">{children}</em>
               ),
             }}
           >
@@ -175,7 +175,7 @@ function FunFactCallout({ block }: { block: CalloutBlock }) {
           ),
           // English translation blockquote — left border, no background box
           blockquote: ({ children }) => (
-            <blockquote className="pl-4 my-4 text-white/52 text-[15px] leading-[1.75] not-italic" style={{ borderLeft: '2px solid rgba(255,255,255,0.15)' }}>
+            <blockquote className="pl-4 my-4 text-white/60 text-[15px] leading-[1.75] not-italic" style={{ borderLeft: '2px solid rgba(255,255,255,0.15)' }}>
               {children}
             </blockquote>
           ),
@@ -222,19 +222,19 @@ function RememberCallout({ block }: { block: CalloutBlock }) {
           ),
           // Generous paragraph spacing — the primary fix for the stacked look
           p: ({ children }) => (
-            <p className="text-[14.5px] leading-[1.85] text-white/70 my-3 first:mt-0 last:mb-0">
+            <p className="text-[14.5px] leading-[1.85] text-white/82 my-3 first:mt-0 last:mb-0">
               {children}
             </p>
           ),
           // Italic text (subtitle, closing question) — same color, just italic
           em: ({ children }) => (
-            <em className="italic text-white/70">
+            <em className="italic text-white/82">
               {children}
             </em>
           ),
           // Bold text — slightly brighter, same color family
           strong: ({ children }) => (
-            <strong className="font-semibold text-white/88 not-italic">
+            <strong className="font-semibold text-white/85 not-italic">
               {children}
             </strong>
           ),
@@ -255,9 +255,9 @@ function WarningCallout({ block }: { block: CalloutBlock }) {
       <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-red-400/60 mb-2 select-none">
         {block.title ?? 'Warning'}
       </p>
-      <div className="text-[15px] leading-[1.75] text-white/75
+      <div className="text-[15px] leading-[1.75] text-white/82
         prose prose-invert max-w-none prose-p:my-1.5 prose-p:leading-[1.75]
-        prose-strong:text-white/90 prose-strong:font-semibold">
+        prose-strong:text-white/85 prose-strong:font-semibold">
         <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}>
           {block.markdown}
         </ReactMarkdown>
@@ -300,7 +300,7 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
 
   const mdComponents = {
     p: ({ children }: { children?: React.ReactNode }) => (
-      <p className="text-[15.5px] leading-[1.85] text-white/65 my-2 first:mt-0 last:mb-0">
+      <p className="text-[15.5px] leading-[1.85] text-white/60 my-2 first:mt-0 last:mb-0">
         {children}
       </p>
     ),
@@ -310,7 +310,7 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
       </strong>
     ),
     em: ({ children }: { children?: React.ReactNode }) => (
-      <em className="italic text-white/55">
+      <em className="italic text-white/60">
         {children}
       </em>
     ),
@@ -323,7 +323,7 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
       {/* Header */}
       {block.title && (
         <div className="px-4 py-2.5 border-b border-white/6">
-          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/62 select-none leading-snug">
+          <p className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/45 select-none leading-snug">
             {block.title}
           </p>
         </div>
@@ -383,7 +383,7 @@ function NoteCallout({ block }: { block: CalloutBlock }) {
             <button
               onClick={() => setExpanded(v => !v)}
               className="mt-2.5 flex items-center gap-1 text-[12px] font-medium
-                text-white/35 hover:text-white/65 transition-colors"
+                text-white/45 hover:text-white/60 transition-colors"
             >
               {expanded
                 ? <><ChevronUp size={13} /><span>Collapse</span></>
@@ -443,7 +443,7 @@ function VoicesThatInspireCallout({ block }: { block: CalloutBlock }) {
           components={{
             // Teacher's framing — warm, readable body
             p: ({ children }) => (
-              <p className="text-[15.5px] leading-[1.85] text-white/75 my-3 first:mt-0 last:mb-0">
+              <p className="text-[15.5px] leading-[1.85] text-white/82 my-3 first:mt-0 last:mb-0">
                 {children}
               </p>
             ),
@@ -495,13 +495,13 @@ function VoicesThatInspireCallout({ block }: { block: CalloutBlock }) {
 function RealWorldCallout({ block }: { block: CalloutBlock }) {
   const mdComponents = {
     p: ({ children }: { children?: React.ReactNode }) => (
-      <p className="text-[16px] leading-[1.8] text-white/88 my-2.5 first:mt-0 last:mb-0">{children}</p>
+      <p className="text-[16px] leading-[1.8] text-white/85 my-2.5 first:mt-0 last:mb-0">{children}</p>
     ),
     strong: ({ children }: { children?: React.ReactNode }) => (
       <strong className="font-semibold not-italic" style={{ color: '#8fe0d6' }}>{children}</strong>
     ),
     em: ({ children }: { children?: React.ReactNode }) => (
-      <em className="italic text-white/70">{children}</em>
+      <em className="italic text-white/82">{children}</em>
     ),
     ul: ({ children }: { children?: React.ReactNode }) => (
       <ul className="my-2.5 pl-5 space-y-1.5 list-disc" style={{ color: 'rgba(255,255,255,0.88)' }}>{children}</ul>
@@ -512,7 +512,7 @@ function RealWorldCallout({ block }: { block: CalloutBlock }) {
       <ol className="my-2.5 pl-5 space-y-2 list-decimal" style={{ color: 'rgba(255,255,255,0.88)' }}>{children}</ol>
     ),
     li: ({ children }: { children?: React.ReactNode }) => (
-      <li className="text-[16px] leading-[1.75] text-white/88 pl-1">{children}</li>
+      <li className="text-[16px] leading-[1.75] text-white/85 pl-1">{children}</li>
     ),
     hr: () => <div className="my-4 h-px" style={{ background: 'rgba(255,255,255,0.10)' }} />,
   };

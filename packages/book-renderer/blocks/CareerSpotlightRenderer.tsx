@@ -33,7 +33,7 @@ export default function CareerSpotlightRenderer({ block }: { block: CareerSpotli
       <div className="px-5 py-4">
         {/* Intro */}
         {block.intro && (
-          <InlineMarkdown paragraphClassName="text-[14px] italic text-white/55 mb-4 leading-relaxed">
+          <InlineMarkdown paragraphClassName="text-[14px] italic text-white/60 mb-4 leading-relaxed">
             {block.intro}
           </InlineMarkdown>
         )}
@@ -48,7 +48,7 @@ export default function CareerSpotlightRenderer({ block }: { block: CareerSpotli
             >
               <span className="mt-[3px] w-[6px] h-[6px] rounded-full shrink-0" style={{ background: ACCENT }} />
               <div className="min-w-0">
-                <p className="text-[14.5px] font-semibold text-white/90 mb-0.5">{c.role}</p>
+                <p className="text-[14.5px] font-semibold text-white/85 mb-0.5">{c.role}</p>
                 <InlineMarkdown paragraphClassName="text-[13.5px] leading-[1.7] text-white/60">
                   {c.description}
                 </InlineMarkdown>

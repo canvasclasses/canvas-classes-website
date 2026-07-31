@@ -69,16 +69,16 @@ const sideTextComponents: Components = {
     <p className="text-[17px] leading-[1.65] text-white/82 my-2.5 first:mt-0 last:mb-0">{children}</p>
   ),
   strong: ({ children }) => (
-    <strong className="font-semibold text-amber-200/80">{children}</strong>
+    <strong className="font-semibold" style={{ color: '#dcceb6' }}>{children}</strong>
   ),
   em: ({ children }) => (
-    <em className="italic text-white/75">{children}</em>
+    <em className="italic text-white/82">{children}</em>
   ),
   ul: ({ children }) => (
-    <ul className="my-3 pl-5 space-y-2 list-disc marker:text-white/30">{children}</ul>
+    <ul className="my-3 pl-5 space-y-2 list-disc marker:text-white/45">{children}</ul>
   ),
   ol: ({ children }) => (
-    <ol className="my-3 pl-5 space-y-2 list-decimal marker:text-white/40">{children}</ol>
+    <ol className="my-3 pl-5 space-y-2 list-decimal marker:text-white/45">{children}</ol>
   ),
   li: ({ children }) => (
     <li className="text-[17px] leading-[1.75] text-white/82">{children}</li>
@@ -118,10 +118,10 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
       <figure className={`${wClass} my-6`}>
         <div className="w-full rounded-xl border border-dashed border-white/15 bg-white/[0.02] overflow-hidden">
           <div className="px-4 py-2.5 border-b border-white/8 flex items-center gap-2">
-            <span className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/25 select-none">
+            <span className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/45 select-none">
               🖼 Image Pending
             </span>
-            <span className="ml-auto text-[10px] text-white/20 italic">{block.alt}</span>
+            <span className="ml-auto text-[10px] text-white/45 italic">{block.alt}</span>
           </div>
 
           {block.generation_prompt ? (
@@ -129,7 +129,7 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
               <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-orange-400/50 mb-2 select-none">
                 AI Generation Prompt
               </p>
-              <p className="text-[13px] leading-[1.65] text-white/50 font-mono mb-3">
+              <p className="text-[13px] leading-[1.65] text-white/60 font-mono mb-3">
                 {block.generation_prompt}
               </p>
               <button
@@ -146,12 +146,12 @@ export default function ImageBlockRenderer({ block }: { block: ImageBlock }) {
             </div>
           ) : (
             <div className="px-4 py-5 text-center">
-              <p className="text-xs text-white/25 italic">{block.caption || block.alt}</p>
+              <p className="text-xs text-white/45 italic">{block.caption || block.alt}</p>
             </div>
           )}
         </div>
         {block.caption && (
-          <figcaption className="mt-2 text-center text-sm text-white/40 italic">
+          <figcaption className="mt-2 text-center text-sm text-white/45 italic">
             {block.caption}
           </figcaption>
         )}

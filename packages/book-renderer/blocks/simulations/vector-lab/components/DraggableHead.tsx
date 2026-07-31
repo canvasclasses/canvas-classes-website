@@ -117,7 +117,14 @@ export function DraggableHead({
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       />
-      <circle cx={screen.x} cy={screen.y} r={radius} fill={color} opacity={0.25} />
+      {/* BOTH visible circles MUST be pointerEvents="none". SVG paints later
+          siblings on top, so a decorative circle drawn after the transparent hit
+          area steals pointerdown from it. This halo was missing the guard, which
+          created a dead disc of exactly `radius` px OVER the dot the student is
+          told to grab: pressing on the hotspot did nothing, while pressing just
+          off-centre (outside the halo, inside the hit circle) dragged fine.
+          Founder-reported 2026-07-29. */}
+      <circle cx={screen.x} cy={screen.y} r={radius} fill={color} opacity={0.25} pointerEvents="none" />
       <circle cx={screen.x} cy={screen.y} r={radius - 3} fill={color} stroke="#0d1117" strokeWidth={2} pointerEvents="none" />
     </g>
   );

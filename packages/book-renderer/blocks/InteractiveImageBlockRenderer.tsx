@@ -210,31 +210,31 @@ export default function InteractiveImageBlockRenderer({
       <figure className="my-6">
         <div className="w-full rounded-xl border border-dashed border-white/15 bg-white/[0.02] overflow-hidden">
           <div className="px-4 py-2.5 border-b border-white/8 flex items-center gap-2">
-            <span className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/25 select-none">
+            <span className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/45 select-none">
               🖼 Interactive Image Pending
             </span>
-            <span className="ml-auto text-[10px] text-white/20 italic">{block.alt}</span>
+            <span className="ml-auto text-[10px] text-white/45 italic">{block.alt}</span>
           </div>
           {block.generation_prompt && (
             <div className="px-4 py-4">
               <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-orange-400/50 mb-2 select-none">
                 AI Generation Prompt
               </p>
-              <p className="text-[13px] leading-[1.65] text-white/50 font-mono">
+              <p className="text-[13px] leading-[1.65] text-white/60 font-mono">
                 {block.generation_prompt}
               </p>
             </div>
           )}
           {block.hotspots.length > 0 && (
             <div className="px-4 py-3 border-t border-white/8">
-              <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-white/25 mb-2 select-none">
+              <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-white/45 mb-2 select-none">
                 {block.hotspots.length} hotspot{block.hotspots.length === 1 ? '' : 's'}
               </p>
               <ul className="space-y-2">
                 {block.hotspots.map((h) => (
                   <li key={h.id} className="text-[13px] leading-snug">
                     <p className="text-orange-400/70 font-semibold mb-0.5">{h.label}</p>
-                    <div className="text-white/55 prose prose-invert prose-sm max-w-none">
+                    <div className="text-white/60 prose prose-invert prose-sm max-w-none">
                       <ReactMarkdown>{h.detail}</ReactMarkdown>
                     </div>
                   </li>
@@ -244,7 +244,7 @@ export default function InteractiveImageBlockRenderer({
           )}
         </div>
         {block.caption && (
-          <figcaption className="mt-2 text-center text-sm text-white/40 italic">
+          <figcaption className="mt-2 text-center text-sm text-white/45 italic">
             {block.caption}
           </figcaption>
         )}
@@ -313,7 +313,7 @@ export default function InteractiveImageBlockRenderer({
       {canQuiz && (
         <div className={`flex justify-center ${outerWidthClass} mx-auto mb-2`}>
           <div className="w-full flex items-center justify-between gap-2">
-            <span className="text-[11px] font-semibold tracking-[0.08em] uppercase text-white/30 select-none">
+            <span className="text-[11px] font-semibold tracking-[0.08em] uppercase text-white/45 select-none">
               {mode === 'quiz' ? 'Label Sprint' : 'Tap a dot to explore'}
             </span>
             {mode === 'explore' ? (
@@ -347,8 +347,8 @@ export default function InteractiveImageBlockRenderer({
               { k: 'Placed', v: `${placed.length}/${total}` },
             ].map((s) => (
               <div key={s.k} className="rounded-lg bg-[#0B0F15] border border-white/10 px-2 py-1.5 text-center">
-                <div className="text-[9px] tracking-[0.08em] uppercase text-white/30">{s.k}</div>
-                <div className={`text-[15px] font-bold tabular-nums ${s.hot ? 'text-amber-400' : 'text-white/90'}`}>{s.v}</div>
+                <div className="text-[9px] tracking-[0.08em] uppercase text-white/45">{s.k}</div>
+                <div className={`text-[15px] font-bold tabular-nums ${s.hot ? 'text-amber-400' : 'text-white/85'}`}>{s.v}</div>
               </div>
             ))}
           </div>
@@ -439,13 +439,13 @@ export default function InteractiveImageBlockRenderer({
                 <p className="text-sm font-semibold text-orange-400 mb-1">{activeHotspot.label}</p>
                 <button
                   onClick={() => setActiveId(null)}
-                  className="text-white/40 hover:text-white/80 text-xs shrink-0"
+                  className="text-white/45 hover:text-white/82 text-xs shrink-0"
                   aria-label="Close"
                 >
                   ✕
                 </button>
               </div>
-              <div className="text-sm text-white/80 prose prose-invert prose-sm max-w-none max-h-[200px] overflow-y-auto">
+              <div className="text-sm text-white/82 prose prose-invert prose-sm max-w-none max-h-[200px] overflow-y-auto">
                 <ReactMarkdown>{activeHotspot.detail}</ReactMarkdown>
               </div>
             </div>
@@ -465,7 +465,7 @@ export default function InteractiveImageBlockRenderer({
                     ? 'bg-emerald-600 border-emerald-400 text-white px-2 h-6 rounded-full cursor-default'
                     : isWrong
                       ? 'bg-[#0B0F15]/85 border-red-500 text-red-400 w-6 h-6 rounded-md'
-                      : `bg-[#0B0F15]/85 w-6 h-6 rounded-md ${armedId ? 'border-orange-400/70 text-orange-300 hover:scale-110 cursor-pointer' : 'border-white/40 text-white/60'}`
+                      : `bg-[#0B0F15]/85 w-6 h-6 rounded-md ${armedId ? 'border-orange-400/70 text-orange-300 hover:scale-110 cursor-pointer' : 'border-white/40 text-white/45'}`
                   }`}
                 style={{ ...spotPos(hotspot), transform: 'translate(-50%,-50%)' }}
                 onClick={() => tapTarget(hotspot.id)}
@@ -523,7 +523,7 @@ export default function InteractiveImageBlockRenderer({
                 </button>
                 <button
                   onClick={exitQuiz}
-                  className="text-[13px] font-semibold px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+                  className="text-[13px] font-semibold px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 hover:bg-white/10"
                 >
                   Back to explore
                 </button>
@@ -534,7 +534,7 @@ export default function InteractiveImageBlockRenderer({
       )}
 
       {block.caption && mode === 'explore' && (
-        <figcaption className="mt-2 text-center text-sm text-white/50 italic">
+        <figcaption className="mt-2 text-center text-sm text-white/45 italic">
           {block.caption}
         </figcaption>
       )}

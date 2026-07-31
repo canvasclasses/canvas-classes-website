@@ -10,12 +10,12 @@ export default function Molecule3DBlockRenderer({ block }: { block: Molecule3DBl
       <div className="w-full max-w-sm bg-[#0B0F15] border border-white/10 rounded-xl p-6
         flex flex-col items-center justify-center gap-2 min-h-[180px]">
         <div className="text-3xl">🧬</div>
-        <p className="text-sm font-semibold text-white/80">{block.name}</p>
-        <p className="text-xs text-white/40 font-mono break-all text-center">{block.smiles}</p>
+        <p className="text-sm font-semibold text-white/82">{block.name}</p>
+        <p className="text-xs text-white/45 font-mono break-all text-center">{block.smiles}</p>
         <p className="text-xs text-orange-400/70 mt-2">3D interactive view</p>
       </div>
       {block.caption && (
-        <figcaption className="mt-2 text-center text-sm text-white/50 italic">
+        <figcaption className="mt-2 text-center text-sm text-white/45 italic">
           {block.caption}
         </figcaption>
       )}

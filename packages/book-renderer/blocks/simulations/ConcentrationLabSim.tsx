@@ -23,10 +23,14 @@
  *      (e.g. molality > molarity when the solute has appreciable mass), the
  *      sim writes ONE sentence explaining the relationship in plain English.
  *
- *   3. PREDICT-FIRST DILUTION  — in dilute mode, before you touch a slider
- *      the sim asks you to predict whether the focused unit will go ↑ / → / ↓.
- *      After you commit, the slider unlocks. On change, the sim reveals the
- *      new value with a ✓ or ✗ tick and a one-line reason.
+ *   3. PREDICT-FIRST DILUTION  — in dilute mode the order is: (a) pick WHICH
+ *      action you're about to take — add water, add solute, or evaporate —
+ *      (b) predict whether the focused unit will go ↑ / → / ↓ *because of
+ *      that specific action*, THEN (c) the matching slider unlocks so you can
+ *      actually do it. Committing to the action before predicting is the
+ *      point — you can't reason about an effect without first knowing its
+ *      cause. On change, the sim reveals the new value with a ✓ or ✗ tick and
+ *      a one-line reason tied to the action you picked.
  *
  * Modelling assumptions (NCERT level — flagged in UI when approximations break):
  *   • Volume of solution ≈ volume of solvent (warned above ~3 M).
@@ -599,9 +603,24 @@ function DerivationPanel({ derivation, accent, headerSlot, footerSlot }:
 // ── Predict-first widget for Dilute mode ─────────────────────────────────
 type Prediction = 'up' | 'same' | 'down' | null;
 
-function PredictWidget({ unitName, prediction, onPredict, beforeValue, afterValue, locked }:
-                       { unitName: string; prediction: Prediction; onPredict: (p: Prediction) => void;
+// The action IS the cause the student commits to before predicting — see the
+// module doc comment. Picking it first is what makes the prediction question
+// answerable ("what happens if I add water?" instead of an unanchored
+// "what will % w/w do?").
+type Action = 'water' | 'solute' | 'evaporate' | null;
+
+const ACTION_META: Record<Exclude<Action, null>, { label: string; verb: string; color: string }> = {
+  water:     { label: '+ Add water',  verb: 'add water',            color: CYAN },
+  solute:    { label: '+ Add solute', verb: 'add more solute',      color: VIO },
+  evaporate: { label: '− Evaporate',  verb: 'evaporate some water', color: CYAN },
+};
+
+function PredictWidget({ unitName, action, prediction, onPredict, beforeValue, afterValue, locked }:
+                       { unitName: string; action: Exclude<Action, null>; prediction: Prediction;
+                         onPredict: (p: Prediction) => void;
                          beforeValue: string; afterValue: string; locked: boolean }) {
+  const verb = ACTION_META[action].verb;
+  const verbColor = ACTION_META[action].color;
   // Determine actual direction from before/after for feedback
   const beforeNum = parseFloat(beforeValue.replace(/[^0-9.eE+-]/g, ''));
   const afterNum = parseFloat(afterValue.replace(/[^0-9.eE+-]/g, ''));
@@ -627,13 +646,11 @@ function PredictWidget({ unitName, prediction, onPredict, beforeValue, afterValu
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-between items-baseline">
-        <div className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: VIO }}>
-          Predict first
-        </div>
-        <div className="text-[10px]" style={{ color: '#64748b' }}>
-          What will <b style={{ color: VIO }}>{unitName}</b> do?
-        </div>
+      <div className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: VIO }}>
+        Predict first
+      </div>
+      <div className="text-[12px] leading-snug" style={{ color: '#cbd5e1' }}>
+        If you <b style={{ color: verbColor }}>{verb}</b>, what happens to <b style={{ color: VIO }}>{unitName}</b>?
       </div>
       <div className="grid grid-cols-3 gap-1.5">
         {arrows.map(a => {
@@ -662,7 +679,7 @@ function PredictWidget({ unitName, prediction, onPredict, beforeValue, afterValu
 
       {prediction && !locked && (
         <div className="text-[10px] italic text-center" style={{ color: '#94a3b8' }}>
-          Now move a slider below to test your prediction →
+          Now move the slider on the left to actually {verb} →
         </div>
       )}
 
@@ -675,8 +692,8 @@ function PredictWidget({ unitName, prediction, onPredict, beforeValue, afterValu
           }}>
           <span className="font-semibold mr-1">{correct ? '✓' : '✗'}</span>
           {correct
-            ? `Correct — ${unitName} ${actual === 'up' ? 'went up' : actual === 'down' ? 'went down' : 'stayed the same'} (${beforeValue} → ${afterValue}).`
-            : `Not quite — ${unitName} ${actual === 'up' ? 'increased' : actual === 'down' ? 'decreased' : 'stayed about the same'} (${beforeValue} → ${afterValue}).`}
+            ? `Correct — you ${verb}, and ${unitName} ${actual === 'up' ? 'went up' : actual === 'down' ? 'went down' : 'stayed the same'} (${beforeValue} → ${afterValue}).`
+            : `Not quite — you ${verb}, and ${unitName} actually ${actual === 'up' ? 'increased' : actual === 'down' ? 'decreased' : 'stayed about the same'} (${beforeValue} → ${afterValue}).`}
         </div>
       )}
     </div>
@@ -699,10 +716,16 @@ export default function ConcentrationLabSim() {
   const [addedSolute, setAddedSolute] = useState<number>(0);
   const [evaporated, setEvaporated]   = useState<number>(0);
 
-  // Predict-first state for Dilute mode
+  // Predict-first state for Dilute mode — `action` is the commitment step:
+  // the student picks WHICH slider they intend to test before they're asked
+  // to predict its effect. Only that one slider is ever active at a time, so
+  // "the number moved" always has one unambiguous cause.
+  const [action, setAction] = useState<Action>(null);
   const [prediction, setPrediction] = useState<Prediction>(null);
-  // "Locked" once any modification slider has been touched (and a prediction exists)
-  const hasModification = addedWater > 0 || addedSolute > 0 || evaporated > 0;
+  const activeAmount = action === 'water' ? addedWater : action === 'solute' ? addedSolute
+    : action === 'evaporate' ? evaporated : 0;
+  // "Locked" once the ACTIVE action's slider has been touched (and a prediction exists)
+  const hasModification = activeAmount > 0;
   const predictionLocked = !!prediction && hasModification;
 
   const solute = useMemo(() => SOLUTES.find(s => s.id === soluteId) ?? SOLUTES[0], [soluteId]);
@@ -728,12 +751,26 @@ export default function ConcentrationLabSim() {
   const currentMolarity = currentState.V_solution_L > 0 ? currentState.moles / currentState.V_solution_L : 0;
   const intensity = Math.min(1, currentMolarity / 2);
 
-  // Reset prediction when student changes focus unit or solute or mode
-  useEffect(() => { setPrediction(null); }, [focusUnit, soluteId, mode]);
+  // Reset the whole predict-act-test cycle when student changes focus unit,
+  // solute, or mode — each unit/solute gets its own clean cycle, not a
+  // slider position carried over from a different question.
+  useEffect(() => {
+    setPrediction(null); setAction(null);
+    setAddedWater(0); setAddedSolute(0); setEvaporated(0);
+  }, [focusUnit, soluteId, mode]);
 
   function resetDilution() {
     setAddedWater(0); setAddedSolute(0); setEvaporated(0);
+    setPrediction(null); setAction(null);
+  }
+
+  // Switching the action always restarts the cycle — you can change your
+  // mind about what to test at any point, but you can't carry a half-tested
+  // action's slider value into a new one (that would blur the cause).
+  function selectAction(a: Exclude<Action, null>) {
+    setAddedWater(0); setAddedSolute(0); setEvaporated(0);
     setPrediction(null);
+    setAction(a);
   }
 
   function selectSolute(id: string) {
@@ -880,15 +917,16 @@ export default function ConcentrationLabSim() {
             </div>
           )}
 
-          {/* Dilute-mode controls — sliders are visually enabled but a banner reminds
-              the student to predict first if they haven't yet */}
+          {/* Dilute-mode controls — three-step flow: (1) pick an action,
+              (2) predict its effect on the right, (3) the matching slider
+              unlocks so the student can actually do it. */}
           {mode === 'dilute' && (
             <div className="flex flex-col gap-3"
               style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 10 }}>
               <div className="flex justify-between items-center">
                 <div className="text-[10px] font-semibold uppercase tracking-widest"
                   style={{ color: '#94a3b8' }}>
-                  Modify the Solution
+                  Step 1 — What will you do?
                 </div>
                 <button onClick={resetDilution}
                   className="text-[10px] font-semibold px-2 py-1 rounded"
@@ -898,22 +936,54 @@ export default function ConcentrationLabSim() {
                   ↺ Reset
                 </button>
               </div>
-              {!prediction && (
+
+              <div className="grid grid-cols-3 gap-1.5">
+                {(['water', 'solute', 'evaporate'] as const).map((a) => {
+                  const meta = ACTION_META[a];
+                  const active = action === a;
+                  return (
+                    <button key={a} onClick={() => selectAction(a)}
+                      className="rounded-md px-2 py-2 text-center transition-all"
+                      style={{
+                        background: active ? `${meta.color}22` : 'rgba(255,255,255,0.02)',
+                        border: `1.5px solid ${active ? `${meta.color}80` : 'rgba(255,255,255,0.07)'}`,
+                        color: active ? meta.color : '#94a3b8',
+                        cursor: 'pointer',
+                      }}>
+                      <div style={{ fontSize: 11, fontWeight: 700 }}>{meta.label}</div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {!action && (
                 <div className="text-[11px] italic" style={{ color: VIO }}>
-                  👉 Make a prediction on the right first, THEN slide.
+                  👉 Pick an action above, then predict its effect on the right.
                 </div>
               )}
-              <NumSlider label="+ Add water" color={CYAN} unit="mL"
-                value={addedWater} min={0} max={500} step={5} onChange={setAddedWater}
-                disabled={!prediction} />
-              <NumSlider label="+ Add solute" color={VIO} unit="g"
-                value={addedSolute} min={0} max={20} step={0.1} onChange={setAddedSolute}
-                disabled={!prediction} />
-              <NumSlider label="− Evaporate" color={CYAN} unit="mL"
-                value={evaporated} min={0}
-                max={Math.max(0, solventVol + addedWater - 5)}
-                step={5} onChange={setEvaporated}
-                disabled={!prediction} />
+              {action && !prediction && (
+                <div className="text-[11px] italic" style={{ color: VIO }}>
+                  👉 Make your prediction on the right, THEN slide.
+                </div>
+              )}
+
+              {action === 'water' && (
+                <NumSlider label="+ Add water" color={CYAN} unit="mL"
+                  value={addedWater} min={0} max={500} step={5} onChange={setAddedWater}
+                  disabled={!prediction} />
+              )}
+              {action === 'solute' && (
+                <NumSlider label="+ Add solute" color={VIO} unit="g"
+                  value={addedSolute} min={0} max={20} step={0.1} onChange={setAddedSolute}
+                  disabled={!prediction} />
+              )}
+              {action === 'evaporate' && (
+                <NumSlider label="− Evaporate" color={CYAN} unit="mL"
+                  value={evaporated} min={0} max={Math.max(0, solventVol - 5)}
+                  step={5} onChange={setEvaporated}
+                  disabled={!prediction} />
+              )}
+
               <div className="text-[10px] italic" style={{ color: '#64748b' }}>
                 Starting from the solution you built in the previous tab.
               </div>
@@ -964,14 +1034,25 @@ export default function ConcentrationLabSim() {
             derivation={currentDeriv}
             accent={accent}
             headerSlot={mode === 'dilute' ? (
-              <PredictWidget
-                unitName={focusedDef.shortName}
-                prediction={prediction}
-                onPredict={setPrediction}
-                beforeValue={`${builtDeriv.finalValue} ${builtDeriv.finalUnit}`}
-                afterValue={`${currentDeriv.finalValue} ${currentDeriv.finalUnit}`}
-                locked={predictionLocked}
-              />
+              action ? (
+                <PredictWidget
+                  unitName={focusedDef.shortName}
+                  action={action}
+                  prediction={prediction}
+                  onPredict={setPrediction}
+                  beforeValue={`${builtDeriv.finalValue} ${builtDeriv.finalUnit}`}
+                  afterValue={`${currentDeriv.finalValue} ${currentDeriv.finalUnit}`}
+                  locked={predictionLocked}
+                />
+              ) : (
+                <div className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: VIO }}>
+                  Predict first
+                  <div className="mt-1.5 text-[12px] font-normal normal-case" style={{ color: '#64748b' }}>
+                    ← Pick what you&rsquo;re going to do on the left, then predict its effect on{' '}
+                    <b style={{ color: VIO }}>{focusedDef.shortName}</b> here.
+                  </div>
+                </div>
+              )
             ) : undefined}
             footerSlot={mode === 'dilute' && hasModification ? (
               <div>
@@ -995,15 +1076,16 @@ export default function ConcentrationLabSim() {
                     </div>
                   </div>
                 </div>
-                {addedSolute === 0 && (
+                {(action === 'water' || action === 'evaporate') && (
                   <div className="text-[11px] italic mt-2" style={{ color: '#94a3b8' }}>
-                    Moles of solute were conserved (you only added/removed water) — so
-                    {' '}{focusedDef.shortName} {focusUnit === 'molality' || focusUnit === 'mole_fraction' ? 'changed because solvent mass changed' : focusUnit === 'normality' ? 'tracks molarity (= n × M)' : 'changed because volume of solution changed'}.
+                    Moles of {solute.formula} were conserved (you only {action === 'water' ? 'added' : 'removed'}{' '}
+                    water) — so {focusedDef.shortName}{' '}
+                    {focusUnit === 'molality' || focusUnit === 'mole_fraction' ? 'changed because the amount of solvent changed' : focusUnit === 'normality' ? 'tracks molarity (= n × M)' : 'changed because the volume of solution changed'}.
                   </div>
                 )}
-                {addedSolute > 0 && (
+                {action === 'solute' && (
                   <div className="text-[11px] italic mt-2" style={{ color: VIO }}>
-                    You added more solute, so total moles changed.
+                    You added more {solute.formula}, so total moles of solute increased — the solvent amount never changed.
                   </div>
                 )}
               </div>

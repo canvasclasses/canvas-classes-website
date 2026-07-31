@@ -4,9 +4,15 @@ import { useContext, useState } from 'react';
 import { SimulationBlock } from '@canvas/data/types/books';
 import dynamic from 'next/dynamic';
 import { ExtraSimulatorsContext } from '../simulators-context';
+import InlineMarkdown from './InlineMarkdown';
 
 // Lazy-load each simulator — keeps initial page bundle small
 const simulators: Record<string, React.ComponentType> = {
+  // Math concept-game: solving linear equations with draggable algebra tiles.
+  'algebra-tiles-solver': dynamic(
+    () => import('./simulations/AlgebraTilesSolverSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   'fractional-distillation': dynamic(
     () => import('./simulations/FractionalDistillationSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
@@ -34,6 +40,14 @@ const simulators: Record<string, React.ComponentType> = {
   // both the student reader and the admin preview.
   'hydrogen-spectrum-decoder': dynamic(
     () => import('./simulations/HydrogenSpectrumDecoderSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // 'element-spectra-lab' serves the FINGERPRINT section of the same page —
+  // match an unknown (sometimes a two-element mixture) against real published
+  // reference spectra, then flip to absorption and watch the lines invert.
+  // Deliberately multi-element: the two sims above are hydrogen-only.
+  'element-spectra-lab': dynamic(
+    () => import('./simulations/ElementSpectraLabSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   // dual-nature page: de Broglie wavelength scale + Heisenberg uncertainty trade-off
@@ -90,12 +104,18 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/RutherfordCollapseSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
-  'atom-builder': dynamic(
-    () => import('./simulations/AtomBuilderSim'),
+  'radioactive-decay-explorer': dynamic(
+    () => import('./simulations/RadioactiveDecaySim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   'em-wave-explorer': dynamic(
     () => import('./simulations/EMWaveSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // Class 11 Physics Ch.1 "Units and Dimensions" — build / recall / apply a
+  // dimensional formula. See PHYSICS_CH1_UNITS_AND_DIMENSIONS_PLAN.md §4.1.
+  'dimension-lab': dynamic(
+    () => import('./simulations/DimensionLabSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   'wave-dynamics': dynamic(
@@ -262,9 +282,13 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/NewtonsThirdLawSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
-  // ── Class 9 Science — Chapter 2: Is Matter Around Us Pure? ──────────────
+  // ── Class 9 Science — Chapter 5: Exploring Mixtures and their Separation ──
   'tyndall-effect': dynamic(
     () => import('./simulations/TyndallEffectSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  'solubility-curve': dynamic(
+    () => import('./simulations/SolubilityCurveSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   // ── Class 11 Chemistry — Chapter 1: Some Basic Concepts of Chemistry ─────
@@ -274,6 +298,14 @@ const simulators: Record<string, React.ComponentType> = {
   ),
   'eudiometer-lab': dynamic(
     () => import('./simulations/EudiometerLabSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // Companion to eudiometer-lab: pick x,y for CxHy directly and watch the
+  // combustion equation balance + the relative-volume bar chart redraw —
+  // the same equation, the other direction (there you deduce x,y from given
+  // volumes; here you pick x,y and see the volumes).
+  'combustion-stoichiometry-balancer': dynamic(
+    () => import('./simulations/CombustionStoichiometryBalancerSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
   'equivalent-concept-explorer': dynamic(
@@ -457,6 +489,10 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/MendeleevGapPredictorSim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  'ionic-compound-namer': dynamic(
+    () => import('./simulations/IonicCompoundNamerSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
   // ── Class 9 ICT — interactive labs ───────────────────────────────────────
   'code-the-bot': dynamic(
     () => import('./simulations/CodeTheBotSim'),
@@ -502,6 +538,35 @@ const simulators: Record<string, React.ComponentType> = {
     () => import('./simulations/RiverJourneySim'),
     { ssr: false, loading: () => <SimulationSkeleton /> }
   ),
+  // ── Life Skills — Class 9, Chapter 1: Focus & Attention ──────────────────
+  // "The Time Paradox" — the day didn't get shorter, deep-focus capacity did.
+  // Self-report-driven so it never fabricates a stat (LIFE_SKILLS_WORKFLOW §7).
+  'focus-time-paradox': dynamic(
+    () => import('./simulations/FocusTimeParadoxSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // "The Shrinking Window" — drag the years, watch measured attention on a
+  // screen collapse 150s→47s (Gloria Mark data).
+  'shrinking-window': dynamic(
+    () => import('./simulations/ShrinkingWindowSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // "Pull the Lever" — discover variable-ratio reinforcement by feeling it.
+  'variable-reward-lever': dynamic(
+    () => import('./simulations/VariableRewardSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // Attention Lab — the focus/coordination instrument set (shared _labkit).
+  // "The Crossover" — anti-phase bimanual tapping → Haken-Kelso-Bunz collapse.
+  'the-crossover': dynamic(
+    () => import('./simulations/attention-lab/TheCrossoverSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
+  // "Stroop" — name the ink, not the word; measures selective-attention cost.
+  'stroop-spotlight': dynamic(
+    () => import('./simulations/attention-lab/StroopSpotlightSim'),
+    { ssr: false, loading: () => <SimulationSkeleton /> }
+  ),
 };
 
 function SimulationSkeleton() {
@@ -539,14 +604,14 @@ function PredictionGate({
         >
           Predict First
         </span>
-        <span className="text-[10px] text-white/25 uppercase tracking-widest">
+        <span className="text-[10px] text-white/45 uppercase tracking-widest">
           before running the simulation
         </span>
       </div>
 
       {/* Prompt */}
       <p className="text-[15px] leading-relaxed text-white/82 font-medium mb-5">
-        {pred.prompt}
+        <InlineMarkdown>{pred.prompt}</InlineMarkdown>
       </p>
 
       {/* Options */}
@@ -570,7 +635,7 @@ function PredictionGate({
             >
               {String.fromCharCode(65 + i)}.
             </span>
-            {opt}
+            <InlineMarkdown>{opt}</InlineMarkdown>
           </button>
         ))}
       </div>
@@ -635,7 +700,7 @@ export default function SimulationBlockRenderer({ block }: { block: SimulationBl
           Your prediction
         </span>
         <span className="text-xs text-white/60">
-          {pred.options[unlockedChoice]}
+          <InlineMarkdown>{pred.options[unlockedChoice]}</InlineMarkdown>
         </span>
       </div>
 
@@ -665,7 +730,7 @@ export default function SimulationBlockRenderer({ block }: { block: SimulationBl
             <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5 text-indigo-400">
               Observe &amp; Explain
             </p>
-            {pred.reveal_after}
+            <InlineMarkdown>{pred.reveal_after}</InlineMarkdown>
           </div>
         )
       )}

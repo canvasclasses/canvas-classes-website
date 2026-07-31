@@ -57,7 +57,7 @@ export default function RailPanel({
     <div className="flex flex-col gap-7">
       {hasNav && (
         <div>
-          <h3 className="text-[10px] font-black uppercase tracking-widest mb-3 text-white/35">
+          <h3 className="text-[10px] font-black uppercase tracking-widest mb-3 text-white/45">
             On This Page
           </h3>
           <nav className="flex flex-col border-l border-white/8">
@@ -69,7 +69,7 @@ export default function RailPanel({
                   onClick={() => scrollToBlock(item.id)}
                   className={`group text-left leading-snug -ml-px border-l border-transparent transition-colors
                     ${isHeading
-                      ? 'text-[14px] py-2 pl-3 text-white/70 hover:text-white hover:border-white/40'
+                      ? 'text-[14px] py-2 pl-3 text-white/82 hover:text-white hover:border-white/40'
                       : 'text-[13px] py-1.5 pl-6 flex items-start gap-2 text-white/45 hover:text-white/85'}`}
                 >
                   {item.kind === 'video' ? (

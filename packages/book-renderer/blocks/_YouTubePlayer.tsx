@@ -205,7 +205,7 @@ export default function YouTubePlayer({
           >
             <RotateCcw size={16} /> Replay
           </button>
-          {title && <p className="text-white/50 text-xs px-6 text-center max-w-md">{title}</p>}
+          {title && <p className="text-white/45 text-xs px-6 text-center max-w-md">{title}</p>}
         </div>
       )}
 
@@ -234,18 +234,18 @@ export default function YouTubePlayer({
           />
           <div className="flex items-center gap-3 mt-1.5">
             <button type="button" onClick={togglePlay} aria-label={playing ? 'Pause' : 'Play'}
-              className="text-white/90 hover:text-white transition-colors">
+              className="text-white/85 hover:text-white transition-colors">
               {playing ? <Pause size={17} fill="currentColor" /> : <Play size={17} fill="currentColor" />}
             </button>
             <button type="button" onClick={toggleMute} aria-label={muted ? 'Unmute' : 'Mute'}
-              className="text-white/90 hover:text-white transition-colors">
+              className="text-white/85 hover:text-white transition-colors">
               {muted ? <VolumeX size={17} /> : <Volume2 size={17} />}
             </button>
-            <span className="text-[11px] font-medium tabular-nums text-white/70">
+            <span className="text-[11px] font-medium tabular-nums text-white/60">
               {fmt(current)} / {fmt(duration)}
             </span>
             <button type="button" onClick={goFullscreen} aria-label="Fullscreen"
-              className="ml-auto text-white/90 hover:text-white transition-colors">
+              className="ml-auto text-white/85 hover:text-white transition-colors">
               <Maximize size={16} />
             </button>
           </div>

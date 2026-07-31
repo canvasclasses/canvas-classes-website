@@ -1,112 +1,103 @@
 'use client';
 
 // ──────────────────────────────────────────────────────────────────────────
-// Bohr Model → Hydrogen Spectrum  (the flagship "connect-the-dots" simulator)
+// Bohr Model → Hydrogen Spectrum
 // Class 11 Chemistry · Chapter 2 (Structure of Atom) · JEE / NEET
 //
-// One continuous experience that fuses three views of the SAME physics so the
-// student never has to mentally stitch separate textbook diagrams together:
+// ── DESIGN HISTORY (read before "improving" this again) ───────────────────
+// v1  3-across grid (atom | energy ladder | spectrum). Rejected: every pane
+//     was a third of the width, so orbit labels collided and the spectrum was
+//     unreadable.
+// v2  2-across + full-width spectrum, honest linear-in-E energy ladder with
+//     leader-lined labels. Rejected: the ladder is unusable BY NATURE — since
+//     Eₙ ∝ −1/n², rungs n≥4 pile into a few pixels against E=0. Leader lines
+//     made it legible but not USEFUL; it read as decoration.
+// v3  (this file) The ladder is replaced by a JUMP-ENERGY CHART: one row per
+//     transition into the selected landing level, bar length = ΔE as a share
+//     of the series limit, bar colour = the real photon colour. Rows are
+//     evenly spaced, so nothing crowds; the convergence students must see
+//     (bars bunching against the 100% ceiling) becomes the *point* of the
+//     chart rather than a rendering problem. Every row is clickable — it is
+//     the jump selector, not a read-only graph.
 //
-//   ┌── THE ATOM ──────┐  ┌── ENERGY LEVELS ─┐  ┌── THE SPECTRUM ───────────┐
-//   │ Bohr orbits with │  │ a ladder of rungs│  │ the full UV–Vis–IR line   │
-//   │ radii ∝ n² (not  │  │ that CONVERGE to │  │ spectrum, each series     │
-//   │ evenly spaced!)  │  │ 0 as n grows; the│  │ crowding toward its limit │
-//   │ + de Broglie     │  │ jump arrow length│  │ = ionisation energy; the  │
-//   │ standing wave    │  │ = the photon ΔE  │  │ continuum beyond it        │
-//   └──────────────────┘  └──────────────────┘  └───────────────────────────┘
+// LAYOUT — everything is full width, stacked in reading order:
+//   ┌── THE ATOM ─────────────────────────────────────────────────────────┐
+//   │ emission/absorption + wave toggles live INSIDE the box, next to what │
+//   │ they control; a live caption NAMES the series on every transition    │
+//   └──────────────────────────────────────────────────────────────────────┘
+//   ┌── ENERGY OF EACH JUMP — series pills + one clickable bar per jump ───┐
+//   ┌── THE SPECTRUM ─────────────────────────────────────────────────────┐
+//   ┌── THIS LINE: series + the Rydberg calculation ──────────────────────┐
 //
-// Everything is driven by one shared state (current level, target level, Z),
-// so a single jump lights up all three panes at once. Controls sit BELOW the
-// full-width panes (per the layout brief).
+// Colour follows the two-colour rule (SIMULATION_DESIGN_WORKFLOW §3): ACCENT
+// violet primary, ACCENT_2 sky for the wave/secondary axis. The only other
+// colours are the wavelength-accurate spectral colours (physics, not
+// decoration), marked `sim-lint-ok` at the usage site.
 //
-// ACADEMIC SOURCES (anti-hallucination gate, SIMULATION_DESIGN_WORKFLOW §7) —
-// every number below is standard NCERT Class 11 Chapter 2 / JEE syllabus data,
-// NOT generated from training knowledge:
+// ACADEMIC SOURCES (anti-hallucination gate, workflow §7) — standard NCERT
+// Class 11 Ch.2 / JEE data, NOT generated from training knowledge:
 //   • Energy of level n (hydrogen-like):  Eₙ = −13.6 · Z² / n²   eV
 //   • Bohr radius:                         rₙ = 0.529 · n² / Z    Å
-//   • Rydberg / wavelength:  1/λ = R_H · Z² · (1/n₁² − 1/n₂²),
-//                            R_H = 1.097×10⁷ m⁻¹ = 0.01097 nm⁻¹
-//   • Angular-momentum quantisation: m v r = n·h/2π  ⇒  2π rₙ = n·λ_deBroglie
-//     (n whole de-Broglie wavelengths fit the orbit — the standing-wave reason
-//      the orbits are quantised at all)
+//   • Rydberg:  1/λ = R_H · Z² · (1/n₁² − 1/n₂²),
+//               R_H = 1.097×10⁷ m⁻¹ = 0.01097 nm⁻¹
+//   • Angular-momentum quantisation: m v r = n·h/2π ⇒ 2π rₙ = n·λ_deBroglie
 //   • Series (n_final): Lyman→1 (UV), Balmer→2 (visible), Paschen→3 (IR),
 //     Brackett→4, Pfund→5
 //   • Balmer visible lines: Hα 656.3, Hβ 486.1, Hγ 434.0, Hδ 410.2 nm
 //   • Series limits (n₂→∞): Lyman 91.2 nm, Balmer 364.6 nm
-//   • Photoelectric bridge: E(eV) = 1240 / λ(nm)
-//
-// NOTE on colour: the SIMULATION_DESIGN_WORKFLOW palette governs all CHROME
-// (orange/amber accents, #0d1117 surfaces, emerald/red semantics). The spectrum
-// itself uses WAVELENGTH-ACCURATE colours (656 nm = red, 486 = cyan, …) — those
-// are physics, not decoration, so the "no new colours" rule does not apply to
-// the rendered spectral lines / photon. This is intentional.
 // ──────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-
-// ── chrome palette (workflow §3 + CLAUDE.md §7) ─────────────────────────────
-const C = {
-  bg: '#0d1117',
-  card: '#0B0F15',
-  surface: '#151E32',
-  text: '#e2e8f0',
-  text2: '#94a3b8',
-  muted: '#475569',
-  ghost: '#64748b',
-  orange: '#f97316',
-  amber: '#fbbf24',
-  amberLight: '#fcd34d',
-  emerald: '#10b981',
-  emeraldLight: '#34d399',
-  red: '#f87171',
-  redDark: '#dc2626',
-  line: 'rgba(255,255,255,0.06)',
-  border: 'rgba(255,255,255,0.08)',
-};
+import {
+  SimShell, SimHeader, StepBar, ExpertTip,
+  ACCENT, ACCENT_2, TEXT, BORDER, TYPE, accentTint, Frac, prettyExp,
+} from './_shared';
+import type { StepDef as BarStep } from './_shared';
 
 // ── physics constants ───────────────────────────────────────────────────────
-const RH = 0.01097;   // Rydberg constant, nm⁻¹
-const E_RYD = 13.6;   // eV — |E₁| for hydrogen
-const NMAX = 6;       // highest orbit drawn in the atom pane
-const SPEC_MIN = 80;  // nm — left edge of the (log) spectrum axis
-const SPEC_MAX = 8000;// nm — right edge (covers Lyman → Pfund)
+const RH = 0.01097;    // Rydberg constant, nm⁻¹
+const E_RYD = 13.6;    // eV — |E₁| for hydrogen
+const NMAX = 6;        // highest orbit drawn in the atom pane
+const ROWS = 5;        // transitions listed in the jump chart (+ the limit row)
+const SPEC_MIN = 80;   // nm — left edge of the (log) spectrum axis
+const SPEC_MAX = 8000; // nm — right edge (covers Lyman → Pfund)
 
-// hydrogen-like helpers (Z = nuclear charge)
 const energyEv = (n: number, Z: number) => -E_RYD * Z * Z / (n * n);
-const radiusA = (n: number, Z: number) => 0.529 * n * n / Z;
 const wavelengthNm = (nLow: number, nHigh: number, Z: number) =>
   1 / (RH * Z * Z * (1 / (nLow * nLow) - 1 / (nHigh * nHigh)));
-const seriesLimitNm = (nLow: number, Z: number) =>
-  1 / (RH * Z * Z * (1 / (nLow * nLow)));
+const seriesLimitNm = (nLow: number, Z: number) => 1 / (RH * Z * Z * (1 / (nLow * nLow)));
 const photonEv = (nLow: number, nHigh: number, Z: number) =>
   energyEv(nHigh, Z) - energyEv(nLow, Z); // > 0
 
-// log-scale x mapping for the spectrum axis
+// log-scale x mapping for the spectrum axis. The axis bounds are FIXED (the
+// UV / visible / IR bands are physical and must not slide with Z), so a line
+// outside them is skipped rather than clamped onto the edge — stacking
+// off-scale lines on the border would read as a real pile-up.
 const L_MIN = Math.log10(SPEC_MIN);
 const L_MAX = Math.log10(SPEC_MAX);
+const onScale = (wl: number) => wl >= SPEC_MIN && wl <= SPEC_MAX;
 const specX = (wl: number, w: number, pad: number) => {
   const clamped = Math.min(Math.max(wl, SPEC_MIN), SPEC_MAX);
   return pad + ((Math.log10(clamped) - L_MIN) / (L_MAX - L_MIN)) * (w - pad * 2);
 };
 
-// wavelength → visible-ish RGB (physics colour). Approximation good enough for
-// teaching; the four named Balmer lines are pinned to crisp hues.
+// wavelength → RGB. These are PHYSICS colours (656 nm really is red), not
+// decoration, so the two-colour accent rule does not apply here.
 function photonColor(wl: number): string {
-  if (Math.abs(wl - 656.3) < 4) return '#ff5b6e';
-  if (Math.abs(wl - 486.1) < 4) return '#3bc9db';
-  if (Math.abs(wl - 434.0) < 4) return '#5c8dff';
-  if (Math.abs(wl - 410.2) < 4) return '#b46cff';
-  if (wl < 380) return '#9a6bff';                 // UV → violet-ish stand-in
-  if (wl > 700) return '#ff6b6b';                 // IR → red stand-in
-  const t = (700 - wl) / 320;                     // 380..700 → hue sweep
-  return `hsl(${Math.round(t * 280)}, 85%, 62%)`;
+  if (Math.abs(wl - 656.3) < 4) return '#ff5b6e'; // sim-lint-ok — Hα, real colour
+  if (Math.abs(wl - 486.1) < 4) return '#3bc9db'; // sim-lint-ok — Hβ, real colour
+  if (Math.abs(wl - 434.0) < 4) return '#5c8dff'; // sim-lint-ok — Hγ, real colour
+  if (Math.abs(wl - 410.2) < 4) return '#b46cff'; // sim-lint-ok — Hδ, real colour
+  if (wl < 380) return '#b191ff';                 // sim-lint-ok — UV stand-in
+  if (wl > 700) return '#ff7a7a';                 // sim-lint-ok — IR stand-in
+  const t = (700 - wl) / 320;
+  return `hsl(${Math.round(t * 280)}, 85%, 66%)`;
 }
 
-function regionOf(wl: number): { label: string; visible: boolean } {
-  if (wl < 380) return { label: 'Ultraviolet', visible: false };
-  if (wl > 700) return { label: 'Infrared', visible: false };
-  return { label: 'Visible', visible: true };
-}
+const regionOf = (wl: number) =>
+  wl < 380 ? { label: 'Ultraviolet', short: 'UV', visible: false }
+    : wl > 700 ? { label: 'Infrared', short: 'IR', visible: false }
+      : { label: 'Visible', short: 'visible', visible: true };
 
 // ── series metadata (n_final defines the series) ────────────────────────────
 const SERIES: { nFinal: number; name: string; region: string }[] = [
@@ -114,235 +105,312 @@ const SERIES: { nFinal: number; name: string; region: string }[] = [
   { nFinal: 2, name: 'Balmer', region: 'Visible' },
   { nFinal: 3, name: 'Paschen', region: 'Infrared' },
   { nFinal: 4, name: 'Brackett', region: 'Infrared' },
-  { nFinal: 5, name: 'Pfund', region: 'Far Infrared' },
+  { nFinal: 5, name: 'Pfund', region: 'Far infrared' },
 ];
-const seriesName = (nFinal: number) => SERIES.find((s) => s.nFinal === nFinal)?.name ?? '';
+const seriesOf = (nFinal: number) => SERIES.find((s) => s.nFinal === nFinal)!;
 
 // ── guided narrative beats ──────────────────────────────────────────────────
-type StepDef = {
-  key: string;
-  label: string;
+type Beat = BarStep & {
   title: string;
   body: string;
-  // pre-configures shared state when the student enters this beat
   enter: Partial<{ mode: 'emission' | 'absorption'; deBroglie: boolean; nFinal: number; nInitial: number }>;
 };
-const STEPS: StepDef[] = [
+const BEATS: Beat[] = [
   {
-    key: 'problem',
-    label: 'The Problem',
+    id: 'problem', label: 'The Problem',
     title: 'Why the classical atom should collapse',
-    body:
-      "Rutherford's electron orbits the nucleus like a planet. But a circling charge is accelerating, and accelerating charges radiate energy — so it should spiral into the nucleus in about 10⁻⁸ s. Matter would not exist. Something is wrong with classical physics here.",
+    body: "Rutherford's electron orbits the nucleus like a planet. But a circling charge is accelerating, and accelerating charges radiate energy — so it should spiral into the nucleus in about 10⁻⁸ s. Matter would not exist. Something is wrong with classical physics here.",
     enter: { mode: 'emission', deBroglie: false },
   },
   {
-    key: 'fix',
-    label: "Bohr's Fix",
+    id: 'fix', label: "Bohr's Fix",
     title: 'Only whole standing waves survive',
-    body:
-      'Bohr allowed only special orbits where the electron neither spirals nor radiates. de Broglie showed why: an orbit is allowed only if a whole number of electron waves fit exactly around it (2πr = n·λ). A non-whole number interferes with itself and cancels. Toggle the wave on — watch n=3 close perfectly, while in-between radii would not.',
+    body: 'Bohr allowed only special orbits where the electron neither spirals nor radiates. de Broglie showed why: an orbit is allowed only if a whole number of electron waves fits exactly around it (2πr = n λ). A non-whole number interferes with itself and cancels.',
     enter: { deBroglie: true, mode: 'emission' },
   },
   {
-    key: 'jump',
+    id: 'jump', label: 'The Jump',
     title: 'A jump emits one photon',
-    label: 'The Jump',
-    body:
-      'An electron can drop from a higher rung to a lower one. The energy it loses, ΔE, leaves as a single photon. Bigger drop → more energy → higher frequency → shorter (bluer) wavelength. Watch the ladder arrow, the photon, and the spectral line all appear together.',
-    enter: { mode: 'emission', deBroglie: false, nFinal: 2, nInitial: 3 },
+    body: 'The electron drops from a higher orbit to a lower one, and the energy it loses, ΔE, leaves as a single photon. Click any orbit inside the electron — or any bar below — and the photon, the series name and the spectral line all appear together.',
+    enter: { mode: 'emission', deBroglie: false, nFinal: 2, nInitial: 4 },
   },
   {
-    key: 'series',
-    label: 'A Whole Series',
+    id: 'series', label: 'A Whole Series',
     title: 'A series crowds toward its limit',
-    body:
-      'Fix the landing level (n_final) and every possible drop into it forms one series. Because the energy rungs bunch up near the top, the spectral lines bunch up too — converging on the series limit. That limit is exactly the energy to rip the electron off from that level: ionisation. Beyond it lies a continuous band — a free electron can take any energy.',
+    body: 'Fix the landing level and every possible drop into it forms one series. Look at the bars: each higher starting level adds less and less extra energy, so they bunch up against the series limit — the energy that would rip the electron off that level entirely.',
     enter: { mode: 'emission', deBroglie: false, nFinal: 2, nInitial: 6 },
   },
   {
-    key: 'mirror',
-    label: 'Absorption',
+    id: 'mirror', label: 'Absorption',
     title: 'Absorption is the mirror image',
-    body:
-      'Send white light through cold hydrogen and the atom absorbs exactly the photons it would emit — so a dark line appears at the identical wavelength. Emission (bright) and absorption (dark) are perfect complements. Flip the mode and compare the same jump.',
+    body: 'Send white light through cold hydrogen and the atom absorbs exactly the photons it would emit — so a dark line appears at the identical wavelength. Emission and absorption are perfect complements.',
     enter: { mode: 'absorption', deBroglie: false, nFinal: 2, nInitial: 4 },
   },
 ];
 
-// ── stacked fraction (workflow §2 — never the ÷ glyph) ──────────────────────
-function Frac({ num, den }: { num: React.ReactNode; den: React.ReactNode }) {
-  return (
-    <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', verticalAlign: 'middle', lineHeight: 1.1, margin: '0 3px' }}>
-      <span style={{ padding: '0 5px 1px' }}>{num}</span>
-      <span style={{ padding: '1px 5px 0', borderTop: '1.5px solid currentColor', width: '100%', textAlign: 'center' }}>{den}</span>
-    </span>
-  );
-}
+// Canvas needs literal colour strings, and larger sizes than the HTML scale —
+// the founder's readability floor for in-canvas text is 13px (2026-07-27).
+const CV = {
+  faint: 'rgba(255,255,255,0.14)',
+  line: 'rgba(255,255,255,0.24)',
+  dim: 'rgba(255,255,255,0.5)',
+  text: TEXT.primary,
+  ghost: TEXT.ghost,
+};
+const FONT = (px: number, weight = 600) => `${weight} ${px}px system-ui, sans-serif`;
 
-type Readout = {
-  nLow: number; nHigh: number; wl: number; ev: number; thz: number;
-  color: string; region: string; visible: boolean; isAbsorption: boolean;
-} | null;
+// Atom-pane geometry. Shared by the renderer AND the hit-test so a layout
+// tweak can never desync what is drawn from what is clickable.
+const atomGeom = (w: number, h: number) => ({
+  cx: w / 2,
+  cy: h * 0.47,
+  maxR: Math.min(w * 0.34, h * 0.40),
+});
+
+/*
+ * Orbit radius on screen.
+ *
+ * Drawing the orbits at their TRUE r ∝ n² is unworkable as the everyday view:
+ * n=1 lands at 1/36 of the outer radius — a ~6px circle swallowed by the
+ * nucleus — and n=1,2,3 sit within ~50px of each other, so no label can sit on
+ * its own ring. The previous fix (push the labels outward on leader lines)
+ * traded one problem for a worse one: the "n=3" text ended up floating where
+ * n=4/n=5 actually are, so the numbers no longer matched the rings.
+ *
+ * So the default view spaces the orbits EVENLY, which is what every textbook
+ * Bohr diagram does, and the n² fact is carried honestly by (a) the real Bohr
+ * radius printed on every label — 0.53, 2.12, 4.76, 8.46, 13.2, 19.0 Å, whose
+ * quadratic growth is right there in the numbers — and (b) a "true n² scale"
+ * toggle that morphs the rings to their real radii on demand. Opt-in, so the
+ * distortion is shown rather than hidden.
+ */
+const orbitR = (n: number, maxR: number, trueScale: boolean) =>
+  trueScale
+    ? ((n * n) / (NMAX * NMAX)) * maxR
+    : (0.22 + 0.78 * ((n - 1) / (NMAX - 1))) * maxR;
+
+// real Bohr radius, Å — rₙ = 0.529 n² / Z
+const bohrA = (n: number, Z: number) => 0.529 * n * n / Z;
 
 export default function BohrSpectraSim() {
   const atomRef = useRef<HTMLCanvasElement>(null);
-  const ladderRef = useRef<HTMLCanvasElement>(null);
   const specRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
 
-  const [stepIdx, setStepIdx] = useState(0);
+  const [beatIdx, setBeatIdx] = useState(0);
   const [mode, setMode] = useState<'emission' | 'absorption'>('emission');
   const [Z, setZ] = useState(1);
   const [nFinal, setNFinal] = useState(2);
-  const [nInitial, setNInitial] = useState(3);
+  const [nInitial, setNInitial] = useState(5);   // electron rests on n=5 by default
   const [deBroglie, setDeBroglie] = useState(false);
-  const [readout, setReadout] = useState<Readout>(null);
+  const [trueScale, setTrueScale] = useState(false);
 
-  // mutable animation state — no React re-render in the rAF loop
+  // mutable animation state — the rAF loop never reads React state
   const sim = useRef({
     mode: 'emission' as 'emission' | 'absorption',
-    Z: 1,
-    step: 0,
-    nFinal: 2,
-    nInitial: 3,
-    deBroglie: false,
-    elecN: 3,        // current level (float while animating)
-    targetN: 3,
-    hoveredN: -1,
-    animating: false,
-    angle: 0,
-    arrowPulse: 0,
-    // active transition mirrored into the ref so the rAF-loop draw fns never
-    // read React state (avoids a stale-closure: the loop is created once).
-    tr: null as null | { nLow: number; nHigh: number; color: string; ev: number; isAbsorption: boolean },
+    Z: 1, beat: 0, nFinal: 2, nInitial: 5, deBroglie: false, trueScale: false,
+    elecN: 5, targetN: 5, hoveredN: -1, animating: false, angle: 0, flash: 0,
+    tr: null as null | { nLow: number; nHigh: number; color: string; ev: number; wl: number; series: string; isAbsorption: boolean },
     photons: [] as Array<{ x: number; y: number; vx: number; color: string; type: 'emission' | 'absorption'; wl: number; targetN: number }>,
     burnt: [] as Array<{ wl: number; color: string; type: 'emission' | 'absorption' }>,
-    aW: 0, aH: 0, lW: 0, lH: 0, sW: 0, sH: 0,
+    aW: 0, aH: 0, sW: 0, sH: 0,
   });
 
-  // ── sync React controls → sim ref ─────────────────────────────────────────
   useEffect(() => { sim.current.mode = mode; }, [mode]);
   useEffect(() => { sim.current.Z = Z; }, [Z]);
   useEffect(() => { sim.current.deBroglie = deBroglie; }, [deBroglie]);
+  useEffect(() => { sim.current.trueScale = trueScale; }, [trueScale]);
   useEffect(() => { sim.current.nFinal = nFinal; }, [nFinal]);
   useEffect(() => { sim.current.nInitial = nInitial; }, [nInitial]);
-  useEffect(() => { sim.current.step = stepIdx; }, [stepIdx]);
+  useEffect(() => { sim.current.beat = beatIdx; }, [beatIdx]);
 
-  // place electron at the resting level when mode / levels change
-  useEffect(() => {
+  // Park the electron on a resting orbit and clear any in-flight transition.
+  //
+  // This used to be an effect on [mode, nFinal, nInitial] — which was the cause
+  // of "sometimes the electron jumps, sometimes it doesn't". Clicking an orbit
+  // (or a bar) calls setNInitial/setNFinal AND fire() in the same handler; the
+  // effect then ran AFTER the state commit and immediately reset elecN,
+  // animating and tr — cancelling the jump that had just started, but only when
+  // the selection actually changed. Parking is now explicit: it happens on a
+  // mode switch, a series switch or a beat switch, and never after a fire.
+  const park = useCallback((n: number) => {
     const s = sim.current;
-    if (mode === 'emission') { s.elecN = nInitial; s.targetN = nInitial; }
-    else { s.elecN = nFinal; s.targetN = nFinal; }
-    s.animating = false;
-    s.tr = null;
-  }, [mode, nFinal, nInitial]);
-
-  // ── narrative beat ────────────────────────────────────────────────────────
-  const goStep = useCallback((idx: number) => {
-    const st = STEPS[idx];
-    setStepIdx(idx);
-    if (st.enter.mode) setMode(st.enter.mode);
-    if (st.enter.deBroglie !== undefined) setDeBroglie(st.enter.deBroglie);
-    if (st.enter.nFinal !== undefined) setNFinal(st.enter.nFinal);
-    if (st.enter.nInitial !== undefined) setNInitial(st.enter.nInitial);
-    sim.current.burnt = [];
-    sim.current.photons = [];
-    sim.current.tr = null;
-    setReadout(null);
+    s.elecN = n; s.targetN = n; s.animating = false; s.tr = null; s.photons = [];
   }, []);
 
-  // ── fire a transition ─────────────────────────────────────────────────────
+  useEffect(() => {
+    const s = sim.current;
+    park(mode === 'emission' ? s.nInitial : s.nFinal);
+  }, [mode, park]);
+
+  const goBeat = useCallback((idx: number) => {
+    const b = BEATS[idx];
+    setBeatIdx(idx);
+    if (b.enter.mode) setMode(b.enter.mode);
+    if (b.enter.deBroglie !== undefined) setDeBroglie(b.enter.deBroglie);
+    if (b.enter.nFinal !== undefined) setNFinal(b.enter.nFinal);
+    if (b.enter.nInitial !== undefined) setNInitial(b.enter.nInitial);
+    const m = b.enter.mode ?? sim.current.mode;
+    const ni = b.enter.nInitial ?? sim.current.nInitial;
+    const nf = b.enter.nFinal ?? sim.current.nFinal;
+    sim.current.burnt = [];
+    park(m === 'emission' ? ni : nf);
+  }, [park]);
+
+  // Switching series moves the landing level, so the electron re-parks.
+  const pickSeries = useCallback((nf: number) => {
+    const s = sim.current;
+    const ni = s.nInitial <= nf ? nf + 1 : s.nInitial;
+    setNFinal(nf); setNInitial(ni);
+    park(s.mode === 'emission' ? ni : nf);
+  }, [park]);
+
   const fire = useCallback((nLow: number, nHigh: number) => {
     const s = sim.current;
     if (s.animating || nLow >= nHigh) return;
     const wl = wavelengthNm(nLow, nHigh, s.Z);
-    const ev = photonEv(nLow, nHigh, s.Z);
     const color = photonColor(wl);
-    const reg = regionOf(wl);
-    s.arrowPulse = 1;
-    s.tr = { nLow, nHigh, color, ev, isAbsorption: s.mode === 'absorption' };
+    s.flash = 1;
+    s.tr = {
+      nLow, nHigh, color, wl, ev: photonEv(nLow, nHigh, s.Z),
+      series: seriesOf(nLow)?.name ?? '', isAbsorption: s.mode === 'absorption',
+    };
 
     if (s.mode === 'emission') {
       s.elecN = nHigh; s.targetN = nLow; s.animating = true;
       setTimeout(() => {
-        s.photons.push({ type: 'emission', x: s.aW * 0.5, y: s.aH * 0.5, vx: 6, color, wl, targetN: nLow });
+        s.photons.push({ type: 'emission', x: s.aW * 0.5, y: s.aH * 0.47, vx: 6, color, wl, targetN: nLow });
       }, 260);
     } else {
       s.elecN = nLow; s.targetN = nLow;
-      s.photons.push({ type: 'absorption', x: -10, y: s.aH * 0.5, vx: 6, color, wl, targetN: nHigh });
+      s.photons.push({ type: 'absorption', x: -10, y: s.aH * 0.47, vx: 6, color, wl, targetN: nHigh });
     }
-    setReadout({
-      nLow, nHigh, wl: Math.round(wl * 10) / 10, ev: Math.round(ev * 1000) / 1000,
-      thz: Math.round((299792.458 / wl) * 10) / 10, color,
-      region: reg.label, visible: reg.visible, isAbsorption: s.mode === 'absorption',
-    });
   }, []);
 
   // ── DRAW: the atom ────────────────────────────────────────────────────────
   function drawAtom(ctx: CanvasRenderingContext2D) {
     const s = sim.current;
-    const w = s.aW, h = s.aH, cx = w / 2, cy = h / 2;
+    const w = s.aW, h = s.aH;
+    const { cx, cy, maxR } = atomGeom(w, h);
     ctx.clearRect(0, 0, w, h);
 
-    // background
-    const bg = ctx.createRadialGradient(cx, cy, 20, cx, cy, w * 0.7);
-    bg.addColorStop(0, '#11182a');
-    bg.addColorStop(1, C.card);
-    ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
+    const rOf = (n: number) => orbitR(n, maxR, s.trueScale);
+    const cur = Math.round(s.elecN);
 
-    // radii ∝ n²  — THE conceptual fix. n=6 fills the pane; n=1 is genuinely tiny.
-    const maxR = Math.min(w, h) * 0.46;
-    const rOf = (n: number) => (n * n) / (NMAX * NMAX) * maxR;
+    // ── background: layered glow, then a vignette so the edges fall away ────
+    ctx.fillStyle = '#07080d'; ctx.fillRect(0, 0, w, h);
+    const aura = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 1.5);
+    aura.addColorStop(0, accentTint(ACCENT, 0.26));
+    aura.addColorStop(0.28, accentTint(ACCENT, 0.10));
+    aura.addColorStop(0.65, accentTint(ACCENT, 0.03));
+    aura.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = aura; ctx.fillRect(0, 0, w, h);
+    const gx = cx - maxR * 0.55, gy = cy + maxR * 0.6;
+    const cool = ctx.createRadialGradient(gx, gy, 0, gx, gy, maxR * 1.05);
+    cool.addColorStop(0, accentTint(ACCENT_2, 0.13));
+    cool.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = cool; ctx.fillRect(0, 0, w, h);
+    const vig = ctx.createRadialGradient(cx, cy, maxR * 0.95, cx, cy, Math.max(w, h) * 0.78);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.62)');
+    ctx.fillStyle = vig; ctx.fillRect(0, 0, w, h);
 
-    // orbits
-    ctx.setLineDash([3, 6]); ctx.lineWidth = 1;
+    // ── orbits ──────────────────────────────────────────────────────────────
     for (let n = 1; n <= NMAX; n++) {
-      ctx.beginPath();
-      ctx.arc(cx, cy, rOf(n), 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,255,255,0.16)';
+      const isFloor = n === s.nFinal, isHere = n === cur;
+      ctx.beginPath(); ctx.arc(cx, cy, rOf(n), 0, Math.PI * 2);
+      if (isHere) { ctx.setLineDash([]); ctx.strokeStyle = 'rgba(255,255,255,0.5)'; ctx.lineWidth = 1.8; }
+      else if (isFloor) { ctx.setLineDash([5, 5]); ctx.strokeStyle = ACCENT; ctx.lineWidth = 1.6; }
+      else { ctx.setLineDash([3, 7]); ctx.strokeStyle = CV.line; ctx.lineWidth = 1; }
       ctx.stroke();
-      ctx.fillStyle = 'rgba(255,255,255,0.45)';
-      ctx.font = '600 11px Geist, system-ui, sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText(`n=${n}`, cx + rOf(n) + 4, cy - 3);
     }
     ctx.setLineDash([]);
 
-    // collapse-warning ghost spiral (opening beat only)
-    if (s.step === 0) {
-      ctx.beginPath();
-      for (let a = 0; a < Math.PI * 8; a += 0.12) {
-        const rr = rOf(3) * (1 - a / (Math.PI * 8));
-        const px = cx + Math.cos(a) * rr, py = cy + Math.sin(a) * rr;
-        if (a === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    // ── orbit labels ────────────────────────────────────────────────────────
+    // In the default (evenly spaced) view every ring is ~32px from its
+    // neighbour, so each label sits ON its own ring — no leader lines, no
+    // ambiguity about which number belongs to which circle. The min-gap push
+    // + leader only kicks in under "true n² scale", where the inner rings
+    // genuinely overlap and the student has asked to see that.
+    const TH = (-52 * Math.PI) / 180;
+    const cosT = Math.cos(TH), sinT = Math.sin(TH);
+    let prevLabelR = 0;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    for (let n = 1; n <= NMAX; n++) {
+      const r = rOf(n);
+      const lr = Math.max(r, prevLabelR + 27);
+      prevLabelR = lr;
+      const ax = cx + cosT * lr, ay = cy + sinT * lr;
+      if (lr - r > 3) {
+        ctx.beginPath();
+        ctx.moveTo(cx + cosT * r, cy + sinT * r);
+        ctx.lineTo(ax, ay);
+        ctx.strokeStyle = CV.line; ctx.lineWidth = 1; ctx.stroke();
+        ctx.fillStyle = CV.line;
+        ctx.beginPath(); ctx.arc(cx + cosT * r, cy + sinT * r, 2.5, 0, Math.PI * 2); ctx.fill();
       }
-      ctx.strokeStyle = 'rgba(248,113,113,0.5)';
-      ctx.setLineDash([2, 4]); ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]);
-      ctx.fillStyle = C.red; ctx.font = '600 11px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('classical: spirals in ~10⁻⁸ s', cx, h - 14);
+
+      const isHere = n === cur, isFloor = n === s.nFinal;
+      const active = isHere || isFloor || n === s.hoveredN;
+      let x = ax + 8;
+
+      // n = N
+      ctx.fillStyle = isHere ? '#ffffff' : active ? ACCENT : CV.dim;
+      ctx.font = FONT(active ? 17 : 15, active ? 800 : 600);
+      ctx.fillText(`n=${n}`, x, ay);
+      x += ctx.measureText(`n=${n}`).width + 9;
+
+      // the REAL radius — this is where r ∝ n² stays visible even when the
+      // circles are drawn evenly (0.53 → 2.12 → 4.76 → 8.46 → 13.2 → 19.0 Å)
+      const rA = bohrA(n, s.Z);
+      const rTxt = `${rA < 10 ? rA.toFixed(2) : rA.toFixed(1)} Å`;
+      ctx.fillStyle = CV.ghost; ctx.font = FONT(13, 500);
+      ctx.fillText(rTxt, x, ay);
+      x += ctx.measureText(rTxt).width + 10;
+
+      // say which ring is which — the solid ring and the dashed ring were
+      // both "highlighted" with nothing telling them apart
+      if (isHere) {
+        ctx.fillStyle = '#ffffff'; ctx.font = FONT(13, 700);
+        ctx.fillText('electron is here', x, ay);
+      } else if (isFloor) {
+        ctx.fillStyle = ACCENT; ctx.font = FONT(13, 700);
+        ctx.fillText('lands here', x, ay);
+      }
     }
 
-    // nucleus
-    const pulse = Math.abs(Math.sin(Date.now() / 700)) * 1.6;
-    const ng = ctx.createRadialGradient(cx, cy, 0, cx, cy, 12 + pulse);
-    ng.addColorStop(0, '#fff'); ng.addColorStop(0.4, C.amber); ng.addColorStop(1, 'transparent');
-    ctx.fillStyle = ng; ctx.beginPath(); ctx.arc(cx, cy, 13 + pulse, 0, Math.PI * 2); ctx.fill();
+    // NOTE: the "classical spiral" ghost path used to be drawn here on beat 0.
+    // Removed 2026-07-27 — it cut across the inner orbits and made n=1..3
+    // impossible to pick out. The narration already makes the point in words.
 
-    // hover preview arrow
+    // ── nucleus: bloom + core (small on purpose — it really is ~10⁻⁵ of the atom)
+    // Sized against the n=1 ring so the innermost orbit is always a clearly
+    // separate circle. Previously the bloom (34px) reached past r₁ and the
+    // electron looked like it was orbiting *inside* the nucleus.
+    const flash = s.flash;
+    const coreR = Math.max(4, Math.min(8, rOf(1) * 0.16));
+    const bloomR = Math.min(rOf(1) * 0.55, 24) + flash * 8;
+    const bloom = ctx.createRadialGradient(cx, cy, 0, cx, cy, bloomR);
+    bloom.addColorStop(0, accentTint(ACCENT, 0.55 + flash * 0.3));
+    bloom.addColorStop(0.4, accentTint(ACCENT, 0.16));
+    bloom.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = bloom; ctx.beginPath(); ctx.arc(cx, cy, bloomR, 0, Math.PI * 2); ctx.fill();
+    const core = ctx.createRadialGradient(cx - 2, cy - 2, 0, cx, cy, coreR);
+    core.addColorStop(0, '#ffffff');
+    core.addColorStop(0.55, ACCENT);
+    core.addColorStop(1, accentTint(ACCENT, 0.25));
+    ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx, cy, coreR, 0, Math.PI * 2); ctx.fill();
+
+    // hover preview
     if (s.hoveredN !== -1 && !s.animating) {
-      const cur = Math.round(s.elecN);
-      const valid = s.mode === 'emission' ? s.hoveredN < cur : s.hoveredN > cur;
-      if (valid) {
-        const nLow = Math.min(s.hoveredN, cur), nHigh = Math.max(s.hoveredN, cur);
-        const col = photonColor(wavelengthNm(nLow, nHigh, s.Z));
-        ctx.beginPath(); ctx.arc(cx, cy, rOf(s.hoveredN), 0, Math.PI * 2);
-        ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.shadowBlur = 10; ctx.shadowColor = col;
-        ctx.stroke(); ctx.shadowBlur = 0;
-      }
+      ctx.beginPath(); ctx.arc(cx, cy, rOf(s.hoveredN), 0, Math.PI * 2);
+      ctx.strokeStyle = ACCENT; ctx.lineWidth = 3;
+      ctx.shadowBlur = 12; ctx.shadowColor = accentTint(ACCENT, 0.8);
+      ctx.stroke(); ctx.shadowBlur = 0;
     }
 
-    // electron motion / animated drop
+    // ── electron motion ─────────────────────────────────────────────────────
     s.angle += 0.02 / Math.max(1, s.elecN);
     if (s.animating) {
       if (Math.abs(s.elecN - s.targetN) < 0.04) { s.elecN = s.targetN; s.animating = false; }
@@ -350,37 +418,48 @@ export default function BohrSpectraSim() {
     }
     const rNow = rOf(s.elecN);
 
-    // de Broglie standing wave around the current orbit (n whole wavelengths)
+    // de Broglie standing wave (n whole wavelengths around the orbit)
     if (s.deBroglie) {
       const nWhole = Math.round(s.elecN);
-      const amp = Math.min(10, rNow * 0.16);
+      const amp = Math.min(12, rNow * 0.18);
       ctx.beginPath();
       for (let a = 0; a <= Math.PI * 2 + 0.05; a += 0.04) {
         const rr = rNow + Math.sin(nWhole * a) * amp;
         const px = cx + Math.cos(a) * rr, py = cy + Math.sin(a) * rr;
         if (a === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
       }
-      ctx.strokeStyle = 'rgba(96,165,250,0.85)'; ctx.lineWidth = 1.6;
-      ctx.shadowBlur = 8; ctx.shadowColor = 'rgba(96,165,250,0.6)'; ctx.stroke(); ctx.shadowBlur = 0;
-      ctx.fillStyle = 'rgba(147,197,253,0.9)'; ctx.font = '600 11px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText(`2πr = ${nWhole} λ  ✓`, cx, cy + rNow + amp + 16);
+      ctx.strokeStyle = ACCENT_2; ctx.lineWidth = 1.8;
+      ctx.shadowBlur = 10; ctx.shadowColor = accentTint(ACCENT_2, 0.7);
+      ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.fillStyle = ACCENT_2; ctx.font = FONT(14, 700); ctx.textAlign = 'center';
+      ctx.fillText(`2πr = ${nWhole} λ`, cx, cy + rNow + amp + 20);
     }
 
-    // electron
+    // electron (comet trail, then the ball)
+    for (let k = 6; k >= 1; k--) {
+      const a = s.angle - k * 0.05;
+      ctx.globalAlpha = 0.05 * (7 - k);
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(cx + Math.cos(a) * rNow, cy + Math.sin(a) * rNow, 2.6, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
     const ex = cx + Math.cos(s.angle) * rNow, ey = cy + Math.sin(s.angle) * rNow;
-    ctx.fillStyle = '#fff'; ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(255,255,255,0.9)';
-    ctx.beginPath(); ctx.arc(ex, ey, 4.5, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+    ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(255,255,255,0.8)';
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
 
-    // photons
+    // ── photons ─────────────────────────────────────────────────────────────
     for (let i = s.photons.length - 1; i >= 0; i--) {
       const p = s.photons[i];
       p.x += p.vx;
       ctx.beginPath(); ctx.moveTo(p.x, p.y);
-      for (let j = 0; j < 16; j++) {
-        ctx.lineTo(p.x - j * 3 * Math.sign(p.vx), p.y + Math.sin((p.x - j * 3 * Math.sign(p.vx)) * 0.25) * 5);
+      for (let j = 0; j < 18; j++) {
+        const px = p.x - j * 3 * Math.sign(p.vx);
+        ctx.lineTo(px, p.y + Math.sin(px * 0.25) * 6);
       }
-      ctx.strokeStyle = p.color; ctx.lineWidth = 2.2; ctx.stroke();
-      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = p.color; ctx.lineWidth = 2.4;
+      ctx.shadowBlur = 10; ctx.shadowColor = p.color; ctx.stroke(); ctx.shadowBlur = 0;
 
       if (p.type === 'emission' && p.x > w) {
         s.photons.splice(i, 1);
@@ -391,182 +470,152 @@ export default function BohrSpectraSim() {
         if (!s.burnt.some((b) => Math.abs(b.wl - p.wl) < 0.5)) s.burnt.push({ wl: p.wl, color: p.color, type: 'absorption' });
       }
     }
-    if (s.arrowPulse > 0) s.arrowPulse = Math.max(0, s.arrowPulse - 0.02);
-  }
+    if (s.flash > 0) s.flash = Math.max(0, s.flash - 0.02);
 
-  // ── DRAW: the energy ladder ───────────────────────────────────────────────
-  function drawLadder(ctx: CanvasRenderingContext2D) {
-    const s = sim.current;
-    const w = s.lW, h = s.lH;
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = C.card; ctx.fillRect(0, 0, w, h);
-
-    const padT = 30, padB = 28, H = h - padT - padB;
-    const xAxis = 52, xLevelEnd = w - 56;
-    // y is linear in E, normalised by the ground-state energy so n=1 sits at the
-    // bottom for any Z and levels converge to E=0 at the top.
-    const E1 = energyEv(1, s.Z);
-    const yOfE = (E: number) => padT + (E / E1) * H; // E=E1 → bottom; E=0 → top
-
-    // continuum band (E ≥ 0 → above the n=∞ line)
-    const yZero = yOfE(0);
-    const cg = ctx.createLinearGradient(0, padT, 0, yZero);
-    cg.addColorStop(0, 'rgba(249,115,22,0.16)'); cg.addColorStop(1, 'rgba(249,115,22,0.03)');
-    ctx.fillStyle = cg; ctx.fillRect(xAxis, padT, xLevelEnd - xAxis, yZero - padT);
-    ctx.fillStyle = 'rgba(251,191,36,0.8)'; ctx.font = '600 10px Geist, system-ui, sans-serif'; ctx.textAlign = 'left';
-    ctx.fillText('continuum — free electron, any energy', xAxis + 6, padT + 13);
-
-    // axis
-    ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(xAxis, padT - 4); ctx.lineTo(xAxis, h - padB + 4); ctx.stroke();
-    ctx.fillStyle = C.text2; ctx.font = '600 10px Geist, system-ui, sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText('E (eV)', xAxis - 6, padT - 8);
-
-    // n=∞ / ionisation line
-    ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(251,191,36,0.55)';
-    ctx.beginPath(); ctx.moveTo(xAxis, yZero); ctx.lineTo(xLevelEnd, yZero); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = C.amber; ctx.textAlign = 'right'; ctx.fillText('0  (n=∞)', xAxis - 6, yZero + 3);
-
-    // rungs n=1..7 (7 is the "near ∞" convergence cue)
-    const cur = Math.round(s.elecN);
-    for (let n = 1; n <= 7; n++) {
-      const E = energyEv(n, s.Z), y = yOfE(E);
-      const isSeriesFloor = n === s.nFinal;
-      ctx.strokeStyle = isSeriesFloor ? 'rgba(249,115,22,0.9)' : 'rgba(255,255,255,0.28)';
-      ctx.lineWidth = isSeriesFloor ? 2 : 1;
-      ctx.beginPath(); ctx.moveTo(xAxis, y); ctx.lineTo(xLevelEnd, y); ctx.stroke();
-      ctx.fillStyle = isSeriesFloor ? C.amberLight : 'rgba(255,255,255,0.55)';
-      ctx.textAlign = 'left'; ctx.font = '600 10px Geist, system-ui, sans-serif';
-      ctx.fillText(`n=${n}${n === 7 ? '…' : ''}`, xLevelEnd + 5, y + 3);
-      // energy value for the first few rungs
-      if (n <= 4) {
-        ctx.fillStyle = C.ghost; ctx.textAlign = 'right';
-        ctx.fillText(`${E.toFixed(2)}`, xAxis - 6, y + 3);
-      }
-      // electron marker
-      if (n === cur && !s.animating) {
-        ctx.fillStyle = '#fff'; ctx.shadowBlur = 8; ctx.shadowColor = '#fff';
-        ctx.beginPath(); ctx.arc(xAxis + 14, y, 4, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
-      }
-    }
-
-    // transition arrow (length = ΔE = photon energy) — read from the ref, not
-    // React state, so the once-created animation loop stays in sync.
+    // ── live caption: every transition NAMES its spectral series ────────────
     const tr = s.tr;
+    ctx.textBaseline = 'middle';
+    const capY = h - 24;
     if (tr) {
-      const yHi = yOfE(energyEv(tr.nHigh, s.Z));
-      const yLo = yOfE(energyEv(tr.nLow, s.Z));
-      const ax = (xAxis + xLevelEnd) / 2;
-      const down = !tr.isAbsorption; // emission falls
-      const yA = down ? yHi : yLo, yB = down ? yLo : yHi;
-      ctx.strokeStyle = tr.color; ctx.lineWidth = 2 + s.arrowPulse * 1.5;
-      ctx.shadowBlur = 6 + s.arrowPulse * 8; ctx.shadowColor = tr.color;
-      ctx.beginPath(); ctx.moveTo(ax, yA); ctx.lineTo(ax, yB); ctx.stroke();
-      // arrowhead
-      const dir = yB > yA ? 1 : -1;
-      ctx.beginPath();
-      ctx.moveTo(ax - 5, yB - dir * 9); ctx.lineTo(ax, yB); ctx.lineTo(ax + 5, yB - dir * 9);
-      ctx.stroke(); ctx.shadowBlur = 0;
-      // ΔE label
-      ctx.fillStyle = tr.color; ctx.textAlign = 'left'; ctx.font = '700 11px Geist, system-ui, sans-serif';
-      ctx.fillText(`ΔE = ${tr.ev.toFixed(2)} eV`, ax + 9, (yA + yB) / 2 + 3);
+      const head = `n=${tr.nHigh} → n=${tr.nLow}`;
+      const tail = `  ${tr.series} series · ${tr.isAbsorption ? 'absorbs' : 'emits'} ${tr.wl.toFixed(1)} nm`;
+      ctx.font = FONT(18, 800);
+      const hw = ctx.measureText(head).width;
+      ctx.font = FONT(16, 600);
+      const tw = ctx.measureText(tail).width;
+      const startX = Math.max(12, (w - (hw + tw + 22)) / 2);
+      ctx.textAlign = 'left';
+      ctx.fillStyle = tr.color;
+      ctx.fillRect(startX, capY - 7, 14, 14);
+      ctx.font = FONT(18, 800); ctx.fillStyle = CV.text;
+      ctx.fillText(head, startX + 22, capY);
+      ctx.font = FONT(16, 600); ctx.fillStyle = tr.color;
+      ctx.fillText(tail, startX + 22 + hw, capY);
+    } else {
+      ctx.font = FONT(15, 600); ctx.fillStyle = CV.ghost; ctx.textAlign = 'center';
+      ctx.fillText(
+        s.mode === 'emission'
+          ? 'Click any orbit inside the electron to make it drop'
+          : 'Click any orbit outside the electron to absorb a photon',
+        cx, capY
+      );
     }
   }
 
-  // ── DRAW: the spectrum ────────────────────────────────────────────────────
+  // ── DRAW: the spectrum (full width) ───────────────────────────────────────
   function drawSpectrum(ctx: CanvasRenderingContext2D) {
     const s = sim.current;
     const w = s.sW, h = s.sH;
     ctx.clearRect(0, 0, w, h);
-    const pad = 26;
-    const stripTop = 30, stripH = h - stripTop - 34;
+    const pad = 32, stripTop = 32, stripH = h - stripTop - 36;
     const absorption = s.mode === 'absorption';
 
-    // base strip
+    ctx.fillStyle = '#07080d'; ctx.fillRect(0, 0, w, h);
     if (absorption) {
       const g = ctx.createLinearGradient(pad, 0, w - pad, 0);
+      // sim-lint-ok — a real continuous white-light spectrum, physics not chrome
       g.addColorStop(0, '#b46cff'); g.addColorStop(0.35, '#5c8dff');
       g.addColorStop(0.5, '#3bc9db'); g.addColorStop(0.7, '#fcd34d'); g.addColorStop(1, '#ff5b6e');
       ctx.fillStyle = g; ctx.fillRect(pad, stripTop, w - pad * 2, stripH);
     } else {
-      ctx.fillStyle = C.card; ctx.fillRect(0, 0, w, h);
-      ctx.fillStyle = '#05060c'; ctx.fillRect(pad, stripTop, w - pad * 2, stripH);
+      ctx.fillStyle = '#04050a'; ctx.fillRect(pad, stripTop, w - pad * 2, stripH);
     }
 
-    // visible-band marker (380–700 nm)
+    // band markers
     const vx1 = specX(380, w, pad), vx2 = specX(700, w, pad);
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = absorption ? 'rgba(0,0,0,0.65)' : 'rgba(255,255,255,0.55)';
+    ctx.font = FONT(13, 700); ctx.textAlign = 'center';
+    ctx.fillText('VISIBLE', (vx1 + vx2) / 2, stripTop - 11);
     if (!absorption) {
-      const vg = ctx.createLinearGradient(vx1, 0, vx2, 0);
-      vg.addColorStop(0, 'rgba(180,108,255,0.22)'); vg.addColorStop(0.5, 'rgba(59,201,219,0.22)'); vg.addColorStop(1, 'rgba(255,91,110,0.22)');
-      ctx.fillStyle = vg; ctx.fillRect(vx1, stripTop, vx2 - vx1, stripH);
+      ctx.strokeStyle = 'rgba(255,255,255,0.13)'; ctx.lineWidth = 1;
+      ctx.strokeRect(vx1, stripTop, vx2 - vx1, stripH);
     }
-    ctx.fillStyle = absorption ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.4)';
-    ctx.font = '600 9px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('VISIBLE', (vx1 + vx2) / 2, stripTop - 6);
-    ctx.textAlign = 'left'; ctx.fillText('◀ UV', pad, stripTop - 6);
-    ctx.textAlign = 'right'; ctx.fillText('IR ▶', w - pad, stripTop - 6);
+    ctx.textAlign = 'left'; ctx.fillText('◀ ULTRAVIOLET', pad, stripTop - 11);
+    ctx.textAlign = 'right'; ctx.fillText('INFRARED ▶', w - pad, stripTop - 11);
 
-    // wavelength ticks (log)
-    ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = '600 9px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
-    [100, 200, 400, 700, 1500, 4000].forEach((wl) => {
-      const x = specX(wl, w, pad);
-      ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.fillRect(x, stripTop + stripH, 1, 5);
-      ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fillText(`${wl}`, x, stripTop + stripH + 16);
+    // wavelength ticks (log scale). The 6000 tick is deliberately absent — it
+    // landed on top of the "λ (nm)" axis title at every realistic width.
+    ctx.font = FONT(13, 500); ctx.textAlign = 'center';
+    [100, 200, 400, 700, 1500, 3000].forEach((tick) => {
+      const x = specX(tick, w, pad);
+      ctx.fillStyle = 'rgba(255,255,255,0.2)'; ctx.fillRect(x, stripTop + stripH, 1, 5);
+      ctx.fillStyle = CV.ghost; ctx.fillText(`${tick}`, x, stripTop + stripH + 23);
     });
+    ctx.textAlign = 'right'; ctx.fillStyle = CV.ghost;
+    ctx.fillText('λ (nm)', w - pad, stripTop + stripH + 23);
 
-    // faint full series (all drops into nFinal) + the series limit
-    for (let nHi = s.nFinal + 1; nHi <= 14; nHi++) {
-      const wl = wavelengthNm(s.nFinal, nHi, s.Z);
-      const x = specX(wl, w, pad);
-      ctx.strokeStyle = absorption ? 'rgba(0,0,0,0.32)' : 'rgba(255,255,255,0.28)';
-      ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, stripTop); ctx.lineTo(x, stripTop + stripH); ctx.stroke();
+    // the whole series, faint, so the crowding toward the limit is visible
+    for (let nHi = s.nFinal + 1; nHi <= 16; nHi++) {
+      const swl = wavelengthNm(s.nFinal, nHi, s.Z);
+      if (!onScale(swl)) continue;
+      const x = specX(swl, w, pad);
+      ctx.strokeStyle = absorption ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.26)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, stripTop); ctx.lineTo(x, stripTop + stripH); ctx.stroke();
     }
-    // series limit (n→∞) = ionisation from nFinal
-    const limit = seriesLimitNm(s.nFinal, s.Z);
-    const lx = specX(limit, w, pad);
-    ctx.strokeStyle = C.amber; ctx.setLineDash([3, 3]); ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(lx, stripTop - 4); ctx.lineTo(lx, stripTop + stripH + 4); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = C.amberLight; ctx.font = '600 9px Geist, system-ui, sans-serif';
-    ctx.textAlign = lx > w - 90 ? 'right' : 'left';
-    ctx.fillText(`${seriesName(s.nFinal)} limit → ionisation`, lx + (lx > w - 90 ? -5 : 5), stripTop + stripH - 4);
 
-    // burnt lines (what the student has fired)
+    // series limit (n→∞) = ionisation from nFinal
+    const limitWl = seriesLimitNm(s.nFinal, s.Z);
+    if (onScale(limitWl)) {
+      const lx = specX(limitWl, w, pad);
+      ctx.strokeStyle = ACCENT; ctx.setLineDash([3, 3]); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(lx, stripTop - 5); ctx.lineTo(lx, stripTop + stripH + 5); ctx.stroke();
+      ctx.setLineDash([]);
+      // The label sits ON the strip, which is a bright rainbow in absorption
+      // mode — violet text on that was unreadable. Give it its own dark plate.
+      const txt = 'series limit';
+      ctx.font = FONT(13, 700);
+      const tw = ctx.measureText(txt).width;
+      const flip = lx + tw + 20 > w - pad;
+      const bx = flip ? lx - tw - 16 : lx + 6;
+      ctx.fillStyle = 'rgba(6,7,12,0.9)';
+      ctx.fillRect(bx, stripTop + 6, tw + 12, 22);
+      ctx.fillStyle = ACCENT; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(txt, bx + 6, stripTop + 17);
+      ctx.textBaseline = 'alphabetic';
+    }
+
+    // lines the student has actually fired
     s.burnt.forEach((b) => {
+      if (!onScale(b.wl)) return;
       const x = specX(b.wl, w, pad);
       if (b.type === 'absorption') {
-        ctx.fillStyle = 'rgba(5,6,12,0.95)'; ctx.fillRect(x - 1.5, stripTop, 3, stripH);
+        ctx.fillStyle = 'rgba(4,5,10,0.95)';
+        ctx.fillRect(x - 1.5, stripTop, 3, stripH);
       } else {
-        ctx.fillStyle = b.color; ctx.fillRect(x - 1.5, stripTop, 3, stripH);
-        ctx.shadowBlur = 10; ctx.shadowColor = b.color; ctx.fillRect(x - 1.5, stripTop, 3, stripH); ctx.shadowBlur = 0;
+        ctx.fillStyle = b.color;
+        ctx.shadowBlur = 12; ctx.shadowColor = b.color;
+        ctx.fillRect(x - 1.5, stripTop, 3, stripH);
+        ctx.shadowBlur = 0;
       }
     });
   }
 
   // ── animation loop + sizing ───────────────────────────────────────────────
   useEffect(() => {
-    const a = atomRef.current, l = ladderRef.current, sp = specRef.current;
-    if (!a || !l || !sp) return;
+    const a = atomRef.current, sp = specRef.current;
+    if (!a || !sp) return;
 
-    function size(canvas: HTMLCanvasElement, minH: number): [number, number] {
+    const size = (canvas: HTMLCanvasElement, minH: number): [number, number] => {
       const r = canvas.parentElement!.getBoundingClientRect();
       const W = Math.max(r.width, 240), Hh = Math.max(r.height, minH);
-      canvas.width = W * 2; canvas.height = Hh * 2;
-      const ctx = canvas.getContext('2d')!; ctx.setTransform(2, 0, 0, 2, 0, 0);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * dpr; canvas.height = Hh * dpr;
+      const ctx = canvas.getContext('2d')!; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       return [W, Hh];
-    }
-    function resize() {
+    };
+    const resize = () => {
       const s = sim.current;
-      [s.aW, s.aH] = size(a!, 380);
-      [s.lW, s.lH] = size(l!, 380);
-      [s.sW, s.sH] = size(sp!, 200);
-    }
+      [s.aW, s.aH] = size(a, 520);
+      [s.sW, s.sH] = size(sp, 160);
+    };
 
     const t = setTimeout(() => {
       resize();
       const loop = () => {
-        const ca = a!.getContext('2d'), cl = l!.getContext('2d'), cs = sp!.getContext('2d');
+        const ca = a.getContext('2d'), cs = sp.getContext('2d');
         if (ca) drawAtom(ca);
-        if (cl) drawLadder(cl);
         if (cs) drawSpectrum(cs);
         rafRef.current = requestAnimationFrame(loop);
       };
@@ -578,273 +627,325 @@ export default function BohrSpectraSim() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ── atom-pane mouse interaction ───────────────────────────────────────────
+  // ── atom-pane interaction ─────────────────────────────────────────────────
+  // Hit-testing: pick the NEAREST orbit the current mode allows, rather than
+  // the first ring within a fixed tolerance. The old version walked n=1→6 and
+  // `break`ed on the first ring within 16px even when that ring was an illegal
+  // target — so with r ∝ n² (n=1,2,3 only ~20px apart) the inner rings ate
+  // every hover and nothing got selected. Nearest-valid-wins is predictable:
+  // the ring you are closest to is the one that lights up.
+  function pickOrbit(x: number, y: number): number {
+    const s = sim.current;
+    const { cx, cy, maxR } = atomGeom(s.aW, s.aH);
+    const dist = Math.hypot(x - cx, y - cy);
+    const cur = Math.round(s.elecN);
+    let best = -1, bestGap = Infinity;
+    for (let n = 1; n <= NMAX; n++) {
+      const legal = s.mode === 'emission' ? n < cur : n > cur;
+      if (!legal) continue;
+      const gap = Math.abs(dist - orbitR(n, maxR, s.trueScale));
+      if (gap < bestGap) { bestGap = gap; best = n; }
+    }
+    return bestGap <= 30 ? best : -1;
+  }
+
   function atomMove(e: React.MouseEvent<HTMLCanvasElement>) {
     const s = sim.current;
     if (s.animating) { s.hoveredN = -1; return; }
     const rect = atomRef.current!.getBoundingClientRect();
-    const x = e.clientX - rect.left, y = e.clientY - rect.top;
-    const cx = s.aW / 2, cy = s.aH / 2;
-    const maxR = Math.min(s.aW, s.aH) * 0.46;
-    const dist = Math.hypot(x - cx, y - cy);
-    s.hoveredN = -1;
-    for (let n = 1; n <= NMAX; n++) {
-      const rn = (n * n) / (NMAX * NMAX) * maxR;
-      if (Math.abs(dist - rn) < 16) {
-        const cur = Math.round(s.elecN);
-        if ((s.mode === 'emission' && n < cur) || (s.mode === 'absorption' && n > cur)) s.hoveredN = n;
-        break;
-      }
-    }
+    s.hoveredN = pickOrbit(e.clientX - rect.left, e.clientY - rect.top);
   }
-  function atomClick() {
+  function atomClick(e: React.MouseEvent<HTMLCanvasElement>) {
     const s = sim.current;
-    if (s.animating || s.hoveredN === -1) return;
-    const cur = Math.round(s.elecN), n = s.hoveredN; s.hoveredN = -1;
+    if (s.animating) return;
+    const rect = atomRef.current!.getBoundingClientRect();
+    const n = pickOrbit(e.clientX - rect.left, e.clientY - rect.top);
+    if (n === -1) return;
+    const cur = Math.round(s.elecN);
+    s.hoveredN = -1;
     const nLow = Math.min(n, cur), nHigh = Math.max(n, cur);
     setNFinal(nLow); setNInitial(nHigh);
     fire(nLow, nHigh);
   }
 
-  const step = STEPS[stepIdx];
+  // ── live values for the current selection ─────────────────────────────────
+  const beat = BEATS[beatIdx];
+  const ser = seriesOf(nFinal);
+  const wl = wavelengthNm(nFinal, nInitial, Z);
+  const dE = photonEv(nFinal, nInitial, Z);
+  const thz = 299792.458 / wl;
+  const col = photonColor(wl);
+  const reg = regionOf(wl);
+  const invLambda = RH * Z * Z * (1 / (nFinal * nFinal) - 1 / (nInitial * nInitial));
+  const bracket = 1 / (nFinal * nFinal) - 1 / (nInitial * nInitial);
+  const limitEv = Math.abs(energyEv(nFinal, Z));       // ΔE of the series limit
   const ZLABELS = ['H', 'He⁺', 'Li²⁺', 'Be³⁺'];
 
-  // small UI helpers ----------------------------------------------------------
-  const PaneLabel = ({ children, accent }: { children: React.ReactNode; accent: string }) => (
-    <div className="flex items-center gap-2 mb-2">
-      <span className="w-1 h-3.5 rounded" style={{ background: accent }} />
-      <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: C.text2 }}>{children}</span>
+  // one row per transition into the landing level; the limit is the ceiling
+  const jumps = Array.from({ length: ROWS }, (_, i) => nFinal + 1 + i).map((nHi) => {
+    const jwl = wavelengthNm(nFinal, nHi, Z);
+    return { nHi, wl: jwl, ev: photonEv(nFinal, nHi, Z), color: photonColor(jwl), region: regionOf(jwl) };
+  });
+
+  const pill = (on: boolean) => ({
+    background: on ? accentTint(ACCENT, 0.18) : 'rgba(255,255,255,0.05)',
+    border: `1px solid ${on ? accentTint(ACCENT, 0.5) : BORDER.card}`,
+    color: on ? ACCENT : TEXT.secondary,
+  });
+
+  // Pane headings sit at text-base, not the 10px uppercase SectionLabel — the
+  // founder's readability call (2026-07-27): micro-caps labels were too small
+  // to read comfortably on a large screen.
+  const PaneTitle = ({ children, sub }: { children: React.ReactNode; sub?: string }) => (
+    <div className="mb-3">
+      <div className="text-base font-bold" style={{ color: TEXT.primary }}>{children}</div>
+      {sub && <div className="text-sm mt-1" style={{ color: TEXT.ghost }}>{sub}</div>}
     </div>
   );
 
   return (
-    <div className="w-full rounded-2xl p-4 md:p-6" style={{ background: C.bg, color: C.text }}>
-      {/* header */}
-      <div className="mb-4 flex justify-between items-start flex-wrap gap-2">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white">
-            Bohr Model <span style={{ color: C.orange }}>→</span> Hydrogen Spectrum
-          </h2>
-          <p className="text-[11px] font-bold uppercase tracking-widest mt-1" style={{ color: C.muted }}>
-            One atom · one energy ladder · one spectrum — all in sync
-          </p>
-        </div>
-        <div className="text-[10px] font-bold uppercase tracking-widest pt-1 px-3 py-1.5 rounded-full"
-          style={{ color: C.amber, background: 'rgba(251,191,36,0.1)', border: `1px solid rgba(251,191,36,0.2)` }}>
-          Eₙ = −13.6 Z² / n²
-        </div>
+    <SimShell style={{ minHeight: 'auto' }}>
+      <SimHeader
+        title="Bohr Model"
+        accentWord="→ Hydrogen Spectrum"
+        subtitle="one atom · one set of jumps · one spectrum, all in sync"
+        badge={<span className="tabular-nums">Eₙ = −13.6 Z² / n² eV</span>}
+      />
+
+      <StepBar steps={BEATS} currentId={beat.id} onGo={(id) => goBeat(BEATS.findIndex((b) => b.id === id))} />
+
+      {/* narration — plain text, never a bordered card (workflow §4) */}
+      <div className="mb-6 max-w-4xl">
+        <div className={`${TYPE.conceptHeading} mb-1.5`}>{beat.title}</div>
+        <p className="text-base leading-relaxed" style={{ color: TEXT.secondary }}>{beat.body}</p>
       </div>
 
-      {/* guided beat strip */}
-      <div className="flex items-center gap-2 mb-3 flex-wrap">
-        {STEPS.map((st, i) => {
-          const active = i === stepIdx;
-          return (
-            <button key={st.key} onClick={() => goStep(i)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-all"
-              style={{
-                background: active ? 'rgba(249,115,22,0.15)' : 'rgba(255,255,255,0.03)',
-                border: `1px solid ${active ? 'rgba(249,115,22,0.45)' : C.border}`,
-                color: active ? C.amberLight : 'rgba(255,255,255,0.4)',
-              }}>
-              <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black"
-                style={{ background: active ? C.orange : 'rgba(255,255,255,0.06)', color: active ? '#000' : '#fff' }}>{i + 1}</span>
-              {st.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* narration */}
-      <div className="mb-5 rounded-xl px-4 py-3" style={{ background: C.card, border: `1px solid ${C.border}` }}>
-        <div className="text-sm font-bold text-white mb-1">{step.title}</div>
-        <p className="text-sm leading-relaxed" style={{ color: C.text2 }}>{step.body}</p>
-      </div>
-
-      {/* ── THE THREE SYNCHRONISED PANES (full width) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
+      <div className="mb-8">
+        {/* ── THE ATOM (full width) — its own controls live inside the box ── */}
         <div>
-          <PaneLabel accent={C.orange}>The Atom · radius ∝ n²</PaneLabel>
-          <div className="relative w-full" style={{ height: 380 }}>
-            <canvas ref={atomRef} className="w-full h-full block rounded-xl cursor-crosshair"
-              style={{ border: `1px solid ${C.border}` }}
-              onMouseMove={atomMove} onMouseLeave={() => { sim.current.hoveredN = -1; }} onClick={atomClick} />
-          </div>
-        </div>
-        <div>
-          <PaneLabel accent={C.amber}>Energy Levels · rungs converge to 0</PaneLabel>
-          <div className="relative w-full" style={{ height: 380 }}>
-            <canvas ref={ladderRef} className="w-full h-full block rounded-xl" style={{ border: `1px solid ${C.border}` }} />
-          </div>
-        </div>
-        <div>
-          <PaneLabel accent={C.emerald}>The Spectrum · series → limit</PaneLabel>
-          <div className="flex flex-col gap-3 h-[380px]">
-            <div className="relative w-full" style={{ height: 200 }}>
-              <canvas ref={specRef} className="w-full h-full block rounded-xl" style={{ border: `1px solid ${C.border}` }} />
-            </div>
-            {/* live readout sits under the spectrum (this pane is the tall one) */}
-            <div className="flex-1 rounded-xl px-4 py-3 flex flex-col justify-center"
-              style={{ background: C.card, border: `1px solid ${C.border}` }}>
-              {readout ? (
-                <>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-4 h-4 rounded" style={{ background: readout.color, boxShadow: `0 0 10px ${readout.color}` }} />
-                    <span className="text-sm font-bold tabular-nums" style={{ color: readout.color }}>
-                      {readout.isAbsorption ? 'Absorbed' : 'Emitted'} · λ = {readout.wl} nm
-                    </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full"
-                      style={{ color: readout.visible ? C.emeraldLight : C.ghost, background: readout.visible ? 'rgba(16,185,129,0.12)' : 'rgba(255,255,255,0.05)' }}>
-                      {readout.region}{readout.visible ? '' : ' (invisible)'}
-                    </span>
-                  </div>
-                  <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-sm" style={{ color: C.text2 }}>
-                    <span className="tabular-nums">ΔE = <strong style={{ color: C.text }}>{readout.ev.toFixed(3)}</strong> eV</span>
-                    <span className="tabular-nums">ν = <strong style={{ color: C.text }}>{readout.thz.toFixed(0)}</strong> THz</span>
-                    <span className="tabular-nums">n={readout.nHigh} → n={readout.nLow}</span>
-                  </div>
-                </>
-              ) : (
-                <div className="text-sm" style={{ color: C.muted }}>
-                  Click an inner orbit (or pick a jump below) — the photon, the energy arrow and the spectral line all appear together.
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── CONTROLS (below, full width) ── */}
-      <div className="rounded-2xl p-4" style={{ background: C.card, border: `1px solid ${C.border}` }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* mode */}
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: C.muted }}>Mode</div>
-            <div className="flex gap-1 p-1 rounded-lg" style={{ background: '#05060c', border: `1px solid ${C.line}` }}>
+          <PaneTitle sub="Rings are drawn evenly spaced so every level stays readable — the real radius (0.529 n² Å) is printed on each one. Flip on true n² scale to see how fast they actually grow. Click any orbit the electron is allowed to move to.">The atom</PaneTitle>
+          <div className="relative w-full" style={{ height: 520 }}>
+            <canvas
+              ref={atomRef}
+              className="w-full h-full block rounded-xl cursor-crosshair"
+              style={{ border: `1px solid ${BORDER.card}` }}
+              onMouseMove={atomMove}
+              onMouseLeave={() => { sim.current.hoveredN = -1; }}
+              onClick={atomClick}
+            />
+            {/* mode toggle — docked inside the simulator it controls */}
+            <div className="absolute top-3 left-3 flex gap-1.5">
               {(['emission', 'absorption'] as const).map((m) => (
                 <button key={m} onClick={() => setMode(m)}
-                  className="flex-1 px-3 py-2 rounded-md text-xs font-bold capitalize transition-all"
-                  style={{ background: mode === m ? 'rgba(249,115,22,0.18)' : 'transparent', color: mode === m ? C.amberLight : 'rgba(255,255,255,0.45)', border: mode === m ? `1px solid rgba(249,115,22,0.4)` : '1px solid transparent' }}>
+                  className="px-3 py-2 rounded-lg text-sm font-semibold capitalize transition-all"
+                  style={pill(mode === m)}>
                   {m}
                 </button>
               ))}
             </div>
-          </div>
-
-          {/* series (n_final) */}
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: C.muted }}>
-              Series — landing level n<sub>final</sub>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {SERIES.map((s) => (
-                <button key={s.nFinal}
-                  onClick={() => { setNFinal(s.nFinal); if (nInitial <= s.nFinal) setNInitial(s.nFinal + 1); }}
-                  className="px-2.5 py-1.5 rounded-md text-[11px] font-bold transition-all"
-                  style={{ background: nFinal === s.nFinal ? 'rgba(249,115,22,0.18)' : 'rgba(255,255,255,0.04)', color: nFinal === s.nFinal ? C.amberLight : C.text2, border: `1px solid ${nFinal === s.nFinal ? 'rgba(249,115,22,0.4)' : C.border}` }}
-                  title={`${s.name} · ${s.region}`}>
-                  {s.name}<span className="opacity-60"> ·{s.nFinal}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* transition (n_initial) */}
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: C.muted }}>
-              Jump from n<sub>initial</sub>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {[2, 3, 4, 5, 6, 7].filter((n) => n > nFinal).map((n) => (
-                <button key={n}
-                  onClick={() => { setNInitial(n); fire(nFinal, n); }}
-                  className="w-9 h-9 rounded-md text-xs font-bold tabular-nums transition-all"
-                  style={{ background: nInitial === n ? 'rgba(16,185,129,0.16)' : 'rgba(255,255,255,0.04)', color: nInitial === n ? C.emeraldLight : C.text2, border: `1px solid ${nInitial === n ? 'rgba(16,185,129,0.4)' : C.border}` }}>
-                  {n}
-                </button>
-              ))}
-              <button onClick={() => fire(nFinal, nInitial)}
-                className="px-3 h-9 rounded-md text-xs font-bold transition-all"
-                style={{ background: 'rgba(249,115,22,0.9)', color: '#000' }}>
-                ▶ Fire
-              </button>
-            </div>
-          </div>
-
-          {/* Z + de Broglie */}
-          <div className="flex flex-col gap-3">
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-widest mb-2 flex justify-between" style={{ color: C.muted }}>
-                <span>Nucleus Z</span>
-                <span style={{ color: C.amberLight }}>{ZLABELS[Z - 1]} (Z={Z})</span>
-              </div>
-              <input type="range" min={1} max={4} step={1} value={Z}
-                onChange={(e) => setZ(parseInt(e.target.value, 10))}
-                className="w-full accent-orange-500" style={{ accentColor: C.orange }} />
-            </div>
+            {/* de Broglie toggle — also an atom control, so also inside the box */}
             <button onClick={() => setDeBroglie((v) => !v)}
-              className="self-start text-xs font-bold transition-colors pb-0.5"
-              style={{ color: deBroglie ? C.amber : C.muted, borderBottom: `1px solid ${deBroglie ? 'rgba(251,191,36,0.5)' : 'rgba(255,255,255,0.12)'}` }}>
-              {deBroglie ? '✓ de Broglie standing wave ON' : 'Show de Broglie standing wave'}
+              className="absolute top-3 right-3 px-3 py-2 rounded-lg text-sm font-semibold transition-all"
+              style={{
+                background: deBroglie ? accentTint(ACCENT_2, 0.18) : 'rgba(255,255,255,0.05)',
+                border: `1px solid ${deBroglie ? accentTint(ACCENT_2, 0.5) : BORDER.card}`,
+                color: deBroglie ? ACCENT_2 : TEXT.secondary,
+              }}>
+              {deBroglie ? 'wave: on' : 'show wave'}
+            </button>
+            {/* the honest escape hatch for the evenly-spaced default */}
+            <button onClick={() => setTrueScale((v) => !v)}
+              className="absolute bottom-3 right-3 px-3 py-2 rounded-lg text-sm font-semibold transition-all"
+              style={{
+                background: trueScale ? accentTint(ACCENT, 0.18) : 'rgba(255,255,255,0.05)',
+                border: `1px solid ${trueScale ? accentTint(ACCENT, 0.5) : BORDER.card}`,
+                color: trueScale ? ACCENT : TEXT.secondary,
+              }}>
+              {trueScale ? 'true n² scale: on' : 'true n² scale'}
             </button>
           </div>
+
+          {/* nucleus charge — the atom's other property, so it sits with the atom */}
+          <div className="flex items-center gap-4 mt-4 max-w-md">
+            <span className="text-sm font-semibold shrink-0" style={{ color: TEXT.secondary }}>Nucleus</span>
+            <input type="range" min={1} max={4} step={1} value={Z}
+              onChange={(e) => setZ(parseInt(e.target.value, 10))}
+              className="flex-1" style={{ accentColor: ACCENT }} />
+            <span className="text-sm font-bold tabular-nums shrink-0" style={{ color: ACCENT }}>
+              {ZLABELS[Z - 1]} · Z={Z}
+            </span>
+          </div>
         </div>
 
-        {/* live Rydberg equation */}
-        <div className="mt-4 pt-4 flex items-center justify-center gap-3 flex-wrap text-lg" style={{ borderTop: `1px solid ${C.line}`, color: C.text }}>
-          <span style={{ color: C.muted }} className="text-xs font-bold uppercase tracking-widest mr-1">Rydberg</span>
-          <Frac num="1" den={<span style={{ fontStyle: 'italic' }}>λ</span>} />
-          <span style={{ color: C.muted }}>=</span>
-          <span style={{ color: C.amber, fontStyle: 'italic' }}>R<sub className="text-[0.6em]">H</sub></span>
-          {Z > 1 && <span style={{ color: C.amber }}><span style={{ fontStyle: 'italic' }}>Z</span>²</span>}
-          <span style={{ color: C.muted }}>[</span>
-          <Frac num="1" den={<span className="tabular-nums">{nFinal}²</span>} />
-          <span style={{ color: C.muted }}>−</span>
-          <Frac num="1" den={<span className="tabular-nums">{nInitial}²</span>} />
-          <span style={{ color: C.muted }}>]</span>
-          <span style={{ color: C.muted }}>⇒</span>
-          <span className="tabular-nums font-bold" style={{ color: readout ? readout.color : C.muted }}>
-            λ = {readout ? `${readout.wl} nm` : '—'}
-          </span>
+        {/* ── ENERGY OF EACH JUMP — replaces the unreadable E-level ladder ── */}
+        <div className="mt-8">
+          <PaneTitle sub="Bar length = energy released, as a share of the series limit. Click any bar to make that jump.">
+            Energy of each jump
+          </PaneTitle>
+
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {SERIES.map((s) => (
+              <button key={s.nFinal}
+                onClick={() => pickSeries(s.nFinal)}
+                title={`${s.name} · lands on n=${s.nFinal} · ${s.region}`}
+                className="px-3 py-2 rounded-lg text-sm font-semibold transition-all"
+                style={pill(nFinal === s.nFinal)}>
+                {s.name}
+                <span className="ml-1.5 tabular-nums" style={{ opacity: 0.6 }}>→{s.nFinal}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            {jumps.map((j) => {
+              const on = j.nHi === nInitial;
+              return (
+                <button key={j.nHi}
+                  onClick={() => { setNInitial(j.nHi); fire(nFinal, j.nHi); }}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all"
+                  style={{
+                    background: on ? accentTint(ACCENT, 0.12) : 'transparent',
+                    border: `1px solid ${on ? accentTint(ACCENT, 0.4) : 'transparent'}`,
+                  }}>
+                  <span className="text-sm font-bold tabular-nums shrink-0" style={{ color: on ? ACCENT : TEXT.primary, width: 60 }}>
+                    {j.nHi} → {nFinal}
+                  </span>
+                  <span className="flex-1 h-3 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                    <span className="block h-full rounded-full" style={{ width: `${(j.ev / limitEv) * 100}%`, background: j.color }} />
+                  </span>
+                  <span className="text-sm font-bold tabular-nums shrink-0 text-right" style={{ color: TEXT.primary, width: 62 }}>
+                    {j.ev.toFixed(2)} eV
+                  </span>
+                  <span className="text-sm tabular-nums shrink-0 text-right" style={{ color: j.color, width: 72 }}>
+                    {j.wl.toFixed(0)} nm
+                  </span>
+                  <span className="text-xs shrink-0 text-right" style={{ color: TEXT.ghost, width: 44 }}>
+                    {j.region.short}
+                  </span>
+                </button>
+              );
+            })}
+
+            {/* the ceiling: n=∞ → nFinal, i.e. ionisation from the landing level */}
+            <div className="w-full flex items-center gap-3 px-3 py-2.5 mt-1"
+              style={{ borderTop: `1px solid ${BORDER.divider}` }}>
+              <span className="text-sm font-bold tabular-nums shrink-0" style={{ color: ACCENT, width: 60 }}>
+                ∞ → {nFinal}
+              </span>
+              <span className="flex-1 h-3 rounded-full" style={{ border: `1px dashed ${accentTint(ACCENT, 0.6)}` }} />
+              <span className="text-sm font-bold tabular-nums shrink-0 text-right" style={{ color: ACCENT, width: 62 }}>
+                {limitEv.toFixed(2)} eV
+              </span>
+              <span className="text-sm tabular-nums shrink-0 text-right" style={{ color: ACCENT, width: 72 }}>
+                {seriesLimitNm(nFinal, Z).toFixed(0)} nm
+              </span>
+              <span className="text-xs shrink-0 text-right" style={{ color: TEXT.ghost, width: 44 }}>limit</span>
+            </div>
+          </div>
+
+          <p className="text-sm mt-3 leading-relaxed" style={{ color: TEXT.ghost }}>
+            Each higher starting level adds less and less extra energy, so the bars bunch up against the dashed
+            ceiling. That ceiling is the series limit — past it the electron is simply gone, and the spectrum
+            turns into an unbroken continuum.
+          </p>
         </div>
       </div>
 
-      {/* ── PAYOFF: series limit = ionisation ── */}
-      <div className="mt-5 rounded-xl px-4 py-3 flex gap-3 items-start"
-        style={{ background: 'rgba(249,115,22,0.06)', border: `1px solid rgba(249,115,22,0.22)` }}>
-        <span className="text-lg">💡</span>
-        <p className="text-sm leading-relaxed" style={{ color: C.text2 }}>
-          The spectral lines of the <strong style={{ color: C.text }}>{seriesName(nFinal)}</strong> series pile up at{' '}
-          <strong style={{ color: C.amberLight }} className="tabular-nums">{Math.round(seriesLimitNm(nFinal, Z))} nm</strong> — its{' '}
-          <strong style={{ color: C.text }}>series limit</strong>. That is exactly the energy to remove the electron from level n={nFinal}:{' '}
-          <strong style={{ color: C.amberLight }} className="tabular-nums">{Math.abs(energyEv(nFinal, Z)).toFixed(2)} eV</strong> of ionisation energy.
-          Past that limit the lines merge into a <strong style={{ color: C.text }}>continuum</strong> — the electron is free and can carry away any extra energy.
-        </p>
+      {/* ── THE SPECTRUM (full width) ── */}
+      <PaneTitle sub="Faint lines are the whole series; a bright line burns in wherever you have actually fired a jump.">
+        The spectrum
+      </PaneTitle>
+      <div className="relative w-full mb-6" style={{ height: 160 }}>
+        <canvas ref={specRef} className="w-full h-full block rounded-xl" style={{ border: `1px solid ${BORDER.card}` }} />
       </div>
+
+      {/* ── THIS LINE: series + the calculation ── */}
+      <div className="pt-6" style={{ borderTop: `1px solid ${BORDER.divider}` }}>
+        <div className="flex flex-wrap items-start gap-x-12 gap-y-6">
+          <div>
+            <div className="text-sm font-semibold mb-2" style={{ color: TEXT.ghost }}>This line belongs to</div>
+            <div className="text-3xl font-black leading-none" style={{ color: ACCENT }}>
+              {ser.name} series
+            </div>
+            <div className="text-base mt-2 tabular-nums" style={{ color: TEXT.secondary }}>
+              n={nInitial} → n={nFinal} · it lands on n={nFinal}, so it is a {ser.name} line
+            </div>
+          </div>
+
+          <div>
+            <div className="text-sm font-semibold mb-2" style={{ color: TEXT.ghost }}>
+              {mode === 'absorption' ? 'Absorbed' : 'Emitted'} photon
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="w-4 h-4 rounded-sm shrink-0" style={{ background: col }} />
+              <span className="text-3xl font-black leading-none tabular-nums" style={{ color: col }}>
+                {wl.toFixed(1)} nm
+              </span>
+            </div>
+            <div className="text-base mt-2 tabular-nums" style={{ color: TEXT.secondary }}>
+              ΔE = <strong style={{ color: TEXT.primary }}>{dE.toFixed(3)}</strong> eV ·{' '}
+              ν = <strong style={{ color: TEXT.primary }}>{thz.toFixed(0)}</strong> THz ·{' '}
+              {reg.label}{reg.visible ? '' : ' — invisible to the eye'}
+            </div>
+          </div>
+        </div>
+
+        {/* the calculation, worked with the numbers actually on screen */}
+        <div className="mt-7">
+          <div className="text-sm font-semibold mb-3" style={{ color: TEXT.ghost }}>How that wavelength is calculated</div>
+          <div className="flex items-center flex-wrap gap-x-2 gap-y-3 text-xl" style={{ color: TEXT.primary }}>
+            <Frac num="1" den={<span style={{ fontStyle: 'italic' }}>λ</span>} />
+            <span style={{ color: TEXT.ghost }}>=</span>
+            <span style={{ color: ACCENT, fontStyle: 'italic' }}>R<sub className="text-[0.6em] not-italic">H</sub></span>
+            {Z > 1 && <span style={{ color: ACCENT, fontStyle: 'italic' }}>Z²</span>}
+            <span style={{ color: TEXT.ghost }}>[</span>
+            <Frac num="1" den={<span className="tabular-nums">{nFinal}²</span>} />
+            <span style={{ color: TEXT.ghost }}>−</span>
+            <Frac num="1" den={<span className="tabular-nums">{nInitial}²</span>} />
+            <span style={{ color: TEXT.ghost }}>]</span>
+          </div>
+          <div className="flex items-center flex-wrap gap-x-2.5 gap-y-3 text-lg mt-4 tabular-nums" style={{ color: TEXT.secondary }}>
+            <span style={{ color: TEXT.ghost }}>=</span>
+            <span>0.01097{Z > 1 ? ` × ${Z * Z}` : ''}</span>
+            <span style={{ color: TEXT.ghost }}>×</span>
+            <span>{bracket.toFixed(4)}</span>
+            <span style={{ color: TEXT.ghost }}>=</span>
+            <span>{prettyExp(invLambda.toExponential(3))} nm⁻¹</span>
+            <span style={{ color: TEXT.ghost }} className="mx-1">⇒</span>
+            <span className="font-bold" style={{ color: col }}>λ = {wl.toFixed(1)} nm</span>
+          </div>
+        </div>
+      </div>
+
+      <ExpertTip>
+        The {ser.name} lines pile up at{' '}
+        <span className="tabular-nums" style={{ color: ACCENT }}>{Math.round(seriesLimitNm(nFinal, Z))} nm</span> — the series limit —
+        because that is exactly the energy needed to pull the electron off level n={nFinal}:{' '}
+        <span className="tabular-nums" style={{ color: ACCENT }}>{limitEv.toFixed(2)} eV</span>.
+        Past the limit the lines merge into a continuum: the electron is free and can carry away any leftover energy.
+      </ExpertTip>
 
       {/* ── LIMITS OF THE MODEL ── */}
       <div className="mt-8">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="w-1 h-4 rounded" style={{ background: C.red }} />
-          <h3 className="text-lg font-bold text-white">Where the Bohr model breaks</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className={`${TYPE.conceptHeading} mb-4`}>Where the Bohr model breaks</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
           {[
-            ['Only one electron', 'It nails hydrogen and one-electron ions (He⁺, Li²⁺ — try the Z slider) but fails the moment a second electron and its repulsion enter.'],
+            ['Only one electron', 'It nails hydrogen and one-electron ions (He⁺, Li²⁺ — try the nucleus slider) but fails the moment a second electron and its repulsion enter.'],
             ['No line intensities', 'It predicts where the lines fall, never why some are brighter than others.'],
             ['Defies uncertainty', 'A fixed circular orbit with a known radius and speed violates Heisenberg (1927). The electron has no definite path.'],
             ['No bonding', 'It cannot explain why atoms share electrons to make molecules — the basis of all chemistry.'],
           ].map(([t, b]) => (
-            <div key={t} className="pl-3" style={{ borderLeft: `2px solid ${C.line}` }}>
-              <div className="font-bold text-sm mb-1" style={{ color: C.text }}>{t}</div>
-              <div className="text-sm leading-relaxed" style={{ color: C.text2 }}>{b}</div>
+            <div key={t}>
+              <div className="text-base font-bold mb-1" style={{ color: TEXT.primary }}>{t}</div>
+              <div className="text-base leading-relaxed" style={{ color: TEXT.secondary }}>{b}</div>
             </div>
           ))}
         </div>
-        <p className="text-sm leading-relaxed mt-4" style={{ color: C.muted }}>
-          The orbit was a stepping stone. The standing wave you toggled on is the real clue — it grows up into the quantum-mechanical orbital, where the electron is a cloud of probability, not a ball on a track.
+        <p className="text-base leading-relaxed mt-5 max-w-4xl" style={{ color: TEXT.ghost }}>
+          The orbit was a stepping stone. The standing wave is the real clue — it grows up into the quantum-mechanical
+          orbital, where the electron is a cloud of probability rather than a ball on a track.
         </p>
       </div>
-    </div>
+    </SimShell>
   );
 }

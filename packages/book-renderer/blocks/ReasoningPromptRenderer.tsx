@@ -53,7 +53,7 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
         </InlineMarkdown>
       </div>
 
-      {/* MCQ options */}
+      {/* MCQ options — pre-commit: neutral pick state, violet "Think" identity */}
       {hasOptions && !committed && (
         <div className="flex flex-col gap-2 mb-4">
           {block.options!.map((opt, i) => (
@@ -75,6 +75,47 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
               <InlineMarkdown>{opt}</InlineMarkdown>
             </button>
           ))}
+        </div>
+      )}
+
+      {/* MCQ options — post-commit verdict. Only shown once `correct_index` is
+          authored (older blocks may omit it, in which case we fall back to the
+          plain "Your answer" chip further down, same as before this change). */}
+      {hasOptions && committed && typeof block.correct_index === 'number' && (
+        <div className="flex flex-col gap-2 mb-4">
+          {block.options!.map((opt, i) => {
+            const isCorrect = i === block.correct_index;
+            const isChosen = i === selected;
+            let bg = 'transparent';
+            let border = 'rgba(255,255,255,0.09)';
+            let color = 'rgba(255,255,255,0.35)';
+            let labelColor = 'rgba(255,255,255,0.15)';
+            if (isCorrect) {
+              bg = 'rgba(6,78,59,0.45)';
+              border = 'rgba(16,185,129,0.28)';
+              color = '#86efac';
+              labelColor = '#34d399';
+            } else if (isChosen) {
+              bg = 'rgba(69,10,10,0.45)';
+              border = 'rgba(239,68,68,0.25)';
+              color = '#fca5a5';
+              labelColor = '#f87171';
+            }
+            return (
+              <div
+                key={i}
+                className="text-left px-4 py-2.5 rounded-xl text-sm"
+                style={{ border: `1.5px solid ${border}`, background: bg, color }}
+              >
+                <span className="mr-2 font-bold" style={{ color: labelColor }}>
+                  {String.fromCharCode(65 + i)}.
+                </span>
+                <InlineMarkdown>{opt}</InlineMarkdown>
+                {isCorrect && <span className="ml-2 text-xs" style={{ color: '#34d399' }}>✓</span>}
+                {isChosen && !isCorrect && <span className="ml-2 text-xs" style={{ color: '#f87171' }}>✗</span>}
+              </div>
+            );
+          })}
         </div>
       )}
 
@@ -105,7 +146,9 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
       {/* Committed state — show selected answer + reveal */}
       {committed && (
         <div>
-          {hasOptions && selected !== null && (
+          {/* "Your answer" chip only when there's no correct_index to render a
+              per-option verdict against (the block above already does that). */}
+          {hasOptions && selected !== null && typeof block.correct_index !== 'number' && (
             <div className="flex items-center gap-2 mb-3">
               <span className="text-xs text-white/45">Your answer:</span>
               <span
@@ -115,6 +158,15 @@ export default function ReasoningPromptRenderer({ block }: { block: ReasoningPro
                 {String.fromCharCode(65 + selected)}. <InlineMarkdown>{block.options![selected]}</InlineMarkdown>
               </span>
             </div>
+          )}
+
+          {hasOptions && selected !== null && typeof block.correct_index === 'number' && (
+            <p
+              className="text-xs font-bold uppercase tracking-widest mb-3"
+              style={{ color: selected === block.correct_index ? '#34d399' : '#f87171' }}
+            >
+              {selected === block.correct_index ? 'Correct' : 'Not quite'}
+            </p>
           )}
 
           {showReveal && (

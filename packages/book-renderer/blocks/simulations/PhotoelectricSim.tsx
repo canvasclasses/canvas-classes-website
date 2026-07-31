@@ -18,10 +18,11 @@
 //   ν changes the ENERGY of each photon. Intensity changes the COUNT of photons.
 //   Never let frequency change photon count or KE depend on intensity.
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   useAnimationFrame,
   useResolvedFont,
+  useCanvasSize,
   mulberry32,
   nuToRGB,
 } from './_shared';
@@ -54,8 +55,7 @@ const NU_MAX = 20;
 
 const CANVAS_W = 900;
 const CANVAS_H = 460;
-const GRAPH_W = 430;
-const GRAPH_H = 230;
+const GRAPH_H = 260;   // fixed CSS height — width comes from the column
 
 // ── Frequency → photon colour ───────────────────────────────────────────
 // Frequency → colour mapping, PRNG and font resolution all live in the shared
@@ -107,6 +107,77 @@ function drawBattery(ctx: CanvasRenderingContext2D, cx: number, cy: number) {
     ctx.lineTo(cx + dx, cy + h / 2);
     ctx.stroke();
   });
+}
+
+// ── Electrodes ───────────────────────────────────────────────────────────
+// The curved, concave-facing cathode — the classic "photosensitive dish"
+// silhouette from real photoelectric-effect diagrams (NCERT / HC Verma),
+// instead of the generic capacitor-style bar this sim drew before. `tipX` is
+// the plate's outer edge — where the lead exits and where photoelectrons are
+// ejected FROM — and the curve bows inward by `depth` px at its middle.
+function drawCurvedCathode(
+  ctx: CanvasRenderingContext2D,
+  tipX: number, y0: number, y1: number, depth: number, width: number
+) {
+  const midY = (y0 + y1) / 2;
+  const ctrlX = tipX - depth;
+  const spine = () => {
+    ctx.beginPath();
+    ctx.moveTo(tipX, y0);
+    ctx.quadraticCurveTo(ctrlX, midY, tipX, y1);
+  };
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const grad = ctx.createLinearGradient(ctrlX, 0, tipX, 0);
+  grad.addColorStop(0, 'rgba(100,116,139,0.95)');
+  grad.addColorStop(0.55, 'rgba(226,232,240,1)');
+  grad.addColorStop(1, 'rgba(148,163,184,0.95)');
+  spine();
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = width;
+  ctx.stroke();
+  spine(); // a thin bright pass on top reads as polished metal
+  ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+}
+
+// The anode — a slender collector rod, deliberately smaller and plainer than
+// the cathode, since it only needs to be conductive, not photosensitive. The
+// shape difference reads the two electrodes' different jobs at a glance.
+function drawAnodeRod(ctx: CanvasRenderingContext2D, x: number, y0: number, y1: number, width: number) {
+  const grad = ctx.createLinearGradient(x - width / 2, 0, x + width / 2, 0);
+  grad.addColorStop(0, 'rgba(100,116,139,0.95)');
+  grad.addColorStop(0.5, 'rgba(226,232,240,1)');
+  grad.addColorStop(1, 'rgba(148,163,184,0.95)');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = width;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(x, y0);
+  ctx.lineTo(x, y1);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(226,232,240,0.95)';
+  ctx.beginPath(); ctx.arc(x, y0, width * 0.62, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x, y1, width * 0.62, 0, Math.PI * 2); ctx.fill();
+}
+
+// A single straight lead from an electrode tip, through the glass wall (a
+// small seal ring marks exactly where it pierces), continuing on to the
+// external circuit — one continuous line, so the plate visibly connects
+// rather than dangling in the tube with an unexplained gap either side.
+function drawLead(ctx: CanvasRenderingContext2D, x: number, fromY: number, wallY: number, toY: number) {
+  ctx.strokeStyle = 'rgba(148,163,184,0.6)';
+  ctx.lineWidth = 1.8;
+  ctx.beginPath();
+  ctx.moveTo(x, fromY);
+  ctx.lineTo(x, toY);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(11,13,26,1)';
+  ctx.beginPath(); ctx.arc(x, wallY, 4.5, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = 'rgba(226,232,240,0.6)';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath(); ctx.arc(x, wallY, 4.5, 0, Math.PI * 2); ctx.stroke();
 }
 
 function drawRheostat(ctx: CanvasRenderingContext2D, cx: number, cy: number) {
@@ -242,54 +313,75 @@ export default function PhotoelectricSim() {
   );
 
   // ── Main stage ─────────────────────────────────────────────────────
-  useEffect(() => {
+  // Drawn in a fixed 900×460 logical space (all the layout math below is
+  // authored against it), uniformly scaled up to the canvas's real CSS size
+  // via one transform — so the diagram renders at native resolution instead
+  // of being a fixed-size bitmap stretched by the browser (which is what was
+  // making every label on the stage soft-edged and small).
+  const drawStage = useCallback(() => {
     const c = stageRef.current;
-    if (!c) return;
-    const ctx = c.getContext('2d');
-    if (!ctx) return;
-    const W = c.width;
-    ctx.clearRect(0, 0, W, c.height);
+    const ctx = c?.getContext('2d');
+    if (!c || !ctx) return;
+    const { w: cssW, h: cssH, dpr } = stageDims.current;
+    if (cssW < 10 || cssH < 10) return;
+    const scale = cssW / CANVAS_W;
+    ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
+    const W = CANVAS_W;
+    ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
 
     // ── Layout ──
-    // Light source (outside the tube)
+    // Every electrode sits well inside the tube's FLAT wall (outside the
+    // corner-radius zone), which is what guarantees the CATHODE/ANODE labels
+    // and the electrode leads can never intersect the glass outline — no
+    // curve-intersection math needed, just picking honest x-positions.
     const sourceX = 95;
-    const sourceY = 140;
     const sourceR = 16;
 
     // Evacuated tube body
-    const tubeX0 = 165, tubeX1 = 760;
-    const tubeY0 = 60, tubeY1 = 220;
+    const tubeX0 = 170, tubeX1 = 770;
+    const tubeY0 = 90, tubeY1 = 270;
+    const tubeRadius = 42; // corner radius — every electrode sits outside this
 
-    // Cathode plate (left, inside tube)
-    const cathodeX = 205;
-    const plateW = 9;
-    const plateY0 = 78, plateY1 = 202;
+    // Cathode — curved photosensitive plate. tipX is its right (outer) edge:
+    // where photoelectrons leave from and where its lead exits.
+    const cathodeTipX = 258;
+    const cathodeY0 = 126, cathodeY1 = 246;
+    const cathodeDepth = 28;
+    const cathodeMidY = (cathodeY0 + cathodeY1) / 2;
 
-    // Anode plate (right, inside tube)
-    const anodeX = 720;
+    // Anode — slender collector rod, shorter than the cathode on purpose.
+    const anodeTipX = 692;
+    const anodeY0 = 148, anodeY1 = 224;
 
-    // Circuit rails / components
-    const wireY = 290;       // upper horizontal trunk wires
-    const circuitY = 380;    // bottom rail with components
-    const leftRailX = 130;
-    const rightRailX = 790;
+    const sourceY = cathodeMidY; // aim the beam at the plate's true centre
+
+    // Circuit — both leads exit the tube's FLAT bottom wall and drop straight
+    // down to one shared rail. No intermediate trunk/rail jogs: plate → wall
+    // seal → straight wire → component row → straight wire → wall seal →
+    // plate is a single readable loop, not a wire that starts or ends in
+    // open space.
+    const circuitY = 380;
+    const ammeterX = 350, ammeterR = 19;
+    const batteryX = 480;
+    const rheoX = 615;
+
 
     // ── Stat readouts (top corners) ──
     ctx.textAlign = 'left';
-    ctx.fillStyle = 'rgba(148,163,184,0.7)';
-    ctx.font = `700 11px ${canvasFont}`;
-    ctx.fillText('INCIDENT PHOTON', 24, 24);
+    ctx.fillStyle = 'rgba(203,213,225,0.85)';
+    ctx.font = `700 13px ${canvasFont}`;
+    ctx.fillText('INCIDENT PHOTON', 24, 26);
     ctx.fillStyle = '#f1f5f9';
-    ctx.font = `600 13px ${canvasFont}`;
-    ctx.fillText(`hν = ${formatEV(Ephoton)} eV`, 24, 42);
+    ctx.font = `700 17px ${canvasFont}`;
+    ctx.fillText(`hν = ${formatEV(Ephoton)} eV`, 24, 47);
 
     ctx.textAlign = 'right';
-    ctx.fillStyle = 'rgba(148,163,184,0.7)';
-    ctx.font = `700 11px ${canvasFont}`;
-    ctx.fillText('PHOTOELECTRON KE', W - 24, 24);
+    ctx.fillStyle = 'rgba(203,213,225,0.85)';
+    ctx.font = `700 13px ${canvasFont}`;
+    ctx.fillText('PHOTOELECTRON KE', W - 24, 26);
     ctx.fillStyle = ejects ? '#22d3ee' : '#f87171';
-    ctx.font = `600 13px ${canvasFont}`;
-    ctx.fillText(`KE = ${formatEV(KE)} eV`, W - 24, 42);
+    ctx.font = `700 17px ${canvasFont}`;
+    ctx.fillText(`KE = ${formatEV(KE)} eV`, W - 24, 47);
     ctx.textAlign = 'start';
 
     // ── Light source ──
@@ -340,22 +432,22 @@ export default function PhotoelectricSim() {
     // gets brighter with intensity, so the viewer sees the lamp "lighting up"
     // the quartz window.
     const beamA = 0.05 + iNorm * 0.11;
-    const beamGrad = ctx.createLinearGradient(sourceX + sourceR, 0, cathodeX, 0);
+    const beamGrad = ctx.createLinearGradient(sourceX + sourceR, 0, cathodeTipX, 0);
     beamGrad.addColorStop(0, `rgba(${pr}, ${pg}, ${pb}, ${beamA * 1.8})`);
     beamGrad.addColorStop(1, `rgba(${pr}, ${pg}, ${pb}, 0)`);
     ctx.fillStyle = beamGrad;
     ctx.beginPath();
     ctx.moveTo(sourceX + sourceR - 2, sourceY - 8);
-    ctx.lineTo(cathodeX - 2, sourceY - 34);
-    ctx.lineTo(cathodeX - 2, sourceY + 34);
+    ctx.lineTo(cathodeTipX - 2, sourceY - 34);
+    ctx.lineTo(cathodeTipX - 2, sourceY + 34);
     ctx.lineTo(sourceX + sourceR - 2, sourceY + 8);
     ctx.closePath();
     ctx.fill();
 
     ctx.fillStyle = 'rgba(203,213,225,0.85)';
-    ctx.font = `700 12px ${canvasFont}`;
+    ctx.font = `700 13px ${canvasFont}`;
     ctx.textAlign = 'center';
-    ctx.fillText('LIGHT SOURCE', sourceX, sourceY - sourceR - 14);
+    ctx.fillText('LIGHT SOURCE', sourceX, sourceY - sourceR - 16);
 
     // ── Evacuated tube ──
     // Subtle glass-like fill
@@ -364,25 +456,39 @@ export default function PhotoelectricSim() {
     tubeGrad.addColorStop(0.5, 'rgba(148,163,184,0.10)');
     tubeGrad.addColorStop(1, 'rgba(148,163,184,0.06)');
     ctx.fillStyle = tubeGrad;
-    roundedRect(ctx, tubeX0, tubeY0, tubeX1 - tubeX0, tubeY1 - tubeY0, 90);
+    roundedRect(ctx, tubeX0, tubeY0, tubeX1 - tubeX0, tubeY1 - tubeY0, tubeRadius);
     ctx.fill();
 
-    ctx.strokeStyle = 'rgba(148,163,184,0.4)';
-    ctx.lineWidth = 1.5;
-    roundedRect(ctx, tubeX0, tubeY0, tubeX1 - tubeX0, tubeY1 - tubeY0, 90);
+    // Glass specular highlight — a soft diagonal band near the top edge, the
+    // detail that actually reads as "glass" rather than a plain outline.
+    ctx.save();
+    roundedRect(ctx, tubeX0, tubeY0, tubeX1 - tubeX0, tubeY1 - tubeY0, tubeRadius);
+    ctx.clip();
+    const glassGrad = ctx.createLinearGradient(tubeX0, tubeY0, tubeX0, tubeY0 + 46);
+    glassGrad.addColorStop(0, 'rgba(255,255,255,0.10)');
+    glassGrad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = glassGrad;
+    ctx.fillRect(tubeX0, tubeY0, tubeX1 - tubeX0, 46);
+    ctx.restore();
+
+    ctx.strokeStyle = 'rgba(203,213,225,0.5)';
+    ctx.lineWidth = 1.8;
+    roundedRect(ctx, tubeX0, tubeY0, tubeX1 - tubeX0, tubeY1 - tubeY0, tubeRadius);
     ctx.stroke();
 
     // Tube label
-    ctx.fillStyle = 'rgba(203,213,225,0.85)';
-    ctx.font = `700 13px ${canvasFont}`;
+    ctx.fillStyle = '#f1f5f9';
+    ctx.font = `800 15px ${canvasFont}`;
     ctx.textAlign = 'center';
     ctx.fillText(
       'EVACUATED PHOTOELECTRIC CELL',
       (tubeX0 + tubeX1) / 2,
-      tubeY0 - 12
+      tubeY0 - 16
     );
 
-    // Quartz window marker (where light enters)
+    // Quartz window marker (where light enters) — sits on the tube's flat
+    // LEFT wall, well inside the corner radius, so it reads as a clean notch
+    // in the glass rather than crossing the curve.
     ctx.strokeStyle = 'rgba(148,163,184,0.5)';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
@@ -390,55 +496,39 @@ export default function PhotoelectricSim() {
     ctx.lineTo(tubeX0, sourceY + 24);
     ctx.stroke();
 
-    // ── Cathode plate ──
-    const plateGrad = ctx.createLinearGradient(cathodeX, 0, cathodeX + plateW, 0);
-    plateGrad.addColorStop(0, 'rgba(148,163,184,0.95)');
-    plateGrad.addColorStop(0.5, 'rgba(226,232,240,1)');
-    plateGrad.addColorStop(1, 'rgba(100,116,139,0.95)');
-    ctx.fillStyle = plateGrad;
-    ctx.fillRect(cathodeX, plateY0, plateW, plateY1 - plateY0);
-    ctx.strokeStyle = 'rgba(226,232,240,0.55)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(cathodeX + 0.5, plateY0 + 0.5, plateW - 1, plateY1 - plateY0 - 1);
+    // ── Cathode: curved photosensitive plate ──
+    drawCurvedCathode(ctx, cathodeTipX, cathodeY0, cathodeY1, cathodeDepth, 11);
 
-    // Cathode (-) tag
-    ctx.fillStyle = 'rgba(203,213,225,0.9)';
-    ctx.font = `800 12px ${canvasFont}`;
+    ctx.fillStyle = 'rgba(226,232,240,0.9)';
+    ctx.font = `800 13px ${canvasFont}`;
     ctx.textAlign = 'center';
-    ctx.fillText('CATHODE (−)', cathodeX + plateW / 2, plateY0 - 8);
+    ctx.fillText('CATHODE (−)', cathodeTipX, cathodeY0 - 12);
 
-    // Metal symbol + work function below the cathode
+    // Metal identity — a compact nameplate beside the plate rather than
+    // stacked below it, so it never competes with the lead wire exiting the
+    // bottom tip.
+    ctx.textAlign = 'left';
     ctx.fillStyle = '#f1f5f9';
-    ctx.font = `800 22px ${canvasFont}`;
-    ctx.fillText(metal.symbol, cathodeX + plateW / 2, plateY1 + 24);
+    ctx.font = `800 15px ${canvasFont}`;
+    ctx.fillText(metal.symbol, cathodeTipX + 70, tubeY0 + 26);
     ctx.fillStyle = 'rgba(251,191,36,0.95)';
     ctx.font = `700 12px ${canvasFont}`;
-    ctx.fillText(`W₀ = ${metal.W0.toFixed(2)} eV`, cathodeX + plateW / 2, plateY1 + 40);
+    ctx.fillText(`W₀ = ${metal.W0.toFixed(2)} eV`, cathodeTipX + 70, tubeY0 + 43);
 
-    // ── Anode plate ──
-    const anodeGrad = ctx.createLinearGradient(anodeX, 0, anodeX + plateW, 0);
-    anodeGrad.addColorStop(0, 'rgba(148,163,184,0.95)');
-    anodeGrad.addColorStop(0.5, 'rgba(226,232,240,1)');
-    anodeGrad.addColorStop(1, 'rgba(100,116,139,0.95)');
-    ctx.fillStyle = anodeGrad;
-    ctx.fillRect(anodeX, plateY0, plateW, plateY1 - plateY0);
-    ctx.strokeStyle = 'rgba(226,232,240,0.55)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(anodeX + 0.5, plateY0 + 0.5, plateW - 1, plateY1 - plateY0 - 1);
+    // ── Anode: slender collector rod ──
+    drawAnodeRod(ctx, anodeTipX, anodeY0, anodeY1, 6);
 
-    ctx.fillStyle = 'rgba(203,213,225,0.9)';
-    ctx.font = `800 12px ${canvasFont}`;
-    ctx.fillText('ANODE (+)', anodeX + plateW / 2, plateY0 - 8);
-    ctx.fillStyle = '#f1f5f9';
-    ctx.font = `800 22px ${canvasFont}`;
-    ctx.fillText('A', anodeX + plateW / 2, plateY1 + 24);
+    ctx.fillStyle = 'rgba(226,232,240,0.9)';
+    ctx.font = `800 13px ${canvasFont}`;
+    ctx.textAlign = 'center';
+    ctx.fillText('ANODE (+)', anodeTipX, anodeY0 - 12);
 
     // ── Photons (light source → cathode) ──
     // Round photon particles travelling rightward in a slightly diverging cone
     // from the bulb to the quartz window. Count scales with intensity; each
     // photon's colour is driven by ν. A small tail streak hints at motion.
     const photonStartX = sourceX + sourceR - 1;
-    const photonEndX = cathodeX;
+    const photonEndX = cathodeTipX;
     const flightDist = photonEndX - photonStartX;
 
     const photonCount = 6 + Math.round(intensity * 3.4); // ~9 → ~40
@@ -487,7 +577,7 @@ export default function PhotoelectricSim() {
     // ── Ejected electrons (cathode → anode) ──
     if (ejects) {
       const electronCount = 3 + Math.round(intensity * 1.6);
-      const flightRange = anodeX - (cathodeX + plateW);
+      const flightRange = anodeTipX - cathodeTipX;
       // Speed ∝ √KE, with a minimum so electrons stay perceptible at low KE
       const speedFactor = Math.sqrt(KE) * 110 + 80;
 
@@ -495,7 +585,7 @@ export default function PhotoelectricSim() {
         const lane = (mulberry32(9000 + i * 137)() - 0.5) * 110;
         const phaseOffset = mulberry32(17000 + i * 53)() * 1000;
         const localT = (time * speedFactor + phaseOffset) % flightRange;
-        const ex = cathodeX + plateW + localT;
+        const ex = cathodeTipX + localT;
         const ey = sourceY + lane;
 
         // Fade in just after the cathode and out just before the anode
@@ -523,56 +613,39 @@ export default function PhotoelectricSim() {
         ctx.stroke();
       }
     } else {
-      // "No ejection" badge inside the tube near the cathode
+      // "No ejection" badge — centred in the gap between the electrodes,
+      // exactly where a student's eye goes looking for the (absent) crossing.
       ctx.fillStyle = 'rgba(248,113,113,0.12)';
-      const bx = cathodeX + plateW + 18;
-      const by = plateY0 + 8;
-      ctx.fillRect(bx, by, 184, 24);
+      const badgeW = 220, badgeH = 30;
+      const bx = (cathodeTipX + anodeTipX) / 2 - badgeW / 2;
+      const by = cathodeMidY - badgeH / 2;
+      ctx.fillRect(bx, by, badgeW, badgeH);
       ctx.strokeStyle = 'rgba(248,113,113,0.55)';
       ctx.lineWidth = 1;
-      ctx.strokeRect(bx + 0.5, by + 0.5, 183, 23);
+      ctx.strokeRect(bx + 0.5, by + 0.5, badgeW - 1, badgeH - 1);
       ctx.fillStyle = 'rgba(252,165,165,0.95)';
-      ctx.font = `700 11px ${canvasFont}`;
-      ctx.textAlign = 'left';
-      ctx.fillText('NO EJECTION  hν < W₀', bx + 10, by + 16);
+      ctx.font = `700 13px ${canvasFont}`;
+      ctx.textAlign = 'center';
+      ctx.fillText('NO EJECTION  ·  hν < W₀', bx + badgeW / 2, by + badgeH / 2 + 5);
     }
 
     // ── External circuit ──
-    const wireColor = 'rgba(148,163,184,0.55)';
-    const wireLW = 1.8;
-    ctx.strokeStyle = wireColor;
-    ctx.lineWidth = wireLW;
+    // Both leads run straight from their electrode's tip, through a seal on
+    // the tube's flat bottom wall, down to ONE shared rail — a plain
+    // rectangle: plate → wall → wire → components → wire → wall → plate.
+    // Nothing starts or ends in open space.
+    drawLead(ctx, cathodeTipX, cathodeY1, tubeY1, circuitY);
+    drawLead(ctx, anodeTipX, anodeY1, tubeY1, circuitY);
 
-    // Cathode side wire: plate bottom → down → outward → down to bottom rail
-    // Start below the Cs/W₀ label stack so the wire doesn't cross the text.
-    const cathodeWireTopY = plateY1 + 52;
-    const cathodeBaseX = cathodeX + plateW / 2;
+    ctx.strokeStyle = 'rgba(148,163,184,0.6)';
+    ctx.lineWidth = 1.8;
     ctx.beginPath();
-    ctx.moveTo(cathodeBaseX, cathodeWireTopY);
-    ctx.lineTo(cathodeBaseX, wireY);
-    ctx.lineTo(leftRailX, wireY);
-    ctx.lineTo(leftRailX, circuitY);
-    ctx.stroke();
-
-    // Anode side wire — start just below the big "A" label
-    const anodeWireTopY = plateY1 + 36;
-    const anodeBaseX = anodeX + plateW / 2;
-    ctx.beginPath();
-    ctx.moveTo(anodeBaseX, anodeWireTopY);
-    ctx.lineTo(anodeBaseX, wireY);
-    ctx.lineTo(rightRailX, wireY);
-    ctx.lineTo(rightRailX, circuitY);
-    ctx.stroke();
-
-    // Bottom rail
-    ctx.beginPath();
-    ctx.moveTo(leftRailX, circuitY);
-    ctx.lineTo(rightRailX, circuitY);
+    ctx.moveTo(cathodeTipX, circuitY);
+    ctx.lineTo(anodeTipX, circuitY);
     ctx.stroke();
 
     // ── Components on the bottom rail ──
     // Ammeter (A)
-    const ammeterX = 290, ammeterR = 19;
     ctx.beginPath();
     ctx.fillStyle = '#0b0d1a';
     ctx.arc(ammeterX, circuitY, ammeterR, 0, Math.PI * 2);
@@ -589,46 +662,41 @@ export default function PhotoelectricSim() {
     ctx.fillText('A', ammeterX, circuitY + 1);
     ctx.textBaseline = 'alphabetic';
     ctx.fillStyle = 'rgba(203,213,225,0.85)';
-    ctx.font = `700 11px ${canvasFont}`;
-    ctx.fillText('AMMETER', ammeterX, circuitY + ammeterR + 16);
+    ctx.font = `700 13px ${canvasFont}`;
+    ctx.fillText('AMMETER', ammeterX, circuitY + ammeterR + 18);
 
-    // Live photo-current readout next to the ammeter
-    ctx.fillStyle = ejects ? 'rgba(34,211,238,0.95)' : 'rgba(148,163,184,0.45)';
-    ctx.font = `700 12px ${canvasFont}`;
-    ctx.textAlign = 'left';
+    // Live photo-current readout — sits ABOVE the ammeter, clear of the
+    // circuitY line the animated dashes travel along.
+    ctx.fillStyle = ejects ? 'rgba(34,211,238,0.95)' : 'rgba(148,163,184,0.5)';
+    ctx.font = `700 14px ${canvasFont}`;
+    ctx.textAlign = 'center';
     ctx.fillText(
       `i = ${photoCurrent.toFixed(2)} μA`,
-      ammeterX + ammeterR + 8,
-      circuitY + 4
+      ammeterX,
+      circuitY - ammeterR - 12
     );
 
     // Battery
-    const batteryX = 470;
     drawBattery(ctx, batteryX, circuitY);
     ctx.fillStyle = 'rgba(203,213,225,0.85)';
-    ctx.font = `700 11px ${canvasFont}`;
+    ctx.font = `700 13px ${canvasFont}`;
     ctx.textAlign = 'center';
-    ctx.fillText('BATTERY', batteryX, circuitY + 24);
+    ctx.fillText('BATTERY', batteryX, circuitY + 26);
 
     // Rheostat
-    const rheoX = 630;
     drawRheostat(ctx, rheoX, circuitY);
     ctx.fillStyle = 'rgba(203,213,225,0.85)';
-    ctx.font = `700 11px ${canvasFont}`;
+    ctx.font = `700 13px ${canvasFont}`;
     ctx.textAlign = 'center';
-    ctx.fillText('RHEOSTAT', rheoX, circuitY + 24);
+    ctx.fillText('RHEOSTAT', rheoX, circuitY + 26);
 
     // ── Animated photo-current flow ──
+    // Same rectangle the static wires trace, split into no-draw gaps around
+    // each component so the dashes appear to enter and exit cleanly.
     if (ejects) {
-      // Polyline path along the external circuit, going from cathode wire down,
-      // along the bottom rail through ammeter, around the battery, and back up
-      // to the anode wire. We split around components with no-draw gaps so the
-      // dashes appear to enter and exit each instrument cleanly.
       const pathPart1: Array<[number, number]> = [
-        [cathodeBaseX, cathodeWireTopY],
-        [cathodeBaseX, wireY],
-        [leftRailX, wireY],
-        [leftRailX, circuitY],
+        [cathodeTipX, cathodeY1],
+        [cathodeTipX, circuitY],
         [ammeterX - ammeterR - 1, circuitY],
       ];
       const pathPart2: Array<[number, number]> = [
@@ -641,10 +709,8 @@ export default function PhotoelectricSim() {
       ];
       const pathPart4: Array<[number, number]> = [
         [rheoX + 24, circuitY],
-        [rightRailX, circuitY],
-        [rightRailX, wireY],
-        [anodeBaseX, wireY],
-        [anodeBaseX, anodeWireTopY],
+        [anodeTipX, circuitY],
+        [anodeTipX, anodeY1],
       ];
       drawCurrentDashes(ctx, pathPart1, time, intensity);
       drawCurrentDashes(ctx, pathPart2, time, intensity);
@@ -657,26 +723,39 @@ export default function PhotoelectricSim() {
     pr, pg, pb, photonCss, photonGlow, photoCurrent,
   ]);
 
+  // useCanvasSize captures its callback once (its effect deps are [ref]), so
+  // handing it drawStage directly would repaint a STALE frame on any window
+  // resize. Route resize repaints through a ref that always holds the
+  // current closure — same pattern as the two graphs below.
+  const drawStageRef = useRef<() => void>(() => {});
+  useEffect(() => { drawStageRef.current = drawStage; }, [drawStage]);
+  const onStageResize = useCallback(() => { drawStageRef.current(); }, []);
+  const stageDims = useCanvasSize(stageRef, onStageResize);
+  useEffect(() => { drawStage(); }, [drawStage]);
+
   // ── Graph: KE vs ν ─────────────────────────────────────────────
-  useEffect(() => {
+  // Real CSS-pixel rendering (see useCanvasSize below) — the previous fixed
+  // 430×230 canvas bitmap was stretched by the browser to fill its column,
+  // which is what made every axis label and tick both blurry and small.
+  const drawGraphNu = useCallback(() => {
     const c = graphNuRef.current;
-    if (!c) return;
-    const ctx = c.getContext('2d');
-    if (!ctx) return;
-    const W = c.width;
-    const H = c.height;
+    const ctx = c?.getContext('2d');
+    if (!c || !ctx) return;
+    const { w: W, h: H } = graphNuDims.current;
+    if (W < 10 || H < 10) return;
     ctx.clearRect(0, 0, W, H);
 
-    const padL = 46;
-    const padR = 18;
-    const padT = 32;
-    const padB = 38;
+    const padL = 56;
+    const padR = 20;
+    const padT = 40;
+    const padB = 44;
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
+    if (plotW < 20 || plotH < 20) return;
 
     // Axes
-    ctx.strokeStyle = 'rgba(148,163,184,0.45)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(203,213,225,0.5)';
+    ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(padL, padT);
     ctx.lineTo(padL, padT + plotH);
@@ -684,10 +763,10 @@ export default function PhotoelectricSim() {
     ctx.stroke();
 
     // Title
-    ctx.fillStyle = 'rgba(226,232,240,0.9)';
-    ctx.font = `700 12px ${canvasFont}`;
+    ctx.fillStyle = '#f1f5f9';
+    ctx.font = `800 15px ${canvasFont}`;
     ctx.textAlign = 'left';
-    ctx.fillText('KE vs FREQUENCY (ν)', padL, 18);
+    ctx.fillText('KE vs FREQUENCY (ν)', padL, 22);
 
     // Domain bounds
     const KEmaxDomain = Math.max(0.5, photonEnergyEV(NU_MAX) - metal.W0);
@@ -726,9 +805,9 @@ export default function PhotoelectricSim() {
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = 'rgba(251,191,36,0.95)';
-      ctx.font = `700 10px ${canvasFont}`;
+      ctx.font = `800 13px ${canvasFont}`;
       ctx.textAlign = 'center';
-      ctx.fillText('ν₀', thrX, padT - 4);
+      ctx.fillText('ν₀', thrX, padT - 6);
     }
 
     // KE = hν − W₀ curve
@@ -762,55 +841,61 @@ export default function PhotoelectricSim() {
     ctx.shadowBlur = 0;
 
     // Axis labels
-    ctx.fillStyle = 'rgba(148,163,184,0.85)';
-    ctx.font = `500 11px ${canvasFont}`;
+    ctx.fillStyle = 'rgba(226,232,240,0.9)';
+    ctx.font = `700 13px ${canvasFont}`;
     ctx.textAlign = 'center';
-    ctx.fillText('ν (× 10¹⁴ Hz)', padL + plotW / 2, H - 8);
+    ctx.fillText('ν (× 10¹⁴ Hz)', padL + plotW / 2, H - 10);
     ctx.save();
-    ctx.translate(14, padT + plotH / 2);
+    ctx.translate(18, padT + plotH / 2);
     ctx.rotate(-Math.PI / 2);
     ctx.fillText('KE (eV)', 0, 0);
     ctx.restore();
 
     // Y ticks
     ctx.textAlign = 'right';
-    ctx.fillStyle = 'rgba(148,163,184,0.7)';
-    ctx.font = `400 10px ${canvasFont}`;
+    ctx.fillStyle = 'rgba(203,213,225,0.85)';
+    ctx.font = `600 12px ${canvasFont}`;
     for (let i = 0; i <= 5; i++) {
       const val = (KEmaxDomain * i) / 5;
       const y = padT + plotH - (plotH * i) / 5;
-      ctx.fillText(val.toFixed(1), padL - 6, y + 3);
+      ctx.fillText(val.toFixed(1), padL - 8, y + 4);
     }
     // X ticks
     ctx.textAlign = 'center';
     for (let i = 0; i <= 5; i++) {
       const val = NU_MIN + ((NU_MAX - NU_MIN) * i) / 5;
       const x = padL + (plotW * i) / 5;
-      ctx.fillText(val.toFixed(0), x, padT + plotH + 14);
+      ctx.fillText(val.toFixed(0), x, padT + plotH + 18);
     }
     ctx.textAlign = 'start';
   }, [nu10_14, metalIdx, metal.W0, thresholdNu, KE, canvasFont]);
 
+  const drawGraphNuRef = useRef<() => void>(() => {});
+  useEffect(() => { drawGraphNuRef.current = drawGraphNu; }, [drawGraphNu]);
+  const onGraphNuResize = useCallback(() => { drawGraphNuRef.current(); }, []);
+  const graphNuDims = useCanvasSize(graphNuRef, onGraphNuResize);
+  useEffect(() => { drawGraphNu(); }, [drawGraphNu]);
+
   // ── Graph: KE vs Intensity ──────────────────────────────────────
-  useEffect(() => {
+  const drawGraphI = useCallback(() => {
     const c = graphIRef.current;
-    if (!c) return;
-    const ctx = c.getContext('2d');
-    if (!ctx) return;
-    const W = c.width;
-    const H = c.height;
+    const ctx = c?.getContext('2d');
+    if (!c || !ctx) return;
+    const { w: W, h: H } = graphIDims.current;
+    if (W < 10 || H < 10) return;
     ctx.clearRect(0, 0, W, H);
 
-    const padL = 46;
-    const padR = 18;
-    const padT = 32;
-    const padB = 38;
+    const padL = 56;
+    const padR = 20;
+    const padT = 40;
+    const padB = 44;
     const plotW = W - padL - padR;
     const plotH = H - padT - padB;
+    if (plotW < 20 || plotH < 20) return;
 
     // Axes
-    ctx.strokeStyle = 'rgba(148,163,184,0.45)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(203,213,225,0.5)';
+    ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(padL, padT);
     ctx.lineTo(padL, padT + plotH);
@@ -818,10 +903,10 @@ export default function PhotoelectricSim() {
     ctx.stroke();
 
     // Title
-    ctx.fillStyle = 'rgba(226,232,240,0.9)';
-    ctx.font = `700 12px ${canvasFont}`;
+    ctx.fillStyle = '#f1f5f9';
+    ctx.font = `800 15px ${canvasFont}`;
     ctx.textAlign = 'left';
-    ctx.fillText('KE vs INTENSITY (I)', padL, 18);
+    ctx.fillText('KE vs INTENSITY (I)', padL, 22);
 
     // Same KE scale as the other graph
     const KEmaxDomain = Math.max(0.5, photonEnergyEV(NU_MAX) - metal.W0);
@@ -870,55 +955,63 @@ export default function PhotoelectricSim() {
     ctx.shadowBlur = 0;
 
     // Why-it's-flat callout
-    ctx.fillStyle = 'rgba(148,163,184,0.65)';
-    ctx.font = `500 10px ${canvasFont}`;
     ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(226,232,240,0.9)';
+    ctx.font = `700 13px ${canvasFont}`;
     ctx.fillText(
       'KE is independent of intensity',
       padL + plotW / 2,
-      padT + plotH / 2 - 6
+      padT + plotH / 2 - 8
     );
+    ctx.fillStyle = 'rgba(148,163,184,0.85)';
+    ctx.font = `500 12px ${canvasFont}`;
     ctx.fillText(
       '(more photons → more electrons, same KE each)',
       padL + plotW / 2,
-      padT + plotH / 2 + 9
+      padT + plotH / 2 + 10
     );
 
     // Axis labels
-    ctx.fillStyle = 'rgba(148,163,184,0.85)';
-    ctx.font = `500 11px ${canvasFont}`;
+    ctx.fillStyle = 'rgba(226,232,240,0.9)';
+    ctx.font = `700 13px ${canvasFont}`;
     ctx.textAlign = 'center';
-    ctx.fillText('I (relative)', padL + plotW / 2, H - 8);
+    ctx.fillText('I (relative)', padL + plotW / 2, H - 10);
     ctx.save();
-    ctx.translate(14, padT + plotH / 2);
+    ctx.translate(18, padT + plotH / 2);
     ctx.rotate(-Math.PI / 2);
     ctx.fillText('KE (eV)', 0, 0);
     ctx.restore();
 
     // Y ticks
     ctx.textAlign = 'right';
-    ctx.fillStyle = 'rgba(148,163,184,0.7)';
-    ctx.font = `400 10px ${canvasFont}`;
+    ctx.fillStyle = 'rgba(203,213,225,0.85)';
+    ctx.font = `600 12px ${canvasFont}`;
     for (let i = 0; i <= 5; i++) {
       const val = (KEmaxDomain * i) / 5;
       const y = padT + plotH - (plotH * i) / 5;
-      ctx.fillText(val.toFixed(1), padL - 6, y + 3);
+      ctx.fillText(val.toFixed(1), padL - 8, y + 4);
     }
     // X ticks
     ctx.textAlign = 'center';
     for (let i = 0; i <= 5; i++) {
       const val = 1 + (9 * i) / 5;
       const x = padL + (plotW * i) / 5;
-      ctx.fillText(val.toFixed(0), x, padT + plotH + 14);
+      ctx.fillText(val.toFixed(0), x, padT + plotH + 18);
     }
     ctx.textAlign = 'start';
   }, [intensity, nu10_14, metalIdx, metal.W0, KE, canvasFont]);
+
+  const drawGraphIRef = useRef<() => void>(() => {});
+  useEffect(() => { drawGraphIRef.current = drawGraphI; }, [drawGraphI]);
+  const onGraphIResize = useCallback(() => { drawGraphIRef.current(); }, []);
+  const graphIDims = useCanvasSize(graphIRef, onGraphIResize);
+  useEffect(() => { drawGraphI(); }, [drawGraphI]);
 
   return (
     <div className="font-sans my-6">
       {/* Metal selector */}
       <div className="mb-4">
-        <div className="text-slate-300 text-[11px] font-bold tracking-widest uppercase mb-2">
+        <div className="text-slate-300 text-xs font-bold tracking-widest uppercase mb-2">
           Cathode Metal
         </div>
         <div className="flex flex-wrap gap-2">
@@ -928,14 +1021,14 @@ export default function PhotoelectricSim() {
               <button
                 key={m.symbol}
                 onClick={() => setMetalIdx(i)}
-                className={`font-sans px-3 py-2 rounded-xl border transition-all text-[11px] font-bold tracking-wide ${
+                className={`font-sans px-3 py-2 rounded-xl border transition-all text-sm font-bold tracking-wide ${
                   active
                     ? 'bg-cyan-500/15 border-cyan-400/60 text-cyan-200'
                     : 'bg-white/[0.02] border-white/10 text-slate-400 hover:text-slate-200 hover:border-white/20'
                 }`}
                 title={m.name}
               >
-                <span className="text-[14px] font-extrabold mr-1">{m.symbol}</span>
+                <span className="text-base font-extrabold mr-1">{m.symbol}</span>
                 <span className="opacity-70">{m.W0.toFixed(2)} eV</span>
               </button>
             );
@@ -943,7 +1036,9 @@ export default function PhotoelectricSim() {
         </div>
       </div>
 
-      {/* Main stage */}
+      {/* Main stage — a fixed aspect ratio so the 900×460 logical diagram
+          above always scales uniformly (see drawStage), never stretched
+          non-uniformly by the column width. */}
       <div
         className="relative rounded-2xl overflow-hidden"
         style={{
@@ -953,9 +1048,8 @@ export default function PhotoelectricSim() {
       >
         <canvas
           ref={stageRef}
-          width={CANVAS_W}
-          height={CANVAS_H}
-          className="w-full h-auto block"
+          className="w-full block"
+          style={{ aspectRatio: `${CANVAS_W} / ${CANVAS_H}` }}
         />
       </div>
 
@@ -963,10 +1057,10 @@ export default function PhotoelectricSim() {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <span className="text-slate-300 text-[11px] font-bold tracking-widest uppercase">
+            <span className="text-slate-300 text-xs font-bold tracking-widest uppercase">
               Frequency (ν)
             </span>
-            <span className="tabular-nums text-[13px] font-bold" style={{ color: photonCss }}>
+            <span className="tabular-nums text-base font-bold" style={{ color: photonCss }}>
               {formatFreq(nu10_14)}
             </span>
           </div>
@@ -993,7 +1087,7 @@ export default function PhotoelectricSim() {
               accentColor: photonCss,
             }}
           />
-          <div className="flex justify-between text-[10px] text-slate-400 mt-2 tracking-wide uppercase font-semibold">
+          <div className="flex justify-between text-sm text-slate-400 mt-2.5 tracking-wide uppercase font-semibold">
             <span>Low ν</span>
             <span className="text-amber-300">
               ν₀ = {thresholdNu.toFixed(2)} × 10¹⁴ Hz
@@ -1004,10 +1098,10 @@ export default function PhotoelectricSim() {
 
         <div>
           <div className="flex items-baseline justify-between mb-2">
-            <span className="text-slate-300 text-[11px] font-bold tracking-widest uppercase">
+            <span className="text-slate-300 text-xs font-bold tracking-widest uppercase">
               Intensity (I)
             </span>
-            <span className="text-cyan-300 tabular-nums text-[13px] font-bold">
+            <span className="text-cyan-300 tabular-nums text-base font-bold">
               {intensity}
             </span>
           </div>
@@ -1020,7 +1114,7 @@ export default function PhotoelectricSim() {
             onChange={e => setIntensity(parseInt(e.target.value))}
             className="w-full h-2 bg-slate-800 rounded-full appearance-none cursor-pointer accent-cyan-400"
           />
-          <div className="flex justify-between text-[10px] text-slate-400 mt-2 tracking-wide uppercase font-semibold">
+          <div className="flex justify-between text-sm text-slate-400 mt-2.5 tracking-wide uppercase font-semibold">
             <span>Dim</span>
             <span>More photons, same energy each</span>
             <span>Bright</span>
@@ -1037,52 +1131,53 @@ export default function PhotoelectricSim() {
         }}
       >
         <div>
-          <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
+          <div className="text-xs font-bold tracking-widest uppercase text-slate-300">
             Photon energy
           </div>
-          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-base text-slate-100 mt-1.5">
             hν = <span className="font-bold" style={{ color: photonCss }}>{formatEV(Ephoton)}</span> eV
           </div>
         </div>
         <div>
-          <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
+          <div className="text-xs font-bold tracking-widest uppercase text-slate-300">
             Work function
           </div>
-          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-base text-slate-100 mt-1.5">
             W₀ = <span className="text-amber-300 font-bold">{metal.W0.toFixed(2)}</span> eV
           </div>
         </div>
         <div>
-          <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
+          <div className="text-xs font-bold tracking-widest uppercase text-slate-300">
             Kinetic energy
           </div>
-          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-base text-slate-100 mt-1.5">
             KE = <span className={ejects ? 'text-cyan-300 font-bold' : 'text-rose-300 font-bold'}>
               {formatEV(KE)}
             </span> eV
           </div>
         </div>
         <div>
-          <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
+          <div className="text-xs font-bold tracking-widest uppercase text-slate-300">
             Photo-current
           </div>
-          <div className="tabular-nums text-[15px] text-slate-100 mt-1">
+          <div className="tabular-nums text-base text-slate-100 mt-1.5">
             i = <span className={ejects ? 'text-cyan-300 font-bold' : 'text-slate-500 font-bold'}>
               {photoCurrent.toFixed(2)}
             </span> μA
           </div>
         </div>
         <div>
-          <div className="text-[10px] font-bold tracking-widest uppercase text-slate-300">
+          <div className="text-xs font-bold tracking-widest uppercase text-slate-300">
             Status
           </div>
-          <div className={`tabular-nums text-[12px] mt-1 font-bold ${ejects ? 'text-emerald-300' : 'text-rose-300'}`}>
+          <div className={`tabular-nums text-sm mt-1.5 font-bold ${ejects ? 'text-emerald-300' : 'text-rose-300'}`}>
             {ejects ? 'ELECTRONS EJECTED' : 'BELOW THRESHOLD'}
           </div>
         </div>
       </div>
 
-      {/* Two live graphs */}
+      {/* Two live graphs — fixed CSS height, real-width rendering (see
+          drawGraphNu / drawGraphI): no more fixed-bitmap stretching. */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div
           className="rounded-2xl overflow-hidden"
@@ -1093,9 +1188,8 @@ export default function PhotoelectricSim() {
         >
           <canvas
             ref={graphNuRef}
-            width={GRAPH_W}
-            height={GRAPH_H}
-            className="w-full h-auto block"
+            className="w-full block"
+            style={{ height: GRAPH_H }}
           />
         </div>
         <div
@@ -1107,15 +1201,14 @@ export default function PhotoelectricSim() {
         >
           <canvas
             ref={graphIRef}
-            width={GRAPH_W}
-            height={GRAPH_H}
-            className="w-full h-auto block"
+            className="w-full block"
+            style={{ height: GRAPH_H }}
           />
         </div>
       </div>
 
       {/* Takeaway */}
-      <div className="mt-4 text-[12px] text-slate-300 leading-relaxed">
+      <div className="mt-5 text-base text-slate-300 leading-relaxed">
         Einstein&apos;s equation:{' '}
         <span className="tabular-nums text-slate-100 font-semibold">KE = hν − W₀</span>. Try it
         yourself — raising <span className="text-cyan-300 font-semibold">intensity</span> fires

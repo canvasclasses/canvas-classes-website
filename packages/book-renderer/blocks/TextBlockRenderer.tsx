@@ -51,18 +51,21 @@ const components: Components = {
     </h3>
   ),
   strong: ({ children }) => (
-    <strong className="font-semibold text-amber-200/80">{children}</strong>
+    // Muted warm tan, not saturated amber — pops off white/82 body text without
+    // shouting when several bold words land in one line (founder feedback,
+    // 2026-07-24: amber-200/80 stayed too bright/fatiguing for extended reading).
+    <strong className="font-semibold" style={{ color: '#dcceb6' }}>{children}</strong>
   ),
   em: ({ children }) => (
-    <em className="italic text-white/75">{children}</em>
+    <em className="italic text-white/82">{children}</em>
   ),
   ul: ({ children }) => (
-    <ul className="my-5 pl-5 space-y-2.5 list-disc marker:text-white/30">
+    <ul className="my-5 pl-5 space-y-2.5 list-disc marker:text-white/45">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="my-5 pl-5 space-y-2.5 list-decimal marker:text-white/40">
+    <ol className="my-5 pl-5 space-y-2.5 list-decimal marker:text-white/45">
       {children}
     </ol>
   ),
@@ -87,12 +90,12 @@ const components: Components = {
     </tr>
   ),
   th: ({ children }) => (
-    <th className="px-5 py-3.5 text-left text-[11px] font-semibold uppercase tracking-[0.08em] text-white/55 whitespace-nowrap">
+    <th className="px-5 py-3.5 text-left text-[11px] font-semibold uppercase tracking-[0.08em] text-white/45 whitespace-nowrap">
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className="px-5 py-3.5 text-[17px] text-white/82 align-middle leading-[1.55] first:font-semibold first:text-white/90">
+    <td className="px-5 py-3.5 text-[17px] text-white/82 align-middle leading-[1.55] first:font-semibold first:text-white/85">
       {children}
     </td>
   ),

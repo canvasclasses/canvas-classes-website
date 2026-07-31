@@ -97,7 +97,7 @@ export function buildResponsiveTableComponents(allHeaders: string[][]) {
       );
     },
     th: ({ children }: { children?: ReactNode }) => (
-      <th className="px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-white/55 whitespace-nowrap">
+      <th className="px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-white/45 whitespace-nowrap">
         {children}
       </th>
     ),
@@ -114,7 +114,7 @@ export function buildResponsiveTableComponents(allHeaders: string[][]) {
           {/* First column reads as the row's identity (matches TextBlockRenderer's
               table styling) — bold on mobile always, and on desktop only since
               sm:font-normal below cancels it back for columns 2+ there too. */}
-          <span className={`text-right sm:text-left ${isFirstCol ? 'font-semibold text-white/90' : 'sm:font-normal'}`}>
+          <span className={`text-right sm:text-left ${isFirstCol ? 'font-semibold text-white/85' : 'sm:font-normal'}`}>
             {children}
           </span>
         </td>

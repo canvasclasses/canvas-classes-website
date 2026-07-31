@@ -185,16 +185,16 @@ export default function GuidedPracticeRenderer({ block }: { block: GuidedPractic
             {KIND_LABEL[block.practice_kind]}
           </span>
           {totalSec > 0 && (
-            <span className="text-[10px] text-white/25 font-medium uppercase tracking-widest">
+            <span className="text-[10px] text-white/45 font-medium uppercase tracking-widest">
               {formatDuration(totalSec)}
             </span>
           )}
         </div>
 
-        <h3 className="text-lg font-bold text-white/90 mb-1">{block.title}</h3>
+        <h3 className="text-lg font-bold text-white/85 mb-1">{block.title}</h3>
         {block.intro && mode === 'idle' && (
           <div className="mb-4">
-            <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/55">
+            <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/60">
               {block.intro}
             </InlineMarkdown>
           </div>
@@ -206,7 +206,7 @@ export default function GuidedPracticeRenderer({ block }: { block: GuidedPractic
             {block.breath_pattern && block.steps.length > 0 && (
               <ul className="mb-4 flex flex-col gap-1.5">
                 {block.steps.map(s => (
-                  <li key={s.id} className="text-sm text-white/55 flex gap-2">
+                  <li key={s.id} className="text-sm text-white/60 flex gap-2">
                     <span style={{ color: ACCENT_STRONG }}>•</span>
                     <InlineMarkdown paragraphClassName="leading-relaxed">{s.instruction}</InlineMarkdown>
                   </li>
@@ -225,7 +225,7 @@ export default function GuidedPracticeRenderer({ block }: { block: GuidedPractic
                 Begin
               </button>
               {completions > 0 && (
-                <span className="text-xs text-white/30">
+                <span className="text-xs text-white/45">
                   You&rsquo;ve done this {completions} {completions === 1 ? 'time' : 'times'}
                 </span>
               )}
@@ -298,7 +298,7 @@ export default function GuidedPracticeRenderer({ block }: { block: GuidedPractic
                 );
               })}
             </div>
-            <span className="mt-3 text-[10px] text-white/25 uppercase tracking-widest tabular-nums">
+            <span className="mt-3 text-[10px] text-white/45 uppercase tracking-widest tabular-nums">
               Round {cycle + 1} of {block.breath_pattern.cycles}
             </span>
           </div>
@@ -309,11 +309,11 @@ export default function GuidedPracticeRenderer({ block }: { block: GuidedPractic
             straight countdown rather than a cycle), a plain Next button otherwise. */}
         {mode === 'running' && !block.breath_pattern && currentStep && (
           <div className="py-2">
-            <span className="text-[10px] text-white/25 font-medium uppercase tracking-widest">
+            <span className="text-[10px] text-white/45 font-medium uppercase tracking-widest">
               Step {stepIdx + 1} of {block.steps.length}
             </span>
             <div className="mt-2 mb-4">
-              <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/90 font-medium">
+              <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/85 font-medium">
                 {currentStep.instruction}
               </InlineMarkdown>
             </div>
@@ -374,7 +374,7 @@ export default function GuidedPracticeRenderer({ block }: { block: GuidedPractic
             </p>
             {block.completion_note && (
               <div className="mb-3">
-                <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/65">
+                <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/60">
                   {block.completion_note}
                 </InlineMarkdown>
               </div>
@@ -387,7 +387,7 @@ export default function GuidedPracticeRenderer({ block }: { block: GuidedPractic
               >
                 Practice again
               </button>
-              <span className="text-xs text-white/30">
+              <span className="text-xs text-white/45">
                 Done {completions} {completions === 1 ? 'time' : 'times'} on this device
               </span>
             </div>

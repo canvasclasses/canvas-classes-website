@@ -125,14 +125,32 @@ export default function RutherfordCollapseSim() {
         ctx.textAlign = 'left';
         ctx.textBaseline = 'alphabetic';
         ctx.fillStyle = 'rgba(52,211,153,0.90)';
-        ctx.font = 'bold 12px system-ui, sans-serif';
-        ctx.fillText('Electrostatic Force', 18, 24);
-        ctx.fillStyle = 'rgba(148,163,184,0.75)';
-        ctx.font = '11px system-ui, sans-serif';
-        ctx.fillText('acts as Centripetal Force', 18, 40);
+        ctx.font = 'bold 13px system-ui, sans-serif';
+        ctx.fillText('Electrostatic Force', 18, 25);
+        ctx.fillStyle = 'rgba(148,163,184,0.80)';
+        ctx.font = '12px system-ui, sans-serif';
+        ctx.fillText('acts as Centripetal Force', 18, 42);
         ctx.fillStyle = 'rgba(229,181,103,0.95)';
-        ctx.font = 'italic bold 13px Georgia, "Times New Roman", serif';
-        ctx.fillText('ke² / r²  =  mv² / r', 18, 62);
+        ctx.font = 'italic bold 14px Georgia, "Times New Roman", serif';
+        ctx.fillText('ke² / r²  =  mv² / r', 18, 65);
+      }
+
+      // ── Predicted collapse-time readout (top-right) ────────────────
+      // Kept visible for the ENTIRE collapse animation (~4s) plus the
+      // collapsed hold, not just a brief flash at the very end — this is
+      // the single most important number in the sim and needs time to read.
+      if (s.phase === 'collapsing' || s.phase === 'collapsed') {
+        const elapsedFraction = s.phase === 'collapsed' ? 1 : Math.min(1, 1 - s.radius / MAX_R);
+        const elapsedNs = (elapsedFraction * 10).toFixed(1); // units of 10⁻⁹ s; predicted total ≈ 10 × 10⁻⁹ s = 10⁻⁸ s
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = 'rgba(252,211,77,0.95)';
+        ctx.font = 'bold 15px system-ui, sans-serif';
+        ctx.fillText(`t ≈ ${elapsedNs} × 10⁻⁹ s`, W - 18, 25);
+        ctx.fillStyle = 'rgba(148,163,184,0.80)';
+        ctx.font = '12px system-ui, sans-serif';
+        ctx.fillText('predicted total: ~10⁻⁸ s', W - 18, 42);
+        ctx.textAlign = 'left';
       }
 
       // ── Collapse physics ──────────────────────────────────────────
@@ -155,6 +173,8 @@ export default function RutherfordCollapseSim() {
           setPhase('collapsed');
 
           timerRef.current = setTimeout(() => {
+            // Held for 4.2s (was 2.8s) so there's time to actually read the
+            // collapse-time readout before the sim resets.
             s.angle    = 0;
             s.radius   = MAX_R;
             s.omega    = 0.022;
@@ -169,7 +189,7 @@ export default function RutherfordCollapseSim() {
               s.phase = 'stable';
               setPhase('stable');
             }
-          }, 2800);
+          }, 4200);
         }
       }
 
@@ -207,10 +227,10 @@ export default function RutherfordCollapseSim() {
       ctx.arc(CX, CY, 10, 0, Math.PI * 2);
       ctx.fill();
       // Label
-      ctx.fillStyle = 'rgba(245,158,11,0.55)';
-      ctx.font = 'bold 10px system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(245,158,11,0.70)';
+      ctx.font = 'bold 11px system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('nucleus', CX, CY + 24);
+      ctx.fillText('nucleus', CX, CY + 26);
 
       // ── Collapse flash ────────────────────────────────────────────
       if (s.phase === 'collapsed') {
@@ -228,18 +248,30 @@ export default function RutherfordCollapseSim() {
           ctx.fill();
         }
 
-        const fadeIn = Math.min(1, (1 - s.flashLife) * 2.5);
-        if (fadeIn > 0.1) {
-          ctx.fillStyle = `rgba(248,113,113,${fadeIn * 0.85})`;
-          ctx.font = 'bold 16px system-ui, sans-serif';
+        // Fade in 4x faster than the flash decays (was 2.5x) so the readout
+        // reaches full brightness quickly instead of eating into the hold time.
+        const fadeIn = Math.min(1, (1 - s.flashLife) * 4);
+        if (fadeIn > 0.05) {
+          // Legibility backing panel — the flash gradient underneath is bright,
+          // so plain text on it washes out without a dark panel behind it.
+          ctx.fillStyle = `rgba(10,15,26,${fadeIn * 0.6})`;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(CX - 135, CY - 78, 270, 68, 12);
+          else ctx.rect(CX - 135, CY - 78, 270, 68);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(248,113,113,${fadeIn * 0.95})`;
+          ctx.font = 'bold 20px system-ui, sans-serif';
           ctx.textAlign = 'center';
-          ctx.fillText('Atom collapsed', CX, CY - 54);
-          ctx.fillStyle = `rgba(148,163,184,${fadeIn * 0.7})`;
-          ctx.font = '12px system-ui';
-          ctx.fillText('in ~10⁻⁸ seconds', CX, CY - 36);
-          ctx.fillStyle = `rgba(100,116,139,${fadeIn * 0.5})`;
-          ctx.font = '11px system-ui';
-          ctx.fillText('Resetting…', CX, CY - 20);
+          ctx.fillText('Atom collapsed', CX, CY - 50);
+
+          ctx.fillStyle = `rgba(252,211,77,${fadeIn})`;
+          ctx.font = 'bold 19px system-ui, sans-serif';
+          ctx.fillText('in ~10⁻⁸ seconds', CX, CY - 26);
+
+          ctx.fillStyle = `rgba(148,163,184,${fadeIn * 0.75})`;
+          ctx.font = '12px system-ui, sans-serif';
+          ctx.fillText('Resetting…', CX, CY - 6);
         }
 
         return;
@@ -282,10 +314,10 @@ export default function RutherfordCollapseSim() {
       ctx.arc(ex, ey, 4, 0, Math.PI * 2);
       ctx.fill();
       // e⁻ label
-      ctx.fillStyle = 'rgba(165,180,252,0.65)';
-      ctx.font = 'bold 9px system-ui';
+      ctx.fillStyle = 'rgba(165,180,252,0.80)';
+      ctx.font = 'bold 11px system-ui, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('e⁻', ex, ey - 14);
+      ctx.fillText('e⁻', ex, ey - 15);
 
       // ── Centripetal force arrow (electron → nucleus) ──────────────
       // Always points radially inward — this IS the electrostatic pull
@@ -355,24 +387,24 @@ export default function RutherfordCollapseSim() {
       ctx.textAlign = 'center';
       if (s.phase === 'stable') {
         ctx.fillStyle = 'rgba(165,180,252,0.90)';
-        ctx.font = 'bold 14px system-ui, sans-serif';
+        ctx.font = 'bold 15px system-ui, sans-serif';
         ctx.fillText("Rutherford's model: stable circular orbit", CX, H - 18);
       } else {
         // Show radius bar (shrinking)
         const pct  = s.radius / MAX_R;
-        const barW = 160;
+        const barW = 170;
         const barX = CX - barW / 2;
-        const barY = H - 38;
+        const barY = H - 40;
         ctx.fillStyle = 'rgba(255,255,255,0.08)';
         ctx.beginPath();
-        if (ctx.roundRect) ctx.roundRect(barX, barY, barW, 5, 3);
+        if (ctx.roundRect) ctx.roundRect(barX, barY, barW, 6, 3);
         ctx.fill();
         ctx.fillStyle = `rgba(248,113,113,${0.55 + (1 - pct) * 0.45})`;
         ctx.beginPath();
-        if (ctx.roundRect) ctx.roundRect(barX, barY, barW * pct, 5, 3);
+        if (ctx.roundRect) ctx.roundRect(barX, barY, barW * pct, 6, 3);
         ctx.fill();
-        ctx.fillStyle = 'rgba(248,113,113,0.85)';
-        ctx.font = 'bold 14px system-ui, sans-serif';
+        ctx.fillStyle = 'rgba(248,113,113,0.90)';
+        ctx.font = 'bold 15px system-ui, sans-serif';
         ctx.fillText('Energy radiating away — orbit decaying', CX, H - 16);
       }
     },
@@ -385,7 +417,7 @@ export default function RutherfordCollapseSim() {
 
       <div className="px-5 pb-4 pt-2 flex items-center gap-4 flex-wrap">
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: '14px', color: 'rgba(226,232,240,0.80)', lineHeight: 1.55, fontWeight: 500 }}>
+          <div style={{ fontSize: '15px', color: 'rgba(226,232,240,0.85)', lineHeight: 1.55, fontWeight: 500 }}>
             {phase === 'stable'     && "Electron orbits the nucleus indefinitely — Rutherford assumed orbits are stable."}
             {phase === 'collapsing' && "Maxwell's theory: the orbiting electron radiates energy and spirals inward."}
             {phase === 'collapsed'  && "Classical physics predicts complete atomic collapse in ~10⁻⁸ s."}

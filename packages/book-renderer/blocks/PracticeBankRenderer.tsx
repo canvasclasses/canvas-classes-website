@@ -205,10 +205,19 @@ export default function PracticeBankRenderer({ block }: { block: PracticeBankBlo
             <span className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{section.items.length} questions</span>
           </div>
           {section.blurb && <p className="text-sm mb-3" style={{ color: 'rgba(255,255,255,0.45)' }}>{section.blurb}</p>}
-          {/* source legend */}
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {(['ncert_exemplar', 'ncert_exercise', 'cbse_pyq', 'mcq'] as PracticeSource[]).map((s) => <SourceBadge key={s} source={s} />)}
-          </div>
+          {/* Source legend — only the sources this section actually contains.
+              Listing all four unconditionally advertised "NCERT Exemplar / NCERT
+              / CBSE PYQ" on banks made entirely of plain MCQs, implying a
+              provenance the questions do not have. */}
+          {(() => {
+            const present = (['ncert_exemplar', 'ncert_exercise', 'cbse_pyq', 'mcq'] as PracticeSource[])
+              .filter((s) => section.items.some((it) => it.source === s));
+            return present.length > 1 ? (
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {present.map((s) => <SourceBadge key={s} source={s} />)}
+              </div>
+            ) : null;
+          })()}
           <div className="flex flex-col gap-3">
             {section.items.map((it, i) =>
               it.kind === 'mcq'

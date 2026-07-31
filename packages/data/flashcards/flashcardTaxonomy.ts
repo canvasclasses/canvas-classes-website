@@ -123,7 +123,7 @@ export const FLASHCARD_CATEGORIES: FlashcardCategory[] = [
         displayName: 'Mole Concept (Some Basic Concepts of Chemistry)',
         category: 'Physical Chemistry',
         topicCount: 7,
-        cardCount: 87,
+        cardCount: 67,
         topics: [
           'Laws of Combination, Sig Figs & Atomic Mass',
           'Mole Basics — Mass / Volume / Particles',

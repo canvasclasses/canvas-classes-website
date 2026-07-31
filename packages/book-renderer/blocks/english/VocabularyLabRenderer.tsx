@@ -175,7 +175,7 @@ export default function VocabularyLabRenderer({ block }: { block: VocabularyLabB
 
       {block.intro && (
         <div className="mb-4">
-          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/65">
+          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/60">
             {block.intro}
           </InlineMarkdown>
         </div>

@@ -23,6 +23,14 @@ export type BlockType =
   | 'inline_quiz'
   | 'worked_example'
   | 'simulation'
+  | 'math_graph'
+  | 'vector_board'
+  | 'mechanics_bench'
+  | 'motion_lab'
+  | 'circuit_bench'
+  | 'optics_bench'
+  | 'field_bench'
+  | 'step_solver'
   | 'section'
   | 'reasoning_prompt'
   | 'curiosity_prompt'
@@ -53,13 +61,17 @@ export type BlockType =
   | 'attention_xray'
   | 'self_experiment'
   | 'guided_reveal'
+  | 'estimate_reveal'
+  | 'comparison_feed'
   // Social Science engagement-plan blocks (2026-07-08) — see
   // _agents/state/SOCIAL_SCIENCE_BOOK_BUILD.md "Engagement retrofit" section.
   | 'perspective_scenario'
   | 'career_spotlight'
   // "You Solve It" — real, unsolved Indian problem the student must reason a
   // solution to (2026-07-10, founder design). See YouSolveItBlock below.
-  | 'you_solve_it';
+  | 'you_solve_it'
+  // Chapter-end revision mind map — see MindMapBlock below.
+  | 'mind_map';
 
 export interface BaseBlock {
   id: string;        // crypto.randomUUID() — stable, used for drag-drop keys
@@ -290,6 +302,14 @@ export interface ClassifyExerciseBlock extends BaseBlock {
   question: string;       // Prompt shown above the table — e.g. "Which of these are true solutions?"
   column_label?: string;  // Header for the first column — default 'Substance'
   rows: ClassifyExerciseRow[];
+  // The block was built for chemistry ("is this a solution?"), so the verdict
+  // wording was hardcoded. These make it subject-agnostic — Physics Ch.1 uses it
+  // for "is this a BASE quantity?" — while every existing chemistry page keeps
+  // its original wording through the defaults. Optional by design: omit and
+  // nothing changes.
+  verdict_label?: string;  // Second column header — default 'Solution?'
+  yes_label?: string;      // Shown when is_solution is true  — default '✓ Solution'
+  no_label?: string;       // Shown when is_solution is false — default '✗ Not a solution'
 }
 
 // 16. INLINE QUIZ — milestone gate MCQ
@@ -320,6 +340,43 @@ export interface WorkedExampleBlock extends BaseBlock {
   video_src?: string;      // R2 URL for walkthrough video
 }
 
+// 17b. STEP SOLVER — an interactive step-by-step problem walkthrough. The student
+// clicks through EVERY step; a load-bearing step can gate on a micro-interaction
+// (pick the operation / MCQ / fill a blank) BEFORE the resulting line reveals, so
+// the student generates each move instead of reading it. Research spine: step-based
+// tutoring (VanLehn 2011, d≈0.76 ≈ human tutoring vs 0.3 for answer-only), the
+// segmentation principle (Mayer), the generation effect, self-explanation, and the
+// worked-example→faded→solo ladder. Renderer: blocks/StepSolverRenderer.
+export interface StepSolverCheck {
+  kind: 'pick_op' | 'mcq' | 'fill_blank';
+  prompt: string;              // markdown+LaTeX, e.g. "What do we do to both sides?"
+  options?: string[];          // pick_op / mcq — markdown+LaTeX option labels
+  answer_index?: number;       // index of the correct option (pick_op / mcq)
+  blank_answer?: string;       // fill_blank — accepted answer (forgiving compare)
+  feedback_right?: string;     // shown on a correct answer (markdown)
+  feedback_wrong?: string;     // gentle nudge on a wrong answer (markdown)
+}
+export interface StepSolverStep {
+  id: string;
+  math: string;                // markdown+LaTeX of the line at THIS step (the result)
+  say?: string;                // one-line "narrate the pen" (markdown)
+  why?: string;                // tap-to-reveal self-explanation (markdown)
+  check?: StepSolverCheck;     // if present, must be answered before `math` reveals
+}
+export interface StepSolverNowYouTry {
+  problem: string;             // markdown+LaTeX — the faded solo problem
+  answer: string;              // markdown+LaTeX — the answer
+  solution?: string;           // optional tap-to-reveal worked solution (markdown)
+}
+export interface StepSolverBlock extends BaseBlock {
+  type: 'step_solver';
+  title?: string;
+  problem: string;             // markdown+LaTeX — the starting problem
+  intro?: string;              // one line of setup (markdown)
+  steps: StepSolverStep[];
+  now_you_try?: StepSolverNowYouTry;
+}
+
 // 18. SIMULATION — embedded interactive lab/simulator
 export interface SimulationPrediction {
   prompt: string;       // "What do you think will happen if...?"
@@ -334,6 +391,565 @@ export interface SimulationBlock extends BaseBlock {
   simulation_id: string;  // e.g. 'fractional-distillation', 'crystallisation-column'
   title?: string;
   prediction?: SimulationPrediction; // Optional predict-observe-explain layer
+}
+
+// 18b. MATH GRAPH — a JSXGraph-backed interactive graph/geometry board authored
+// as DATA (no code), so math faculty build graphs from the admin dashboard.
+// Two authoring modes; `archetype` (a richer, pedagogically-loaded construction
+// the plain form can't express) takes precedence over `spec` (the declarative
+// board form). See MATH_LIVEBOOK_PLAN.md §2A + §2. The renderer is dark-themed;
+// JSXGraph is imported client-side only (SSR-guarded), like the sim registry.
+export type MathAccent = 'violet' | 'sky' | 'emerald' | 'amber' | 'pink' | 'orange';
+
+export interface MathGraphFunction {
+  expr: string;            // expression in x, may reference slider names ('a*x^2 + b*x + c')
+  color?: MathAccent;
+  dashed?: boolean;
+  label?: string;          // shown in the colour-matched corner legend (not on the curve)
+}
+export interface MathGraphSlider {
+  name: string;            // single token used inside expressions, e.g. 'a'
+  min: number;
+  max: number;
+  value: number;           // initial value
+  step?: number;
+}
+export interface MathGraphPoint {
+  x: number;
+  y: number;
+  label?: string;
+  draggable?: boolean;     // student can drag it (coordinate geometry)
+  color?: MathAccent;
+}
+export interface MathGraphRegion {
+  expr: string;                    // right-hand side in x
+  op: '<' | '>' | '<=' | '>=';     // shades the half-plane  y <op> expr
+  color?: MathAccent;
+}
+// A straight connector between two literal coordinates — for coordinate-
+// geometry diagrams (triangle sides, room outlines, distance legs) that a
+// function-based `points`/`functions` pair alone can't draw. Declarative
+// sibling of the JXG 'segment' element the engine already creates internally
+// inside several archetypes (see archetypes.ts) — this exposes the same
+// primitive as authorable spec data. Optional `label` goes into the
+// colour-matched corner legend, same as a labelled function (never drawn on
+// the line itself).
+export interface MathGraphSegment {
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  color?: MathAccent;
+  dashed?: boolean;
+  label?: string;
+}
+// A free-floating text label placed at a coordinate — for the Thomas-style
+// "family" graphs (e.g. "1 unit ↑", "y = x² + 2" annotations). Function labels
+// already render on their own curve; this is for extra notes.
+export interface MathGraphAnnotation {
+  x: number;
+  y: number;
+  text: string;
+  color?: MathAccent;
+}
+export interface MathGraphSpec {
+  bounds?: { xmin: number; xmax: number; ymin: number; ymax: number };  // default -5..5
+  functions?: MathGraphFunction[];
+  sliders?: MathGraphSlider[];
+  points?: MathGraphPoint[];
+  segments?: MathGraphSegment[];
+  regions?: MathGraphRegion[];
+  annotations?: MathGraphAnnotation[];  // static text labels (family/revision graphs)
+  showGrid?: boolean;      // default true
+  showAxes?: boolean;      // default true
+  keepSquare?: boolean;    // equal unit scale on both axes; default true
+  // Linked table — tabulates one expression across a range and updates live as
+  // sliders move. Powers the graph + table + equation multi-representation panel.
+  table?: { expr: string; from: number; to: number; step: number; label?: string };
+}
+export interface MathGraphPredict {
+  prompt: string;
+  options: string[];       // ≥2
+  answer_index?: number;   // optional correct option (feedback only; never gates)
+  reveal?: string;         // optional explainer shown after the guess
+}
+// Auto-checkable "match the graph" challenge — shows a dashed GOAL curve drawn
+// at `targets`, and the student adjusts the sliders until every one is within
+// `tolerance` of its target, at which point `success` is revealed. This is the
+// interactive exercise a static textbook cannot do. Requires an archetype (or
+// spec) with sliders whose names appear in `targets`.
+export interface MathGraphChallenge {
+  targets: Record<string, number>;   // slider name → goal value
+  tolerance?: number;                // per-slider absolute tolerance (default 0.3)
+  prompt?: string;                   // "Set the sliders to match the dashed curve"
+  success?: string;                  // shown when matched
+}
+// "Which curve is it?" — a gradable visual-recognition MCQ. Renders `spec` as a
+// STATIC multi-curve board (no sliders/predict/compare — those don't make sense
+// here) with each candidate curve colour-coded and labelled by LETTER only
+// (author sets `spec.functions[i].label` to 'A'/'B'/'C'/… — never the equation,
+// or the answer gives itself away). The prompt names the target equation/move;
+// the reader picks a curve by letter; `correct_index` indexes into
+// `spec.functions` (same order the legend renders in). Spec mode only — an
+// archetype's interactive sliders have no "correct answer" to grade.
+export interface MathGraphIdentify {
+  prompt: string;          // "Which curve is y = x² − 2?"
+  correct_index: number;   // index into spec.functions
+  explanation: string;     // shown after any pick, names every curve's real equation
+}
+export interface MathGraphBlock extends BaseBlock {
+  type: 'math_graph';
+  title?: string;
+  caption?: string;
+  archetype?: string;                               // named construction; wins over spec
+  archetype_params?: Record<string, number | string | boolean>;
+  spec?: MathGraphSpec;                             // declarative board
+  predict?: MathGraphPredict;                       // predict-first gate
+  compare?: boolean;                                // show "Keep this curve" family-builder control
+  challenge?: MathGraphChallenge;                   // auto-checkable match-the-graph exercise
+  identify?: MathGraphIdentify;                     // gradable "which curve is it?" MCQ (spec mode only)
+  height?: number;                                  // px canvas height override
+}
+
+// 18c. VECTOR BOARD — an SVG arrow-diagram board for physics, authored as DATA
+// (no code), so physics faculty build vector exercises from the admin dashboard.
+// Sibling of `math_graph` and deliberately the same shape: the ENGINE ships once
+// as code (a library of named `archetype` constructions); every individual
+// exercise is a block of JSON. See PHYSICS_CH0_MATHS_FOR_PHYSICS_PLAN.md §2.
+//
+// Why this exists rather than a `simulation` block: the sim registry renders
+// <Sim /> with ZERO props, so a `simulation` can only name an id — it cannot
+// carry per-exercise config. Authoring "a good number of interactive exercises"
+// would mean one registry entry (i.e. one code change) per question.
+//
+// The maths is shared with the Vector Lab simulator: this engine imports
+// `simulations/vector-lab/lib/vectorMath` rather than re-deriving formulas, so
+// there is exactly one source of truth for the NCERT parallelogram law.
+export type VectorAccent = 'indigo' | 'amber' | 'emerald' | 'pink' | 'red' | 'violet' | 'ghost';
+
+/** One arrow on the board. `mag`/`angle` are polar (angle = degrees CCW from +x). */
+export interface VectorSpec {
+  label: string;            // 'A', 'B', 'F₁' — rendered at the arrow head
+  mag: number;              // magnitude in `units`
+  angle: number;            // degrees, CCW from +x (standard physics convention)
+  color?: VectorAccent;
+  draggable?: boolean;      // student may grab the head (default: archetype decides)
+  tail?: 'origin' | 'chain'; // 'chain' = start at the previous vector's head (tip-to-tail)
+}
+
+/** Auto-checkable "drag until it matches" exercise — the analogue of MathGraphChallenge. */
+export interface VectorTarget {
+  prompt: string;
+  resultant_mag?: number;    // goal |R|
+  resultant_angle?: number;  // goal direction, degrees CCW from +x
+  tolerance?: number;        // absolute, applied to magnitude (default 0.5)
+  angle_tolerance?: number;  // degrees (default 5)
+  show_goal?: boolean;       // draw a dashed goal arrow (default true)
+  success: string;           // revealed on match
+}
+
+/**
+ * Gradable "which diagram is right?" MCQ. Renders `options` as small STATIC
+ * boards side by side, labelled A/B/C/D — the student picks one. This is the
+ * vector analogue of MathGraphIdentify, and exists for the same reason: a
+ * hand-drawn vector in a rough book cannot be auto-graded, but choosing the
+ * correct diagram can. Reversed subtraction (B−A drawn for A−B) is the classic
+ * trap this is built to drill.
+ */
+export interface VectorIdentify {
+  prompt: string;
+  options: { vectors: VectorSpec[]; caption?: string }[];  // each is one candidate diagram
+  correct_index: number;
+  explanation: string;       // shown after any pick — names what every diagram actually is
+}
+
+/** Type-the-answer numeric exercise with a tolerance band. */
+export interface VectorNumeric {
+  prompt: string;
+  answer: number;
+  tolerance?: number;        // absolute (default 0.1)
+  unit?: string;             // 'N', 'm', 'm s⁻¹'
+  worked_reveal: string;     // the full substitution, shown after answering
+}
+
+export interface VectorBoardBlock extends BaseBlock {
+  type: 'vector_board';
+  title?: string;
+  caption?: string;
+  archetype: string;                                // named construction (see vector-board/archetypes.ts)
+  params?: Record<string, number | string | boolean>;
+  vectors?: VectorSpec[];                           // seed arrows; archetype supplies defaults
+  units?: string;                                   // 'N' | 'm' | 'm s⁻¹' — physics context on every readout
+  show?: {
+    grid?: boolean; axes?: boolean; components?: boolean;
+    angleArc?: boolean; readout?: boolean; formula?: boolean;
+    compass?: boolean;  // label axis ends East/West/North/South instead of x/y
+  };
+  /**
+   * Guided mode. The construction is revealed one stage at a time: the panel
+   * states what is about to happen and why, the student clicks, one element
+   * appears, then the next statement follows. Nothing is drawn before it has
+   * been explained. Only archetypes that define steps support this.
+   */
+  guided?: boolean;
+  /** Override the archetype's built-in step script (one entry per reveal click). */
+  steps?: { say: string; cta: string }[];
+  // ── the four gradable exercise layers (any combination) ──
+  predict?: MathGraphPredict;                       // predict-first gate (same shape as math_graph)
+  target?: VectorTarget;                            // auto-checkable drag-to-match
+  identify?: VectorIdentify;                        // "which diagram is right?" MCQ
+  numeric?: VectorNumeric;                          // type-the-answer
+  height?: number;                                  // px canvas height override
+}
+
+// 18d. MECHANICS BENCH — the E1 engine as a config-carrying block.
+// Sibling of `vector_board` and `math_graph`, for exactly the same reason: the
+// `simulation` registry renders <Sim /> with ZERO props, so it can only name an
+// id — one code change per exercise. Here the ENGINE ships once
+// (blocks/mechanics-bench/) and every FBD / pulley / incline exercise on every
+// page is a block of JSON, authorable by physics faculty in the admin editor.
+//
+// See _agents/plans/PHYSICS_SIMULATION_PROGRAM.md §3 and §5.1–5.2.
+
+/**
+ * Which E1 tool the block presents. One engine, five interaction modes.
+ * `energy` and `rotation` were added 2026-07-30 with the Phase-2 libraries
+ * (Energy Ledger, Collision Studio, Orbit Sandbox, MoI Racer, Torque Bench,
+ * Rolling, Angular-Momentum Chair) — without them those 24 archetypes build and
+ * verify but are unreachable from a book page.
+ */
+export type MechanicsMode = 'fbd' | 'pulley' | 'solve' | 'energy' | 'rotation';
+
+/** A body placed in the scene by the author. Mirrors mechanics-bench/types.ts
+ *  `Body`, but flattened to JSON-authorable primitives. */
+export interface MechanicsBodySpec {
+  id: string;
+  shape: 'block' | 'sphere' | 'wedge' | 'rod' | 'pulley';
+  mass: number;                 // kg (0 = massless idealisation)
+  x: number;                    // m
+  y: number;                    // m
+  w?: number;
+  h?: number;
+  radius?: number;
+  angle?: number;               // degrees CCW from +x; a wedge's incline angle
+  inertia?: number;             // kg m² — a pulley WITH mass
+  fixed?: boolean;
+  dof?: number;                 // degrees — the axis this body accelerates along
+  label?: string;
+}
+
+export interface MechanicsContactSpec {
+  id: string;
+  a: string;                    // body id
+  b: string;                    // body id or 'world:ground' | 'world:wall' | 'world:ceiling'
+  normal: number;               // degrees CCW from +x — direction of N on `a`
+  mu_s?: number;
+  mu_k?: number;
+  sliding?: -1 | 0 | 1;
+}
+
+export interface MechanicsStringSpec {
+  id: string;
+  path: string[];               // ordered body/pulley ids the string runs between
+  taut?: boolean;               // default true
+  massless?: boolean;           // default true
+  label?: string;
+}
+
+export interface MechanicsAppliedSpec {
+  id: string;
+  body: string;
+  from: string;                 // the NAMED agent — required, see §5.1
+  mag: number;                  // N
+  angle: number;                // degrees CCW from +x
+  label?: string;
+}
+
+export interface MechanicsSceneSpec {
+  bodies: MechanicsBodySpec[];
+  contacts?: MechanicsContactSpec[];
+  strings?: MechanicsStringSpec[];
+  applied?: MechanicsAppliedSpec[];
+  g?: number;                   // default 9.8
+  /** The frame the FBD is drawn in. In 'inertial' a pseudo-force is a grading
+   *  ERROR; in the others it is REQUIRED. Same scene, opposite right answers. */
+  frame?: 'inertial' | 'accelerating' | 'rotating';
+  frame_accel?: { x: number; y: number };   // when frame = 'accelerating'
+  frame_omega?: number;                     // when frame = 'rotating'
+}
+
+/** The FBD task: which body to isolate, and what counts as done. */
+export interface MechanicsFbdTask {
+  /** Body the student must draw the free-body diagram for. */
+  body: string;
+  prompt: string;
+  /** Require each arrow's agent to be named ("what is pushing this?").
+   *  Default true — it is the anti-ghost-force mechanism. */
+  require_agent?: boolean;
+  /** Enable the system-boundary cut tool on this exercise. */
+  allow_cut?: boolean;
+  /** Reveal the solve step (axis choice + ΣF = ma) once the FBD is correct. */
+  then_solve?: boolean;
+  success?: string;
+}
+
+/** The pulley task: predict-first, then reveal the derived constraint. */
+export interface MechanicsPulleyTask {
+  prompt: string;
+  /** Ask for the acceleration of this body before running. */
+  predict_body?: string;
+  /** Show the string-length ledger with segments colour-matched to terms. */
+  show_constraint_ledger?: boolean;
+  /** Let the student add a pulley/mass and re-solve — the "keep adding
+   *  complexity" ladder from §5.2. */
+  allow_extend?: boolean;
+  success?: string;
+}
+
+/** Type-the-answer numeric check, same shape as VectorNumeric. */
+export interface MechanicsNumeric {
+  prompt: string;
+  answer: number;
+  tolerance?: number;           // absolute, default 0.05
+  unit?: string;                // 'm s⁻²', 'N'
+  worked_reveal: string;
+}
+
+export interface MechanicsBenchBlock extends BaseBlock {
+  type: 'mechanics_bench';
+  title?: string;
+  caption?: string;
+  mode: MechanicsMode;
+  /** Named construction from mechanics-bench/archetypes.ts. Supplies the scene
+   *  when `scene` is absent, and the guided step script. */
+  archetype?: string;
+  params?: Record<string, number | string | boolean>;
+  /** Explicit scene. Takes precedence over the archetype's default scene. */
+  scene?: MechanicsSceneSpec;
+  fbd?: MechanicsFbdTask;
+  pulley?: MechanicsPulleyTask;
+  show?: {
+    grid?: boolean;
+    axes?: boolean;
+    components?: boolean;       // resolve each force into the chosen axes
+    readout?: boolean;
+    equations?: boolean;        // the ΣF = ma lines as LaTeX
+    values?: boolean;           // numeric magnitudes, not just symbols
+  };
+  /** Guided reveal — nothing on screen before it has been explained. */
+  guided?: boolean;
+  steps?: { say: string; cta: string }[];
+  predict?: MathGraphPredict;
+  numeric?: MechanicsNumeric;
+  height?: number;
+}
+
+// 18e. MOTION LAB — the E2 engine as a config-carrying block. Projectile,
+// circular motion, relative motion and 1-D kinematics graphs, all as data.
+// See PHYSICS_SIMULATION_PROGRAM.md §5.3–5.4.
+
+export type MotionScenario =
+  | 'projectile'
+  | 'projectile-incline'
+  | 'monkey-hunter'
+  | 'relative'
+  | 'circular'
+  | 'vertical-circle'
+  | 'banked-road'
+  | 'graphs';
+
+export interface MotionProjectileSpec {
+  speed: number;                // m/s
+  angle: number;                // degrees above horizontal
+  height?: number;              // m — launch height above the ground
+  g?: number;                   // default 9.8
+  drag?: { k: number; quadratic?: boolean };
+  incline?: number;             // degrees — for 'projectile-incline'
+  target?: { x: number; y: number };
+}
+
+export interface MotionCircularSpec {
+  radius: number;               // m
+  mass: number;                 // kg
+  speed: number;                // m/s (tangential)
+  plane?: 'vertical' | 'horizontal';
+  agent?: 'string' | 'rod' | 'track-inside' | 'track-outside' | 'friction' | 'gravity';
+  bank?: number;                // degrees — banked road
+  mu_s?: number;
+  alpha?: number;               // m/s² tangential — non-uniform circular motion
+}
+
+export interface MotionBenchBlock extends BaseBlock {
+  type: 'motion_lab';
+  title?: string;
+  caption?: string;
+  scenario: MotionScenario;
+  archetype?: string;
+  params?: Record<string, number | string | boolean>;
+  projectile?: MotionProjectileSpec;
+  circular?: MotionCircularSpec;
+  /**
+   * The synchronized 1-D views shown beside the trajectory. Two strips —
+   * x (constant velocity) and y (free fall) — playing in lockstep IS the
+   * projectile-independence concept. §5.3.
+   */
+  strips?: {
+    axis: 'x' | 'y' | 'speed' | 'vx' | 'vy' | 'ax' | 'ay';
+    label: string;
+    mode: 'line' | 'graph';
+    unit?: string;
+  }[];
+  /** Offer the ground/moving-frame toggle. In circular scenarios this is what
+   *  makes centrifugal force appear and disappear on demand. */
+  frames?: ('ground' | 'translating' | 'accelerating' | 'rotating')[];
+  show?: {
+    grid?: boolean;
+    trail?: boolean;
+    vectors?: boolean;          // v and a arrows on the moving body
+    components?: boolean;
+    readout?: boolean;
+    envelope?: boolean;         // the parabola of safety
+  };
+  /** Cut-the-string / leave-the-track handoff into the projectile integrator. */
+  allow_release?: boolean;
+  guided?: boolean;
+  steps?: { say: string; cta: string }[];
+  predict?: MathGraphPredict;
+  numeric?: MechanicsNumeric;
+  height?: number;
+}
+
+// 18f/g/h. CIRCUIT BENCH (E3) · OPTICS BENCH (E4) · FIELD BENCH (E5).
+// Same config-carrying pattern as `mechanics_bench` / `motion_lab`: the engine
+// ships once as code, every exercise is JSON authored in the admin editor.
+// Engine contracts live in packages/book-renderer/blocks/{circuit,optics,field}-bench/types.ts.
+
+export interface CircuitComponentSpec {
+  id: string;
+  kind: 'resistor' | 'battery' | 'wire' | 'capacitor' | 'inductor'
+      | 'ammeter' | 'voltmeter' | 'switch' | 'bulb' | 'galvanometer';
+  a: string;                 // node id
+  b: string;                 // node id
+  value: number;             // Ω | V | F | H
+  internal?: number;         // Ω — real batteries and real meters are not ideal
+  label?: string;
+  open?: boolean;
+  x?: number;
+  y?: number;
+}
+
+export interface CircuitNodeSpec { id: string; x?: number; y?: number; label?: string; ground?: boolean }
+
+export interface CircuitBenchBlock extends BaseBlock {
+  type: 'circuit_bench';
+  title?: string;
+  caption?: string;
+  archetype?: string;
+  params?: Record<string, number | string | boolean>;
+  nodes?: CircuitNodeSpec[];
+  components?: CircuitComponentSpec[];
+  /** The two nodes R_eq is measured between. */
+  probes?: [string, string];
+  show?: {
+    /** The topological regroup animation — the reason this engine exists. */
+    redraw?: boolean;
+    potentialHeatmap?: boolean;
+    currentWidth?: boolean;   // stroke width ∝ current, so a 0-A branch stops
+    values?: boolean;
+    equations?: boolean;
+  };
+  guided?: boolean;
+  steps?: { say: string; cta: string }[];
+  predict?: MathGraphPredict;
+  numeric?: MechanicsNumeric;
+  height?: number;
+}
+
+export interface OpticsElementSpec {
+  id: string;
+  kind: 'thin-lens' | 'thick-lens' | 'mirror-spherical' | 'mirror-plane'
+      | 'aperture' | 'screen' | 'prism' | 'slab' | 'eye' | 'grating';
+  x: number;                 // cm along the bench
+  y?: number;
+  focal?: number;            // cm, Cartesian sign convention
+  aperture?: number;         // cm half-height — a ray beyond this MISSES
+  radius?: number;
+  n?: number;
+  apex?: number;             // degrees, prism
+  tilt?: number;
+  label?: string;
+}
+
+export interface OpticsBenchBlock extends BaseBlock {
+  type: 'optics_bench';
+  title?: string;
+  caption?: string;
+  /** 'assembler' is the camera → eye → microscope → telescope → binoculars arc. */
+  mode: 'bench' | 'assembler' | 'wave';
+  archetype?: string;
+  params?: Record<string, number | string | boolean>;
+  elements?: OpticsElementSpec[];
+  source?: { x: number; y: number; rays?: number; wavelength?: number;
+             kind?: 'point' | 'extended' | 'parallel-beam'; beamAngle?: number };
+  nMedium?: number;
+  show?: {
+    constructionRays?: boolean;   // the classic three, dashed where virtual
+    realFan?: boolean;            // the honest fan — aberration becomes visible
+    image?: boolean;
+    labels?: boolean;
+    magnification?: boolean;
+  };
+  guided?: boolean;
+  steps?: { say: string; cta: string }[];
+  predict?: MathGraphPredict;
+  numeric?: MechanicsNumeric;
+  height?: number;
+}
+
+export interface FieldSourceSpec {
+  id: string;
+  kind: 'point-charge' | 'dipole' | 'line-charge' | 'sheet-charge' | 'ring-charge'
+      | 'point-mass' | 'current-wire' | 'current-loop' | 'solenoid' | 'bar-magnet'
+      | 'uniform-E' | 'uniform-B';
+  x: number;
+  y: number;
+  strength: number;          // C | kg | A | field magnitude
+  angle?: number;
+  radius?: number;
+  length?: number;
+  label?: string;
+  fixed?: boolean;
+}
+
+export interface FieldBenchBlock extends BaseBlock {
+  type: 'field_bench';
+  title?: string;
+  caption?: string;
+  kind: 'electric' | 'magnetic' | 'gravitational';
+  /** 'emi' added 2026-07-30 with Unit 11 — induction is neither a static
+   *  field sculpt nor a Gauss surface, and the 12 EMI archetypes had been
+   *  declaring 'gauss' as the closest true statement. */
+  mode: 'sculptor' | 'gauss' | 'trajectory' | 'photoelectric' | 'emi';
+  archetype?: string;
+  params?: Record<string, number | string | boolean>;
+  sources?: FieldSourceSpec[];
+  testCharges?: { id: string; x: number; y: number; vx?: number; vy?: number;
+                  charge: number; mass: number; label?: string }[];
+  surfaces?: { id: string; shape: 'circle' | 'rectangle'; x: number; y: number;
+               radius?: number; w?: number; h?: number; label?: string }[];
+  show?: {
+    fieldLines?: boolean;
+    equipotentials?: boolean;
+    vectors?: boolean;
+    flux?: boolean;
+    magnitudeHeatmap?: boolean;
+  };
+  /** Let the student drag the Gauss surface — dragging it and watching the flux
+   *  NOT change is the entire lesson. */
+  allow_drag_surface?: boolean;
+  guided?: boolean;
+  steps?: { say: string; cta: string }[];
+  predict?: MathGraphPredict;
+  numeric?: MechanicsNumeric;
+  height?: number;
 }
 
 // 21. CURIOSITY PROMPT — open-ended Block 0 hook for Class 9 pages
@@ -352,6 +968,14 @@ export interface ReasoningPromptBlock extends BaseBlock {
   reasoning_type: ReasoningType;
   prompt: string;           // The reasoning question / scenario
   options?: string[];       // If provided: MCQ-style; if absent: open-ended (student just reads + thinks)
+  /**
+   * Index into `options` of the correct choice. Required whenever `options`
+   * is set — an MCQ with no correctness signal lets a student commit to a
+   * wrong answer and never find out (audited 2026-07-29: all 140 existing
+   * reasoning_prompt blocks in class11-biology showed this gap). Omit for
+   * open-ended prompts (no `options`), where there is no "correct" pick.
+   */
+  correct_index?: number;
   reveal: string;           // Shown after committing — not "the answer" but "what to notice"
   difficulty_level: 1 | 2 | 3 | 4 | 5;
 }
@@ -1059,6 +1683,52 @@ export interface GuidedRevealBlock extends BaseBlock {
   outro?: string;          // shown after the last beat (markdown)
 }
 
+// LS8. ESTIMATE REVEAL — "discover, don't display" a statistic. The student is
+// asked to GUESS a number first (drag a slider), commits it, and only THEN sees
+// the researched truth animate into place. The teaching is the GAP between guess
+// and reality, not the number itself. Generic + reusable across the strand (phone
+// touches, hours lost, screen time…). Fixed science-backed `truth`; `reveal`
+// supports {guess} {truth} {ratio} tokens so the closing line reacts to the guess.
+// Renderer: blocks/lifeskills/EstimateRevealRenderer.
+export interface EstimateRevealBlock extends BaseBlock {
+  type: 'estimate_reveal';
+  question: string;          // "how many times a day do you TOUCH your phone?"
+  unit: string;             // "touches / day" — shown under the number
+  min: number;              // slider floor
+  max: number;              // slider ceiling
+  step?: number;            // slider step; default (max-min)/100
+  default_guess?: number;   // starting slider value; default midpoint
+  truth: number;            // the researched value revealed after the guess
+  reveal_unit?: string;     // optional different unit label after reveal (e.g. "measured · taps/day")
+  source?: string;          // "dscout, 94 users tracked over 5 days" (markdown, shown small)
+  reveal: string;           // markdown line, supports {guess}/{truth}/{ratio} tokens
+  caption?: string;         // italic teaching line under the instrument
+}
+
+// LS9. COMPARISON FEED — the self-image instrument. The student scrolls a curated
+// highlight-reel feed; a quiet mood meter dips as they view (upward social
+// comparison, felt not stated). Tapping "see behind the post" flips each card to
+// its behind-the-scenes reality; understanding pulls the meter back up. Once all
+// are flipped a closing lands the mechanism (the feed is everyone's best frame vs
+// your unedited whole). Content-driven — posts + closing live in the DB.
+// Renderer: blocks/lifeskills/ComparisonFeedRenderer.
+export interface ComparisonFeedPost {
+  id: string;
+  who: string;              // "Aarav · topper"
+  meta?: string;            // "2 hrs ago"
+  front: string;            // the highlight-reel caption (markdown)
+  reveal_label?: string;    // "What the frame cut out" — heading on the flipped side
+  back: string;             // the behind-the-scenes reality (markdown)
+}
+export interface ComparisonFeedBlock extends BaseBlock {
+  type: 'comparison_feed';
+  title?: string;
+  intro?: string;           // markdown, one line before the feed
+  meter_label?: string;     // "How you feel about your own life"; default provided
+  posts: ComparisonFeedPost[];
+  closing: string;          // markdown, unlocked once every post is flipped
+}
+
 // PERSPECTIVE SCENARIO — Social Science engagement mechanic (2026-07-08, founder
 // design). A real, documented Indian case (a genuine institutional/expert debate,
 // not an invented hypothetical) presented as a decision the student must make.
@@ -1144,6 +1814,55 @@ export interface YouSolveItBlock extends BaseBlock {
   reality_check: string; // "Where the debate actually stands" — grounding reveal, NOT a verdict (markdown)
 }
 
+// MIND MAP — chapter-end revision aid (2026-07-26, founder design). NOT a
+// flashcard replacement: a mind map is the "shape of the chapter" — orient
+// first, then jump into retrieval practice. Central chapter node → topic
+// branches → leaf sub-concepts. Clicking a leaf reveals its content plus an
+// optional deep link into the flashcard deck for that exact topic (matched
+// via `flashcardTopic`, which must equal a real `topic.name` value already
+// used on Flashcard docs for this chapter — see packages/data/models/
+// Flashcard.ts — so the "Test yourself" link resolves).
+// Renderer: blocks/MindMapBlockRenderer.tsx.
+//
+// LEAF CONTENT FRAMEWORK (revised 2026-07-26 after founder review — a first
+// pass that reused flashcard-style single-paragraph prose was rejected as
+// "generic": for a calculation-heavy chapter, a revision map has to surface
+// the actual formula/shortcut a student can glance at and use, not just
+// restate the concept). Every leaf now has TWO parts:
+//   - `formula` (optional): the ONE canonical equation/rule/reference line
+//     for this sub-concept, standalone — e.g. "$M = 2 \times \text{V.D.}$".
+//     Omit ONLY when the sub-concept genuinely has no single formula (a
+//     pure "why"/conceptual leaf, e.g. why average atomic mass is
+//     non-integer). Never pad this field with a full sentence — if it needs
+//     a verb, it belongs in a bullet, not here.
+//   - `summary`: 2-4 SHORT bullet points (markdown `- ` list, each under
+//     ~20 words), not a paragraph. Lead with the rule/method in its most
+//     compact usable form (if there's no separate `formula`, the first
+//     bullet carries it). Label a shortcut bullet **Shortcut:** when one
+//     exists. ALWAYS end on a **Watch out:** bullet — this is where the
+//     original trap-testing angle lives now; it's one bullet among several,
+//     not the entire leaf.
+export interface MindMapLeaf {
+  id: string;
+  label: string;             // short sub-concept name, e.g. "Excess Reagent Left Over"
+  formula?: string;          // the one canonical equation/rule line, markdown/LaTeX — see framework above
+  summary: string;           // 2-4 short markdown bullets — see framework above
+  flashcardTopic?: string;   // matches Flashcard.topic.name — powers the "Test yourself" deep link
+}
+export interface MindMapBranch {
+  id: string;
+  label: string;             // topic name, e.g. "Limiting Reagent & Yield"
+  children: MindMapLeaf[];
+}
+export interface MindMapBlock extends BaseBlock {
+  type: 'mind_map';
+  title: string;
+  root_label: string;        // center node, e.g. "Mole Concept"
+  intro?: string;            // short framing line above the map (markdown)
+  branches: MindMapBranch[];
+  flashcardChapterSlug?: string; // e.g. 'mole-concept' — chapterSlug for /chemistry-flashcards/[chapter]
+}
+
 export type ContentBlock =
   | TextBlock
   | HeadingBlock
@@ -1165,6 +1884,14 @@ export type ContentBlock =
   | InlineQuizBlock
   | WorkedExampleBlock
   | SimulationBlock
+  | MathGraphBlock
+  | VectorBoardBlock
+  | MechanicsBenchBlock
+  | MotionBenchBlock
+  | CircuitBenchBlock
+  | OpticsBenchBlock
+  | FieldBenchBlock
+  | StepSolverBlock
   | SectionBlock
   | ReasoningPromptBlock
   | CuriosityPromptBlock
@@ -1195,9 +1922,12 @@ export type ContentBlock =
   | AttentionXrayBlock
   | SelfExperimentBlock
   | GuidedRevealBlock
+  | EstimateRevealBlock
+  | ComparisonFeedBlock
   | PerspectiveScenarioBlock
   | CareerSpotlightBlock
-  | YouSolveItBlock;
+  | YouSolveItBlock
+  | MindMapBlock;
 
 
 // ─── Page & Book documents ────────────────────────────────────────────────────
@@ -1244,7 +1974,14 @@ export interface BookPage {
    * field, add it here too, or it silently becomes dead data.
    */
   glossary?: GlossaryEntry[];
-  tags?: string[];       // Links to Crucible taxonomy tags
+  /**
+   * FREE-TEXT keywords only (e.g. 'Bohr model', 'coordinates'). NOT taxonomy ids —
+   * an audit on 2026-07-27 found all 807 tagged pages across 9 books carry plain
+   * keywords and ZERO Crucible ids, despite an old comment here claiming otherwise.
+   * There is currently no page-level Crucible link — see `BookChapter.crucible_chapter_id`
+   * for the chapter-level one, which is what the title-consistency rule uses.
+   */
+  tags?: string[];
   created_at: Date;
   updated_at: Date;
   published: boolean;
@@ -1327,6 +2064,16 @@ export interface BookChapter {
   page_ids: string[];
   description?: string;
   is_published: boolean;
+  /**
+   * TAXONOMY BRIDGE (2026-07-27) — the Crucible chapter this Live Book chapter
+   * teaches, e.g. 'ph11_math_phy'. Must be a `type: 'chapter'` id in
+   * `packages/data/taxonomy/taxonomyData_from_csv.ts`.
+   *
+   * This is what lets the reader hand a student off to Crucible practice at the
+   * end of a chapter. REQUIRED on every new Live Book chapter — see
+   * BOOK_PAGE_WORKFLOW.md §18 and `scripts/lib/validate-taxonomy-link.js`.
+   */
+  crucible_chapter_id?: string;
 }
 
 export interface Book {

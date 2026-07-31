@@ -122,12 +122,12 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
             Experiment
           </span>
           {hasTimer && (
-            <span className="text-[10px] text-white/25 font-medium uppercase tracking-widest">
+            <span className="text-[10px] text-white/45 font-medium uppercase tracking-widest">
               {Math.round((block.duration_sec ?? 0) / 60)} min
             </span>
           )}
         </div>
-        <h3 className="text-lg font-bold text-white/90 mb-1">{block.title}</h3>
+        <h3 className="text-lg font-bold text-white/85 mb-1">{block.title}</h3>
 
         {/* Intro */}
         {mode === 'intro' && (
@@ -136,7 +136,7 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
               <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/60">{block.intro}</InlineMarkdown>
             </div>
             {block.steps && block.steps.length > 0 && (
-              <ul className="mb-4 flex flex-col gap-1.5 text-sm text-white/70">
+              <ul className="mb-4 flex flex-col gap-1.5 text-sm text-white/82">
                 {block.steps.map((s, i) => (
                   <li key={i} className="flex gap-2"><span style={{ color: ACCENT_STRONG }}>•</span> <span>{s}</span></li>
                 ))}
@@ -150,7 +150,7 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
                     style={{ background: ACCENT_BG, color: ACCENT, border: `1.5px solid ${ACCENT_STRONG}` }}>
                     Start the {Math.round((block.duration_sec ?? 0) / 60)}-minute timer
                   </button>
-                  <button onClick={() => setMode('reflect')} className="text-xs text-white/40 hover:text-white/60 underline underline-offset-2">
+                  <button onClick={() => setMode('reflect')} className="text-xs text-white/45 hover:text-white/60 underline underline-offset-2">
                     Skip to what I noticed →
                   </button>
                 </>
@@ -168,12 +168,12 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
         {/* Running timer */}
         {mode === 'running' && (
           <div className="flex flex-col items-center py-6">
-            <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">Phone out of reach. Just notice.</span>
+            <span className="text-[10px] uppercase tracking-widest text-white/45 mb-2">Phone out of reach. Just notice.</span>
             <span className="text-6xl font-bold tabular-nums leading-none" style={{ color: ACCENT }}>
               {Math.floor(secsLeft / 60)}:{String(secsLeft % 60).padStart(2, '0')}
             </span>
             <button onClick={() => { clearTimer(); setMode('reflect'); }}
-              className="mt-5 text-xs text-white/40 hover:text-white/60 underline underline-offset-2">
+              className="mt-5 text-xs text-white/45 hover:text-white/60 underline underline-offset-2">
               I&rsquo;m done early →
             </button>
           </div>
@@ -183,7 +183,7 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
         {mode === 'reflect' && (
           <div>
             <div className="mb-3">
-              <InlineMarkdown paragraphClassName="text-sm font-semibold leading-relaxed text-white/75">{block.prompt}</InlineMarkdown>
+              <InlineMarkdown paragraphClassName="text-sm font-semibold leading-relaxed text-white/82">{block.prompt}</InlineMarkdown>
             </div>
             <div className="flex flex-col gap-2">
               {block.options.map((opt, i) => {
@@ -208,7 +208,7 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
                     </button>
                     {on && (
                       <div className="px-3 pb-3 pl-10">
-                        <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/70">{opt.explanation}</InlineMarkdown>
+                        <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/82">{opt.explanation}</InlineMarkdown>
                       </div>
                     )}
                   </div>
@@ -217,12 +217,12 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
             </div>
 
             {belowMin && (
-              <p className="text-xs text-white/35 italic mt-2">Tick any that showed up — there&rsquo;s no wrong answer.</p>
+              <p className="text-xs text-white/45 italic mt-2">Tick any that showed up — there&rsquo;s no wrong answer.</p>
             )}
 
             {selected.size > 0 && block.completion_note && (
               <div className="mt-4 rounded-xl px-4 py-3" style={{ background: 'rgba(16,185,129,0.07)', border: '1px solid rgba(16,185,129,0.22)' }}>
-                <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/75">{block.completion_note}</InlineMarkdown>
+                <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/82">{block.completion_note}</InlineMarkdown>
               </div>
             )}
 
@@ -233,7 +233,7 @@ export default function SelfExperimentRenderer({ block }: { block: SelfExperimen
                   Run it again
                 </button>
               )}
-              {doneCount > 0 && <span className="text-[11px] text-white/25">Done on this device</span>}
+              {doneCount > 0 && <span className="text-[11px] text-white/45">Done on this device</span>}
               {selected.size > 0 && <span className="ml-auto text-[11px] tabular-nums" style={{ color: EMERALD }}>{selected.size} noticed</span>}
             </div>
           </div>

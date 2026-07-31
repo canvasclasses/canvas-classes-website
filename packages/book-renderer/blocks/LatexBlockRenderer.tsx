@@ -90,7 +90,7 @@ export default function LatexBlockRenderer({ block }: { block: LatexBlock }) {
     <pre className="text-red-400 text-xs whitespace-pre-wrap text-center">{error}</pre>
   ) : (
     <div
-      className="text-white/90 text-lg"
+      className="text-white/85 text-lg"
       // KaTeX output is trusted — it never injects external URLs or scripts
       dangerouslySetInnerHTML={{ __html: html }}
     />
@@ -99,7 +99,7 @@ export default function LatexBlockRenderer({ block }: { block: LatexBlock }) {
   const meta = (block.figure_number || block.label || block.note) && (
     <>
       {(block.figure_number || block.label) && (
-        <p className="text-xs text-white/40 font-mono mt-1">
+        <p className="text-xs text-white/45 font-mono mt-1">
           {block.figure_number ? `Eq. ${block.figure_number}` : block.label}
         </p>
       )}
@@ -110,13 +110,21 @@ export default function LatexBlockRenderer({ block }: { block: LatexBlock }) {
   );
 
   if (block.highlight) {
+    // Shrink-to-fit card (inline-flex, not a full-width block) so a short
+    // equation isn't stranded in a wide box with empty space on both sides —
+    // and a long one grows the box to match instead of silently overflowing
+    // it. overflow-x-auto stays as a last-resort fallback for anything wider
+    // than the reading column, but max-w-full + shrink-to-fit means it should
+    // rarely trigger. Neutral card (not an amber wash) to match the elegant,
+    // non-neon convention already established for callouts (see
+    // CalloutBlockRenderer's NoteCallout / ExamTipCallout).
     return (
-      <div className="my-5 overflow-x-auto">
+      <div className="my-5 flex justify-center">
         <div
-          className="flex flex-col items-center gap-1 rounded-xl px-5 py-4"
+          className="inline-flex max-w-full flex-col items-center gap-1 overflow-x-auto rounded-xl px-6 py-4"
           style={{
-            background: 'rgba(217,119,6,0.08)',
-            border: '1px solid rgba(217,119,6,0.28)',
+            background: '#11141b',
+            border: '1px solid rgba(255,255,255,0.10)',
           }}
         >
           {equation}

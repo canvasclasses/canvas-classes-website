@@ -79,10 +79,10 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
           <span className="shrink-0 text-sky-400/90">
             {playing ? <Pause size={13} fill="currentColor" /> : <Headphones size={14} />}
           </span>
-          <span className="flex-1 text-left text-[14px] font-medium text-white/70 leading-snug line-clamp-2">
+          <span className="flex-1 text-left text-[14px] font-medium text-white/82 leading-snug line-clamp-2">
             {block.label ?? 'Audio Explanation'}
           </span>
-          <span className="text-[12px] text-white/30 tabular-nums shrink-0">
+          <span className="text-[12px] text-white/45 tabular-nums shrink-0">
             {formatTime(playing ? currentTime : block.duration_sec)}
           </span>
         </button>
@@ -147,15 +147,15 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
 
         {/* Labels */}
         <div className="flex-1 min-w-0">
-          <p className="text-[13px] font-semibold text-white/80 leading-tight truncate">
+          <p className="text-[13px] font-semibold text-white/82 leading-tight truncate">
             {block.label ?? 'Audio Explanation'}
           </p>
-          <p className="text-[11px] text-white/35 mt-0.5">
+          <p className="text-[11px] text-white/45 mt-0.5">
             {playing ? 'Playing…' : 'Tap to listen'}
           </p>
         </div>
 
-        <span className="text-[12px] text-white/30 tabular-nums shrink-0">
+        <span className="text-[12px] text-white/45 tabular-nums shrink-0">
           {formatTime(playing ? currentTime : block.duration_sec)}
         </span>
       </button>
@@ -177,7 +177,7 @@ export default function AudioNoteBlockRenderer({ block, compact = false }: { blo
         </div>
 
         {/* Time */}
-        <div className="flex justify-between mt-1.5 text-[11px] text-white/30 tabular-nums">
+        <div className="flex justify-between mt-1.5 text-[11px] text-white/45 tabular-nums">
           <span>{formatTime(currentTime)}</span>
           <span>{formatTime(block.duration_sec)}</span>
         </div>

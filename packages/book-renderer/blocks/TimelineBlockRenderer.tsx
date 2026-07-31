@@ -38,7 +38,7 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
     return (
       <div className="my-4">
         {block.title && (
-          <p className="text-sm font-semibold text-white/70 mb-3 uppercase tracking-wide">
+          <p className="text-sm font-semibold text-white/82 mb-3 uppercase tracking-wide">
             {block.title}
           </p>
         )}
@@ -53,9 +53,9 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
                   <TimelineIcon name={event.icon} className="w-4 h-4 shrink-0 mt-0.5 text-amber-400" />
                 )}
                 <div>
-                  <p className="text-sm font-semibold text-white/90"><InlineMarkdown>{event.label}</InlineMarkdown></p>
+                  <p className="text-sm font-semibold text-white/85"><InlineMarkdown>{event.label}</InlineMarkdown></p>
                   {event.detail && (
-                    <p className="text-xs text-white/55 mt-0.5 leading-relaxed"><InlineMarkdown>{event.detail}</InlineMarkdown></p>
+                    <p className="text-xs text-white/60 mt-0.5 leading-relaxed"><InlineMarkdown>{event.detail}</InlineMarkdown></p>
                   )}
                 </div>
               </div>
@@ -76,7 +76,7 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
   return (
     <div className="my-4 overflow-x-auto">
       {block.title && (
-        <p className="text-sm font-semibold text-white/70 mb-3 uppercase tracking-wide">
+        <p className="text-sm font-semibold text-white/82 mb-3 uppercase tracking-wide">
           {block.title}
         </p>
       )}
@@ -90,9 +90,9 @@ export default function TimelineBlockRenderer({ block }: { block: TimelineBlock 
                 {event.icon && (
                   <TimelineIcon name={event.icon} className="w-3.5 h-3.5 mb-1 mx-auto text-amber-400" />
                 )}
-                <p className="text-xs font-semibold text-white/90"><InlineMarkdown>{event.label}</InlineMarkdown></p>
+                <p className="text-xs font-semibold text-white/85"><InlineMarkdown>{event.label}</InlineMarkdown></p>
                 {event.detail && (
-                  <p className="text-xs text-white/50 mt-0.5"><InlineMarkdown>{event.detail}</InlineMarkdown></p>
+                  <p className="text-xs text-white/60 mt-0.5"><InlineMarkdown>{event.detail}</InlineMarkdown></p>
                 )}
               </div>
             </div>

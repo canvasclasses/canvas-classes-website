@@ -32,6 +32,14 @@ const AnimationBlockRenderer         = dynamicBlock(() => import('./blocks/Anima
 const InlineQuizRenderer             = dynamicBlock(() => import('./blocks/InlineQuizRenderer'));
 const WorkedExampleRenderer          = dynamicBlock(() => import('./blocks/WorkedExampleRenderer'));
 const SimulationBlockRenderer        = dynamicBlock(() => import('./blocks/SimulationBlockRenderer'));
+const MathGraphRenderer              = dynamicBlock(() => import('./blocks/MathGraphRenderer'));
+const VectorBoardRenderer            = dynamicBlock(() => import('./blocks/VectorBoardRenderer'));
+const MechanicsBenchRenderer         = dynamicBlock(() => import('./blocks/MechanicsBenchRenderer'));
+const MotionLabRenderer              = dynamicBlock(() => import('./blocks/MotionLabRenderer'));
+const CircuitBenchRenderer           = dynamicBlock(() => import('./blocks/CircuitBenchRenderer'));
+const OpticsBenchRenderer            = dynamicBlock(() => import('./blocks/OpticsBenchRenderer'));
+const FieldBenchRenderer             = dynamicBlock(() => import('./blocks/FieldBenchRenderer'));
+const StepSolverRenderer             = dynamicBlock(() => import('./blocks/StepSolverRenderer'));
 const ReasoningPromptRenderer        = dynamicBlock(() => import('./blocks/ReasoningPromptRenderer'));
 const CuriosityPromptRenderer        = dynamicBlock(() => import('./blocks/CuriosityPromptRenderer'));
 const ClassifyExerciseRenderer      = dynamicBlock(() => import('./blocks/ClassifyExerciseRenderer'));
@@ -39,6 +47,7 @@ const MeetAScientistRenderer        = dynamicBlock(() => import('./blocks/MeetAS
 const PerspectiveScenarioRenderer   = dynamicBlock(() => import('./blocks/PerspectiveScenarioRenderer'));
 const CareerSpotlightRenderer       = dynamicBlock(() => import('./blocks/CareerSpotlightRenderer'));
 const YouSolveItRenderer            = dynamicBlock(() => import('./blocks/YouSolveItRenderer'));
+const MindMapRenderer               = dynamicBlock(() => import('./blocks/MindMapBlockRenderer'));
 
 // English blocks — Class 9 Kaveri. Spec: _agents/workflows/ENGLISH_BOOK_PAGE_WORKFLOW.md
 const NarratedPassageRenderer            = dynamicBlock(() => import('./blocks/english/NarratedPassageRenderer'));
@@ -67,6 +76,8 @@ const FocusGameRenderer                  = dynamicBlock(() => import('./blocks/l
 const AttentionXrayRenderer              = dynamicBlock(() => import('./blocks/lifeskills/AttentionXrayRenderer'));
 const SelfExperimentRenderer             = dynamicBlock(() => import('./blocks/lifeskills/SelfExperimentRenderer'));
 const GuidedRevealRenderer               = dynamicBlock(() => import('./blocks/lifeskills/GuidedRevealRenderer'));
+const EstimateRevealRenderer             = dynamicBlock(() => import('./blocks/lifeskills/EstimateRevealRenderer'));
+const ComparisonFeedRenderer             = dynamicBlock(() => import('./blocks/lifeskills/ComparisonFeedRenderer'));
 
 export default function BlockRenderer({
   block,
@@ -106,6 +117,14 @@ export default function BlockRenderer({
     case 'inline_quiz':       return <InlineQuizRenderer block={block} onPass={score => onQuizPass?.(block.id, score)} />;
     case 'worked_example':    return <WorkedExampleRenderer block={block} exampleNumber={exampleNumber} />;
     case 'simulation':        return <SimulationBlockRenderer block={block} />;
+    case 'math_graph':        return <MathGraphRenderer block={block} />;
+    case 'vector_board':      return <VectorBoardRenderer block={block} />;
+    case 'mechanics_bench':   return <MechanicsBenchRenderer block={block} />;
+    case 'motion_lab':        return <MotionLabRenderer block={block} />;
+    case 'circuit_bench':     return <CircuitBenchRenderer block={block} />;
+    case 'optics_bench':      return <OpticsBenchRenderer block={block} />;
+    case 'field_bench':       return <FieldBenchRenderer block={block} />;
+    case 'step_solver':       return <StepSolverRenderer block={block} />;
     case 'section':           return <SectionBlockRenderer block={block} onQuizPass={onQuizPass} />;
     case 'reasoning_prompt':   return <ReasoningPromptRenderer block={block} />;
     case 'curiosity_prompt':   return <CuriosityPromptRenderer block={block} />;
@@ -113,7 +132,8 @@ export default function BlockRenderer({
     case 'meet_a_scientist':   return <MeetAScientistRenderer block={block} />;
     case 'perspective_scenario': return <PerspectiveScenarioRenderer block={block} />;
     case 'career_spotlight':     return <CareerSpotlightRenderer block={block} />;
-    case 'you_solve_it':         return <YouSolveItRenderer block={block} />;
+    case 'you_solve_it':         return <YouSolveItRenderer block={block} />
+    case 'mind_map':             return <MindMapRenderer block={block} />;
     // English blocks (Class 9 Kaveri)
     case 'narrated_passage':              return <NarratedPassageRenderer block={block} />;
     case 'vocabulary_lab':                return <VocabularyLabRenderer block={block} />;
@@ -140,6 +160,8 @@ export default function BlockRenderer({
     case 'attention_xray':                return <AttentionXrayRenderer block={block} />;
     case 'self_experiment':               return <SelfExperimentRenderer block={block} />;
     case 'guided_reveal':                 return <GuidedRevealRenderer block={block} />;
+    case 'estimate_reveal':               return <EstimateRevealRenderer block={block} />;
+    case 'comparison_feed':               return <ComparisonFeedRenderer block={block} />;
     default:                   return null;
   }
 }

@@ -49,6 +49,11 @@ export default function InlineMarkdown({ children, paragraphClassName }: InlineM
         {children}
       </code>
     ),
+    // Tailwind's preflight strips default list markers/spacing, so bullet
+    // markdown (`- item`) renders as unmarked stacked text without this.
+    ul: ({ children }) => <ul className="my-1 space-y-1.5 pl-4 list-disc marker:text-white/30">{children}</ul>,
+    ol: ({ children }) => <ol className="my-1 space-y-1.5 pl-4 list-decimal marker:text-white/40">{children}</ol>,
+    li: ({ children }) => <li className="pl-0.5">{children}</li>,
   };
 
   return (

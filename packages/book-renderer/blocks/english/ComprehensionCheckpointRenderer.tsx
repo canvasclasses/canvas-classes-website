@@ -102,7 +102,7 @@ export default function ComprehensionCheckpointRenderer({ block }: { block: Comp
 
       {block.intro && (
         <div className="mb-3">
-          <InlineMarkdown paragraphClassName="text-[13px] italic text-white/55">
+          <InlineMarkdown paragraphClassName="text-[13px] italic text-white/60">
             {block.intro}
           </InlineMarkdown>
         </div>

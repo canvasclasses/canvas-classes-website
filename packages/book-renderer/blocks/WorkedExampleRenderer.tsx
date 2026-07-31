@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import { REHYPE_KATEX_OPTIONS } from './_katexConfig';
+import { extractGfmTableHeaders, buildResponsiveTableComponents } from './_responsiveTable';
 import 'katex/dist/katex.min.css';
 import 'katex/contrib/mhchem';
 import { WorkedExampleBlock } from '@canvas/data/types/books';
@@ -72,16 +73,16 @@ const mdComponents = {
     <p className="text-[17px] leading-[1.65] text-white/82 my-2.5">{children}</p>
   ),
   strong: ({ children }: { children?: React.ReactNode }) => (
-    <strong className="font-semibold text-white">{children}</strong>
+    <strong className="font-semibold text-white/85">{children}</strong>
   ),
   em: ({ children }: { children?: React.ReactNode }) => (
-    <em className="not-italic text-white/55 text-[15px]">{children}</em>
+    <em className="not-italic text-white/60 text-[15px]">{children}</em>
   ),
   ul: ({ children }: { children?: React.ReactNode }) => (
-    <ul className="my-2 pl-5 space-y-1 list-disc marker:text-white/30">{children}</ul>
+    <ul className="my-2 pl-5 space-y-1 list-disc marker:text-white/45">{children}</ul>
   ),
   ol: ({ children }: { children?: React.ReactNode }) => (
-    <ol className="my-2 pl-5 space-y-1 list-decimal marker:text-white/40">{children}</ol>
+    <ol className="my-2 pl-5 space-y-1 list-decimal marker:text-white/45">{children}</ol>
   ),
   li: ({ children }: { children?: React.ReactNode }) => (
     <li className="text-[17px] leading-[1.65] text-white/82">{children}</li>
@@ -109,6 +110,16 @@ export default function WorkedExampleRenderer({ block, exampleNumber }: Props) {
   // Remember=sky colour system).
   const accent = '#dba846';
 
+  // GFM tables inside `solution` (e.g. a "part (a)/(b)/(c)..." breakdown) read
+  // as real bordered tables on desktop and stacked label:value cards on
+  // mobile, instead of react-markdown's unstyled default <table> — same
+  // pattern already used by CalloutBlockRenderer's RememberCallout.
+  const solutionTableHeaders = useMemo(() => extractGfmTableHeaders(block.solution), [block.solution]);
+  const solutionComponents = useMemo(
+    () => ({ ...mdComponents, ...buildResponsiveTableComponents(solutionTableHeaders) }),
+    [solutionTableHeaders],
+  );
+
   return (
     <div
       className="my-8 rounded-r-xl pl-6 pr-5 py-5"
@@ -126,12 +137,12 @@ export default function WorkedExampleRenderer({ block, exampleNumber }: Props) {
             {headingMain}
           </span>
           {subtitle && (
-            <span className="text-[15px] text-white/70 font-normal leading-normal">
+            <span className="text-[15px] text-white/60 font-normal leading-normal">
               {subtitle}
             </span>
           )}
         </div>
-        <span className="text-[10px] font-bold uppercase tracking-widest text-white/35 whitespace-nowrap pt-1">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-white/45 whitespace-nowrap pt-1">
           {badge}
         </span>
       </div>
@@ -170,7 +181,7 @@ export default function WorkedExampleRenderer({ block, exampleNumber }: Props) {
             <ReactMarkdown
               remarkPlugins={[remarkMath, remarkGfm]}
               rehypePlugins={[[rehypeKatex, REHYPE_KATEX_OPTIONS]]}
-              components={mdComponents}
+              components={solutionComponents}
             >
               {block.solution}
             </ReactMarkdown>

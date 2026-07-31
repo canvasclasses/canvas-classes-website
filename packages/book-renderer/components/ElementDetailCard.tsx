@@ -468,7 +468,7 @@ export function ElementDetailCard({ element }: { element: Element }) {
             <div className={`text-3xl md:text-5xl font-bold mb-0.5 md:mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               {element.symbol}
             </div>
-            <div className={`flex items-baseline gap-3 flex-wrap text-base md:text-xl font-medium ${isDark ? 'text-white/90' : 'text-gray-900/90'}`}>
+            <div className={`flex items-baseline gap-3 flex-wrap text-base md:text-xl font-medium ${isDark ? 'text-white/85' : 'text-gray-900/90'}`}>
               <span>{element.name}</span>
               {element.electronConfig && (
                 <span className="font-mono tracking-tight">

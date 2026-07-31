@@ -64,13 +64,13 @@ export default function VideoBlockRenderer({
           className="w-full flex items-center gap-2.5 py-1.5 pl-3 pr-2 rounded-md hover:bg-white/[0.03] transition-colors group text-left"
         >
           <Play size={13} fill="currentColor" className="text-orange-400/90 shrink-0" />
-          <span className="flex-1 text-left text-[14px] font-medium text-white/65 group-hover:text-white/85 transition-colors">
+          <span className="flex-1 text-left text-[14px] font-medium text-white/60 group-hover:text-white/85 transition-colors">
             {block.caption ?? 'Watch Video Explanation'}
           </span>
           {block.duration_sec > 0 && (
-            <span className="text-[12px] text-white/30 tabular-nums shrink-0">{formatDuration(block.duration_sec)}</span>
+            <span className="text-[12px] text-white/45 tabular-nums shrink-0">{formatDuration(block.duration_sec)}</span>
           )}
-          {expanded ? <ChevronUp size={15} className="text-white/25 shrink-0" /> : <ChevronDown size={15} className="text-white/25 shrink-0" />}
+          {expanded ? <ChevronUp size={15} className="text-white/45 shrink-0" /> : <ChevronDown size={15} className="text-white/45 shrink-0" />}
         </button>
       ) : (
         <button
@@ -91,7 +91,7 @@ export default function VideoBlockRenderer({
             <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-orange-400/85 mb-0.5">
               Video Lecture
             </span>
-            <span className="block text-[15px] font-semibold text-white/90 leading-snug group-hover:text-white transition-colors">
+            <span className="block text-[15px] font-semibold text-white/85 leading-snug group-hover:text-white transition-colors">
               {block.caption ?? 'Watch Video Explanation'}
             </span>
           </span>

@@ -43,7 +43,7 @@ export default function PerspectiveScenarioRenderer({ block }: { block: Perspect
 
       <div className="px-5 py-5">
         {/* Title */}
-        <h4 className="text-[19px] font-bold text-white/92 mb-2 leading-snug">{block.title}</h4>
+        <h4 className="text-[19px] font-bold text-white/85 mb-2 leading-snug">{block.title}</h4>
 
         {/* Role frame */}
         <p className="text-[15px] italic text-white/60 mb-4 leading-relaxed">{block.role_frame}</p>
@@ -61,33 +61,33 @@ export default function PerspectiveScenarioRenderer({ block }: { block: Perspect
               />
             ) : (
               <div className="rounded-lg border border-dashed border-white/12 bg-white/[0.02] px-3 py-2.5">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-white/25 mb-1.5">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-white/45 mb-1.5">
                   Infographic needed — generation prompt:
                 </p>
-                <p className="text-[12px] text-white/38 font-mono leading-relaxed select-all">
+                <p className="text-[12px] text-white/45 font-mono leading-relaxed select-all">
                   {block.image_prompt}
                 </p>
               </div>
             )}
             {block.image_caption && (
-              <figcaption className="text-[12px] text-white/35 italic mt-1.5">{block.image_caption}</figcaption>
+              <figcaption className="text-[12px] text-white/45 italic mt-1.5">{block.image_caption}</figcaption>
             )}
           </figure>
         )}
 
         {/* Event context */}
-        <InlineMarkdown paragraphClassName="text-[14.5px] leading-[1.8] text-white/72 mb-2">
+        <InlineMarkdown paragraphClassName="text-[14.5px] leading-[1.8] text-white/82 mb-2">
           {block.event_context}
         </InlineMarkdown>
 
         {/* Source note — citation, always visible */}
         <div className="flex items-start gap-2 mt-3 mb-5 pt-3 border-t border-white/8">
           <span className="text-[11px] mt-[1px]" style={{ color: ACCENT }}>◆</span>
-          <p className="text-[12.5px] text-white/40 leading-relaxed italic">{block.source_note}</p>
+          <p className="text-[12.5px] text-white/45 leading-relaxed italic">{block.source_note}</p>
         </div>
 
         {/* Prompt */}
-        <p className="text-[15.5px] font-semibold text-white/90 mb-4">{block.prompt}</p>
+        <p className="text-[15.5px] font-semibold text-white/85 mb-4">{block.prompt}</p>
 
         {/* Options — equal visual weight, no correctness styling */}
         {!chosen && (
@@ -112,11 +112,11 @@ export default function PerspectiveScenarioRenderer({ block }: { block: Perspect
         {/* Chosen option — its real position + reasoning */}
         {chosen && (
           <div className="rounded-xl px-4 py-4 mb-5 border" style={{ borderColor: ACCENT_BORDER, background: ACCENT_DIM }}>
-            <p className="text-[14.5px] font-semibold text-white/90 mb-1.5">{chosen.label}</p>
+            <p className="text-[14.5px] font-semibold text-white/85 mb-1.5">{chosen.label}</p>
             <p className="text-[11px] font-bold uppercase tracking-wide mb-3" style={{ color: ACCENT }}>
               {chosen.real_position}
             </p>
-            <InlineMarkdown paragraphClassName="text-[14px] leading-[1.8] text-white/70">
+            <InlineMarkdown paragraphClassName="text-[14px] leading-[1.8] text-white/82">
               {chosen.perspective}
             </InlineMarkdown>
           </div>
@@ -125,7 +125,7 @@ export default function PerspectiveScenarioRenderer({ block }: { block: Perspect
         {/* Other perspectives — unlock after a choice, explorable */}
         {chosen && others.length > 0 && (
           <div className="mb-5">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-white/35 mb-2.5">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-white/45 mb-2.5">
               How others might have approached this
             </p>
             <div className="flex flex-col gap-2">
@@ -135,10 +135,10 @@ export default function PerspectiveScenarioRenderer({ block }: { block: Perspect
                   <div key={opt.id} className="rounded-xl border border-white/8 overflow-hidden">
                     <button
                       onClick={() => setOpenId(isOpen ? null : opt.id)}
-                      className="w-full text-left px-4 py-3 text-[14px] text-white/70 flex items-center justify-between gap-3"
+                      className="w-full text-left px-4 py-3 text-[14px] text-white/82 flex items-center justify-between gap-3"
                     >
                       <span>{opt.label}</span>
-                      <span className="text-white/30 text-[12px] shrink-0">{isOpen ? '−' : '+'}</span>
+                      <span className="text-white/45 text-[12px] shrink-0">{isOpen ? '−' : '+'}</span>
                     </button>
                     {isOpen && (
                       <div className="px-4 pb-4 pt-1">
@@ -160,10 +160,10 @@ export default function PerspectiveScenarioRenderer({ block }: { block: Perspect
         {/* Synthesis — explicitly not a verdict */}
         {chosen && (
           <div className="pt-4 border-t border-white/8">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-white/35 mb-2">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-white/45 mb-2">
               Where This Actually Stands
             </p>
-            <InlineMarkdown paragraphClassName="text-[14px] leading-[1.8] text-white/62">
+            <InlineMarkdown paragraphClassName="text-[14px] leading-[1.8] text-white/60">
               {block.synthesis}
             </InlineMarkdown>
           </div>

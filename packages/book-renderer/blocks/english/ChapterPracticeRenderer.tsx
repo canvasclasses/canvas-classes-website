@@ -146,7 +146,7 @@ export default function ChapterPracticeRenderer({
         </div>
         {block.intro && (
           <div className="mb-4">
-            <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/65">
+            <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/60">
               {block.intro}
             </InlineMarkdown>
           </div>
@@ -171,13 +171,13 @@ export default function ChapterPracticeRenderer({
       <div className="my-8 rounded-2xl border border-violet-500/20 bg-violet-500/[0.03] px-5 py-8 text-center">
         <div className="text-5xl mb-3">{passed ? '🎯' : '📚'}</div>
         <h3 className="text-xl font-bold mb-1">{passed ? 'Practice complete!' : 'Keep going'}</h3>
-        <p className="text-white/50 text-sm mb-5">
+        <p className="text-white/60 text-sm mb-5">
           You got {correctCount} of {served} right ({score}%).
         </p>
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <button
             onClick={start}
-            className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70"
+            className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/82"
           >
             Practice again
           </button>
@@ -203,13 +203,13 @@ export default function ChapterPracticeRenderer({
         <span className="text-[10px] font-bold uppercase tracking-widest text-violet-400/70">
           {block.title || 'Chapter Practice'}
         </span>
-        <span className="text-[11px] text-white/35 tabular-nums">
+        <span className="text-[11px] text-white/45 tabular-nums">
           {served + (phase === 'feedback' ? 0 : 1)} / {sessionSize}
         </span>
       </div>
 
-      <div className="mb-4 text-[15px] leading-relaxed text-white/90">
-        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/90">
+      <div className="mb-4 text-[15px] leading-relaxed text-white/85">
+        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/85">
           {current.question}
         </InlineMarkdown>
       </div>
@@ -245,7 +245,7 @@ export default function ChapterPracticeRenderer({
       {phase === 'feedback' && (
         <div className="mt-4 pt-4 border-t border-white/8">
           {current.explanation && (
-            <p className="text-[13px] text-white/55 leading-relaxed mb-4">{current.explanation}</p>
+            <p className="text-[13px] text-white/60 leading-relaxed mb-4">{current.explanation}</p>
           )}
           <button
             onClick={advance}

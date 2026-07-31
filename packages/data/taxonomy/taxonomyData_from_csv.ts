@@ -119,6 +119,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'micro_mole_2_4', name: 'Volume Strength of H₂O₂', parent_id: 'tag_mole_2', type: 'micro_topic' },
     { id: 'micro_mole_2_5', name: 'Interconversion of Concentration Units', parent_id: 'tag_mole_2', type: 'micro_topic' },
     { id: 'micro_mole_2_6', name: 'Parts Per Million (ppm/ppb)', parent_id: 'tag_mole_2', type: 'micro_topic' },
+    { id: 'micro_mole_2_7', name: 'Dilution & Mixing (Mole Conservation)', parent_id: 'tag_mole_2', type: 'micro_topic' },
     { id: 'tag_mole_3', name: 'Empirical/Molecular Formula', parent_id: 'ch11_mole', type: 'topic' },
     { id: 'micro_mole_3_1', name: 'Empirical Formula from % Composition', parent_id: 'tag_mole_3', type: 'micro_topic' },
     { id: 'micro_mole_3_2', name: 'Molecular Formula from Empirical Formula', parent_id: 'tag_mole_3', type: 'micro_topic' },
@@ -1824,7 +1825,7 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_ac_4', name: 'Power in AC Circuits & Power Factor', parent_id: 'ph12_ac', type: 'topic' },
     { id: 'tag_ac_5', name: 'Transformers', parent_id: 'ph12_ac', type: 'topic' },
 
-    { id: 'ph12_ray_optics', name: 'Ray Optics', parent_id: null, type: 'chapter', sequence_order: 124, class_level: 12, chapterType: 'optics' },
+    { id: 'ph12_ray_optics', name: 'Ray Optics', parent_id: null, type: 'chapter', sequence_order: 125, class_level: 12, chapterType: 'optics' },
     { id: 'tag_rop_1', name: 'Reflection (Plane & Curved Mirrors)', parent_id: 'ph12_ray_optics', type: 'topic' },
     { id: 'tag_rop_2', name: 'Refraction at Plane Surfaces & TIR', parent_id: 'ph12_ray_optics', type: 'topic' },
     { id: 'tag_rop_3', name: 'Prism & Dispersion', parent_id: 'ph12_ray_optics', type: 'topic' },
@@ -1832,34 +1833,34 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
     { id: 'tag_rop_5', name: 'Optical Instruments (Microscope, Telescope)', parent_id: 'ph12_ray_optics', type: 'topic' },
     { id: 'tag_rop_6', name: 'Power of Lens & Lens Maker\'s Equation', parent_id: 'ph12_ray_optics', type: 'topic' },
 
-    { id: 'ph12_wave_optics', name: 'Wave Optics', parent_id: null, type: 'chapter', sequence_order: 125, class_level: 12, chapterType: 'optics' },
+    { id: 'ph12_wave_optics', name: 'Wave Optics', parent_id: null, type: 'chapter', sequence_order: 126, class_level: 12, chapterType: 'optics' },
     { id: 'tag_wvop_1', name: 'Huygens\' Principle & Wavefronts', parent_id: 'ph12_wave_optics', type: 'topic' },
     { id: 'tag_wvop_2', name: 'Young\'s Double Slit Experiment (YDSE)', parent_id: 'ph12_wave_optics', type: 'topic' },
     { id: 'tag_wvop_3', name: 'Interference Conditions & Fringe Width', parent_id: 'ph12_wave_optics', type: 'topic' },
     { id: 'tag_wvop_4', name: 'Diffraction (Single Slit)', parent_id: 'ph12_wave_optics', type: 'topic' },
     { id: 'tag_wvop_5', name: 'Polarisation', parent_id: 'ph12_wave_optics', type: 'topic' },
 
-    { id: 'ph12_dual_nature', name: 'Dual Nature of Matter', parent_id: null, type: 'chapter', sequence_order: 126, class_level: 12, chapterType: 'modern_physics' },
+    { id: 'ph12_dual_nature', name: 'Dual Nature of Matter', parent_id: null, type: 'chapter', sequence_order: 127, class_level: 12, chapterType: 'modern_physics' },
     { id: 'tag_dual_1', name: 'Photoelectric Effect & Einstein\'s Photoelectric Equation', parent_id: 'ph12_dual_nature', type: 'topic' },
     { id: 'tag_dual_2', name: 'Photoelectric Experiments (Stopping Potential, Threshold Frequency)', parent_id: 'ph12_dual_nature', type: 'topic' },
     { id: 'tag_dual_3', name: 'de Broglie Hypothesis & Matter Waves', parent_id: 'ph12_dual_nature', type: 'topic' },
     { id: 'tag_dual_4', name: 'Davisson-Germer Experiment', parent_id: 'ph12_dual_nature', type: 'topic' },
 
-    { id: 'ph12_atoms', name: 'Atomic Physics', parent_id: null, type: 'chapter', sequence_order: 127, class_level: 12, chapterType: 'modern_physics' },
+    { id: 'ph12_atoms', name: 'Atomic Physics', parent_id: null, type: 'chapter', sequence_order: 128, class_level: 12, chapterType: 'modern_physics' },
     { id: 'tag_atph_1', name: 'Thomson & Rutherford Atomic Models', parent_id: 'ph12_atoms', type: 'topic' },
     { id: 'tag_atph_2', name: 'Alpha-Particle Scattering Experiment', parent_id: 'ph12_atoms', type: 'topic' },
     { id: 'tag_atph_3', name: 'Bohr\'s Model of Hydrogen Atom', parent_id: 'ph12_atoms', type: 'topic' },
     { id: 'tag_atph_4', name: 'Hydrogen Spectrum (Lyman, Balmer, Paschen Series)', parent_id: 'ph12_atoms', type: 'topic' },
     { id: 'tag_atph_5', name: 'X-Rays (Production, Continuous & Characteristic Spectrum)', parent_id: 'ph12_atoms', type: 'topic' },
 
-    { id: 'ph12_nuclei', name: 'Nuclear Physics', parent_id: null, type: 'chapter', sequence_order: 128, class_level: 12, chapterType: 'modern_physics' },
+    { id: 'ph12_nuclei', name: 'Nuclear Physics', parent_id: null, type: 'chapter', sequence_order: 129, class_level: 12, chapterType: 'modern_physics' },
     { id: 'tag_nucl_1', name: 'Nuclear Composition, Size & Density', parent_id: 'ph12_nuclei', type: 'topic' },
     { id: 'tag_nucl_2', name: 'Mass-Energy Equivalence & Binding Energy', parent_id: 'ph12_nuclei', type: 'topic' },
     { id: 'tag_nucl_3', name: 'Radioactivity (Alpha, Beta, Gamma Decay)', parent_id: 'ph12_nuclei', type: 'topic' },
     { id: 'tag_nucl_4', name: 'Law of Radioactive Decay & Half-Life', parent_id: 'ph12_nuclei', type: 'topic' },
     { id: 'tag_nucl_5', name: 'Nuclear Fission & Fusion', parent_id: 'ph12_nuclei', type: 'topic' },
 
-    { id: 'ph12_em_waves', name: 'Electromagnetic Waves', parent_id: null, type: 'chapter', sequence_order: 129, class_level: 12, chapterType: 'electromagnetism' },
+    { id: 'ph12_em_waves', name: 'Electromagnetic Waves', parent_id: null, type: 'chapter', sequence_order: 124, class_level: 12, chapterType: 'electromagnetism' },
     { id: 'tag_emw_1', name: 'Displacement Current & Maxwell\'s Equations', parent_id: 'ph12_em_waves', type: 'topic' },
     { id: 'tag_emw_2', name: 'Properties of Electromagnetic Waves (Speed, Energy, Momentum)', parent_id: 'ph12_em_waves', type: 'topic' },
     { id: 'tag_emw_3', name: 'Electromagnetic Spectrum (Radio Waves to Gamma Rays)', parent_id: 'ph12_em_waves', type: 'topic' },
@@ -2892,6 +2893,6 @@ export const TAXONOMY_FROM_CSV: TaxonomyNode[] = [
 
 // Summary Statistics
 // Total Chapters: 136
-// Total Tags: 881
-// Total Micro Topics: 1681
-// Last saved: 2026-05-24T11:03:44.980Z
+// Total Tags: 888
+// Total Micro Topics: 1706
+// Last saved: 2026-07-27T04:10:43.421Z

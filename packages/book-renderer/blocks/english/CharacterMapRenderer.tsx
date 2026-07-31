@@ -150,7 +150,7 @@ export default function CharacterMapRenderer({ block }: { block: CharacterMapBlo
               close ×
             </button>
           </div>
-          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/75">
+          <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/82">
             {openChar.bio}
           </InlineMarkdown>
         </div>

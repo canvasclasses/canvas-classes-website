@@ -43,7 +43,7 @@ export function FigureCaption({
   blockType,
   figureNumber,
   caption,
-  className = 'mt-2 text-center text-sm text-white/50 italic',
+  className = 'mt-2 text-center text-sm text-white/45 italic',
 }: {
   blockType: string;
   figureNumber?: string;
@@ -54,7 +54,7 @@ export function FigureCaption({
   if (!label && !caption) return null;
   return (
     <figcaption className={className}>
-      {label && <span className="font-semibold not-italic text-white/70">{label}</span>}
+      {label && <span className="font-semibold not-italic text-white/60">{label}</span>}
       {label && caption ? ' — ' : ''}
       {caption}
     </figcaption>

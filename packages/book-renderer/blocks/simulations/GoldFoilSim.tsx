@@ -137,8 +137,13 @@ export default function GoldFoilSim() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, W, H);
 
-      // Background
-      ctx.fillStyle = '#0a0f1a';
+      // Background — soft radial gradient (matches the platform's canonical
+      // SVG-canvas viewport treatment) instead of a flat fill, so the scene
+      // reads as a proper lit stage rather than a plain dark rectangle.
+      const bgGrad = ctx.createRadialGradient(FOIL_X, CY, 0, FOIL_X, CY, Math.max(W, H) * 0.75);
+      bgGrad.addColorStop(0, '#101625');
+      bgGrad.addColorStop(1, '#05070d');
+      ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, W, H);
 
       // ── ZnS Detector Screen ─────────────────────────────────────
@@ -150,18 +155,20 @@ export default function GoldFoilSim() {
       ctx.strokeStyle = 'rgba(15,23,42,0.85)';
       ctx.lineWidth = 4;
       ctx.stroke();
-      // Outer fluorescent ring (thick faint glow)
+      // Outer fluorescent ring (thick faint glow) — teal, matching the ZnS
+      // label colour, instead of the old lime-green which clashed with the
+      // gold/amber palette used everywhere else in the scene.
       ctx.beginPath();
       ctx.arc(FOIL_X, CY, SCREEN_R, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(190,242,100,0.08)';
+      ctx.strokeStyle = 'rgba(45,212,191,0.07)';
       ctx.lineWidth = 22;
       ctx.stroke();
       // Mid fluorescent ring
-      ctx.strokeStyle = 'rgba(132,204,22,0.20)';
+      ctx.strokeStyle = 'rgba(45,212,191,0.16)';
       ctx.lineWidth = 8;
       ctx.stroke();
       // Inner sharp edge — the actual screen
-      ctx.strokeStyle = 'rgba(190,242,100,0.55)';
+      ctx.strokeStyle = 'rgba(94,234,212,0.45)';
       ctx.lineWidth = 1.5;
       ctx.stroke();
       // Tick marks every 30° around the screen so it reads as a graduated
@@ -174,7 +181,7 @@ export default function GoldFoilSim() {
         const y2 = CY     + (SCREEN_R + 4) * Math.sin(a);
         ctx.beginPath();
         ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
-        ctx.strokeStyle = 'rgba(190,242,100,0.32)';
+        ctx.strokeStyle = 'rgba(94,234,212,0.28)';
         ctx.lineWidth = 1;
         ctx.stroke();
       }
@@ -454,25 +461,24 @@ export default function GoldFoilSim() {
           >
             Reset
           </button>
-          {T > 0 && (
-            <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', marginLeft: 4 }}>
-              {T} α-particles fired
-            </span>
-          )}
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
+        {/* Flat stat row — plain text, no bordered/tinted boxes. A thin
+            vertical hairline separates the three columns instead of wrapping
+            each one in its own card. */}
+        <div className="flex" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 14 }}>
           {([
-            { label: 'Straight Through', key: 'straight'      as const, color: '#4ade80', bg: 'rgba(74,222,128,0.06)',  bdr: 'rgba(74,222,128,0.18)'  },
-            { label: 'Deflected',        key: 'deflected'     as const, color: '#fbbf24', bg: 'rgba(251,191,36,0.06)', bdr: 'rgba(251,191,36,0.18)'  },
-            { label: 'Backscattered',    key: 'backscattered' as const, color: '#f87171', bg: 'rgba(248,113,113,0.06)',bdr: 'rgba(248,113,113,0.18)' },
-          ] as const).map(({ label, key, color, bg, bdr }) => (
-            <div key={key} style={{ background: bg, border: `1px solid ${bdr}`, borderRadius: '10px', padding: '10px 12px' }}>
-              <div style={{ fontSize: '22px', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color, lineHeight: 1.1 }}>
+            { label: 'Straight Through', key: 'straight'      as const, color: '#4ade80' },
+            { label: 'Deflected',        key: 'deflected'     as const, color: '#fbbf24' },
+            { label: 'Backscattered',    key: 'backscattered' as const, color: '#f87171' },
+          ] as const).map(({ label, key, color }, i) => (
+            <div key={key} className="flex-1"
+              style={{ borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none', paddingLeft: i > 0 ? 16 : 0, marginLeft: i > 0 ? 4 : 0 }}>
+              <div style={{ fontSize: '24px', fontWeight: 800, fontVariantNumeric: 'tabular-nums', color, lineHeight: 1.1 }}>
                 {T > 0 ? `${((counts[key] / T) * 100).toFixed(1)}%` : '—'}
               </div>
-              <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.42)', marginTop: 3 }}>{label}</div>
-              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.22)', marginTop: 2 }}>{counts[key]}</div>
+              <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.50)', marginTop: 4 }}>{label}</div>
+              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.28)', marginTop: 1 }}>{counts[key]} of {T}</div>
             </div>
           ))}
         </div>

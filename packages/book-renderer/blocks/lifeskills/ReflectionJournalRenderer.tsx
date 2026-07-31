@@ -59,13 +59,13 @@ export default function ReflectionJournalRenderer({ block }: { block: Reflection
         >
           Your Journal
         </span>
-        <span className="text-[10px] text-white/25 font-medium uppercase tracking-widest">
+        <span className="text-[10px] text-white/45 font-medium uppercase tracking-widest">
           Private — stays on this device
         </span>
       </div>
 
       <div className="mb-3">
-        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/90 font-medium">
+        <InlineMarkdown paragraphClassName="text-[15px] leading-relaxed text-white/85 font-medium">
           {block.prompt}
         </InlineMarkdown>
       </div>
@@ -87,7 +87,7 @@ export default function ReflectionJournalRenderer({ block }: { block: Reflection
       />
 
       <div className="flex items-center justify-between mt-1.5">
-        <span className="text-[11px] text-white/25">
+        <span className="text-[11px] text-white/45">
           {words} {words === 1 ? 'word' : 'words'}
           {block.min_words && words < block.min_words && words > 0 && (
             <span> · try for {block.min_words}+</span>

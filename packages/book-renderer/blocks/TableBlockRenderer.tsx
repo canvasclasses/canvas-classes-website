@@ -17,9 +17,9 @@ function CellContent({ text }: { text: string }) {
       components={{
         p: ({ children }) => <span>{children}</span>,
         strong: ({ children }) => (
-          <strong className="font-semibold text-amber-200/80">{children}</strong>
+          <strong className="font-semibold" style={{ color: '#dcceb6' }}>{children}</strong>
         ),
-        em: ({ children }) => <em className="italic text-white/65">{children}</em>,
+        em: ({ children }) => <em className="italic text-white/60">{children}</em>,
         code: ({ children }) => (
           <code className="bg-white/10 px-1 rounded text-[12px] text-amber-300 font-mono">
             {children}
@@ -38,8 +38,8 @@ export default function TableBlockRenderer({ block }: { block: TableBlock }) {
   return (
     <figure className="my-6">
       {(block.figure_number || block.caption) && (
-        <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/35 mb-3 select-none">
-          {block.figure_number && <span className="text-white/55">Table {block.figure_number}</span>}
+        <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/45 mb-3 select-none">
+          {block.figure_number && <span className="text-white/45">Table {block.figure_number}</span>}
           {block.figure_number && block.caption ? ' — ' : ''}
           {block.caption}
         </p>
@@ -60,7 +60,7 @@ export default function TableBlockRenderer({ block }: { block: TableBlock }) {
                       px-5 py-3.5 text-left font-semibold tracking-wide whitespace-nowrap
                       ${i === 0
                         ? 'text-sky-300 text-[13px]'
-                        : 'text-white/55 text-[11px] uppercase tracking-[0.08em]'
+                        : 'text-white/45 text-[11px] uppercase tracking-[0.08em]'
                       }
                     `}
                   >
@@ -96,8 +96,8 @@ export default function TableBlockRenderer({ block }: { block: TableBlock }) {
                         className={`
                           px-5 py-3.5 align-middle leading-[1.55]
                           ${ci === 0
-                            ? 'font-semibold text-white/90 min-w-[80px]'
-                            : 'text-white/72'
+                            ? 'font-semibold text-white/85 min-w-[80px]'
+                            : 'text-white/82'
                           }
                           ${isHighlighted && ci === 0 ? 'text-orange-300' : ''}
                         `}

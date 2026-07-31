@@ -31,7 +31,7 @@ export default function SectionBlockRenderer({ block, onQuizPass }: Props) {
       }
     >
       {block.title && (
-        <h2 className="text-[22px] font-semibold text-white/90 mb-4 tracking-tight">
+        <h2 className="text-[22px] font-semibold text-white/85 mb-4 tracking-tight">
           <InlineMarkdown>{block.title}</InlineMarkdown>
         </h2>
       )}

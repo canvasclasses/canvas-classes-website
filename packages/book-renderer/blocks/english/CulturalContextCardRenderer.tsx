@@ -68,7 +68,7 @@ export default function CulturalContextCardRenderer({ block, hinglish }: { block
                   />
                 </div>
               )}
-              <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/70">
+              <InlineMarkdown paragraphClassName="text-[14px] leading-relaxed text-white/82">
                 {detail}
               </InlineMarkdown>
             </div>

@@ -63,15 +63,15 @@ export default function HabitTrackerRenderer({ block }: { block: HabitTrackerBlo
         >
           {block.duration_days}-Day Challenge
         </span>
-        <span className="text-[10px] text-white/25 font-medium uppercase tracking-widest tabular-nums">
+        <span className="text-[10px] text-white/45 font-medium uppercase tracking-widest tabular-nums">
           {doneCount} / {block.duration_days} days
         </span>
       </div>
 
-      <h3 className="text-lg font-bold text-white/90 mb-1">{block.title}</h3>
+      <h3 className="text-lg font-bold text-white/85 mb-1">{block.title}</h3>
       {block.why && (
         <div className="mb-3">
-          <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/55">
+          <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/60">
             {block.why}
           </InlineMarkdown>
         </div>
@@ -110,14 +110,14 @@ export default function HabitTrackerRenderer({ block }: { block: HabitTrackerBlo
           <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: ACCENT }}>
             {checkedToday ? 'Done for today' : `Day ${doneCount + 1}`}
           </p>
-          <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/80">
+          <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/82">
             {todaysTask}
           </InlineMarkdown>
         </div>
       )}
 
       {missedGap && (
-        <p className="text-xs text-white/40 mb-3 italic">
+        <p className="text-xs text-white/45 mb-3 italic">
           Missed a day? No guilt — the streak that matters is the one you restart. Continue today.
         </p>
       )}
@@ -128,7 +128,7 @@ export default function HabitTrackerRenderer({ block }: { block: HabitTrackerBlo
           Challenge complete — {block.duration_days} days. That consistency is the real skill.
         </p>
       ) : checkedToday ? (
-        <p className="text-xs text-white/30">
+        <p className="text-xs text-white/45">
           Checked in. Come back tomorrow for day {doneCount + 1}.
         </p>
       ) : (

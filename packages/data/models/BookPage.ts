@@ -29,6 +29,14 @@ const BookPageSchema = new Schema<IBookPage>(
     worked_example_count: { type: Number, default: 0 },
     content_types: { type: [String], default: [] },
     video_title: { type: String, default: null },
+    // Per-page glossary (§15.9) — {term, definition} entries powering tap/hover
+    // definitions in the reader. Stored schema-less like blocks/hinglish_blocks;
+    // shape is GlossaryEntry[] from types/books.ts, Zod-validated at the API layer.
+    // Was missing here entirely, so Mongoose's default strict mode silently
+    // dropped it on every $set — the PUT route returned success but nothing
+    // persisted (root cause of ~1,754 biology-book entries never rendering).
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    glossary: { type: [Schema.Types.Mixed], default: [] } as any,
     // §15.1 — 'chapter_opener' renders the bespoke cover + journey; absent = lesson.
     page_type: { type: String, enum: ['lesson', 'chapter_opener'], default: 'lesson' },
     // Automated readiness summary (computed on save + recompute backfill). Stored

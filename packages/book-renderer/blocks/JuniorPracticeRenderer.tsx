@@ -209,7 +209,7 @@ export default function JuniorPracticeRenderer({
           </div>
         )}
 
-        <p className="mb-3 text-[15px] leading-relaxed text-white/90">
+        <p className="mb-3 text-[15px] leading-relaxed text-white/85">
           <span className="mr-2 text-xs font-bold" style={{ color: '#818cf8' }}>Q{idx + 1}.</span>
           <Md>{current.question}</Md>
         </p>
@@ -249,7 +249,7 @@ export default function JuniorPracticeRenderer({
               {idx + 1 >= total ? 'See results' : 'Next →'}
             </button>
           ) : isTest ? (
-            <span className="text-xs text-white/40">Question {idx + 1} of {total}</span>
+            <span className="text-xs text-white/45">Question {idx + 1} of {total}</span>
           ) : null}
         </div>
       </>
@@ -263,9 +263,9 @@ export default function JuniorPracticeRenderer({
       <div role="dialog" aria-modal="true" aria-label={label}
         className="relative z-10 flex h-full w-full flex-col overflow-y-auto border-white/10 bg-[#0B0F15] p-6 sm:h-auto sm:max-h-[88vh] sm:max-w-2xl sm:rounded-2xl sm:border">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">{isTest ? 'Chapter Test' : 'Chapter Practice'}</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-white/45">{isTest ? 'Chapter Test' : 'Chapter Practice'}</span>
           <button onClick={requestClose} aria-label="Close"
-            className="grid h-8 w-8 place-items-center rounded-full text-white/50 hover:bg-white/10 hover:text-white/80">✕</button>
+            className="grid h-8 w-8 place-items-center rounded-full text-white/45 hover:bg-white/10 hover:text-white/82">✕</button>
         </div>
         {sessionContent()}
       </div>
@@ -277,18 +277,18 @@ export default function JuniorPracticeRenderer({
     return (
       <>
         <div className="my-8 rounded-2xl border p-6" style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-white/30">{isTest ? 'Chapter Test' : 'Chapter Practice'}</p>
-          <h3 className="mt-1 text-lg font-bold text-white/90">{label}</h3>
-          {block.intro && <p className="mt-1 text-sm text-white/55">{block.intro}</p>}
-          {count === null ? <p className="mt-4 text-sm text-white/40">Loading questions…</p>
-            : count === 0 ? <p className="mt-4 text-sm text-white/40">No practice questions for this chapter yet.</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-white/45">{isTest ? 'Chapter Test' : 'Chapter Practice'}</p>
+          <h3 className="mt-1 text-lg font-bold text-white/85">{label}</h3>
+          {block.intro && <p className="mt-1 text-sm text-white/60">{block.intro}</p>}
+          {count === null ? <p className="mt-4 text-sm text-white/45">Loading questions…</p>
+            : count === 0 ? <p className="mt-4 text-sm text-white/45">No practice questions for this chapter yet.</p>
             : (
               <button onClick={launch} className="mt-4 rounded-xl px-5 py-2.5 text-sm font-bold text-black"
                 style={{ background: 'linear-gradient(to right, #f97316, #f59e0b)' }}>
                 Open practice — {Math.min(sessionSize, count)} question{Math.min(sessionSize, count) !== 1 ? 's' : ''} →
               </button>
             )}
-          <p className="mt-3 text-xs text-white/30">In the live reader this opens as a centered modal, launched from a floating button.</p>
+          <p className="mt-3 text-xs text-white/45">In the live reader this opens as a centered modal, launched from a floating button.</p>
         </div>
         {modal}
       </>

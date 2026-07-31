@@ -226,21 +226,21 @@ export default function FocusGameRenderer({ block }: { block: FocusGameBlock }) 
           style={{ background: ACCENT_BG, color: ACCENT }}>
           Focus Meter
         </span>
-        <span className="text-[10px] text-white/25 font-medium uppercase tracking-widest">
+        <span className="text-[10px] text-white/45 font-medium uppercase tracking-widest">
           {block.role === 'retest' ? 'Round 2' : block.role === 'baseline' ? 'Baseline' : 'Focus Check'} · {totalSec}s
         </span>
       </div>
-      <h3 className="text-lg font-bold text-white/90 mb-1">{block.title}</h3>
+      <h3 className="text-lg font-bold text-white/85 mb-1">{block.title}</h3>
 
       {/* Intro */}
       {mode === 'intro' && (
         <div>
           {block.intro && (
             <div className="mb-3">
-              <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/55">{block.intro}</InlineMarkdown>
+              <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/60">{block.intro}</InlineMarkdown>
             </div>
           )}
-          <ul className="mb-4 flex flex-col gap-1.5 text-sm text-white/70">
+          <ul className="mb-4 flex flex-col gap-1.5 text-sm text-white/82">
             <li className="flex gap-2"><span style={{ color: ACCENT_STRONG }}>•</span> One flame. Your only job: <b>keep your attention on it.</b></li>
             <li className="flex gap-2"><span style={{ color: ACCENT_STRONG }}>•</span> <span>The moment you catch your mind wandering — a thought, an itch to look away — <b>tap.</b> (Spacebar works too.)</span></li>
             <li className="flex gap-2"><span style={{ color: ACCENT_STRONG }}>•</span> <span>The timer shows how long you held. Each tap <b>resets it to zero</b> — that&rsquo;s one slip.</span></li>
@@ -252,7 +252,7 @@ export default function FocusGameRenderer({ block }: { block: FocusGameBlock }) 
             {block.role === 'retest' ? 'Watch the flame again' : 'Light the flame'}
           </button>
           {baseline && block.role === 'retest' && (
-            <span className="ml-3 text-xs text-white/30">Your page-1 longest hold was {Math.round(baseline.longest)}s.</span>
+            <span className="ml-3 text-xs text-white/45">Your page-1 longest hold was {Math.round(baseline.longest)}s.</span>
           )}
         </div>
       )}
@@ -276,24 +276,24 @@ export default function FocusGameRenderer({ block }: { block: FocusGameBlock }) 
 
             {/* timer — far right, deliberately dim so it never pulls your eye off the flame */}
             <div className="w-16 sm:w-24 shrink-0 text-right leading-none">
-              <div className="text-[9px] uppercase tracking-widest text-white/25 mb-1">Holding for</div>
-              <div className="text-3xl sm:text-4xl font-semibold tabular-nums text-white/55">
-                {(holdMs / 1000).toFixed(1)}<span className="text-lg text-white/25">s</span>
+              <div className="text-[9px] uppercase tracking-widest text-white/45 mb-1">Holding for</div>
+              <div className="text-3xl sm:text-4xl font-semibold tabular-nums text-white/60">
+                {(holdMs / 1000).toFixed(1)}<span className="text-lg text-white/45">s</span>
               </div>
-              <div className="mt-3 flex flex-col gap-0.5 text-[10px] text-white/25 tabular-nums">
+              <div className="mt-3 flex flex-col gap-0.5 text-[10px] text-white/45 tabular-nums">
                 <span>Longest {longestSoFar.toFixed(1)}s</span>
                 <span>Slips {drifts}</span>
               </div>
             </div>
 
-            <span className="absolute bottom-2.5 left-0 right-0 text-center text-[11px] tracking-widest uppercase text-white/20">
+            <span className="absolute bottom-2.5 left-0 right-0 text-center text-[11px] tracking-widest uppercase text-white/45">
               Tap the moment your mind wanders
             </span>
           </div>
 
           {/* total-time bar */}
           <div className="mt-3 flex items-center justify-between">
-            <span className="text-xs text-white/30 uppercase tracking-widest">Stay with the flame</span>
+            <span className="text-xs text-white/45 uppercase tracking-widest">Stay with the flame</span>
             <span className="text-sm font-semibold tabular-nums" style={{ color: ACCENT }}>
               {Math.floor(secsLeft / 60)}:{String(secsLeft % 60).padStart(2, '0')}
             </span>
@@ -310,9 +310,9 @@ export default function FocusGameRenderer({ block }: { block: FocusGameBlock }) 
           {/* Headline: longest unbroken hold */}
           <div className="flex items-end gap-4 mb-1">
             <div>
-              <div className="text-[10px] uppercase tracking-widest text-white/30 mb-0.5">Your longest unbroken focus</div>
+              <div className="text-[10px] uppercase tracking-widest text-white/45 mb-0.5">Your longest unbroken focus</div>
               <div className="text-5xl font-bold tabular-nums" style={{ color: ACCENT }}>
-                {Math.round(summary.longest)}<span className="text-2xl text-white/40">s</span>
+                {Math.round(summary.longest)}<span className="text-2xl text-white/45">s</span>
               </div>
             </div>
             {delta != null && (
@@ -334,7 +334,7 @@ export default function FocusGameRenderer({ block }: { block: FocusGameBlock }) 
             ].map((s) => (
               <div key={s.label} className="rounded-xl py-2" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
                 <div className="text-lg font-bold tabular-nums text-white/85">{s.val}</div>
-                <div className="text-[10px] uppercase tracking-widest text-white/30">{s.label}</div>
+                <div className="text-[10px] uppercase tracking-widest text-white/45">{s.label}</div>
               </div>
             ))}
           </div>
@@ -346,7 +346,7 @@ export default function FocusGameRenderer({ block }: { block: FocusGameBlock }) 
             </p>
           ) : resets != null && (
             <div className="rounded-xl px-4 py-3 mb-3" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}` }}>
-              <p className="text-sm leading-relaxed text-white/80">
+              <p className="text-sm leading-relaxed text-white/82">
                 At that pace, in a <b>45-minute class</b> your attention would quietly reset about{' '}
                 <b style={{ color: ACCENT }}>{resets} times</b>. That&rsquo;s the real problem — and it&rsquo;s exactly what the rest of this chapter helps you fix.
               </p>
@@ -355,11 +355,11 @@ export default function FocusGameRenderer({ block }: { block: FocusGameBlock }) 
 
           {block.completion_note && (
             <div className="mb-3">
-              <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/65">{block.completion_note}</InlineMarkdown>
+              <InlineMarkdown paragraphClassName="text-sm leading-relaxed text-white/60">{block.completion_note}</InlineMarkdown>
             </div>
           )}
           {block.role === 'baseline' && (
-            <p className="text-xs text-white/40 italic mb-3">This is your starting line — not a good or bad number. You&rsquo;ll watch the same flame on the last page and see how much longer you can hold.</p>
+            <p className="text-xs text-white/45 italic mb-3">This is your starting line — not a good or bad number. You&rsquo;ll watch the same flame on the last page and see how much longer you can hold.</p>
           )}
           <button onClick={() => setMode('intro')} className="text-xs font-semibold px-4 py-2 rounded-xl"
             style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}>

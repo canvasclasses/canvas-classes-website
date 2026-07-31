@@ -45,7 +45,7 @@ export default function ImageLightbox({
         onClick={onClose}
         aria-label="Close image"
         className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center
-          text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+          text-white/60 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
       >
         ✕
       </button>
@@ -61,7 +61,7 @@ export default function ImageLightbox({
           draggable={false}
         />
         {caption && (
-          <figcaption className="mt-3 text-center text-sm text-white/55 italic max-w-2xl">
+          <figcaption className="mt-3 text-center text-sm text-white/45 italic max-w-2xl">
             {caption}
           </figcaption>
         )}
