@@ -899,9 +899,10 @@ sub {
 .lb-section { margin-top: 4px; }
 .lb-heading {
   display: flex; align-items: center; gap: 12px;
-  padding: 0 2px 14px;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  margin-bottom: 4px;
+  /* No rule under the heading — the books already read as their own band, so
+     the divider only added a line to look at. */
+  padding: 0 2px 10px;
+  margin-bottom: 0;
 }
 .lb-heading h2 {
   margin: 0;
