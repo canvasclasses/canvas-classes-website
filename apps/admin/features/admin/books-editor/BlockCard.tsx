@@ -29,6 +29,13 @@ import SectionBlockEditor from './blocks/SectionBlockEditor';
 import ClassifyExerciseEditor from './blocks/ClassifyExerciseEditor';
 import CuriosityPromptBlockEditor from './blocks/CuriosityPromptBlockEditor';
 import SimulationBlockEditor from './blocks/SimulationBlockEditor';
+import MathGraphEditor from './blocks/MathGraphEditor';
+import VectorBoardEditor from './blocks/VectorBoardEditor';
+import MechanicsBenchEditor from './blocks/MechanicsBenchEditor';
+import MotionLabEditor from './blocks/MotionLabEditor';
+import CircuitBenchEditor from './blocks/CircuitBenchEditor';
+import OpticsBenchEditor from './blocks/OpticsBenchEditor';
+import FieldBenchEditor from './blocks/FieldBenchEditor';
 import JuniorPracticeEditor from './blocks/JuniorPracticeEditor';
 import YouSolveItEditor from './blocks/YouSolveItEditor';
 
@@ -53,6 +60,14 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   inline_quiz: 'Quiz (Milestone)',
   worked_example: 'Worked Example',
   simulation: 'Simulation',
+  math_graph: 'Interactive Graph',
+  vector_board: 'Vector Board',
+  mechanics_bench: 'Mechanics Bench',
+  motion_lab: 'Motion Lab',
+  circuit_bench: 'Circuit Bench',
+  optics_bench: 'Optics Bench',
+  field_bench: 'Field Bench',
+  step_solver: 'Step Solver',
   section: 'Section',
   reasoning_prompt: 'Reasoning Prompt',
   curiosity_prompt: 'Curiosity Prompt',
@@ -83,9 +98,12 @@ const BLOCK_LABELS: Record<BlockType, string> = {
   attention_xray: 'Attention X-Ray',
   self_experiment: 'Self-Experiment',
   guided_reveal: 'Guided Reveal',
+  estimate_reveal: 'Estimate & Reveal',
+  comparison_feed: 'Comparison Feed',
   perspective_scenario: 'Perspective Scenario',
   career_spotlight: 'Career Spotlight',
   you_solve_it: 'You Solve It',
+  mind_map: 'Mind Map',
 };
 
 const BLOCK_ICONS: Record<BlockType, string> = {
@@ -109,6 +127,14 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   inline_quiz: '🧠',
   worked_example: '📘',
   simulation: '⚙️',
+  math_graph: '📈',
+  vector_board: '➶',
+  mechanics_bench: '⚖',
+  motion_lab: '◠',
+  circuit_bench: '⚡',
+  optics_bench: '🔦',
+  field_bench: '🧲',
+  step_solver: '🪜',
   section: '▦',
   reasoning_prompt: '🧩',
   curiosity_prompt: '✦',
@@ -138,9 +164,12 @@ const BLOCK_ICONS: Record<BlockType, string> = {
   attention_xray: '🩻',
   self_experiment: '🔬',
   guided_reveal: '🎬',
+  estimate_reveal: '🎯',
+  comparison_feed: '📱',
   perspective_scenario: '⚖️',
   career_spotlight: '💼',
   you_solve_it: '◎',
+  mind_map: '🗺️',
 };
 
 function blockPreview(block: ContentBlock): string {
@@ -167,6 +196,13 @@ function blockPreview(block: ContentBlock): string {
       case 'inline_quiz':    return `${(block.questions || []).length} question${block.questions?.length !== 1 ? 's' : ''} · ${Math.round((block.pass_threshold ?? 0.7) * 100)}% to pass`;
       case 'worked_example': return block.label || '(example)';
       case 'simulation':     return block.title || block.simulation_id || '(simulation)';
+      case 'math_graph':     return block.title || (block.archetype ? `template: ${block.archetype}` : 'graph') || '(math graph)';
+      case 'vector_board':   return block.title || (block.archetype ? `construction: ${block.archetype}` : '(vector board)');
+      case 'mechanics_bench':return block.title || `${block.mode}${block.archetype ? ` · ${block.archetype}` : ''}`;
+      case 'motion_lab':     return block.title || `${block.scenario}${block.archetype ? ` · ${block.archetype}` : ''}`;
+      case 'circuit_bench':  return block.title || (block.archetype ? `construction: ${block.archetype}` : '(circuit bench)');
+      case 'optics_bench':   return block.title || `${block.mode}${block.archetype ? ` · ${block.archetype}` : ''}`;
+      case 'field_bench':    return block.title || `${block.kind} · ${block.mode}${block.archetype ? ` · ${block.archetype}` : ''}`;
       case 'section':           return `${block.layout} · ${block.columns.reduce((sum, col) => sum + col.length, 0)} blocks`;
       case 'reasoning_prompt':   return `${block.reasoning_type} · Level ${block.difficulty_level} · ${(block.prompt || '').slice(0, 60)}`;
       case 'curiosity_prompt':   return (block.prompt || '').slice(0, 80) || '(empty)';
@@ -219,6 +255,13 @@ export default function BlockCard({
       case 'classify_exercise': return <ClassifyExerciseEditor block={block} onChange={onChange} />;
       case 'curiosity_prompt':  return <CuriosityPromptBlockEditor block={block} onChange={onChange} />;
       case 'simulation':        return <SimulationBlockEditor block={block} onChange={onChange} />;
+      case 'math_graph':        return <MathGraphEditor block={block} onChange={onChange} />;
+      case 'vector_board':      return <VectorBoardEditor block={block} onChange={onChange} />;
+      case 'mechanics_bench':   return <MechanicsBenchEditor block={block} onChange={onChange} />;
+      case 'motion_lab':        return <MotionLabEditor block={block} onChange={onChange} />;
+      case 'circuit_bench':     return <CircuitBenchEditor block={block} onChange={onChange} />;
+      case 'optics_bench':      return <OpticsBenchEditor block={block} onChange={onChange} />;
+      case 'field_bench':       return <FieldBenchEditor block={block} onChange={onChange} />;
       case 'junior_practice':   return <JuniorPracticeEditor block={block} onChange={onChange} />;
       case 'you_solve_it':      return <YouSolveItEditor block={block} onChange={onChange} onUpload={onUpload} />;
       case 'practice_bank':     return (
@@ -233,6 +276,13 @@ export default function BlockCard({
           <p className="text-white/60 font-semibold">{block.title || 'Group Elements'}</p>
           <p>Elements: <span className="font-mono text-white/70">{(block.element_symbols || []).join(', ') || '(none)'}</span></p>
           <p className="text-white/30">The element list is authored in-script (looked up in the shared periodic table by symbol). See the live preview on the right for the rendered cards.</p>
+        </div>
+      );
+      case 'mind_map':          return (
+        <div className="text-xs text-white/40 leading-relaxed px-1 py-2 space-y-1">
+          <p className="text-white/60 font-semibold">{block.title || 'Mind Map'}</p>
+          <p>{block.branches.length} branches · {block.branches.reduce((s, b) => s + b.children.length, 0)} sub-topics.</p>
+          <p className="text-white/30">Authored via <code>scripts/</code> + <code>book-writer.js</code>. See the live preview on the right for the rendered map.</p>
         </div>
       );
       default:                  return null;

@@ -39,6 +39,22 @@ export function defaultBlock(type: BlockType, order: number): ContentBlock {
     case 'curiosity_prompt':  return { ...base, type, prompt: '' };
     case 'classify_exercise': return { ...base, type, question: 'Which of these are…?', rows: [{ substance: '', is_solution: true, explanation: '' }] };
     case 'junior_practice':   return { ...base, type, book_slug: '', chapter_number: 1, session_size: 10, pass_threshold: 0.7, mode: 'practice', title: '', intro: '' };
+    // Config-carrying engine blocks. Each seeds a real `archetype` so the block
+    // renders something in the split-pane preview the moment it is added — the
+    // archetype supplies its own default vectors/scene/params, and the faculty
+    // editor swaps it from the catalog dropdown. Never seed `null` for the
+    // optional fields: they are Mixed-stored but Zod-validated with
+    // `.optional()`, which rejects null — omit the key instead.
+    case 'math_graph':        return { ...base, type, archetype: 'transformations' };
+    case 'vector_board':      return { ...base, type, archetype: 'triangle-law' };
+    // Physics engine blocks (E1 mechanics-bench, E2 motion-lab). `mode` and
+    // `scenario` are required by Zod, so the default must supply them — the
+    // editor then swaps them when an archetype is picked.
+    case 'mechanics_bench':   return { ...base, type, mode: 'fbd', archetype: 'body-on-incline' };
+    case 'motion_lab':        return { ...base, type, scenario: 'projectile', archetype: 'basic-launch' };
+    case 'circuit_bench':     return { ...base, type, archetype: 'series-vs-parallel' };
+    case 'optics_bench':      return { ...base, type, mode: 'bench', archetype: 'converging-lens' };
+    case 'field_bench':       return { ...base, type, kind: 'electric', mode: 'sculptor', archetype: 'single-charge' };
     // English / practice blocks (narrated_passage, vocabulary_lab,
     // chapter_practice, apply_express, …) are authored via scripts / the English
     // book pipeline, not this editor's Add-block menu, so they never reach here.

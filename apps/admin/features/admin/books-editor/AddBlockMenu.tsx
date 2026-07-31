@@ -42,6 +42,23 @@ const BLOCK_GROUPS: { label: string; blocks: { type: BlockType; icon: string; la
     ],
   },
   {
+    label: 'Math',
+    blocks: [
+      { type: 'math_graph', icon: '📈', label: 'Interactive Graph' },
+    ],
+  },
+  {
+    label: 'Physics',
+    blocks: [
+      { type: 'vector_board', icon: '➶', label: 'Vector Board' },
+      { type: 'mechanics_bench', icon: '⚖', label: 'Mechanics Bench' },
+      { type: 'motion_lab', icon: '◠', label: 'Motion Lab' },
+      { type: 'circuit_bench', icon: '⚡', label: 'Circuit Bench' },
+      { type: 'optics_bench', icon: '🔦', label: 'Optics Bench' },
+      { type: 'field_bench', icon: '🧲', label: 'Field Bench' },
+    ],
+  },
+  {
     label: 'Interactive',
     blocks: [
       { type: 'practice_link',   icon: '🎯', label: 'Practice Link' },
