@@ -1,0 +1,190 @@
+{
+  "confident": [
+    {
+      "block_id": "1e3c5f79-1ef8-4a03-821b-832268a48cff",
+      "correct_index": 0,
+      "why": "Reveal: \"7 A\" — charge conservation, 3+4; option[0] is \"7 A\" (5 A is the named vector-addition trap)"
+    },
+    {
+      "block_id": "e84ff06d-50ca-4558-9cd0-bbc58770d107",
+      "correct_index": 0,
+      "why": "Reveal: \"A few hundred years — around 430\"; recomputed t=1.36e10 s = 432 yr; option[0]"
+    },
+    {
+      "block_id": "a2053fd9-d338-4d41-a3ff-98a43f9cb1eb",
+      "correct_index": 0,
+      "why": "Reveal: \"No violation. The conditions changed\" (hotter filament); option[0]; option[2] also says No but with the false claim that R rises with V in every material"
+    },
+    {
+      "block_id": "903665fa-bf03-4b4f-ae02-f69c4f0bacaf",
+      "correct_index": 0,
+      "why": "Reveal: \"16 times\"; stretching at constant volume gives R∝1/A², 4²=16; option[0]"
+    },
+    {
+      "block_id": "1a16d5e1-8684-4bbc-916c-c5d5da105c90",
+      "correct_index": 0,
+      "why": "Reveal: 4e-3 K^-1; 14=10(1+100α); option[0]"
+    },
+    {
+      "block_id": "8b79a036-d319-46fc-927f-c04dc2c85ed3",
+      "correct_index": 0,
+      "why": "Reveal: \"1.25 V\"; I=0.5 A, V=ε−Ir=IR=1.25; option[0]"
+    },
+    {
+      "block_id": "633cd348-b043-4a4d-80a6-467f41032665",
+      "correct_index": 0,
+      "why": "Reveal: \"Smallest 2 Ω, largest 18 Ω\" (all-parallel / all-series); option[0]"
+    },
+    {
+      "block_id": "90d3698d-f922-4db8-af9e-5b0716284139",
+      "correct_index": 0,
+      "why": "Reveal: \"Zero\" — shorted resistor has V=0 across it; option[0]"
+    },
+    {
+      "block_id": "73090430-889d-4e82-a735-8408d7ac9542",
+      "correct_index": 0,
+      "why": "Reveal: \"2 rows of 12 cells (m=2, n=12)\"; verified all 8 divisor pairs — 3.00 A is the max; option[0] matches verbatim"
+    },
+    {
+      "block_id": "2cf2467e-03af-43ed-a6b0-d72d99140afd",
+      "correct_index": 0,
+      "why": "Reveal: \"Parallel, by a factor of 4\"; Pp/Ps=n²=4; option[0]"
+    },
+    {
+      "block_id": "5c3c0038-99e6-4ba4-91a7-6e7cf8874e59",
+      "correct_index": 0,
+      "why": "Reveal: \"Yes — it remains balanced\"; P/Q=R/S ⇔ P/R=Q/S; option[0]"
+    },
+    {
+      "block_id": "5fcc51de-f409-4a76-a262-6473d5bfd779",
+      "correct_index": 0,
+      "why": "Reveal: 15 Ω; S=R(100−l)/l=10(60/40); option[0] (6.7 Ω is the inverted-ratio trap)"
+    },
+    {
+      "block_id": "693236df-21f6-41b7-ac29-386be4cda939",
+      "correct_index": 0,
+      "why": "Reveal: \"2.2 V, and yes — balances at 6.25 m\"; k=0.4 V/m; option[0] matches both halves"
+    },
+    {
+      "block_id": "cfd8650e-d18a-406e-baf3-19cdbc5d9e08",
+      "correct_index": 0,
+      "why": "Reveal: \"A very large current flows, and the ammeter is likely to be destroyed\"; option[0]"
+    },
+    {
+      "block_id": "3f35b512-ba63-44ad-a993-9fd2cafae147",
+      "correct_index": 0,
+      "why": "Reveal: \"Zero\" — ∮B·dS=0 always, no magnetic monopoles; option[0]"
+    },
+    {
+      "block_id": "2abbb26c-6a5c-4ce6-9abf-ee82881e9bd9",
+      "correct_index": 0,
+      "why": "Reveal: \"m/2 in both cases\"; perpendicular cut halves l, lengthwise cut halves q_m; option[0]"
+    },
+    {
+      "block_id": "b0b97a07-60b0-47b8-8da7-803a815757af",
+      "correct_index": 0,
+      "why": "Reveal: \"B/2 on the equator, B/8 on the axis at 2d\"; axial→equatorial ÷2, dipole 1/d³ ÷8; option[0]"
+    },
+    {
+      "block_id": "19a1a53a-8b83-4500-98c9-0c4e54e787d5",
+      "correct_index": 0,
+      "why": "Reveal: \"Yes\" — poles sit in different B in a non-uniform field; option[0] gives that exact reason"
+    },
+    {
+      "block_id": "909c5121-a0f3-49bb-8f49-27cccca47b79",
+      "correct_index": 0,
+      "why": "Reveal: 0.64 G; B=B_H/cos60°=0.32/0.5; option[0] (0.16 G is the multiply-instead-of-divide trap)"
+    },
+    {
+      "block_id": "cde45ea7-9d89-4d28-ae24-8746a485bbba",
+      "correct_index": 0,
+      "why": "Reveal: \"On the perpendicular bisector, one on each side\"; N pointing north ⇒ equatorial field opposes B_H; option[0]"
+    },
+    {
+      "block_id": "7d38675a-017f-41bb-9d1a-3285370fd495",
+      "correct_index": 0,
+      "why": "Reveal: \"About 0.63 T\"; μ0(1+χ)H = 4πe-7·500·1000 = 0.628 T; option[0]"
+    },
+    {
+      "block_id": "ca6d1487-5fd6-4dfd-93a7-41afe82a4aa4",
+      "correct_index": 0,
+      "why": "Reveal: 3.6e-5; Curie χ∝1/T, ×300/200; option[0]"
+    },
+    {
+      "block_id": "7850bf05-fa50-4ceb-9a29-8f134d692a3e",
+      "correct_index": 0,
+      "why": "Reveal: \"No\" — domains reform in random orientations with no field to align them; option[0]"
+    },
+    {
+      "block_id": "9c7a2f5e-fa96-42ea-bfde-5ccdca6400b1",
+      "correct_index": 0,
+      "why": "Reveal: \"Its velocity must be along the field — parallel or antiparallel\"; option[0]"
+    },
+    {
+      "block_id": "4bafea5e-ced6-4923-95a7-3b7cefc36eb4",
+      "correct_index": 0,
+      "why": "Reveal: \"East\"; v×B (north × down) = west, negated for the electron = east; option[0]"
+    },
+    {
+      "block_id": "99312ad7-42d2-4058-86e7-7e186a8cf423",
+      "correct_index": 0,
+      "why": "Reveal: \"Any particle at 2.0e6 m/s, regardless of charge or mass\"; v=E/B; option[0] matches the charge/mass-independence clause"
+    },
+    {
+      "block_id": "a5865192-25cb-4098-8cdf-ea0ee649487e",
+      "correct_index": 0,
+      "why": "Reveal: \"Twice the radius and twice the period\"; both ∝ m/q = 4m_p/2e; option[0]"
+    },
+    {
+      "block_id": "7f11a979-7ee8-4646-93fd-7fe920163d61",
+      "correct_index": 0,
+      "why": "Reveal: \"Radius is half; period is unchanged\"; r∝v sin30°, T=2πm/qB has no v; option[0]"
+    },
+    {
+      "block_id": "fac847e4-ab28-46e1-a618-0261e66dfe21",
+      "correct_index": 0,
+      "why": "Reveal: \"Increase the magnetic field by √2\"; K_max ∝ B²; option[0]"
+    },
+    {
+      "block_id": "43ad0158-1c25-4b56-96bb-aef3d75dedc8",
+      "correct_index": 0,
+      "why": "Reveal: \"2BIR\"; effective length is the diameter 2R; option[0] (πBIR is the arc-length trap)"
+    },
+    {
+      "block_id": "74200a0a-e2cb-461a-8166-20eb8d630703",
+      "correct_index": 0,
+      "why": "Reveal: \"5e-5 N/m, attractive\"; 2e-7·25/0.10 = 5e-5, same-direction currents attract; option[0] matches both halves"
+    },
+    {
+      "block_id": "fd4c291c-7f7b-4d94-93a4-f73b6abab9e6",
+      "correct_index": 0,
+      "why": "Reveal: \"At a point further along the x-axis\" — θ=0 so sinθ=0; option[0]"
+    },
+    {
+      "block_id": "1e0d679d-d4b6-4b72-8bf8-c06994641938",
+      "correct_index": 0,
+      "why": "Reveal: \"About 4 cm\"; d=μ0I/2πB=2e-6/5e-5=0.04 m; option[0]"
+    },
+    {
+      "block_id": "0072758d-d2f6-42dd-8aff-c655d90215df",
+      "correct_index": 0,
+      "why": "Reveal: \"The integral is zero, but the field certainly is not\"; I_enc=0; option[0] states exactly that pairing"
+    },
+    {
+      "block_id": "2bd1f379-0f0d-4b60-9917-3940078ac274",
+      "correct_index": 0,
+      "why": "Reveal: 5.0e-3 T; n=1000/0.5=2000 turns/m, μ0nI; option[0] (2.5e-3 is the use-N-not-n trap)"
+    },
+    {
+      "block_id": "31402cd1-9155-4b44-a3fb-54f6e3ccad67",
+      "correct_index": 0,
+      "why": "Reveal: 3.8e-2 N·m; m=NIA=0.1257, τ_max=mB=0.0377; option[0] (3.8e-4 is the cm-not-m trap)"
+    },
+    {
+      "block_id": "3a2428fc-675b-44c6-b742-57bb9d66711f",
+      "correct_index": 0,
+      "why": "Reveal: \"Current sensitivity doubles; voltage sensitivity is roughly unchanged\" — G doubles too and cancels N; option[0]"
+    }
+  ],
+  "uncertain": []
+}

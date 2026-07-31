@@ -40,6 +40,18 @@ import { join } from 'node:path';
 
 const ROOT = process.cwd();
 const SIM_DIR = 'packages/book-renderer/blocks/simulations';
+// The E1/E2 physics engines live outside SIM_DIR because they are config-carrying
+// BLOCKS, not sim-registry entries — but their canvases are simulations and must
+// meet the same design gate. Without these the two-colour rule silently stops
+// applying the moment a sim ships as an engine block.
+const ENGINE_DIRS = [
+  'packages/book-renderer/blocks/mechanics-bench',
+  'packages/book-renderer/blocks/motion-lab',
+  'packages/book-renderer/blocks/vector-board',
+  'packages/book-renderer/blocks/field-bench',
+  'packages/book-renderer/blocks/circuit-bench',
+  'packages/book-renderer/blocks/optics-bench',
+];
 const EXTRA_SIMULATORS_FILE = 'apps/student/features/books/lib/extraSimulators.tsx';
 const ALL = process.argv.includes('--all');
 const REPORT_ONLY = process.argv.includes('--report');
@@ -72,7 +84,8 @@ function extraSimulatorFiles() {
 const EXTRA_SIM_FILES = new Set(extraSimulatorFiles());
 
 const isSimFile = (p) =>
-  (p.startsWith(SIM_DIR) && p.endsWith('.tsx') && !SKIP.some((s) => p.startsWith(s) || p === s))
+  ((p.startsWith(SIM_DIR) || ENGINE_DIRS.some((d) => p.startsWith(d)))
+    && p.endsWith('.tsx') && !SKIP.some((s) => p.startsWith(s) || p === s))
   || EXTRA_SIM_FILES.has(p);
 
 
@@ -104,7 +117,7 @@ function changedFiles() {
 function allSimFiles() {
   // NB: `git ls-files "dir/**/*.tsx"` under-matches (pathspec globbing quirk).
   // List the whole subtree and filter to .tsx ourselves.
-  const out = sh(`git ls-files -- ${SIM_DIR}`);
+  const out = sh(`git ls-files -- ${SIM_DIR} ${ENGINE_DIRS.join(' ')}`);
   const bookRendererFiles = out.split('\n').map((l) => l.trim()).filter((p) => p.endsWith('.tsx')).filter(isSimFile);
   // Extra simulators live outside SIM_DIR entirely — add them directly rather
   // than globbing apps/student (which contains plenty of non-sim files too).

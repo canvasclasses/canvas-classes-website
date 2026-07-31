@@ -43,7 +43,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.13',
               prompt:
-                'Pressure is determined as force per unit area of the surface. The SI unit of pressure, pascal is as shown below:\n1Pa = 1N m-2\nIf mass of air at sea level is 1034 g cm-2, calculate the pressure in pascal.',
+                'Pressure is determined as force per unit area of the surface. The SI unit of pressure, pascal is as shown below:\n$1\\ \\text{Pa} = 1\\ \\text{N m}^{-2}$\nIf mass of air at sea level is $1034\\ \\text{g cm}^{-2}$, calculate the pressure in pascal.',
               answer: 'P ≈ 1.01 × 10⁵ Pa',
               solution:
                 "**Set up what 'mass per area' means physically.** We're told that a column of air pressing down on every $1\\ \\text{cm}^2$ of sea-level surface weighs $1034\\ \\text{g}$. Pressure is force per area, and force here is the weight of that air, $F = mg$. So first turn the given mass-per-area into SI units (kg and m²), then bring in $g$.\n\n**Convert the mass-per-area to kg/m².**\n$1034\\ \\text{g cm}^{-2} = 1034 \\times 10^{-3}\\ \\text{kg} \\ / \\ 10^{-4}\\ \\text{m}^2 = 1034 \\times 10\\ \\text{kg m}^{-2} = 1.034\\times 10^{4}\\ \\text{kg m}^{-2}$\n\n**Bring in gravity to turn mass-per-area into force-per-area (pressure).** Take $g = 9.8\\ \\text{m s}^{-2}$:\n$P = (1.034\\times 10^{4}\\ \\text{kg m}^{-2}) \\times (9.8\\ \\text{m s}^{-2}) = 1.013\\times 10^{5}\\ \\text{kg m}^{-1}\\text{s}^{-2}$\n\nAnd $1\\ \\text{kg m}^{-1}\\text{s}^{-2} = 1\\ \\text{N m}^{-2} = 1\\ \\text{Pa}$, so:\n$P \\approx 1.01\\times 10^{5}\\ \\text{Pa}$\n\n**Where students get stuck:** forgetting that 'mass per unit area' isn't pressure by itself — you still need to multiply by $g$ to get a force. Also watch the unit conversion: $1\\ \\text{cm}^2 = 10^{-4}\\ \\text{m}^2$, not $10^{-2}\\ \\text{m}^2$ — a very common slip.",
@@ -64,7 +64,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.15',
               prompt:
-                'Match the following prefixes with their multiples:\nPrefixes    Multiples\n(i) micro    10^6\n(ii) deca    10^9\n(iii) mega    10^-6\n(iv) giga    10^-15\n(v) femto    10',
+                'Match the following prefixes with their multiples:\nPrefixes    Multiples\n(i) micro    $10^{6}$\n(ii) deca    $10^{9}$\n(iii) mega    $10^{-6}$\n(iv) giga    $10^{-15}$\n(v) femto    10',
               answer: 'micro→10⁻⁶, deca→10¹, mega→10⁶, giga→10⁹, femto→10⁻¹⁵',
               solution:
                 "**This is a straight recall of the SI prefix table** — the multiples listed in the question are jumbled up, so match each prefix to its actual value, not to the position it's sitting next to.\n\n- **micro** ($\\mu$) $= 10^{-6}$ — a millionth.\n- **deca** (da) $= 10^{1} = 10$ — just ten times.\n- **mega** (M) $= 10^{6}$ — a million.\n- **giga** (G) $= 10^{9}$ — a billion.\n- **femto** (f) $= 10^{-15}$ — a thousandth of a trillionth, used for things like bond lengths in picometres' smaller cousin.\n\n**Where students get stuck:** micro and mega get swapped (both are '6', but one is positive, one negative), and femto (very small, $10^{-15}$) gets confused with giga (very large, $10^{9}$) just because both look like 'big scientific' prefixes. Anchor it by remembering: prefixes with Latin/Greek roots for 'small' (micro, femto, pico, nano) are always negative powers; 'large' ones (kilo, mega, giga, tera) are always positive powers.",
@@ -118,7 +118,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.21',
               prompt:
-                'The following data are obtained when dinitrogen and dioxygen react together to form different compounds:\nMass of dinitrogen    Mass of dioxygen\n(i) 14 g    16 g\n(ii) 14 g    32 g\n(iii) 28 g    32 g\n(iv) 28 g    80 g\n(a) Which law of chemical combination is obeyed by the above experimental data? Give its statement.\n(b) Fill in the blanks in the following conversions:\n(i) 1 km = ...................... mm = ...................... pm\n(ii) 1 mg = ...................... kg = ...................... ng\n(iii) 1 mL = ...................... L = ...................... dm3',
+                'The following data are obtained when dinitrogen and dioxygen react together to form different compounds:\nMass of dinitrogen    Mass of dioxygen\n(i) 14 g    16 g\n(ii) 14 g    32 g\n(iii) 28 g    32 g\n(iv) 28 g    80 g\n(a) Which law of chemical combination is obeyed by the above experimental data? Give its statement.\n(b) Fill in the blanks in the following conversions:\n(i) 1 km = ...................... mm = ...................... pm\n(ii) 1 mg = ...................... kg = ...................... ng\n(iii) 1 mL = ...................... L = ...................... $\\text{dm}^3$',
               answer: '(a) Law of multiple proportions. (b)(i) 10⁶ mm, 10¹⁵ pm (ii) 10⁻⁶ kg, 10⁶ ng (iii) 10⁻³ L, 10⁻³ dm³',
               solution:
                 "**Part (a) — spot the pattern first.** Fix the mass of dinitrogen and see how the mass of dioxygen it combines with changes:\n- At $14\\ \\text{g}\\ \\text{N}_2$: dioxygen is $16\\ \\text{g}$ or $32\\ \\text{g}$ — ratio $16:32 = 1:2$.\n- At $28\\ \\text{g}\\ \\text{N}_2$: dioxygen is $32\\ \\text{g}$ or $80\\ \\text{g}$ — ratio $32:80 = 2:5$, and note $28\\ \\text{g}$ is exactly double $14\\ \\text{g}$, so scaling (iii) down to $14\\ \\text{g}\\ \\text{N}_2$ gives $16\\ \\text{g}\\ \\text{O}_2$ — matching (i) exactly, and (iv) scaled down gives $40\\ \\text{g}\\ \\text{O}_2$ for $14\\ \\text{g}\\ \\text{N}_2$.\n\nSo for a fixed mass of dinitrogen, the different masses of dioxygen it combines with ($16, 32, 40\\ \\text{g}$, i.e. after scaling) are in the simple whole-number ratio $2:4:5$ (equivalently the raw pairs $16:32$ simplify to $1:2$). This is exactly the **Law of Multiple Proportions**: *when two elements combine to form two or more different compounds, the masses of one element that combine with a fixed mass of the other are in a ratio of small whole numbers.*\n\n**Part (b) — unit conversions, one step at a time.**\n\n(i) $1\\ \\text{km} = 10^{3}\\ \\text{m}$. Since $1\\ \\text{m} = 10^{3}\\ \\text{mm}$, $1\\ \\text{km} = 10^{3}\\times 10^{3} = 10^{6}\\ \\text{mm}$. Since $1\\ \\text{m} = 10^{12}\\ \\text{pm}$, $1\\ \\text{km} = 10^{3}\\times 10^{12} = 10^{15}\\ \\text{pm}$.\n\n(ii) $1\\ \\text{mg} = 10^{-3}\\ \\text{g} = 10^{-3}\\times 10^{-3}\\ \\text{kg} = 10^{-6}\\ \\text{kg}$. Since $1\\ \\text{g} = 10^{9}\\ \\text{ng}$, $1\\ \\text{mg} = 10^{-3}\\times 10^{9} = 10^{6}\\ \\text{ng}$.\n\n(iii) $1\\ \\text{mL} = 10^{-3}\\ \\text{L}$, and since $1\\ \\text{L} = 1\\ \\text{dm}^3$ exactly, $1\\ \\text{mL} = 10^{-3}\\ \\text{dm}^3$ too.\n\n**Where students get stuck:** treating (iv)'s ratio ($2:5$) as if it doesn't match (i)–(iii) — you have to scale to a *common* fixed mass of nitrogen first before comparing, not compare the raw numbers as given.",
@@ -128,7 +128,7 @@ module.exports = {
               id: 'f1ceadce-897b-4180-a4e6-a2dca8b5cf9a',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.22',
-              prompt: 'If the speed of light is 3.0 × 10^8 m s-1, calculate the distance covered by light in 2.00 ns.',
+              prompt: 'If the speed of light is $3.0 \\times 10^{8}\\ \\text{m s}^{-1}$, calculate the distance covered by light in 2.00 ns.',
               answer: 'Distance = 0.600 m',
               solution:
                 "**This is a plain distance = speed × time problem — the only real work is unit conversion.** Nanoseconds need to become seconds first.\n\n$2.00\\ \\text{ns} = 2.00\\times 10^{-9}\\ \\text{s}$\n\n**Now multiply:**\n$\\text{distance} = v \\times t = (3.0\\times 10^{8}\\ \\text{m s}^{-1}) \\times (2.00\\times 10^{-9}\\ \\text{s})$\n$= 3.0 \\times 2.00 \\times 10^{8-9}\\ \\text{m} = 6.0\\times 10^{-1}\\ \\text{m} = 0.600\\ \\text{m}$\n\n**Sig figs:** the speed has 2 sig figs ($3.0$), so the answer is reported to 2 sig figs: $0.60\\ \\text{m}$ (written as $6.0\\times 10^{-1}\\ \\text{m}$ to be unambiguous).\n\n**Where students get stuck:** mixing up nano ($10^{-9}$) with micro ($10^{-6}$) or pico ($10^{-12}$) — always convert the prefix before plugging into the formula, not after.",
@@ -166,7 +166,7 @@ module.exports = {
               id: '7934e781-6888-4a4a-96e7-d32e2e3a921d',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.1',
-              prompt: 'Calculate the molar mass of the following:\n(i) H2O (ii) CO2 (iii) CH4',
+              prompt: 'Calculate the molar mass of the following:\n(i) $\\ce{H2O}$ (ii) $\\ce{CO2}$ (iii) $\\ce{CH4}$',
               answer: '(i) 18 g/mol (ii) 44 g/mol (iii) 16 g/mol',
               solution:
                 "**Molar mass is just the sum of atomic masses of every atom in the formula, in grams per mole.** Use the standard atomic masses: $\\ce{H}=1$, $\\ce{C}=12$, $\\ce{O}=16$ (all in u, which numerically equals g/mol).\n\n(i) $\\ce{H2O}$: $2(1) + 16 = 18\\ \\text{g mol}^{-1}$\n\n(ii) $\\ce{CO2}$: $12 + 2(16) = 12 + 32 = 44\\ \\text{g mol}^{-1}$\n\n(iii) $\\ce{CH4}$: $12 + 4(1) = 16\\ \\text{g mol}^{-1}$\n\n**Where students get stuck:** forgetting to multiply by the subscript for every atom of that element — e.g. writing $\\ce{CO2}$ as $12+16=28$ instead of $12+2(16)=44$.",
@@ -177,7 +177,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.9',
               prompt:
-                'Calculate the atomic mass (average) of chlorine using the following data:\n% Natural Abundance     Molar Mass\n35Cl    75.77    34.9689\n37Cl    24.23    36.9659',
+                'Calculate the atomic mass (average) of chlorine using the following data:\n% Natural Abundance     Molar Mass\n$\\ce{^{35}Cl}$    75.77    34.9689\n$\\ce{^{37}Cl}$    24.23    36.9659',
               answer: 'Average atomic mass ≈ 35.45 u',
               solution:
                 "**Average atomic mass is a weighted average** — weight each isotope's mass by how common it actually is in nature (its fractional abundance), then add.\n\n$\\bar{M} = (0.7577 \\times 34.9689) + (0.2423 \\times 36.9659)$\n\nFirst term: $0.7577 \\times 34.9689 = 26.496$\n\nSecond term: $0.2423 \\times 36.9659 = 8.957$\n\n$\\bar{M} = 26.496 + 8.957 = 35.45\\ \\text{u}$\n\n**Why this matches the periodic table value:** chlorine's listed atomic mass, $35.5\\ \\text{u}$, isn't the mass of any single chlorine atom — no chlorine atom actually weighs $35.5\\ \\text{u}$. It's this abundance-weighted average across the two naturally occurring isotopes, $\\ce{^{35}Cl}$ and $\\ce{^{37}Cl}$.\n\n**Where students get stuck:** using a simple average of the two masses ($\\frac{34.9689+36.9659}{2}$) instead of weighting by abundance — that ignores that $\\ce{^{35}Cl}$ is roughly three times more common, which pulls the true average closer to 35.",
@@ -188,7 +188,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.10',
               prompt:
-                'In three moles of ethane (C2H6), calculate the following:\n(i) Number of moles of carbon atoms.\n(ii) Number of moles of hydrogen atoms.\n(iii) Number of molecules of ethane.',
+                'In three moles of ethane ($\\ce{C2H6}$), calculate the following:\n(i) Number of moles of carbon atoms.\n(ii) Number of moles of hydrogen atoms.\n(iii) Number of molecules of ethane.',
               answer: '(i) 6 mol C (ii) 18 mol H (iii) 1.807×10²⁴ molecules',
               solution:
                 "**Each molecule of $\\ce{C2H6}$ contains 2 carbon atoms and 6 hydrogen atoms — scale that ratio up by the number of moles of ethane you have.**\n\n(i) Moles of C atoms $= 3\\ \\text{mol ethane} \\times 2 = 6\\ \\text{mol C}$\n\n(ii) Moles of H atoms $= 3\\ \\text{mol ethane} \\times 6 = 18\\ \\text{mol H}$\n\n(iii) Number of molecules $= 3\\ \\text{mol} \\times 6.022\\times 10^{23}\\ \\text{mol}^{-1} = 1.807\\times 10^{24}\\ \\text{molecules}$\n\n**Where students get stuck:** applying Avogadro's number directly to the *atoms* asked for in (i)/(ii) when the question only wants the mole count, not the actual number of atoms — read exactly what's being asked (moles vs. number of particles) before reaching for $N_A$.",
@@ -198,7 +198,7 @@ module.exports = {
               id: '95caa7a9-b5ff-489c-b494-9ef0d16f89cf',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.28',
-              prompt: 'Which one of the following will have the largest number of atoms?\n(i) 1 g Au(s)\n(ii) 1 g Na(s)\n(iii) 1 g Li(s)\n(iv) 1 g of Cl2(g)',
+              prompt: 'Which one of the following will have the largest number of atoms?\n(i) 1 g Au(s)\n(ii) 1 g Na(s)\n(iii) 1 g Li(s)\n(iv) 1 g of $\\ce{Cl2(g)}$',
               answer: '1 g of Li(s) has the largest number of atoms',
               solution:
                 "**For the same mass, the element with the smallest molar mass per atom packs in the most atoms** — lighter atoms means more of them fit into 1 gram. So find moles of atoms for each and compare (no need to multiply through by $N_A$ since it's the same constant for all).\n\n(i) $\\ce{Au}$ ($M=197\\ \\text{g/mol}$): moles $= 1/197 = 0.00508\\ \\text{mol atoms}$\n\n(ii) $\\ce{Na}$ ($M=23\\ \\text{g/mol}$): moles $= 1/23 = 0.0435\\ \\text{mol atoms}$\n\n(iii) $\\ce{Li}$ ($M=7\\ \\text{g/mol}$): moles $= 1/7 = 0.1429\\ \\text{mol atoms}$\n\n(iv) $\\ce{Cl2}$ ($M=71\\ \\text{g/mol}$ for the molecule, $35.5$ per Cl atom): moles of molecules $=1/71=0.01408$, so moles of **atoms** $= 2\\times 0.01408 = 0.0282\\ \\text{mol atoms}$\n\nComparing: $0.1429 > 0.0435 > 0.0282 > 0.00508$. **Lithium wins**, because it has by far the smallest atomic mass among these four.\n\n**Where students get stuck:** forgetting that $\\ce{Cl2}$ is diatomic — you must double the moles of molecules to get moles of atoms, or you'll wrongly compare it as if it behaves like a single atom.",
@@ -208,7 +208,7 @@ module.exports = {
               id: 'b99e35b0-41fb-449b-b912-c6f8649a05e6',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.30',
-              prompt: 'What will be the mass of one 12C atom in g?',
+              prompt: 'What will be the mass of one $\\ce{^{12}C}$ atom in g?',
               answer: 'Mass of one ¹²C atom ≈ 1.9927 × 10⁻²³ g',
               solution:
                 "**One mole of $\\ce{^{12}C}$ atoms has a mass of exactly $12\\ \\text{g}$ (that's the definition the whole mole concept is anchored to) and contains $N_A = 6.022\\times 10^{23}$ atoms.** So the mass of a single atom is just molar mass divided by Avogadro's number.\n\n$\\text{mass of one atom} = \\dfrac{12\\ \\text{g mol}^{-1}}{6.022\\times 10^{23}\\ \\text{mol}^{-1}} = 1.9927\\times 10^{-23}\\ \\text{g}$\n\n**Why this is worth sitting with:** this is the calculation that makes the mole concept concrete — it's the actual bridge between the everyday gram scale you weigh things on, and the impossibly tiny mass of a single atom. Every 'moles ↔ grams' conversion you'll ever do is built on exactly this division.",
@@ -219,7 +219,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.32',
               prompt:
-                'Use the data given in the following table to calculate the molar mass of naturally occuring argon isotopes:\nIsotope    Isotopic molar mass    Abundance\n36Ar    35.96755 g mol-1    0.337%\n38Ar    37.96272 g mol-1    0.063%\n40Ar    39.9624 g mol-1    99.600%',
+                'Use the data given in the following table to calculate the molar mass of naturally occuring argon isotopes:\nIsotope    Isotopic molar mass    Abundance\n$\\ce{^{36}Ar}$    $35.96755\\ \\text{g mol}^{-1}$    0.337%\n$\\ce{^{38}Ar}$    $37.96272\\ \\text{g mol}^{-1}$    0.063%\n$\\ce{^{40}Ar}$    $39.9624\\ \\text{g mol}^{-1}$    99.600%',
               answer: 'Average molar mass of Ar ≈ 39.95 g/mol',
               solution:
                 "**Same abundance-weighted average idea as chlorine in 1.9, just with three isotopes instead of two.** Convert each percentage to a fraction, multiply by that isotope's mass, and sum.\n\n$\\bar{M} = (0.00337\\times 35.96755) + (0.00063\\times 37.96272) + (0.99600\\times 39.9624)$\n\nFirst term: $0.00337\\times 35.96755 = 0.1212$\n\nSecond term: $0.00063\\times 37.96272 = 0.0239$\n\nThird term: $0.99600\\times 39.9624 = 39.8026$\n\n$\\bar{M} = 0.1212+0.0239+39.8026 = 39.948\\ \\text{g mol}^{-1} \\approx 39.95\\ \\text{g mol}^{-1}$\n\n**Notice how close this is to the pure mass of $\\ce{^{40}Ar}$ alone** — that's because $\\ce{^{40}Ar}$ makes up 99.6% of all naturally occurring argon, so the other two isotopes barely nudge the average. This is a good intuition check: when one isotope is overwhelmingly dominant, the average atomic mass will sit almost exactly at that isotope's mass.",
@@ -246,7 +246,7 @@ module.exports = {
               id: '7bc5604e-6da7-411f-9ed5-820d78668594',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.2',
-              prompt: 'Calculate the mass per cent of different elements present in sodium sulphate (Na2SO4).',
+              prompt: 'Calculate the mass per cent of different elements present in sodium sulphate ($\\ce{Na2SO4}$).',
               answer: 'Na ≈ 32.39%, S ≈ 22.54%, O ≈ 45.07%',
               solution:
                 "**Mass percent of an element = (total mass of that element in one formula unit ÷ molar mass of the compound) × 100.** First get the molar mass of $\\ce{Na2SO4}$:\n\n$M = 2(23) + 32 + 4(16) = 46 + 32 + 64 = 142\\ \\text{g mol}^{-1}$\n\n**Now each element's share:**\n\n$\\%\\ \\ce{Na} = \\dfrac{46}{142}\\times 100 = 32.39\\%$\n\n$\\%\\ \\ce{S} = \\dfrac{32}{142}\\times 100 = 22.54\\%$\n\n$\\%\\ \\ce{O} = \\dfrac{64}{142}\\times 100 = 45.07\\%$\n\n**Check:** $32.39+22.54+45.07 = 100.0\\%$ — the three percentages must always add up to 100, which is a free way to catch arithmetic slips.\n\n**Where students get stuck:** using the atomic mass of a single Na atom (23) in the numerator instead of the mass contributed by *both* sodium atoms in the formula (46) — always multiply by the subscript first.",
@@ -257,7 +257,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.3',
               prompt: 'Determine the empirical formula of an oxide of iron, which has 69.9% iron and 30.1% dioxygen by mass.',
-              answer: 'Empirical formula: Fe2O3',
+              answer: 'Empirical formula: $\\ce{Fe2O3}$',
               solution:
                 "**Empirical formula from percentages: assume a 100 g sample, so the percentages become grams directly, convert each to moles, then find the simplest whole-number ratio.**\n\nMass Fe $= 69.9\\ \\text{g}$, mass O $= 30.1\\ \\text{g}$ (in a 100 g sample)\n\nMoles Fe $= 69.9/56 = 1.248\\ \\text{mol}$\n\nMoles O $= 30.1/16 = 1.881\\ \\text{mol}$\n\n**Divide both by the smaller value (1.248) to get the simplest ratio:**\n\nFe: $1.248/1.248 = 1.00$\n\nO: $1.881/1.248 = 1.507 \\approx 1.5$\n\nA ratio of $1 : 1.5$ isn't whole numbers yet — **multiply both by 2** to clear the fraction:\n\nFe : O $= 2 : 3$\n\n**Empirical formula: $\\ce{Fe2O3}$**\n\n**Where students get stuck:** stopping at the $1:1.5$ ratio instead of recognising it needs to be doubled to reach whole numbers — any time your ratio ends in $.5$, $.33$, or $.25$, multiply through by 2, 3, or 4 respectively before finalising the formula.",
             },
@@ -267,7 +267,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.8',
               prompt: 'Determine the molecular formula of an oxide of iron, in which the mass per cent of iron and oxygen are 69.9 and 30.1, respectively.',
-              answer: 'Molecular formula: Fe2O3',
+              answer: 'Molecular formula: $\\ce{Fe2O3}$',
               solution:
                 "**This is the exact same data as 1.3** — 69.9% Fe, 30.1% O — so the empirical formula comes out identically to $\\ce{Fe2O3}$ (see the working there: moles Fe $=1.248$, moles O $=1.881$, ratio $1:1.5\\to 2:3$).\n\n**The step this question adds is going from empirical to molecular formula.** Normally you'd need the compound's actual molar mass to find $n$ in $(\\text{empirical formula})_n = \\text{molecular formula}$, using $n = \\dfrac{\\text{molar mass of compound}}{\\text{empirical formula mass}}$.\n\nHere, no separate molar mass is given for this oxide — so, following the standard convention when no extra molar-mass data is supplied, we take $n=1$, meaning the **molecular formula is the same as the empirical formula**:\n\n**Molecular formula: $\\ce{Fe2O3}$** (this is indeed ferric oxide / hematite in real life, so this checks out chemically too).\n\n**Where students get stuck:** not noticing that 1.3 and 1.8 give the same numbers — many students redo the whole percent-to-mole calculation from scratch not realising the empirical-formula step is identical; the only new idea here is the empirical-vs-molecular distinction itself.",
             },
@@ -278,7 +278,7 @@ module.exports = {
               source_label: 'NCERT 1.34',
               prompt:
                 'A welding fuel gas contains carbon and hydrogen only. Burning a small sample of it in oxygen gives 3.38 g carbon dioxide, 0.690 g of water and no other products. A volume of 10.0 L (measured at STP) of this welding gas is found to weigh 11.6 g. Calculate (i) empirical formula, (ii) molar mass of the gas, and (iii) molecular formula.',
-              answer: 'Empirical formula CH; molar mass ≈ 26.0 g/mol; molecular formula C2H2',
+              answer: 'Empirical formula CH; molar mass ≈ 26.0 g/mol; molecular formula $\\ce{C2H2}$',
               solution:
                 "**This is a combustion analysis problem — all the carbon in the original sample ends up in the $\\ce{CO2}$, and all the hydrogen ends up in the $\\ce{H2O}$.** Work backwards from the products to find how much C and H were in the original gas.\n\n**Step 1 — moles and mass of carbon (from $\\ce{CO2}$):**\n$\\text{moles } \\ce{CO2} = 3.38/44 = 0.0768\\ \\text{mol} \\Rightarrow \\text{moles C} = 0.0768\\ \\text{mol}$\nmass C $= 0.0768\\times 12 = 0.922\\ \\text{g}$\n\n**Step 2 — moles and mass of hydrogen (from $\\ce{H2O}$):**\n$\\text{moles } \\ce{H2O} = 0.690/18 = 0.0383\\ \\text{mol} \\Rightarrow \\text{moles H} = 2\\times 0.0383 = 0.0767\\ \\text{mol}$\nmass H $= 0.0767\\times 1 = 0.0767\\ \\text{g}$\n\n**Step 3 — empirical formula.** Moles C : moles H $= 0.0768 : 0.0767 \\approx 1:1$.\n\n**Empirical formula: $\\ce{CH}$**, empirical formula mass $= 12+1 = 13\\ \\text{g mol}^{-1}$\n\n**Step 4 — molar mass, from the STP density.** At STP, 1 mole of any gas occupies $22.4\\ \\text{L}$ (the NCERT convention). Moles in the 10.0 L sample:\n$\\text{moles} = 10.0/22.4 = 0.4464\\ \\text{mol}$\n$\\text{Molar mass} = \\dfrac{\\text{mass}}{\\text{moles}} = \\dfrac{11.6}{0.4464} = 26.0\\ \\text{g mol}^{-1}$\n\n**Step 5 — molecular formula.**\n$n = \\dfrac{\\text{molar mass}}{\\text{empirical formula mass}} = \\dfrac{26.0}{13} = 2$\n\n**Molecular formula: $(\\ce{CH})_2 = \\ce{C2H2}$** — this is acetylene, which is exactly what real welding-gas cylinders contain, so the chemistry checks out.\n\n**Where students get stuck:** forgetting the factor of 2 when converting moles of $\\ce{H2O}$ to moles of H atoms (each water molecule has 2 hydrogens), and mixing up which formula (empirical vs molecular) the STP-density step is meant to determine.",
             },
@@ -305,7 +305,7 @@ module.exports = {
               id: 'e82aa771-76fe-4d0d-8ad4-ed47dd7c94ba',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.7',
-              prompt: 'How much copper can be obtained from 100 g of copper sulphate (CuSO4)?',
+              prompt: 'How much copper can be obtained from 100 g of copper sulphate ($\\ce{CuSO4}$)?',
               answer: 'Cu ≈ 39.8 g',
               solution:
                 "**Every mole of $\\ce{CuSO4}$ contains exactly one mole of Cu**, so this is a direct mole-ratio problem once you know the molar mass of $\\ce{CuSO4}$.\n\n$M(\\ce{CuSO4}) = 63.5 + 32 + 4(16) = 63.5+32+64 = 159.5\\ \\text{g mol}^{-1}$\n\n$\\text{moles } \\ce{CuSO4} = \\dfrac{100}{159.5} = 0.627\\ \\text{mol}$\n\nSince the mole ratio $\\ce{CuSO4}:\\ce{Cu}$ is $1:1$:\n\n$\\text{moles Cu} = 0.627\\ \\text{mol}$\n\n$\\text{mass Cu} = 0.627 \\times 63.5 = 39.8\\ \\text{g}$\n\n**Where students get stuck:** forgetting to actually finish the conversion back to grams — leaving the answer in moles instead of the mass the question asks for.",
@@ -316,7 +316,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.23',
               prompt:
-                'In a reaction\nA + B2 → AB2\nIdentify the limiting reagent, if any, in the following reaction mixtures.\n(i) 300 atoms of A + 200 molecules of B\n(ii) 2 mol A + 3 mol B\n(iii) 100 atoms of A + 100 molecules of B\n(iv) 5 mol A + 2.5 mol B\n(v) 2.5 mol A + 5 mol B',
+                'In a reaction\n$\\ce{A + B2 -> AB2}$\nIdentify the limiting reagent, if any, in the following reaction mixtures.\n(i) 300 atoms of A + 200 molecules of B\n(ii) 2 mol A + 3 mol B\n(iii) 100 atoms of A + 100 molecules of B\n(iv) 5 mol A + 2.5 mol B\n(v) 2.5 mol A + 5 mol B',
               options: [
                 '(i) B₂ limiting (ii) A limiting (iii) none — exact ratio (iv) B₂ limiting (v) A limiting',
                 '(i) A limiting (ii) B₂ limiting (iii) none — exact ratio (iv) A limiting (v) B₂ limiting',
@@ -333,7 +333,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.24',
               prompt:
-                'Dinitrogen and dihydrogen react with each other to produce ammonia according to the following chemical equation:\nN2(g) + H2(g) → 2NH3(g)\n(i) Calculate the mass of ammonia produced if 2.00 × 10^3 g dinitrogen reacts with 1.00 × 10^3 g of dihydrogen.\n(ii) Will any of the two reactants remain unreacted?\n(iii) If yes, which one and what would be its mass?',
+                'Dinitrogen and dihydrogen react with each other to produce ammonia according to the following chemical equation:\n$\\ce{N2(g) + H2(g) -> 2NH3(g)}$\n(i) Calculate the mass of ammonia produced if $2.00 \\times 10^{3}\\ \\text{g}$ dinitrogen reacts with $1.00 \\times 10^{3}\\ \\text{g}$ of dihydrogen.\n(ii) Will any of the two reactants remain unreacted?\n(iii) If yes, which one and what would be its mass?',
               answer: '(i) ≈2.43×10³ g NH₃ (ii) yes (iii) H₂ remains, ≈5.71×10² g',
               solution:
                 "**First, balance the equation properly** — as written it's missing a coefficient. The correctly balanced reaction is:\n$\\ce{N2(g) + 3H2(g) -> 2NH3(g)}$\nEvery 1 mole of $\\ce{N2}$ needs 3 moles of $\\ce{H2}$.\n\n**Step 1 — convert both reactants to moles.**\n$\\text{moles } \\ce{N2} = \\dfrac{2.00\\times 10^3}{28} = 71.43\\ \\text{mol}$\n$\\text{moles } \\ce{H2} = \\dfrac{1.00\\times 10^3}{2} = 500\\ \\text{mol}$\n\n**Step 2 — find the limiting reagent.** For $71.43\\ \\text{mol}$ $\\ce{N2}$ to react fully, we'd need $3\\times 71.43 = 214.3\\ \\text{mol}$ $\\ce{H2}$. We have $500\\ \\text{mol}$ — far more than enough. So **$\\ce{N2}$ is the limiting reagent**.\n\n**(i) Mass of $\\ce{NH3}$ produced:** the ratio $\\ce{N2}:\\ce{NH3}$ is $1:2$.\n$\\text{moles } \\ce{NH3} = 2\\times 71.43 = 142.9\\ \\text{mol}$\n$\\text{mass } \\ce{NH3} = 142.9\\times 17 = 2.43\\times 10^{3}\\ \\text{g}$\n\n**(ii) Yes** — since $\\ce{N2}$ is limiting, some $\\ce{H2}$ is left unreacted.\n\n**(iii) Mass of $\\ce{H2}$ left over:**\n$\\ce{H2}$ actually used $= 3\\times 71.43 = 214.3\\ \\text{mol} \\Rightarrow$ mass used $= 214.3\\times 2 = 428.6\\ \\text{g}$\n$\\ce{H2}$ remaining $= 1000 - 428.6 = 571.4\\ \\text{g} \\approx 5.71\\times 10^{2}\\ \\text{g}$\n\n**Where students get stuck:** using the unbalanced $\\ce{N2 + H2 -> 2NH3}$ as printed instead of catching that it needs the coefficient 3 on $\\ce{H2}$ — a reaction that produces $\\ce{NH3}$ from $\\ce{N2}$ and $\\ce{H2}$ can never balance as 1:1:2, since that would leave nitrogen balanced but hydrogen short (2 H on the left, 6 H on the right).",
@@ -343,7 +343,7 @@ module.exports = {
               id: '73f69a68-bb73-4058-8ab7-b2dc4368abfc',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.25',
-              prompt: 'How are 0.50 mol Na2CO3 and 0.50 M Na2CO3 different?',
+              prompt: 'How are 0.50 mol $\\ce{Na2CO3}$ and 0.50 M $\\ce{Na2CO3}$ different?',
               answer: '0.50 mol is a fixed amount of substance; 0.50 M is a concentration (per litre of solution)',
               solution:
                 "**These describe two completely different kinds of quantity, even though the numbers look the same.**\n\n**$0.50\\ \\text{mol}\\ \\ce{Na2CO3}$** is simply an *amount of substance* — a fixed number of moles ($0.50\\times 6.022\\times 10^{23}$ formula units), which corresponds to a fixed mass: $0.50\\times 106 = 53\\ \\text{g}$ (molar mass of $\\ce{Na2CO3} = 2(23)+12+3(16)=106$). This amount doesn't depend on whether it's dissolved in water, dry as a solid, or spread across any volume at all.\n\n**$0.50\\ \\text{M}\\ \\ce{Na2CO3}$** (i.e. $0.50\\ \\text{mol L}^{-1}$) is a *concentration* — it tells you there's $0.50$ mole of $\\ce{Na2CO3}$ dissolved in **every litre** of solution. The total amount present depends entirely on how much solution volume you have: 1 L of it contains $0.50\\ \\text{mol}$, but 2 L of it contains $1.00\\ \\text{mol}$.\n\n**In short:** '$0.50$ mol' is a quantity; '$0.50$ M' is a concentration (a ratio of quantity to volume). You cannot ask 'how many grams does 0.50 M contain' without also knowing the volume of solution.\n\n**Where students get stuck:** treating molarity as if it were an absolute amount of substance, and trying to convert '0.50 M' directly to a mass without being given (or assuming) a solution volume.",
@@ -364,7 +364,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.35',
               prompt:
-                'Calcium carbonate reacts with aqueous HCl to give CaCl2 and CO2 according to the reaction, CaCO3(s) + 2 HCl(aq) → CaCl2(aq) + CO2(g) + H2O(l)\nWhat mass of CaCO3 is required to react completely with 25 mL of 0.75 M HCl?',
+                'Calcium carbonate reacts with aqueous $\\ce{HCl}$ to give $\\ce{CaCl2}$ and $\\ce{CO2}$ according to the reaction, $\\ce{CaCO3(s) + 2HCl(aq) -> CaCl2(aq) + CO2(g) + H2O(l)}$\nWhat mass of $\\ce{CaCO3}$ is required to react completely with 25 mL of 0.75 M $\\ce{HCl}$?',
               answer: 'CaCO₃ ≈ 0.938 g',
               solution:
                 "**Start from the HCl volume and molarity to get moles of HCl, then use the balanced-equation ratio to reach $\\ce{CaCO3}$.**\n\n$\\text{moles HCl} = \\text{molarity} \\times \\text{volume (L)} = 0.75 \\times 0.025 = 0.01875\\ \\text{mol}$\n\n**From the balanced equation**, $\\ce{CaCO3 + 2HCl -> CaCl2 + CO2 + H2O}$, the mole ratio $\\ce{CaCO3}:\\ce{HCl}$ is $1:2$.\n\n$\\text{moles } \\ce{CaCO3} = \\dfrac{0.01875}{2} = 0.009375\\ \\text{mol}$\n\n**Molar mass of $\\ce{CaCO3}$:** $40+12+3(16) = 100\\ \\text{g mol}^{-1}$\n\n$\\text{mass } \\ce{CaCO3} = 0.009375 \\times 100 = 0.9375\\ \\text{g} \\approx 0.94\\ \\text{g}$\n\n**Where students get stuck:** forgetting to convert $25\\ \\text{mL}$ to litres ($0.025\\ \\text{L}$) before multiplying by molarity, and forgetting to divide by the 2 in the mole ratio (since it takes *two* moles of HCl per mole of $\\ce{CaCO3}$, not one).",
@@ -375,7 +375,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.36',
               prompt:
-                'Chlorine is prepared in the laboratory by treating manganese dioxide (MnO2) with aqueous hydrochloric acid according to the reaction\n4 HCl(aq) + MnO2(s) → 2H2O(l) + MnCl2(aq) + Cl2(g)\nHow many grams of HCl react with 5.0 g of manganese dioxide?',
+                'Chlorine is prepared in the laboratory by treating manganese dioxide ($\\ce{MnO2}$) with aqueous hydrochloric acid according to the reaction\n$\\ce{4HCl(aq) + MnO2(s) -> 2H2O(l) + MnCl2(aq) + Cl2(g)}$\nHow many grams of $\\ce{HCl}$ react with 5.0 g of manganese dioxide?',
               answer: 'HCl ≈ 8.4 g',
               solution:
                 "**Start from the given mass of $\\ce{MnO2}$, convert to moles, then use the balanced-equation ratio to get moles (then mass) of HCl.**\n\n**Molar mass of $\\ce{MnO2}$:** $55+2(16) = 87\\ \\text{g mol}^{-1}$\n\n$\\text{moles } \\ce{MnO2} = \\dfrac{5.0}{87} = 0.05747\\ \\text{mol}$\n\n**From the balanced equation**, $\\ce{4HCl + MnO2 -> 2H2O + MnCl2 + Cl2}$, the mole ratio $\\ce{HCl}:\\ce{MnO2}$ is $4:1$.\n\n$\\text{moles HCl} = 4 \\times 0.05747 = 0.2299\\ \\text{mol}$\n\n**Molar mass of HCl:** $1+35.5 = 36.5\\ \\text{g mol}^{-1}$\n\n$\\text{mass HCl} = 0.2299 \\times 36.5 = 8.39\\ \\text{g} \\approx 8.4\\ \\text{g}$\n\n**Where students get stuck:** using the $1:1$ ratio instead of the actual $4:1$ ratio from the balanced equation — always read the coefficients off the equation itself rather than assuming a simple one-to-one relationship.",
@@ -392,7 +392,7 @@ module.exports = {
               id: 'eb1dcd00-67e5-4825-b05f-933d74c4337f',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.5',
-              prompt: 'Calculate the mass of sodium acetate (CH3COONa) required to make 500 mL of 0.375 molar aqueous solution. Molar mass of sodium acetate is 82.0245 g mol-1.',
+              prompt: 'Calculate the mass of sodium acetate ($\\ce{CH3COONa}$) required to make 500 mL of 0.375 molar aqueous solution. Molar mass of sodium acetate is $82.0245\\ \\text{g mol}^{-1}$.',
               answer: 'Mass ≈ 15.38 g',
               solution:
                 "**Molarity tells you moles per litre — combine it with the volume to get moles needed, then convert to mass using the given molar mass.**\n\n$\\text{moles needed} = \\text{molarity}\\times \\text{volume (L)} = 0.375 \\times 0.500 = 0.1875\\ \\text{mol}$\n\n$\\text{mass} = \\text{moles}\\times \\text{molar mass} = 0.1875 \\times 82.0245 = 15.38\\ \\text{g}$\n\n**Where students get stuck:** using $500$ (mL) directly in the molarity formula instead of converting to litres first ($500\\ \\text{mL} = 0.500\\ \\text{L}$) — this is the single most common arithmetic slip across every molarity question in this chapter.",
@@ -402,7 +402,7 @@ module.exports = {
               id: '287f9c99-cd06-4a5d-901f-a257769569c1',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.6',
-              prompt: 'Calculate the concentration of nitric acid in moles per litre in a sample which has a density, 1.41 g mL-1 and the mass per cent of nitric acid in it being 69%.',
+              prompt: 'Calculate the concentration of nitric acid in moles per litre in a sample which has a density, $1.41\\ \\text{g mL}^{-1}$ and the mass per cent of nitric acid in it being 69%.',
               answer: 'Molarity of HNO₃ ≈ 15.44 mol/L',
               solution:
                 "**Work with a convenient fixed volume — take exactly 1 litre (1000 mL) of the solution — and use the density to find its total mass, then the mass percent to find how much of that is actual $\\ce{HNO3}$.**\n\n**Total mass of 1 L of solution:**\n$\\text{mass} = \\text{density}\\times \\text{volume} = 1.41\\ \\text{g mL}^{-1} \\times 1000\\ \\text{mL} = 1410\\ \\text{g}$\n\n**Mass of $\\ce{HNO3}$ in that litre** (69% by mass):\n$\\text{mass } \\ce{HNO3} = 0.69 \\times 1410 = 972.9\\ \\text{g}$\n\n**Convert to moles.** $M(\\ce{HNO3}) = 1+14+3(16) = 63\\ \\text{g mol}^{-1}$\n$\\text{moles} = \\dfrac{972.9}{63} = 15.44\\ \\text{mol}$\n\n**Since this is the amount of $\\ce{HNO3}$ found in exactly 1 litre of solution, this number IS the molarity:**\n\n$\\text{Molarity} = 15.44\\ \\text{mol L}^{-1}$\n\n**Where students get stuck:** picking an arbitrary volume like 100 mL instead of 1 L — it still works mathematically, but choosing 1 L directly gives you the molarity without a final division step, and is far less error-prone.",
@@ -412,7 +412,7 @@ module.exports = {
               id: '811bf3af-845c-4fb6-8487-f03bdb758c24',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.11',
-              prompt: 'What is the concentration of sugar (C12H22O11) in mol L-1 if its 20 g are dissolved in enough water to make a final volume up to 2L?',
+              prompt: 'What is the concentration of sugar ($\\ce{C12H22O11}$) in $\\text{mol L}^{-1}$ if its 20 g are dissolved in enough water to make a final volume up to 2L?',
               answer: 'Molarity ≈ 0.0292 mol/L',
               solution:
                 "**Straightforward molarity: convert the given mass to moles, then divide by the given volume in litres.**\n\n**Molar mass of sugar:** $\\ce{C12H22O11} = 12(12)+22(1)+11(16) = 144+22+176 = 342\\ \\text{g mol}^{-1}$\n\n$\\text{moles} = \\dfrac{20}{342} = 0.0585\\ \\text{mol}$\n\n$\\text{Molarity} = \\dfrac{\\text{moles}}{\\text{volume (L)}} = \\dfrac{0.0585}{2} = 0.0292\\ \\text{mol L}^{-1}$\n\n**Where students get stuck:** stopping after finding moles and forgetting the final division by volume — molarity always needs both a mole count and a volume, never just one.",
@@ -422,7 +422,7 @@ module.exports = {
               id: '0c2c6bd3-4e24-4e0c-b4e1-1328f4376b0f',
               source: 'ncert_exercise',
               source_label: 'NCERT 1.12',
-              prompt: 'If the density of methanol is 0.793 kg L-1, what is its volume needed for making 2.5 L of its 0.25 M solution?',
+              prompt: 'If the density of methanol is $0.793\\ \\text{kg L}^{-1}$, what is its volume needed for making 2.5 L of its 0.25 M solution?',
               answer: 'Volume of methanol ≈ 25.2 mL',
               solution:
                 "**Work forward from the target solution to find how much pure methanol (by mass) is needed, then use density to convert that mass to a volume.**\n\n**Step 1 — moles of methanol needed:**\n$\\text{moles} = \\text{molarity}\\times \\text{volume} = 0.25 \\times 2.5 = 0.625\\ \\text{mol}$\n\n**Step 2 — mass of methanol needed.** $M(\\ce{CH3OH}) = 12+4(1)+16 = 32\\ \\text{g mol}^{-1}$\n$\\text{mass} = 0.625 \\times 32 = 20\\ \\text{g}$\n\n**Step 3 — convert that mass to a volume using density.** Density $=0.793\\ \\text{kg L}^{-1} = 0.793\\ \\text{g mL}^{-1}$ (numerically the same value, since kg/L and g/mL are equal units).\n\n$\\text{volume} = \\dfrac{\\text{mass}}{\\text{density}} = \\dfrac{20\\ \\text{g}}{0.793\\ \\text{g mL}^{-1}} = 25.2\\ \\text{mL}$\n\n**Where students get stuck:** treating $0.793\\ \\text{kg L}^{-1}$ as if it needs a unit conversion before use — it doesn't; $1\\ \\text{kg L}^{-1}$ numerically equals $1\\ \\text{g mL}^{-1}$, so you can plug the given density straight in as g/mL.",
@@ -433,7 +433,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 1.17',
               prompt:
-                'A sample of drinking water was found to be severely contaminated with chloroform, CHCl3, supposed to be carcinogenic in nature. The level of contamination was 15 ppm (by mass).\n(i) Express this in per cent by mass.\n(ii) Determine the molality of chloroform in the water sample.',
+                'A sample of drinking water was found to be severely contaminated with chloroform, $\\ce{CHCl3}$, supposed to be carcinogenic in nature. The level of contamination was 15 ppm (by mass).\n(i) Express this in per cent by mass.\n(ii) Determine the molality of chloroform in the water sample.',
               answer: '(i) 1.5×10⁻³% (ii) ≈1.25×10⁻⁴ mol/kg',
               solution:
                 "**ppm (parts per million) by mass means grams of solute per $10^6$ grams of solution — treat this as your recipe for both parts.**\n\n**(i) Convert ppm to percent.** Percent is 'parts per hundred', so:\n$\\%\\ \\text{by mass} = \\dfrac{15}{10^6}\\times 100 = 15\\times 10^{-4}\\% = 1.5\\times 10^{-3}\\%$\n\n**(ii) Molality = moles of solute per kilogram of solvent.** Take the $10^6\\ \\text{g}$ solution as basis: it contains $15\\ \\text{g}$ of $\\ce{CHCl3}$, and (since the contamination is tiny) essentially $10^6\\ \\text{g} = 1000\\ \\text{kg}$ of water as solvent.\n\n**Molar mass of $\\ce{CHCl3}$:** $12+1+3(35.5) = 12+1+106.5 = 119.5\\ \\text{g mol}^{-1}$\n\n$\\text{moles } \\ce{CHCl3} = \\dfrac{15}{119.5} = 0.1255\\ \\text{mol}$\n\n$\\text{Molality} = \\dfrac{0.1255\\ \\text{mol}}{1000\\ \\text{kg}} = 1.255\\times 10^{-4}\\ \\text{mol kg}^{-1}$\n\n**Where students get stuck:** forgetting that molality needs the mass of *solvent* (water), not the mass of the whole solution — for such a dilute contamination the two are nearly identical, which is exactly why the approximation (treating all $10^6$ g as water) is valid here.",

@@ -80,11 +80,21 @@ that chapter's own published pages.
    for a more literal diagrammatic structure (hotspots sitting on an actual flowchart of the
    process, not a generic illustrated scene), that becomes the change; otherwise device #1
    stays as built.
-3. **Closing quiz size: scales with chapter length, roughly 1 question per lesson page**, not a
-   fixed 6–8. Ch.1 (11 lesson pages) keeping its 8 is fine as a floor/ceiling-ish outcome, but
-   when authoring Ch.2–13 size each closing quiz to the chapter's own lesson-page count
-   (6-page chapters like Ch.3/Ch.12 get ~6 questions; 11-page chapters like Ch.4/Ch.5 get ~11).
-   Still applies book-wide quiz hygiene (varied `correct_index`, no length-tell) at whatever size.
+3. **Closing quiz size (revised 2026-07-30 — supersedes the original ~1/page figure): roughly
+   2 questions per lesson page.** Founder wants chapter-end revision denser than the Ch.1 pilot's
+   ratio — a 6-page chapter now gets ~12 questions, an 11-page chapter ~22, not ~6/~11. Still
+   scales with chapter length, not a fixed count; still applies book-wide quiz hygiene (varied
+   `correct_index`, no length-tell, difficulty-tagged) at whatever size.
+4. **No duplicate questions, anywhere the same chapter's content is tested.** A closing-quiz
+   question must not repeat (near-verbatim or by testing the identical single fact with the
+   options merely reworded) any question already asked in: that chapter's own per-page
+   `inline_quiz`/`reasoning_prompt` blocks, any mid-chapter section-checkpoint page, or the
+   chapter's NCERT-exercises `practice_bank` page. Before finalizing a closing quiz, cross-check
+   its questions against all three of those sources (dump the chapter via
+   `_dump_chapter.js`, extract every existing question stem, and diff). This applies to every
+   revision-density surface added to a chapter, not just the closing quiz — the more retrieval
+   surfaces a chapter has, the easier it is to accidentally quiz the same fact twice, which
+   wastes a slot that could have tested something else.
 
 **Still blocking the scale-to-Ch.2–13 pass:** founder's live look at the Ch.1 mindmap (item 2).
 Once they confirm keep-as-is or request a rework, the pattern is fully locked and ready to

@@ -547,7 +547,7 @@ module.exports = {
               prompt: 'What transition in the hydrogen spectrum would have the same wavelength as the Balmer transition n = 4 to n = 2 of He⁺ spectrum?',
               answer: 'n = 2 to n = 1 in hydrogen',
               solution:
-                "$He^+$ is a one-electron (hydrogen-like) species with $Z=2$, so its energy levels scale as $R_H Z^2/n^2$. Energy of the $n=4 \\to n=2$ transition in $He^+$:\n\n$$E_{He^+} = R_H Z^2\\left(\\dfrac{1}{2^2} - \\dfrac{1}{4^2}\\right) = R_H \\times 4 \\times \\left(\\dfrac{1}{4}-\\dfrac{1}{16}\\right) = R_H \\times 4 \\times 0.1875 = 0.75\\,R_H.$$\n\nFor a hydrogen transition ($Z=1$) to have this same energy (same wavelength):\n\n$$R_H\\left(\\dfrac{1}{n_1^2} - \\dfrac{1}{n_2^2}\\right) = 0.75\\,R_H \\implies \\dfrac{1}{n_1^2} - \\dfrac{1}{n_2^2} = 0.75.$$\n\nTrying $n_1=1, n_2=2$: $1 - 0.25 = 0.75$ ✓. So the matching hydrogen transition is **$n=2 \\to n=1$** (a Lyman-series line).",
+                "$He^+$ is a one-electron (hydrogen-like) species with $Z=2$, so its energy levels scale as $R_H Z^2/n^2$. Energy of the $n=4 \\to n=2$ transition in $He^+$:\n\n$E_{He^+} = R_H Z^2\\left(\\dfrac{1}{2^2} - \\dfrac{1}{4^2}\\right) = R_H \\times 4 \\times \\left(\\dfrac{1}{4}-\\dfrac{1}{16}\\right) = R_H \\times 4 \\times 0.1875 = 0.75\\,R_H.$\n\nFor a hydrogen transition ($Z=1$) to have this same energy (same wavelength):\n\n$R_H\\left(\\dfrac{1}{n_1^2} - \\dfrac{1}{n_2^2}\\right) = 0.75\\,R_H \\implies \\dfrac{1}{n_1^2} - \\dfrac{1}{n_2^2} = 0.75.$\n\nTrying $n_1=1, n_2=2$: $1 - 0.25 = 0.75$ ✓. So the matching hydrogen transition is **$n=2 \\to n=1$** (a Lyman-series line).",
             },
             {
               kind: 'numerical',
@@ -558,7 +558,7 @@ module.exports = {
                 'Calculate the energy required for the process\nHe⁺(g) → He²⁺(g) + e⁻\nThe ionization energy for the H atom in the ground state is 2.18 × 10⁻¹⁸ J atom⁻¹.',
               answer: '8.72×10⁻¹⁸ J per atom',
               solution:
-                'This is the ionisation energy of $He^+$, a one-electron hydrogen-like ion with $Z=2$, from its ground state ($n=1$). Ionisation energy for such a species scales as $R_H Z^2$:\n\n$$E = R_H Z^2 = 2.18 \\times 10^{-18} \\times 2^2 = 2.18 \\times 10^{-18} \\times 4 = 8.72 \\times 10^{-18}\\ \\text{J per atom}.$$',
+                'This is the ionisation energy of $He^+$, a one-electron hydrogen-like ion with $Z=2$, from its ground state ($n=1$). Ionisation energy for such a species scales as $R_H Z^2$:\n\n$E = R_H Z^2 = 2.18 \\times 10^{-18} \\times 2^2 = 2.18 \\times 10^{-18} \\times 4 = 8.72 \\times 10^{-18}\\ \\text{J per atom}.$',
             },
             {
               kind: 'numerical',
@@ -618,7 +618,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 2.23',
               prompt:
-                '(i) Write the electronic configurations of the following ions: (a) H– (b) Na+ (c) O2– (d) F–\n(ii) What are the atomic numbers of elements whose outermost electrons are represented by (a) 3s1 (b) 2p3 and (c) 3p5?\n(iii) Which atoms are indicated by the following configurations? (a) [He] 2s1 (b) [Ne] 3s2 3p3 (c) [Ar] 4s2 3d1.',
+                '(i) Write the electronic configurations of the following ions: (a) H– (b) Na+ (c) $\\ce{O2^{2-}}$ (d) F–\n(ii) What are the atomic numbers of elements whose outermost electrons are represented by (a) 3s1 (b) 2p3 and (c) 3p5?\n(iii) Which atoms are indicated by the following configurations? (a) [He] 2s1 (b) [Ne] 3s2 3p3 (c) [Ar] 4s2 3d1.',
               answer: 'see full solution for each part',
               solution:
                 "**(i) Ions** — build the configuration for the electron count *after* adjusting for charge:\n\n(a) $H^-$: 1 proton but 2 electrons (gained 1) $\\Rightarrow 1s^2$.\n\n(b) $Na^+$: $Z=11$, minus 1 electron $= 10$ e⁻ $\\Rightarrow 1s^2\\,2s^2\\,2p^6$.\n\n(c) $O^{2-}$: $Z=8$, plus 2 electrons $= 10$ e⁻ $\\Rightarrow 1s^2\\,2s^2\\,2p^6$.\n\n(d) $F^-$: $Z=9$, plus 1 electron $= 10$ e⁻ $\\Rightarrow 1s^2\\,2s^2\\,2p^6$.\n\n**(ii) Outermost electron → atomic number:**\n\n(a) $3s^1$ means the atom's last electron fills $3s$ after a filled $1s^2\\,2s^2\\,2p^6$ core (10) plus 1 more $= Z=11$ (sodium).\n\n(b) $2p^3$ means $1s^2\\,2s^2\\,2p^3$, total $=7$ electrons $= Z=7$ (nitrogen).\n\n(c) $3p^5$ means $[Ne]3s^2\\,3p^5$, i.e. $10 + 2 + 5 = 17 = Z=17$ (chlorine).\n\n**(iii) Configuration → atom:**\n\n(a) $[He]2s^1$: $2 + 1 = 3$ electrons $\\Rightarrow$ lithium ($Li$, $Z=3$).\n\n(b) $[Ne]3s^2\\,3p^3$: $10 + 2 + 3 = 15$ electrons $\\Rightarrow$ phosphorus ($P$, $Z=15$).\n\n(c) $[Ar]4s^2\\,3d^1$: $18 + 2 + 1 = 21$ electrons $\\Rightarrow$ scandium ($Sc$, $Z=21$).",

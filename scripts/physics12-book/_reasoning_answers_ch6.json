@@ -1,0 +1,90 @@
+{
+  "confident": [
+    {
+      "block_id": "cb45dc09-059d-4032-a87b-06eb3941f94a",
+      "correct_index": 2,
+      "why": "reveal: \"Nothing at all\" — coil and magnet move together, zero relative motion, flux unchanged"
+    },
+    {
+      "block_id": "75c1052f-972e-4fe7-8bc3-233ed9b4e5b0",
+      "correct_index": 1,
+      "why": "reveal: \"BA sin 30°, which is BA/2\" — plane at 30° means normal at 60°, so BA cos60 = BA sin30"
+    },
+    {
+      "block_id": "e79aea2f-7832-41fb-8f29-79aa33cb0d83",
+      "correct_index": 2,
+      "why": "reveal: \"A changing area, and yes — there is an emf\" — B and theta fixed, A = pi r^2 growing"
+    },
+    {
+      "block_id": "0ad892aa-c1bc-47c9-9f01-560a73d184d5",
+      "correct_index": 1,
+      "why": "reveal: \"Clockwise, producing a field into the page\" — into-page flux falling, induced current sustains it"
+    },
+    {
+      "block_id": "c496986a-8333-4339-bc08-366b6e00cd33",
+      "correct_index": 1,
+      "why": "reveal: \"Nothing changes. Same current, same pole, same force\" — only relative motion matters"
+    },
+    {
+      "block_id": "04c5a30c-ee26-4af5-b0d3-f2594a5857c9",
+      "correct_index": 0,
+      "why": "reveal: \"A steady potential difference Bvl appears across its ends\" — separation self-limits at E = vB"
+    },
+    {
+      "block_id": "90c78217-4ffc-44d7-9cca-e4c2f27c758f",
+      "correct_index": 0,
+      "why": "reveal: \"It stays constant at Bvl\" — rate of flux change Blv is fixed, not the flux itself"
+    },
+    {
+      "block_id": "ccfcdff5-317d-47a7-8bfd-61d4cda908e0",
+      "correct_index": 0,
+      "why": "reveal: \"Bvd — exactly what a straight rod between the same two ends would give\" — only endpoint separation counts"
+    },
+    {
+      "block_id": "dacc878e-4b36-4b6a-9ad6-b0968ac9bb89",
+      "correct_index": 0,
+      "why": "reveal: \"None. On a frictionless open circuit the rod glides on for ever\" — I = 0 so F = BIl = 0"
+    },
+    {
+      "block_id": "7b246790-f1a9-411b-a527-0c04c2ecc9ab",
+      "correct_index": 0,
+      "why": "reveal: \"It swings far longer\" — slots chop wide eddy loops into narrow high-resistance ones"
+    },
+    {
+      "block_id": "40f6c2d5-d6bf-46fb-8159-2de5ae697c9f",
+      "correct_index": 0,
+      "why": "reveal: \"The sheets must lie parallel to the flux, stacked across it\" — insulation cuts the plane eddies circulate in"
+    },
+    {
+      "block_id": "792c35bf-1033-4bf1-9207-a5402abdf845",
+      "correct_index": 0,
+      "why": "reveal: \"Zero\" — eps = -L di/dt and di/dt = 0 for a steady current"
+    },
+    {
+      "block_id": "c9307da2-cc8a-45ad-87fa-b6bec336e8fa",
+      "correct_index": 0,
+      "why": "reveal: \"It falls almost to zero\" — field lines graze the rotated coil, cos 90° = 0, no flux linkage"
+    },
+    {
+      "block_id": "f5c8b4c1-e998-484d-8754-7f3c25bdc07c",
+      "correct_index": 0,
+      "why": "reveal: \"Four times\" — U = (1/2)L i^2, so doubling i quadruples U"
+    },
+    {
+      "block_id": "478a8872-28e4-4287-88ea-7a01acbb9c6e",
+      "correct_index": 0,
+      "why": "reveal: \"Time constant halves; final current halves\" — tau = L/R and i0 = V0/R both scale as 1/R"
+    },
+    {
+      "block_id": "f896b737-1fc7-44f9-9129-97459bf4b09c",
+      "correct_index": 0,
+      "why": "reveal: \"It accelerates, along a circle around the solenoid\" — induced E field is non-zero outside where B is zero"
+    },
+    {
+      "block_id": "78df581e-cb22-48d2-99d1-f27fcf24510d",
+      "correct_index": 0,
+      "why": "reveal: \"When the plane of the coil is parallel to the field\" — flux zero there, |dPhi/dt| maximum"
+    }
+  ],
+  "uncertain": []
+}

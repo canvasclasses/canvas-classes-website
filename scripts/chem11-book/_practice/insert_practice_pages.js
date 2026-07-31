@@ -21,6 +21,7 @@ const fs = require('fs');
 const { v4: uuid } = require('uuid');
 const { MongoClient } = require('mongodb');
 const bw = require('../../lib/book-writer');
+const { checkPracticeBank } = require('./check_prompt_latex');
 
 const APPLY = process.argv.includes('--apply');
 const BOOK_SLUG = 'ncert-simplified';
@@ -63,6 +64,15 @@ async function main() {
       must(Array.isArray(pb.sections) && pb.sections.length, `ch${chapter}: practice_bank has no sections`);
       const itemCount = pb.sections.reduce((s, sec) => s + (sec.items || []).length, 0);
       must(itemCount >= 1, `ch${chapter}: practice_bank has no items`);
+
+      // Chemical formulas / isotope notation / unit exponents written as plain
+      // text instead of $...$ / \ce{} render literally in the reader (e.g. "m-2"
+      // stays "m-2" instead of m⁻²). Every ch*.js prompt field had this bug until
+      // the 2026-07-22 sweep — this hard-blocks it from ever being pushed again.
+      // See check_prompt_latex.js and CONTRACT.md Rule 1.
+      const latexProblems = checkPracticeBank(pb);
+      must(latexProblems.length === 0, `ch${chapter}: unwrapped LaTeX found — ` +
+        latexProblems.map((p) => `${p.source_label} [${p.field}]: ${p.hits.join(', ')}`).join('; '));
 
       const chapEntry = chapters.find((c) => c.number === chapter);
       must(chapEntry, `ch${chapter}: chapter entry not found on book`);

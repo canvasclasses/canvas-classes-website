@@ -1,0 +1,180 @@
+'use strict';
+// Class 11 Biology — Ch.2 Biological Classification — "Practice — NCERT Exercises" page.
+// All 12 verbatim NCERT exercises (source: scripts/bio-book/_ncert_pdfs/kebo102.txt,
+// EXERCISES section), regrouped into 4 revision themes. Every fact in the
+// solutions traces to this chapter's own already-published lesson pages (dumped
+// via scripts/livebook-review/_dump_chapter.js class11-biology 2 and read in
+// full before writing) or to the NCERT source text itself.
+// IDs are hardcoded static strings (generated once), NOT dynamic uuid() calls —
+// see the 2026-07-30 lesson in CONTRACT.md on why that matters for idempotency.
+module.exports = {
+  slug: 'ch2-practice-ncert-exercises',
+  title: 'Practice — NCERT Exercises',
+  subtitle: 'All 12 NCERT textbook exercises for the chapter, grouped into 4 revision themes with full worked solutions.',
+  page_type: 'lesson',
+  tags: ['ncert-exercises', 'practice'],
+  blocks: [
+    {
+      id: '2c7e8559-90ae-4b58-ab86-19566775ebaa',
+      type: 'image',
+      order: 0,
+      src: '',
+      alt: 'Five simple glowing organism silhouettes representing the five kingdoms spaced across a dark banner, with a lone crystalline virus particle sitting apart from them at the edge',
+      caption: '',
+      width: 'full',
+      aspect_ratio: '16:5',
+      generation_prompt: "Scientific textbook illustration, wide landscape banner, flat 2D educational diagram on a dark background (#0a0a0a near-black). Five simple silhouette icons spaced evenly across the banner, each glowing softly in its own muted pool of light: a rod-shaped bacterium, a single amoeba-like blob, a mushroom, a fern frond, and a deer, arranged left to right. At the far right edge, physically separate from the five and slightly dimmer, a small crystalline virus particle sits alone outside a faint cell outline, not glowing like the others. Clean white outlines, muted natural ochre and sage tones, biologically accurate schematic proportions, no photorealism, no cartoon, matches standard biology textbook illustration conventions. No text, no labels, no leader lines, no pointer lines of any kind anywhere in the image.",
+    },
+    {
+      id: '1abfec16-25ae-4348-9a9d-d24009cec7f1',
+      type: 'text',
+      order: 1,
+      markdown: "You've read the chapter — now drill it. Below are **all 12 NCERT exercises** for *Biological Classification*, pulled out of the textbook's running order and re-sorted into four revision themes: why classification itself keeps changing and what Monera's bacteria are good for, the algae-like protist groups, protozoa and fungi (with lichens thrown in), and the outer edge of the living world — partially heterotrophic plants, viroids and viruses.\n\nTry to answer each one in your head (or on paper) before you open the solution. The worked answer is written to *teach* the whole idea, not just tick the box — so even a question you get right is worth reading through.",
+    },
+    {
+      id: '22deeae6-9113-4b46-b5d1-5e1e4a599241',
+      type: 'practice_bank',
+      order: 2,
+      title: 'NCERT Exercises 2.1–2.12',
+      intro: 'Every end-of-chapter exercise, regrouped into four revision themes. Each carries a one-line answer for a quick self-check and a full worked solution.',
+      sections: [
+        {
+          id: 's1-classification-and-monera',
+          title: 'Classification Keeps Changing, and What Monera Is Good For',
+          blurb: 'The two-kingdom system had to give way to Whittaker’s five — and the useful side of bacteria and archaebacteria.',
+          items: [
+            {
+              kind: 'numerical',
+              id: 'fcddc217-5777-4324-af2c-11ef19039663',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.1',
+              prompt: 'Discuss how classification systems have undergone several changes over a period of time?',
+              answer: 'Classification keeps changing because the criteria used to sort organisms keep changing — from Aristotle’s red-blood/no-red-blood split, to Linnaeus’ two-kingdom system built on one shared feature (a cell wall), to Whittaker’s 1969 five-kingdom system built on cell structure, body organisation, nutrition, reproduction, and evolutionary relationships.',
+              solution: "This chapter traces the story in three stages, and each stage changed because the *characters used to classify* changed, not because the organisms themselves changed.\n\n**Stage 1 — Aristotle.** The earliest scientific attempt used the simplest visible features: plants were split into trees, shrubs and herbs; animals into those with red blood and those without. Before this, sorting was purely by usefulness — which organisms gave food, shelter, or clothing.\n\n**Stage 2 — Linnaeus' Two Kingdom system.** Every living thing was filed into either Plantae or Animalia. It lasted a long time because it was easy to teach, but it had one fatal weakness: it did not distinguish eukaryotes from prokaryotes, unicellular from multicellular organisms, or photosynthetic from non-photosynthetic organisms. The one thing actually tying \"Plants\" together under this scheme was as thin as \"has a cell wall\" — which is why bacteria, blue-green algae, fungi, mosses, ferns, gymnosperms and angiosperms were all lumped in together despite being wildly different.\n\n**Stage 3 — Whittaker's Five Kingdom system (1969).** R.H. Whittaker judged organisms on **five criteria** instead of one: cell structure, body organisation, mode of nutrition, reproduction, and phylogenetic relationships. That single change reshuffled the whole deck — fungi were pulled out on the basis of their chitin wall (not cellulose), all prokaryotes were gathered into Monera, and unicellular eukaryotes as different as Chlamydomonas (once a \"plant\") and Amoeba (once an \"animal\") ended up together in Protista, because they now shared the one criterion that mattered: being a single-celled eukaryote.\n\nThe lesson under all three stages: **classification isn't a fixed list, it's a moving target that tracks how well science can observe an organism.** As tools got better — from the naked eye, to the microscope, to biochemistry and genetics — the groupings got redrawn to match. This chapter even flags that a further six-kingdom / three-domain system (splitting Monera in two) has since been proposed, so the reshuffling is still ongoing.",
+            },
+            {
+              kind: 'numerical',
+              id: '0c21ef31-79db-44bb-a132-de057d633606',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.2',
+              prompt: "State two economically important uses of:\n(a) heterotrophic bacteria\n(b) archaebacteria",
+              answer: 'Heterotrophic bacteria: turning milk into curd, and producing antibiotics (they also fix nitrogen in legume roots). Archaebacteria: methanogens produce methane (biogas) from cattle dung, and they live in and aid digestion in the gut of ruminants like cows and buffaloes.',
+              solution: "**(a) Heterotrophic bacteria.** This chapter is explicit that heterotrophic bacteria are the most abundant bacteria in nature, and while some are pathogens, most of them are quietly useful. Two economically important uses:\n\n1. **Making curd from milk** — the everyday fermentation that turns warm milk into curd overnight is bacterial.\n2. **Production of antibiotics** — many of the antibiotics a doctor prescribes are made with the help of bacteria.\n\n(A third use is available if you need it: **fixing nitrogen in the roots of legume plants**, which cuts down how much fertiliser a farmer needs to add.)\n\n**(b) Archaebacteria.** The methanogens are the economically important group here. Two points:\n\n1. **They live in the gut of ruminant animals** such as cows and buffaloes, where they help the animal's digestion of plant matter.\n2. **They produce methane — biogas — from the dung** of these animals, which is exactly the process behind biogas plants that turn cattle dung into cooking fuel.\n\nNotice the shape of the answer in both halves: an *economic* use always traces back to what the organism naturally does — heterotrophic bacteria ferment and decompose because that's how they feed; methanogens produce methane because that's their metabolism in a low-oxygen gut. Humans just harness the natural process.",
+            },
+          ],
+        },
+        {
+          id: 's2-protista-algae-euglenoids',
+          title: 'Protista’s Algae-Like Groups',
+          blurb: 'Glass-walled diatoms, the blooms and red tides they and their cousins cause, and the plant-by-day predator Euglena.',
+          items: [
+            {
+              kind: 'numerical',
+              id: '39b8b9e0-e2c1-4b44-92dc-239488b928b9',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.3',
+              prompt: 'What is the nature of cell-walls in diatoms?',
+              answer: 'A diatom’s wall is built from two thin overlapping silica shells that fit together like a soap box and its lid, making the wall effectively indestructible.',
+              solution: "A diatom's wall has a very specific, memorable build: it's made of **two thin overlapping shells that fit together like a soap box** — one half sits inside the other, exactly like a box and its lid.\n\nThe key material fact is that these shells are **embedded with silica** — the same substance glass is made of. Silica doesn't break down naturally, so the wall is effectively **indestructible**. That's why, when a diatom dies, its wall doesn't rot away with the rest of the cell — it stays behind. Over billions of years, these leftover silica shells have piled up into thick deposits called **'diatomaceous earth'**, which is fine and gritty enough that we mine it for polishing and for filtering oils and syrups.\n\nOne fact worth locking in alongside this: diatoms are described as the **chief 'producers' in the oceans** — because they float as photosynthetic plankton, they sit at the base of the whole ocean food chain, and their indestructible walls are what leave a permanent record of that in the rock.",
+            },
+            {
+              kind: 'numerical',
+              id: '7f02b393-f830-4872-a712-fc2bd48b45a6',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.4',
+              prompt: "Find out what do the terms 'algal bloom' and 'red-tides' signify.",
+              answer: 'An algal bloom is a sudden explosion in numbers of cyanobacteria (blue-green algae) in a nutrient-polluted water body; a red tide is the marine version caused by red dinoflagellates like Gonyaulax multiplying so fast they turn the sea red and release toxins that can kill fish.',
+              solution: "Both terms describe the same underlying event — an organism multiplying explosively in water — but they belong to two different groups covered in this chapter.\n\n**Algal bloom** is tied to the **cyanobacteria** (blue-green algae). When a pond or lake gets polluted with extra nutrients, cyanobacteria can multiply so fast that they pile up into visible **blooms** across the water surface — a thick mat of blue-green growth that you can actually see.\n\n**Red tide** is the marine, dinoflagellate version of the same idea. Dinoflagellates normally appear yellow, green, brown, blue or red depending on their pigments. When the **red dinoflagellates** — the textbook example is **Gonyaulax** — multiply fast enough, their sheer numbers turn the sea visibly red: a **red tide**. This is not just a colour change — the **toxins** released by such an enormous population can **kill other marine animals, such as fish**.\n\nSo the shared signal in both terms is the same: a sudden population explosion of a photosynthetic protist group, triggered by favourable (often polluted or nutrient-rich) conditions, dense enough to change the water's colour and, in the red tide's case, poison the water around it.",
+            },
+            {
+              kind: 'numerical',
+              id: 'eb1d80d7-6d2b-40ab-893c-f310b3c4c275',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.10',
+              prompt: 'What are the characteristic features of Euglenoids?',
+              answer: 'Euglenoids are mostly fresh-water organisms with no cell wall (a flexible protein pellicle instead), two unequal flagella, and a mixotrophic lifestyle — photosynthetic in sunlight, predatory heterotroph in the dark; the textbook example is Euglena.',
+              solution: "Euglenoids have a distinct set of features, and this chapter builds them one at a time:\n\n- **Habitat**: mostly **fresh-water** organisms, typically found in **stagnant water** — still ponds and puddles.\n- **No cell wall.** In its place is a **protein-rich layer called the pellicle**. Because it's protein rather than a rigid mineral wall, the pellicle **makes the body flexible** — the cell can bend and change shape as it moves.\n- **Two flagella** of different lengths — **one short and one long**.\n- **Mixotrophic nutrition** — this is their signature trick. **In sunlight they are photosynthetic**, making their own food exactly like a plant. But when **deprived of sunlight, they behave like heterotrophs** and turn **predator**, eating smaller organisms. One cell, two completely different feeding strategies, switched purely by whether light is available.\n- **Plant-like pigments.** The pigments of euglenoids are **identical to those found in higher plants** — which is part of why they photosynthesise so much like a true plant when light is present.\n\nThe textbook example is ***Euglena***. Keep the pellicle straight in your head: it is *not* a cell wall, and confusing the two is the exact trap examiners set for this group.",
+            },
+          ],
+        },
+        {
+          id: 's3-protozoa-fungi-lichens',
+          title: 'Protozoa, Fungi’s Four Classes & Lichens',
+          blurb: 'The four ways a single-celled hunter moves, how fungi compare across classes, and the alga-fungus partnership inside a lichen.',
+          items: [
+            {
+              kind: 'numerical',
+              id: '9338f210-d644-43ae-9bb6-e80abdf23fdb',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.6',
+              prompt: 'Describe briefly the four major groups of Protozoa.',
+              answer: 'Amoeboid (moves with pseudopodia, e.g. Amoeba), Flagellated (moves with flagella, e.g. Trypanosoma — sleeping sickness), Ciliated (moves with cilia into a gullet, e.g. Paramoecium), and Sporozoan (has an infectious spore-like stage, e.g. Plasmodium — malaria).',
+              solution: "All protozoans are **heterotrophs** — predators or parasites, believed to be primitive relatives of animals. NCERT sorts them into four groups, and the cleanest way to tell them apart is to ask: *how does it move?*\n\n| Group | How it moves | Habitat / lifestyle note | Example | Disease |\n|---|---|---|---|---|\n| **Amoeboid** | **Pseudopodia** (false feet) it pushes out to crawl and to wrap around prey | Fresh water, sea water, or moist soil; marine forms have silica shells | *Amoeba*; parasite: *Entamoeba* | — |\n| **Flagellated** | **Flagella** (long whip-like threads) | Free-living or parasitic | *Trypanosoma* | Sleeping sickness |\n| **Ciliated** | Thousands of coordinated **cilia** | Aquatic; has a **gullet** (a cavity opening to the surface) into which beating cilia sweep food-laden water | *Paramoecium* | — |\n| **Sporozoan** | Has an **infectious spore-like stage** in its life cycle | Diverse group | *Plasmodium* | Malaria |\n\nOne trap worth flagging while you're here: lower-case *plasmodium* is the crawling body of a **slime mould**, while capital-P *Plasmodium* is the **sporozoan** that causes malaria — same-sounding name, two completely different organisms, and examiners place them next to each other on purpose.",
+            },
+            {
+              kind: 'numerical',
+              id: '9a3788c8-4049-48b1-9fef-f6a051429c34',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.9',
+              prompt: "Give a comparative account of the classes of Kingdom Fungi under the following:\n(i) mode of nutrition\n(ii) mode of reproduction",
+              answer: 'All four classes are heterotrophic (absorbing dead/host tissue) but differ in lifestyle; reproduction differs sharply — Phycomycetes make a zygospore from fused gametes, Ascomycetes make endogenous ascospores in an ascus, Basidiomycetes make exogenous basidiospores on a basidium via fused somatic cells, and Deuteromycetes reproduce only by asexual conidia (no known sexual stage).',
+              solution: "Every class of Kingdom Fungi is **heterotrophic** — none of them photosynthesise — but the two axes the chapter actually uses to compare them are **nutrition-style lifestyle** and, much more sharply, **mode of reproduction**.\n\n**(i) Mode of nutrition (lifestyle within heterotrophy):**\n\n| Class | Nutrition / lifestyle |\n|---|---|\n| **Phycomycetes** | Aquatic habitats and decaying wood in damp places, or **obligate parasites on plants** (e.g. *Albugo* on mustard) |\n| **Ascomycetes** | **Saprophytes, decomposers, parasites**, or **coprophilous** (growing on dung) |\n| **Basidiomycetes** | Soil, logs and tree stumps, and as **parasites inside living plants** — the rusts and smuts that damage crops |\n| **Deuteromycetes** | Mostly **decomposers of litter** (helping mineral cycling), also saprophytes or parasites |\n\n**(ii) Mode of reproduction:**\n\n| Class | Mycelium | Asexual spore | Sexual spore |\n|---|---|---|---|\n| **Phycomycetes** | Aseptate, coenocytic | **Zoospores** (motile) or **aplanospores** (non-motile), in a sporangium | **Zygospore** — direct fusion of two gametes |\n| **Ascomycetes** | Branched, septate | **Conidia**, exogenous, on conidiophores | **Ascospores**, endogenous, inside asci (held in an ascocarp) |\n| **Basidiomycetes** | Branched, septate | Generally **absent** — vegetative reproduction by fragmentation instead | **Basidiospores**, exogenous, on a basidium (held in a basidiocarp); formed after two somatic cells of different strains fuse (plasmogamy) into a dikaryon |\n| **Deuteromycetes** | Septate, branched | **Conidia only** | **None known** — the 'imperfect fungi'; once a sexual stage is found, the fungus is reassigned to Ascomycetes or Basidiomycetes |\n\nThe pattern worth remembering: nutrition tells you roughly *where* each class lives and feeds, but reproduction is what actually separates them cleanly — and the endogenous-ascospore vs exogenous-basidiospore contrast is the single most tested pair in this whole comparison.",
+            },
+            {
+              kind: 'numerical',
+              id: 'e4f2808e-8215-467b-ad6d-cc4a33eb4ad7',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.8',
+              prompt: 'What do the terms phycobiont and mycobiont signify?',
+              answer: 'In a lichen (a symbiotic partnership between an alga and a fungus), the phycobiont is the algal partner — autotrophic, it prepares the food; the mycobiont is the fungal partner — heterotrophic, it provides shelter and absorbs mineral nutrients and water for both.',
+              solution: "A **lichen** is a **symbiotic (mutually useful) association between an alga and a fungus** — and *phycobiont* and *mycobiont* are simply the names for its two halves.\n\n- **Phycobiont** — the **algal** component. It is **autotrophic**, so its job is to **prepare food** (via photosynthesis) for the partnership.\n- **Mycobiont** — the **fungal** component. It is **heterotrophic**, and its job is to provide **shelter**, and to **absorb mineral nutrients and water** for its partner.\n\nThe two organisms live so closely intertwined that if you saw a lichen growing on a rock or tree bark, you would never guess there were actually two different organisms living inside it as one body.\n\nA memory hook for keeping the two straight: ***phyco* → photosynthesis** — that's the algal half that feeds the pair. One more fact worth carrying alongside this: lichens are **very good pollution indicators** — they simply do not grow in polluted areas, so their presence is itself a sign of clean air.",
+            },
+          ],
+        },
+        {
+          id: 's4-plants-viruses-edge-of-life',
+          title: 'Plants That Bend the Rule, and Life’s Blurriest Edge',
+          blurb: 'Partially heterotrophic plants, viroids vs viruses, virus structure and genetic material, and the living-or-non-living debate.',
+          items: [
+            {
+              kind: 'numerical',
+              id: '656340c8-64b4-44c4-87ea-d843259db34f',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.7',
+              prompt: 'Plants are autotrophic. Can you think of some plants that are partially heterotrophic?',
+              answer: 'Yes — insectivorous plants like the Venus fly trap and Bladderwort (which trap and digest small animals) and the parasitic plant Cuscuta (which lives off another plant) are all partially heterotrophic even though they belong to Kingdom Plantae.',
+              solution: "Yes — this chapter names them directly, right where it defines Kingdom Plantae. **A few members are partially heterotrophic**, and they split into two kinds:\n\n**Insectivorous plants** — still green, chlorophyll-containing plants, but they trap and digest small animals to supplement poor soil nutrition:\n- **Venus fly trap** — snaps shut on insects and digests them.\n- **Bladderwort** — does the same trick underwater.\n\n**Parasitic plants** — plants that live off another plant instead of feeding themselves:\n- **Cuscuta** — a leafless, orange, thread-like plant often seen twined over hedges, drawing its nutrition from the host plant it wraps around.\n\nAll three are still classified in Kingdom Plantae — they're eukaryotic and chlorophyll-containing — but they've stepped away from the 'pure autotroph' rule that defines most of the kingdom. Watch the trap examiners set here: mixing these up (calling Cuscuta insectivorous, or the Venus fly trap a parasite) is the classic mistake. Keep it straight as **insectivorous → Bladderwort and Venus fly trap; parasite → Cuscuta.**",
+            },
+            {
+              kind: 'numerical',
+              id: '96cf8310-4d4a-451f-beeb-f58b448238fc',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.5',
+              prompt: 'How are viroids different from viruses?',
+              answer: 'A viroid is free RNA of low molecular weight with no protein coat at all, while a virus is nucleic acid (RNA or DNA) wrapped inside a protective protein coat (capsid) — the missing coat is exactly what makes a viroid smaller and different.',
+              solution: "Both are infectious, sub-cellular agents, but they differ on the two features that define a virus in the first place — its genetic material and its protein coat.\n\n| Feature | Virus | Viroid |\n|---|---|---|\n| Genetic material | **RNA or DNA** (never both) | **Free RNA only**, and of **low molecular weight** |\n| Protein coat (capsid) | **Yes** — the nucleic acid is wrapped in a protective capsid | **No** — completely lacks the protein coat; this missing coat is exactly why it's named a *viroid* ('virus-like, but smaller/simpler') |\n| Discovery | Ivanowsky (1892) / Beijerinck (1898) / Stanley (1935) | **T.O. Diener, 1971** |\n| Example disease | Mosaic disease of tobacco, and many others | **Potato spindle tuber disease** |\n\nSo the short version: a virus is nucleic acid **plus** a protective protein shell around it; a viroid is **just** the RNA, stripped of that shell entirely — smaller, simpler, and even harder to spot than a virus.",
+            },
+            {
+              kind: 'numerical',
+              id: 'be21e855-8cf6-4a39-a104-f4bbf82415b5',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.11',
+              prompt: 'Give a brief account of viruses with respect to their structure and nature of genetic material. Also name four common viral diseases.',
+              answer: 'A virus is a nucleoprotein — a nucleic acid (RNA or DNA, never both) wrapped in a protein coat (capsid) built from capsomeres. Four common viral diseases: mumps, small pox, influenza, and AIDS.',
+              solution: "**Structure.** A virus is called a **nucleoprotein** because it is built from just two components: genetic material on the inside, and protein on the outside.\n\n- The outer layer is the **capsid**, a protein coat made of small subunits called **capsomeres**, arranged in either a **helical** form (as in the rod-shaped Tobacco Mosaic Virus) or a **polyhedral** geometric form. Its only job is to **protect the nucleic acid** inside.\n- A **bacteriophage** (a virus that infects bacteria) has a slightly different shape — a **head** holding the nucleic acid, connected to a tail **sheath** that helps it dock onto a bacterial cell, giving it a tadpole-like look.\n\n**Nature of the genetic material.** A virus contains **either RNA or DNA — never both**, and it is this nucleic acid, not the protein, that is **infectious**. Which type you get depends on the host:\n\n- **Plant-infecting viruses** — generally **single-stranded RNA** (e.g. TMV).\n- **Animal-infecting viruses** — either single- or double-stranded **RNA**, or double-stranded **DNA**.\n- **Bacteriophages** — usually double-stranded **DNA**.\n\nOutside a host, a virus with this structure is simply an **inert crystalline particle**, doing nothing. Once it infects a cell, it hijacks the host's own machinery to replicate itself, which is why every virus is an **obligate parasite**.\n\n**Four common viral diseases:** **mumps, small pox, influenza, and AIDS.** (This chapter also names herpes as a fifth; in plants, viral infection shows up as mosaic formation, leaf rolling and curling, yellowing, and stunted growth.)",
+            },
+            {
+              kind: 'numerical',
+              id: '9670f5c5-8343-44d1-acad-3de97418b451',
+              source: 'ncert_exercise',
+              source_label: 'NCERT 2.12',
+              prompt: 'Organise a discussion in your class on the topic – Are viruses living or non-living?',
+              answer: 'Neither side is simply right — outside a host a virus is an inert, non-living crystal with no cell structure, but the moment it enters a living cell it hijacks the host machinery to replicate, which is a defining trait of life. That is why NCERT calls viruses a bridge between the living and the non-living.',
+              solution: "This is a discussion prompt, not a fact-recall question — but this chapter hands you exactly the two facts you need to run a genuine debate, because it frames this same tension directly.\n\n**The case for 'non-living':** If 'living' requires having a **cell structure**, a virus fails outright. It is **non-cellular** — no cell, no cell membrane, none of the usual machinery of life. Outside a host, a virus is described as an **inert crystalline structure** — it does nothing, just like a mineral crystal. W.M. Stanley even showed in 1935 that viruses **can be crystallised**, and the crystals are largely protein — you could bottle a virus like a chemical and it would sit there indefinitely.\n\n**The case for 'living':** The instant a virus gets inside a living cell, everything changes. It **takes over the machinery of the host cell to replicate itself**, producing more copies of itself and, in the process, usually killing the host. **Replication** is one of the most basic hallmarks of life — nothing truly non-living can make more of itself.\n\n**How to run the discussion:** Split the class into two sides using exactly this contrast — one side argues from the virus's behaviour *outside* a host (inert, crystalline, no cell), the other argues from its behaviour *inside* a host (replicates, has genetic material, causes disease). The honest conclusion NCERT points toward isn't a clean yes-or-no: a virus genuinely behaves like a **non-living chemical** in one state and like a **living organism** in the other, which is exactly why biologists often describe viruses as sitting on the **bridge between the living and the non-living** — and why Whittaker's five kingdoms, built for organisms with a proper cell, could never find room for them at all.",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};

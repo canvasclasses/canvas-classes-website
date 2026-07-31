@@ -17,8 +17,14 @@ a student who gets a question wrong should learn the whole idea from your soluti
 1. **The PROMPT is the exact NCERT question, verbatim (Rule 0).** Copy the question text as-is
    from the source `.txt` file you are given. Do NOT paraphrase, simplify, renumber, or "improve"
    the question — students will meet this exact wording. Fix only obvious OCR artefacts. If a
-   question has parts (a)(b)(c), keep them in the prompt. Preserve chemical formulas exactly
-   (subscripts/superscripts as plain text is fine, e.g. `H2SO4`, `Fe3+`).
+   question has parts (a)(b)(c), keep them in the prompt. **The wording is verbatim, but the
+   markup is not plain text** — the reader only renders sub/superscripts inside `$...$` math
+   mode (see Rule 6), so any chemical formula, isotope, or unit exponent in the prompt must be
+   wrapped exactly like it already is in your own `solution` field, e.g. `H2SO4` → `$\ce{H2SO4}$`,
+   `Fe3+` → `$\ce{Fe^{3+}}$`, `35Cl` → `$\ce{^{35}Cl}$`, `m-2` → `$\text{m}^{-2}$`,
+   `10^6` → `$10^{6}$`. Leaving these as bare text (a real bug found and fixed in `ch1.js`,
+   2026-07-22 — every prompt had this) renders literally as `H2SO4`/`m-2` instead of H₂SO₄/m⁻²
+   on the page, even though the matching `solution` field was correctly wrapped all along.
 2. **Every exercise in scope must appear exactly once.** Do not drop, merge, or invent questions.
    The founder has told you the exact question-number range in scope for this chapter (e.g.
    "6.1–6.34 only" or "8.18–8.35 only") — count them; your page must contain exactly that many

@@ -1,0 +1,1307 @@
+[
+ {
+  "block_id": "8bcc61d0-d770-49d5-b8c6-62fe07f17c5d",
+  "chapter": 1,
+  "page": 1,
+  "page_slug": "charge-the-property-behind-it-all",
+  "has_correct_index": false,
+  "prompt": "Two small metal spheres carry $ +8\\ \\mu\\text{C} $ and $ -2\\ \\mu\\text{C} $. They are touched together and separated again. What charge does each carry now?",
+  "options": [
+   "$ +3\\ \\mu\\text{C} $ each",
+   "$ +6\\ \\mu\\text{C} $ and $ 0 $",
+   "$ +8\\ \\mu\\text{C} $ and $ -2\\ \\mu\\text{C} $, unchanged",
+   "$ +4\\ \\mu\\text{C} $ and $ -1\\ \\mu\\text{C} $"
+  ],
+  "reveal": "**$ +3\\ \\mu\\text{C} $ each.**\n\nWhen two identical conductors touch, they become one conductor. The total charge is $ +8 + (-2) = +6\\ \\mu\\text{C} $ — a scalar sum — and by symmetry it splits equally, giving $ +3\\ \\mu\\text{C} $ on each.\n\nNotice what did the work: charge is conserved (total stays $ +6 $) and charge is a scalar (you added the signs, not vectors). Both rules, in one line of arithmetic.\n\nThis \"touch and share\" step appears in exam problems constantly, and it is only equal sharing when the spheres are **identical**."
+ },
+ {
+  "block_id": "14c15630-5192-4dea-abe1-f16a92478003",
+  "chapter": 1,
+  "page": 2,
+  "page_slug": "how-a-body-gets-charged",
+  "has_correct_index": false,
+  "prompt": "In the induction sequence above, a student removes the rod first and *then* removes the earthing wire. What does the sphere end up with?",
+  "options": [
+   "No net charge",
+   "The same positive charge as before",
+   "A negative charge instead",
+   "Half the charge it would otherwise have"
+  ],
+  "reveal": "**No net charge.**\n\nThe rod is the thing holding the imbalance in place. Take the rod away first and there is nothing repelling electrons any more, so the electrons that went to earth simply come straight back up the wire. The sphere returns to neutral, and only then do you disconnect it.\n\nThis is why the order in Step 3 and Step 4 is not a detail. **Break the earth connection while the field is still applied** — that is the whole trick of induction, and the one step exam questions are built around."
+ },
+ {
+  "block_id": "ad28df49-4f84-4523-8407-a7191fbea48e",
+  "chapter": 1,
+  "page": 3,
+  "page_slug": "coulombs-law",
+  "has_correct_index": false,
+  "prompt": "Two charges attract with a force $ F $. Both charges are then doubled, and the separation is also doubled. What is the new force?",
+  "options": [
+   "$ F $",
+   "$ 2F $",
+   "$ 4F $",
+   "$ F/2 $"
+  ],
+  "reveal": "**$ F $ — completely unchanged.**\n\n$ F \\propto \\dfrac{q_1 q_2}{r^{2}} $. Doubling both charges multiplies the top by 4. Doubling the separation multiplies the bottom by 4. They cancel exactly.\n\nGet into the habit of doing these as **ratios**, not by recomputing. In an exam, \"what happens to $ F $ if…\" questions are pure scaling — never plug in $ 9 \\times 10^{9} $ for those."
+ },
+ {
+  "block_id": "fc20d297-dc78-45b3-943c-65ced18911f2",
+  "chapter": 1,
+  "page": 4,
+  "page_slug": "superposition-more-than-two-charges",
+  "has_correct_index": false,
+  "prompt": "Three **equal** positive charges $ q $ sit at the vertices of an equilateral triangle of side $ a $. What is the magnitude of the force on any one of them?",
+  "options": [
+   "$ \\sqrt{3}\\,\\dfrac{kq^{2}}{a^{2}} $",
+   "$ 2\\dfrac{kq^{2}}{a^{2}} $",
+   "$ \\dfrac{kq^{2}}{a^{2}} $",
+   "Zero, by symmetry"
+  ],
+  "reveal": "**$ \\sqrt{3}\\,kq^{2}/a^{2} $.**\n\nEach of the other two charges repels with $ F = kq^{2}/a^{2} $, and the two repulsions are separated by $ 60^\\circ $ (both point away from the other vertices, and here that keeps the interior angle).\n\n$ F_{\\text{net}} = \\sqrt{F^{2}+F^{2}+2F^{2}\\cos 60^\\circ} = F\\sqrt{2+1} = \\sqrt{3}\\,F $\n\n\"Zero by symmetry\" is the trap. The arrangement is symmetric about the centre, so the force at the **centre** would be zero — but a corner is not the centre. There is no symmetry at a vertex to cancel anything, and the net force points outward along the line from the centre through that vertex."
+ },
+ {
+  "block_id": "03474ba5-253f-49a5-abcf-a9633ed77d87",
+  "chapter": 1,
+  "page": 5,
+  "page_slug": "medium-and-equilibrium",
+  "has_correct_index": false,
+  "prompt": "Two charges are $ r $ apart in vacuum. They are now placed in a medium of dielectric constant $ K = 4 $. By how much must the separation change so that the force returns to its original value?",
+  "options": [
+   "Reduce it to $ r/2 $",
+   "Reduce it to $ r/4 $",
+   "Increase it to $ 2r $",
+   "Increase it to $ 4r $"
+  ],
+  "reveal": "**Reduce it to $ r/2 $.**\n\nThe medium divides the force by $ K = 4 $. To win that factor of 4 back you need $ 1/r^{2} $ to grow by 4, which means $ r $ must **halve** — because the force goes as the inverse *square*.\n\nThis is the standard \"equivalent vacuum distance\" idea: a separation $ r $ in a medium of constant $ K $ behaves like a separation $ r\\sqrt{K} $ in vacuum. Halving here is the same statement read backwards."
+ },
+ {
+  "block_id": "25419131-94bd-43f6-b539-62462bcc9675",
+  "chapter": 1,
+  "page": 6,
+  "page_slug": "the-electric-field",
+  "has_correct_index": false,
+  "prompt": "At a certain point the electric field is $ 10^{5} $ N/C pointing due west. What force acts on a charge of $ -5\\ \\mu\\text{C} $ placed there?",
+  "options": [
+   "0.5 N due east",
+   "0.5 N due west",
+   "$ 5 \\times 10^{-11} $ N due west",
+   "Zero — negative charges are not affected"
+  ],
+  "reveal": "**0.5 N due east.**\n\nMagnitude: $ F = |q|E = (5\\times10^{-6})(10^{5}) = 0.5 $ N.\n\nDirection: the charge is **negative**, so the force is exactly opposite to $ \\vec{E} $. The field points west, so the force points east.\n\nThe field itself is unchanged by what you put in it — it was already there, made by other charges. All the negative sign does is flip which way the force points."
+ },
+ {
+  "block_id": "44b655c4-3e3b-4c4a-88fe-a3763e63c41a",
+  "chapter": 1,
+  "page": 7,
+  "page_slug": "electric-field-lines",
+  "has_correct_index": false,
+  "prompt": "A student draws two electric field lines that cross at a point, and argues it is fine because the field there is just the vector sum of two directions. What is wrong?",
+  "options": [
+   "At a crossing the field would have two different directions at once, which is impossible",
+   "Crossing lines are allowed, but only for unlike charges",
+   "The lines are allowed to cross only inside a conductor",
+   "Nothing is wrong — field lines cross all the time"
+  ],
+  "reveal": "**A field has exactly one direction at each point.**\n\nThe tangent to a field line *is* the direction of $ \\vec{E} $ there. If two lines crossed, you could draw two different tangents at the crossing point, and the field would be pointing two ways at once.\n\nThe student's instinct is not silly — fields **do** add as vectors. But the addition happens *before* you draw the map: you add the contributions to get one field vector at each point, and *then* you draw one line through it. The lines are the answer, not the ingredients."
+ },
+ {
+  "block_id": "8d68733f-b829-41e4-9d57-891c3a390f48",
+  "chapter": 1,
+  "page": 8,
+  "page_slug": "when-charge-is-spread-out",
+  "has_correct_index": false,
+  "prompt": "You move from 1 cm to 2 cm away from a very long charged wire. By what factor does the field drop?",
+  "options": [
+   "It halves",
+   "It drops to a quarter",
+   "It stays the same",
+   "It drops to one eighth"
+  ],
+  "reveal": "**It halves.**\n\nFor a long wire $ E \\propto 1/r $, not $ 1/r^{2} $. Doubling the distance halves the field.\n\nThis catches people out constantly, because \"electrostatics\" and \"inverse square\" are welded together in memory. But the inverse-square law is about **point** charges. Spread the same charge along an infinite line and you get $ 1/r $; spread it over an infinite sheet and — as you are about to see — you get **no** distance dependence at all.\n\nThe geometry of the source decides the power of $ r $. That is a genuinely important idea, and Gauss's law will explain exactly why in a few pages."
+ },
+ {
+  "block_id": "a0a5c5ca-04d6-4e08-84e4-6c6c99c372c7",
+  "chapter": 1,
+  "page": 9,
+  "page_slug": "charge-set-free-in-a-uniform-field",
+  "has_correct_index": false,
+  "prompt": "A proton and an electron are released from rest at the same point in the same uniform electric field. After the same time $ t $, compare their kinetic energies and their displacements.",
+  "options": [
+   "The electron travels much further and gains much more kinetic energy",
+   "They gain equal kinetic energy and travel equal distances, in opposite directions",
+   "They travel equal distances, but the proton gains more kinetic energy",
+   "The electron travels further, but they gain equal kinetic energy"
+  ],
+  "reveal": "**The electron travels much further and gains much more kinetic energy.**\n\nBoth feel the same force magnitude $ eE $, but acceleration is $ a = eE/m $, and the electron is about 1836 times lighter — so its acceleration is about 1836 times bigger.\n\nIn the same time $ t $: displacement $ s = \\tfrac{1}{2}at^{2} \\propto a $, so the electron goes about 1836 times further. Kinetic energy is the work done, $ W = F\\!s $, and with the same force but a much bigger $ s $, the electron gains about 1836 times more energy.\n\n(They do move in opposite directions — the charges have opposite signs — but that is the only thing that is symmetric here.)\n\n**Careful:** had the question said \"after the same *distance*\" instead of \"after the same *time*\", the kinetic energies **would** be equal, since $ W = qEd $ is the same for both. Time or distance — read which one the question fixed."
+ },
+ {
+  "block_id": "02efe301-2e36-4c6e-9e0a-30a6ba9bdc8b",
+  "chapter": 1,
+  "page": 10,
+  "page_slug": "the-electric-dipole",
+  "has_correct_index": false,
+  "prompt": "Dipole A is $ \\pm 2q $ separated by $ d $. Dipole B is $ \\pm q $ separated by $ 2d $. How do their dipole moments compare?",
+  "options": [
+   "They are equal",
+   "A is twice B",
+   "B is twice A",
+   "A is four times B"
+  ],
+  "reveal": "**They are equal** — both have $ p = 2qd $.\n\nAnd because far-field behaviour depends only on $ p $, a distant observer could not tell these two apart by any measurement. The individual charge and the individual separation are invisible from outside; only their product survives.\n\nThis is exactly why the **ideal dipole** (or \"point dipole\") is a useful idea: let $ 2a \\to 0 $ and $ q \\to \\infty $ keeping $ p $ fixed. All the approximate formulas on the next page become exact, and nothing observable is lost."
+ },
+ {
+  "block_id": "09e74125-05ce-4f9f-85a9-08d03266a5d9",
+  "chapter": 1,
+  "page": 11,
+  "page_slug": "the-field-of-a-dipole",
+  "has_correct_index": false,
+  "prompt": "At a far point a distance $ r $ along the axis of a dipole, the field is $ E $. What is the field at a distance $ 2r $ along the perpendicular bisector?",
+  "options": [
+   "$ E/16 $, in the opposite direction to $ \\vec{p} $",
+   "$ E/16 $, in the same direction as $ \\vec{p} $",
+   "$ E/8 $, in the opposite direction to $ \\vec{p} $",
+   "$ E/2 $, in the opposite direction to $ \\vec{p} $"
+  ],
+  "reveal": "**$ E/16 $, opposite to $ \\vec{p} $.**\n\nDo it in two independent steps and it becomes easy.\n\n*Step 1 — the position.* Going from axial to equatorial at the **same** distance costs a factor of 2, so the equatorial field at distance $ r $ would be $ E/2 $.\n\n*Step 2 — the distance.* The dipole field goes as $ 1/r^{3} $, so moving from $ r $ to $ 2r $ divides by $ 2^{3} = 8 $.\n\nTogether: $ E/2 \\div 8 = E/16 $.\n\n*Direction:* equatorial fields point **against** $ \\vec{p} $, so the sign flips too. Written as a vector, $ \\vec{E}' = -\\vec{E}/16 $.\n\nThe habit worth stealing here is doing the two factors separately. Trying to do position and distance in one step is where mistakes live."
+ },
+ {
+  "block_id": "776239f8-8dcb-4037-b47a-d690fe44a90e",
+  "chapter": 1,
+  "page": 12,
+  "page_slug": "a-dipole-in-a-uniform-field",
+  "has_correct_index": false,
+  "prompt": "A dipole sits at $ \\theta = 180^\\circ $ in a uniform field. Both the net force and the net torque on it are zero. Is it therefore in equilibrium?",
+  "options": [
+   "Yes — but unstable equilibrium, since the energy is at a maximum",
+   "No — zero torque means it cannot be in equilibrium",
+   "Yes, and it is stable, since nothing is acting on it",
+   "No — a dipole is never in equilibrium in a field"
+  ],
+  "reveal": "**Yes — it is in equilibrium, but the unstable kind.**\n\nEquilibrium means zero net force and zero net torque, and both are satisfied here. The dipole genuinely will sit there for ever, provided nothing disturbs it.\n\nBut the potential energy is at its **maximum**, $ +pE $. The smallest nudge produces a torque that turns it further, and it flips right round to $ 0^\\circ $.\n\nThe test is always the energy, never the torque. Torque tells you *whether* it is an equilibrium; the energy — minimum or maximum — tells you *what kind*."
+ },
+ {
+  "block_id": "771d1965-2f5b-4abe-b40e-020a3767abc3",
+  "chapter": 1,
+  "page": 13,
+  "page_slug": "electric-flux",
+  "has_correct_index": false,
+  "prompt": "A closed cube is placed in a **uniform** electric field, with no charge inside it. What is the net flux through the cube?",
+  "options": [
+   "Zero",
+   "$ EL^{2} $ where $ L $ is the side",
+   "$ 6EL^{2} $",
+   "It depends on the orientation of the cube"
+  ],
+  "reveal": "**Zero — and for any closed surface, any orientation.**\n\nIn a uniform field the lines are straight and parallel. Every line that enters the cube must come out the other side; nothing is created or destroyed inside. Entering flux is negative and leaving flux is positive, and they cancel exactly.\n\nOrientation makes no difference either. Tilt the cube and each face contributes differently, but the sum stays zero — because the *lines* have not changed, only how they are shared between faces.\n\nRemember this as a statement in its own right: **the net flux through any closed surface in a uniform field is zero.** You will use it constantly to throw away faces you do not want to compute."
+ },
+ {
+  "block_id": "c5cd9ce7-b61c-48fe-8260-e14aa1fcb990",
+  "chapter": 1,
+  "page": 14,
+  "page_slug": "gausss-law",
+  "has_correct_index": false,
+  "prompt": "Five charges $ q_1 $ to $ q_5 $ are scattered about. A Gaussian surface $ S $ encloses only $ q_2 $ and $ q_4 $. Which statement is right?",
+  "options": [
+   "$ \\vec{E} $ on the surface is due to all five charges, while $ q_{\\text{in}} $ counts only $ q_2 $ and $ q_4 $",
+   "Both $ \\vec{E} $ and $ q_{\\text{in}} $ involve only $ q_2 $ and $ q_4 $",
+   "$ \\vec{E} $ is due only to $ q_2 $ and $ q_4 $, while $ q_{\\text{in}} $ counts all five",
+   "$ \\vec{E} $ is due to $ q_1, q_3, q_5 $ and $ q_{\\text{in}} $ to $ q_2, q_4 $"
+  ],
+  "reveal": "**The field on the surface comes from all five; the enclosed charge counts only two.**\n\nElectric fields do not know about imaginary surfaces. $ \\vec{E} $ at any point is the superposition of the fields of every charge there is — an outside charge changes it just as much as an inside one.\n\nWhat Gauss guarantees is narrower and cleverer: when you **add up** $ \\vec{E}\\cdot d\\vec{S} $ over the entire closed surface, the outside charges contribute exactly zero, because whatever flux they push in on one side they take out on the other.\n\nSo you must never say \"the field on the Gaussian surface is due to the enclosed charge.\" That is only true when symmetry makes it true — which is precisely the case we exploit on the next page, and precisely why it is so easy to over-generalise."
+ },
+ {
+  "block_id": "10d01604-b460-4e08-a0bc-d30cc807b8e0",
+  "chapter": 1,
+  "page": 15,
+  "page_slug": "gauss-in-action",
+  "has_correct_index": false,
+  "prompt": "A solid non-conducting sphere of radius $ R $ carries charge $ Q $ spread uniformly through its volume. Where is the field larger — at $ r = R/2 $ or at $ r = 2R $?",
+  "options": [
+   "At $ r = R/2 $, by a factor of 2",
+   "At $ r = 2R $, by a factor of 2",
+   "They are equal",
+   "At $ r = R/2 $, by a factor of 4"
+  ],
+  "reveal": "**At $ r = R/2 $, and by exactly a factor of 2.**\n\nInside, $ E = \\dfrac{kQr}{R^{3}} $. At $ r = R/2 $ this gives $ \\dfrac{kQ}{2R^{2}} $.\n\nOutside, $ E = \\dfrac{kQ}{r^{2}} $. At $ r = 2R $ this gives $ \\dfrac{kQ}{4R^{2}} $.\n\nRatio: $ 2 : 1 $.\n\nThe trap is using one formula for both points. **Always check which side of $ R $ you are on before you pick the expression** — that single check prevents most errors on this topic."
+ },
+ {
+  "block_id": "804895ab-9ef1-41e8-a855-05db26898144",
+  "chapter": 1,
+  "page": 16,
+  "page_slug": "what-a-conductor-does-to-a-field",
+  "has_correct_index": false,
+  "prompt": "A solid metal sphere and a hollow metal sphere of the **same radius** are each given the same charge $ Q $. Compare the field just outside each of them.",
+  "options": [
+   "Identical for both spheres",
+   "Larger for the solid sphere, which holds more charge",
+   "Larger for the hollow sphere",
+   "Zero outside the hollow one"
+  ],
+  "reveal": "**Identical.**\n\nOn either sphere, all of $ Q $ ends up on the outer surface — there is never any charge inside the metal. Since both spheres have the same radius, both have the same $ \\sigma = Q/4\\pi R^{2} $, and therefore the same field $ \\sigma/\\varepsilon_0 $ just outside.\n\nThe metal in the middle of the solid sphere plays no part whatsoever. It is not storing charge, and it is not contributing to any field.\n\nThis is why the huge Van de Graaff generators used for demonstrations are hollow shells: the inside of a solid one would be dead weight."
+ },
+ {
+  "block_id": "82eb3461-f191-4f12-b4d8-df6dee7cb76e",
+  "chapter": 1,
+  "page": 17,
+  "page_slug": "cavities-and-shielding",
+  "has_correct_index": false,
+  "prompt": "A charge $ +2q $ is placed inside a cavity in an **isolated neutral** conducting sphere. What appears on the cavity wall and on the outer surface?",
+  "options": [
+   "$ -2q $ on the cavity wall, $ +2q $ on the outer surface",
+   "$ +2q $ on the cavity wall, $ -2q $ on the outer surface",
+   "$ -2q $ on the cavity wall, and nothing on the outer surface",
+   "Nothing on either, since the conductor is neutral overall"
+  ],
+  "reveal": "**$ -2q $ on the cavity wall and $ +2q $ on the outer surface.**\n\n*Cavity wall:* a Gaussian surface drawn in the metal must enclose zero net charge, because $ \\vec{E} = 0 $ there. With $ +2q $ in the cavity, the wall must supply $ -2q $.\n\n*Outer surface:* the conductor began neutral and nothing was added to it, so the $ -2q $ drawn to the cavity wall leaves $ +2q $ behind — and the outer surface is the only place excess charge can sit.\n\n**The extension that exams like.** Had the conductor started with its own charge $ Q $, the cavity wall would still be $ -2q $ — that argument never changes — and the outer surface would carry $ Q + 2q $."
+ },
+ {
+  "block_id": "b0079b83-0f13-4a0e-84bf-261e8011f259",
+  "chapter": 2,
+  "page": 1,
+  "page_slug": "force-work-and-stored-energy",
+  "has_correct_index": false,
+  "prompt": "Two protons are pushed from a large separation to a distance $ r $ apart and released. Two protons in a nucleus, however, stay put. What is the electrostatic potential energy doing in each case?",
+  "options": [
+   "It is positive in both cases — the nucleus is held together by something other than electrostatics",
+   "It is positive in the first case and negative in the second",
+   "It is negative in both cases, since both systems are bound",
+   "It is zero in the nucleus, since the protons touch"
+  ],
+  "reveal": "**Positive in both cases** — and that is exactly the point.\n\nTwo protons always give $ U = +kq^{2}/r $, whether they are in your laboratory or in a nucleus. Electrostatically they are always trying to fly apart, and the closer they are the harder they try.\n\nSo what holds a nucleus together cannot be electrostatics. It is the **strong nuclear force**, which is far stronger at these distances but has almost no reach beyond them.\n\nThe habit worth taking away: a positive $ U $ always means \"wants to separate\", a negative $ U $ means \"bound\". If a system stays together despite a positive electrostatic $ U $, something else is holding it."
+ },
+ {
+  "block_id": "4d8acea8-4c63-4e5c-b2af-d3d0d32acfa1",
+  "chapter": 2,
+  "page": 2,
+  "page_slug": "electric-potential",
+  "has_correct_index": false,
+  "prompt": "Two charges $ +q $ and $ -q $ sit a distance $ 2a $ apart. At the midpoint between them, what are $ V $ and $ \\vec{E} $?",
+  "options": [
+   "$ V = 0 $, but $ \\vec{E} \\neq 0 $",
+   "Both $ V $ and $ \\vec{E} $ are zero",
+   "$ V \\neq 0 $, but $ \\vec{E} = 0 $",
+   "Both are non-zero"
+  ],
+  "reveal": "**$ V = 0 $, but $ \\vec{E} $ is definitely not zero.**\n\n*Potential:* $ V = \\dfrac{kq}{a} + \\dfrac{k(-q)}{a} = 0 $. The two numbers are equal and opposite, so they cancel.\n\n*Field:* the positive charge pushes away from itself and the negative charge pulls towards itself — **both point the same way**, from $ +q $ towards $ -q $. So they add to $ 2kq/a^{2} $ rather than cancelling.\n\nThis pair of facts is worth carrying around. **Zero potential does not mean zero field, and zero field does not mean zero potential.** Inside a charged spherical shell you get exactly the reverse case: $ \\vec{E} = 0 $ everywhere, while $ V $ is a constant non-zero value throughout."
+ },
+ {
+  "block_id": "6d88b764-e1a3-4642-b7ce-84d97ca09abe",
+  "chapter": 2,
+  "page": 3,
+  "page_slug": "potential-difference-and-work",
+  "has_correct_index": false,
+  "prompt": "An electron is released from rest at a point where the potential is $ -5 $ V. It is free to move. Does it head towards a region of higher or lower potential?",
+  "options": [
+   "Higher potential",
+   "Lower potential",
+   "It stays at rest",
+   "It depends on the field strength"
+  ],
+  "reveal": "**Higher potential.**\n\nEnergy is what decides, and for an electron $ U = qV = (-e)V $. To lower its energy, the electron must move to a place where $ V $ is **larger**.\n\nSo a free electron accelerates from low potential to high potential — the opposite of a free proton, in exactly the same landscape.\n\nAnd here is the reason a starting value of $ -5 $ V is a red herring: only the **difference** matters. Whether the point is at $ -5 $ V, $ 0 $ V or $ +1000 $ V changes nothing about which way the electron moves."
+ },
+ {
+  "block_id": "32dd5eb7-1606-44eb-b6be-c0847256ad04",
+  "chapter": 2,
+  "page": 4,
+  "page_slug": "field-and-potential-both-ways",
+  "has_correct_index": false,
+  "prompt": "In a certain region the electric potential is constant. What can you say about the electric field there?",
+  "options": [
+   "It is zero throughout the region",
+   "It is constant but non-zero",
+   "It is perpendicular to the region",
+   "Nothing can be said without more information"
+  ],
+  "reveal": "**It is zero throughout the region.**\n\n$ E = -dV/dr $, and a constant $ V $ has zero slope in every direction. No slope, no field.\n\nThe contour-map picture makes it obvious: a region of constant height is flat ground, and a ball placed anywhere on it stays put.\n\n**Do not read it backwards, though.** Zero field over a region does mean constant potential. But zero field at a *single point* says nothing about the neighbourhood — at the null point between two like charges the field vanishes while the potential is changing perfectly steadily through it."
+ },
+ {
+  "block_id": "25388fad-f0c6-4482-bf31-54134a1537d9",
+  "chapter": 2,
+  "page": 5,
+  "page_slug": "equipotential-surfaces",
+  "has_correct_index": false,
+  "prompt": "A student sketches equipotential surfaces around a point charge as spheres that are **equally spaced** for equal steps in $ V $. What is wrong?",
+  "options": [
+   "They should get further apart with distance, because the field weakens",
+   "They should get closer together with distance",
+   "They should not be spheres at all",
+   "Nothing is wrong — the spacing is always equal"
+  ],
+  "reveal": "**They must spread out as you go further away.**\n\nThe spacing of equipotentials is set by the field strength: $ \\Delta V \\approx E\\,\\Delta r $, so for a fixed step $ \\Delta V $, a **weaker** field needs a **larger** $ \\Delta r $.\n\nAround a point charge the field falls as $ 1/r^{2} $, so the surfaces are packed tight close in and spread out further away.\n\nEqually spaced equipotentials mean a **uniform** field — which is exactly what you get between parallel plates, and only there."
+ },
+ {
+  "block_id": "0517cd5a-0ac0-4dfe-a2a4-ceda3f54580b",
+  "chapter": 2,
+  "page": 6,
+  "page_slug": "the-energy-of-a-whole-system",
+  "has_correct_index": false,
+  "prompt": "Three charges $ +q $, $ +q $ and $ -q $ sit at the corners of an equilateral triangle of side $ a $. Is the total potential energy positive, negative, or zero?",
+  "options": [
+   "Negative",
+   "Positive",
+   "Zero",
+   "It depends on which corner holds the negative charge"
+  ],
+  "reveal": "**Negative.**\n\nThree pairs, all at the same separation $ a $:\n\n- $ (+q, +q) $: $ +\\dfrac{kq^{2}}{a} $\n- $ (+q, -q) $: $ -\\dfrac{kq^{2}}{a} $\n- $ (+q, -q) $: $ -\\dfrac{kq^{2}}{a} $\n\n$ U = \\dfrac{kq^{2}}{a}(1 - 1 - 1) = -\\dfrac{kq^{2}}{a} $\n\nTwo attracting pairs beat one repelling pair, so the system is **bound** — you would have to supply energy to pull it apart.\n\nAnd because every side is the same length, it genuinely does not matter which corner holds the negative charge. Change the triangle to a non-equilateral one and it would."
+ },
+ {
+  "block_id": "f93ecb09-d1d3-4a96-821d-dd486caf9912",
+  "chapter": 2,
+  "page": 7,
+  "page_slug": "conductors-in-the-language-of-potential",
+  "has_correct_index": false,
+  "prompt": "A sphere of radius $ 10 $ cm and one of radius $ 2 $ cm are joined by a long wire and given a total charge. Which has the greater surface charge density, and by what factor?",
+  "options": [
+   "The small sphere, by a factor of 5",
+   "The large sphere, by a factor of 5",
+   "The small sphere, by a factor of 25",
+   "They are equal, since the spheres are connected"
+  ],
+  "reveal": "**The small sphere, by a factor of 5.**\n\nConnected means equal potential, which gives $ Q \\propto R $ — so the large sphere carries 5 times the charge.\n\nBut density is charge per unit **area**, and the large sphere's area is $ 5^{2} = 25 $ times bigger. So:\n\n$ \\frac{\\sigma_{\\text{small}}}{\\sigma_{\\text{large}}} = \\frac{R_{\\text{large}}}{R_{\\text{small}}} = \\frac{10}{2} = 5 $\n\n\"By a factor of 25\" is the trap — that is the *area* ratio, which you must divide by the *charge* ratio of 5, leaving 5.\n\nThe practical upshot: a spark will start at the small sphere first, even though it holds only a fifth of the charge."
+ },
+ {
+  "block_id": "f008c9c6-9d9d-4efc-beb6-c6a5ec930c3d",
+  "chapter": 2,
+  "page": 8,
+  "page_slug": "capacitance",
+  "has_correct_index": false,
+  "prompt": "A capacitor is charged so that its plates carry $ +Q $ and $ -Q $. What is \"the charge on the capacitor\"?",
+  "options": [
+   "$ Q $ — the magnitude on either plate",
+   "$ 2Q $ — the total on both plates",
+   "zero — the plates carry equal and opposite charges",
+   "$ Q/2 $ — the average of the two plates"
+  ],
+  "reveal": "**$ Q $ — the magnitude on one plate.**\n\nThe *net* charge on the whole device is genuinely zero, and that is not a trick: charge was not created, only moved from one plate to the other. But \"the charge on a capacitor\" always means the magnitude on either plate, and $ C = Q/V $ uses that $ Q $.\n\nOne consequence worth having ready: **the two plates of any capacitor always carry equal and opposite charges**, whatever the circuit around them. Charge pushed onto one plate repels an equal amount off the other."
+ },
+ {
+  "block_id": "b27aa013-cc00-4b80-be66-f5bffe4ae6f2",
+  "chapter": 2,
+  "page": 9,
+  "page_slug": "the-parallel-plate-capacitor",
+  "has_correct_index": false,
+  "prompt": "A parallel-plate capacitor is connected to a battery. Its plate separation is then doubled, with the battery still connected. What happens to the charge on it?",
+  "options": [
+   "It halves",
+   "It doubles",
+   "It stays the same",
+   "It falls to a quarter"
+  ],
+  "reveal": "**It halves.**\n\nWork through it in the right order — and the order is always the same.\n\n1. **What is held fixed?** The battery is connected, so $ V $ is fixed.\n2. **What does the geometry do to $ C $?** $ C = \\varepsilon_0A/d $, so doubling $ d $ halves $ C $.\n3. **Then use $ Q = CV $.** With $ V $ fixed and $ C $ halved, $ Q $ halves. Charge flows back into the battery.\n\nThe answer would be completely different if the battery had been **disconnected** first: then $ Q $ would be fixed instead, and $ V $ would double.\n\n**Always ask \"battery on or off?\" before anything else.** That single question decides which quantity is the constant, and everything else follows from it. There is a full table of these cases waiting on the dielectrics page."
+ },
+ {
+  "block_id": "9c01153d-c80c-49f9-9a14-d93fa027095a",
+  "chapter": 2,
+  "page": 10,
+  "page_slug": "spherical-and-cylindrical-capacitors",
+  "has_correct_index": false,
+  "prompt": "In a spherical capacitor the two radii $ a $ and $ b $ are made very close, so that $ b - a = d $ is tiny. What does the capacitance formula become?",
+  "options": [
+   "It reduces to $ \\varepsilon_0A/d $ — the parallel-plate result",
+   "It becomes $ 4\\pi\\varepsilon_0 a $",
+   "It goes to zero",
+   "It stays as $ 4\\pi\\varepsilon_0 ab/(b-a) $ and does not simplify"
+  ],
+  "reveal": "**It becomes the parallel-plate formula — as it must.**\n\nWith $ b - a = d $ very small, $ a $ and $ b $ are nearly equal, so $ ab \\approx a^{2} $:\n\n$ C = 4\\pi\\varepsilon_0\\frac{ab}{b-a} \\approx \\frac{4\\pi\\varepsilon_0 a^{2}}{d} = \\frac{\\varepsilon_0(4\\pi a^{2})}{d} = \\frac{\\varepsilon_0 A}{d} $\n\nsince $ 4\\pi a^{2} $ is exactly the surface area of the sphere.\n\nThis is worth more than the algebra. **Any two conductors separated by a gap small compared with their size behave as a parallel-plate capacitor**, whatever their shape — because on that scale every surface looks flat. It is why the parallel-plate formula is so widely useful, and it is a good habit to check a new formula against a limit you already trust."
+ },
+ {
+  "block_id": "80775606-26b0-4a23-b9e2-7d1b47b89288",
+  "chapter": 2,
+  "page": 11,
+  "page_slug": "capacitors-in-series-and-parallel",
+  "has_correct_index": false,
+  "prompt": "A $ 2\\ \\mu\\text{F} $ and a $ 6\\ \\mu\\text{F} $ capacitor are connected **in series** across a $ 12 $ V supply. Which carries the larger voltage, and what is it?",
+  "options": [
+   "The $ 2\\ \\mu\\text{F} $, with $ 9 $ V across it",
+   "The $ 6\\ \\mu\\text{F} $, with $ 9 $ V across it",
+   "They share equally, $ 6 $ V each",
+   "The $ 2\\ \\mu\\text{F} $, with $ 3 $ V across it"
+  ],
+  "reveal": "**The $ 2\\ \\mu\\text{F} $ capacitor, with $ 9 $ V across it.**\n\nIn series the charge is common. From $ V = Q/C $ with $ Q $ fixed, $ V \\propto 1/C $ — so the **smaller** capacitor takes the **larger** share of the voltage.\n\nThe numbers: $ C_{\\text{eq}} = \\dfrac{2\\times6}{2+6} = 1.5\\ \\mu\\text{F} $, so $ Q = C_{\\text{eq}}V = 1.5\\times12 = 18\\ \\mu\\text{C} $ on each.\n\nThen $ V_1 = 18/2 = 9 $ V and $ V_2 = 18/6 = 3 $ V. They add to 12 V, which is the check.\n\n**Why an engineer cares.** Every capacitor has a voltage it cannot survive. In a series chain the smallest capacitor is the one under most stress — so it is the one that fails first, and it is the one that sets the rating of the whole chain."
+ },
+ {
+  "block_id": "7596fc61-8afc-45ee-a2da-3893e23e7daf",
+  "chapter": 2,
+  "page": 12,
+  "page_slug": "reading-a-capacitor-network",
+  "has_correct_index": false,
+  "prompt": "Two capacitors are joined at a middle point, and a third wire also connects to that same middle point and runs off to another part of the circuit. Are the two capacitors in series?",
+  "options": [
+   "No — the middle node has a third connection, so charge can leave it",
+   "Yes — they are still connected end to end",
+   "Yes, but only if the third wire carries no current",
+   "It depends on the values of the capacitances"
+  ],
+  "reveal": "**No.**\n\nThe series rule rests entirely on the middle plates being an **isolated island**: whatever charge arrives on one plate is exactly what left the other, because there is nowhere else for it to go.\n\nAttach a third wire and that argument dies. Charge can now flow in or out of the junction, so the two capacitors no longer carry equal charges and $ 1/C_{\\text{eq}} = 1/C_1 + 1/C_2 $ does not apply.\n\n**This is the single most common error in network problems** — assuming series purely from the drawing looking like a chain. Always check: does anything else touch the junction?"
+ },
+ {
+  "block_id": "1fd7dba4-b0b4-413e-a084-e90940cd93af",
+  "chapter": 2,
+  "page": 13,
+  "page_slug": "energy-stored-in-a-capacitor",
+  "has_correct_index": false,
+  "prompt": "A capacitor is charged and then **disconnected** from the battery. The plate separation is now doubled. What happens to the stored energy?",
+  "options": [
+   "It doubles",
+   "It halves",
+   "It stays the same",
+   "It falls to a quarter"
+  ],
+  "reveal": "**It doubles.**\n\nDisconnected means $ Q $ is fixed, so use $ U = \\dfrac{Q^{2}}{2C} $.\n\nDoubling $ d $ halves $ C = \\varepsilon_0A/d $, and halving $ C $ in the denominator **doubles** $ U $.\n\nWhere did the extra energy come from? **From you.** The plates carry opposite charges and attract each other, so pulling them apart takes work — and that work is exactly the energy increase.\n\nRun the same question with the **battery still connected** and everything changes: now $ V $ is fixed, $ U = \\tfrac{1}{2}CV^{2} $, and halving $ C $ **halves** the energy, with the surplus going back into the battery. Same physical action, opposite answer — which is why \"battery on or off?\" is always the first question."
+ },
+ {
+  "block_id": "fb60d4b3-94a9-4271-9756-f08b068d567a",
+  "chapter": 2,
+  "page": 14,
+  "page_slug": "where-the-energy-lives",
+  "has_correct_index": false,
+  "prompt": "The electric field in a certain region is $ 2\\times10^{5} $ V/m. How much energy is stored in each cubic metre?",
+  "options": [
+   "About $ 0.18 $ J",
+   "About $ 1.8 $ J",
+   "About $ 0.018 $ J",
+   "About $ 18 $ J"
+  ],
+  "reveal": "**About $ 0.18 $ J per cubic metre.**\n\n$ u = \\tfrac{1}{2}\\varepsilon_0E^{2} = \\tfrac{1}{2}(8.854\\times10^{-12})(2\\times10^{5})^{2} $\n\n$ = \\tfrac{1}{2}(8.854\\times10^{-12})(4\\times10^{10}) = 0.177\\ \\text{J/m}^{3} $\n\nWorth pausing on how **small** that is. A field of 200,000 V/m is respectable — a fifth of the way to breaking down dry air — and a whole cubic metre of it holds under a fifth of a joule. That is roughly the energy of dropping an apple 20 cm.\n\nThis is the honest reason capacitors are poor batteries. They deliver energy magnificently fast, but they hold very little of it, because $ \\varepsilon_0 $ is tiny and $ E $ cannot be pushed past the breakdown limit of the insulator."
+ },
+ {
+  "block_id": "f5f366dd-1ffb-4f90-bcf8-a03573cbd2a7",
+  "chapter": 2,
+  "page": 15,
+  "page_slug": "dielectrics",
+  "has_correct_index": false,
+  "prompt": "A capacitor is charged, then **disconnected** from the battery, and a dielectric slab of constant $ K = 4 $ is inserted. What happens to the potential difference and to the energy?",
+  "options": [
+   "$ V $ becomes one quarter; $ U $ becomes one quarter",
+   "$ V $ becomes one quarter; $ U $ becomes four times",
+   "$ V $ is unchanged; $ U $ becomes four times",
+   "$ V $ becomes four times; $ U $ becomes one quarter"
+  ],
+  "reveal": "**Both drop to one quarter.**\n\nWork it in the fixed order:\n\n1. **Battery off → $ Q $ is fixed.**\n2. $ C \\to 4C $ (dielectric, always).\n3. $ V = Q/C $ → drops to $ V/4 $.\n4. $ U = Q^{2}/2C $ → drops to $ U/4 $.\n\nThe lost three quarters went into pulling the slab in — the capacitor did work on it.\n\n**Contrast with the battery left connected:** then $ V $ would be unchanged, $ Q $ would rise to $ 4Q $, and $ U $ would rise to $ 4U $, with the battery supplying all of it.\n\nSame slab, same capacitor, opposite answers. Establish the battery state before touching any formula."
+ },
+ {
+  "block_id": "1c834253-7af1-41fd-bf4a-64a5ac943634",
+  "chapter": 2,
+  "page": 16,
+  "page_slug": "charging-and-discharging",
+  "has_correct_index": false,
+  "prompt": "A $ 10\\ \\mu\\text{F} $ capacitor discharges through a $ 200\\ \\text{k}\\Omega $ resistor. Roughly how long until it is essentially fully discharged?",
+  "options": [
+   "About 10 seconds",
+   "About 2 seconds",
+   "About 0.5 seconds",
+   "About 100 seconds"
+  ],
+  "reveal": "**About 10 seconds.**\n\n$ \\tau = CR = (10\\times10^{-6})(200\\times10^{3}) = 2\\ \\text{s} $\n\n\"Essentially fully discharged\" means about $ 5\\tau $, so around **10 seconds** — at which point 0.7% of the charge is left.\n\nThe answer \"about 2 seconds\" is $ \\tau $ itself, which is a very different claim: after 2 seconds the capacitor still holds **37%** of its charge. That is a lot, and it is why service manuals tell you to wait — and then to short the terminals anyway.\n\n**Practical note.** A large capacitor in a high-resistance circuit can stay dangerously charged for minutes after the power is off. The time constant is not a formality."
+ },
+ {
+  "block_id": "1e3c5f79-1ef8-4a03-821b-832268a48cff",
+  "chapter": 3,
+  "page": 1,
+  "page_slug": "what-a-current-really-is",
+  "has_correct_index": false,
+  "prompt": "Currents of $ 3 $ A and $ 4 $ A flow into a junction along two wires at right angles to each other, and a single wire carries the total away. What current flows in the third wire?",
+  "options": [
+   "$ 7 $ A",
+   "$ 5 $ A",
+   "$ 1 $ A",
+   "$ 3.5 $ A"
+  ],
+  "reveal": "**7 A.**\n\nCharge is conserved, so whatever arrives per second must leave per second: $ 3 + 4 = 7 $ A.\n\nThe answer 5 A comes from treating the currents as perpendicular vectors and using $ \\sqrt{3^{2}+4^{2}} $. That is exactly the mistake this question exists to catch. **Currents add arithmetically, whatever the geometry of the wires.**\n\nThis is also, in one line, Kirchhoff's junction rule — which gets a full page later."
+ },
+ {
+  "block_id": "e84ff06d-50ca-4558-9cd0-bbc58770d107",
+  "chapter": 3,
+  "page": 2,
+  "page_slug": "drift-velocity",
+  "has_correct_index": false,
+  "prompt": "A copper conductor of cross-section $ 1\\ \\text{cm}^{2} $ and length $ 10 $ km carries $ 1 $ A. Roughly how long would one electron take to travel from one end to the other? Take $ n = 8.5\\times10^{28}\\ \\text{m}^{-3} $.",
+  "options": [
+   "A few hundred years",
+   "A few hours",
+   "A few seconds",
+   "About a month"
+  ],
+  "reveal": "**A few hundred years** — around 430, in fact.\n\n$ A = 1\\ \\text{cm}^{2} = 10^{-4}\\ \\text{m}^{2} $, so\n\n$ v_d = \\dfrac{1}{(8.5\\times10^{28})(1.6\\times10^{-19})(10^{-4})} = 7.4\\times10^{-7}\\ \\text{m/s} $\n\n$ t = \\dfrac{10^{4}}{7.4\\times10^{-7}} = 1.4\\times10^{10}\\ \\text{s} \\approx 430\\ \\text{years} $\n\nAnd yet the current at the far end starts within microseconds of switching on.\n\nThat gap — four centuries versus microseconds — is the sharpest possible statement of the point. **The current is not electrons delivered from a source. It is electrons already present, all beginning to drift together.**"
+ },
+ {
+  "block_id": "a2053fd9-d338-4d41-a3ff-98a43f9cb1eb",
+  "chapter": 3,
+  "page": 3,
+  "page_slug": "ohms-law-and-resistance",
+  "has_correct_index": false,
+  "prompt": "A torch bulb is measured at low voltage and gives $ R = 3\\ \\Omega $. At its full working voltage the measured resistance is $ 12\\ \\Omega $. Is Ohm's law being violated?",
+  "options": [
+   "No — the filament is much hotter at full voltage, so the conditions have changed",
+   "Yes — the resistance should have stayed constant",
+   "No — resistance always rises with voltage in every material",
+   "Yes, but only because the measurement is inaccurate"
+  ],
+  "reveal": "**No violation.** The conditions changed.\n\nOhm's law applies at **constant temperature**. A filament at full brightness sits at over 2000 °C; at low voltage it is barely warm. The hot lattice vibrates far more, so $ \\tau $ drops sharply, and $ \\rho = m/ne^{2}\\tau $ rises.\n\nSo the bulb is not disobeying physics — it is simply not being measured under the same conditions twice. Its $ V $–$ I $ graph curves, bending towards the voltage axis as the filament heats.\n\n**A practical consequence:** at the instant of switch-on the filament is cold and its resistance is low, so the inrush current is several times the running current. That surge is why filament bulbs almost always fail at the moment you switch them on."
+ },
+ {
+  "block_id": "903665fa-bf03-4b4f-ae02-f69c4f0bacaf",
+  "chapter": 3,
+  "page": 4,
+  "page_slug": "resistivity-and-the-shape-of-a-wire",
+  "has_correct_index": false,
+  "prompt": "A wire is stretched so that its radius is halved. By what factor does its resistance change?",
+  "options": [
+   "16 times",
+   "4 times",
+   "2 times",
+   "8 times"
+  ],
+  "reveal": "**16 times.**\n\nHalving the radius quarters the area, since $ A = \\pi r^{2} $. And at constant volume, $ R \\propto 1/A^{2} $:\n\n$ R_{\\text{new}} = \\left(\\frac{A}{A/4}\\right)^{2}R = 4^{2}R = 16R $\n\nCheck it the other way to be sure. Constant volume with a quartered area means the length is multiplied by 4, and $ R \\propto l^{2} $ gives $ 4^{2} = 16 $. The two routes agree.\n\n**The trap** is answering \"4 times\" by using $ R \\propto 1/A $ and forgetting that the length changed too. Whenever a wire is *stretched*, both dimensions move — always."
+ },
+ {
+  "block_id": "1a16d5e1-8684-4bbc-916c-c5d5da105c90",
+  "chapter": 3,
+  "page": 5,
+  "page_slug": "temperature-and-resistance",
+  "has_correct_index": false,
+  "prompt": "A metal wire has resistance $ 10\\ \\Omega $ at $ 20\\ ^\\circ\\text{C} $ and $ 14\\ \\Omega $ at $ 120\\ ^\\circ\\text{C} $. What is its temperature coefficient?",
+  "options": [
+   "$ 4\\times10^{-3}\\ \\text{K}^{-1} $",
+   "$ 4\\times10^{-2}\\ \\text{K}^{-1} $",
+   "$ 0.4\\ \\text{K}^{-1} $",
+   "$ 4\\times10^{-4}\\ \\text{K}^{-1} $"
+  ],
+  "reveal": "**$ 4\\times10^{-3}\\ \\text{K}^{-1} $.**\n\n$ R = R_0(1+\\alpha\\Delta T) $ with $ R_0 = 10 $, $ R = 14 $ and $ \\Delta T = 100 $ K:\n\n$ 14 = 10(1 + 100\\alpha) \\;\\Rightarrow\\; 1.4 = 1 + 100\\alpha \\;\\Rightarrow\\; \\alpha = 4\\times10^{-3}\\ \\text{K}^{-1} $\n\nA useful sanity check: this is the typical value for a metal, so the answer is believable. If a calculation ever hands you $ \\alpha $ of order 1 for a metal, you have slipped a power of ten.\n\nAnd note that $ \\Delta T $ in kelvin equals $ \\Delta T $ in celsius — only the *difference* enters, so there is no need to convert to absolute temperature here."
+ },
+ {
+  "block_id": "8b79a036-d319-46fc-927f-c04dc2c85ed3",
+  "chapter": 3,
+  "page": 6,
+  "page_slug": "what-a-cell-really-does",
+  "has_correct_index": false,
+  "prompt": "A cell of emf $ 1.5 $ V has internal resistance $ 0.5\\ \\Omega $. It is connected to a $ 2.5\\ \\Omega $ resistor. What is the terminal voltage?",
+  "options": [
+   "$ 1.25 $ V",
+   "$ 1.5 $ V",
+   "$ 1.0 $ V",
+   "$ 0.25 $ V"
+  ],
+  "reveal": "**1.25 V.**\n\nFirst the current, using the whole loop:\n\n$ I = \\dfrac{\\varepsilon}{R+r} = \\dfrac{1.5}{2.5+0.5} = 0.5\\ \\text{A} $\n\nThen the terminal voltage:\n\n$ V = \\varepsilon - Ir = 1.5 - (0.5)(0.5) = 1.25\\ \\text{V} $\n\n**Check it a second way.** The terminal voltage must also equal the voltage across the external resistor: $ IR = (0.5)(2.5) = 1.25 $ V. ✓ Those two routes agreeing is the standard check on this kind of problem.\n\nAnd note the trap: $ V = \\varepsilon - Ir $ needs $ I $, so you cannot skip the first step. Answering 1.5 V means treating the cell as ideal."
+ },
+ {
+  "block_id": "633cd348-b043-4a4d-80a6-467f41032665",
+  "chapter": 3,
+  "page": 7,
+  "page_slug": "resistors-in-series-and-parallel",
+  "has_correct_index": false,
+  "prompt": "You have three $ 6\\ \\Omega $ resistors. What is the smallest resistance you can make from all three, and the largest?",
+  "options": [
+   "$ 2\\ \\Omega $ and $ 18\\ \\Omega $",
+   "$ 3\\ \\Omega $ and $ 18\\ \\Omega $",
+   "$ 2\\ \\Omega $ and $ 12\\ \\Omega $",
+   "$ 6\\ \\Omega $ and $ 18\\ \\Omega $"
+  ],
+  "reveal": "**Smallest $ 2\\ \\Omega $, largest $ 18\\ \\Omega $.**\n\n*Largest:* all three in series, $ 6+6+6 = 18\\ \\Omega $.\n\n*Smallest:* all three in parallel, and for $ n $ equal resistors that is simply $ R/n = 6/3 = 2\\ \\Omega $.\n\nThose are always the two extremes: **all-series is the maximum, all-parallel is the minimum**, and every mixed arrangement lands somewhere in between. With three resistors the mixed options are $ 6+3 = 9\\ \\Omega $ (one in series with two parallel) and $ 4\\ \\Omega $ (one parallel with two in series).\n\nSo three identical resistors give exactly four possible values: 2, 4, 9 and 18 Ω. Being able to list them is a standard exam task."
+ },
+ {
+  "block_id": "90d3698d-f922-4db8-af9e-5b0716284139",
+  "chapter": 3,
+  "page": 8,
+  "page_slug": "reading-a-circuit-you-have-not-seen-before",
+  "has_correct_index": false,
+  "prompt": "A resistor has a plain copper wire soldered across both of its ends. What current flows through the resistor?",
+  "options": [
+   "Zero",
+   "The full circuit current",
+   "Half the circuit current",
+   "It depends on the resistor value"
+  ],
+  "reveal": "**Zero.**\n\nThe wire has no resistance, so its two ends are at the same potential. Those ends are also the two ends of the resistor — so the resistor has $ V = 0 $ across it, and $ I = V/R = 0 $.\n\nAll the current takes the wire. The resistor might as well not be there, and in a redraw you should **delete it**.\n\nThis is called **short-circuiting** the resistor, and spotting it is worth a lot of marks. Once you are labelling nodes properly it becomes obvious: a short-circuited resistor is one whose two ends carry the **same letter**."
+ },
+ {
+  "block_id": "73090430-889d-4e82-a735-8408d7ac9542",
+  "chapter": 3,
+  "page": 10,
+  "page_slug": "grouping-of-cells",
+  "has_correct_index": false,
+  "prompt": "You have 24 cells, each of emf $ 1.5 $ V and internal resistance $ 0.5\\ \\Omega $, and a load of $ 3\\ \\Omega $. How should they be arranged for maximum current?",
+  "options": [
+   "2 rows of 12 cells",
+   "4 rows of 6 cells",
+   "All 24 in series",
+   "All 24 in parallel"
+  ],
+  "reveal": "**2 rows of 12 cells** ($ m = 2 $, $ n = 12 $).\n\nApply the condition $ nr = mR $:\n\n$ n(0.5) = m(3) \\quad\\Rightarrow\\quad n = 6m $\n\nAnd we need $ mn = 24 $. Substituting: $ 6m^{2} = 24 $, so $ m = 2 $ and $ n = 12 $.\n\nCheck it against the alternatives, using $ I = \\dfrac{mn\\varepsilon}{mR+nr} $ with $ mn\\varepsilon = 36 $:\n\n- **2 rows of 12:** $ \\dfrac{36}{2(3)+12(0.5)} = \\dfrac{36}{12} = 3.0 $ A\n- 4 rows of 6: $ \\dfrac{36}{4(3)+6(0.5)} = \\dfrac{36}{15} = 2.4 $ A\n- All in series: $ \\dfrac{36}{3+12} = 2.4 $ A\n- All in parallel: $ \\dfrac{36}{72+0.5} = 0.5 $ A\n\nThe matched arrangement wins, and all-in-parallel is a disaster here because the load is large.\n\n**The method to keep:** use $ nr = mR $ to find the optimum, then confirm that $ m $ and $ n $ come out as whole numbers that multiply to the cells you actually have. When they do not, compute the nearest few arrangements and compare."
+ },
+ {
+  "block_id": "2cf2467e-03af-43ed-a6b0-d72d99140afd",
+  "chapter": 3,
+  "page": 11,
+  "page_slug": "power-and-the-heating-effect",
+  "has_correct_index": false,
+  "prompt": "Two identical bulbs are connected first in series and then in parallel across the same supply. In which arrangement is the **total** power consumed greater, and by what factor?",
+  "options": [
+   "Parallel, by a factor of 4",
+   "Series, by a factor of 4",
+   "Parallel, by a factor of 2",
+   "They are equal"
+  ],
+  "reveal": "**Parallel, by a factor of 4.**\n\nLet each bulb be $ R $ and the supply be $ V $.\n\n*Series:* total resistance $ 2R $, so $ P_s = \\dfrac{V^{2}}{2R} $.\n\n*Parallel:* total resistance $ R/2 $, so $ P_p = \\dfrac{V^{2}}{R/2} = \\dfrac{2V^{2}}{R} $.\n\n$ \\dfrac{P_p}{P_s} = \\dfrac{2V^{2}/R}{V^{2}/2R} = 4 $\n\nThe general rule for $ n $ identical devices on a fixed supply: parallel draws $ n^{2} $ times the power of series. With $ n = 2 $ that is 4.\n\n**Which is why household appliances are wired in parallel** — each gets the full mains voltage and therefore its full rated power, and switching one off does not affect the others."
+ },
+ {
+  "block_id": "5c3c0038-99e6-4ba4-91a7-6e7cf8874e59",
+  "chapter": 3,
+  "page": 12,
+  "page_slug": "the-wheatstone-bridge",
+  "has_correct_index": false,
+  "prompt": "In a balanced Wheatstone bridge, the cell and the galvanometer are swapped over — the cell now sits where the galvanometer was, and vice versa. Is the bridge still balanced?",
+  "options": [
+   "Yes, it stays balanced",
+   "No, the balance is lost",
+   "Only if all four resistances are equal",
+   "Only if the galvanometer has zero resistance"
+  ],
+  "reveal": "**Yes — it remains balanced.**\n\nThe balance condition $ P/Q = R/S $ can be rearranged to $ P/R = Q/S $, which is exactly the condition you would write for the swapped arrangement. The two are the same statement.\n\nThis is a real and useful property, not a curiosity: it means you cannot get the bridge wrong by putting the cell and detector in the wrong diagonals. The circuit is symmetric in that exchange.\n\n**What you *cannot* do** is swap a resistor with the galvanometer. That breaks the diamond and the condition no longer applies."
+ },
+ {
+  "block_id": "5fcc51de-f409-4a76-a262-6473d5bfd779",
+  "chapter": 3,
+  "page": 13,
+  "page_slug": "the-meter-bridge",
+  "has_correct_index": false,
+  "prompt": "In a meter bridge with $ R = 10\\ \\Omega $, the balance point is found at $ l = 40 $ cm from the left. What is the unknown resistance?",
+  "options": [
+   "$ 15\\ \\Omega $",
+   "$ 6.7\\ \\Omega $",
+   "$ 25\\ \\Omega $",
+   "$ 4\\ \\Omega $"
+  ],
+  "reveal": "**$ 15\\ \\Omega $.**\n\n$ S = R\\cdot\\dfrac{100-l}{l} = 10 \\times \\dfrac{60}{40} = 15\\ \\Omega $\n\nA useful check on the direction: the balance point sat on the **left** of centre, meaning the left-hand piece of wire had the smaller resistance. So the arm containing $ R $ needed the smaller partner — which makes $ S $ the larger of the two. And 15 is larger than 10. ✓\n\nAnswering $ 6.7\\ \\Omega $ means the ratio was inverted, which the sanity check above catches immediately. **Always ask which side of centre the null fell on before writing the answer.**"
+ },
+ {
+  "block_id": "693236df-21f6-41b7-ac29-386be4cda939",
+  "chapter": 3,
+  "page": 14,
+  "page_slug": "the-potentiometer",
+  "has_correct_index": false,
+  "prompt": "A potentiometer wire is $ 10 $ m long with $ 4 $ V across it. A cell balances at $ 5.5 $ m. What is its emf — and would a $ 2.5 $ V cell balance anywhere on this wire?",
+  "options": [
+   "$ 2.2 $ V; and yes, a $ 2.5 $ V cell would balance at $ 6.25 $ m",
+   "$ 2.2 $ V; and no, a $ 2.5 $ V cell is too large to balance",
+   "$ 5.5 $ V; and yes, at $ 6.25 $ m",
+   "$ 0.44 $ V; and yes, near the far end"
+  ],
+  "reveal": "**$ 2.2 $ V, and yes — a $ 2.5 $ V cell would balance at $ 6.25 $ m.**\n\nThe gradient is $ k = 4/10 = 0.4 $ V/m, so\n\n$ \\varepsilon = kl = 0.4 \\times 5.5 = 2.2\\ \\text{V} $\n\nFor the second cell: $ l = \\varepsilon/k = 2.5/0.4 = 6.25 $ m, comfortably within the $ 10 $ m wire.\n\n**The condition to check is always the same:** can the wire supply that voltage at all? The whole wire offers $ 4 $ V, so any cell up to $ 4 $ V will balance somewhere. A $ 4.5 $ V cell would not, and the galvanometer would deflect the same way at both ends.\n\nSo the driver circuit must always deliver **more** across the wire than the largest emf you intend to measure."
+ },
+ {
+  "block_id": "cfd8650e-d18a-406e-baf3-19cdbc5d9e08",
+  "chapter": 3,
+  "page": 15,
+  "page_slug": "inside-a-meter",
+  "has_correct_index": false,
+  "prompt": "A student accidentally connects an ammeter **in parallel** with a resistor instead of in series. What happens?",
+  "options": [
+   "A very large current flows through the ammeter and may destroy it",
+   "The ammeter reads zero",
+   "The ammeter reads the correct current anyway",
+   "Nothing happens — the reading is simply too small"
+  ],
+  "reveal": "**A very large current flows, and the ammeter is likely to be destroyed.**\n\nAn ammeter is built to have almost no resistance. Connect it across a component and you have placed a near-perfect short circuit in parallel with that component — so nearly all the current abandons the resistor and pours through the meter.\n\nThe current is then limited only by the rest of the circuit, and it can easily be hundreds of times the meter's rating.\n\n**The mirror mistake is harmless but useless.** A voltmeter accidentally placed in series has enormous resistance, so it throttles the current almost to nothing. Nothing is damaged; the circuit simply stops working, and the voltmeter reads close to the full supply voltage.\n\nSo: **wrongly connected ammeter — expensive. Wrongly connected voltmeter — merely wrong.**"
+ },
+ {
+  "block_id": "3f35b512-ba63-44ad-a993-9fd2cafae147",
+  "chapter": 4,
+  "page": 1,
+  "page_slug": "poles-and-why-they-never-come-alone",
+  "has_correct_index": false,
+  "prompt": "A closed surface is drawn so that it encloses **only the north pole** of a bar magnet, cutting through the middle of the magnet. What is the net magnetic flux through it?",
+  "options": [
+   "Zero",
+   "Positive, since only the north pole is inside",
+   "Negative",
+   "It depends on the pole strength"
+  ],
+  "reveal": "**Zero.**\n\nIt is tempting to think that enclosing \"only a north pole\" should give an outward flux, exactly as enclosing a positive charge gives an outward electric flux. But the analogy breaks here, and the reason is the whole theme of this page.\n\nThe field lines emerging from the north end outside the magnet are the **same lines** that pass back through the magnet's middle. Your surface cuts through the magnet, so those lines enter through the cut and leave through the north end. Everything that goes out came in.\n\n**There is no such thing as \"enclosing only a pole\" in the way you can enclose only a charge.** That is what $ \\oint\\vec{B}\\cdot d\\vec{S} = 0 $ is telling you."
+ },
+ {
+  "block_id": "2abbb26c-6a5c-4ce6-9abf-ee82881e9bd9",
+  "chapter": 4,
+  "page": 2,
+  "page_slug": "the-magnetic-dipole-moment",
+  "has_correct_index": false,
+  "prompt": "A bar magnet of moment $ m $ is cut into two equal halves **perpendicular** to its length. What is the moment of each half? And what if it had been cut **along** its length instead?",
+  "options": [
+   "$ m/2 $ in both cases",
+   "$ m/2 $ for the perpendicular cut, $ m $ for the lengthwise cut",
+   "$ m $ for the perpendicular cut, $ m/2 $ for the lengthwise cut",
+   "$ m/4 $ in both cases"
+  ],
+  "reveal": "**$ m/2 $ in both cases** — which is a genuinely satisfying result.\n\n*Cut perpendicular to the length:* the pole strength $ q_m $ is unchanged (the cut faces have the same area), but the length is halved. So $ m' = q_m \\times l = m/2 $.\n\n*Cut along the length:* now the length $ 2l $ is unchanged, but each piece has half the cross-section, so its pole strength is halved. So $ m' = (q_m/2)(2l) = m/2 $.\n\nDifferent mechanisms, same answer — because in both cases you ended up with half the material.\n\nThat is the general rule: **cut a magnet into $ n $ equal pieces, any way you like, and each piece has moment $ m/n $.** It makes sense from the atomic picture: the moment is the sum of the atomic moments, so half the atoms means half the moment."
+ },
+ {
+  "block_id": "b0b97a07-60b0-47b8-8da7-803a815757af",
+  "chapter": 4,
+  "page": 3,
+  "page_slug": "the-field-of-a-bar-magnet",
+  "has_correct_index": false,
+  "prompt": "At a point $ d $ from the centre of a short bar magnet, on its axis, the field is $ B $. What is the field at a distance $ d $ on the equatorial line, and at $ 2d $ on the axis?",
+  "options": [
+   "$ B/2 $ on the equator; $ B/8 $ on the axis",
+   "$ 2B $ on the equator; $ B/8 $ on the axis",
+   "$ B/2 $ on the equator; $ B/4 $ on the axis",
+   "$ B/2 $ on the equator; $ B/2 $ on the axis"
+  ],
+  "reveal": "**$ B/2 $ on the equator, and $ B/8 $ on the axis at $ 2d $.**\n\n*Position change:* axial to equatorial at the same distance divides by 2. So $ B/2 $.\n\n*Distance change:* the dipole field goes as $ 1/d^{3} $, so doubling the distance divides by $ 2^{3} = 8 $. So $ B/8 $.\n\nBoth are pure translations of what you did with electric dipoles in Chapter 1, and the same discipline applies: **handle the position change and the distance change as two separate factors.** Trying to combine them in one step is where errors come from.\n\nAnd remember the directions differ too — the equatorial field is antiparallel to $ \\vec{m} $ while the axial one is parallel."
+ },
+ {
+  "block_id": "19a1a53a-8b83-4500-98c9-0c4e54e787d5",
+  "chapter": 4,
+  "page": 4,
+  "page_slug": "a-magnet-in-a-uniform-field",
+  "has_correct_index": false,
+  "prompt": "A bar magnet is placed in a **non-uniform** magnetic field. Does it experience a net force?",
+  "options": [
+   "Yes — the two poles sit in different field strengths",
+   "No — the forces on the two poles always cancel",
+   "Only if it is aligned with the field",
+   "Only if the field is very strong"
+  ],
+  "reveal": "**Yes.**\n\nThe cancellation on this page relied entirely on the word **uniform**: both poles had to sit in the same $ B $ for $ q_mB $ and $ -q_mB $ to cancel. In a non-uniform field they do not, and a net force survives.\n\nWhich is exactly why a magnet **attracts** an iron nail rather than merely twisting it. A magnet's own field is strongly non-uniform, so the nail — once magnetised by induction — is pulled towards the region where the field is stronger.\n\nSame structure as the electric case: the comb twisted nothing but *lifted* the paper, because a comb's field is non-uniform. Uniform fields twist; non-uniform fields also pull."
+ },
+ {
+  "block_id": "909c5121-a0f3-49bb-8f49-27cccca47b79",
+  "chapter": 4,
+  "page": 5,
+  "page_slug": "the-earth-as-a-magnet",
+  "has_correct_index": false,
+  "prompt": "At a certain place the horizontal component of the Earth's field is $ 0.32 $ G and the dip is $ 60^\\circ $. What is the total field?",
+  "options": [
+   "$ 0.64 $ G",
+   "$ 0.16 $ G",
+   "$ 0.37 $ G",
+   "$ 0.55 $ G"
+  ],
+  "reveal": "**0.64 G.**\n\n$ B_H = B\\cos\\delta $, so\n\n$ B = \\frac{B_H}{\\cos\\delta} = \\frac{0.32}{\\cos 60^\\circ} = \\frac{0.32}{0.5} = 0.64\\ \\text{G} $\n\n**The check that catches the usual error:** the total field must always be **larger** than either component. If your answer comes out smaller than $ B_H $, you have multiplied where you should have divided — which is what gives $ 0.16 $ G.\n\nAnd note the unit. The **gauss** is the CGS unit, with $ 1\\ \\text{G} = 10^{-4} $ T, and it survives in geomagnetism because the Earth's field is a convenient fraction of a gauss. In SI this answer is $ 6.4\\times10^{-5} $ T."
+ },
+ {
+  "block_id": "cde45ea7-9d89-4d28-ae24-8746a485bbba",
+  "chapter": 4,
+  "page": 6,
+  "page_slug": "neutral-points-and-the-tangent-law",
+  "has_correct_index": false,
+  "prompt": "A bar magnet is placed on a horizontal table with its **north pole pointing towards magnetic north**. Where are the neutral points?",
+  "options": [
+   "On the perpendicular bisector, one on each side",
+   "On the axis, beyond each pole",
+   "At the two poles themselves",
+   "There are none in this arrangement"
+  ],
+  "reveal": "**On the perpendicular bisector, one on each side of the magnet.**\n\nWork it out rather than recalling it. On the **axis** beyond the north pole, the magnet's field points away from that pole — i.e. **northwards**, the same direction as $ B_H $. Two fields in the same direction can never cancel, so there is no neutral point there.\n\nOn the **equatorial line**, the magnet's field is antiparallel to $ \\vec{m} $ — so it points **southwards**, directly against $ B_H $. Cancellation is possible, and it happens at whatever distance makes the magnitudes equal.\n\nBy symmetry there are two such points, one on each side.\n\n**The habit:** always ask \"which way does the magnet's field point *here*?\" before looking for a null. It is the same discipline as finding a null point between two charges in Chapter 1."
+ },
+ {
+  "block_id": "7d38675a-017f-41bb-9d1a-3285370fd495",
+  "chapter": 4,
+  "page": 7,
+  "page_slug": "three-fields-b-h-and-m",
+  "has_correct_index": false,
+  "prompt": "A material has susceptibility $ \\chi = 499 $. A solenoid producing $ H = 1000 $ A/m is filled with it. What is $ B $ inside?",
+  "options": [
+   "About $ 0.63 $ T",
+   "About $ 1.26\\times10^{-3} $ T",
+   "About $ 0.63\\times10^{-3} $ T",
+   "About $ 6.3 $ T"
+  ],
+  "reveal": "**About $ 0.63 $ T.**\n\n$ \\mu_r = 1 + \\chi = 500 $, so\n\n$ B = \\mu_0\\mu_rH = (4\\pi\\times10^{-7})(500)(1000) $\n\n$ = (1.257\\times10^{-6})(5\\times10^{5}) = 0.63\\ \\text{T} $\n\n**Compare with no material at all:** $ B = \\mu_0H = 1.26\\times10^{-3} $ T. So the material has multiplied the field by 500 — which is exactly what $ \\mu_r $ means.\n\n**Two things to take from this.** First, $ \\mu_r = 1+\\chi $, not $ \\chi $: for a ferromagnet with $ \\chi $ in the hundreds the difference hardly matters, but for a diamagnet with $ \\chi = -10^{-5} $ it is the *entire* content of the answer.\n\nSecond, this is why electromagnets have iron cores. The current does the same work; the iron multiplies the result."
+ },
+ {
+  "block_id": "ca6d1487-5fd6-4dfd-93a7-41afe82a4aa4",
+  "chapter": 4,
+  "page": 8,
+  "page_slug": "the-two-weak-magnetisms",
+  "has_correct_index": false,
+  "prompt": "A paramagnetic sample has susceptibility $ \\chi = 2.4\\times10^{-5} $ at $ 300 $ K. What is its susceptibility at $ 200 $ K?",
+  "options": [
+   "$ 3.6\\times10^{-5} $",
+   "$ 1.6\\times10^{-5} $",
+   "$ 2.4\\times10^{-5} $",
+   "$ 4.8\\times10^{-5} $"
+  ],
+  "reveal": "**$ 3.6\\times10^{-5} $.**\n\nCurie's law gives $ \\chi \\propto 1/T $, so\n\n$ \\frac{\\chi_2}{\\chi_1} = \\frac{T_1}{T_2} = \\frac{300}{200} = 1.5 $\n\n$ \\chi_2 = 1.5 \\times 2.4\\times10^{-5} = 3.6\\times10^{-5} $\n\n**Cooling increases the susceptibility**, because there is less thermal agitation to fight the field's alignment. That direction is worth checking every time — if your answer comes out smaller on cooling, the ratio is inverted.\n\n**And note:** $ T $ must be **absolute**. Using $ 27\\ ^\\circ\\text{C} $ and $ -73\\ ^\\circ\\text{C} $ as 27 and $ -73 $ would be nonsense — a negative susceptibility from a paramagnet."
+ },
+ {
+  "block_id": "7850bf05-fa50-4ceb-9a29-8f134d692a3e",
+  "chapter": 4,
+  "page": 9,
+  "page_slug": "ferromagnetism-domains-and-hysteresis",
+  "has_correct_index": false,
+  "prompt": "An unmagnetised iron bar is heated above its Curie temperature and then cooled back down, with no field applied. Is it now magnetised?",
+  "options": [
+   "No — the domains reform pointing in random directions",
+   "Yes — cooling always produces magnetisation",
+   "Yes, but only weakly",
+   "It becomes permanently diamagnetic"
+  ],
+  "reveal": "**No.**\n\nAbove $ T_c $ the domains dissolve entirely and the material is paramagnetic. On cooling below $ T_c $ the cooperative interaction returns and domains reform — but with **no field to tell them which way to point**, they form in random orientations and their moments cancel.\n\nSo you get unmagnetised iron back, with domains, exactly as you started.\n\n**But cool it *in a field* and the story changes completely.** The domains then form preferentially along that field and the bar comes out strongly magnetised. This is precisely how permanent magnets are manufactured — heat, apply a field, and cool.\n\nIt is also how the ocean floor recorded the Earth's magnetic history: molten rock cooling through its Curie point froze in the direction of the Earth's field at that moment, and reading those stripes is how the reversals of the Earth's field were discovered."
+ },
+ {
+  "block_id": "9c7a2f5e-fa96-42ea-bfde-5ccdca6400b1",
+  "chapter": 5,
+  "page": 1,
+  "page_slug": "a-moving-charge-feels-a-force",
+  "has_correct_index": false,
+  "prompt": "A charged particle is fired into a region of uniform magnetic field and travels straight through, undeflected. What can you conclude?",
+  "options": [
+   "Its velocity is parallel or antiparallel to the field",
+   "The field must be zero there",
+   "The particle must be neutral",
+   "Its speed must be very large"
+  ],
+  "reveal": "**Its velocity must be along the field** — parallel or antiparallel.\n\nWith $ F = qvB\\sin\\theta $, the only ways to get zero force are $ q = 0 $, $ v = 0 $, $ B = 0 $, or $ \\sin\\theta = 0 $. The particle is charged and moving in a field, so the angle is the only option left: $ \\theta = 0^\\circ $ or $ 180^\\circ $.\n\n**Note what speed has to do with it: nothing.** Increasing the speed increases the force, so a fast particle is deflected *more*, not less. The \"it was going too fast to be deflected\" instinct is wrong here — it comes from thinking of the field as needing time to act, which it does not.\n\n**And one honest caution.** In an exam, \"travels undeflected\" can also mean the magnetic force is being cancelled by an *electric* one. That is the velocity selector, and it arrives two pages from now — so read the question for whether an electric field is present."
+ },
+ {
+  "block_id": "4bafea5e-ced6-4923-95a7-3b7cefc36eb4",
+  "chapter": 5,
+  "page": 2,
+  "page_slug": "getting-the-direction-right",
+  "has_correct_index": false,
+  "prompt": "An electron travels **north** through a magnetic field directed **vertically downward**. In which direction is the magnetic force on it?",
+  "options": [
+   "East",
+   "West",
+   "Upward",
+   "Downward"
+  ],
+  "reveal": "**East.**\n\nDo it in the two separate steps.\n\n*Step 1 — $ \\vec{v}\\times\\vec{B} $, charge ignored.* Fingers point north, curl them downward. The thumb points **west**. (Check: west is perpendicular to both north and down. ✓)\n\n*Step 2 — the charge.* An electron is **negative**, so the force is opposite to $ \\vec{v}\\times\\vec{B} $ — which makes it **east**.\n\nThat sign flip is the step people drop, and it inverts the answer completely. Every one of the three wrong options here is a plausible slip: \"west\" is forgetting the electron's charge, and \"up\" or \"down\" come from breaking the perpendicularity rule.\n\n**So always finish with step 3:** is the answer perpendicular to both? East is perpendicular to both north and down. It survives the check."
+ },
+ {
+  "block_id": "99312ad7-42d2-4058-86e7-7e186a8cf423",
+  "chapter": 5,
+  "page": 3,
+  "page_slug": "the-lorentz-force-and-the-velocity-selector",
+  "has_correct_index": false,
+  "prompt": "A velocity selector uses $ E = 3.0\\times10^{5} $ V/m and $ B = 0.15 $ T. Which particles pass through undeflected?",
+  "options": [
+   "All particles with speed $ 2.0\\times10^{6} $ m/s, whatever their charge or mass",
+   "Only protons with speed $ 2.0\\times10^{6} $ m/s",
+   "All particles with speed $ 4.5\\times10^{4} $ m/s",
+   "Only neutral particles"
+  ],
+  "reveal": "**Any particle at $ 2.0\\times10^{6} $ m/s, regardless of charge or mass.**\n\n$ v = \\dfrac{E}{B} = \\dfrac{3.0\\times10^{5}}{0.15} = 2.0\\times10^{6}\\ \\text{m/s} $\n\nThe charge divided out of $ qE = qvB $, and the mass never appeared at all — so the selected speed is a property of the **apparatus**, not of the particle.\n\n**The neutral-particle option is a genuine trap** worth thinking through. A neutral particle feels neither force, so it does go straight through — but it goes straight through at *any* speed, so the selector does nothing useful with it. The instrument only *selects* among charged particles.\n\nAnd note the option $ 4.5\\times10^{4} $, which is $ E \\times B $ rather than $ E/B $. Check the units when in doubt: V/m divided by T gives m/s; multiplied gives nonsense."
+ },
+ {
+  "block_id": "a5865192-25cb-4098-8cdf-ea0ee649487e",
+  "chapter": 5,
+  "page": 4,
+  "page_slug": "circular-motion-in-a-magnetic-field",
+  "has_correct_index": false,
+  "prompt": "A proton and an alpha particle (charge $ 2e $, mass $ 4m_p $) enter the same magnetic field with the same **speed**. Compare their radii and their periods.",
+  "options": [
+   "The alpha has twice the radius and twice the period",
+   "The alpha has twice the radius and the same period",
+   "The alpha has the same radius and twice the period",
+   "The alpha has four times the radius and twice the period"
+  ],
+  "reveal": "**Twice the radius and twice the period.**\n\n*Radius:* $ r = \\dfrac{mv}{qB} \\propto \\dfrac{m}{q} $. For the alpha, $ \\dfrac{4m_p}{2e} = 2\\dfrac{m_p}{e} $ — twice as large.\n\n*Period:* $ T = \\dfrac{2\\pi m}{qB} \\propto \\dfrac{m}{q} $ as well — also twice as large.\n\nSo **both** scale with the same ratio $ m/q $, and that is the quantity worth tracking. For an alpha particle it is twice the proton value, which is why alphas and protons behave so similarly in magnetic instruments while an electron (with $ m/q $ nearly two thousand times smaller) behaves completely differently.\n\n**Careful with the wording, though.** This question fixed the **speed**. Had it fixed the **kinetic energy** instead, the radius comparison would change entirely — see the next section."
+ },
+ {
+  "block_id": "7f11a979-7ee8-4646-93fd-7fe920163d61",
+  "chapter": 5,
+  "page": 5,
+  "page_slug": "helical-paths",
+  "has_correct_index": false,
+  "prompt": "A charged particle enters a uniform magnetic field at $ 30^\\circ $ to it. Compared with a particle of the same speed entering at $ 90^\\circ $, is the helix radius larger or smaller — and what happens to the period?",
+  "options": [
+   "Radius is half; period is unchanged",
+   "Radius is half; period is doubled",
+   "Radius is doubled; period is unchanged",
+   "Radius and period are both halved"
+  ],
+  "reveal": "**Radius is half; period is unchanged.**\n\n*Radius:* only $ v_{\\perp} = v\\sin\\theta $ matters. At $ 30^\\circ $, $ \\sin 30^\\circ = 0.5 $, so the perpendicular component — and therefore the radius — is **half** what it was at $ 90^\\circ $ where $ \\sin 90^\\circ = 1 $.\n\n*Period:* $ T = 2\\pi m/qB $ contains no velocity at all, so it is **completely unaffected** by the entry angle. Same field, same particle, same period — always.\n\nThe particle at $ 30^\\circ $ therefore goes round a tighter circle in the same time, while simultaneously drifting along the field at $ v\\cos 30^\\circ $. It travels a long, thin, stretched-out helix.\n\n**The habit to build:** at the start of any helix question, write down $ v\\sin\\theta $ and $ v\\cos\\theta $ explicitly and label which is which. Radius uses one; pitch uses the other. Confusing them is essentially the only way to get these wrong."
+ },
+ {
+  "block_id": "fac847e4-ab28-46e1-a618-0261e66dfe21",
+  "chapter": 5,
+  "page": 6,
+  "page_slug": "the-cyclotron",
+  "has_correct_index": false,
+  "prompt": "To double the maximum energy a cyclotron can deliver, which change would work?",
+  "options": [
+   "Increase the magnetic field by a factor of $ \\sqrt{2} $",
+   "Double the accelerating voltage across the dees",
+   "Double the frequency of the oscillator",
+   "Double the number of turns the particle makes"
+  ],
+  "reveal": "**Increase the magnetic field by $ \\sqrt{2} $.**\n\n$ K_{\\max} = \\dfrac{q^{2}B^{2}R^{2}}{2m} \\propto B^{2} $, so multiplying $ B $ by $ \\sqrt{2} $ doubles the energy. Multiplying $ R $ by $ \\sqrt{2} $ would work equally well, and cost far more.\n\n**Why the others fail:**\n\n*Doubling the voltage* gets the particle to the same final energy in half as many turns. Faster, but no more energetic — the voltage does not appear in $ K_{\\max} $ at all.\n\n*Doubling the frequency* breaks the resonance condition. The voltage would no longer reverse when the particle arrives, so it would be decelerated as often as accelerated, and the machine would simply stop working.\n\n*Doubling the number of turns* is not something you can choose. The number of turns is whatever it takes to spiral out to radius $ R $ — set by $ B $, $ R $ and $ V $, not by you."
+ },
+ {
+  "block_id": "43ad0158-1c25-4b56-96bb-aef3d75dedc8",
+  "chapter": 5,
+  "page": 7,
+  "page_slug": "force-on-a-current-carrying-wire",
+  "has_correct_index": false,
+  "prompt": "A wire is bent into a semicircle of radius $ R $ and placed in a uniform field $ B $ perpendicular to its plane, carrying current $ I $. What is the force on it?",
+  "options": [
+   "$ 2BIR $",
+   "$ \\pi BIR $",
+   "zero",
+   "$ BIR $"
+  ],
+  "reveal": "**$ 2BIR $.**\n\nThe effective length is the straight vector joining the two ends of the semicircle — its **diameter**, $ 2R $. So\n\n$ F = BI(2R) = 2BIR $\n\nThe answer $ \\pi BIR $ uses the *actual arc length* $ \\pi R $, and that is the mistake this question exists to catch. The arc length would matter if you were computing resistance or heating; for force in a uniform field, only the end-to-end vector counts.\n\n**Why the shape drops out.** Each element contributes $ I\\,d\\vec{l}\\times\\vec{B} $, and in a uniform field $ \\vec{B} $ factors out of the sum, leaving $ \\sum d\\vec{l} $ — which is the resultant displacement, head to tail. Every excursion sideways is undone by a matching one back.\n\nAnd note that zero would be right if the wire were a **complete** circle."
+ },
+ {
+  "block_id": "74200a0a-e2cb-461a-8166-20eb8d630703",
+  "chapter": 5,
+  "page": 8,
+  "page_slug": "force-between-two-parallel-wires",
+  "has_correct_index": false,
+  "prompt": "Two long parallel wires $ 10 $ cm apart each carry $ 5 $ A in the same direction. Find the force per unit length, and say whether it is attractive or repulsive.",
+  "options": [
+   "$ 5\\times10^{-5} $ N/m, attractive",
+   "$ 5\\times10^{-5} $ N/m, repulsive",
+   "$ 5\\times10^{-4} $ N/m, attractive",
+   "$ 2.5\\times10^{-5} $ N/m, attractive"
+  ],
+  "reveal": "**$ 5\\times10^{-5} $ N/m, attractive.**\n\n$ \\dfrac{F}{l} = \\dfrac{\\mu_0I_1I_2}{2\\pi d} $. Use $ \\dfrac{\\mu_0}{2\\pi} = 2\\times10^{-7} $ — worth memorising in that form, since it saves handling $ 4\\pi $ every time.\n\n$ \\dfrac{F}{l} = \\dfrac{(2\\times10^{-7})(5)(5)}{0.10} = \\dfrac{5\\times10^{-6}}{0.10} = 5\\times10^{-5}\\ \\text{N/m} $\n\nCurrents in the **same** direction, so **attractive**.\n\n**A sense of the scale.** Fifty micronewtons per metre — about the weight of a grain of sand on every metre of wire. Magnetic forces between ordinary currents are genuinely tiny, which is exactly why the ampere had to be defined at $ 1 $ m separation where the number comes out at $ 2\\times10^{-7} $ N/m and can just be measured.\n\nIn a short circuit carrying thousands of amps, though, the same formula gives forces large enough to tear busbars off their mountings — which is why heavy switchgear is bolted down."
+ },
+ {
+  "block_id": "fd4c291c-7f7b-4d94-93a4-f73b6abab9e6",
+  "chapter": 5,
+  "page": 9,
+  "page_slug": "the-biot-savart-law",
+  "has_correct_index": false,
+  "prompt": "A short current element points along the $ x $-axis. At which of these points does it produce **no** magnetic field?",
+  "options": [
+   "At a point further along the $ x $-axis",
+   "At a point on the $ y $-axis",
+   "At a point on the $ z $-axis",
+   "It produces a field everywhere"
+  ],
+  "reveal": "**At a point further along the $ x $-axis** — that is, anywhere along its own line.\n\n$ dB \\propto \\sin\\theta $, where $ \\theta $ is the angle between the element and the line to the field point. For a point straight ahead along the same axis, $ \\theta = 0 $, so $ \\sin\\theta = 0 $ and the contribution vanishes.\n\nOn the $ y $- or $ z $-axis, $ \\theta = 90^\\circ $ and the contribution is maximum.\n\n**Why this matters in practice.** In the next page's derivation for a straight wire, the elements *nearest* the perpendicular foot contribute most and the far-away ones contribute little — partly because $ r $ is larger, but also because $ \\theta $ shrinks towards zero. Both effects work the same way, which is what makes the integral converge nicely.\n\nAnd it explains a result you can then check: at a point on the **extension** of a finite straight wire, the field is exactly **zero**, because every element there has $ \\theta = 0 $."
+ },
+ {
+  "block_id": "1e0d679d-d4b6-4b72-8bf8-c06994641938",
+  "chapter": 5,
+  "page": 10,
+  "page_slug": "the-field-of-a-straight-wire",
+  "has_correct_index": false,
+  "prompt": "A long straight wire carries $ 10 $ A. At what distance from it is the field equal in magnitude to the Earth's field of about $ 5\\times10^{-5} $ T?",
+  "options": [
+   "About $ 4 $ cm",
+   "About $ 4 $ mm",
+   "About $ 40 $ cm",
+   "About $ 4 $ m"
+  ],
+  "reveal": "**About 4 cm.**\n\n$ B = \\dfrac{\\mu_0I}{2\\pi d} \\quad\\Rightarrow\\quad d = \\dfrac{\\mu_0I}{2\\pi B} $\n\nUsing $ \\dfrac{\\mu_0}{2\\pi} = 2\\times10^{-7} $:\n\n$ d = \\dfrac{(2\\times10^{-7})(10)}{5\\times10^{-5}} = \\dfrac{2\\times10^{-6}}{5\\times10^{-5}} = 0.04\\ \\text{m} = 4\\ \\text{cm} $\n\n**This is Oersted's experiment, quantified.** A compass 4 cm from a wire carrying 10 A sees a field comparable to the Earth's, so it deflects by roughly $ 45^\\circ $ — a large, unmistakable movement. Any closer and it swings round almost completely.\n\nWhich also explains why the effect went unnoticed for so long: with a weak battery giving a fraction of an amp, you have to hold the compass within millimetres. Oersted had a decent voltaic pile and got lucky with his geometry."
+ },
+ {
+  "block_id": "0072758d-d2f6-42dd-8aff-c655d90215df",
+  "chapter": 5,
+  "page": 12,
+  "page_slug": "amperes-circuital-law",
+  "has_correct_index": false,
+  "prompt": "A closed Amperean loop is drawn near a current-carrying wire, but the wire does **not** pass through the loop. What is $ \\oint\\vec{B}\\cdot d\\vec{l} $ round it, and is $ \\vec{B} $ zero on the loop?",
+  "options": [
+   "The integral is zero, but $ \\vec{B} $ is not zero anywhere on the loop",
+   "Both the integral and $ \\vec{B} $ are zero",
+   "The integral is non-zero because $ \\vec{B} $ is non-zero",
+   "The integral cannot be evaluated"
+  ],
+  "reveal": "**The integral is zero, but the field certainly is not.**\n\nNo current threads the loop, so $ I_{\\text{enc}} = 0 $ and the circulation vanishes. But the wire is right there — its field is non-zero at every point of your loop.\n\nWhat happens is that the positive and negative contributions to $ \\vec{B}\\cdot d\\vec{l} $ cancel exactly as you go round: on the part of the loop nearer the wire the field is stronger but you travel a shorter arc; further away it is weaker but the arc is longer. The two balance perfectly.\n\n**This is precisely the Chapter 1 trap in magnetic form.** There, a charge outside a Gaussian surface contributed zero *net flux* while still contributing to $ \\vec{E} $ everywhere on it. Here a current outside the loop contributes zero *net circulation* while still contributing to $ \\vec{B} $ everywhere on it.\n\nSo never say \"the field on the Amperean loop is due to the enclosed current.\" It is only true when symmetry makes it true."
+ },
+ {
+  "block_id": "2bd1f379-0f0d-4b60-9917-3940078ac274",
+  "chapter": 5,
+  "page": 13,
+  "page_slug": "the-solenoid-and-the-toroid",
+  "has_correct_index": false,
+  "prompt": "A solenoid $ 50 $ cm long has $ 1000 $ turns and carries $ 2.0 $ A. What is the field inside it?",
+  "options": [
+   "$ 5.0\\times10^{-3} $ T",
+   "$ 2.5\\times10^{-3} $ T",
+   "$ 2.5 $ T",
+   "$ 1.3\\times10^{-3} $ T"
+  ],
+  "reveal": "**$ 5.0\\times10^{-3} $ T.**\n\nThe step people miss is that $ n $ is turns **per metre**, not the total:\n\n$ n = \\frac{1000}{0.50} = 2000\\ \\text{turns/m} $\n\n$ B = \\mu_0 nI = (4\\pi\\times10^{-7})(2000)(2.0) = (1.257\\times10^{-6})(4000) $\n\n$ B = 5.0\\times10^{-3}\\ \\text{T} $\n\nAbout $ 5 $ mT, or a hundred times the Earth's field, from a very ordinary coil and current.\n\n**Using $ N = 1000 $ directly instead of $ n = 2000 $** would have halved the answer — and that is the single commonest error on this formula. **Always divide by the length first**, and check that your $ n $ has units of per-metre."
+ },
+ {
+  "block_id": "31402cd1-9155-4b44-a3fb-54f6e3ccad67",
+  "chapter": 5,
+  "page": 14,
+  "page_slug": "a-current-loop-is-a-magnetic-dipole",
+  "has_correct_index": false,
+  "prompt": "A circular coil of $ 50 $ turns and radius $ 4.0 $ cm carries $ 0.50 $ A in a uniform field of $ 0.30 $ T. What is the maximum torque on it?",
+  "options": [
+   "$ 3.8\\times10^{-2} $ N·m",
+   "$ 7.5\\times10^{-4} $ N·m",
+   "$ 3.8\\times10^{-4} $ N·m",
+   "$ 1.9\\times10^{-2} $ N·m"
+  ],
+  "reveal": "**$ 3.8\\times10^{-2} $ N·m.**\n\nFirst the moment:\n\n$ m = NIA = (50)(0.50)\\pi(0.040)^{2} = (25)\\pi(1.6\\times10^{-3}) = 0.126\\ \\text{A·m}^{2} $\n\nMaximum torque is at $ \\theta = 90^\\circ $, where $ \\sin\\theta = 1 $:\n\n$ \\tau_{\\max} = mB = (0.126)(0.30) = 3.8\\times10^{-2}\\ \\text{N·m} $\n\n**Two things to be careful about.** The radius must be converted to metres **before** squaring — leaving it in centimetres costs a factor of $ 10^{4} $. And the maximum torque is at $ 90^\\circ $, not at $ 0^\\circ $: a loop already aligned with the field feels no torque at all.\n\n**And notice what this number is.** It is exactly the torque a bar magnet of moment $ 0.126\\ \\text{A·m}^{2} $ would feel in the same field. The coil and the magnet are interchangeable."
+ },
+ {
+  "block_id": "3a2428fc-675b-44c6-b742-57bb9d66711f",
+  "chapter": 5,
+  "page": 15,
+  "page_slug": "inside-a-galvanometer",
+  "has_correct_index": false,
+  "prompt": "A galvanometer's coil is rewound with twice as many turns of the same wire, keeping the area the same. What happens to its current sensitivity and its voltage sensitivity?",
+  "options": [
+   "Current sensitivity doubles; voltage sensitivity is roughly unchanged",
+   "Both double",
+   "Both are roughly unchanged",
+   "Current sensitivity is unchanged; voltage sensitivity doubles"
+  ],
+  "reveal": "**Current sensitivity doubles; voltage sensitivity is roughly unchanged.**\n\n*Current sensitivity* $ = \\dfrac{NAB}{k} \\propto N $, so doubling $ N $ doubles it.\n\n*Voltage sensitivity* $ = \\dfrac{NAB}{kG} $. But twice the turns of the same wire means twice the length of wire, so the coil resistance $ G $ also roughly doubles. The $ N $ on top and the $ G $ underneath cancel, leaving it essentially unchanged.\n\n**This is the standard trap on this topic**, and the phrasing matters: \"**increasing the current sensitivity does not necessarily increase the voltage sensitivity**.\" They are separate specifications.\n\nTo genuinely improve **both**, you have to change something that does not drag $ G $ along with it — a stronger magnet (larger $ B $), a larger coil area, or a weaker suspension (smaller $ k $). All three raise both sensitivities."
+ },
+ {
+  "block_id": "cb45dc09-059d-4032-a87b-06eb3941f94a",
+  "chapter": 6,
+  "page": 1,
+  "page_slug": "emi-the-experiment-that-started-it",
+  "has_correct_index": false,
+  "prompt": "A bar magnet and a coil are moved along a bench **together**, side by side, at the same speed, in the same direction. What does the galvanometer show?",
+  "options": [
+   "A large deflection, because both are moving fast",
+   "Half the deflection of a moving magnet alone",
+   "Nothing at all",
+   "A deflection that reverses back and forth"
+  ],
+  "reveal": "**Nothing at all.**\n\nBoth objects are moving through the room, but neither is moving *with respect to the other*. Sitting on the coil, you would see the magnet parked motionless beside you. The field threading the coil is not changing, so there is no induced current.\n\n**This is why the word \"relative\" matters so much here.** It is not the magnet's motion that induces anything, and it is not the coil's. It is the **relative** motion between them — and in Faraday's third experiment there is no motion of any kind, only a changing current.\n\nSo \"motion\" is not really the requirement either. Motion was just the easiest way Faraday had of making the field through the coil change. **The requirement is the change itself.**\n\nThat is worth holding on to, because the next page has to find a single quantity whose change is what actually counts — and it turns out not to be the field."
+ },
+ {
+  "block_id": "75c1052f-972e-4fe7-8bc3-233ed9b4e5b0",
+  "chapter": 6,
+  "page": 2,
+  "page_slug": "emi-magnetic-flux",
+  "has_correct_index": false,
+  "prompt": "A flat coil sits in a uniform field. The question says: \"the **plane** of the coil makes an angle of $ 30^\\circ $ with the field.\" What is the flux through it?",
+  "options": [
+   "$ BA\\cos 30^\\circ $",
+   "$ BA\\sin 30^\\circ $",
+   "$ BA\\tan 30^\\circ $",
+   "$ BA $, since the angle does not matter"
+  ],
+  "reveal": "**$ BA\\sin 30^\\circ $, which is $ BA/2 $.**\n\nThis is a wording trap, and it is set deliberately in exams.\n\nThe formula $ \\Phi = BA\\cos\\theta $ uses $ \\theta $ measured from the **normal**, not from the plane. Here the *plane* makes $ 30^\\circ $ with the field, so the **normal** makes $ 90^\\circ - 30^\\circ = 60^\\circ $ with it. Then\n\n$ \\Phi = BA\\cos 60^\\circ = BA\\sin 30^\\circ = \\frac{BA}{2} $\n\n**The habit that kills this trap for good:** before writing anything down, draw the normal on your sketch and mark the angle *between the field and that arrow*. Do not reach for cos or sin until the arrow is on the paper.\n\nA quick sanity check also catches it. A coil lying edge-on to the field ($ 0^\\circ $ between the plane and the field) must have **zero** flux — and $ BA\\sin 0^\\circ = 0 $ ✓, whereas $ BA\\cos 0^\\circ = BA $ would be badly wrong."
+ },
+ {
+  "block_id": "e79aea2f-7832-41fb-8f29-79aa33cb0d83",
+  "chapter": 6,
+  "page": 3,
+  "page_slug": "emi-faradays-law",
+  "has_correct_index": false,
+  "prompt": "A circular loop of stretchy wire lies flat in a steady, uniform magnetic field, and someone pulls it outwards so its radius grows. Which of the three doors is this, and is there an induced emf?",
+  "options": [
+   "A changing field — yes, there is an emf",
+   "A changing angle — yes, there is an emf",
+   "A changing area — yes, there is an emf",
+   "Nothing is changing — no emf at all"
+  ],
+  "reveal": "**A changing area, and yes — there is an emf.**\n\nThe field is steady, so $ B $ is fixed. The loop stays flat, so $ \\theta $ is fixed. But $ A = \\pi r^{2} $ is growing, so the flux $ \\Phi = BA $ grows with it, and $ \\frac{d\\Phi}{dt}\\neq 0 $.\n\nWorking it through: $ \\frac{d\\Phi}{dt} = B\\frac{dA}{dt} = B\\cdot 2\\pi r\\frac{dr}{dt} $, so the emf grows as the loop gets bigger, even at a constant rate of stretching.\n\n**Why this one is worth doing.** No magnet moves and no coil rotates, so the situation looks nothing like the pictures in the chapter — and students who have memorised *situations* rather than the *rule* get stuck. Students who ask \"which of $ B $, $ A $, $ \\theta $ is changing?\" get it in five seconds.\n\nThat question is the one to ask every single time, and it is why this page splits induction into three doors rather than listing a dozen examples."
+ },
+ {
+  "block_id": "0ad892aa-c1bc-47c9-9f01-560a73d184d5",
+  "chapter": 6,
+  "page": 4,
+  "page_slug": "emi-lenzs-law",
+  "has_correct_index": false,
+  "prompt": "A loop lies in a field directed **into** the page, and the field is being **switched off**. Which way does the induced current flow, as seen by you looking at the page?",
+  "options": [
+   "Anticlockwise, producing a field out of the page inside the loop",
+   "Clockwise, producing a field into the page inside the loop",
+   "There is no current, because the field is disappearing",
+   "It flows first one way and then the other"
+  ],
+  "reveal": "**Clockwise, producing a field into the page inside the loop.**\n\nWork it in the order that always works.\n\n*What is the flux doing?* It is into the page and **falling** towards zero.\n\n*What change must be opposed?* The **fall**. So the induced current must try to keep the into-page flux going.\n\n*Which way must the current run to do that?* Curl your right hand so the thumb points into the page; the fingers run **clockwise** as you look at the page. That is the sense that produces an into-the-page field inside the loop.\n\n**Notice what has happened here.** The induced current is producing a field in the *same* direction as the field that already exists — it is helping it, not fighting it. Anyone reciting \"the induced current opposes the flux\" gets this backwards.\n\nAnd the energy argument still holds perfectly. The circuit is not being given anything for free: whatever is switching that field off now has to work harder, because the loop is fighting to keep it."
+ },
+ {
+  "block_id": "c496986a-8333-4339-bc08-366b6e00cd33",
+  "chapter": 6,
+  "page": 5,
+  "page_slug": "emi-reading-a-lenz-situation",
+  "has_correct_index": false,
+  "prompt": "Now hold the magnet perfectly still, north pole facing the coil, and move the **coil** towards the magnet at the same speed as before. What changes?",
+  "options": [
+   "The current reverses, because it is now the coil that moves",
+   "Nothing changes — the current, the pole and the force are the same",
+   "There is no current, because the magnet is stationary",
+   "The current is halved, since only one object is moving"
+  ],
+  "reveal": "**Nothing changes.** Same current, same pole, same force.\n\nRun the routine and see why it cannot be otherwise. Step 1 asks which way the flux points — unchanged. Step 2 asks whether it is growing — and it is, at exactly the same rate, since the gap is closing at the same speed. Steps 3 and 4 follow from step 2 alone.\n\n**Nowhere does the routine ask who is doing the moving.** It asks only what the flux is doing, and the flux through a coil depends on the separation, not on which object a bystander thinks is at rest.\n\nThis is the relative-motion result from page 1, arriving now as a consequence rather than an observation. And it is more than a convenience — the fact that the physics cannot tell the two cases apart is a hint of something much larger, which Einstein took up in 1905. His paper on relativity opens with exactly this example.\n\n**Practical version, for an exam:** never spend time deciding who is moving. Ask only whether the gap is opening or closing."
+ },
+ {
+  "block_id": "04c5a30c-ee26-4af5-b0d3-f2594a5857c9",
+  "chapter": 6,
+  "page": 6,
+  "page_slug": "emi-motional-emf",
+  "has_correct_index": false,
+  "prompt": "The rod is disconnected from the rails and slid across the field on its own, so no current can flow anywhere. What is now true?",
+  "options": [
+   "A steady potential difference $ Bvl $ appears across its ends",
+   "Nothing at all happens, because a circuit is needed",
+   "Charge keeps piling up at the top end without limit",
+   "The emf exists but the potential difference is zero"
+  ],
+  "reveal": "**A steady potential difference $ Bvl $ appears across its ends.**\n\nThe magnetic force starts sweeping positive charge upward at once. But as soon as charge separates, the two ends set up an **electric** field inside the rod pointing downward, which pushes back. The pile-up stops the instant the two balance:\n\n$ qE = qvB \\quad\\Rightarrow\\quad E = vB $\n\nand the potential difference across the length is $ V = El = Bvl $. So the accumulation is self-limiting — it settles in far less than a microsecond and then holds steady.\n\n**Why the \"no circuit, nothing happens\" instinct is wrong:** a circuit is needed for a *current*, not for an *emf*. A torch cell on a shelf has an emf too.\n\nAnd the claim that the emf exists while the potential difference is zero is worth separating carefully. On **open circuit** the emf and the terminal potential difference are equal, both $ Bvl $. They differ only when a current flows and something drops voltage internally."
+ },
+ {
+  "block_id": "90c78217-4ffc-44d7-9cca-e4c2f27c758f",
+  "chapter": 6,
+  "page": 6,
+  "page_slug": "emi-motional-emf",
+  "has_correct_index": false,
+  "prompt": "The rod is pulled at a **constant** speed $ v $. As it slides further and further to the right, what happens to the induced emf?",
+  "options": [
+   "It stays constant at $ Bvl $",
+   "It grows, because the enclosed area keeps growing",
+   "It falls, because the flux is already large",
+   "It falls to zero once the rod stops accelerating"
+  ],
+  "reveal": "**It stays constant at $ Bvl $.**\n\nThis is the single most common slip in the whole topic, so it is worth naming: **induction responds to the RATE of change of flux, not to the amount of flux.**\n\nThe flux $ \\Phi = Blx $ certainly keeps growing. But its *rate* of growth is $ Blv $, and $ B $, $ l $ and $ v $ are all fixed — so $ d\\Phi/dt $ is a constant and so is the emf. A huge flux sitting there unchanging induces nothing at all.\n\nRoute one says the same thing more bluntly: the force on a carrier is $ qvB $, which depends on the speed of the rod and on nothing else. Where the rod happens to be on the rails is irrelevant to it.\n\n**And acceleration is a red herring.** Induction needs the flux to change, not the velocity. A rod moving at a steady $ 5 $ m/s induces a steady emf indefinitely."
+ },
+ {
+  "block_id": "ccfcdff5-317d-47a7-8bfd-61d4cda908e0",
+  "chapter": 6,
+  "page": 7,
+  "page_slug": "emi-motional-emf-geometries",
+  "has_correct_index": false,
+  "prompt": "A wire is bent into a semicircle of diameter $ d $ and dragged sideways at speed $ v $ through a field $ B $ perpendicular to its plane, with the diameter held perpendicular to the velocity. What is the emf between its two ends?",
+  "options": [
+   "$ Bvd $ — the same as a straight rod joining the ends",
+   "$ Bv \\times \\frac{\\pi d}{2} $, using the arc length",
+   "Zero, because the wire is curved",
+   "$ \\frac{1}{2}Bvd $, averaging over the curve"
+  ],
+  "reveal": "**$ Bvd $ — exactly what a straight rod between the same two ends would give.**\n\nThe master formula is $ \\varepsilon = (\\vec{v}\\times\\vec{B})\\cdot\\vec{l} $, and $ \\vec{l} $ is the vector **from one end to the other**. It knows nothing about the path taken in between. For a shape as awkward as you like, only the straight-line separation of the endpoints matters, projected perpendicular to $ \\vec{v} $.\n\nHere the endpoints are the two ends of the diameter, separated by $ d $ perpendicular to $ \\vec{v} $, so the effective length is $ d $ and the emf is $ Bvd $.\n\n**Why the arc-length answer is tempting and wrong:** it treats the wire like a resistor, where the path length genuinely matters. Emf is not resistance. Curving a wire adds length without adding any effective length.\n\n**Check it with flux if you prefer.** Compare the semicircle with the straight rod over the same time: the shapes of the swept regions differ, but the *rate* at which each sweeps new area is $ dv $ in both cases, because they both advance a front of width $ d $ at speed $ v $."
+ },
+ {
+  "block_id": "dacc878e-4b36-4b6a-9ad6-b0968ac9bb89",
+  "chapter": 6,
+  "page": 8,
+  "page_slug": "emi-the-energy-account",
+  "has_correct_index": false,
+  "prompt": "The rails are open-circuited — the resistor is disconnected, so the loop is broken. The rod is still slid at the same speed $ v $. What force is now needed to keep it moving?",
+  "options": [
+   "None, because no current flows",
+   "The same $ \\frac{B^{2}l^{2}v}{R} $, since the emf is unchanged",
+   "Half as much, since only one rail is carrying charge",
+   "More than before, because the charge has nowhere to go"
+  ],
+  "reveal": "**None.** On a frictionless open circuit the rod glides on for ever.\n\nFollow the chain carefully, because each link matters. The emf is **still there** — page 6 showed it needs no circuit. But with the loop broken, $ I = 0 $. And the retarding force is $ F = BIl $, which is zero when $ I $ is zero.\n\nSo the emf alone costs nothing. **It is the current that costs energy**, because it is the current that produces both the heat and the force.\n\nThat is a useful way to remember the whole page: no current, no heat, no force, no work. Close the switch and all four appear together.\n\n**Careful with the \"same force, since the emf is unchanged\" reading.** It is right that the emf is unchanged, but the retarding force does not depend on the emf directly — it depends on the current, and the same emf across an infinite resistance drives none."
+ },
+ {
+  "block_id": "7b246790-f1a9-411b-a527-0c04c2ecc9ab",
+  "chapter": 6,
+  "page": 9,
+  "page_slug": "emi-eddy-currents",
+  "has_correct_index": false,
+  "prompt": "A flat metal plate is set swinging like a pendulum so that it passes in and out of the gap of a strong magnet. It stops after two or three swings. The experiment is repeated with an identical plate that has several long slots cut into it. What happens?",
+  "options": [
+   "It swings far longer, because the slots break up the current loops",
+   "It stops even faster, because the slots make it lighter",
+   "It behaves exactly the same, since the metal is unchanged",
+   "It stops instantly, because the slots concentrate the field"
+  ],
+  "reveal": "**It swings far longer.** This is a classic demonstration and it is worth understanding rather than remembering.\n\nIn the solid plate, wide low-resistance loops of eddy current form as it enters and leaves the field. Those currents produce a retarding force — the same $ F \\propto v $ drag as page 8 — and the plate's kinetic energy is converted to heat in a couple of swings.\n\nCutting slots does not change the emf at all. What it changes is the **path**. The wide loops are chopped into narrow ones, each with a much smaller area (so a smaller emf around it) and a much longer, thinner path (so a higher resistance). Less current, less force, less heating — and the plate swings on.\n\n**Note what did not change:** the metal, its conductivity, and the field are all the same. Only the geometry available to the current was altered.\n\nHold on to that, because the next section is the same idea applied to a transformer core, where it saves a great deal of money."
+ },
+ {
+  "block_id": "40f6c2d5-d6bf-46fb-8159-2de5ae697c9f",
+  "chapter": 6,
+  "page": 9,
+  "page_slug": "emi-eddy-currents",
+  "has_correct_index": false,
+  "prompt": "The magnetic flux runs along the length of a transformer core. How must the laminations be stacked for them to do any good?",
+  "options": [
+   "As sheets lying parallel to the flux, stacked across it",
+   "As sheets lying perpendicular to the flux, stacked along it",
+   "The orientation makes no difference as long as they are insulated",
+   "As sheets at 45° to the flux, to split the difference"
+  ],
+  "reveal": "**The sheets must lie parallel to the flux, stacked across it** — so that the insulating gaps sit across the plane in which the eddy currents want to circulate.\n\nThe reasoning is one step. Eddy currents circulate in planes **perpendicular** to the field, because that is the plane in which the flux through a loop is changing. To break those loops you must put insulation across that plane — which means slicing the core in a direction that runs *along* the flux.\n\nStack the sheets the other way, face-on to the flux, and each sheet is a full-width disc in the plane where the eddy currents already flow. You would have changed nothing about the loops, while adding gaps that obstruct the magnetic flux itself and spoil the core.\n\n**And there is a second reason the orientation is not free.** Insulating gaps cutting across the flux path create air gaps in the magnetic circuit, which the design is specifically trying to avoid. Laid the right way, the laminations block the electrical loops without interrupting the magnetic path at all."
+ },
+ {
+  "block_id": "792c35bf-1033-4bf1-9207-a5402abdf845",
+  "chapter": 6,
+  "page": 10,
+  "page_slug": "emi-self-inductance",
+  "has_correct_index": false,
+  "prompt": "A steady current of $ 5 $ A has been flowing through an ideal inductor for a long time. What is the EMF across it?",
+  "options": [
+   "Zero, because the current is not changing",
+   "Five times the inductance",
+   "Large, because the current is large",
+   "Equal and opposite to the battery EMF"
+  ],
+  "reveal": "**Zero.**\n\n$ \\varepsilon = -L\\frac{di}{dt} $, and a steady current has $ di/dt = 0 $. It does not matter that the current is 5 A rather than 0.005 A — the size of the current is simply not in the formula.\n\nThis is the single most common misreading of self-inductance: treating the coil as though it opposes **current**. It does not. It opposes **change in current**. An ideal inductor carrying a steady current is electrically indistinguishable from a plain wire.\n\n**And notice what would make the EMF large:** not a big current, but a fast-changing one. A current of only $ 0.1 $ A switched off in a microsecond gives $ di/dt = 10^{5} $ A/s, which across a $ 1 $ H coil is a hundred thousand volts. That number is not a trick — it is the spark you will meet on the L-R page."
+ },
+ {
+  "block_id": "c9307da2-cc8a-45ad-87fa-b6bec336e8fa",
+  "chapter": 6,
+  "page": 11,
+  "page_slug": "emi-mutual-inductance",
+  "has_correct_index": false,
+  "prompt": "Two flat coils lie face to face, a few centimetres apart, with a large mutual inductance. One of them is now rotated through $ 90^\\circ $, so that its plane is perpendicular to the other's. What happens to $ M $?",
+  "options": [
+   "It falls almost to zero",
+   "It is unchanged, since neither coil moved further away",
+   "It doubles, since the coils are now at right angles",
+   "It becomes negative"
+  ],
+  "reveal": "**It falls almost to zero.**\n\nFace to face, the first coil's field lines pass straight through the second coil, so the flux linkage is large. Turn the second coil through a right angle and those same field lines now run *along* its plane — they graze past it instead of threading through it. Flux through a loop is $ BA\\cos\\theta $, and $ \\cos 90^\\circ = 0 $.\n\nNo flux linkage means no mutual inductance, whatever the currents are doing.\n\n**This is a practical fact, not a curiosity.** It is exactly how sensitive circuits are protected from a noisy neighbour on the same board: you do not always have to move the coils apart, you can simply turn one of them. And it is why a wireless charger stops working when the phone is not lying flat on the pad."
+ },
+ {
+  "block_id": "f5c8b4c1-e998-484d-8754-7f3c25bdc07c",
+  "chapter": 6,
+  "page": 12,
+  "page_slug": "emi-energy-stored-in-an-inductor",
+  "has_correct_index": false,
+  "prompt": "The current through an inductor is increased from $ 2 $ A to $ 4 $ A. By what factor does the stored energy increase?",
+  "options": [
+   "Four times",
+   "Twice",
+   "Eight times",
+   "Sixteen times"
+  ],
+  "reveal": "**Four times.**\n\n$ U = \\frac{1}{2}Li^{2} \\propto i^{2} $, so doubling the current quadruples the energy. Numerically the store goes from $ \\frac{1}{2}L(4) = 2L $ to $ \\frac{1}{2}L(16) = 8L $.\n\n**The square is the point, and it is easy to under-rate.** A modest-sounding increase in current is a large increase in stored energy — and every joule of it has to be got rid of somewhere when you open the switch. This is why a big electromagnet cannot simply be switched off: at ten times the current it holds a hundred times the energy, and that energy will find a path out whether you have provided one or not.\n\nThe answer \"twice\" is what you get by reading $ U $ as proportional to $ i $. Check the exponent before you scale anything."
+ },
+ {
+  "block_id": "478a8872-28e4-4287-88ea-7a01acbb9c6e",
+  "chapter": 6,
+  "page": 13,
+  "page_slug": "emi-the-lr-circuit",
+  "has_correct_index": false,
+  "prompt": "An L-R circuit has $ L = 8 $ mH and $ R = 4\\ \\Omega $. The resistance is now doubled to $ 8\\ \\Omega $, with the same battery. What happens to the time constant and to the final current?",
+  "options": [
+   "Time constant halves; final current halves",
+   "Time constant doubles; final current halves",
+   "Time constant halves; final current is unchanged",
+   "Both are unchanged"
+  ],
+  "reveal": "**Time constant halves; final current halves.**\n\n$ \\tau = \\frac{L}{R} $, so doubling $ R $ takes $ \\tau $ from $ 2 $ ms to $ 1 $ ms — the circuit settles **twice as fast**.\n\n$ i_0 = \\frac{V_0}{R} $, so doubling $ R $ also halves the steady current the circuit ends up at.\n\nBoth change, and they change for quite separate reasons. The **destination** is pure Ohm's law and the inductor has nothing to do with it. The **journey time** is where $ L $ lives.\n\n**The trap worth naming** is importing the C-R intuition wholesale. There, more resistance meant more time. Here, more resistance means less time. The exponential shape is identical, but $ R $ sits on the other side of the fraction — so re-derive $ \\tau $ rather than recalling it."
+ },
+ {
+  "block_id": "f896b737-1fc7-44f9-9129-97459bf4b09c",
+  "chapter": 6,
+  "page": 14,
+  "page_slug": "emi-the-induced-electric-field",
+  "has_correct_index": false,
+  "prompt": "Inside a long solenoid the current is being increased steadily. A stationary electron is placed in the empty space **outside** the solenoid, where the magnetic field is essentially zero. What happens to it?",
+  "options": [
+   "It accelerates, because the induced electric field is non-zero there",
+   "Nothing, because the magnetic field is zero at its position",
+   "Nothing, because it is not moving, so it feels no magnetic force",
+   "It moves radially outward, away from the solenoid"
+  ],
+  "reveal": "**It accelerates**, along a circle around the solenoid.\n\nThe magnetic field outside a long solenoid is essentially zero — but the induced **electric** field is not. Take a circular path of radius $ r $ outside the solenoid: it still encloses all of the changing flux from inside, so $ \\oint\\vec{E}\\cdot d\\vec{l} = -\\frac{d\\Phi}{dt} $ is not zero, and by symmetry $ E $ is the same all the way round that circle.\n\nSo there is a real electric field at a place where there is **no magnetic field and no charge whatsoever**. The electron feels $ q\\vec{E} $ and starts to move — tangentially, following the field line, not radially.\n\n**This is the result worth sitting with.** The changing field is confined inside the solenoid. The electron never enters that region. Yet it is pushed. The induced electric field reaches out into space where nothing is happening magnetically at all, and that reach is what makes Faraday's law a field law rather than a rule about coils.\n\nOne caution on the reasoning: the answer \"nothing, because it is not moving\" is correct logic applied to the *magnetic* force, and wrong here only because the magnetic force is not the force in question. An electric field does not care whether a charge is moving."
+ },
+ {
+  "block_id": "78df581e-cb22-48d2-99d1-f27fcf24510d",
+  "chapter": 6,
+  "page": 15,
+  "page_slug": "emi-the-ac-generator",
+  "has_correct_index": false,
+  "prompt": "At which position of the rotating coil is the induced EMF at its maximum?",
+  "options": [
+   "When the plane of the coil is parallel to the field",
+   "When the plane of the coil is perpendicular to the field",
+   "When the flux through the coil is at its maximum",
+   "When the coil has completed exactly one full turn"
+  ],
+  "reveal": "**When the plane of the coil is parallel to the field** — that is, when the flux through it is momentarily **zero**.\n\nThe EMF is $ -\\frac{d\\Phi}{dt} $, so it tracks how fast the flux is changing, not how big it is. Picture the graph of $ \\Phi = BA\\cos\\omega t $: it is steepest exactly where it crosses zero, and flat exactly at its peaks.\n\nSo the two extremes are swapped:\n\n- coil plane **perpendicular** to the field → flux maximum, rate of change zero → **EMF zero**;\n- coil plane **parallel** to the field → flux zero, rate of change maximum → **EMF maximum**.\n\nPhysically, in the second position the coil's sides are slicing across the field lines at full speed. In the first they are moving momentarily along them.\n\n**This is a favourite examination question precisely because the instinct is wrong.** Whenever a question mentions the flux being large, check what it actually asked for — the flux or its rate of change."
+ }
+]

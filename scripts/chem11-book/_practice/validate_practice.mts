@@ -4,6 +4,7 @@ import { join } from 'path';
 import { ContentBlocksArraySchema } from '../../../packages/data/books/schemas';
 
 const require = createRequire(import.meta.url);
+const { checkPracticeBank } = require('./check_prompt_latex');
 
 // Validates the authored practice-page modules against the real Zod schema.
 // Unlike the lesson validator, a practice page legitimately ENDS on a
@@ -26,6 +27,19 @@ for (const ch of CHAPTERS) {
   const collect = (o: any) => { if (o && typeof o === 'object') { if (typeof o.id === 'string') ids.push(o.id); } };
   blocks.forEach((b: any) => { collect(b); (b.sections || []).forEach((s: any) => { collect(s); (s.items || []).forEach(collect); }); });
   if (new Set(ids).size !== ids.length) problems.push('duplicate ids somewhere (block/section/item)');
+
+  // Chemical formulas / isotope notation / unit-scientific-notation exponents
+  // written as plain text instead of $...$ / \ce{} — the reader only converts
+  // math INSIDE $...$, so e.g. "m-2" or "H2O" outside it renders literally.
+  // See CONTRACT.md Rule 1 and the real bug found across every ch*.js prompt
+  // field, fixed 2026-07-22. This is a hard fail, not a warning — the whole
+  // point is that this class of bug should no longer be possible to ship.
+  if (pb) {
+    const latexProblems = checkPracticeBank(pb);
+    for (const p of latexProblems) {
+      problems.push(`${p.source_label} [${p.field}] has unwrapped LaTeX: ${p.hits.join(', ')} — wrap in $...$ / \\ce{...} per CONTRACT.md Rule 1`);
+    }
+  }
 
   const itemCount = pb ? pb.sections.reduce((s: number, sec: any) => s + (sec.items || []).length, 0) : 0;
 

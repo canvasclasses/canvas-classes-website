@@ -64,8 +64,8 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 6.35',
               prompt:
-                'What is meant by the conjugate acid-base pair? Find the conjugate acid/base for the following species:\nHNO2, CN-, HClO4, F-, OH-, CO3^2-, and S2-',
-              answer: 'NO2⁻, HCN, ClO4⁻, HF, H2O, HCO3⁻, HS⁻',
+                'What is meant by the conjugate acid-base pair? Find the conjugate acid/base for the following species:\n$\\ce{HNO2}$, CN-, $\\ce{HClO4}$, F-, OH-, $\\ce{CO3^{2-}}$, and $\\ce{S^{2-}}$',
+              answer: '$\\ce{NO2^-}$, HCN, $\\ce{ClO4^-}$, HF, $\\ce{H2O}$, $\\ce{HCO3^-}$, HS⁻',
               solution:
                 'A **conjugate acid-base pair** is a Brønsted-Lowry acid and the base left behind once it has donated one proton (H⁺), or a base and the acid formed once it has accepted one proton. The two members of a pair differ by exactly one H⁺.\n\n' +
                 'For each species, ask: is it acting as an acid (does it have an H to give away) or a base (does it have a lone pair to accept an H⁺)?\n\n' +
@@ -82,8 +82,8 @@ module.exports = {
               id: '31474328-edd5-4cd6-87ce-7549d10308d3',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.36',
-              prompt: 'Which of the followings are Lewis acids? H2O, BF3, H+, and NH4+',
-              answer: 'BF3, H+ and NH4+ are Lewis acids',
+              prompt: 'Which of the followings are Lewis acids? $\\ce{H2O}$, $\\ce{BF3}$, H+, and $\\ce{NH4+}$',
+              answer: '$\\ce{BF3}$, H+ and $\\ce{NH4+}$ are Lewis acids',
               solution:
                 'A **Lewis acid** is an electron-pair acceptor — it needs somewhere to put an incoming pair of electrons, either because it has an empty orbital or because it can generate one.\n\n' +
                 '- $\\ce{H2O}$: oxygen carries two lone pairs it can donate — this makes water a Lewis **base**, not an acid.\n' +
@@ -97,8 +97,8 @@ module.exports = {
               id: '572651bb-91b4-4be2-b5b4-df51fc4104b2',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.37',
-              prompt: 'What will be the conjugate bases for the Brönsted acids: HF, H2SO4 and HCO3-?',
-              answer: 'F⁻, HSO4⁻, CO3²⁻',
+              prompt: 'What will be the conjugate bases for the Brönsted acids: HF, $\\ce{H2SO4}$ and $\\ce{HCO3^-}$?',
+              answer: 'F⁻, $\\ce{HSO4^-}$, $\\ce{CO3^{2-}}$',
               solution:
                 'Remove one H⁺ from each acid to get its conjugate base:\n\n' +
                 '- $\\ce{HF}$ loses H⁺ → $\\ce{F^-}$\n' +
@@ -110,8 +110,8 @@ module.exports = {
               id: '62b3c1b0-f5ec-4bc6-8889-9ba788a4b6d7',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.38',
-              prompt: 'Write the conjugate acids for the following Brönsted bases: NH2-, NH3 and HCOO-.',
-              answer: 'NH3, NH4⁺, HCOOH',
+              prompt: 'Write the conjugate acids for the following Brönsted bases: $\\ce{NH2^-}$, $\\ce{NH3}$ and HCOO-.',
+              answer: '$\\ce{NH3}$, $\\ce{NH4+}$, HCOOH',
               solution:
                 'Add one H⁺ to each base to get its conjugate acid:\n\n' +
                 '- $\\ce{NH2^-}$ gains H⁺ → $\\ce{NH3}$\n' +
@@ -124,7 +124,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 6.39',
               prompt:
-                'The species: H2O, HCO3-, HSO4- and NH3 can act both as Brönsted acids and bases. For each case give the corresponding conjugate acid and base.',
+                'The species: $\\ce{H2O}$, $\\ce{HCO3^-}$, $\\ce{HSO4^-}$ and $\\ce{NH3}$ can act both as Brönsted acids and bases. For each case give the corresponding conjugate acid and base.',
               answer: 'Each species has one conjugate acid (gain H⁺) and one conjugate base (lose H⁺) — see solution table.',
               solution:
                 'A species that can act as both acid and base (an **amphiprotic** species) has two conjugates: donate an H⁺ to get its conjugate base, accept an H⁺ to get its conjugate acid.\n\n' +
@@ -141,8 +141,8 @@ module.exports = {
               id: '80323e15-7f7c-427c-9881-1cca92ba7978',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.40',
-              prompt: 'Classify the following species into Lewis acids and Lewis bases and show how these act as Lewis acid/base: (a) OH- (b) F- (c) H+ (d) BCl3.',
-              answer: 'OH⁻ and F⁻ are Lewis bases; H⁺ and BCl3 are Lewis acids.',
+              prompt: 'Classify the following species into Lewis acids and Lewis bases and show how these act as Lewis acid/base: (a) OH- (b) F- (c) H+ (d) $\\ce{BCl3}$.',
+              answer: 'OH⁻ and F⁻ are Lewis bases; H⁺ and $\\ce{BCl3}$ are Lewis acids.',
               solution:
                 'Sort by whether the species has electrons to give (base) or a gap to fill (acid):\n\n' +
                 '(a) $\\ce{OH^-}$ — oxygen carries lone pairs it can donate → **Lewis base**.\n\n' +
@@ -162,7 +162,7 @@ module.exports = {
               id: '3304aaec-692e-4e06-966e-3b6330849e02',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.41',
-              prompt: 'The concentration of hydrogen ion in a sample of soft drink is 3.8 × 10^-3 M. What is its pH?',
+              prompt: 'The concentration of hydrogen ion in a sample of soft drink is 3.8 × $10^{-3}$ M. What is its pH?',
               answer: 'pH = 2.42',
               solution:
                 '$\\text{pH} = -\\log[\\ce{H+}]$\n\n' +
@@ -275,7 +275,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 6.58',
               prompt: 'The solubility of Sr(OH)2 at 298 K is 19.23 g/L of solution. Calculate the concentrations of strontium and hydroxyl ions and the pH of the solution.',
-              answer: '[Sr2+] = 0.158 M, [OH-] = 0.316 M, pH = 13.50',
+              answer: '[$\\ce{Sr^{2+}}$] = 0.158 M, [OH-] = 0.316 M, pH = 13.50',
               solution:
                 'Molar mass of $\\ce{Sr(OH)2} = 87.6 + 2(17) = 121.6$ g/mol.\n\n' +
                 'Molarity $= 19.23/121.6 = 0.158$ M — this is the concentration of dissolved $\\ce{Sr(OH)2}$, all of it dissociating.\n\n' +
@@ -287,7 +287,7 @@ module.exports = {
               id: '5d2f881d-52f4-4da1-9793-a550614adff9',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.65',
-              prompt: 'Ionic product of water at 310K is 2.7 × 10^-14. What is the pH of neutral water at this temperature?',
+              prompt: 'Ionic product of water at 310K is 2.7 × $10^{-14}$. What is the pH of neutral water at this temperature?',
               answer: 'pH = 6.78',
               solution:
                 'In *neutral* water, $[\\ce{H+}] = [\\ce{OH^-}]$ always — that\'s the definition of neutral, regardless of temperature.\n\n' +
@@ -302,7 +302,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 6.66',
               prompt:
-                'Calculate the pH of the resultant mixtures: a) 10 mL of 0.2M Ca(OH)2 + 25 mL of 0.1M HCl b) 10 mL of 0.01M H2SO4 + 10 mL of 0.01M Ca(OH)2 c) 10 mL of 0.1M H2SO4 + 10 mL of 0.1M KOH',
+                'Calculate the pH of the resultant mixtures: a) 10 mL of 0.2M Ca(OH)2 + 25 mL of 0.1M HCl b) 10 mL of 0.01M $\\ce{H2SO4}$ + 10 mL of 0.01M Ca(OH)2 c) 10 mL of 0.1M $\\ce{H2SO4}$ + 10 mL of 0.1M KOH',
               answer: 'a) pH = 12.63  b) pH = 7.00  c) pH = 1.30',
               solution:
                 'These are all acid-base neutralisations: find total moles of $\\ce{H+}$ and total moles of $\\ce{OH^-}$, see which is in excess, then divide by the *combined* final volume.\n\n' +
@@ -328,7 +328,7 @@ module.exports = {
               id: 'd6a76739-7a55-4a74-a23c-56361d5f73a4',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.43',
-              prompt: 'The ionization constant of HF, HCOOH and HCN at 298K are 6.8 × 10^-4, 1.8 × 10^-4 and 4.8 × 10^-9 respectively. Calculate the ionization constants of the corresponding conjugate base.',
+              prompt: 'The ionization constant of HF, HCOOH and HCN at 298K are 6.8 × $10^{-4}$, 1.8 × $10^{-4}$ and 4.8 × $10^{-9}$ respectively. Calculate the ionization constants of the corresponding conjugate base.',
               answer: 'Kb(F⁻) = 1.5×10⁻¹¹, Kb(HCOO⁻) = 5.6×10⁻¹¹, Kb(CN⁻) = 2.08×10⁻⁶',
               solution:
                 'For any conjugate acid-base pair, $K_a \\times K_b = K_w = 1.0\\times10^{-14}$ (at 298 K). So $K_b = K_w/K_a$ for each conjugate base.\n\n' +
@@ -343,8 +343,8 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 6.44',
               prompt:
-                'The ionization constant of phenol is 1.0 × 10^-10. What is the concentration of phenolate ion in 0.05 M solution of phenol? What will be its degree of ionization if the solution is also 0.01M in sodium phenolate?',
-              answer: '[C6H5O⁻] = 2.2×10⁻⁶ M, α = 4.47×10⁻⁵; with 0.01M sodium phenolate, α = 1.0×10⁻⁸',
+                'The ionization constant of phenol is 1.0 × $10^{-10}$. What is the concentration of phenolate ion in 0.05 M solution of phenol? What will be its degree of ionization if the solution is also 0.01M in sodium phenolate?',
+              answer: '[$\\ce{C6H5O^-}$] = 2.2×10⁻⁶ M, α = 4.47×10⁻⁵; with 0.01M sodium phenolate, α = 1.0×10⁻⁸',
               solution:
                 'Phenol ionizes as $\\ce{C6H5OH <=> C6H5O- + H+}$, $K_a = 1.0\\times10^{-10}$.\n\n' +
                 '**Without common ion:** let $x = [\\ce{C6H5O^-}]$ at equilibrium.\n' +
@@ -362,7 +362,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 6.45',
               prompt:
-                'The first ionization constant of H2S is 9.1 × 10^-8. Calculate the concentration of HS- ion in its 0.1M solution. How will this concentration be affected if the solution is 0.1M in HCl also? If the second dissociation constant of H2S is 1.2 × 10^-13, calculate the concentration of S2- under both conditions.',
+                'The first ionization constant of $\\ce{H2S}$ is 9.1 × $10^{-8}$. Calculate the concentration of HS- ion in its 0.1M solution. How will this concentration be affected if the solution is 0.1M in HCl also? If the second dissociation constant of $\\ce{H2S}$ is 1.2 × $10^{-13}$, calculate the concentration of $\\ce{S^{2-}}$ under both conditions.',
               answer: '[HS⁻] = 9.54×10⁻⁵ M (no HCl), 9.1×10⁻⁸ M (with 0.1M HCl); [S²⁻] = 1.2×10⁻¹³ M (no HCl), 1.09×10⁻¹⁹ M (with 0.1M HCl)',
               solution:
                 'Two dissociation steps: $\\ce{H2S <=> H+ + HS-}$ ($K_{a1}=9.1\\times10^{-8}$) and $\\ce{HS- <=> H+ + S^{2-}}$ ($K_{a2}=1.2\\times10^{-13}$).\n\n' +
@@ -381,8 +381,8 @@ module.exports = {
               id: '38037db2-0ae9-45fa-b145-8e04ccb8f18e',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.46',
-              prompt: 'The ionization constant of acetic acid is 1.74 × 10^-5. Calculate the degree of dissociation of acetic acid in its 0.05 M solution. Calculate the concentration of acetate ion in the solution and its pH.',
-              answer: 'α = 0.0187, [CH3COO⁻] = 9.3×10⁻⁴ M, pH = 3.03',
+              prompt: 'The ionization constant of acetic acid is 1.74 × $10^{-5}$. Calculate the degree of dissociation of acetic acid in its 0.05 M solution. Calculate the concentration of acetate ion in the solution and its pH.',
+              answer: 'α = 0.0187, [$\\ce{CH3COO^-}$] = 9.3×10⁻⁴ M, pH = 3.03',
               solution:
                 'For a weak acid at concentration $C$ with small $\\alpha$, $\\alpha \\approx \\sqrt{K_a/C}$ (the Ostwald dilution law).\n\n' +
                 '$\\alpha = \\sqrt{\\dfrac{1.74\\times10^{-5}}{0.05}} = \\sqrt{3.48\\times10^{-4}} = 0.0187$ (about 1.9% dissociated)\n\n' +
@@ -423,7 +423,7 @@ module.exports = {
               id: 'f729d698-2bd9-4e0f-98cf-7862be185d1e',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.51',
-              prompt: 'The pH of 0.005M codeine (C18H21NO3) solution is 9.95. Calculate its ionization constant and pKb.',
+              prompt: 'The pH of 0.005M codeine ($\\ce{C18H21NO3}$) solution is 9.95. Calculate its ionization constant and pKb.',
               answer: 'Kb = 1.6×10⁻⁶, pKb = 5.80',
               solution:
                 'Codeine is a weak base, so work in pOH first.\n\n' +
@@ -453,7 +453,7 @@ module.exports = {
               id: '4d5bebbe-37d6-4847-9df6-fd26d10278c4',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.59',
-              prompt: 'The ionization constant of propanoic acid is 1.32 × 10^-5. Calculate the degree of ionization of the acid in its 0.05M solution and also its pH. What will be its degree of ionization if the solution is 0.01M in HCl also?',
+              prompt: 'The ionization constant of propanoic acid is 1.32 × $10^{-5}$. Calculate the degree of ionization of the acid in its 0.05M solution and also its pH. What will be its degree of ionization if the solution is 0.01M in HCl also?',
               answer: 'α = 0.0163, pH = 3.09 (no HCl); α = 1.32×10⁻³ with 0.01M HCl',
               solution:
                 '**Without HCl:**\n' +
@@ -523,7 +523,7 @@ module.exports = {
               id: 'b62f7a52-4a07-4b03-85fa-6fe0fa43a3a7',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.54',
-              prompt: 'The ionization constant of dimethylamine is 5.4 × 10^-4. Calculate its degree of ionization in its 0.02M solution. What percentage of dimethylamine is ionized if the solution is also 0.1M in NaOH?',
+              prompt: 'The ionization constant of dimethylamine is 5.4 × $10^{-4}$. Calculate its degree of ionization in its 0.02M solution. What percentage of dimethylamine is ionized if the solution is also 0.1M in NaOH?',
               answer: 'α ≈ 16.4% alone; only 0.54% when 0.1M NaOH is also present',
               solution:
                 '**Alone, no NaOH:**\n' +
@@ -537,7 +537,7 @@ module.exports = {
               id: 'ff8da02c-b633-444e-9361-b187b9ba5861',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.61',
-              prompt: 'The ionization constant of nitrous acid is 4.5 × 10^-4. Calculate the pH of 0.04 M sodium nitrite solution and also its degree of hydrolysis.',
+              prompt: 'The ionization constant of nitrous acid is 4.5 × $10^{-4}$. Calculate the pH of 0.04 M sodium nitrite solution and also its degree of hydrolysis.',
               answer: 'pH = 7.97, degree of hydrolysis h = 2.36×10⁻⁵',
               solution:
                 'Sodium nitrite is the salt of a weak acid ($\\ce{HNO2}$) and a strong base — its anion hydrolyses:\n' +
@@ -553,8 +553,8 @@ module.exports = {
               id: '0f88ca7a-12ac-4c9c-aa9b-b2cf9341b1d5',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.63',
-              prompt: 'Predict if the solutions of the following salts are neutral, acidic or basic: NaCl, KBr, NaCN, NH4NO3, NaNO2 and KF',
-              answer: 'NaCl, KBr neutral; NaCN, NaNO2, KF basic; NH4NO3 acidic',
+              prompt: 'Predict if the solutions of the following salts are neutral, acidic or basic: NaCl, KBr, NaCN, $\\ce{NH4NO3}$, $\\ce{NaNO2}$ and KF',
+              answer: 'NaCl, KBr neutral; NaCN, $\\ce{NaNO2}$, KF basic; $\\ce{NH4NO3}$ acidic',
               solution:
                 'The rule: compare the strength of the acid and base that formed the salt. Strong+strong → neutral; weak acid+strong base → basic (anion hydrolyses); strong acid+weak base → acidic (cation hydrolyses).\n\n' +
                 '- $\\ce{NaCl}$: from strong $\\ce{HCl}$ + strong $\\ce{NaOH}$ → **neutral**\n' +
@@ -569,7 +569,7 @@ module.exports = {
               id: '4b1f7e7b-9a47-45c1-bb0c-b54dde218a45',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.64',
-              prompt: 'The ionization constant of chloroacetic acid is 1.35 × 10^-3. What will be the pH of 0.1M acid and its 0.1M sodium salt solution?',
+              prompt: 'The ionization constant of chloroacetic acid is 1.35 × $10^{-3}$. What will be the pH of 0.1M acid and its 0.1M sodium salt solution?',
               answer: 'pH(acid) = 1.9, pH(salt) = 7.9',
               solution:
                 '**The acid itself, 0.1M chloroacetic acid:**\n' +
@@ -595,7 +595,7 @@ module.exports = {
               source: 'ncert_exercise',
               source_label: 'NCERT 6.67',
               prompt: 'Determine the solubilities of silver chromate, barium chromate, ferric hydroxide, lead chloride and mercurous iodide at 298K from their solubility product constants given in Table 6.9. Determine also the molarities of individual ions.',
-              answer: 'Ag2CrO4: S = 6.5×10⁻⁵ M; BaCrO4: S = 1.1×10⁻⁵ M; Fe(OH)3: S = 1.39×10⁻¹⁰ M; PbCl2: S = 1.59×10⁻² M; Hg2I2: S = 2.24×10⁻¹⁰ M',
+              answer: '$\\ce{Ag2CrO4}$: S = 6.5×10⁻⁵ M; $\\ce{BaCrO4}$: S = 1.1×10⁻⁵ M; Fe(OH)3: S = 1.39×10⁻¹⁰ M; $\\ce{PbCl2}$: S = 1.59×10⁻² M; $\\ce{Hg2I2}$: S = 2.24×10⁻¹⁰ M',
               solution:
                 'For each salt, write the dissolution equilibrium, express $K_{sp}$ in terms of the molar solubility $S$, and solve. (Table 6.9 values used: $K_{sp}(\\ce{Ag2CrO4})=1.1\\times10^{-12}$, $K_{sp}(\\ce{BaCrO4})=1.2\\times10^{-10}$, $K_{sp}(\\ce{Fe(OH)3})=1.0\\times10^{-38}$, $K_{sp}(\\ce{PbCl2})=1.6\\times10^{-5}$, $K_{sp}(\\ce{Hg2I2})=4.5\\times10^{-29}$.)\n\n' +
                 '**Silver chromate** $\\ce{Ag2CrO4 <=> 2Ag+ + CrO4^{2-}}$: $K_{sp}=4S^3$\n' +
@@ -614,8 +614,8 @@ module.exports = {
               id: '43ad53f8-6186-4032-a7cf-a70d88efa55b',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.68',
-              prompt: 'The solubility product constant of Ag2CrO4 and AgBr are 1.1 × 10^-12 and 5.0 × 10^-13 respectively. Calculate the ratio of the molarities of their saturated solutions.',
-              answer: 'S(Ag2CrO4)/S(AgBr) = 91.9 — silver chromate is more soluble',
+              prompt: 'The solubility product constant of $\\ce{Ag2CrO4}$ and AgBr are 1.1 × $10^{-12}$ and 5.0 × $10^{-13}$ respectively. Calculate the ratio of the molarities of their saturated solutions.',
+              answer: 'S($\\ce{Ag2CrO4}$)/S(AgBr) = 91.9 — silver chromate is more soluble',
               solution:
                 'These two salts have *different* stoichiometry, so their $K_{sp}$-to-$S$ relations are different — you cannot just compare $K_{sp}$ values directly.\n\n' +
                 '$\\ce{Ag2CrO4 <=> 2Ag+ + CrO4^{2-}}$: $K_{sp}=4S_1^3$\n' +
@@ -630,7 +630,7 @@ module.exports = {
               id: '5ed13aa5-7e10-4291-8b87-1889ccdc9474',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.69',
-              prompt: 'Equal volumes of 0.002 M solutions of sodium iodate and cupric chlorate are mixed together. Will it lead to precipitation of copper iodate? (For cupric iodate Ksp = 7.4 × 10^-8).',
+              prompt: 'Equal volumes of 0.002 M solutions of sodium iodate and cupric chlorate are mixed together. Will it lead to precipitation of copper iodate? (For cupric iodate Ksp = 7.4 × $10^{-8}$).',
               answer: 'No — the ionic product is well below Ksp, no precipitate forms',
               solution:
                 'Mixing equal volumes halves each concentration: $[\\ce{IO3^-}] = [\\ce{Cu^{2+}}] = 0.002/2 = 0.001$ M.\n\n' +
@@ -644,7 +644,7 @@ module.exports = {
               id: '60dce864-8e2b-46f0-bb30-054111e04036',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.70',
-              prompt: 'The ionization constant of benzoic acid is 6.46 × 10^-5 and Ksp for silver benzoate is 2.5 × 10^-13. How many times is silver benzoate more soluble in a buffer of pH 3.19 compared to its solubility in pure water?',
+              prompt: 'The ionization constant of benzoic acid is 6.46 × $10^{-5}$ and Ksp for silver benzoate is 2.5 × $10^{-13}$. How many times is silver benzoate more soluble in a buffer of pH 3.19 compared to its solubility in pure water?',
               answer: 'Silver benzoate is about 3.3 times more soluble at pH 3.19 than in pure water',
               solution:
                 '**In pure water:** the pH stays near neutral, well above $\\text{p}K_a(\\text{benzoic acid})\\approx4.2$, so essentially all dissolved benzoate stays as $\\ce{C6H5COO^-}$ (negligible protonation). So $K_{sp}=S_0^2$:\n' +
@@ -662,7 +662,7 @@ module.exports = {
               id: '95ab523c-7334-41f8-a8bb-079a177faec8',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.71',
-              prompt: 'What is the maximum concentration of equimolar solutions of ferrous sulphate and sodium sulphide so that when mixed in equal volumes, there is no precipitation of iron sulphide? (For iron sulphide, Ksp = 6.3 × 10^-18).',
+              prompt: 'What is the maximum concentration of equimolar solutions of ferrous sulphate and sodium sulphide so that when mixed in equal volumes, there is no precipitation of iron sulphide? (For iron sulphide, Ksp = 6.3 × $10^{-18}$).',
               answer: 'C(max) ≈ 5.02×10⁻⁹ M',
               solution:
                 'Let $C$ be the concentration of each solution *before* mixing. Mixing equal volumes doubles the total volume, so each ion is diluted to half its original concentration:\n' +
@@ -678,7 +678,7 @@ module.exports = {
               id: 'd77bddcc-a9f6-435c-a998-c1f23e5ce539',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.72',
-              prompt: 'What is the minimum volume of water required to dissolve 1g of calcium sulphate at 298 K? (For calcium sulphate, Ksp is 9.1 × 10^-6).',
+              prompt: 'What is the minimum volume of water required to dissolve 1g of calcium sulphate at 298 K? (For calcium sulphate, Ksp is 9.1 × $10^{-6}$).',
               answer: 'V(min) = 2.43 L',
               solution:
                 '$\\ce{CaSO4 <=> Ca^{2+} + SO4^{2-}}$, so $K_{sp}=S^2$ where $S$ is the molar solubility:\n\n' +
@@ -692,8 +692,8 @@ module.exports = {
               id: '3da45721-e1d9-4e2f-b26f-0758a1a8e2be',
               source: 'ncert_exercise',
               source_label: 'NCERT 6.73',
-              prompt: 'The concentration of sulphide ion in 0.1M HCl solution saturated with hydrogen sulphide is 1.0 × 10^-19 M. If 10 mL of this is added to 5 mL of 0.04 M solution of the following: FeSO4, MnCl2, ZnCl2 and CdCl2, in which of these solutions precipitation will take place?',
-              answer: 'Precipitation occurs in ZnCl2 and CdCl2 solutions (not FeSO4 or MnCl2)',
+              prompt: 'The concentration of sulphide ion in 0.1M HCl solution saturated with hydrogen sulphide is 1.0 × $10^{-19}$ M. If 10 mL of this is added to 5 mL of 0.04 M solution of the following: $\\ce{FeSO4}$, $\\ce{MnCl2}$, $\\ce{ZnCl2}$ and $\\ce{CdCl2}$, in which of these solutions precipitation will take place?',
+              answer: 'Precipitation occurs in $\\ce{ZnCl2}$ and $\\ce{CdCl2}$ solutions (not $\\ce{FeSO4}$ or $\\ce{MnCl2}$)',
               solution:
                 'After mixing 10 mL of the sulphide solution with 5 mL of each metal-ion solution, total volume = 15 mL, so both concentrations get diluted:\n\n' +
                 '$[\\ce{S^{2-}}] = 1.0\\times10^{-19}\\times\\dfrac{10}{15} = 6.67\\times10^{-20}$ M\n\n' +

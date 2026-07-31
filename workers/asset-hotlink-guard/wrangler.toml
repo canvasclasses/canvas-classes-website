@@ -1,0 +1,28 @@
+# asset-hotlink-guard — Cloudflare Worker in front of the R2 asset bucket.
+# See README.md for the full phased deployment runbook. Deploy log-only FIRST.
+
+name = "asset-hotlink-guard"
+main = "src/index.js"
+compatibility_date = "2025-07-01"
+
+# The Worker runs on the R2 custom domain. You create this domain in the
+# Cloudflare dashboard (R2 > canvas-chemistry-assets > Settings > Custom Domains)
+# BEFORE deploying — see README Phase 0. Then bind the route here.
+routes = [
+  { pattern = "assets.canvasclasses.in/*", zone_name = "canvasclasses.in" },
+]
+
+# R2 bucket binding — the Worker serves objects from this bucket directly.
+[[r2_buckets]]
+binding = "ASSETS_BUCKET"
+bucket_name = "canvas-chemistry-assets"
+
+[vars]
+# LOG-ONLY until you have watched the logs and calibrated REFERER_ALLOWLIST.
+# Flip to "true" only in Phase 3.
+ENFORCE = "false"
+
+# Apex hosts we serve from. Subdomains are auto-allowed (www., admin.), so
+# listing the apex is enough. Add any extra first-party host that legitimately
+# embeds assets. Do NOT add third-party hosts.
+REFERER_ALLOWLIST = "canvasclasses.in"

@@ -62,7 +62,7 @@ function computeReadingTime(arr) {
   return Math.max(1, Math.ceil(w / 200) + v * 2 + a);
 }
 const INTERACTIVE = new Set([
-  'inline_quiz', 'simulation', 'video', 'molecule_3d', 'interactive_image',
+  'inline_quiz', 'simulation', 'math_graph', 'vector_board', 'video', 'molecule_3d', 'interactive_image',
   'classify_exercise', 'reasoning_prompt', 'worked_example', 'practice_link',
 ]);
 function computeContentTypes(arr) {
