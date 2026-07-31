@@ -8,6 +8,12 @@ import { harvestVocabulary, dedupeVaultWords, type VaultWord } from '@canvas/dat
 // PUBLIC: no auth required — this is the same vocabulary every reader sees,
 // derived from the published book content. Cache aggressively; the deck only
 // changes when the book is re-authored (admin save calls revalidatePath).
+//
+// Anti-scraping/cost note: keyed only by bookSlug (very low cardinality), so
+// the ISR cache below IS the rate-limit. Do NOT add a per-IP limiter here:
+// reading req.headers to get the IP forces the handler dynamic and disables
+// this cache, a net loss (CLAUDE.md §10). The cache absorbs repeat +
+// enumeration hits after the first generation per book.
 export const revalidate = 86400;
 
 const MAX_PAGES = 400; // hard cap; a full Kaveri book is ~128 pages.
@@ -24,7 +30,9 @@ export async function GET(
 
   try {
     await connectToDatabase();
-    const book = await BookModel.findOne({ slug: bookSlug }).lean();
+    // Only published books are readable here — never leak a draft/embargoed
+    // book's vocabulary before launch (the SSR page route gates the same way).
+    const book = await BookModel.findOne({ slug: bookSlug, is_published: true }).lean();
     if (!book) {
       return NextResponse.json({ success: false, error: 'Book not found' }, { status: 404 });
     }
@@ -39,8 +47,11 @@ export async function GET(
       return NextResponse.json({ success: true, data: { words: [] } });
     }
 
+    // published: true — harvest only live pages, not unpublished drafts whose
+    // ids still sit in chapters[].page_ids. Soft-deleted pages are already
+    // hidden by BookPage model middleware.
     const pages = await BookPageModel
-      .find({ _id: { $in: pageIds } })
+      .find({ _id: { $in: pageIds }, published: true })
       .select('slug chapter_number blocks')
       .limit(MAX_PAGES)
       .lean();

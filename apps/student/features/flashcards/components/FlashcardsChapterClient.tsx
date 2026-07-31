@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
     Layers,
     RotateCcw,
@@ -46,7 +47,15 @@ export default function FlashcardsChapterClient({
     chapterSlug,
     topics,
 }: Props) {
-    const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+    // Deep-link support: a `?topic=` param (e.g. from a Live Book chapter's
+    // end-of-chapter mind map "Test yourself" link) pre-selects that topic on
+    // load. Validated against this chapter's real topic names — an unknown
+    // or stale param is silently ignored rather than surfacing an empty state.
+    const searchParams = useSearchParams();
+    const [selectedTopics, setSelectedTopics] = useState<string[]>(() => {
+        const topicParam = searchParams.get('topic');
+        return topicParam && topics.some((t) => t.name === topicParam) ? [topicParam] : [];
+    });
     const [practiceQueue, setPracticeQueue] = useState<FlashcardItem[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);

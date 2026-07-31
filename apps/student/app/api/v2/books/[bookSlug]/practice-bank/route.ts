@@ -7,6 +7,12 @@ import { harvestPractice, type BankQuestion } from '@canvas/data/books/practiceS
 
 // PUBLIC: no auth — the practice question bank is identical for every reader.
 // Cacheable; only changes when the book is re-authored.
+//
+// Anti-scraping/cost note: this endpoint is keyed only by bookSlug (very low
+// cardinality — a handful of books), so the ISR cache below IS the rate-limit.
+// Do NOT add a per-IP limiter here: reading req.headers to get the IP forces
+// the handler dynamic and disables this cache, which is a net loss (CLAUDE.md
+// §10). The cache absorbs repeat + enumeration hits after the first generation.
 export const revalidate = 86400;
 
 const MAX_PAGES = 400;
@@ -23,7 +29,9 @@ export async function GET(
   }
   try {
     await connectToDatabase();
-    const book = await BookModel.findOne({ slug: bookSlug }).lean();
+    // Only published books are readable here — never leak a draft/embargoed
+    // book's quiz bank before launch (the SSR page route gates the same way).
+    const book = await BookModel.findOne({ slug: bookSlug, is_published: true }).lean();
     if (!book) {
       return NextResponse.json({ success: false, error: 'Book not found' }, { status: 404 });
     }
@@ -37,8 +45,11 @@ export async function GET(
       return NextResponse.json({ success: true, data: { questions: [] } });
     }
 
+    // published: true — harvest only live pages, not unpublished drafts whose
+    // ids still sit in chapters[].page_ids. Soft-deleted pages are already
+    // hidden by BookPage model middleware.
     const pages = await BookPageModel
-      .find({ _id: { $in: pageIds } })
+      .find({ _id: { $in: pageIds }, published: true })
       .select('chapter_number blocks')
       .limit(MAX_PAGES)
       .lean();

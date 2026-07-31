@@ -16,13 +16,15 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx",
+    ".next-agent-b/types/**/*.ts",
     ".next-agent/types/**/*.ts",
+    ".next-preview/types/**/*.ts",
     ".next-verify/types/**/*.ts",
     ".next-vstud/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    ".next-preview/types/**/*.ts"
+    ".next-agent-build/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

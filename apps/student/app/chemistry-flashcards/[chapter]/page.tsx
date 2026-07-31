@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getChapterSummaries } from '@/features/flashcards/lib/flashcardsData';
@@ -243,11 +244,18 @@ export default async function FlashcardsChapterPage({ params }: Props) {
                 }}
             />
 
-            <FlashcardsChapterClient
-                chapterName={summary.name}
-                chapterSlug={chapterSlug}
-                topics={summary.topics}
-            />
+            {/* FlashcardsChapterClient reads `?topic=` via useSearchParams for
+                deep-linking. On a statically prerendered route (revalidate =
+                86400) that MUST sit behind a Suspense boundary, or the export
+                fails with "useSearchParams() should be wrapped in a suspense
+                boundary" and takes the whole build down. */}
+            <Suspense fallback={null}>
+                <FlashcardsChapterClient
+                    chapterName={summary.name}
+                    chapterSlug={chapterSlug}
+                    topics={summary.topics}
+                />
+            </Suspense>
         </>
     );
 }
