@@ -23,7 +23,6 @@
 
 import { useMemo } from 'react';
 import { useBookProgress } from '@/features/books/hooks/useBookProgress';
-import { getTheme } from './bookDesign';
 import Book3D, { subjectLabel, bookThickness } from './Book3D';
 import type { GradeBook, GradePage } from './GradeLandingPage';
 
@@ -73,38 +72,19 @@ function ShelfBook({ book, pages, isActive, onSelect }: ShelfBookProps) {
 }
 
 export interface BookShelfProps {
-  heading: string;
   books: GradeBook[];
   pages: GradePage[];
   activeSlug: string | null;
   onSelect: (slug: string) => void;
 }
 
-export default function BookShelf({ heading, books, pages, activeSlug, onSelect }: BookShelfProps) {
-  /* The wash behind the books takes the SELECTED subject's colour and drifts.
-     Light and colour only — never floating subject glyphs, which are the
-     strongest "AI-generated page" tell. */
-  const ambient = useMemo(() => {
-    const active = books.find(b => b.slug === activeSlug) ?? books[0];
-    return active ? getTheme(active.subject).ambient : '140, 52, 104';
-  }, [books, activeSlug]);
-
+export default function BookShelf({ books, pages, activeSlug, onSelect }: BookShelfProps) {
   if (books.length === 0) return null;
 
   return (
-    <section className="lb-section" style={{ ['--lb-ambient' as string]: ambient }}>
-      <div className="lb-heading">
-        <h2>{heading}</h2>
-        <span className="lb-count">
-          {books.length} {books.length === 1 ? 'book' : 'books'}
-        </span>
-      </div>
-
+    <section className="lb-section">
       <div className="lb-stage">
-        <div className="lb-aurora" aria-hidden="true">
-          <i /><i /><i />
-        </div>
-        <div className="lb-grid" role="tablist" aria-label={heading}>
+        <div className="lb-grid" role="tablist" aria-label="Choose a subject">
           {books.map(b => (
             <ShelfBook
               key={b.slug}

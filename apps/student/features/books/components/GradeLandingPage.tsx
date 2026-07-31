@@ -760,6 +760,14 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
     return map;
   }, [books, pages]);
 
+  /* The band's light takes the SELECTED book's colour, so picking a subject
+     re-tints the hero as well as the shelf. Lives here rather than in
+     BookShelf because the band now spans both. */
+  const shelfAmbient = useMemo(() => {
+    const active = books.find(b => b.slug === activeSubject) ?? books[0];
+    return active ? getTheme(active.subject).ambient : '140, 52, 104';
+  }, [books, activeSubject]);
+
   const activeBook = useMemo(
     () => books.find(b => b.slug === activeSubject) ?? books[0] ?? null,
     [books, activeSubject],
@@ -827,11 +835,15 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
       {/* Content wrapper — sits above the ambient layer */}
       <div className="relative z-10 flex-1 flex flex-col">
 
-      {/* ── Masthead ──────────────────────────────────────────────────
-          The old hero (big logo tile, four feature chips, Start-learning CTA)
-          pushed the books ~460px below the fold. This keeps one real brand
-          lockup and the claim, and hands the page straight to the books. */}
-      <header className="relative shrink-0 overflow-hidden">
+      {/* ── Lit band: masthead + shelf + search, ONE surface ────────────
+          The aurora used to be clipped inside the shelf, which drew a visible
+          rectangle across the page and left the hero as a dull slab above it.
+          It now sits behind this whole band, tinted by the SELECTED book, so
+          hero and books share one light and there is no seam between them. */}
+      <div className="lb-band" style={{ ['--lb-ambient' as string]: shelfAmbient }}>
+        <div className="lb-aurora" aria-hidden="true"><i /><i /><i /></div>
+
+      <header className="relative z-[1] shrink-0">
         <div className="relative max-w-6xl mx-auto px-4 md:px-8 pt-6 pb-6 md:pt-8 md:pb-7">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div className="min-w-0">
@@ -900,10 +912,9 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
           Picking a book swaps the chapter list below. This is the only
           chooser on the page — the sticky subject pills it replaced were a
           second control for the same job. */}
-      <div className="px-4 md:px-8 shrink-0">
+      <div className="relative z-[1] px-4 md:px-8 shrink-0">
         <div className="max-w-6xl mx-auto pb-2">
           <BookShelf
-            heading="Subjects"
             books={orderedBooks}
             pages={pages}
             activeSlug={activeSubject}
@@ -916,7 +927,7 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
       <ProgressBand books={books} pages={pages} basePath={basePath} />
 
       {/* ── Search bar ──────────────────────────────────────────────── */}
-      <div className="border-b border-white/[0.06] px-4 md:px-8 shrink-0">
+      <div className="relative z-[1] px-4 md:px-8 shrink-0 pb-4">
         <div className="max-w-6xl mx-auto py-3">
           <div className="relative">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
@@ -972,6 +983,8 @@ export default function GradeLandingPage({ grade, books, pages, basePath }: Prop
           )}
         </div>
       </div>
+
+      </div>{/* /lb-band */}
 
       {/* ── Chapters for the SELECTED book only ─────────────────────── */}
       <main className="flex-1 px-4 md:px-8 pt-6 pb-10 md:pt-8 md:pb-14">
