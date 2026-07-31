@@ -915,13 +915,19 @@ sub {
    book) and every blob drifts on its own clock. Light, never iconography. */
 .lb-aurora {
   position: absolute;
-  inset: 0;
+  /* Extends 240px ABOVE the band. The page is offset 72px for the fixed
+     navbar, so an aurora at inset:0 has its top edge just under the nav — and
+     because this box clips (overflow:hidden), the blobs were cut off dead
+     straight along that edge. That hard line, with flat colour above it, was
+     the visible break. Pushing the top past y=0 puts the clip off-screen, so
+     the glow reads as reaching the very top of the page. */
+  inset: -240px 0 0 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  /* fade out into the page instead of ending on an edge */
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 74%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 0%, black 74%, transparent 100%);
+  /* fade out into the page at the bottom instead of ending on an edge */
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 76%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 76%, transparent 100%);
 }
 .lb-aurora i {
   position: absolute;
@@ -933,15 +939,15 @@ sub {
   will-change: transform, opacity;
 }
 .lb-aurora i:nth-child(1) {
-  width: 52%; height: 62%; top: -10%; left: -4%;
+  width: 54%; height: 54%; top: 4%; left: -6%;
   opacity: .26; animation: lb-float-a 24s ease-in-out infinite alternate;
 }
 .lb-aurora i:nth-child(2) {
-  width: 46%; height: 58%; top: 22%; right: -2%;
+  width: 48%; height: 50%; top: 14%; right: -4%;
   opacity: .20; animation: lb-float-b 31s ease-in-out infinite alternate;
 }
 .lb-aurora i:nth-child(3) {
-  width: 40%; height: 52%; bottom: 2%; left: 34%;
+  width: 42%; height: 44%; bottom: 4%; left: 32%;
   opacity: .16; animation: lb-float-c 27s ease-in-out infinite alternate;
 }
 @keyframes lb-float-a {
