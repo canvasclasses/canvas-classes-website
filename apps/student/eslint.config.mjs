@@ -12,7 +12,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
   {
     ignores: [
-      ".next/**",
+      // Every Next build dir, not just the default one. The repo routinely
+      // builds into alternates — NEXT_DIST_DIR=.next-agent / .next-agent-b in
+      // .claude/launch.json, .next-preview in next.config.ts, plus ad-hoc
+      // verify builds. Ignoring only ".next/**" let ESLint loose on compiled
+      // bundles: 15,269 of 15,272 reported "errors" were minified output,
+      // drowning the 3 real ones and making `npm run lint` useless.
+      ".next*/**",
       "next-env.d.ts",
     ],
   },
