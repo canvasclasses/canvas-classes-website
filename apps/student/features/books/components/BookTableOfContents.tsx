@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   ChevronRight, Play, CheckCircle2, Search, Bookmark, PlayCircle,
   FlaskConical, Video, Brain, ClipboardCheck, Gamepad2, Clock,
-  Flame, ArrowRight, X, Sparkles, Languages, Zap, Lock,
+  Flame, ArrowRight, X, Sparkles, Languages, Lock,
 } from 'lucide-react';
 import { useBookProgress, BookProgressRecord } from '@/features/books/hooks/useBookProgress';
 import { useBookBookmarks } from '@/features/books/hooks/useBookBookmarks';
@@ -13,6 +13,7 @@ import { useBookTheme } from '@/features/books/hooks/useBookTheme';
 import { useBookStats } from '@/features/books/hooks/useBookStats';
 import { BlockType } from '@canvas/data/types/books';
 import { getTheme, getDecor, LiveBooksLogo } from './bookDesign';
+import Book3D, { bookThickness } from './Book3D';
 
 /* ─── Serialisable types (no Mongoose/ObjectId) ─────────────────────────── */
 
@@ -39,6 +40,10 @@ export interface ToCBook {
   title: string;
   subject: string;
   grade: number;
+  /** Cover artwork, so the hero book matches the one on the grade shelf. */
+  cover_image?: string | null;
+  /** Total published pages — drives the spine thickness. */
+  page_count?: number;
 }
 
 interface Props {
@@ -220,16 +225,18 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
 
               {/* Logo + title */}
               <div className="flex items-center gap-4 md:gap-5">
-                <div className="relative shrink-0">
-                  <div className="absolute inset-0 rounded-2xl bg-[var(--plum)]
-                    blur-2xl opacity-50" />
-                  <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-2xl
-                    bg-gradient-to-br from-[var(--plum)] to-[var(--plum-hover)]
-                    flex items-center justify-center shadow-xl shadow-black/40
-                    ring-1 ring-[var(--plum-line)]">
-                    <LiveBooksLogo size={38} className="md:hidden" />
-                    <LiveBooksLogo size={46} className="hidden md:block" />
-                  </div>
+                {/* The actual book, not a generic glyph — the same object the
+                    grade shelf shows, so a student arriving here from
+                    /class-11 recognises what they clicked. */}
+                <div className="relative shrink-0 pr-3">
+                  <div className="absolute inset-0 bg-[var(--plum)] blur-3xl opacity-25" />
+                  <Book3D
+                    subject={book.subject}
+                    grade={book.grade}
+                    coverImage={book.cover_image}
+                    thickness={bookThickness(book.page_count ?? 0)}
+                    scale={1.15}
+                  />
                 </div>
                 <div className="min-w-0">
                   <p className={`text-[11px] uppercase tracking-[0.18em] font-bold ${theme.accent} mb-1`}>
@@ -243,7 +250,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
 
               <p className="mt-4 text-sm md:text-base text-zinc-400 leading-relaxed max-w-xl">
                 NCERT Class {book.grade} {book.subject} as an interactive live book — with simulations,
-                worked examples, quizzes, and Hinglish mode. Free, forever.
+                worked examples, quizzes, video walkthroughs and Hinglish mode.
               </p>
 
               <div className="mt-4 flex flex-wrap gap-1.5">
@@ -251,7 +258,7 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                   { icon: Gamepad2,       label: 'Simulations',   color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
                   { icon: ClipboardCheck, label: 'Quizzes',       color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
                   { icon: Languages,      label: 'Hinglish mode', color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
-                  { icon: Zap,            label: 'Adaptive',      color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
+                  { icon: Video,          label: 'Video walkthroughs', color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
                 ].map(chip => {
                   const Ic = chip.icon;
                   return (

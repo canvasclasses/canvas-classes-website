@@ -72,6 +72,8 @@ export default async function Class11ChemistryPage() {
     title: String(book.title),
     subject: String(book.subject),
     grade: Number(book.grade),
+    cover_image: ((book as Record<string, unknown>).cover_image as string) ?? null,
+    page_count: pages.length,
   };
 
   return (

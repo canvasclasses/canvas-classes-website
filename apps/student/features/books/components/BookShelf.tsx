@@ -24,60 +24,8 @@
 import { useMemo } from 'react';
 import { useBookProgress } from '@/features/books/hooks/useBookProgress';
 import { getTheme } from './bookDesign';
+import Book3D, { subjectLabel, bookThickness } from './Book3D';
 import type { GradeBook, GradePage } from './GradeLandingPage';
-
-/**
- * Subjects arrive from the DB as raw slugs — `social_science`, `life_skills`,
- * lowercase. Render them as words.
- *
- * A few get a shorter display name so they fit the cover board and read the way
- * students actually say them ("Maths", not "Mathematics"). The full subject is
- * still what the DB stores and what the card body shows.
- */
-const COVER_NAME: Record<string, string> = {
-  mathematics: 'Maths',
-  'social science': 'Social Science',
-  'life skills': 'Life Skills',
-};
-
-function subjectLabel(subject: string) {
-  return subject
-    .replace(/[_-]+/g, ' ')
-    .trim()
-    .split(/\s+/)
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
-}
-
-/** The name printed on the cover — short form where one exists. */
-function coverName(subject: string) {
-  const key = subject.replace(/[_-]+/g, ' ').trim().toLowerCase();
-  return COVER_NAME[key] ?? subjectLabel(subject);
-}
-
-/**
- * The cover is a fixed 112px board, so a long title has to come down to fit —
- * "Mathematics" and "Social Science" were running off the edge of the book.
- * Stepped rather than continuous so the set still looks like one publisher.
- */
-function coverTitleSize(label: string) {
-  const n = label.length;
-  if (n <= 5)  return 21;   // Maths, Hindi
-  if (n <= 8)  return 18;   // Physics, Biology, Science, English
-  if (n <= 11) return 15;   // Life Skills, Chemistry
-  // "Social Science" wraps to two lines at this width regardless of size —
-  // it isn't fighting to fit on one, so it doesn't need the cramped size a
-  // long single-line name would. Sized for a comfortable two-line stack.
-  if (n <= 15) return 16;   // Social Science
-  return 12;
-}
-
-/* Thickness from the real page count — a readable exaggeration, not a scale
- * model, so a 12-page book still reads as a book. */
-function thickness(pageCount: number) {
-  const t = Math.max(0, Math.min(1, pageCount / 80));
-  return Math.round(20 + t * 22); // 20 → 42px of spine
-}
 
 interface ShelfBookProps {
   book: GradeBook;
@@ -87,8 +35,6 @@ interface ShelfBookProps {
 }
 
 function ShelfBook({ book, pages, isActive, onSelect }: ShelfBookProps) {
-  const theme = getTheme(book.subject);
-  const Icon = theme.icon;
   const { completedSlugs, loading } = useBookProgress(book.slug);
 
   const pct = useMemo(() => {
@@ -97,8 +43,7 @@ function ShelfBook({ book, pages, isActive, onSelect }: ShelfBookProps) {
     return Math.round((done / pages.length) * 100);
   }, [pages, completedSlugs]);
 
-  const label = subjectLabel(book.subject);   // card body + a11y
-  const cover = coverName(book.subject);      // the shorter name on the board
+  const label = subjectLabel(book.subject);
   const chapters = book.chapters.length;
 
   return (
@@ -108,40 +53,14 @@ function ShelfBook({ book, pages, isActive, onSelect }: ShelfBookProps) {
       aria-selected={isActive}
       onClick={() => onSelect(book.slug)}
       className={`lb-card${isActive ? ' is-active' : ''}`}
-      style={{
-        ['--lb-cloth' as string]: theme.cloth,
-        ['--lb-edge' as string]: `rgb(${theme.ambient})`,
-        ['--lb-t' as string]: `${thickness(pages.length)}px`,
-        ['--lb-title-size' as string]: `${coverTitleSize(cover)}px`,
-      }}
       aria-label={`${label} — ${chapters} chapters, ${pct}% complete`}
     >
-      <span className="lb-scene">
-        <span className="lb-book">
-          <span className="lb-face lb-front">
-            {book.cover_image && (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="lb-art" src={book.cover_image} alt="" loading="lazy" decoding="async" />
-                <span className="lb-veil" />
-              </>
-            )}
-            <span className="lb-front-ink">
-              <span className="lb-pub">NCERT</span>
-              <span className="lb-title">{cover}</span>
-              <span className="lb-emblem"><Icon size={16} strokeWidth={1.7} /></span>
-            </span>
-            <span className="lb-groove" />
-          </span>
-          <span className="lb-face lb-back" />
-          <span className="lb-face lb-spine">
-            <span className="lb-spine-text">{cover} · Class {book.grade}</span>
-          </span>
-          <span className="lb-face lb-top" />
-          <span className="lb-face lb-fore" />
-        </span>
-        <span className="lb-drop" />
-      </span>
+      <Book3D
+        subject={book.subject}
+        grade={book.grade}
+        coverImage={book.cover_image}
+        thickness={bookThickness(pages.length)}
+      />
 
       <span className="lb-meta">
         <span className="lb-name">{label}</span>

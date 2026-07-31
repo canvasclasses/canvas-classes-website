@@ -1046,6 +1046,22 @@ sub {
 .lb-card.is-active .lb-bar  { background: rgba(215, 150, 196, .16); }
 .lb-card:focus-visible { outline: 2px solid var(--plum-text); outline-offset: 3px; }
 
+/* Standalone book (hero on a single-book page). The shelf's .lb-scene is
+   absolutely positioned against a card and relies on `.lb-card:hover` for both
+   its rotation and its un-dimming; a book with no card needs neither, so this
+   variant puts it back in normal flow, drops the dim, and owns its own hover. */
+.lb-scene-static {
+  position: relative;
+  top: auto; left: auto;
+  transform: none;
+  display: inline-block;
+  line-height: 0;
+}
+.lb-scene-static .lb-book { transform: rotateX(12deg) rotateY(-26deg); }
+.lb-scene-static:hover .lb-book { transform: rotateX(5deg) rotateY(-14deg) scale(1.04); }
+.lb-scene-static .lb-front::after { background: rgba(0, 0, 0, 0); }
+.lb-scene-static .lb-drop { left: 4px; width: calc(var(--lb-w) * 0.86); }
+
 /* ── the scene owns the perspective; the book owns the rotation ─────────── */
 .lb-scene {
   position: absolute;

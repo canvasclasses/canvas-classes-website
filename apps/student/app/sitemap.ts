@@ -77,7 +77,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { path: '/chemihex', priority: 0.75, changeFrequency: 'monthly' as const },
         // Live Books landing pages (grade hubs)
         { path: '/class-9', priority: 1.0, changeFrequency: 'daily' as const },
-        // /class-11 has no grade-hub page; chemistry book lives at /class-11/chemistry.
+        // Grade hubs. /class-11 gained one in the 2026-07-31 multi-subject
+        // redesign; the per-book /class-11/chemistry page below is KEPT, not
+        // redirected — it already absorbed a 301 from /books/ncert-simplified
+        // and targets a far higher-volume query than the grade hub does.
+        { path: '/class-11', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/class-12', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/class-12/chemistry', priority: 0.9, changeFrequency: 'weekly' as const },
         { path: '/class-11/chemistry', priority: 0.9, changeFrequency: 'weekly' as const },
