@@ -389,6 +389,8 @@ accent labels, clean technical illustration style.
 - `problem` and `solution` support full markdown + LaTeX
 - Format solution as clear numbered/bold steps, ending with boxed answer
 - **Numbering is automatic and chapter-continuous.** The reader renders the heading as "Example N" where N runs continuously across every worked example in the whole chapter (computed at render time from block order — never stored). **Do NOT hand-write "Example 3" / "Solved Example 5" into `label`.** Put only a descriptive suffix in `label` if you want one (e.g. `"— Empirical formula from % composition"`); the "Example N" prefix is added for you. When you add/remove/reorder examples, every number re-adjusts automatically — so never renumber by hand.
+- **"Example N" is reserved for this auto-numbering — never hand-write it inside a `text` block's body prose either.** A quick in-prose derivation embedded in explanatory text (before/outside a formal `worked_example` card) should be labeled **"Illustration N"** instead, so it can never collide with a real, auto-numbered "Example N" card elsewhere on the same page (found on `equivalent-concept`, fixed 2026-07-25).
+- **Never capitalize a word mid-sentence for emphasis (e.g. "the SAME gas", "stretched across THREE reactions").** It reads as shouting, not emphasis. Use **bold** instead — always. This does not apply to genuine abbreviations that are always capitalized (NTP, STP, NCERT, roman numerals like III) — only to ordinary words capitalized purely to stress them (founder-flagged 2026-07-25).
 
 ### 3.6 `inline_quiz`
 ```json
@@ -422,6 +424,12 @@ accent labels, clean technical illustration style.
 ### 3.6.1 Option-Design Rules — every distractor must be a real trap
 
 > Added 2026-06-06. Applies to **every** multiple-choice block: `inline_quiz`, `chapter_practice`, `reasoning_prompt`, and `comprehension_checkpoint`. The single most common quality failure in auto-generated quizzes is the *giveaway*: three throwaway options and one obviously-correct one, so a student who never read the page still scores by elimination. These rules exist to kill that.
+
+> **`reasoning_prompt` MUST carry `correct_index` (added 2026-07-31 after a book-wide defect).** The field is `.optional()` in the schema, so nothing enforced it — and across **550 reasoning blocks in 10 live books, not one set it.** Two things break when it is missing:
+> 1. **The student is never marked.** `ReasoningPromptRenderer` only draws a right/wrong verdict when `correct_index` is a number; without it the reader shows a bare "your answer" chip, so a reasoning check silently stops being a check.
+> 2. **The answer-position gate goes blind.** Balance checkers tally items that carry a `correct_index`, so these blocks were never counted. In `class12-physics` the answer had drifted to **option A in 94% of cases (82 of 87), with option D never correct** — a student scored 94% by always picking the first option. Chapters 3, 4 and 5 were at 100%.
+>
+> So: set `correct_index` on every `reasoning_prompt` that has an `options` array, vary the position deliberately (target an even A/B/C/D mix, never > 40%), and keep the `reveal` referring to the option's **content** — never "the first option" — so the order can be re-spread later without invalidating the text. `scripts/physics12-book/_hygiene.js` now counts reasoning prompts in its spread and reports a missing `correct_index` as a finding; copy that check into any new book's gate.
 
 **The four-intelligent-options rule (non-negotiable).** Every one of the four options must be something a *half-prepared* student could genuinely pick. Each wrong option is a specific, nameable mistake — a real misconception, a believable misreading, or a realistic calculation slip — **never filler**. Test: if you can tell which option is correct *without knowing the topic* (because it's the longest, the most detailed, the only specific one, or the only grammatical fit), the question has failed — rewrite the distractors, not the key.
 
@@ -1751,8 +1759,26 @@ Author the content; the renderer applies the look. Match your authoring to these
 
 - **Bold + amber = key terms only** (glossary-worthy words). This is the single "highlight a term" mechanism in running prose.
 - **Italic is reserved** for genuine contrast pairs (*what* vs *how*) and titles of works/substances — **never decorative emphasis**. Don't sprinkle italic when bold-amber already exists.
-- **Body text brightness is standardised at `white/82`** across text blocks, worked examples, prompts, and table cells. Don't introduce other shades of white for body copy.
 - **Key formula → `latex_block` with `"highlight": true`** (one anchor formula per concept; §3.10).
+
+#### 17.3.1 The white-text opacity scale — FOUR tiers, no others (project decision 2026-07-24)
+
+> **This is a hard rule. Every white/near-white text in every Live Book reading renderer uses exactly one of these four `text-white/NN` values — nothing else.** Before 2026-07-24 the reading renderers had drifted to **24 different opacity levels** (`/15` … `/92`), most of them a point or two apart and indistinguishable — clutter that made the hierarchy read as noise. The scale below is the whole vocabulary. (This governs **white text only**; semantic/accent colours — sky, emerald, amber, `--book-accent`, the four section-family colours in §17.1 — are chosen by role and are **not** touched by this rule. Simulations are **out of scope** — they follow `SIMULATION_DESIGN_WORKFLOW.md`'s own token scale, never this one.)
+
+| Tier | Class | Role — "what is this text's job?" |
+|---|---|---|
+| **Body** | `text-white/82` | The main reading text — every paragraph, list item, table cell, worked-example problem/solution, prompt body. The default; when in doubt, this. |
+| **Emphasis** | `text-white/85` | The **brightest** tier — bold spans inside body copy ("Step 1 —", key phrases), and headings/labels meant to sit a touch above body. **Nothing ever goes brighter than `/85`.** |
+| **Secondary** | `text-white/60` | Genuine supporting copy that is *not* the primary content — subtitles/deks under a title, hints, reveal captions with substance, de-emphasised list sub-items. |
+| **Meta** | `text-white/45` | The **dimmest legible** tier — small uppercase eyebrow labels, badges, image captions, timestamps, idle-state icon tint, keyboard hints. **Nothing legible goes dimmer than `/45`.** |
+
+**The two hard bounds:** ceiling `/85`, floor `/45`. `text-white/90` (and `/88`, `/92`) is **banned** — it was the single most-overused value and reads as harsh on the reading surface. The dull `/25`–`/40` band is **banned** — those were too faint to earn their place; a label that matters is `/45`, and one that doesn't shouldn't be there.
+
+**How to pick a tier (role, not number):** ask what the text's *job* is, then use the matching class — don't reach for an in-between value because it "looks about right." In particular, text that is the **primary content of its block** is Body `/82` even if it currently sits at `/75`–`/80`; only text that is genuinely *secondary* (a subtitle, a hint) drops to `/60`.
+
+**Migration note (for any renderer touched after 2026-07-24):** collapse every stray value to its tier — `/88 /90 /92 → /85`; primary-content `/68`–`/81 → /82`, secondary `/68`–`/81 → /60`; `/46`–`/67 → /60`; `≤ /45 → /45`. This is opacity-only and imperceptible where it lands on an adjacent tier, so there is no visual regression — only consolidation.
+
+**Reader text-brightness control:** the whole reader's brightest ink is *additionally* remapped at runtime by the student's chosen "Text color" (Bright `#dbdbdb` / Warm & soft `#d6d0c2`) via `--book-ink` in `globals.css`'s `.book-page-content` scope (see `useBookTheme.ts`). That is a global multiplier on top of these opacities — it does **not** change which of the four tiers you author with. Always author in the four `text-white/NN` tiers and let `--book-ink` do the per-device tinting.
 
 ### 17.4 The enrichment-card pattern (`real_world`)
 
@@ -1784,3 +1810,28 @@ When asked to refine/upgrade a page to the latest workflow, verify and fix each 
 8. **Quiz:** `difficulty_level` is 1–3 only; multi-step explanations use `\n\n` between steps.
 9. **Exam tip:** `title` is "Quick Recap" (or omitted), never contains "JEE / NEET".
 10. **All mutations through `scripts/lib/book-writer.js`** with a dry-run first (§0.6 content protection). Refresh `_agents/state` / the project ledger after (§0.5, §3).
+
+---
+
+## 18. Crucible Taxonomy Title Consistency — MANDATORY for every chapter
+
+**Founder rule (2026-07-27):** if a student reads a chapter in a Live Book, the matching chapter in Crucible must carry the **exact same title**. Naming a chapter "Atomic Structure" here and "Structure of Atom" in Crucible is a bug, not a style choice — it breaks the mental model of a student who finishes a Live Book chapter and goes to Crucible to practise the same material.
+
+**Crucible's taxonomy is the source of truth.** It is the older, larger corpus (`packages/data/taxonomy/taxonomyData_from_csv.ts`, `type: 'chapter'` entries) — the Live Book title conforms to it, never the other way round. If NCERT's own chapter name differs from Crucible's (this happens — e.g. NCERT physics has no "Physical World" chapter in the rationalised edition, and Crucible's `ph11_math_phy` is titled "Mathematics **in** Physics" while early drafts drifted to "Mathematics **for** Physics"), **Crucible wins**.
+
+### The rule, mechanically
+
+1. **Before naming any new chapter**, find its match in the taxonomy file (grep by subject + rough topic) and copy the `name` field verbatim as the `BookChapter.title`.
+2. **Every `BookChapter` sets `crucible_chapter_id`** — the taxonomy `chapter` id it corresponds to (e.g. `ph11_math_phy`). This is what makes the check machine-verifiable instead of a thing someone has to remember.
+3. **If no matching Crucible chapter exists yet**, that's a signal to add one to the taxonomy (a founder call — the taxonomy is small and hand-curated), not to invent a Live-Book-only name that will drift.
+4. **Coverage, not just naming:** the chapter should teach every *primary* topic tag under that Crucible chapter (the `type: 'topic'` children). If the Live Book genuinely needs something with no matching tag, that's a signal to extend the tag list — not to quietly cover ground Crucible doesn't track.
+
+### Validate
+
+```bash
+node scripts/lib/validate-taxonomy-link.js <book-slug>
+```
+
+Checks every chapter's `crucible_chapter_id` resolves and its title matches Crucible **exactly** (hard error on mismatch), and prints an informational (non-blocking) list of primary tags that don't yet appear covered by a page title — a prompt for the human topic-flow review, not a gate. Run this whenever a chapter is renamed or newly scaffolded, and before calling a chapter's Live-Book build "done".
+
+**Do not add a per-page taxonomy link** (a `crucible_tags` field on individual pages) until there is an actual "practise this in Crucible" UI feature to power — an unused link field is dead data that silently drifts, exactly like the `BookPage.tags` field turned out to be (audited 2026-07-27: 807 tagged pages across 9 books, all free-text keywords, zero real taxonomy ids, despite a doc comment claiming otherwise). Chapter-level linking is enough for the naming-consistency rule this section exists to enforce.

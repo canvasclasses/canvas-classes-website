@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 47,
+ "hcv_title": "The Special Theory of Relativity",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Not a standalone NCERT chapter — mass-energy equivalence appears under Nuclei. Length contraction, time dilation and relativistic momentum are enrichment beyond the current syllabus."
+ },
+ "source_pages": {
+  "worked": "946-947",
+  "obj1": "948"
+ },
+ "notes": "SYLLABUS FLAG: only $ E = mc^{2} $ is in the current NCERT course (under Nuclei); the rest of this chapter is enrichment. 9 Objective I items rebuilt, topped up to 10 with a time-dilation item. The 'rod moves' versus 'observer moves' pair is the chapter's central point about relativity of motion and is kept adjacent.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch47-relativity",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Special Relativity",
+   "intro": "Ten questions on relativistic motion. The single principle that settles most of them: only *relative* motion has any meaning, so it never matters which body you say is moving.",
+   "sections": [
+    {
+     "id": "length-and-time",
+     "title": "Length Contraction and Time Dilation",
+     "blurb": "Symmetric between observers — which is the point.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch47-m01",
+       "source": "mcq",
+       "prompt": "Consider: (A) if a rod moves parallel to its length while the observer stays at rest, the measured length is reduced; (B) if the rod stays at rest while the observer moves parallel to it, the measured length is reduced. Then",
+       "options": [
+        "A is true but B is false",
+        "both are true",
+        "B is true but A is false",
+        "both are false"
+       ],
+       "correct_index": 1,
+       "explanation": "Only the *relative* velocity between rod and observer matters — there is no privileged frame in which one of them is 'really' moving. Both statements describe the same relative motion and both give the same contraction, $ L = L_0\\sqrt{1 - v^{2}/c^{2}} $. This symmetry is the first postulate at work."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch47-m02",
+       "source": "mcq",
+       "prompt": "As the speed of a particle increases, its **rest mass**",
+       "options": [
+        "increases",
+        "decreases",
+        "changes unpredictably",
+        "remains the same"
+       ],
+       "correct_index": 3,
+       "explanation": "Rest mass is an invariant — the mass measured in the particle's own frame, identical for every observer. What grows with speed is the *relativistic* mass or, better, the total energy. Modern usage avoids 'relativistic mass' altogether and speaks of energy and momentum instead, precisely to prevent this confusion."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch47-m03",
+       "source": "mcq",
+       "prompt": "A clock moving at $ 0.6c $ relative to a laboratory is observed from the laboratory. Compared with a laboratory clock, it runs",
+       "options": [
+        "fast, by a factor of $ 1.25 $",
+        "at the same rate",
+        "slow, by a factor of $ 0.8 $",
+        "slow, by a factor of $ 0.6 $"
+       ],
+       "correct_index": 2,
+       "explanation": "With $ v = 0.6c $, $ \\sqrt{1-v^{2}/c^{2}} = \\sqrt{1-0.36} = 0.8 $. The moving clock's ticks are stretched by $ \\gamma = 1.25 $ as seen from the lab, so it accumulates only $ 0.8 $ s per laboratory second — it runs slow. Note the moving observer says exactly the same about the laboratory clock."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch47-m04",
+       "source": "mcq",
+       "prompt": "Length contraction occurs",
+       "options": [
+        "in all three directions equally",
+        "only perpendicular to the motion",
+        "only for charged objects",
+        "only along the direction of relative motion"
+       ],
+       "correct_index": 3,
+       "explanation": "Only the dimension along the relative velocity contracts; transverse dimensions are unaffected. A fast-moving sphere is therefore measured as an ellipsoid, flattened along its direction of travel — and this anisotropy is a direct consequence of the Lorentz transformation's structure."
+      }
+     ]
+    },
+    {
+     "id": "momentum-and-energy",
+     "title": "Relativistic Momentum and Energy",
+     "blurb": "Why nothing reaches the speed of light.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch47-m05",
+       "source": "mcq",
+       "prompt": "The magnitude of the linear momentum of a particle moving at relativistic speed $ v $ is proportional to",
+       "options": [
+        "$ \\frac{v}{\\sqrt{1-v^{2}/c^{2}}} $",
+        "$ v $",
+        "$ v\\sqrt{1-v^{2}/c^{2}} $",
+        "$ 1 - v^{2}/c^{2} $"
+       ],
+       "correct_index": 0,
+       "explanation": "The relativistic momentum is $ p = \\gamma m_0 v = \\frac{m_0 v}{\\sqrt{1-v^{2}/c^{2}}} $. At low speeds $ \\gamma \\to 1 $ and this reduces to the familiar $ m_0 v $; as $ v \\to c $ the denominator vanishes and $ p $ grows without limit."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch47-m06",
+       "source": "mcq",
+       "prompt": "If the speed of a particle already moving relativistically is doubled, its linear momentum will",
+       "options": [
+        "become more than double",
+        "become double",
+        "remain the same",
+        "become less than double"
+       ],
+       "correct_index": 0,
+       "explanation": "Momentum is $ \\gamma m_0 v $, and $ \\gamma $ itself grows with speed. Doubling $ v $ therefore doubles one factor *and* increases the other, so the momentum more than doubles. Only in the non-relativistic limit, where $ \\gamma \\approx 1 $, does momentum scale simply with speed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch47-m07",
+       "source": "mcq",
+       "prompt": "A constant force acts on a particle from rest for a very long time. Its acceleration will",
+       "options": [
+        "remain constant",
+        "gradually decrease",
+        "gradually increase",
+        "be undefined"
+       ],
+       "correct_index": 1,
+       "explanation": "A constant force gives a constant rate of momentum increase, $ p = Ft $, growing without limit. But since $ p = \\gamma m_0 v $ and $ \\gamma $ climbs steeply as $ v \\to c $, the *speed* increases ever more sluggishly and the acceleration fades towards zero. The particle approaches $ c $ asymptotically and never reaches it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch47-m08",
+       "source": "mcq",
+       "prompt": "A charged particle is projected at very high speed perpendicular to a uniform magnetic field. Compared with the non-relativistic prediction, the radius of its circular path is",
+       "options": [
+        "smaller",
+        "the same",
+        "larger",
+        "zero"
+       ],
+       "correct_index": 2,
+       "explanation": "The radius is $ r = p/qB $, and the relativistic momentum $ \\gamma m_0 v $ exceeds the classical $ m_0 v $. So the path is wider than classical physics predicts — and the period is longer too, which is exactly why a plain cyclotron fails at high energies and a synchrotron is needed."
+      }
+     ]
+    },
+    {
+     "id": "mass-energy",
+     "title": "Mass-Energy Equivalence",
+     "blurb": "The one part of this chapter that sits squarely in the syllabus.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch47-m09",
+       "source": "mcq",
+       "prompt": "The rest energy of a particle of rest mass $ m_0 $ is",
+       "options": [
+        "$ \\frac{1}{2}m_0 c^{2} $",
+        "$ m_0 c^{2} $",
+        "$ m_0 c $",
+        "zero"
+       ],
+       "correct_index": 1,
+       "explanation": "Even at rest a particle possesses energy $ m_0c^{2} $. For an electron that is $ 0.511 $ MeV, and for a proton $ 938 $ MeV. This is the energy released in nuclear reactions, where a small mass defect converts into a large energy — and it is why the mass of a bound nucleus is less than the sum of its parts."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch47-m10",
+       "source": "mcq",
+       "prompt": "The relation between total energy, momentum and rest mass is",
+       "options": [
+        "$ E^{2} = p^{2}c^{2} + m_0^{2}c^{4} $",
+        "$ E = pc + m_0c^{2} $",
+        "$ E^{2} = p^{2}c^{2} - m_0^{2}c^{4} $",
+        "$ E = pc $ always"
+       ],
+       "correct_index": 0,
+       "explanation": "This is the fundamental energy-momentum relation. For a massless photon it reduces to $ E = pc $; for a particle at rest ($ p = 0 $) it gives $ E = m_0c^{2} $; and at low speeds it expands to $ m_0c^{2} + p^{2}/2m_0 $ — rest energy plus the familiar kinetic energy."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch47-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Length contraction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A rod of rest length $ 2 $ m moves at $ 0.8c $ along its length. Find its length as measured in the laboratory.",
+    "solution": "**Lorentz factor:**\n\n$ \\sqrt{1 - v^{2}/c^{2}} = \\sqrt{1 - 0.64} = \\sqrt{0.36} = 0.6 $\n\n**Contracted length:**\n\n$ L = L_0\\sqrt{1 - v^{2}/c^{2}} = (2)(0.6) = 1.2\\ \\text{m} $\n\n**What the rod's own frame says.** In the rod's frame it is still exactly $ 2 $ m — proper length is what an observer at rest with respect to the object measures, and it is the largest value any observer finds.\n\n**Why this is not an illusion.** The contraction is a genuine feature of how measurements in different frames relate, not an optical trick. Both observers are correct in their own frame, and there is no fact of the matter about which length is 'real'.\n\n**A useful set of $ \\gamma $ values to recognise:** at $ 0.6c $, $ \\gamma = 1.25 $; at $ 0.8c $, $ \\gamma = 1.667 $; at $ 0.99c $, $ \\gamma = 7.09 $. The effect stays modest until quite close to $ c $, and then rises steeply."
+   },
+   {
+    "id": "we-ch47-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Time dilation and the muon puzzle",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A muon has a rest lifetime of $ 2.2\\ \\mu\\text{s} $ and travels at $ 0.998c $. Find its lifetime in the laboratory frame and the distance it covers, and explain why atmospheric muons reach the ground.",
+    "solution": "**Lorentz factor:**\n\n$ \\gamma = \\frac{1}{\\sqrt{1-(0.998)^{2}}} = \\frac{1}{\\sqrt{1-0.996}} = \\frac{1}{\\sqrt{0.004}} = 15.8 $\n\n**Laboratory lifetime:**\n\n$ t = \\gamma t_0 = (15.8)(2.2\\ \\mu\\text{s}) = 34.8\\ \\mu\\text{s} $\n\n**Distance travelled:**\n\n$ d = vt = (0.998)(3 \\times 10^{8})(34.8 \\times 10^{-6}) = 10\\,400\\ \\text{m} $\n\nOver ten kilometres.\n\n**The puzzle and its resolution.** Without dilation a muon would travel only $ (0.998)(3 \\times 10^{8})(2.2 \\times 10^{-6}) = 659 $ m — far too little to cross the atmosphere from where cosmic rays create it. Yet muons are detected in abundance at sea level.\n\n**Both frames agree on the outcome.** In the laboratory frame the muon's clock runs slow, so it lives long enough. In the *muon's* frame it lives only $ 2.2\\ \\mu\\text{s} $, but the atmosphere is length-contracted to $ 10\\,400/15.8 = 658 $ m — which it covers comfortably. Different explanations, same observed fact, which is exactly what a consistent theory requires."
+   },
+   {
+    "id": "we-ch47-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Relativistic momentum and energy",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An electron moves at $ 0.6c $. Find its momentum, total energy and kinetic energy. Take $ m_0c^{2} = 0.511 $ MeV.",
+    "solution": "**Lorentz factor:**\n\n$ \\gamma = \\frac{1}{\\sqrt{1-0.36}} = \\frac{1}{0.8} = 1.25 $\n\n**Total energy:**\n\n$ E = \\gamma m_0c^{2} = (1.25)(0.511) = 0.639\\ \\text{MeV} $\n\n**Kinetic energy:**\n\n$ KE = E - m_0c^{2} = 0.639 - 0.511 = 0.128\\ \\text{MeV} $\n\n**Momentum**, most easily from $ pc = \\gamma m_0c^{2}\\cdot\\frac{v}{c} $:\n\n$ pc = (0.639)(0.6) = 0.383\\ \\text{MeV} $, so $ p = 0.383\\ \\text{MeV}/c $\n\n**Compare with the classical prediction.** $ \\frac{1}{2}m_0v^{2} = \\frac{1}{2}(0.511)(0.36) = 0.092 $ MeV — some $ 28\\% $ below the correct $ 0.128 $ MeV. At $ 0.6c $ classical mechanics is already badly wrong.\n\n**A useful check.** $ E^{2} = (pc)^{2} + (m_0c^{2})^{2} $ gives $ 0.639^{2} = 0.408 $ against $ 0.383^{2} + 0.511^{2} = 0.147 + 0.261 = 0.408 $ ✓ Working in energy units throughout avoids ever handling kilograms."
+   },
+   {
+    "id": "we-ch47-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Mass-energy equivalence in nuclear fusion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The sun radiates $ 3.8 \\times 10^{26} $ W. Find the rate at which it converts mass into energy, and how much of its mass it has lost in $ 4.5 $ billion years.",
+    "solution": "**Rate of mass loss:**\n\n$ \\frac{dm}{dt} = \\frac{P}{c^{2}} = \\frac{3.8 \\times 10^{26}}{9 \\times 10^{16}} = 4.2 \\times 10^{9}\\ \\text{kg s}^{-1} $\n\nFour million tonnes every second.\n\n**Over $ 4.5 $ billion years** ($ 1.42 \\times 10^{17} $ s):\n\n$ \\Delta m = (4.2 \\times 10^{9})(1.42 \\times 10^{17}) = 6.0 \\times 10^{26}\\ \\text{kg} $\n\n**As a fraction of the sun's mass** ($ 2 \\times 10^{30} $ kg):\n\n$ \\frac{6.0 \\times 10^{26}}{2 \\times 10^{30}} = 3 \\times 10^{-4} $ — about $ 0.03\\% $\n\n**Why the sun is in no danger.** Despite shedding four million tonnes a second for four and a half billion years, it has lost only three parts in ten thousand of its mass. The $ c^{2} $ factor makes mass an extraordinarily concentrated store of energy.\n\n**What is actually happening.** Hydrogen fuses to helium, and the helium nucleus is about $ 0.7\\% $ lighter than the four protons that made it. That missing mass becomes the sunlight — which is why $ E = mc^{2} $ is the one piece of relativity that every syllabus keeps."
+   },
+   {
+    "id": "we-ch47-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Relativistic velocity addition",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A spaceship moving at $ 0.8c $ relative to earth fires a probe forward at $ 0.5c $ relative to the ship. Find the probe's speed relative to earth.",
+    "solution": "Classical addition would give $ 1.3c $ — impossible. The correct relation is\n\n$ u = \\frac{u' + v}{1 + \\frac{u'v}{c^{2}}} $\n\n**Substitute** $ u' = 0.5c $ and $ v = 0.8c $:\n\n$ u = \\frac{0.5c + 0.8c}{1 + (0.5)(0.8)} = \\frac{1.3c}{1.4} = 0.929c $\n\nComfortably below $ c $.\n\n**The remarkable feature of this formula.** No combination of sub-light speeds ever exceeds $ c $. Try $ u' = v = 0.99c $: the result is $ \\frac{1.98c}{1.9801} = 0.99995c $ — closer to $ c $, but never past it.\n\n**And light is invariant.** Put $ u' = c $:\n\n$ u = \\frac{c + v}{1 + v/c} = \\frac{c(1 + v/c)}{1 + v/c} = c $\n\nLight travels at $ c $ for every observer, whatever the source's motion — which is the second postulate, recovered from the formula rather than assumed in it.\n\n**Why classical addition still works for us.** At everyday speeds $ u'v/c^{2} $ is utterly negligible, so the denominator is 1 and the familiar rule is recovered."
+   },
+   {
+    "id": "we-ch47-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — When must relativity be used?",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the percentage error in using the classical kinetic energy formula for a particle at (a) $ 0.1c $ and (b) $ 0.5c $.",
+    "solution": "**(a) At $ v = 0.1c $.**\n\n$ \\gamma = \\frac{1}{\\sqrt{1-0.01}} = 1.00504 $\n\nRelativistic: $ KE = (\\gamma - 1)m_0c^{2} = 0.00504\\,m_0c^{2} $\n\nClassical: $ \\frac{1}{2}m_0v^{2} = \\frac{1}{2}(0.01)m_0c^{2} = 0.00500\\,m_0c^{2} $\n\nError: $ \\frac{0.00004}{0.00504} = 0.8\\% $\n\n**(b) At $ v = 0.5c $.**\n\n$ \\gamma = \\frac{1}{\\sqrt{1-0.25}} = 1.1547 $\n\nRelativistic: $ 0.1547\\,m_0c^{2} $\n\nClassical: $ \\frac{1}{2}(0.25)m_0c^{2} = 0.125\\,m_0c^{2} $\n\nError: $ \\frac{0.0297}{0.1547} = 19.2\\% $\n\n**The practical rule of thumb.** Below about $ 0.1c $ classical mechanics is good to roughly $ 1\\% $ and is usually adequate. Beyond $ 0.3c $ the errors become serious.\n\n**Where this matters.** An electron accelerated through $ 10 $ kV reaches about $ 0.2c $, so electron microscopes and old television tubes already need relativistic corrections. Particle accelerators run at $ \\gamma $ of thousands, where classical mechanics is not merely inaccurate but meaningless."
+   },
+   {
+    "id": "we-ch47-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Energy cost of approaching light speed",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the energy needed to accelerate a $ 1 $ kg mass from rest to (a) $ 0.9c $ and (b) $ 0.99c $, and comment on the trend.",
+    "solution": "**The kinetic energy is $ (\\gamma - 1)m_0c^{2} $, with $ m_0c^{2} = 9 \\times 10^{16} $ J.**\n\n**(a) At $ 0.9c $:**\n\n$ \\gamma = \\frac{1}{\\sqrt{1-0.81}} = \\frac{1}{\\sqrt{0.19}} = 2.294 $\n\n$ KE = (1.294)(9 \\times 10^{16}) = 1.16 \\times 10^{17}\\ \\text{J} $\n\n**(b) At $ 0.99c $:**\n\n$ \\gamma = \\frac{1}{\\sqrt{1-0.9801}} = \\frac{1}{\\sqrt{0.0199}} = 7.089 $\n\n$ KE = (6.089)(9 \\times 10^{16}) = 5.48 \\times 10^{17}\\ \\text{J} $\n\n**The trend is the point.** Going from $ 0.9c $ to $ 0.99c $ — a further $ 0.09c $, one tenth of the first leap — costs nearly *four times* as much energy as reaching $ 0.9c $ in the first place.\n\n**And it never ends.** As $ v \\to c $, $ \\gamma \\to \\infty $ and so does the energy required. Reaching $ c $ would take infinite energy, which is why no massive particle can ever get there — not as a practical limitation but as an absolute one.\n\n**For scale:** $ 5.5 \\times 10^{17} $ J is roughly the world's total annual electricity generation, spent on accelerating a single kilogram to $ 0.99c $."
+   },
+   {
+    "id": "we-ch47-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — The twin paradox, quantitatively",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A traveller leaves earth at $ 0.8c $, journeys to a star $ 8 $ light-years away and returns immediately. Find the time elapsed for the earth-bound twin and for the traveller.",
+    "solution": "**For the earth-bound twin.** The round trip is $ 16 $ light-years at $ 0.8c $:\n\n$ t_{earth} = \\frac{16}{0.8} = 20\\ \\text{years} $\n\n**For the traveller.** Their clock runs slow by the factor $ \\gamma $:\n\n$ \\gamma = \\frac{1}{\\sqrt{1-0.64}} = \\frac{1}{0.6} = 1.667 $\n\n$ t_{traveller} = \\frac{20}{1.667} = 12\\ \\text{years} $\n\nThe traveller returns **8 years younger**.\n\n**Checking from the traveller's point of view.** In their frame the distance is contracted:\n\n$ 8 \\times 0.6 = 4.8\\ \\text{light-years each way} $, so $ \\frac{9.6}{0.8} = 12 $ years ✓\n\nBoth frames agree on the traveller's own elapsed time, as they must.\n\n**Why this is not actually a paradox.** Time dilation is symmetric between two observers in *uniform* relative motion — but the traveller is not in uniform motion throughout. They must decelerate, turn round and accelerate back, changing inertial frames en route. The earth-bound twin never does. That asymmetry breaks the symmetry of the situation and settles unambiguously which twin ages less.\n\n**And it has been tested.** Atomic clocks flown around the world return measurably behind their stationary counterparts, by exactly the predicted amount."
+   }
+  ]
+ }
+}

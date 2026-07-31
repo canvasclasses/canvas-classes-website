@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 22,
+ "hcv_title": "Photometry",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Not a standalone NCERT chapter — pairs with Ray Optics / the eye; useful as enrichment on luminous intensity and illuminance"
+ },
+ "source_pages": {
+  "worked": "466-467",
+  "obj1": "468"
+ },
+ "notes": "10 Objective I items rebuilt. The recurring skill is the cosine law of illuminance, so several items and worked examples deliberately force the student to decide whether a cosine factor applies.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch22-photometry",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Photometry",
+   "intro": "Ten questions on measuring light as the eye sees it. Watch for two separate factors: the inverse square of distance, and the cosine of the tilt.",
+   "sections": [
+    {
+     "id": "luminous-quantities",
+     "title": "Radiant Versus Luminous Quantities",
+     "blurb": "The eye is not an equal-opportunity detector.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch22-m01",
+       "source": "mcq",
+       "prompt": "The single quantity that determines the brightness of a source as sensed by the eye is",
+       "options": [
+        "the energy of light entering the eye per second",
+        "the total luminous flux entering the eye",
+        "the wavelength of the light",
+        "the total radiant flux entering the eye"
+       ],
+       "correct_index": 1,
+       "explanation": "Luminous flux is radiant flux already weighted by the eye's sensitivity curve, so it is the quantity that matches perception. Radiant flux counts every watt equally, which is why a powerful infrared source delivers plenty of radiant flux and yet looks completely dark."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch22-m02",
+       "source": "mcq",
+       "prompt": "Three sources emit equal radiant energy per second at wavelengths $ 450 $ nm, $ 555 $ nm and $ 700 $ nm, appearing with brightnesses $ X_A $, $ X_B $, $ X_C $. Then",
+       "options": [
+        "$ X_A > X_B $ and $ X_C > X_B $",
+        "$ X_B > X_A $ and $ X_B > X_C $",
+        "$ X_A > X_B $ and $ X_B > X_C $",
+        "$ X_B > X_A $ and $ X_C > X_B $"
+       ],
+       "correct_index": 1,
+       "explanation": "The eye's sensitivity peaks at about $ 555 $ nm — yellow-green — and falls away towards both the violet and the red ends. With equal radiant power, the $ 555 $ nm source therefore looks brightest of the three. This is why emergency vehicles and high-visibility jackets use exactly that yellow-green."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch22-m03",
+       "source": "mcq",
+       "prompt": "As the wavelength is increased from violet to red, the luminosity",
+       "options": [
+        "increases and then decreases",
+        "increases continuously",
+        "decreases continuously",
+        "decreases and then increases"
+       ],
+       "correct_index": 0,
+       "explanation": "The luminosity curve rises from near zero in the violet, peaks around $ 555 $ nm, then falls back towards zero in the deep red. Being a peaked curve, neither a monotonic rise nor a monotonic fall describes it — the shape is essential to how the eye responds."
+      }
+     ]
+    },
+    {
+     "id": "illuminance-laws",
+     "title": "Illuminance: Distance and Tilt",
+     "blurb": "Two factors, and a third that depends on the shape of the source.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch22-m04",
+       "source": "mcq",
+       "prompt": "A bulb hangs $ 1 $ m above a table. The illuminance directly below it is $ 40 $ lux. At a point on the table $ 1 $ m away from that spot, the illuminance is about",
+       "options": [
+        "$ 14 $ lux",
+        "$ 20 $ lux",
+        "$ 28 $ lux",
+        "$ 40 $ lux"
+       ],
+       "correct_index": 0,
+       "explanation": "Two effects reduce it. The distance grows to $ \\sqrt{2} $ m, so $ r^{2} $ doubles; and the surface is now tilted to the rays by $ 45^\\circ $, contributing $ \\cos 45^\\circ = 1/\\sqrt{2} $. So $ E = 40 \\times \\frac{1}{2} \\times \\frac{1}{\\sqrt{2}} = 14.1 $ lux. Forgetting the cosine gives $ 20 $ lux — the most common error here."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch22-m05",
+       "source": "mcq",
+       "prompt": "The intensity produced by a long cylindrical light source at a small distance $ r $ from it is proportional to",
+       "options": [
+        "$ 1/r $",
+        "$ 1/r^{2} $",
+        "$ 1/r^{3} $",
+        "none of these"
+       ],
+       "correct_index": 0,
+       "explanation": "A long line source spreads its power over a cylindrical surface of area $ 2\\pi r L $, which grows only as the first power of $ r $ — so the intensity falls as $ 1/r $. The inverse-square law belongs to point sources, whose light spreads over a sphere. The geometry of the spreading always sets the exponent."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch22-m06",
+       "source": "mcq",
+       "prompt": "A photographic plate $ 5 $ cm from a weak point source needs $ 3 $ s of exposure. Moved to $ 10 $ cm, the time needed becomes",
+       "options": [
+        "$ 3 $ s",
+        "$ 6 $ s",
+        "$ 12 $ s",
+        "$ 48 $ s"
+       ],
+       "correct_index": 2,
+       "explanation": "Doubling the distance quarters the illuminance by the inverse-square law, so the exposure must be four times as long: $ 4 \\times 3 = 12 $ s. Correct exposure depends on illuminance × time, so halving one requires doubling the other."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch22-m07",
+       "source": "mcq",
+       "prompt": "A photographic plate faces a small diffused disc-shaped source and needs $ 12 $ s. If the source is rotated by $ 60^\\circ $ about a diameter, the exposure time becomes",
+       "options": [
+        "$ 6 $ s",
+        "$ 12 $ s",
+        "$ 24 $ s",
+        "$ 48 $ s"
+       ],
+       "correct_index": 2,
+       "explanation": "Rotating the disc reduces its projected area as seen from the plate by $ \\cos 60^\\circ = 0.5 $, halving the light received. The exposure must therefore double to $ 24 $ s. Note the cosine acts on the *source's* orientation here, not the receiving surface's."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch22-m08",
+       "source": "mcq",
+       "prompt": "A point source moves in a straight line parallel to a table. For a small patch of the table under that line, the illuminance varies with its distance $ r $ from the source as",
+       "options": [
+        "$ 1/r $",
+        "$ 1/r^{3} $",
+        "$ 1/r^{2} $",
+        "$ 1/r^{4} $"
+       ],
+       "correct_index": 1,
+       "explanation": "Here $ E = \\frac{I\\cos\\theta}{r^{2}} $, and as the source moves the patch's tilt changes too. With the source at fixed height $ h $, $ \\cos\\theta = h/r $, so $ E = \\frac{Ih}{r^{3}} $. The cosine contributes one further power of $ r $ on top of the inverse square."
+      }
+     ]
+    },
+    {
+     "id": "units-and-photometers",
+     "title": "Units and Comparison of Sources",
+     "blurb": "Candela, lumen and lux — and how to compare two lamps.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch22-m09",
+       "source": "mcq",
+       "prompt": "One lux is equal to",
+       "options": [
+        "one candela per square metre",
+        "one lumen per steradian",
+        "one watt per square metre",
+        "one lumen per square metre"
+       ],
+       "correct_index": 3,
+       "explanation": "Illuminance measures luminous flux arriving per unit area, so $ 1\\ \\text{lux} = 1\\ \\text{lumen m}^{-2} $. A lumen per steradian is the candela, the unit of luminous *intensity*, and a watt per square metre is the radiant — not luminous — analogue."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch22-m10",
+       "source": "mcq",
+       "prompt": "In a photometer two lamps are balanced when a screen between them appears equally bright from both sides. The luminous intensities then satisfy",
+       "options": [
+        "$ I_1/I_2 = r_1/r_2 $",
+        "$ I_1/I_2 = r_2^{2}/r_1^{2} $",
+        "$ I_1 = I_2 $ regardless of distances",
+        "$ I_1/I_2 = r_1^{2}/r_2^{2} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Balance means equal illuminance on the two faces: $ I_1/r_1^{2} = I_2/r_2^{2} $, so $ I_1/I_2 = r_1^{2}/r_2^{2} $. The stronger lamp must sit further away. Comparing an unknown lamp with a standard this way is the basic principle of every photometric comparison."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch22-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Illuminance directly below a lamp",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A lamp of luminous intensity $ 100 $ candela hangs $ 2 $ m above a table. Find the illuminance directly below it.",
+    "solution": "Directly below the lamp the rays strike the table at normal incidence, so no cosine factor applies.\n\n$ E = \\frac{I}{r^{2}} = \\frac{100}{2^{2}} = 25\\ \\text{lux} $\n\n**Reading the units.** Luminous intensity in candela is luminous flux per steradian. Dividing by $ r^{2} $ converts steradians into square metres at that distance, giving lumens per square metre — that is, lux.\n\n**For a sense of scale:** full daylight is around $ 10\\,000 $ lux, an office about $ 500 $ lux, and a comfortable reading level roughly $ 300 $ lux. So $ 25 $ lux is dim — closer to twilight than to working light."
+   },
+   {
+    "id": "we-ch22-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — The cosine law of illuminance",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The same $ 100 $ candela lamp hangs $ 2 $ m above a table. Find the illuminance at a point on the table $ 1.5 $ m horizontally from the point directly below it.",
+    "solution": "**Distance from the lamp to that point:**\n\n$ r = \\sqrt{2^{2} + 1.5^{2}} = \\sqrt{4 + 2.25} = \\sqrt{6.25} = 2.5\\ \\text{m} $\n\n**The tilt factor.** The angle between the incoming ray and the table's normal (the vertical) satisfies\n\n$ \\cos\\theta = \\frac{h}{r} = \\frac{2}{2.5} = 0.8 $\n\n**Illuminance:**\n\n$ E = \\frac{I\\cos\\theta}{r^{2}} = \\frac{100(0.8)}{6.25} = \\frac{80}{6.25} = 12.8\\ \\text{lux} $\n\n**Compare with the $ 25 $ lux directly below.** The illuminance has halved for a sideways step of only $ 1.5 $ m, because *both* factors work against it — the distance grows and the surface tilts.\n\n**Watch out:** forgetting the cosine would give $ 16 $ lux, a 25% overestimate. Whenever the receiving surface is not perpendicular to the rays, the cosine is compulsory — and $ \\cos\\theta = h/r $ is the convenient form for a lamp above a flat table."
+   },
+   {
+    "id": "we-ch22-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Comparing two lamps with a photometer",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two lamps are $ 1 $ m apart. A screen placed between them appears equally bright on both sides when it is $ 40 $ cm from the first lamp. If the first has intensity $ 16 $ candela, find the second's.",
+    "solution": "**Equal brightness means equal illuminance** on the two faces:\n\n$ \\frac{I_1}{r_1^{2}} = \\frac{I_2}{r_2^{2}} $\n\n**The distances:** $ r_1 = 0.4 $ m and $ r_2 = 1 - 0.4 = 0.6 $ m\n\n$ \\frac{16}{0.4^{2}} = \\frac{I_2}{0.6^{2}} $\n\n$ \\frac{16}{0.16} = \\frac{I_2}{0.36} $\n\n$ 100 = \\frac{I_2}{0.36} \\Rightarrow I_2 = 36\\ \\text{candela} $\n\n**Check the direction.** The balance point sits nearer the weaker lamp, and indeed $ 36 > 16 $ with the screen closer to the $ 16 $ cd lamp ✓ If your answer puts the stronger lamp nearer, you have inverted the ratio.\n\n**Why this method is trusted.** The eye is poor at judging *how much* brighter one surface is than another, but excellent at judging when two adjacent surfaces are *equal*. The photometer converts a hard perceptual task into an easy one, and a distance measurement does the rest."
+   },
+   {
+    "id": "we-ch22-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Luminous flux from a lamp",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A lamp radiates uniformly in all directions with a luminous intensity of $ 60 $ candela. Find the total luminous flux it emits, and the illuminance on a sphere of radius $ 3 $ m around it.",
+    "solution": "**Total flux.** A full sphere subtends $ 4\\pi $ steradians, and intensity is flux per steradian:\n\n$ \\Phi = 4\\pi I = 4\\pi(60) = 754\\ \\text{lumens} $\n\n**Illuminance on the sphere.** Two equivalent routes:\n\n$ E = \\frac{I}{r^{2}} = \\frac{60}{9} = 6.7\\ \\text{lux} $\n\nor by dividing the flux over the sphere's area:\n\n$ E = \\frac{\\Phi}{4\\pi r^{2}} = \\frac{754}{4\\pi(9)} = \\frac{754}{113} = 6.7\\ \\text{lux} $ ✓\n\n**Why bulbs are now sold in lumens.** Lumens measure the total light produced, independent of how efficiently it was made. An LED delivering $ 800 $ lumens from $ 9 $ W replaces a filament lamp delivering the same $ 800 $ lumens from $ 60 $ W — the *lumen* figure is what the room experiences, and the watt figure is only what it costs."
+   },
+   {
+    "id": "we-ch22-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Exposure and the inverse square law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A photographic plate needs $ 2 $ s of exposure when a point source is $ 30 $ cm away. What exposure is needed at $ 45 $ cm, and at what distance would $ 8 $ s be required?",
+    "solution": "Correct exposure means a fixed product $ E \\times t $, and $ E \\propto 1/r^{2} $, so $ t \\propto r^{2} $.\n\n**At $ 45 $ cm:**\n\n$ \\frac{t_2}{t_1} = \\left(\\frac{r_2}{r_1}\\right)^{2} = \\left(\\frac{45}{30}\\right)^{2} = (1.5)^{2} = 2.25 $\n\n$ t_2 = 2 \\times 2.25 = 4.5\\ \\text{s} $\n\n**For $ 8 $ s:**\n\n$ \\frac{8}{2} = \\left(\\frac{r}{30}\\right)^{2} \\Rightarrow \\left(\\frac{r}{30}\\right)^{2} = 4 \\Rightarrow r = 60\\ \\text{cm} $\n\n**The pattern to carry.** Doubling the distance quadruples the exposure. This is exactly why a camera flash is useless for distant subjects — at four times the range it delivers a sixteenth of the light, and no shutter setting recovers it.\n\n**The photographic shorthand.** Each 'stop' halves or doubles the light, so moving from $ 30 $ cm to $ 60 $ cm costs two stops."
+   },
+   {
+    "id": "we-ch22-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — A tilted surface",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A surface is $ 2 $ m from a $ 200 $ candela source, with its normal at $ 60^\\circ $ to the incoming light. Find the illuminance. How must it be reoriented to double it?",
+    "solution": "**Illuminance as it stands:**\n\n$ E = \\frac{I\\cos\\theta}{r^{2}} = \\frac{200\\cos 60^\\circ}{4} = \\frac{200(0.5)}{4} = 25\\ \\text{lux} $\n\n**To double it**, turn the surface to face the source squarely, $ \\theta = 0 $:\n\n$ E = \\frac{200(1)}{4} = 50\\ \\text{lux} $\n\nSince $ \\cos 60^\\circ = 0.5 $, removing the tilt exactly doubles the illuminance.\n\n**Why tilt matters so much in practice.** The same beam is spread over a larger area when it strikes obliquely, so each square metre receives less. This single factor explains why the sun warms the tropics more than the poles, why winter is colder than summer, and why solar panels are tilted towards the sun's average elevation.\n\n**The general form to remember:** $ E = \\frac{I\\cos\\theta}{r^{2}} $, with $ \\theta $ measured from the *surface's normal* — not from the surface itself. Measuring it from the wrong reference turns the cosine into a sine and the answer into nonsense."
+   },
+   {
+    "id": "we-ch22-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Luminous efficiency",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 60 $ W filament lamp emits $ 900 $ lumens; a $ 9 $ W LED emits $ 800 $ lumens. Compare their luminous efficiencies, and comment on the theoretical maximum.",
+    "solution": "**Filament lamp:**\n\n$ \\eta = \\frac{900}{60} = 15\\ \\text{lm W}^{-1} $\n\n**LED:**\n\n$ \\eta = \\frac{800}{9} = 89\\ \\text{lm W}^{-1} $\n\nThe LED is about **six times** as efficient.\n\n**Where the filament's energy goes.** Almost all of it leaves as infrared — heat, not light. A filament lamp is a rather good heater that happens to glow, which is why it is warm to the touch and why it has been phased out.\n\n**The theoretical ceiling.** A source emitting *only* at the eye's peak sensitivity of $ 555 $ nm, with perfect efficiency, would deliver $ 683\\ \\text{lm W}^{-1} $. That is the absolute limit set by the definition of the lumen.\n\n**Why real white sources fall short of it.** White light must contain wavelengths across the visible range, including reds and blues the eye responds to weakly. So a genuinely white source is capped nearer $ 250$–$300\\ \\text{lm W}^{-1} $ — which still leaves plenty of room above today's LEDs."
+   },
+   {
+    "id": "we-ch22-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Two lamps illuminating one point",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two lamps of $ 80 $ and $ 45 $ candela are $ 1 $ m apart on a line. Where between them is a screen placed so that both faces are equally illuminated?",
+    "solution": "Let the screen be $ x $ from the $ 80 $ cd lamp, hence $ (1-x) $ from the other.\n\n$ \\frac{80}{x^{2}} = \\frac{45}{(1-x)^{2}} $\n\n**Take square roots** — much cleaner than cross-multiplying:\n\n$ \\frac{\\sqrt{80}}{x} = \\frac{\\sqrt{45}}{1-x} $\n\n$ \\frac{8.94}{x} = \\frac{6.71}{1-x} $\n\n$ 8.94(1-x) = 6.71x $\n\n$ 8.94 = 15.65x \\Rightarrow x = 0.571\\ \\text{m} $\n\nSo the screen sits about $ 57 $ cm from the $ 80 $ cd lamp and $ 43 $ cm from the $ 45 $ cd lamp.\n\n**Check the sense of it.** The balance point is further from the brighter lamp, as it must be ✓\n\n**Shortcut:** taking square roots at the start turns a quadratic into a linear equation. The ratio of distances is always $ \\sqrt{I_1/I_2} $ — here $ \\sqrt{80/45} = 1.33 $, and indeed $ 0.571/0.429 = 1.33 $."
+   }
+  ]
+ }
+}

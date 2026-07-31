@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 45,
+ "hcv_title": "Semiconductors and Semiconductor Devices",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Semiconductor Electronics: Materials, Devices and Simple Circuits"
+ },
+ "source_pages": {
+  "worked": "905-907",
+  "obj1": "908-909"
+ },
+ "notes": "11 Objective I items rebuilt. The drift/diffusion current pair is kept adjacent, since the contrast between them is the whole basis of junction behaviour.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch45-semiconductors",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Semiconductors and Devices",
+   "intro": "Eleven questions on semiconductors and the p-n junction. Keeping drift and diffusion currents straight resolves most of the junction questions at once.",
+   "sections": [
+    {
+     "id": "carriers",
+     "title": "Charge Carriers in Semiconductors",
+     "blurb": "Two kinds of carrier, and what doping does to their balance.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch45-m01",
+       "source": "mcq",
+       "prompt": "Electrical conduction in a semiconductor takes place through",
+       "options": [
+        "electrons only",
+        "holes only",
+        "both electrons and holes",
+        "neither"
+       ],
+       "correct_index": 2,
+       "explanation": "Thermal energy lifts electrons into the conduction band, leaving vacancies — holes — in the valence band, and both drift under an applied field. Having two carrier types with opposite sign is what distinguishes a semiconductor from a metal, where only electrons conduct."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m02",
+       "source": "mcq",
+       "prompt": "An electric field is applied to a semiconductor. If the temperature is raised, then for the carrier number $ n $ and the average drift speed $ v $,",
+       "options": [
+        "$ n $ increases but $ v $ decreases",
+        "both $ n $ and $ v $ increase",
+        "$ v $ increases but $ n $ decreases",
+        "both decrease"
+       ],
+       "correct_index": 0,
+       "explanation": "Heating liberates many more electron-hole pairs, so $ n $ rises sharply (exponentially). It also increases lattice vibration, so carriers are scattered more often and the mobility — hence $ v $ — falls. The rise in $ n $ wins decisively, which is why a semiconductor's resistance *falls* on heating."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m03",
+       "source": "mcq",
+       "prompt": "In an **intrinsic** semiconductor, the numbers of holes $ n_p $ and conduction electrons $ n_e $ satisfy",
+       "options": [
+        "$ n_p > n_e $",
+        "$ n_p < n_e $",
+        "$ n_p \\neq n_e $",
+        "$ n_p = n_e $"
+       ],
+       "correct_index": 3,
+       "explanation": "In a pure semiconductor every conduction electron leaves behind exactly one hole, so the two are created in pairs and their numbers are necessarily equal. Any imbalance requires impurities."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m04",
+       "source": "mcq",
+       "prompt": "In an **extrinsic** semiconductor,",
+       "options": [
+        "$ n_p \\neq n_e $",
+        "$ n_p > n_e $ always",
+        "$ n_p = n_e $",
+        "$ n_p < n_e $ always"
+       ],
+       "correct_index": 0,
+       "explanation": "Doping deliberately upsets the balance — but which way depends on the dopant. An n-type material has $ n_e > n_p $ and a p-type has $ n_p > n_e $. All that can be said without knowing the dopant is that the two are unequal."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m05",
+       "source": "mcq",
+       "prompt": "A p-type semiconductor is",
+       "options": [
+        "positively charged",
+        "electrically neutral",
+        "negatively charged",
+        "charged only when a field is applied"
+       ],
+       "correct_index": 1,
+       "explanation": "Doping adds neutral atoms, so the crystal remains neutral overall. A trivalent dopant creates *mobile holes* while itself becoming a fixed negative acceptor ion — the two balance exactly. 'p-type' describes which carrier is in the majority, not a net charge."
+      }
+     ]
+    },
+    {
+     "id": "pn-junction",
+     "title": "The p-n Junction",
+     "blurb": "Two currents flowing in opposite directions, and which one bias favours.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch45-m06",
+       "source": "mcq",
+       "prompt": "The **diffusion** current in a p-n junction flows",
+       "options": [
+        "from the n-side to the p-side",
+        "from n to p when forward-biased and the reverse otherwise",
+        "from the p-side to the n-side",
+        "from p to n when forward-biased and the reverse otherwise"
+       ],
+       "correct_index": 2,
+       "explanation": "Majority carriers diffuse down their concentration gradients: holes from p to n, and electrons from n to p. Both correspond to conventional current from p to n, and this direction never changes — bias only changes its *size*."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m07",
+       "source": "mcq",
+       "prompt": "The **drift** current in a p-n junction flows",
+       "options": [
+        "from the p-side to the n-side",
+        "from n to p when forward-biased only",
+        "from the n-side to the p-side",
+        "from p to n when reverse-biased only"
+       ],
+       "correct_index": 2,
+       "explanation": "The drift current is carried by *minority* carriers swept across by the junction's built-in field — electrons from p to n, and holes from n to p — which is conventional current from n to p. It opposes the diffusion current and, like it, keeps a fixed direction."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m08",
+       "source": "mcq",
+       "prompt": "The diffusion current exceeds the drift current in magnitude",
+       "options": [
+        "when the junction is reverse-biased",
+        "when the junction is forward-biased",
+        "when the junction is unbiased",
+        "in no case"
+       ],
+       "correct_index": 1,
+       "explanation": "Forward bias lowers the potential barrier, so many more majority carriers can cross and the diffusion current grows. Reverse bias raises the barrier and suppresses it. With no bias the two currents are exactly equal and opposite — which is why an unbiased junction carries no net current."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m09",
+       "source": "mcq",
+       "prompt": "The reverse **saturation** current of a diode is nearly independent of the reverse voltage because it is limited by",
+       "options": [
+        "the applied reverse voltage across the junction",
+        "the rate at which minority carriers are thermally generated",
+        "the bulk resistance of the diode material",
+        "the width of the depletion layer at that voltage"
+       ],
+       "correct_index": 1,
+       "explanation": "In reverse bias the field sweeps across every minority carrier that happens to be generated, so the current is set by the *generation rate*, not by the voltage. Raising the reverse voltage cannot produce more carriers — but raising the *temperature* can, which is why reverse leakage is strongly temperature-dependent."
+      }
+     ]
+    },
+    {
+     "id": "devices",
+     "title": "Diodes, Transistors and Bands",
+     "blurb": "Band gaps and what they let a device do.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch45-m10",
+       "source": "mcq",
+       "prompt": "At absolute zero, a pure semiconductor behaves as",
+       "options": [
+        "a perfect insulator",
+        "a perfect conductor",
+        "a superconductor",
+        "unchanged from room temperature"
+       ],
+       "correct_index": 0,
+       "explanation": "With no thermal energy, no electron can cross the band gap: the valence band is full, the conduction band empty, and there are no carriers at all. Conductivity in a semiconductor is entirely thermally generated, which is the deepest difference between it and a metal."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch45-m11",
+       "source": "mcq",
+       "prompt": "In a common-emitter transistor amplifier, the base region is made very thin and lightly doped so that",
+       "options": [
+        "the base resistance is kept deliberately high",
+        "most injected carriers reach the collector instead of recombining in the base",
+        "the base current is made as large as possible",
+        "the emitter junction ends up reverse-biased instead"
+       ],
+       "correct_index": 1,
+       "explanation": "A thin, lightly doped base gives injected carriers little chance to recombine before the collector field sweeps them up — so nearly all the emitter current becomes collector current and the base current stays small. Since current gain is the ratio of the two, that is exactly what makes $ \\beta $ large."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch45-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Intrinsic carrier concentration and conductivity",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Pure silicon at room temperature has $ n_i = 1.5 \\times 10^{16}\\ \\text{m}^{-3} $, with electron and hole mobilities $ 0.135 $ and $ 0.048\\ \\text{m}^{2}\\text{V}^{-1}\\text{s}^{-1} $. Find its conductivity.",
+    "solution": "Both carriers contribute, and in an intrinsic material their numbers are equal:\n\n$ \\sigma = n_i e(\\mu_e + \\mu_h) $\n\n$ = (1.5 \\times 10^{16})(1.6 \\times 10^{-19})(0.135 + 0.048) $\n\n$ = (1.5 \\times 10^{16})(1.6 \\times 10^{-19})(0.183) $\n\n$ = 4.39 \\times 10^{-4}\\ \\text{S m}^{-1} $\n\n**Resistivity:** $ \\rho = 1/\\sigma = 2280\\ \\Omega\\,\\text{m} $.\n\n**Put that in context.** Copper's resistivity is $ 1.7 \\times 10^{-8}\\ \\Omega\\,\\text{m} $ — pure silicon is worse by eleven orders of magnitude. It sits between a metal and an insulator, which is exactly what 'semiconductor' means.\n\n**Note that both mobilities enter.** Electrons are nearly three times as mobile as holes, because a hole moves only by successive electron hops through the valence band — an inherently clumsier process. Both nonetheless contribute to the current.\n\n**Why doping is transformative.** Adding one dopant atom per million silicon atoms raises the carrier density by orders of magnitude, lowering the resistivity dramatically. Semiconductor technology is essentially the art of controlling that."
+   },
+   {
+    "id": "we-ch45-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Doping and majority carriers",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Silicon is doped with $ 10^{22} $ donor atoms per cubic metre. Taking $ n_i = 1.5 \\times 10^{16}\\ \\text{m}^{-3} $, find the electron and hole concentrations.",
+    "solution": "**Majority carriers.** Each donor contributes one conduction electron, and this swamps the intrinsic contribution:\n\n$ n_e \\approx N_d = 10^{22}\\ \\text{m}^{-3} $\n\n**Minority carriers**, from the mass-action law $ n_e n_p = n_i^{2} $:\n\n$ n_p = \\frac{n_i^{2}}{n_e} = \\frac{(1.5 \\times 10^{16})^{2}}{10^{22}} = \\frac{2.25 \\times 10^{32}}{10^{22}} = 2.25 \\times 10^{10}\\ \\text{m}^{-3} $\n\n**The asymmetry is staggering.** Electrons outnumber holes by a factor of about $ 4 \\times 10^{11} $. Doping has not merely added electrons — it has *suppressed* the holes, because the extra electrons recombine with them.\n\n**Why the product stays fixed.** At a given temperature, generation and recombination balance, and that balance pins $ n_e n_p $ at $ n_i^{2} $ whatever the doping. Push one carrier up and the other must come down.\n\n**A useful check on scale.** $ 10^{22}\\ \\text{m}^{-3} $ of donors against silicon's $ 5 \\times 10^{28} $ atoms per cubic metre is about one dopant per five million atoms — remarkably dilute for so drastic an effect."
+   },
+   {
+    "id": "we-ch45-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Band gap and the onset of absorption",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the longest wavelength that can create an electron-hole pair in (a) silicon ($ E_g = 1.1 $ eV) and (b) germanium ($ E_g = 0.7 $ eV).",
+    "solution": "A photon must carry at least the band-gap energy, so the longest usable wavelength corresponds to exactly $ E_g $.\n\n**Silicon:**\n\n$ \\lambda = \\frac{1240}{1.1} = 1127\\ \\text{nm} = 1.13\\ \\mu\\text{m} $\n\n**Germanium:**\n\n$ \\lambda = \\frac{1240}{0.7} = 1771\\ \\text{nm} = 1.77\\ \\mu\\text{m} $\n\n**Both lie in the infrared**, beyond the visible band. This is why silicon and germanium look opaque and metallic-grey — they absorb *all* visible light, every visible photon having more than enough energy.\n\n**Why silicon solar cells cannot use all of sunlight.** Photons with $ \\lambda > 1127 $ nm pass straight through unabsorbed, and that infrared tail represents about a fifth of the sun's energy — one of the fundamental limits on single-junction cell efficiency.\n\n**And why germanium detectors need cooling.** Its narrower gap means far more thermal generation at room temperature, so leakage currents are large. The same narrow gap that helps it detect longer wavelengths hurts its noise performance."
+   },
+   {
+    "id": "we-ch45-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Diode in a circuit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A silicon diode (forward drop $ 0.7 $ V) is connected in series with a $ 220\\ \\Omega $ resistor across a $ 5 $ V supply. Find the current and the power dissipated in each component.",
+    "solution": "**Voltage across the resistor:**\n\n$ V_R = 5 - 0.7 = 4.3\\ \\text{V} $\n\n**Current:**\n\n$ i = \\frac{4.3}{220} = 0.0195\\ \\text{A} = 19.5\\ \\text{mA} $\n\n**Power in the resistor:**\n\n$ P_R = i^{2}R = (0.0195)^{2}(220) = 0.084\\ \\text{W} $\n\n**Power in the diode:**\n\n$ P_D = V_D i = (0.7)(0.0195) = 0.0137\\ \\text{W} $\n\n**Why the diode is modelled as a fixed drop.** Its exponential characteristic is so steep that once conducting, its voltage barely moves — $ 0.7 $ V for silicon, $ 0.3 $ V for germanium. Treating it as a constant is accurate enough for almost all circuit work.\n\n**Why the resistor is essential.** Without it, the supply would sit directly across the diode, whose exponential characteristic would then draw a destructive current. Every LED circuit needs exactly this current-limiting resistor, and its value is chosen precisely by the calculation above."
+   },
+   {
+    "id": "we-ch45-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Transistor current gain",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A transistor has $ \\beta = 100 $. If the base current is $ 20\\ \\mu\\text{A} $, find the collector and emitter currents, and $ \\alpha $.",
+    "solution": "**Collector current:**\n\n$ i_C = \\beta i_B = (100)(20 \\times 10^{-6}) = 2 \\times 10^{-3}\\ \\text{A} = 2\\ \\text{mA} $\n\n**Emitter current**, by Kirchhoff's junction rule at the transistor:\n\n$ i_E = i_C + i_B = 2.0 + 0.02 = 2.02\\ \\text{mA} $\n\n**Alpha:**\n\n$ \\alpha = \\frac{i_C}{i_E} = \\frac{2.0}{2.02} = 0.990 $\n\n**The relation between the two gains:**\n\n$ \\alpha = \\frac{\\beta}{1+\\beta} = \\frac{100}{101} = 0.990 $ ✓\n\n**Why $ \\alpha $ is always just below 1.** It measures the fraction of emitter current that survives the base to reach the collector. A high $ \\beta $ demands $ \\alpha $ very close to 1 — for $ \\beta = 100 $, $ 99\\% $ must get through, and for $ \\beta = 500 $, $ 99.8\\% $.\n\n**Why this makes base design so critical.** A tiny increase in base recombination collapses $ \\beta $: raising $ \\alpha $'s shortfall from $ 1\\% $ to $ 2\\% $ halves the gain. Hence the very thin, lightly doped base."
+   },
+   {
+    "id": "we-ch45-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Full-wave rectification and ripple",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A full-wave bridge rectifier is fed from a $ 12 $ V rms, $ 50 $ Hz supply. Find the peak output voltage, the ripple frequency, and the average output (ignoring diode drops).",
+    "solution": "**Peak voltage:**\n\n$ V_0 = \\sqrt{2}(12) = 17.0\\ \\text{V} $\n\n**Ripple frequency.** A bridge uses *both* half-cycles, so the output pulses at twice the supply frequency:\n\n$ f_{ripple} = 2(50) = 100\\ \\text{Hz} $\n\n**Average (d.c.) output:**\n\n$ V_{av} = \\frac{2V_0}{\\pi} = \\frac{2(17.0)}{\\pi} = 10.8\\ \\text{V} $\n\n**Compare with half-wave rectification**, which gives $ V_0/\\pi = 5.4 $ V and a $ 50 $ Hz ripple.\n\n**Two reasons full-wave is preferred.** It delivers twice the average output from the same transformer, and its higher ripple frequency is much easier to smooth — a capacitor's reactance $ 1/\\omega C $ is halved at $ 100 $ Hz, so the same capacitor filters twice as effectively.\n\n**In practice**, subtracting two diode drops ($ 1.4 $ V for silicon, since two conduct in series at any instant) brings the real peak to about $ 15.6 $ V. That loss is why bridge rectifiers are avoided in very low-voltage supplies."
+   },
+   {
+    "id": "we-ch45-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Zener diode as a voltage regulator",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 6 $ V Zener diode with a $ 100\\ \\Omega $ series resistor is fed from a supply varying between $ 9 $ V and $ 12 $ V. Find the Zener current at each extreme, with no load connected.",
+    "solution": "The Zener holds its terminals at $ 6 $ V throughout, so the resistor takes whatever is left.\n\n**At $ 9 $ V supply:**\n\n$ V_R = 9 - 6 = 3\\ \\text{V} $, so $ i = \\frac{3}{100} = 30\\ \\text{mA} $\n\n**At $ 12 $ V supply:**\n\n$ V_R = 12 - 6 = 6\\ \\text{V} $, so $ i = \\frac{6}{100} = 60\\ \\text{mA} $\n\n**How the regulation works.** A $ 3 $ V change in input produces *no* change in output — the diode simply absorbs more current. Its steep reverse characteristic beyond breakdown means a huge current change accompanies almost no voltage change.\n\n**The design constraint.** The Zener must dissipate $ P = (6)(0.060) = 0.36 $ W at the worst case, so a $ 0.5 $ W device is needed. The resistor must be small enough to keep the Zener conducting at minimum input, yet large enough not to overheat it at maximum — and that pair of inequalities is exactly how its value is chosen.\n\n**Note the operating region.** A Zener regulator works in *reverse* bias, beyond breakdown — the one application where a diode is deliberately run in a region that would destroy an ordinary one."
+   },
+   {
+    "id": "we-ch45-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Why resistance falls with temperature",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why a semiconductor's resistance falls on heating while a metal's rises, and estimate the factor by which silicon's carrier density grows between $ 300 $ K and $ 350 $ K given $ E_g = 1.1 $ eV.",
+    "solution": "**The competing effects.** Conductivity is $ \\sigma = nq\\mu $. Heating raises $ n $ (more carriers) but lowers $ \\mu $ (more lattice scattering). Which wins depends on the material.\n\n**In a metal**, $ n $ is fixed — every atom already contributes its free electrons and there is no gap to cross. Only $ \\mu $ changes, and it falls, so resistance *rises*.\n\n**In a semiconductor**, $ n $ rises exponentially and utterly swamps the modest fall in $ \\mu $, so resistance *falls*.\n\n**The estimate.** Carrier density goes as $ e^{-E_g/2kT} $:\n\nAt $ 300 $ K: $ \\frac{E_g}{2kT} = \\frac{1.1}{2(8.62 \\times 10^{-5})(300)} = \\frac{1.1}{0.0517} = 21.3 $\n\nAt $ 350 $ K: $ \\frac{1.1}{2(8.62 \\times 10^{-5})(350)} = \\frac{1.1}{0.0603} = 18.2 $\n\n$ \\frac{n_{350}}{n_{300}} = e^{21.3-18.2} = e^{3.1} = 22 $\n\n**A twenty-two-fold increase for a $ 50 $ K rise.** This extreme sensitivity is why thermistors make excellent temperature sensors — and why power semiconductors need careful heat-sinking, since a device that warms up conducts more, warms further, and can run away thermally."
+   }
+  ]
+ }
+}

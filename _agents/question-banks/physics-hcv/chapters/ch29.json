@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 29,
+ "hcv_title": "Electric Field and Potential",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Electric Charges and Fields + Electrostatic Potential and Capacitance"
+ },
+ "source_pages": {
+  "worked": "605-609",
+  "obj1": "610-611"
+ },
+ "notes": "11 Objective I items rebuilt. Three source items depend on figures (field-line spacing, a charge with three labelled destination points, and a circle around the origin); each was re-cast so the geometry is stated in words.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch29-electric-field",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Electric Field and Potential",
+   "intro": "Eleven questions on fields, potential and potential energy. The sign traps are relentless here, so reason with the physics before trusting the algebra.",
+   "sections": [
+    {
+     "id": "field-lines-and-field",
+     "title": "Field Lines and Electric Field",
+     "blurb": "Crowded lines mean a strong field.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch29-m01",
+       "source": "mcq",
+       "prompt": "Electric field lines are drawn close together at region A, widely spaced at B, and close together again at C. The field magnitudes satisfy",
+       "options": [
+        "$ E_A > E_B > E_C $",
+        "$ E_A = E_C > E_B $",
+        "$ E_A = E_B = E_C $",
+        "$ E_A = E_C < E_B $"
+       ],
+       "correct_index": 1,
+       "explanation": "Field strength is indicated by the *density* of field lines. Equal crowding at A and C means equal field strength there, and the wider spacing at B means a weaker field. This is the whole convention that makes field-line diagrams quantitative rather than merely decorative."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m02",
+       "source": "mcq",
+       "prompt": "The electric field at the origin points along the $ +x $ direction. On a small circle centred at the origin, the potential is lowest at the point",
+       "options": [
+        "$ (0, a) $",
+        "$ (a, 0) $",
+        "$ (-a, 0) $",
+        "$ (0, -a) $"
+       ],
+       "correct_index": 1,
+       "explanation": "The field points from high to low potential, so potential falls fastest in the direction of the field — here along $ +x $. The point $ (a,0) $ lies furthest down that gradient and so has the lowest potential. The points $ (0, \\pm a) $ sit perpendicular to the field and are at essentially the origin's potential."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m03",
+       "source": "mcq",
+       "prompt": "An electric dipole is placed in a **uniform** electric field. The net electric force on it",
+       "options": [
+        "depends on the dipole's orientation",
+        "can never be zero",
+        "depends on the dipole's strength",
+        "is always zero"
+       ],
+       "correct_index": 3,
+       "explanation": "The two equal and opposite charges sit in the same field, so they feel equal and opposite forces that cancel exactly. The dipole feels a *torque* — which does depend on orientation — but no net force. Only in a non-uniform field does a net force appear, which is why dipoles are pulled towards regions of stronger field."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m04",
+       "source": "mcq",
+       "prompt": "If a body is given a negative charge by rubbing, its weight",
+       "options": [
+        "remains precisely constant",
+        "increases slightly",
+        "decreases slightly",
+        "may change either way"
+       ],
+       "correct_index": 1,
+       "explanation": "Charging by friction transfers *electrons*, and electrons have mass. Gaining electrons means gaining mass, so the body gets very slightly heavier. The effect is utterly unmeasurable — about $ 10^{-19} $ kg for a typical charge — but it is real and its direction is fixed by the sign of the charge."
+      }
+     ]
+    },
+    {
+     "id": "potential-and-energy",
+     "title": "Potential and Potential Energy",
+     "blurb": "Where the sign of the charge changes the conclusion.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch29-m05",
+       "source": "mcq",
+       "prompt": "When the separation between two charges is increased, their electric potential energy",
+       "options": [
+        "may increase or decrease",
+        "increases",
+        "decreases",
+        "remains the same"
+       ],
+       "correct_index": 0,
+       "explanation": "Everything depends on the signs. For two like charges, $ U = \\frac{kq_1q_2}{r} $ is positive and falls towards zero as $ r $ grows. For unlike charges $ U $ is negative and *rises* towards zero. So separating them can lower or raise the energy — the question cannot be answered without the signs."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m06",
+       "source": "mcq",
+       "prompt": "A **positive** charge is moved from a low-potential region to a high-potential region. Its electric potential energy",
+       "options": [
+        "decreases",
+        "remains the same",
+        "increases",
+        "may increase or decrease"
+       ],
+       "correct_index": 2,
+       "explanation": "Potential energy is $ U = qV $, so for positive $ q $ it rises and falls with $ V $. Moving to higher potential therefore raises the energy — work must be done to push it there. For a *negative* charge the same move would lower the energy, which is exactly why the sign of the charge must always be checked."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m07",
+       "source": "mcq",
+       "prompt": "Two equal positive charges sit at A and B. Moving from A to B along the line joining them, the potential",
+       "options": [
+        "decreases and then increases",
+        "increases continuously",
+        "decreases continuously",
+        "increases and then decreases"
+       ],
+       "correct_index": 0,
+       "explanation": "Potential is a scalar and both charges contribute positively. Near A the total is dominated by A and is large; it falls to a minimum at the midpoint, where both charges are as far away as they can be; then it rises again towards B. Note the potential never vanishes, while the *field* does — at exactly that midpoint."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m08",
+       "source": "mcq",
+       "prompt": "A point charge is taken from a point P to three different points A, B and C, all at the **same distance** from a fixed charge $ q $. The works done satisfy",
+       "options": [
+        "$ W_A < W_B < W_C $",
+        "$ W_A > W_B > W_C $",
+        "$ W_A = W_B = W_C $",
+        "none of these"
+       ],
+       "correct_index": 2,
+       "explanation": "The potential due to a point charge depends only on distance, so A, B and C lie on one equipotential surface and are all at the same potential. Work equals $ q\\Delta V $, which is therefore identical for all three routes — the electrostatic force is conservative and the path is irrelevant."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m09",
+       "source": "mcq",
+       "prompt": "A charge $ q $ is carried once round a circle in the field of a point charge $ Q $ sitting at the circle's centre. The work done by the field is",
+       "options": [
+        "positive",
+        "negative",
+        "zero",
+        "zero only if $ Q $ is at the centre"
+       ],
+       "correct_index": 2,
+       "explanation": "Every point on the circle is at the same distance from $ Q $, hence the same potential, so $ \\Delta V = 0 $ and no work is done. In fact the work round *any* closed path is zero for a conservative force — so the answer would still be zero even with $ Q $ off-centre."
+      }
+     ]
+    },
+    {
+     "id": "coulomb-and-superposition",
+     "title": "Coulomb's Law and Superposition",
+     "blurb": "Vectors for fields, scalars for potentials.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch29-m10",
+       "source": "mcq",
+       "prompt": "Two equal and opposite charges are separated by a distance $ 2a $. At the midpoint between them,",
+       "options": [
+        "the potential is zero but the field is not",
+        "both the field and the potential are zero",
+        "the field is zero but the potential is not",
+        "neither is zero"
+       ],
+       "correct_index": 0,
+       "explanation": "The potentials, being scalars of opposite sign and equal magnitude, cancel to zero. The fields both point from the positive towards the negative charge, so they *add* rather than cancel. Zero potential never implies zero field — this pair is the standard illustration of why."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch29-m11",
+       "source": "mcq",
+       "prompt": "Three equal positive charges sit at the corners of an equilateral triangle. At the centroid,",
+       "options": [
+        "both field and potential are zero",
+        "the field is non-zero and the potential is zero",
+        "the field is zero and the potential is non-zero",
+        "both are non-zero"
+       ],
+       "correct_index": 2,
+       "explanation": "The three field vectors are equal in magnitude and symmetrically spaced at $ 120^\\circ $, so they cancel exactly. The three potentials are equal positive scalars and simply add to $ 3kq/r $. Symmetry cancels vectors readily; it can never cancel same-sign scalars."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch29-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Coulomb's law with two charges",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two charges of $ +3\\ \\mu\\text{C} $ and $ -4\\ \\mu\\text{C} $ are $ 20 $ cm apart in air. Find the force between them. Take $ \\frac{1}{4\\pi\\varepsilon_0} = 9 \\times 10^{9} $ SI.",
+    "solution": "$ F = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1q_2}{r^{2}} $\n\n$ = \\frac{(9 \\times 10^{9})(3 \\times 10^{-6})(4 \\times 10^{-6})}{(0.20)^{2}} $\n\n$ = \\frac{(9 \\times 10^{9})(1.2 \\times 10^{-11})}{0.04} = \\frac{0.108}{0.04} = 2.7\\ \\text{N} $\n\nThe force is **attractive**, since the charges are unlike.\n\n**How to handle the signs.** Put the *magnitudes* into the formula and decide attraction or repulsion from the signs separately. Carrying the minus sign through gives $ -2.7 $ N, which is only meaningful once you have fixed a positive direction — and it is easy to lose track.\n\n**Watch the units.** Microcoulombs must become coulombs ($ \\times 10^{-6} $) and centimetres metres. Since $ r $ is squared, a factor-of-100 slip in the distance becomes a factor of $ 10^{4} $ in the force."
+   },
+   {
+    "id": "we-ch29-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Field from two charges by superposition",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Charges of $ +8\\ \\mu\\text{C} $ and $ -8\\ \\mu\\text{C} $ are $ 10 $ cm apart. Find the electric field at the midpoint of the line joining them.",
+    "solution": "Each charge is $ 5 $ cm from the midpoint.\n\n**Magnitude of each field:**\n\n$ E = \\frac{kq}{r^{2}} = \\frac{(9 \\times 10^{9})(8 \\times 10^{-6})}{(0.05)^{2}} = \\frac{7.2 \\times 10^{4}}{2.5 \\times 10^{-3}} = 2.88 \\times 10^{7}\\ \\text{N C}^{-1} $\n\n**Directions.** The field points *away* from the positive charge and *towards* the negative one. At the midpoint both therefore point the same way — from the positive charge towards the negative.\n\n**They add:**\n\n$ E_{net} = 2 \\times 2.88 \\times 10^{7} = 5.76 \\times 10^{7}\\ \\text{N C}^{-1} $\n\n**Contrast with the potential** at the same point:\n\n$ V = \\frac{kq}{r} + \\frac{k(-q)}{r} = 0 $\n\n**The lesson in one line.** Fields are vectors and here they reinforce; potentials are scalars and here they cancel. Never infer one from the other."
+   },
+   {
+    "id": "we-ch29-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Where the field vanishes",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Charges $ +9\\ \\mu\\text{C} $ and $ +4\\ \\mu\\text{C} $ are $ 50 $ cm apart. Find the point on the line joining them where the electric field is zero.",
+    "solution": "Both charges are positive, so the null point must lie **between** them, where their fields oppose. Let it be $ x $ from the $ 9\\ \\mu\\text{C} $ charge.\n\n$ \\frac{k(9)}{x^{2}} = \\frac{k(4)}{(0.5-x)^{2}} $\n\n**Take square roots** — far cleaner than expanding:\n\n$ \\frac{3}{x} = \\frac{2}{0.5-x} $\n\n$ 3(0.5 - x) = 2x $\n\n$ 1.5 = 5x \\Rightarrow x = 0.30\\ \\text{m} $\n\nSo the field vanishes $ 30 $ cm from the $ 9\\ \\mu\\text{C} $ charge and $ 20 $ cm from the $ 4\\ \\mu\\text{C} $ charge.\n\n**Check the sense of it.** The null point sits nearer the *smaller* charge, as it must ✓\n\n**Where the null point would be for unlike charges.** Outside the pair, beyond the smaller charge — because between them the two fields would point the same way and could never cancel. Deciding the region *before* doing algebra saves solving for a root that does not exist."
+   },
+   {
+    "id": "we-ch29-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Potential due to several charges",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Charges of $ +2\\ \\mu\\text{C} $, $ -3\\ \\mu\\text{C} $ and $ +4\\ \\mu\\text{C} $ sit at the corners of an equilateral triangle of side $ 30 $ cm. Find the potential at the centroid.",
+    "solution": "**Distance from each corner to the centroid** of an equilateral triangle of side $ a $:\n\n$ r = \\frac{a}{\\sqrt{3}} = \\frac{0.30}{1.732} = 0.173\\ \\text{m} $\n\n**Potential is a scalar**, so simply add the three contributions with their signs:\n\n$ V = \\frac{k}{r}(q_1 + q_2 + q_3) = \\frac{9 \\times 10^{9}}{0.173}(2 - 3 + 4) \\times 10^{-6} $\n\n$ = (5.20 \\times 10^{10})(3 \\times 10^{-6}) = 1.56 \\times 10^{5}\\ \\text{V} $\n\n**Why this was so quick.** All three charges are equidistant from the centroid, so $ k/r $ factors out and only the *algebraic sum* of the charges matters. No angles, no components.\n\n**The contrast with the field.** Finding $ \\vec{E} $ at the same point would require resolving three vectors at $ 120^\\circ $ to each other — a much longer calculation. Whenever a question can be answered through potential, that is almost always the faster route."
+   },
+   {
+    "id": "we-ch29-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Work done in moving a charge",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A charge of $ -5\\ \\mu\\text{C} $ is moved from a point at $ 200 $ V to a point at $ 500 $ V. Find the work done by the external agent.",
+    "solution": "$ W_{ext} = q\\Delta V = q(V_f - V_i) $\n\n$ = (-5 \\times 10^{-6})(500 - 200) = (-5 \\times 10^{-6})(300) $\n\n$ = -1.5 \\times 10^{-3}\\ \\text{J} = -1.5\\ \\text{mJ} $\n\n**The negative sign means the external agent does no work at all** — the field does it. A negative charge is *pulled* towards higher potential, so it moves there of its own accord, releasing $ 1.5 $ mJ.\n\n**Compare with a positive charge.** For $ +5\\ \\mu\\text{C} $ the same move would need $ +1.5 $ mJ of external work, since a positive charge resists being pushed uphill in potential.\n\n**The rule worth internalising.** Positive charges move spontaneously from high to low potential; negative charges do the opposite. Both are simply moving towards lower potential *energy* — and the sign of $ q $ in $ U = qV $ is what flips the direction."
+   },
+   {
+    "id": "we-ch29-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Field and potential of a dipole",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A dipole consists of $ \\pm 2\\ \\mu\\text{C} $ separated by $ 2 $ cm. Find its dipole moment, and the field at a point $ 50 $ cm away on its axis.",
+    "solution": "**Dipole moment:**\n\n$ p = q(2a) = (2 \\times 10^{-6})(0.02) = 4 \\times 10^{-8}\\ \\text{C m} $\n\n**Field on the axis**, for $ r \\gg a $:\n\n$ E = \\frac{2kp}{r^{3}} = \\frac{2(9 \\times 10^{9})(4 \\times 10^{-8})}{(0.5)^{3}} $\n\n$ = \\frac{720}{0.125} = 5760\\ \\text{N C}^{-1} $\n\nIt points along the dipole axis, from the negative towards the positive charge and onwards.\n\n**Note the $ 1/r^{3} $ dependence.** A dipole's field falls off much faster than a point charge's $ 1/r^{2} $, because the two opposite charges nearly cancel at a distance. Double the distance and the field drops eightfold.\n\n**On the equatorial line** the field is $ E = \\frac{kp}{r^{3}} $ — exactly half the axial value at the same distance, and pointing *antiparallel* to the dipole moment. Both are $ 1/r^{3} $; only the factor and the direction differ."
+   },
+   {
+    "id": "we-ch29-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Torque on a dipole in a uniform field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A dipole of moment $ 5 \\times 10^{-8}\\ \\text{C m} $ sits at $ 30^\\circ $ to a uniform field of $ 4 \\times 10^{4}\\ \\text{N C}^{-1} $. Find the torque on it and the work needed to turn it to $ 90^\\circ $.",
+    "solution": "**Torque:**\n\n$ \\tau = pE\\sin\\theta = (5 \\times 10^{-8})(4 \\times 10^{4})\\sin 30^\\circ $\n\n$ = (2 \\times 10^{-3})(0.5) = 1 \\times 10^{-3}\\ \\text{N m} $\n\n**Potential energy** of a dipole is $ U = -pE\\cos\\theta $.\n\nAt $ 30^\\circ $: $ U_1 = -(2 \\times 10^{-3})\\cos 30^\\circ = -1.73 \\times 10^{-3}\\ \\text{J} $\n\nAt $ 90^\\circ $: $ U_2 = -(2 \\times 10^{-3})\\cos 90^\\circ = 0 $\n\n**Work required:**\n\n$ W = U_2 - U_1 = 0 - (-1.73 \\times 10^{-3}) = 1.73 \\times 10^{-3}\\ \\text{J} $\n\n**Reading the energy function.** $ U $ is most negative at $ \\theta = 0 $ — aligned with the field, the stable position — and largest at $ \\theta = 180^\\circ $, the unstable one. At $ 90^\\circ $ it is zero, which is why that orientation is the convenient reference.\n\n**And note the torque is greatest at $ 90^\\circ $**, where the energy is changing fastest. Torque is the rate of change of $ U $ with angle, so a maximum torque and a zero energy coincide."
+   },
+   {
+    "id": "we-ch29-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Charged particle accelerated through a potential difference",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An electron is accelerated from rest through $ 500 $ V. Find its final speed. Take $ e = 1.6 \\times 10^{-19} $ C and $ m_e = 9.1 \\times 10^{-31} $ kg.",
+    "solution": "All the electrical energy becomes kinetic energy.\n\n$ eV = \\frac{1}{2}mv^{2} $\n\n$ v = \\sqrt{\\frac{2eV}{m}} = \\sqrt{\\frac{2(1.6 \\times 10^{-19})(500)}{9.1 \\times 10^{-31}}} $\n\n$ = \\sqrt{\\frac{1.6 \\times 10^{-16}}{9.1 \\times 10^{-31}}} = \\sqrt{1.76 \\times 10^{14}} = 1.33 \\times 10^{7}\\ \\text{m s}^{-1} $\n\nAbout $ 4.4\\% $ of the speed of light.\n\n**A shortcut worth adopting.** Working in electron-volts, the energy gained is simply $ 500 $ eV — no powers of ten needed. That is why particle energies are quoted in eV, keV and MeV rather than joules.\n\n**When this formula stops working.** Beyond roughly $ 10\\% $ of $ c $ — around $ 25 $ kV for electrons — relativistic corrections matter and $ \\frac{1}{2}mv^{2} $ underestimates the energy. Inside an old television tube ($ \\sim 20 $ kV) electrons were already mildly relativistic."
+   }
+  ]
+ }
+}

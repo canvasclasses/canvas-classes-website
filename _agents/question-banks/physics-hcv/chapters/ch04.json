@@ -1,0 +1,246 @@
+{
+ "hcv_chapter": 4,
+ "hcv_title": "The Forces",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Laws of Motion — the nature of forces (fundamental forces, contact forces)"
+ },
+ "source_pages": {
+  "worked": "74-75",
+  "obj1": "76"
+ },
+ "notes": "Short source chapter — only 4 Objective I items. Topped up to 9 covering the range and relative strength of the four fundamental forces and the electromagnetic origin of everyday contact forces.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch04-forces",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — The Fundamental Forces",
+   "intro": "Nine questions on which of the four forces is actually doing the work in everyday situations.",
+   "sections": [
+    {
+     "id": "which-force",
+     "title": "Identifying the Force at Work",
+     "blurb": "Almost everything you touch is electromagnetism in disguise.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch04-m01",
+       "source": "mcq",
+       "prompt": "When you press a book down onto a table, the force between your palm and the book's cover is fundamentally",
+       "options": [
+        "electromagnetic",
+        "gravitational",
+        "nuclear",
+        "weak"
+       ],
+       "correct_index": 0,
+       "explanation": "Every contact force — pushing, friction, tension, the normal force — comes from electron clouds in the two surfaces repelling each other. Nothing ever truly touches; the repulsion between outer electrons is what you feel. Nuclear and weak forces die away long before reaching from one atom to the next."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch04-m02",
+       "source": "mcq",
+       "prompt": "Which of the four fundamental forces does **not** act between two electrons?",
+       "options": [
+        "The nuclear (strong) force",
+        "The electromagnetic force",
+        "The gravitational force",
+        "The weak force"
+       ],
+       "correct_index": 0,
+       "explanation": "The strong nuclear force acts only between quarks and the particles built from them — protons, neutrons and the like. Electrons are leptons and are simply blind to it. They do feel electromagnetism (strongly), gravity (feebly) and the weak force."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch04-m03",
+       "source": "mcq",
+       "prompt": "Let $ E $, $ G $ and $ N $ be the magnitudes of the electromagnetic, gravitational and nuclear forces between two electrons a nanometre apart. Then",
+       "options": [
+        "$ N > E > G $",
+        "$ E > N > G $",
+        "$ E > G > N $",
+        "$ G > N > E $"
+       ],
+       "correct_index": 2,
+       "explanation": "The nuclear force does not act on electrons at all, so $ N = 0 $ and sits last by default. Between the other two, electromagnetism beats gravity by roughly $ 10^{42} $ — which is why the electrical repulsion of two electrons matters and their mutual gravity never does."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch04-m04",
+       "source": "mcq",
+       "prompt": "The sum of all the electromagnetic forces between the different particles of a system of charged particles is zero",
+       "options": [
+        "only if all the particles are positively charged",
+        "only if all the particles are negatively charged",
+        "irrespective of the signs of the charges",
+        "only if half the charges are positive and half negative"
+       ],
+       "correct_index": 2,
+       "explanation": "These are *internal* forces, and they come in Newton's-third-law pairs: whatever particle 1 does to particle 2, particle 2 does back in exact opposition. Every pair cancels in the sum no matter what the signs are — which is precisely why internal forces can never accelerate a system as a whole."
+      }
+     ]
+    },
+    {
+     "id": "third-law-and-range",
+     "title": "Third-Law Pairs, Range and Strength",
+     "blurb": "Reaction forces are never negotiable, and each force has a reach.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch04-m05",
+       "source": "mcq",
+       "prompt": "A $ 70 $ kg man pushes a $ 50 $ kg boy with a force of $ 80 $ N. The force with which the boy pushes the man is",
+       "options": [
+        "$ 50 $ N",
+        "zero",
+        "$ 57 $ N",
+        "$ 80 $ N"
+       ],
+       "correct_index": 3,
+       "explanation": "Newton's third law fixes the reaction at exactly $ 80 $ N, regardless of the masses. The masses decide the resulting *accelerations* — the lighter boy accelerates more — but never the sizes of the two forces, which are always equal and opposite."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch04-m06",
+       "source": "mcq",
+       "prompt": "Arranged from strongest to weakest, the four fundamental forces are",
+       "options": [
+        "electromagnetic, strong, gravitational, weak",
+        "strong, weak, electromagnetic, gravitational",
+        "gravitational, electromagnetic, weak, strong",
+        "strong, electromagnetic, weak, gravitational"
+       ],
+       "correct_index": 3,
+       "explanation": "Taking the strong force as 1, electromagnetism is about $ 10^{-2} $, the weak force about $ 10^{-6} $, and gravity a staggering $ 10^{-38} $. Gravity dominates the universe not because it is strong but because it is always attractive and never cancels, while charges neutralise each other over large scales."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch04-m07",
+       "source": "mcq",
+       "prompt": "Which pair of forces has unlimited range?",
+       "options": [
+        "Strong and weak",
+        "Gravitational and electromagnetic",
+        "Gravitational and strong",
+        "Electromagnetic and weak"
+       ],
+       "correct_index": 1,
+       "explanation": "Both gravity and the electrostatic force fall off as $ 1/r^{2} $ — weakening forever but never switching off, which is how the Sun holds distant planets. The strong force dies out beyond about $ 10^{-15} $ m and the weak force beyond roughly $ 10^{-18} $ m, so neither is felt outside a nucleus."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch04-m08",
+       "source": "mcq",
+       "prompt": "Beta decay of a nucleus is governed by",
+       "options": [
+        "the strong force",
+        "the weak force",
+        "the electromagnetic force",
+        "the gravitational force"
+       ],
+       "correct_index": 1,
+       "explanation": "Beta decay turns a neutron into a proton (or the reverse), changing one kind of quark into another. Only the weak force can change quark flavour, so it alone drives the process. Its feebleness explains why beta half-lives are so long compared with the near-instant decays the strong force mediates."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch04-m09",
+       "source": "mcq",
+       "prompt": "Two protons inside a nucleus repel each other electrically, yet the nucleus holds together. This is because",
+       "options": [
+        "the strong nuclear force between them exceeds the electrical repulsion at that separation",
+        "the electrical repulsion between protons vanishes at nuclear separations",
+        "the gravitational attraction between the protons is enough to bind them",
+        "the weak force acts between them and exactly cancels the repulsion"
+       ],
+       "correct_index": 0,
+       "explanation": "At separations of about a femtometre the strong force is roughly a hundred times the electrical repulsion, so it wins and binds the nucleus. Its very short range is also why large nuclei become unstable: electrical repulsion reaches right across a big nucleus, while the strong attraction only reaches immediate neighbours."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch04-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Comparing gravitational and electrical forces",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the ratio of the electrical force to the gravitational force between two protons. Take $ m_p = 1.67 \\times 10^{-27} $ kg, $ e = 1.6 \\times 10^{-19} $ C, $ G = 6.67 \\times 10^{-11} $ SI and $ 1/4\\pi\\varepsilon_0 = 9 \\times 10^{9} $ SI.",
+    "solution": "Both forces fall off as $ 1/r^{2} $, so the separation cancels in the ratio — the answer is a pure number, the same at every distance.\n\n$ \\frac{F_e}{F_g} = \\frac{\\frac{1}{4\\pi\\varepsilon_0}\\frac{e^{2}}{r^{2}}}{G\\frac{m_p^{2}}{r^{2}}} = \\frac{\\frac{1}{4\\pi\\varepsilon_0}e^{2}}{G m_p^{2}} $\n\n**Numerator:** $ (9 \\times 10^{9})(1.6 \\times 10^{-19})^{2} = (9 \\times 10^{9})(2.56 \\times 10^{-38}) = 2.30 \\times 10^{-28} $\n\n**Denominator:** $ (6.67 \\times 10^{-11})(1.67 \\times 10^{-27})^{2} = (6.67 \\times 10^{-11})(2.79 \\times 10^{-54}) = 1.86 \\times 10^{-64} $\n\n$ \\frac{F_e}{F_g} = \\frac{2.30 \\times 10^{-28}}{1.86 \\times 10^{-64}} \\approx 1.2 \\times 10^{36} $\n\n**What that number means.** Gravity between two protons is smaller than their electrical repulsion by thirty-six orders of magnitude. This is why gravity is simply ignored in every atomic and nuclear calculation — including it would be like worrying about the weight of a signature when weighing a truck.\n\n**So why does gravity run the cosmos?** Because charge comes in two signs and bulk matter is neutral, electrical forces cancel over large scales. Mass has only one sign, so gravity accumulates without limit."
+   },
+   {
+    "id": "we-ch04-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Resultant of three forces on a particle",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Three forces act on a particle: $ 4 $ N towards east, $ 3 $ N towards north, and $ 5 $ N towards south-west. Find the resultant.",
+    "solution": "Resolve everything into east and north components, add them separately, then recombine.\n\n**The $ 4 $ N east force:** $ (+4, 0) $\n\n**The $ 3 $ N north force:** $ (0, +3) $\n\n**The $ 5 $ N south-west force** points $ 45^\\circ $ below the west direction, so both components are negative:\n\n$ (-5\\cos 45^\\circ,\\ -5\\sin 45^\\circ) = (-3.54, -3.54) $\n\n**Add.**\n\nEast: $ 4 + 0 - 3.54 = 0.46 $ N\n\nNorth: $ 0 + 3 - 3.54 = -0.54 $ N\n\n**Recombine.**\n\n$ R = \\sqrt{0.46^{2} + 0.54^{2}} = \\sqrt{0.21 + 0.29} = \\sqrt{0.50} \\approx 0.71 $ N\n\n$ \\tan\\theta = \\frac{0.54}{0.46} \\Rightarrow \\theta \\approx 49.6^\\circ $ south of east.\n\n**Watch out:** the three forces nearly cancel, so the resultant is far smaller than any one of them. That is normal, and it is also why you must keep the signs straight — a single sign slip here changes the answer by more than the answer itself."
+   },
+   {
+    "id": "we-ch04-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Identifying third-law pairs",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A book of weight $ 20 $ N rests on a table. Name the reaction partner of (a) the book's weight and (b) the normal force the table exerts on the book. Explain why these are not the same pair.",
+    "solution": "A third-law pair always involves **two different bodies**, and the two forces are of the **same kind**.\n\n**(a) The book's weight** is the earth pulling the book down with $ 20 $ N, gravitationally. Its partner is *the book pulling the earth up* with $ 20 $ N, gravitationally. That partner acts on the earth, not on the table.\n\n**(b) The normal force** is the table pushing the book up with $ 20 $ N, electromagnetically. Its partner is *the book pushing the table down* with $ 20 $ N.\n\n**Why the weight and the normal force are not a pair.** They act on the *same* body (the book), they are different kinds of force (gravitational versus contact), and they happen to be equal here only because the book is in equilibrium. Tilt the table or put the book in a lift and the two would differ at once — while a genuine third-law pair is equal always, no exceptions.\n\n**The test to apply.** Ask: *who exerts it, and on whom?* If both forces act on the same object, they are not a third-law pair, however neatly they cancel."
+   },
+   {
+    "id": "we-ch04-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Range decides which force matters",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why the strong nuclear force, though about $ 100 $ times stronger than the electrical force, plays no part in holding a water molecule together.",
+    "solution": "Strength alone never settles which force dominates — **range** does.\n\n**The reach of each force.** The strong force falls to nothing beyond about $ 10^{-15} $ m, roughly the width of a nucleus. Chemical bonds in a water molecule span about $ 10^{-10} $ m — a hundred thousand times further.\n\n**The consequence.** At that separation the strong force is not merely weak, it is effectively absent. Electromagnetism, falling off gently as $ 1/r^{2} $, is still perfectly potent and does the entire job of bonding.\n\n**The general rule.** Which force governs a phenomenon depends on the length scale:\n\ninside a nucleus ($ \\sim 10^{-15} $ m) — the strong force\n\natoms, molecules, all of chemistry and every contact force ($ \\sim 10^{-10} $ m) — electromagnetism\n\nplanets, stars, galaxies — gravity, because bulk matter is electrically neutral\n\n**The takeaway.** Before asking 'which force is strongest?', ask 'how far apart are the objects?'. A short-range force of enormous strength is simply irrelevant at long distances."
+   },
+   {
+    "id": "we-ch04-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — How many electrons make a charge?",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A plastic rod rubbed with cloth acquires a charge of $ -4 \\times 10^{-9} $ C. How many electrons were transferred, and by how much did the rod's mass change? Take $ e = 1.6 \\times 10^{-19} $ C and $ m_e = 9.1 \\times 10^{-31} $ kg.",
+    "solution": "**Number of electrons:**\n\n$ n = \\frac{q}{e} = \\frac{4 \\times 10^{-9}}{1.6 \\times 10^{-19}} = 2.5 \\times 10^{10} $\n\nTwenty-five thousand million electrons.\n\n**Mass gained:**\n\n$ \\Delta m = n m_e = (2.5 \\times 10^{10})(9.1 \\times 10^{-31}) = 2.3 \\times 10^{-20}\\ \\text{kg} $\n\n**Two things worth noticing.** Twenty-five billion electrons sounds enormous, yet it is a *tiny* fraction of the rod's electrons — a gram of matter holds something like $ 10^{23} $ of them. Charging by friction disturbs about one electron in $ 10^{13} $.\n\n**And the mass change is unmeasurable.** At $ 10^{-20} $ kg, no balance ever built could detect it. This is why charge transfer is treated as a purely electrical event with no mechanical consequence — even though, strictly, the rod really did get heavier."
+   },
+   {
+    "id": "we-ch04-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Gravity versus electricity on the large scale",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two identical neutral iron spheres of mass $ 1 $ kg are $ 1 $ m apart. Find the gravitational attraction between them. Then find what fractional charge imbalance would make the electrical force equal to it. Take $ G = 6.67 \\times 10^{-11} $ SI.",
+    "solution": "**Gravitational force:**\n\n$ F_g = \\frac{Gm^{2}}{r^{2}} = \\frac{(6.67 \\times 10^{-11})(1)}{1} = 6.67 \\times 10^{-11}\\ \\text{N} $\n\n**Charge needed for an equal electrical force.** Setting $ \\frac{kq^{2}}{r^{2}} = F_g $:\n\n$ q = \\sqrt{\\frac{F_g r^{2}}{k}} = \\sqrt{\\frac{6.67 \\times 10^{-11}}{9 \\times 10^{9}}} = \\sqrt{7.41 \\times 10^{-21}} = 8.6 \\times 10^{-11}\\ \\text{C} $\n\n**As a number of electrons:** $ \\frac{8.6 \\times 10^{-11}}{1.6 \\times 10^{-19}} = 5.4 \\times 10^{8} $ — about half a billion.\n\n**The point of the calculation.** A charge imbalance of only half a billion electrons — one part in roughly $ 10^{15} $ of the sphere's electrons — already produces a force matching the whole gravitational attraction of a kilogram.\n\n**So why does gravity run the universe?** Precisely because such imbalances do not persist. Charges of both signs attract and neutralise, so bulk matter is electrically neutral to extraordinary precision. Mass has only one sign and cannot cancel, so gravity accumulates without limit — feeble per particle, dominant in aggregate."
+   },
+   {
+    "id": "we-ch04-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Where the contact force actually comes from",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 5 $ kg book rests on a table. Explain, in terms of the fundamental forces, what supplies the $ 50 $ N normal force, and estimate the compression of the table surface if its effective stiffness is $ 10^{8}\\ \\text{N m}^{-1} $.",
+    "solution": "**What the normal force is.** Nothing in the table \"decides\" to push back. The book's atoms approach the table's atoms until their electron clouds begin to overlap, and the resulting **electromagnetic** repulsion — plus the quantum exclusion that forbids electrons sharing states — pushes them apart. The normal force is that repulsion, summed over the contact area.\n\n**Why it happens to equal $ 50 $ N.** The table compresses until the repulsion exactly balances the weight, then stops. It is a spring finding its equilibrium, not a fixed property of the table.\n\n**Estimating the compression:**\n\n$ x = \\frac{F}{k} = \\frac{50}{10^{8}} = 5 \\times 10^{-7}\\ \\text{m} = 0.5\\ \\mu\\text{m} $\n\nHalf a micrometre — invisible, but real.\n\n**The consequence worth carrying.** Every contact force in mechanics — normal force, friction, tension, the push of a hand — is electromagnetic at bottom, and every \"rigid\" support is really a very stiff spring. That is why a normal force can take any value up to the point of breaking, and why it disappears the instant contact is lost."
+   },
+   {
+    "id": "we-ch04-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Ranking the four forces in a real situation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "For two protons at a separation of $ 1 $ fm inside a nucleus, compare the strong nuclear force (about $ 2000 $ N at that range) with the electrical repulsion and the gravitational attraction.",
+    "solution": "**Electrical repulsion:**\n\n$ F_e = \\frac{ke^{2}}{r^{2}} = \\frac{(9 \\times 10^{9})(1.6 \\times 10^{-19})^{2}}{(10^{-15})^{2}} = \\frac{2.30 \\times 10^{-28}}{10^{-30}} = 230\\ \\text{N} $\n\n**Gravitational attraction:**\n\n$ F_g = \\frac{Gm_p^{2}}{r^{2}} = \\frac{(6.67 \\times 10^{-11})(1.67 \\times 10^{-27})^{2}}{10^{-30}} = \\frac{1.86 \\times 10^{-64}}{10^{-30}} = 1.9 \\times 10^{-34}\\ \\text{N} $\n\n**The ranking:**\n\nStrong: $ 2000 $ N\n\nElectrical: $ 230 $ N — about a ninth of it\n\nGravitational: $ 2 \\times 10^{-34} $ N — smaller by 37 orders of magnitude\n\n**What holds a nucleus together.** The strong force beats the electrical repulsion by roughly ten to one at this separation, which is why nuclei are stable at all. Gravity is so far below the others that it plays literally no part.\n\n**Why heavy nuclei become unstable.** The strong force reaches only about $ 1 $ fm, so each proton is bound by its immediate neighbours alone. Electrical repulsion has unlimited range and every proton repels every other. Add enough protons and the accumulated repulsion overtakes the local attraction — which is precisely why there is no stable element beyond bismuth."
+   }
+  ]
+ }
+}

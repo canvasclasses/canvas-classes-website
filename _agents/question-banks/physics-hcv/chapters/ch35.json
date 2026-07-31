@@ -1,0 +1,295 @@
+{
+ "hcv_chapter": 35,
+ "hcv_title": "Magnetic Field due to a Current",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Moving Charges and Magnetism (Biot-Savart law, Ampere's law, solenoids, force between currents)"
+ },
+ "source_pages": {
+  "worked": "734-738 (partly read from page images)",
+  "obj1": "740-741 (read from page images)"
+ },
+ "notes": "The second chapter whose text layer is corrupt in the source PDF, so the full Objective I set (12 items) and the worked-example/exercise topics were read from rendered page images. All 12 items rebuilt; one (a square loop beside a straight wire, answered from a figure) was re-cast with the geometry stated in words.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch35-field-due-to-current",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Magnetic Field due to a Current",
+   "intro": "Twelve questions on the fields currents make. Getting the *direction* right is most of the work, so reach for the right-hand rule before the formula.",
+   "sections": [
+    {
+     "id": "directions",
+     "title": "Getting the Direction Right",
+     "blurb": "Right-hand rule, then arithmetic — never the other way round.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch35-m01",
+       "source": "mcq",
+       "prompt": "A vertical wire carries current upward. An electron beam is fired horizontally **towards** the wire. The beam is deflected",
+       "options": [
+        "downward",
+        "upward",
+        "towards the right",
+        "towards the left"
+       ],
+       "correct_index": 1,
+       "explanation": "Take the current along $ +\\hat{k} $ and the electron approaching from $ +x $, so $ \\vec{v} = -v\\hat{i} $. The wire's field there is $ \\vec{B} = B\\hat{j} $. Then $ \\vec{v} \\times \\vec{B} = -vB(\\hat{i} \\times \\hat{j}) = -vB\\hat{k} $, and multiplying by the electron's negative charge flips it to $ +\\hat{k} $ — upward."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m02",
+       "source": "mcq",
+       "prompt": "A straight current-carrying wire lies along the **axis** of a circular current loop. The wire",
+       "options": [
+        "exerts an inward force on the loop",
+        "exerts an outward force on the loop",
+        "exerts a force parallel to itself",
+        "exerts no force on the loop"
+       ],
+       "correct_index": 3,
+       "explanation": "The wire's field circles it, so at every point of the loop that field is tangential — pointing along the loop's own current element. Since $ d\\vec{l} \\times \\vec{B} = 0 $ when the two are parallel, every element feels zero force and so does the loop."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m03",
+       "source": "mcq",
+       "prompt": "A proton beam travels north to south and an electron beam south to north, side by side. Ignoring the earth's field, the electron beam is deflected",
+       "options": [
+        "away from the proton beam",
+        "upward",
+        "towards the proton beam",
+        "downward"
+       ],
+       "correct_index": 2,
+       "explanation": "Conventional current follows the protons (southward) and *opposes* the electrons' motion (also southward). So both beams constitute southward currents — parallel currents, which attract. The electron beam is pulled towards the proton beam."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m04",
+       "source": "mcq",
+       "prompt": "A charged particle is moved **along** a magnetic field line. The magnetic force on it is",
+       "options": [
+        "along its velocity",
+        "zero",
+        "opposite to its velocity",
+        "perpendicular to its velocity"
+       ],
+       "correct_index": 1,
+       "explanation": "The force is $ qvB\\sin\\theta $, and moving along a field line means $ \\theta = 0 $, so the force vanishes. This is why charged particles spiral *along* field lines in the magnetosphere — the parallel motion is entirely unimpeded."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m05",
+       "source": "mcq",
+       "prompt": "A moving charge produces",
+       "options": [
+        "both an electric and a magnetic field",
+        "an electric field only",
+        "a magnetic field only",
+        "neither"
+       ],
+       "correct_index": 0,
+       "explanation": "Any charge, moving or not, has an electric field. Motion adds a magnetic field as well. The two are aspects of one electromagnetic field — which is why an observer moving alongside the charge would see only an electric field, with the magnetic part transformed away."
+      }
+     ]
+    },
+    {
+     "id": "wires-and-loops",
+     "title": "Fields of Wires and Loops",
+     "blurb": "Straight wires, loops, and the forces between them.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch35-m06",
+       "source": "mcq",
+       "prompt": "A circular loop lies in the vertical north-south plane, carrying current directed **north** at its topmost point. On its axis, the magnetic field at a point to the east and at a point to the west is",
+       "options": [
+        "towards east at both points",
+        "towards west at both points",
+        "east at one and west at the other",
+        "zero at both"
+       ],
+       "correct_index": 1,
+       "explanation": "Curling the right hand along the current (north at the top) gives a magnetic moment pointing west. On the axis the field lies along the moment on *both* sides of the loop — field lines emerge from one face and re-enter the other, running the same way along the whole axis. So it is westward at both points."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m07",
+       "source": "mcq",
+       "prompt": "Wires carrying $ 20 $ A and $ 40 $ A run parallel in **opposite** directions. A third wire, carrying current antiparallel to the $ 20 $ A wire, is placed midway between them. The force on it is",
+       "options": [
+        "towards the $ 40 $ A wire",
+        "towards the $ 20 $ A wire",
+        "zero",
+        "perpendicular to the plane of the currents"
+       ],
+       "correct_index": 0,
+       "explanation": "The third wire is antiparallel to the $ 20 $ A wire, so it is *repelled* by it — pushed towards the $ 40 $ A side. It is parallel to the $ 40 $ A wire (both oppose the $ 20 $ A one), so it is *attracted* to that too. Both effects push the same way."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m08",
+       "source": "mcq",
+       "prompt": "Two parallel wires carry $ i_1 > i_2 $. With the currents in the same direction the field midway between them is $ 10\\ \\mu\\text{T} $; reversing $ i_2 $ makes it $ 30\\ \\mu\\text{T} $. The ratio $ i_1/i_2 $ is",
+       "options": [
+        "$ 2 $",
+        "$ 4 $",
+        "$ 3 $",
+        "$ 1 $"
+       ],
+       "correct_index": 0,
+       "explanation": "At the midpoint, same-direction currents give *opposing* fields, so the difference $ \\propto (i_1 - i_2) = 10 $. Reversing one makes them add, so $ \\propto (i_1 + i_2) = 30 $. Solving gives $ i_1 = 20k $ and $ i_2 = 10k $, a ratio of 2."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m09",
+       "source": "mcq",
+       "prompt": "A square loop carrying current sits beside a long straight wire, with one side parallel and nearer to the wire. The loop experiences",
+       "options": [
+        "no net force at all, since it is a closed loop",
+        "a torque about its centre but no net force",
+        "a net force towards or away from the wire, set by the current directions",
+        "a force perpendicular to the plane of the wire and loop"
+       ],
+       "correct_index": 2,
+       "explanation": "The wire's field is *non-uniform*, falling as $ 1/r $, so the near side of the loop sits in a stronger field than the far side and the two forces do not cancel. If the near side's current is parallel to the wire's the loop is attracted; if antiparallel, repelled. Only in a *uniform* field would a closed loop feel no net force."
+      }
+     ]
+    },
+    {
+     "id": "paths-and-frames",
+     "title": "Paths, Radii and Reference Frames",
+     "blurb": "What the enclosed area reveals, and what changes when you move.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch35-m10",
+       "source": "mcq",
+       "prompt": "A particle is projected perpendicular to a uniform magnetic field. The **area** enclosed by its circular path is proportional to its",
+       "options": [
+        "velocity",
+        "momentum",
+        "kinetic energy",
+        "charge"
+       ],
+       "correct_index": 2,
+       "explanation": "The radius is $ r = mv/qB $, so the area $ \\pi r^{2} \\propto v^{2} $ — and $ v^{2} $ is proportional to the kinetic energy. Note the *radius* goes as momentum, while the *area*, involving its square, tracks energy."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m11",
+       "source": "mcq",
+       "prompt": "Particles X and Y of equal charge, accelerated through the same potential difference, describe circles of radii $ R_1 $ and $ R_2 $ in the same field. The ratio of X's mass to Y's is",
+       "options": [
+        "$ (R_1/R_2)^{1/2} $",
+        "$ R_1/R_2 $",
+        "$ R_1 R_2 $",
+        "$ (R_1/R_2)^{2} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Accelerating through $ V $ gives $ v = \\sqrt{2qV/m} $, so $ r = mv/qB = \\frac{1}{B}\\sqrt{2mV/q} \\propto \\sqrt{m} $. Inverting, the mass goes as $ r^{2} $, giving $ (R_1/R_2)^{2} $. The heavier particle emerges slower but still curves more widely."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch35-m12",
+       "source": "mcq",
+       "prompt": "An observer rides a trolley alongside a current-carrying wire, moving opposite to the current at exactly the electrons' drift speed $ v = i/nAe $. The magnetic field this observer measures at distance $ r $ is very nearly",
+       "options": [
+        "zero",
+        "$ \\frac{\\mu_0 i}{\\pi r} $",
+        "$ \\frac{2\\mu_0 i}{\\pi r} $",
+        "$ \\frac{\\mu_0 i}{2\\pi r} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Moving with the electrons makes *them* stationary — but the positive lattice ions are now moving backwards past the observer, and they constitute a current of the same magnitude and the same direction as before. So the field is essentially unchanged at $ \\mu_0 i/2\\pi r $. Only what is moving has changed, not the current."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch35-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Field due to a long straight wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A long straight wire carries $ 10 $ A. Find the magnetic field $ 5 $ cm from it. Take $ \\mu_0 = 4\\pi \\times 10^{-7} $ SI.",
+    "solution": "$ B = \\frac{\\mu_0 i}{2\\pi r} = \\frac{(4\\pi \\times 10^{-7})(10)}{2\\pi (0.05)} $\n\nThe $ \\pi $ cancels:\n\n$ = \\frac{(2 \\times 10^{-7})(10)}{0.05} = \\frac{2 \\times 10^{-6}}{0.05} = 4 \\times 10^{-5}\\ \\text{T} $\n\nThat is $ 40\\ \\mu\\text{T} $ — comparable with the earth's field of about $ 50\\ \\mu\\text{T} $, which is why a compass placed near such a wire deflects noticeably.\n\n**A shortcut worth memorising.** $ \\frac{\\mu_0}{2\\pi} = 2 \\times 10^{-7} $ exactly, so $ B = \\frac{2 \\times 10^{-7}i}{r} $. This removes the $ \\pi $ from every straight-wire calculation.\n\n**Direction.** Grip the wire with the right hand, thumb along the current; the fingers curl the way the field circles. The field lines are closed circles round the wire — magnetic field lines never begin or end anywhere."
+   },
+   {
+    "id": "we-ch35-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Field at the centre of a circular loop",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A circular coil of $ 50 $ turns and radius $ 4 $ cm carries $ 2 $ A. Find the magnetic field at its centre.",
+    "solution": "For a single turn, the Biot-Savart law integrates to $ B = \\frac{\\mu_0 i}{2R} $. With $ N $ turns this multiplies up:\n\n$ B = \\frac{\\mu_0 N i}{2R} = \\frac{(4\\pi \\times 10^{-7})(50)(2)}{2(0.04)} $\n\n$ = \\frac{4\\pi \\times 10^{-5}}{0.08} = \\frac{1.257 \\times 10^{-4}}{0.08} = 1.57 \\times 10^{-3}\\ \\text{T} $\n\nAbout $ 1.6 $ mT — some forty times the earth's field.\n\n**Why the integration is so easy here.** Every current element of the loop is the same distance $ R $ from the centre, and each $ d\\vec{l} $ is perpendicular to its $ \\vec{r} $. So $ \\sin\\theta = 1 $ throughout and the integral reduces to $ \\frac{\\mu_0 i}{4\\pi R^{2}} \\oint dl = \\frac{\\mu_0 i}{4\\pi R^{2}}(2\\pi R) $.\n\n**Direction.** Along the axis, given by curling the right hand along the current — the thumb points the way the field goes through the loop. Note that turns are cheap: fifty turns give fifty times the field for the same current."
+   },
+   {
+    "id": "we-ch35-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Field on the axis of a circular loop",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A loop of radius $ 3 $ cm carries $ 5 $ A. Find the field on its axis at $ 4 $ cm from the centre, and compare with the field at the centre.",
+    "solution": "$ B = \\frac{\\mu_0 i R^{2}}{2(R^{2} + x^{2})^{3/2}} $\n\n**Denominator first:** $ R^{2} + x^{2} = (0.03)^{2} + (0.04)^{2} = 9 \\times 10^{-4} + 16 \\times 10^{-4} = 25 \\times 10^{-4} $\n\n$ (25 \\times 10^{-4})^{3/2} = (0.05)^{3} = 1.25 \\times 10^{-4} $\n\n**Now the field:**\n\n$ B = \\frac{(4\\pi \\times 10^{-7})(5)(9 \\times 10^{-4})}{2(1.25 \\times 10^{-4})} = \\frac{5.65 \\times 10^{-9}}{2.5 \\times 10^{-4}} = 2.26 \\times 10^{-5}\\ \\text{T} $\n\n**At the centre**, setting $ x = 0 $:\n\n$ B_0 = \\frac{\\mu_0 i}{2R} = \\frac{(4\\pi \\times 10^{-7})(5)}{0.06} = 1.05 \\times 10^{-4}\\ \\text{T} $\n\nSo the axial point has about $ 22\\% $ of the central value.\n\n**The far-field limit.** For $ x \\gg R $ the formula becomes $ B \\approx \\frac{\\mu_0 i R^{2}}{2x^{3}} = \\frac{\\mu_0 M}{2\\pi x^{3}} $ — the field of a magnetic dipole, falling as $ 1/x^{3} $, exactly like an electric dipole. A current loop *is* a magnetic dipole, and at a distance nothing else about it matters."
+   },
+   {
+    "id": "we-ch35-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Force between two parallel wires",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two long parallel wires $ 4 $ cm apart carry $ 6 $ A and $ 9 $ A in the same direction. Find the force per unit length between them.",
+    "solution": "$ \\frac{F}{L} = \\frac{\\mu_0 i_1 i_2}{2\\pi d} = \\frac{(4\\pi \\times 10^{-7})(6)(9)}{2\\pi(0.04)} $\n\nUsing $ \\frac{\\mu_0}{2\\pi} = 2 \\times 10^{-7} $:\n\n$ = \\frac{(2 \\times 10^{-7})(54)}{0.04} = \\frac{1.08 \\times 10^{-5}}{0.04} = 2.7 \\times 10^{-4}\\ \\text{N m}^{-1} $\n\n**Attractive**, since the currents run the same way.\n\n**Why the same direction attracts — a genuinely counter-intuitive result.** Wire 1's field at wire 2 points in a particular direction; applying $ I\\vec{L} \\times \\vec{B} $ to wire 2 gives a force towards wire 1. Note this is the *opposite* of two parallel beams of like charges, which repel electrostatically. Current-carrying wires are electrically neutral, so only the magnetic effect survives.\n\n**Where this force is used to define units.** The ampere was long defined by exactly this relation: two wires a metre apart carrying $ 1 $ A each exert $ 2 \\times 10^{-7}\\ \\text{N m}^{-1} $. That is not a coincidence — $ \\mu_0 $ was *defined* to make it come out so."
+   },
+   {
+    "id": "we-ch35-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Ampere's law applied to a solenoid",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A solenoid $ 50 $ cm long with $ 1000 $ turns carries $ 3 $ A. Find the field near its centre, and at one end.",
+    "solution": "**Turns per unit length:**\n\n$ n = \\frac{1000}{0.5} = 2000\\ \\text{m}^{-1} $\n\n**Field at the centre**, from Ampere's law applied to a long solenoid:\n\n$ B = \\mu_0 n i = (4\\pi \\times 10^{-7})(2000)(3) = 7.54 \\times 10^{-3}\\ \\text{T} $\n\nAbout $ 7.5 $ mT.\n\n**At one end** the field is very nearly half the central value:\n\n$ B_{end} = 3.77 \\times 10^{-3}\\ \\text{T} $\n\n**Why $ B $ does not depend on the radius or the total length.** Ampere's law with a rectangular loop straddling the winding gives $ B = \\mu_0 ni $ — only the *density* of turns matters. Adding more turns at the ends does not strengthen the middle, which answers a question that puzzles many students.\n\n**And why the field is uniform inside.** The contributions from turns on all sides conspire to cancel any radial variation, provided the solenoid is much longer than it is wide. This uniformity is why solenoids are the standard laboratory source of a controlled magnetic field."
+   },
+   {
+    "id": "we-ch35-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Field inside and outside a thick wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A solid cylindrical conductor of radius $ R $ carries current $ i $ spread uniformly over its cross-section. Find the field at distance $ r $ from the axis, for $ r < R $ and $ r > R $.",
+    "solution": "Use Ampere's law with a circular path of radius $ r $ centred on the axis: $ \\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 i_{enc} $.\n\n**Outside ($ r > R $).** The whole current is enclosed:\n\n$ B(2\\pi r) = \\mu_0 i \\Rightarrow B = \\frac{\\mu_0 i}{2\\pi r} $\n\nIdentical to a thin wire — the thickness makes no difference outside.\n\n**Inside ($ r < R $).** Only the current within radius $ r $ counts, and it scales with area:\n\n$ i_{enc} = i\\frac{r^{2}}{R^{2}} $\n\n$ B(2\\pi r) = \\frac{\\mu_0 i r^{2}}{R^{2}} \\Rightarrow B = \\frac{\\mu_0 i r}{2\\pi R^{2}} $\n\nSo $ B \\propto r $ inside.\n\n**Check the boundary.** Both expressions give $ \\frac{\\mu_0 i}{2\\pi R} $ at $ r = R $ ✓ — the field is greatest at the surface, zero on the axis.\n\n**The pattern to recognise.** This is structurally identical to the uniformly charged sphere in electrostatics: linear inside, inverse-power outside, matching at the boundary. Whenever a source is spread uniformly through a symmetric body, expect this shape."
+   },
+   {
+    "id": "we-ch35-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Field due to a finite straight wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A straight wire of length $ 10 $ cm carries $ 10 $ A. Find the field at a point on its perpendicular bisector, $ 4 $ cm from the wire's midpoint.",
+    "solution": "For a finite wire, the Biot-Savart law integrates to\n\n$ B = \\frac{\\mu_0 i}{4\\pi d}(\\sin\\theta_1 + \\sin\\theta_2) $\n\nwhere the angles are measured from the perpendicular to each end. On the bisector they are equal.\n\n**Geometry.** Half the wire is $ 5 $ cm, and $ d = 4 $ cm, so the distance to each end is $ \\sqrt{4^{2}+5^{2}} = 6.4 $ cm:\n\n$ \\sin\\theta = \\frac{5}{6.4} = 0.781 $\n\n**Field:**\n\n$ B = \\frac{(10^{-7})(10)}{0.04}(2 \\times 0.781) = \\frac{10^{-6}}{0.04}(1.562) $\n\n$ = (2.5 \\times 10^{-5})(1.562) = 3.9 \\times 10^{-5}\\ \\text{T} $\n\n**Compare with an infinite wire** at the same distance: $ B = \\frac{2 \\times 10^{-7}(10)}{0.04} = 5 \\times 10^{-5} $ T. The finite wire gives less, as it must — there is simply less wire contributing.\n\n**The two limits worth knowing.** For $ d \\gg L $ the wire looks like a point element and $ B \\propto 1/d^{2} $. For $ d \\ll L $ it looks infinite and $ B \\propto 1/d $. The general formula bridges the two, and the $ \\sin\\theta $ factors are what carry you between them."
+   },
+   {
+    "id": "we-ch35-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Field at the centre of a square loop",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A square loop of side $ 10 $ cm carries $ 4 $ A. Find the magnetic field at its centre.",
+    "solution": "Each of the four sides contributes equally, and by symmetry all four contributions point the same way (perpendicular to the loop), so simply compute one and multiply by four.\n\n**For one side.** Its perpendicular distance from the centre is $ d = a/2 = 5 $ cm, and the centre lies on its perpendicular bisector, so\n\n$ \\sin\\theta_1 = \\sin\\theta_2 = \\frac{a/2}{\\sqrt{(a/2)^{2}+(a/2)^{2}}} = \\frac{1}{\\sqrt{2}} = 0.707 $\n\n$ B_{one} = \\frac{\\mu_0 i}{4\\pi d}(2\\sin\\theta) = \\frac{(10^{-7})(4)}{0.05}(1.414) $\n\n$ = (8 \\times 10^{-6})(1.414) = 1.13 \\times 10^{-5}\\ \\text{T} $\n\n**Total from four sides:**\n\n$ B = 4(1.13 \\times 10^{-5}) = 4.52 \\times 10^{-5}\\ \\text{T} $\n\n**In closed form:** $ B = \\frac{2\\sqrt{2}\\mu_0 i}{\\pi a} $, which gives the same value.\n\n**Compare with a circular loop of the same perimeter.** A circle of circumference $ 0.4 $ m has $ R = 0.0637 $ m and gives $ B = \\frac{\\mu_0 i}{2R} = 3.9 \\times 10^{-5} $ T — slightly *less* than the square. Packing the same length of wire into a square brings more of it closer to the centre."
+   }
+  ]
+ }
+}

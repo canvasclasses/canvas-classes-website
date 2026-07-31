@@ -1,0 +1,329 @@
+{
+ "hcv_chapter": 10,
+ "hcv_title": "Rotational Mechanics",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "System of Particles and Rotational Motion"
+ },
+ "source_pages": {
+  "worked": "197-206",
+  "obj1": "207-208"
+ },
+ "notes": "13 Objective I items rebuilt. One source item uses a figure of two coaxial wheels with strings; re-cast verbally since only the radius ratio matters. The paired disc items (11 and 12) are kept as a pair because the second builds on the first.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch10-rotation",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Rotational Mechanics",
+   "intro": "Thirteen questions on rotation. The recurring theme: moment of inertia depends on *where* the mass sits, not just how much there is.",
+   "sections": [
+    {
+     "id": "rotational-kinematics",
+     "title": "Axis, Angular Velocity and Directions",
+     "blurb": "Vectors along the axis, motion perpendicular to it.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch10-m01",
+       "source": "mcq",
+       "prompt": "$ \\vec{A} $ is a unit vector along the rotation axis of a purely rotating body and $ \\vec{B} $ a unit vector along the velocity of a particle P off the axis. Then $ \\vec{A} \\cdot \\vec{B} $ equals",
+       "options": [
+        "$ 1 $",
+        "$ -1 $",
+        "$ 0 $",
+        "none of these"
+       ],
+       "correct_index": 2,
+       "explanation": "Every particle of a rotating body moves in a circle whose plane is perpendicular to the axis, so its velocity is always perpendicular to the axis. Perpendicular vectors have zero dot product. This holds for every particle, whatever its distance from the axis."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m02",
+       "source": "mcq",
+       "prompt": "For a body rotating uniformly about a fixed axis, $ \\vec{A} $ is a unit vector along the axis and $ \\vec{B} $ a unit vector along the resultant force on an off-axis particle P. Then $ \\vec{A} \\cdot \\vec{B} $ equals",
+       "options": [
+        "$ 1 $",
+        "$ -1 $",
+        "$ 0 $",
+        "none of these"
+       ],
+       "correct_index": 2,
+       "explanation": "Uniform rotation means the particle has only centripetal acceleration, directed straight at the axis and therefore perpendicular to it. The resultant force follows the acceleration, so it too is perpendicular to $ \\vec{A} $ and the dot product vanishes."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m03",
+       "source": "mcq",
+       "prompt": "A particle moves with constant velocity parallel to the X-axis. Its angular momentum about the origin",
+       "options": [
+        "remains constant",
+        "is zero",
+        "goes on increasing",
+        "goes on decreasing"
+       ],
+       "correct_index": 0,
+       "explanation": "Angular momentum is $ L = mvd $, where $ d $ is the perpendicular distance from the origin to the line of motion — and for a straight-line path that distance never changes. So $ L $ stays constant and non-zero. Consistently, the torque about the origin is zero because no force acts."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m04",
+       "source": "mcq",
+       "prompt": "In pure rotation, $ \\omega = v/r $ for a particle at distance $ r $ from the axis. It follows that",
+       "options": [
+        "$ \\omega \\propto 1/r $",
+        "$ \\omega \\propto r $",
+        "$ \\omega $ is independent of $ r $",
+        "$ \\omega = 0 $"
+       ],
+       "correct_index": 2,
+       "explanation": "Every particle of a rigid rotating body sweeps the same angle in the same time, so $ \\omega $ is a property of the whole body, identical at every radius. Reading $ \\omega = v/r $ as an inverse proportionality misses that $ v $ itself grows with $ r $ in exactly the way that keeps the ratio fixed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m05",
+       "source": "mcq",
+       "prompt": "A small wheel is fixed coaxially on a bigger wheel of double its radius, and strings wound on them support blocks A (small wheel) and B (big wheel). In a given time the distances travelled satisfy",
+       "options": [
+        "$ x = y $",
+        "$ y = 2x $",
+        "$ x = 2y $",
+        "none of these"
+       ],
+       "correct_index": 1,
+       "explanation": "Both wheels share one axle and therefore one angular displacement $ \\theta $. The string unwinds by $ r\\theta $, so the block on the larger radius moves twice as far: $ y = 2x $. The angular quantity is common; the linear quantities scale with radius."
+      }
+     ]
+    },
+    {
+     "id": "moment-of-inertia",
+     "title": "Moment of Inertia",
+     "blurb": "Distance from the axis counts twice over.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch10-m06",
+       "source": "mcq",
+       "prompt": "Disc A has radius $ r $ and thickness $ t $; disc B has radius $ 4r $ and thickness $ t/4 $. Both are cut from the same iron plate stock. Their moments of inertia about the central axis satisfy",
+       "options": [
+        "$ I_A > I_B $",
+        "$ I_A = I_B $",
+        "it depends on the actual values of $ t $ and $ r $",
+        "$ I_A < I_B $"
+       ],
+       "correct_index": 3,
+       "explanation": "Mass goes as $ \\rho \\pi R^{2}h $, so B has $ 16 \\times \\tfrac14 = 4 $ times A's mass. Then $ I = \\tfrac12 MR^{2} $ gives B a factor of $ 4 \\times 16 = 64 $ over A. Spreading the same material further out raises $ I $ sharply, because radius enters squared on top of its effect on mass."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m07",
+       "source": "mcq",
+       "prompt": "Equal torques act from rest on discs A and B of the previous question. After the same time, the rim speeds satisfy",
+       "options": [
+        "$ v_A = v_B $",
+        "$ v_A > v_B $",
+        "$ v_A < v_B $",
+        "it depends on the magnitude of the torques"
+       ],
+       "correct_index": 1,
+       "explanation": "With $ \\alpha = \\tau/I $ and $ I_B = 64 I_A $, disc A gains angular speed 64 times faster. Its rim radius is 4 times smaller, so its rim speed still wins by a factor of $ 64/4 = 16 $. The much larger moment of inertia of B dominates the comparison."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m08",
+       "source": "mcq",
+       "prompt": "A closed horizontal tube partly filled with water is rotated about a perpendicular bisector. As it spins up, the moment of inertia of the water about the axis",
+       "options": [
+        "decreases",
+        "stays the same",
+        "increases",
+        "first increases, then decreases"
+       ],
+       "correct_index": 2,
+       "explanation": "The water is flung towards the tube's ends, so its mass ends up further from the axis. Since $ I = \\sum mr^{2} $, moving mass outward raises the moment of inertia. Unlike a rigid body, a fluid can rearrange itself and its moment of inertia is not fixed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m09",
+       "source": "mcq",
+       "prompt": "A uniform rod of mass $ m $ and length $ l $ rotates on a smooth horizontal surface about a clamped end at uniform angular velocity $ \\omega $. The horizontal force exerted by the clamp is",
+       "options": [
+        "zero",
+        "$ \\frac{1}{2}m\\omega^{2}l $",
+        "$ m\\omega^{2}l $",
+        "$ mg $"
+       ],
+       "correct_index": 1,
+       "explanation": "The rod's centre of mass travels in a circle of radius $ l/2 $, so the net inward force must be $ m\\omega^{2}(l/2) $. The clamp is the only thing that can supply it. Using $ l $ rather than $ l/2 $ — forgetting that the centre of mass, not the far end, sets the requirement — is the usual slip."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m10",
+       "source": "mcq",
+       "prompt": "A uniform rod of length $ l $ stands vertically on a **smooth** horizontal surface at point O. Disturbed slightly, it topples. Its lower end finally rests",
+       "options": [
+        "at a distance $ l/2 $ from O",
+        "at O",
+        "at a distance less than $ l/2 $ from O",
+        "at a distance greater than $ l/2 $ from O"
+       ],
+       "correct_index": 0,
+       "explanation": "The surface is smooth, so no horizontal force acts and the centre of mass falls straight down along the vertical through O. Once the rod lies flat, its centre of mass is directly over O and each end is $ l/2 $ away — so the lower end has slid to $ l/2 $ from O. On a rough floor friction would hold the end near O instead."
+      }
+     ]
+    },
+    {
+     "id": "torque-and-angular-momentum",
+     "title": "Torque, Angular Momentum and Rolling",
+     "blurb": "Why a spinning skater speeds up by pulling her arms in.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch10-m11",
+       "source": "mcq",
+       "prompt": "A skater spinning with arms outstretched pulls them in. Her angular speed increases because",
+       "options": [
+        "her moment of inertia decreases while angular momentum is conserved",
+        "her angular momentum increases",
+        "she exerts an external torque on herself",
+        "her kinetic energy is conserved"
+       ],
+       "correct_index": 0,
+       "explanation": "No external torque acts about the vertical axis, so $ L = I\\omega $ is conserved. Drawing her arms in lowers $ I $, so $ \\omega $ must rise to compensate. Her kinetic energy $ \\tfrac12 I\\omega^{2} = L^{2}/2I $ actually *increases* — supplied by the muscular work of pulling her arms inward."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m12",
+       "source": "mcq",
+       "prompt": "A solid sphere, a solid cylinder and a hollow cylinder of equal mass and radius roll without slipping from rest down the same incline. The one reaching the bottom first is",
+       "options": [
+        "the hollow cylinder",
+        "the solid cylinder",
+        "all arrive together",
+        "the solid sphere"
+       ],
+       "correct_index": 3,
+       "explanation": "The acceleration is $ a = g\\sin\\theta/(1 + I/MR^{2}) $, so the smallest $ I/MR^{2} $ wins. That ratio is $ 0.4 $ for a solid sphere, $ 0.5 $ for a solid cylinder and $ 1 $ for a hollow one. Mass and radius cancel out entirely — only the *distribution* of mass matters."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch10-m13",
+       "source": "mcq",
+       "prompt": "For a body rolling without slipping, the instantaneous velocity of the contact point relative to the ground is",
+       "options": [
+        "zero",
+        "$ v $, the same as the centre",
+        "$ 2v $",
+        "$ v/2 $"
+       ],
+       "correct_index": 0,
+       "explanation": "Rolling without slipping means exactly that the contact point is momentarily at rest — its translational velocity $ v $ forward is cancelled by the rotational velocity $ \\omega R = v $ backward. That is why static rather than kinetic friction acts at the contact, and why rolling friction dissipates so little energy. The topmost point, by the same reasoning, moves at $ 2v $."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch10-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Torque and angular acceleration",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A flywheel of moment of inertia $ 4\\ \\text{kg m}^{2} $ is acted on by a constant torque of $ 20 $ N m. Find its angular acceleration and the angular speed after $ 5 $ s from rest.",
+    "solution": "The rotational analogue of $ F = ma $ is $ \\tau = I\\alpha $.\n\n$ \\alpha = \\frac{\\tau}{I} = \\frac{20}{4} = 5\\ \\text{rad s}^{-2} $\n\n**Angular speed after $ 5 $ s**, using the rotational version of $ v = u + at $:\n\n$ \\omega = \\omega_0 + \\alpha t = 0 + 5(5) = 25\\ \\text{rad s}^{-1} $\n\n**The translation table worth memorising once:**\n\n$ x \\to \\theta $, $ v \\to \\omega $, $ a \\to \\alpha $, $ m \\to I $, $ F \\to \\tau $\n\nEvery linear equation carries over. So $ \\theta = \\omega_0 t + \\tfrac12 \\alpha t^{2} $ gives the angle turned, here $ \\tfrac12(5)(25) = 62.5 $ rad — about 10 revolutions."
+   },
+   {
+    "id": "we-ch10-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Moment of inertia and the parallel axis theorem",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the moment of inertia of a uniform rod of mass $ M $ and length $ L $ about an axis through one end, perpendicular to the rod.",
+    "solution": "**About the centre**, the standard result is\n\n$ I_{CM} = \\frac{ML^{2}}{12} $\n\n**The parallel axis theorem** shifts this to any parallel axis a distance $ d $ away:\n\n$ I = I_{CM} + Md^{2} $\n\nHere the end is $ d = L/2 $ from the centre:\n\n$ I_{end} = \\frac{ML^{2}}{12} + M\\left(\\frac{L}{2}\\right)^{2} = \\frac{ML^{2}}{12} + \\frac{ML^{2}}{4} = \\frac{ML^{2} + 3ML^{2}}{12} = \\frac{ML^{2}}{3} $\n\n**Four times larger than about the centre.** That is the general lesson: moving the axis away from the centre of mass always increases $ I $, and the centre of mass gives the smallest possible value.\n\n**Watch out:** the theorem only works when one of the two axes passes through the centre of mass. You cannot use it to hop directly between two arbitrary off-centre axes — go via the centre of mass in two steps."
+   },
+   {
+    "id": "we-ch10-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Rolling down an incline",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A solid sphere rolls without slipping down a $ 30^\\circ $ incline. Find its acceleration. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Rolling splits the released energy between translation and rotation, so the sphere accelerates more slowly than it would if sliding.\n\nFor a body rolling without slipping,\n\n$ a = \\frac{g\\sin\\theta}{1 + \\frac{I}{MR^{2}}} $\n\nFor a solid sphere $ I = \\tfrac25 MR^{2} $, so $ I/MR^{2} = 0.4 $:\n\n$ a = \\frac{10 \\times 0.5}{1 + 0.4} = \\frac{5}{1.4} = 3.57\\ \\text{m s}^{-2} $\n\n**Compare with sliding** on a frictionless incline: $ a = g\\sin\\theta = 5\\ \\text{m s}^{-2} $. Rolling is slower because some of the energy goes into spinning rather than advancing.\n\n**Note what is absent from the answer.** Neither mass nor radius appears — every solid sphere rolls down at the same rate, marble or cannonball. Only the shape factor $ I/MR^{2} $ matters, which is why a race between a sphere, a cylinder and a ring always finishes in that order."
+   },
+   {
+    "id": "we-ch10-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Conservation of angular momentum",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A turntable of moment of inertia $ 2\\ \\text{kg m}^{2} $ spins freely at $ 6\\ \\text{rad s}^{-1} $. A lump of clay of moment of inertia $ 1\\ \\text{kg m}^{2} $ about the same axis is dropped gently onto it. Find the new angular speed and the energy lost.",
+    "solution": "The clay is dropped vertically, so it exerts no torque about the vertical axis — **angular momentum is conserved**.\n\n$ I_1\\omega_1 = (I_1 + I_2)\\omega_2 $\n\n$ 2(6) = 3\\omega_2 \\Rightarrow \\omega_2 = 4\\ \\text{rad s}^{-1} $\n\n**Energy before:**\n\n$ \\tfrac12 (2)(36) = 36 $ J\n\n**Energy after:**\n\n$ \\tfrac12 (3)(16) = 24 $ J\n\n**Lost:** $ 12 $ J, to friction as the clay is dragged up to speed — the rotational twin of a perfectly inelastic collision.\n\n**Why energy falls while angular momentum holds.** Since $ KE = L^{2}/2I $ and $ L $ is fixed, raising $ I $ must lower the energy. The same algebra run backwards explains the skater: pulling her arms in lowers $ I $ and *raises* her energy, paid for by her muscles."
+   },
+   {
+    "id": "we-ch10-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Torque about a pivot: the see-saw condition",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A uniform plank of mass $ 10 $ kg and length $ 4 $ m rests on a pivot $ 1.5 $ m from its left end. What mass must be placed on the left end to balance it? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "For equilibrium the clockwise and anticlockwise torques about the pivot must match.\n\n**The plank's weight** acts at its centre, $ 2 $ m from the left end — that is $ 0.5 $ m to the *right* of the pivot.\n\nClockwise torque $ = (10)(10)(0.5) = 50 $ N m\n\n**The added mass** sits at the left end, $ 1.5 $ m to the left of the pivot.\n\nAnticlockwise torque $ = m(10)(1.5) = 15m $\n\n**Balance them:**\n\n$ 15m = 50 \\Rightarrow m = 3.33 $ kg\n\n**The two habits that make torque problems easy.** First, take moments about the pivot — the unknown reaction there has zero moment arm and drops out of the equation entirely. Second, treat a uniform body's whole weight as acting at its centre of mass.\n\n**Check:** the pivot must also support $ (10 + 3.33)(10) = 133 $ N vertically, which is where the force equilibrium condition comes in if the question asks for it."
+   },
+   {
+    "id": "we-ch10-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Rotational kinetic energy of a rolling body",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A solid cylinder of mass $ 2 $ kg rolls without slipping at $ 3\\ \\text{m s}^{-1} $. Find its total kinetic energy and the fraction that is rotational.",
+    "solution": "A rolling body has both kinds of kinetic energy at once.\n\n**Translational:**\n\n$ \\tfrac12 Mv^{2} = \\tfrac12 (2)(9) = 9 $ J\n\n**Rotational.** For a solid cylinder $ I = \\tfrac12 MR^{2} $, and rolling gives $ \\omega = v/R $:\n\n$ \\tfrac12 I\\omega^{2} = \\tfrac12 \\left(\\tfrac12 MR^{2}\\right)\\left(\\frac{v}{R}\\right)^{2} = \\tfrac14 Mv^{2} = \\tfrac14 (2)(9) = 4.5 $ J\n\nNotice $ R $ cancels completely.\n\n**Total:** $ 9 + 4.5 = 13.5 $ J\n\n**Rotational fraction:** $ 4.5/13.5 = 1/3 $\n\n**A tidy general result.** The rotational share is $ \\frac{I/MR^{2}}{1 + I/MR^{2}} $ — one third for a solid cylinder, two sevenths for a solid sphere, one half for a ring. It depends only on shape, never on mass, radius or speed, which is exactly why the rolling race always finishes in the same order."
+   },
+   {
+    "id": "we-ch10-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Angular momentum of a particle in a straight line",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg particle moves along the line $ y = 3 $ m, parallel to the X-axis, at $ 4\\ \\text{m s}^{-1} $. Find its angular momentum about the origin.",
+    "solution": "Angular momentum does not require circular motion — any moving particle has it about any chosen point.\n\n$ L = mvd $\n\nwhere $ d $ is the **perpendicular distance from the origin to the line of motion**, here $ 3 $ m.\n\n$ L = (2)(4)(3) = 24\\ \\text{kg m}^{2}\\text{s}^{-1} $\n\n**Is it constant?** Yes. The particle's distance from the origin changes constantly, but the perpendicular distance to its straight path never does. Consistently, no force acts, so no torque acts, so $ L $ cannot change.\n\n**Watch out:** use the perpendicular distance to the *line*, not the instantaneous distance to the particle. Written as $ \\vec{L} = \\vec{r} \\times \\vec{p} $, the cross product automatically extracts that perpendicular component — which is why the vector form is worth trusting over an intuition about distance."
+   },
+   {
+    "id": "we-ch10-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — A falling rod pivoted at one end",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A uniform rod of mass $ M $ and length $ L $ is held horizontal, hinged at one end, and released. Find its angular acceleration at that instant, and the linear acceleration of its far end.",
+    "solution": "**Torque about the hinge.** The rod's weight acts at its centre, $ L/2 $ from the hinge:\n\n$ \\tau = Mg\\frac{L}{2} $\n\n**Moment of inertia about the end:**\n\n$ I = \\frac{ML^{2}}{3} $\n\n**Angular acceleration:**\n\n$ \\alpha = \\frac{\\tau}{I} = \\frac{MgL/2}{ML^{2}/3} = \\frac{3g}{2L} $\n\n**Linear acceleration of the far end:**\n\n$ a = \\alpha L = \\frac{3g}{2} = 1.5g $\n\n**A genuinely surprising result.** The rod's tip accelerates downward at $ 1.5g $ — faster than free fall. Place a coin near the tip of a hinged ruler and release it: the ruler outruns the coin, which is left behind in mid-air. The hinge supplies the extra downward force through the rod's rigidity.\n\n**Where the crossover is.** Points closer than $ 2L/3 $ from the hinge accelerate at less than $ g $; beyond that, more. The centre of mass itself accelerates at exactly $ 3g/4 $."
+   },
+   {
+    "id": "we-ch10-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Work and power in rotation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A motor applies a constant torque of $ 30 $ N m to a wheel, turning it through $ 20 $ revolutions in $ 10 $ s. Find the work done and the average power.",
+    "solution": "**Convert the angle to radians** — torque formulae never accept revolutions:\n\n$ \\theta = 20 \\times 2\\pi = 125.7 $ rad\n\n**Work done by a torque:**\n\n$ W = \\tau\\theta = 30 \\times 125.7 = 3770 $ J\n\n**Average power:**\n\n$ P = \\frac{W}{t} = \\frac{3770}{10} = 377 $ W\n\n**Check with the other form.** Average angular speed is $ \\omega = 125.7/10 = 12.57\\ \\text{rad s}^{-1} $, and\n\n$ P = \\tau\\omega = 30(12.57) = 377 $ W ✓\n\n**The analogy again.** $ W = \\tau\\theta $ mirrors $ W = Fs $, and $ P = \\tau\\omega $ mirrors $ P = Fv $. Engine specifications quote torque and rpm precisely because their product is the power — which is why a high-torque engine at low revs and a low-torque one at high revs can deliver the same power."
+   },
+   {
+    "id": "we-ch10-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Pulley with mass",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block of mass $ 2 $ kg hangs from a string wound round a pulley of mass $ 4 $ kg and radius $ 0.2 $ m (a uniform disc), free to rotate about its axis. Find the block's acceleration. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Because the pulley has mass, the tension must now provide the torque to spin it — so the tension is *not* simply the block's weight.\n\n**For the block** (taking downward as positive):\n\n$ mg - T = ma \\Rightarrow 20 - T = 2a $\n\n**For the pulley**, with $ I = \\tfrac12 MR^{2} $ and the string not slipping so $ a = \\alpha R $:\n\n$ TR = I\\alpha = \\tfrac12 MR^{2}\\left(\\frac{a}{R}\\right) \\Rightarrow T = \\tfrac12 Ma = \\tfrac12 (4)a = 2a $\n\n**Substitute:**\n\n$ 20 - 2a = 2a \\Rightarrow a = 5\\ \\text{m s}^{-2} $, and $ T = 10 $ N\n\n**Compare with a massless pulley**, where $ a $ would be the full $ g = 10\\ \\text{m s}^{-2} $ and $ T = 0 $... in fact for a massless pulley $ a = g $ only if nothing resists. Here the pulley's inertia halves the acceleration.\n\n**Watch out:** with a massive pulley the tensions on the two sides of the string are *unequal* — that difference is exactly what supplies the torque. Assuming a single tension throughout, valid for a light pulley, is the standard error once the pulley is given a mass."
+   }
+  ]
+ }
+}

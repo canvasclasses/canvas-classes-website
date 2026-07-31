@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 33,
+ "hcv_title": "Thermal and Chemical Effects of Electric Current",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Current Electricity (heating effect); thermoelectricity and electrolysis are largely beyond the current NCERT syllabus — treat as enrichment"
+ },
+ "source_pages": {
+  "worked": "706-707",
+  "obj1": "708-709"
+ },
+ "notes": "Short source chapter — 8 Objective I items, of which the first two are graph-identification questions; both re-cast verbally (what power depends on, and how the temperature coefficient bends the curve). Topped up to 10 with electrolysis and Seebeck items. Thermoelectricity and Faraday's laws of electrolysis sit outside the current NCERT syllabus, so this chapter is flagged as enrichment rather than core.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch33-thermal-chemical",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Thermal and Chemical Effects of Current",
+   "intro": "Ten questions on what a current does besides flow: heating, thermoelectric effects and electrolysis.",
+   "sections": [
+    {
+     "id": "joule-heating",
+     "title": "Joule Heating",
+     "blurb": "Quadratic in the current — until the resistance itself starts changing.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch33-m01",
+       "source": "mcq",
+       "prompt": "The thermal energy produced in a resistor in a fixed time, plotted against the current, gives",
+       "options": [
+        "a straight line through the origin",
+        "a horizontal straight line",
+        "a parabola through the origin",
+        "a curve that falls with current"
+       ],
+       "correct_index": 2,
+       "explanation": "The heat is $ H = I^{2}Rt $, so for fixed $ R $ and $ t $ it goes as $ I^{2} $ — a parabola opening upward from the origin. Doubling the current quadruples the heat, which is why overloaded wiring becomes dangerous so quickly."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch33-m02",
+       "source": "mcq",
+       "prompt": "A constant current is passed through a resistor whose resistance rises with temperature. The rate of production of thermal energy",
+       "options": [
+        "stays exactly constant",
+        "decreases with time",
+        "falls to zero",
+        "increases with time and then levels off"
+       ],
+       "correct_index": 3,
+       "explanation": "With $ I $ held constant, $ P = I^{2}R $ grows as the resistor heats and $ R $ rises. The growth is not unbounded: once the resistor loses heat to its surroundings as fast as it generates it, the temperature — and hence $ R $ and $ P $ — settles at a steady value."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch33-m03",
+       "source": "mcq",
+       "prompt": "Joule heating in a resistor is",
+       "options": [
+        "reversible — it disappears if the current is reversed",
+        "irreversible — reversing the current still produces heat",
+        "proportional to the current, not its square",
+        "independent of the resistance"
+       ],
+       "correct_index": 1,
+       "explanation": "Because $ H \\propto I^{2} $, the sign of the current is irrelevant — heat is produced either way. This is what distinguishes Joule heating from the Peltier effect, which *does* reverse (absorbing heat instead of releasing it) when the current direction is flipped."
+      }
+     ]
+    },
+    {
+     "id": "thermoelectricity",
+     "title": "Thermoelectric Effects",
+     "blurb": "Three related effects, and which junction temperature each depends on.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch33-m04",
+       "source": "mcq",
+       "prompt": "For a thermocouple, consider: (A) the neutral temperature does not depend on the cold-junction temperature; (B) the inversion temperature does not depend on the cold-junction temperature. Then",
+       "options": [
+        "both are correct",
+        "A is correct but B is wrong",
+        "B is correct but A is wrong",
+        "both are wrong"
+       ],
+       "correct_index": 1,
+       "explanation": "The neutral temperature — where the thermo-emf peaks — is a property of the metal pair alone. The inversion temperature, however, sits as far *above* the neutral temperature as the cold junction lies below it, so raising the cold junction lowers the inversion temperature. Only A is independent of it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch33-m05",
+       "source": "mcq",
+       "prompt": "The Seebeck effect is the production of",
+       "options": [
+        "an emf when two junctions of dissimilar metals are at different temperatures",
+        "heat at a junction when current flows through it",
+        "heat along a single conductor carrying current in a temperature gradient",
+        "a temperature difference by an applied emf"
+       ],
+       "correct_index": 0,
+       "explanation": "Seebeck is the *thermometric* effect: a temperature difference between two junctions of dissimilar metals drives a current. It is the basis of every thermocouple. Peltier is its converse (current produces heating or cooling at a junction), and Thomson concerns a single conductor."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch33-m06",
+       "source": "mcq",
+       "prompt": "Which thermoelectric effect is **reversible** — that is, it changes from heating to cooling when the current is reversed?",
+       "options": [
+        "The Peltier effect",
+        "Joule heating",
+        "Neither",
+        "Both"
+       ],
+       "correct_index": 0,
+       "explanation": "Peltier heat is proportional to the *first* power of the current, so reversing the current reverses the sign — a junction that warmed now cools. Joule heat goes as $ I^{2} $ and is always positive. This reversibility is what makes thermoelectric coolers possible."
+      }
+     ]
+    },
+    {
+     "id": "electrolysis",
+     "title": "Chemical Effects and Electrolysis",
+     "blurb": "Charge passed decides mass deposited.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch33-m07",
+       "source": "mcq",
+       "prompt": "According to Faraday's first law of electrolysis, the mass deposited at an electrode is proportional to",
+       "options": [
+        "the current alone, whatever the time",
+        "the charge passed through the electrolyte",
+        "the time alone, whatever the current",
+        "the voltage applied across the electrodes"
+       ],
+       "correct_index": 1,
+       "explanation": "The law states $ m = Zq = Zit $, so it is the *product* of current and time — the total charge — that matters. Half the current for twice the time deposits the same mass. The voltage affects how large the current is, but does not enter the law directly."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch33-m08",
+       "source": "mcq",
+       "prompt": "The same charge is passed through solutions of two different salts. The masses deposited are in the ratio of their",
+       "options": [
+        "atomic masses",
+        "valencies",
+        "densities",
+        "chemical equivalents"
+       ],
+       "correct_index": 3,
+       "explanation": "Faraday's second law: for equal charge, the deposited masses are proportional to the chemical equivalents — atomic mass divided by valency. A divalent ion needs twice the charge per atom, which is exactly why the valency must appear in the denominator."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch33-m09",
+       "source": "mcq",
+       "prompt": "One faraday of charge is approximately",
+       "options": [
+        "$ 96\\,500 $ C",
+        "$ 1.6 \\times 10^{-19} $ C",
+        "$ 6.02 \\times 10^{23} $ C",
+        "$ 9650 $ C"
+       ],
+       "correct_index": 0,
+       "explanation": "A faraday is the charge on one mole of electrons: $ N_A e = (6.02 \\times 10^{23})(1.6 \\times 10^{-19}) \\approx 96\\,500 $ C. It is the natural unit for electrolysis, since it deposits exactly one gram-equivalent of any substance."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch33-m10",
+       "source": "mcq",
+       "prompt": "In an electrolytic cell, current is carried through the solution by",
+       "options": [
+        "free electrons, exactly as in a metal wire",
+        "positive and negative ions moving in opposite directions",
+        "positive ions alone, drifting to the cathode",
+        "neutral molecules carrying the charge bodily"
+       ],
+       "correct_index": 1,
+       "explanation": "Electrolytes conduct by ionic migration: cations drift to the cathode and anions to the anode, both contributing to the same current. This is fundamentally different from metallic conduction, where only electrons move — and it is why electrolysis transports *matter* while a metal wire does not."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch33-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Heat produced by a current",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A current of $ 3 $ A flows through a $ 20\\ \\Omega $ resistor for $ 5 $ minutes. Find the heat produced, in joules and in calories.",
+    "solution": "$ H = I^{2}Rt = (3)^{2}(20)(300) $\n\n$ = (9)(20)(300) = 54\\,000\\ \\text{J} $\n\n**In calories**, dividing by $ 4.186 $:\n\n$ H = \\frac{54\\,000}{4.186} = 12\\,900\\ \\text{cal} \\approx 12.9\\ \\text{kcal} $\n\n**Watch the time unit.** Five minutes must become $ 300 $ s. Leaving it as 5 would understate the heat sixtyfold.\n\n**Which power formula to use.** All three of $ I^{2}Rt $, $ V^{2}t/R $ and $ VIt $ are correct, but pick the one whose quantities are actually held fixed in the problem. Here the current was given, so $ I^{2}Rt $ is the natural choice."
+   },
+   {
+    "id": "we-ch33-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Rating of an electric kettle",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An electric kettle raises $ 1.5 $ kg of water from $ 25 $ °C to $ 100 $ °C in $ 8 $ minutes on a $ 220 $ V supply. Find its power, resistance and the current drawn, assuming no losses. Take $ c_w = 4200\\ \\text{J kg}^{-1}\\text{K}^{-1} $.",
+    "solution": "**Heat required:**\n\n$ Q = mc\\Delta T = (1.5)(4200)(75) = 472\\,500\\ \\text{J} $\n\n**Power:**\n\n$ P = \\frac{Q}{t} = \\frac{472\\,500}{480} = 984\\ \\text{W} $\n\n**Resistance:**\n\n$ R = \\frac{V^{2}}{P} = \\frac{(220)^{2}}{984} = \\frac{48\\,400}{984} = 49.2\\ \\Omega $\n\n**Current:**\n\n$ I = \\frac{P}{V} = \\frac{984}{220} = 4.47\\ \\text{A} $\n\n**Why a real kettle is rated higher.** Heat leaks to the surroundings and warms the kettle body itself, so a real appliance needs perhaps $ 1.5 $ kW to do this in eight minutes. Efficiency is typically 80-90% — good, because the heat 'wasted' mostly stays in the water anyway.\n\n**A useful check on the current.** At $ 4.5 $ A this appliance sits comfortably below a $ 5 $ A domestic circuit rating, which is the kind of sanity test worth running on any answer of this type."
+   },
+   {
+    "id": "we-ch33-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Faraday's first law of electrolysis",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A current of $ 2 $ A passes through a copper sulphate solution for $ 30 $ minutes. Find the mass of copper deposited. Take the electrochemical equivalent of copper as $ 3.29 \\times 10^{-7}\\ \\text{kg C}^{-1} $.",
+    "solution": "**Charge passed:**\n\n$ q = It = (2)(1800) = 3600\\ \\text{C} $\n\n**Mass deposited:**\n\n$ m = Zq = (3.29 \\times 10^{-7})(3600) = 1.18 \\times 10^{-3}\\ \\text{kg} = 1.18\\ \\text{g} $\n\n**Cross-check from first principles.** Copper is divalent with atomic mass $ 63.5 $, so its chemical equivalent is $ 63.5/2 = 31.75\\ \\text{g} $ per faraday:\n\n$ m = \\frac{31.75}{96\\,500} \\times 3600 = 1.18\\ \\text{g} $ ✓\n\n**What only the charge decides.** Halving the current and doubling the time deposits exactly the same mass. This is why electroplating is specified in ampere-hours rather than amps.\n\n**Where the relation comes from.** Each $ \\text{Cu}^{2+} $ ion needs two electrons to become an atom, so the number of atoms deposited is $ q/2e $ — and multiplying by the atomic mass gives Faraday's law directly. The 'electrochemical equivalent' is just that arithmetic packaged into one constant."
+   },
+   {
+    "id": "we-ch33-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Faraday's second law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The same current is passed in series through solutions of silver nitrate and copper sulphate. If $ 2.16 $ g of silver is deposited, find the mass of copper. Take the atomic masses as $ 108 $ (silver, monovalent) and $ 63.5 $ (copper, divalent).",
+    "solution": "In series, both cells receive the **same charge**, so Faraday's second law applies: the masses are in the ratio of the chemical equivalents.\n\n**Chemical equivalents:**\n\nSilver: $ \\frac{108}{1} = 108 $\n\nCopper: $ \\frac{63.5}{2} = 31.75 $\n\n**Ratio:**\n\n$ \\frac{m_{Cu}}{m_{Ag}} = \\frac{31.75}{108} $\n\n$ m_{Cu} = 2.16 \\times \\frac{31.75}{108} = 0.635\\ \\text{g} $\n\n**Why the valency matters so much.** Copper's atomic mass is more than half silver's, yet only about a quarter as much copper is deposited. Each copper ion demands *two* electrons, which halves the number of atoms a given charge can neutralise.\n\n**Note the elegance of the series arrangement.** Because the charge is guaranteed identical, this setup was historically used as a *coulometer* — measure the silver deposited and you know exactly how much charge flowed, with no ammeter required."
+   },
+   {
+    "id": "we-ch33-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Thermo-emf and the neutral temperature",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A thermocouple has $ \\varepsilon = at + bt^{2} $ with $ a = 40\\ \\mu\\text{V °C}^{-1} $ and $ b = -0.1\\ \\mu\\text{V °C}^{-2} $, where $ t $ is the hot-junction temperature and the cold junction is at $ 0 $ °C. Find the neutral and inversion temperatures.",
+    "solution": "**Neutral temperature** is where the emf is maximum, so $ d\\varepsilon/dt = 0 $:\n\n$ a + 2bt = 0 \\Rightarrow t_n = -\\frac{a}{2b} = -\\frac{40}{2(-0.1)} = 200\\ \\text{°C} $\n\n**Inversion temperature** is where the emf returns to zero:\n\n$ at + bt^{2} = 0 \\Rightarrow t(a + bt) = 0 $\n\n$ t_i = -\\frac{a}{b} = -\\frac{40}{-0.1} = 400\\ \\text{°C} $\n\n**Note the relationship:** $ t_i = 2t_n $ when the cold junction is at $ 0 $ °C. More generally the neutral temperature sits exactly midway between the cold-junction and inversion temperatures.\n\n**What happens beyond inversion.** Above $ 400 $ °C the emf reverses sign and the current flows the other way round the circuit — which is why a thermocouple is only usable well below its inversion temperature, and why the neutral temperature (a property of the metal pair alone) is the figure quoted in tables."
+   },
+   {
+    "id": "we-ch33-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Fuse wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why a fuse wire is made short and thin, and why the current at which it melts depends on its radius but not on its length.",
+    "solution": "**Heat generated per unit length:**\n\n$ \\frac{P}{L} = \\frac{I^{2}R}{L} = \\frac{I^{2}\\rho}{A} = \\frac{I^{2}\\rho}{\\pi r^{2}} $\n\n**Heat lost per unit length** goes as the surface area, $ 2\\pi r $ per unit length, times the temperature excess.\n\n**At the melting point these balance:**\n\n$ \\frac{I^{2}\\rho}{\\pi r^{2}} \\propto 2\\pi r \\Rightarrow I^{2} \\propto r^{3} $\n\nSo the fusing current depends on $ r^{3/2} $ — and the **length cancels entirely**.\n\n**Why length drops out.** A longer wire generates proportionally more heat *and* has proportionally more surface to lose it through. The two effects cancel exactly, so a fuse's rating is set by its thickness alone.\n\n**Why it is nevertheless made short.** Not for the rating, but to keep its resistance low so it wastes little power and drops little voltage in normal operation. And thin, so it melts at a current safely below what the wiring can withstand."
+   },
+   {
+    "id": "we-ch33-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Maximum power from a battery into a heater",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two heating coils of $ 4\\ \\Omega $ and $ 6\\ \\Omega $ are available with a $ 12 $ V supply of negligible internal resistance. Which arrangement of the two gives the greatest heating rate?",
+    "solution": "Since the supply voltage is fixed, $ P = V^{2}/R $ — so the **lowest** total resistance gives the most heat.\n\n**Both in series:** $ R = 10\\ \\Omega $, $ P = \\frac{144}{10} = 14.4\\ \\text{W} $\n\n**The $ 4\\ \\Omega $ alone:** $ P = \\frac{144}{4} = 36\\ \\text{W} $\n\n**Both in parallel:** $ R = \\frac{(4)(6)}{10} = 2.4\\ \\Omega $, $ P = \\frac{144}{2.4} = 60\\ \\text{W} $\n\n**Parallel wins**, at $ 60 $ W — more than four times the series arrangement.\n\n**The general rule for a fixed-voltage supply.** Lower resistance means more power, so parallel always beats series. Note this is the exact opposite of the fixed-*current* case, where $ P = I^{2}R $ favours the larger resistance.\n\n**The practical caveat.** At $ 60 $ W the supply must deliver $ 5 $ A, and a real battery with internal resistance would sag under that load — reducing the actual power below the ideal figure. Multi-heat appliances switch between series, single and parallel connections for exactly this reason."
+   },
+   {
+    "id": "we-ch33-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Electroplating time",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "How long must a current of $ 1.5 $ A flow to deposit a $ 10\\ \\mu\\text{m} $ layer of silver over an area of $ 200\\ \\text{cm}^{2} $? Take $ \\rho_{Ag} = 10\\,500\\ \\text{kg m}^{-3} $ and the electrochemical equivalent as $ 1.118 \\times 10^{-6}\\ \\text{kg C}^{-1} $.",
+    "solution": "**Volume of silver needed:**\n\n$ V = A \\times t = (200 \\times 10^{-4})(10 \\times 10^{-6}) = 2 \\times 10^{-7}\\ \\text{m}^{3} $\n\n**Mass:**\n\n$ m = \\rho V = (10\\,500)(2 \\times 10^{-7}) = 2.1 \\times 10^{-3}\\ \\text{kg} = 2.1\\ \\text{g} $\n\n**Charge required:**\n\n$ q = \\frac{m}{Z} = \\frac{2.1 \\times 10^{-3}}{1.118 \\times 10^{-6}} = 1878\\ \\text{C} $\n\n**Time:**\n\n$ t = \\frac{q}{I} = \\frac{1878}{1.5} = 1252\\ \\text{s} \\approx 21\\ \\text{minutes} $\n\n**Why plating is specified this way.** The thickness is what the customer cares about, and it translates through volume and density into a required charge. Since only charge matters, a plater can trade current against time freely — though very high currents give rough, poorly adherent deposits, so low currents over long times are preferred for quality work.\n\n**Watch the two unit conversions.** The area in $ \\text{cm}^{2} $ needs $ \\times 10^{-4} $ and the micrometre thickness $ \\times 10^{-6} $. Both are easy to fumble, and the answer scales directly with each."
+   }
+  ]
+ }
+}

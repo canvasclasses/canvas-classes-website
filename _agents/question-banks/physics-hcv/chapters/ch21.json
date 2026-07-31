@@ -1,0 +1,232 @@
+{
+ "hcv_chapter": 21,
+ "hcv_title": "Speed of Light",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Ray Optics / Wave Optics — supplementary; the historical measurement of c is not a separate NCERT chapter"
+ },
+ "source_pages": {
+  "worked": "(none — the source chapter has no Worked Out Examples section)",
+  "obj1": "462"
+ },
+ "notes": "The shortest chapter in the source: 3 Objective I items and NO Worked Out Examples section at all. The 3 items are rebuilt and the bank topped up to 8 on the historical methods and on c itself. The 6 worked examples are authored on the chapter's own content (Fizeau's wheel, Michelson's rotating mirror, refractive index from speed) rather than adapted, since there was nothing to adapt.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch21-speed-of-light",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — The Speed of Light",
+   "intro": "Eight questions on how fast light travels and how that was first measured.",
+   "sections": [
+    {
+     "id": "speed-in-media",
+     "title": "Speed of Light in Different Media",
+     "blurb": "Only vacuum gives every colour the same speed.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch21-m01",
+       "source": "mcq",
+       "prompt": "Light passes through a closed cylindrical tube containing a gas. As the gas is gradually pumped out, the speed of light inside the tube will",
+       "options": [
+        "decrease",
+        "remain constant",
+        "increase",
+        "first increase then decrease"
+       ],
+       "correct_index": 2,
+       "explanation": "The gas has a refractive index slightly above 1, so light travels at $ c/n $, marginally below $ c $. Removing the gas drives $ n $ towards exactly 1, so the speed rises towards $ c $. The change is tiny — air's index is about $ 1.0003 $ — but the direction is unambiguous."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch21-m02",
+       "source": "mcq",
+       "prompt": "The speeds of red light and yellow light are exactly equal",
+       "options": [
+        "in vacuum but not in air",
+        "in air but not in vacuum",
+        "in vacuum as well as in air",
+        "in neither"
+       ],
+       "correct_index": 0,
+       "explanation": "In vacuum every wavelength travels at exactly $ c $ — vacuum is non-dispersive. Air, like any material, has a refractive index that varies slightly with wavelength, so the two colours travel at very slightly different speeds. That difference is precisely what makes dispersion possible."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch21-m03",
+       "source": "mcq",
+       "prompt": "An object in front of a converging lens forms a real image. If the object is shifted slightly,",
+       "options": [
+        "the image shifts a little later",
+        "the image shifts at the same instant",
+        "the image shifts a little earlier",
+        "the image does not shift"
+       ],
+       "correct_index": 0,
+       "explanation": "Information cannot travel faster than light, so the news of the object's move takes a finite time to reach the lens and then the image plane. The delay is around $ 10^{-9} $ s for laboratory distances — utterly unobservable, but not zero. Strict simultaneity would require infinite signal speed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch21-m04",
+       "source": "mcq",
+       "prompt": "The speed of light in a medium of refractive index $ 1.5 $ is",
+       "options": [
+        "$ 3 \\times 10^{8}\\ \\text{m s}^{-1} $",
+        "$ 2 \\times 10^{8}\\ \\text{m s}^{-1} $",
+        "$ 4.5 \\times 10^{8}\\ \\text{m s}^{-1} $",
+        "$ 1.5 \\times 10^{8}\\ \\text{m s}^{-1} $"
+       ],
+       "correct_index": 1,
+       "explanation": "From $ n = c/v $, the speed is $ v = c/n = (3 \\times 10^{8})/1.5 = 2 \\times 10^{8}\\ \\text{m s}^{-1} $. Note the speed is always *less* than $ c $ in a material — any answer exceeding $ 3 \\times 10^{8} $ should be rejected on sight."
+      }
+     ]
+    },
+    {
+     "id": "measuring-c",
+     "title": "Measuring the Speed of Light",
+     "blurb": "From Roemer's moons to a defined constant.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch21-m05",
+       "source": "mcq",
+       "prompt": "In Fizeau's toothed-wheel method, light returns through a gap in the wheel when the wheel has rotated by",
+       "options": [
+        "half a tooth spacing",
+        "one full revolution",
+        "a quarter of a revolution",
+        "one full tooth-plus-gap spacing"
+       ],
+       "correct_index": 3,
+       "explanation": "Light leaves through one gap, travels to a distant mirror and back. For it to pass again, the wheel must have advanced by exactly one tooth-and-gap period so that the *next* gap occupies the same place. Advancing by half that spacing would put a tooth there and block the light — which is how Fizeau found the first blocking speed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch21-m06",
+       "source": "mcq",
+       "prompt": "Michelson's rotating-mirror method improved on Fizeau's chiefly because",
+       "options": [
+        "it used a much longer light path than Fizeau had",
+        "the returning image is displaced continuously rather than merely blocked",
+        "it needed no distant mirror at all, only a rotating one",
+        "it worked without any rotating component whatsoever"
+       ],
+       "correct_index": 1,
+       "explanation": "Fizeau had to judge when the returning light was *extinguished*, which is an imprecise thing to see. A rotating mirror shifts the returning beam through a measurable angle instead, and an angle can be read far more accurately than a fading brightness. That change of observable is what raised the precision."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch21-m07",
+       "source": "mcq",
+       "prompt": "In the SI system today, the speed of light in vacuum is",
+       "options": [
+        "a measured quantity with an experimental uncertainty",
+        "known only to three significant figures",
+        "a defined exact constant",
+        "different for different observers"
+       ],
+       "correct_index": 2,
+       "explanation": "Since 1983 the metre has been *defined* as the distance light travels in $ 1/299\\,792\\,458 $ of a second, which makes $ c $ exact by definition. Improved experiments now refine the metre rather than $ c $. And its constancy for all observers is the founding postulate of special relativity."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch21-m08",
+       "source": "mcq",
+       "prompt": "Roemer's determination of the speed of light was based on",
+       "options": [
+        "the aberration of starlight over the course of a year",
+        "timing eclipses of Jupiter’s moons at different earth-Jupiter distances",
+        "a toothed wheel and a mirror several kilometres away",
+        "interference between two beams of light from one source"
+       ],
+       "correct_index": 1,
+       "explanation": "Roemer noticed that eclipses of Io ran late when the earth was far from Jupiter and early when close — the discrepancy being the extra travel time across the earth's orbit. It was the first evidence that light travels at a finite speed at all, obtained astronomically long before any laboratory method existed."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch21-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Speed of light and refractive index",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Light travels at $ 2.25 \\times 10^{8}\\ \\text{m s}^{-1} $ in water. Find water's refractive index, and the time light takes to cross $ 3 $ m of water.",
+    "solution": "**Refractive index:**\n\n$ n = \\frac{c}{v} = \\frac{3 \\times 10^{8}}{2.25 \\times 10^{8}} = 1.33 $\n\nwhich is the familiar $ 4/3 $.\n\n**Time to cross:**\n\n$ t = \\frac{d}{v} = \\frac{3}{2.25 \\times 10^{8}} = 1.33 \\times 10^{-8}\\ \\text{s} $\n\nabout $ 13 $ nanoseconds.\n\n**Compare with vacuum:** the same $ 3 $ m would take $ 10 $ ns. The extra $ 3 $ ns is what the refractive index amounts to physically — a delay.\n\n**A useful way to see optical path.** Light takes as long to cross $ 3 $ m of water as it would to cross $ 4 $ m of vacuum. That equivalent vacuum distance, $ nd $, is the *optical path* — the quantity that governs every interference calculation."
+   },
+   {
+    "id": "we-ch21-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Fizeau's toothed wheel",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "In a Fizeau experiment the mirror is $ 8.6 $ km away and the wheel has $ 720 $ teeth. Light is first blocked when the wheel spins at $ 12.6 $ revolutions per second. Find the speed of light.",
+    "solution": "**The round-trip distance:**\n\n$ 2L = 2(8600) = 17\\,200\\ \\text{m} $\n\n**The time available.** Light is first blocked when the wheel has turned by *half* a tooth-and-gap spacing, so a tooth has moved into the gap's place. With $ 720 $ teeth there are $ 720 $ gaps, so half a spacing is $ \\frac{1}{2 \\times 720} $ of a revolution.\n\nAt $ 12.6 $ rev/s, one revolution takes $ 1/12.6 $ s, so\n\n$ t = \\frac{1}{2 \\times 720 \\times 12.6} = \\frac{1}{18\\,144} = 5.51 \\times 10^{-5}\\ \\text{s} $\n\n**Speed of light:**\n\n$ c = \\frac{2L}{t} = \\frac{17\\,200}{5.51 \\times 10^{-5}} = 3.12 \\times 10^{8}\\ \\text{m s}^{-1} $\n\nWithin about 4% of the true value — remarkable for 1849.\n\n**Why the baseline had to be kilometres long.** With $ L $ only a few metres, $ t $ would be nanoseconds and no mechanical wheel could spin fast enough. Choosing a distant mirror is what brings the timing into mechanical reach."
+   },
+   {
+    "id": "we-ch21-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Michelson's rotating mirror",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An octagonal mirror rotates so that light returning from a mirror $ 35 $ km away finds the next face exactly in position. Find the rotation rate needed, and hence how the speed of light follows.",
+    "solution": "**Round-trip time**, assuming $ c = 3 \\times 10^{8}\\ \\text{m s}^{-1} $:\n\n$ t = \\frac{2L}{c} = \\frac{2(35\\,000)}{3 \\times 10^{8}} = 2.33 \\times 10^{-4}\\ \\text{s} $\n\n**Rotation required.** An octagon has 8 faces, so the next face arrives after one eighth of a revolution. That eighth must take $ t $:\n\n$ T = 8t = 1.87 \\times 10^{-3}\\ \\text{s} $\n\n$ f = \\frac{1}{T} = 536\\ \\text{rev s}^{-1} $\n\n**How the measurement runs in practice.** The rate is measured with a stroboscope or tuning fork, the distance surveyed, and then\n\n$ c = \\frac{2L}{t} = 2L \\times 8f = 16 L f $\n\n**Why this design is precise.** Only two quantities enter — a surveyed distance and a rotation rate — and both can be measured to high accuracy. Michelson eventually reached about one part in $ 10^{5} $ this way, and the method held the record for decades."
+   },
+   {
+    "id": "we-ch21-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Roemer's astronomical method",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Eclipses of a moon of Jupiter are observed to run about $ 1000 $ s late when the earth is on the far side of its orbit compared with the near side. The earth's orbital diameter is $ 3.0 \\times 10^{11} $ m. Estimate the speed of light.",
+    "solution": "The delay is simply the extra time light needs to cross the earth's orbit.\n\n$ c = \\frac{\\text{extra distance}}{\\text{extra time}} = \\frac{3.0 \\times 10^{11}}{1000} = 3.0 \\times 10^{8}\\ \\text{m s}^{-1} $\n\n**Why this was such a leap.** Before Roemer, light was widely assumed to travel instantaneously. His observation showed the eclipses were systematically early or late in step with the earth-Jupiter distance — a pattern only a finite light speed could explain.\n\n**The clever part of the method.** Jupiter's moons are a *clock* of known period. Any drift in the observed timing must therefore come from the changing travel distance, not from the moons. Roemer needed no precision timing apparatus at all — only patience and a predictable astronomical event.\n\n**Where the error lay.** The main uncertainty was the size of the earth's orbit, which was poorly known in 1676. His speed was about 26% low, but the *method* was sound, and it remained the only approach for nearly two centuries."
+   },
+   {
+    "id": "we-ch21-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Light-travel times across astronomical distances",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the time light takes to reach the earth from (a) the moon, $ 3.84 \\times 10^{8} $ m away, (b) the sun, $ 1.5 \\times 10^{11} $ m away. Express the second as a light-time.",
+    "solution": "**(a) From the moon:**\n\n$ t = \\frac{3.84 \\times 10^{8}}{3 \\times 10^{8}} = 1.28\\ \\text{s} $\n\n**(b) From the sun:**\n\n$ t = \\frac{1.5 \\times 10^{11}}{3 \\times 10^{8}} = 500\\ \\text{s} = 8.3\\ \\text{minutes} $\n\n**What this means physically.** You never see the sun as it is now, only as it was eight minutes ago. The round-trip delay to the moon — about $ 2.6 $ s — is audible in radio conversations with lunar missions and is exactly why those exchanges sound stilted.\n\n**The light-year as a distance.** A year has $ 3.15 \\times 10^{7} $ s, so\n\n$ 1\\ \\text{light-year} = (3 \\times 10^{8})(3.15 \\times 10^{7}) = 9.5 \\times 10^{15}\\ \\text{m} $\n\nThe nearest star is $ 4.2 $ light-years off, so its light left before you read this sentence by more than four years. Looking outward in space is always looking backward in time."
+   },
+   {
+    "id": "we-ch21-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Delay introduced by a slab",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A glass slab of thickness $ 6 $ cm and refractive index $ 1.5 $ is placed in a light beam. By how much is the light delayed compared with travelling the same $ 6 $ cm through vacuum?",
+    "solution": "**Time through the glass:**\n\n$ v = \\frac{c}{n} = \\frac{3 \\times 10^{8}}{1.5} = 2 \\times 10^{8}\\ \\text{m s}^{-1} $\n\n$ t_{glass} = \\frac{0.06}{2 \\times 10^{8}} = 3.0 \\times 10^{-10}\\ \\text{s} $\n\n**Time through the same distance of vacuum:**\n\n$ t_{vac} = \\frac{0.06}{3 \\times 10^{8}} = 2.0 \\times 10^{-10}\\ \\text{s} $\n\n**Delay:**\n\n$ \\Delta t = 1.0 \\times 10^{-10}\\ \\text{s} = 100\\ \\text{ps} $\n\n**Express it as extra optical path:**\n\n$ \\Delta t \\times c = (1.0 \\times 10^{-10})(3 \\times 10^{8}) = 0.03\\ \\text{m} = 3\\ \\text{cm} $\n\nwhich is exactly $ (n-1)t = (0.5)(6) = 3 $ cm — the extra optical path met in the interference chapter.\n\n**The connection worth seeing.** A time delay and an extra optical path are the same fact in two currencies. In interference we count that extra path in wavelengths; here we count it in picoseconds. Both describe the light simply arriving late."
+   },
+   {
+    "id": "we-ch21-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Light-travel time and satellite navigation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A navigation satellite is $ 20\\,000 $ km from a receiver. Find the signal travel time, and the position error that a timing error of $ 1 $ nanosecond would cause.",
+    "solution": "**Travel time:**\n\n$ t = \\frac{d}{c} = \\frac{2.0 \\times 10^{7}}{3 \\times 10^{8}} = 0.067\\ \\text{s} = 67\\ \\text{ms} $\n\n**Position error from a $ 1 $ ns timing error:**\n\n$ \\Delta d = c\\,\\Delta t = (3 \\times 10^{8})(10^{-9}) = 0.3\\ \\text{m} $\n\nThirty centimetres per nanosecond.\n\n**Why this sets the whole engineering problem.** Satellite navigation works by measuring travel times from several satellites and solving for position. Since every nanosecond costs $ 30 $ cm, metre-level accuracy demands clocks good to a few nanoseconds over the whole constellation — hence atomic clocks aboard every satellite.\n\n**And why relativity is not optional here.** A satellite clock runs fast relative to a ground clock by about $ 38 $ microseconds a day, once gravitational and motional effects are combined. Left uncorrected that is $ 38\\,000 $ ns, or roughly $ 11 $ km of position error accumulating daily. Navigation systems correct for it explicitly — one of the most routine practical uses of relativity there is."
+   },
+   {
+    "id": "we-ch21-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Aberration of starlight",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The earth orbits the sun at $ 30\\ \\text{km s}^{-1} $. Find the angle by which the apparent direction of a star overhead is shifted, and explain how this yields the speed of light.",
+    "solution": "**The shift.** The earth's motion tilts the apparent direction of incoming starlight, much as a moving cyclist must tilt an umbrella. For a star perpendicular to the earth's motion,\n\n$ \\tan\\theta = \\frac{v}{c} = \\frac{3 \\times 10^{4}}{3 \\times 10^{8}} = 10^{-4} $\n\n$ \\theta \\approx 10^{-4}\\ \\text{rad} = 20.6\\ \\text{arcseconds} $\n\n**What an observer sees.** Over a year the earth's velocity swings right round, so every star traces a small ellipse on the sky with a semi-major axis of about $ 20.5 $ arcseconds — the constant of aberration. Bradley discovered this in 1728.\n\n**How it gives $ c $.** Measure the aberration angle and know the earth's orbital speed, and $ c = v/\\tan\\theta $ follows directly. Bradley obtained a value within a few per cent of the modern one — more than a century before any laboratory method existed.\n\n**Why aberration is not parallax.** Parallax depends on the earth's *position* and so on the star's distance; aberration depends on the earth's *velocity* and is the same for every star. Distinguishing the two was itself a significant achievement, and it is the reason Bradley found $ c $ while looking for something else entirely."
+   }
+  ]
+ }
+}

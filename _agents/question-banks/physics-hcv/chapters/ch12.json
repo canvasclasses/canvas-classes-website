@@ -1,0 +1,315 @@
+{
+ "hcv_chapter": 12,
+ "hcv_title": "Simple Harmonic Motion",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Oscillations"
+ },
+ "source_pages": {
+  "worked": "257-263",
+  "obj1": "264-265"
+ },
+ "notes": "12 Objective I items rebuilt. One source item asks students to compare two SHM curves in a figure; re-cast as a phase-difference question stated algebraically.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch12-shm",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Simple Harmonic Motion",
+   "intro": "Twelve questions on oscillations. The test for SHM is always the same: is the restoring force proportional to displacement and directed back towards the mean position?",
+   "sections": [
+    {
+     "id": "what-counts-as-shm",
+     "title": "Recognising Simple Harmonic Motion",
+     "blurb": "One condition decides it — everything else is consequence.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch12-m01",
+       "source": "mcq",
+       "prompt": "A student claims to have applied a force $ F = -k\\sqrt{x} $ (positive $ x $ only, no other force) and obtained simple harmonic motion. For this to be true,",
+       "options": [
+        "$ k $ must decrease as $ x $ increases",
+        "$ k $ must increase as $ x $ increases",
+        "$ k $ must be constant",
+        "the motion cannot be simple harmonic"
+       ],
+       "correct_index": 1,
+       "explanation": "SHM demands $ F \\propto -x $. Writing $ F = -k\\sqrt{x} $ as $ -(k/\\sqrt{x})\\cdot x $ shows the effective stiffness is $ k/\\sqrt{x} $, which must be constant — so $ k $ has to grow as $ \\sqrt{x} $. With $ k $ genuinely constant the force would go as $ \\sqrt{x} $ and the motion, though oscillatory, would not be simple harmonic."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m02",
+       "source": "mcq",
+       "prompt": "The motion $ x = A\\sin\\omega t + B\\cos\\omega t $ is",
+       "options": [
+        "not simple harmonic",
+        "simple harmonic with amplitude $ A + B $",
+        "simple harmonic with amplitude $ (A+B)/2 $",
+        "simple harmonic with amplitude $ \\sqrt{A^{2}+B^{2}} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Two SHMs of the same frequency, a quarter-cycle out of phase, combine into a single SHM. Writing $ A\\sin\\omega t + B\\cos\\omega t = R\\sin(\\omega t + \\phi) $ requires $ R = \\sqrt{A^{2}+B^{2}} $ — the same Pythagorean rule as adding perpendicular vectors, which is exactly what the phasor picture makes of it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m03",
+       "source": "mcq",
+       "prompt": "A particle moves as $ \\vec{r} = A(\\hat{i}\\cos\\omega t + \\hat{j}\\sin\\omega t) $. Its path is",
+       "options": [
+        "a straight line",
+        "a circle",
+        "simple harmonic along one axis",
+        "a parabola"
+       ],
+       "correct_index": 1,
+       "explanation": "Here $ x = A\\cos\\omega t $ and $ y = A\\sin\\omega t $, so $ x^{2}+y^{2} = A^{2} $ — a circle of radius $ A $ traversed at constant angular speed. Each *component* is simple harmonic; combined at right angles with a quarter-cycle phase difference they produce uniform circular motion. This is the classic statement that SHM is the projection of circular motion."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m04",
+       "source": "mcq",
+       "prompt": "A particle moves as $ x = A + B\\sin\\omega t $. The motion is simple harmonic with amplitude",
+       "options": [
+        "$ A $",
+        "$ A + B $",
+        "$ \\sqrt{A^{2}+B^{2}} $",
+        "$ B $"
+       ],
+       "correct_index": 3,
+       "explanation": "The constant $ A $ only shifts the mean position to $ x = A $; it does not change how far the particle swings either side of it. The amplitude is the coefficient of the oscillating term, $ B $. A vertical spring-mass system behaves exactly like this, oscillating about its stretched equilibrium rather than the spring's natural length."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m05",
+       "source": "mcq",
+       "prompt": "Two simple harmonic motions are described by $ x_1 = A\\sin\\omega t $ and $ x_2 = A\\cos\\omega t $. The phase difference between them is",
+       "options": [
+        "zero",
+        "$ \\pi/2 $",
+        "$ \\pi $",
+        "$ 2\\pi $"
+       ],
+       "correct_index": 1,
+       "explanation": "Since $ \\cos\\omega t = \\sin(\\omega t + \\pi/2) $, the second motion leads the first by a quarter cycle. In practice this means one is at its extreme exactly when the other is at the mean position — velocity and displacement in SHM stand in precisely this relationship."
+      }
+     ]
+    },
+    {
+     "id": "period-and-averages",
+     "title": "Period, Displacement and Averages",
+     "blurb": "What a full cycle adds up to, and what it cancels.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch12-m06",
+       "source": "mcq",
+       "prompt": "The time between consecutive appearances of a particle at a particular point equals its full period. That point is",
+       "options": [
+        "the mean position",
+        "between the mean position and the positive extreme",
+        "an extreme position",
+        "between the mean position and the negative extreme"
+       ],
+       "correct_index": 2,
+       "explanation": "Every ordinary point is visited twice per cycle — once going out, once coming back — so the gap between visits is less than a period. Only at an extreme, where the particle turns around and touches the point just once per cycle, is the interval a full period."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m07",
+       "source": "mcq",
+       "prompt": "The smallest time between the particle acquiring a particular **velocity** $ v $ equals the full period. That velocity is",
+       "options": [
+        "zero",
+        "between $ 0 $ and $ v_{max} $",
+        "between $ 0 $ and $ -v_{max} $",
+        "$ v_{max} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Velocity is a vector here, so $ +v $ and $ -v $ count as different. Most values occur twice per cycle, but the maximum velocity — attained only at the mean position while moving in one particular direction — occurs just once, so its repeat interval is a whole period."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m08",
+       "source": "mcq",
+       "prompt": "The displacement of a particle in SHM over one complete period is",
+       "options": [
+        "$ A $",
+        "$ 2A $",
+        "zero",
+        "$ 4A $"
+       ],
+       "correct_index": 2,
+       "explanation": "After one full period the particle is back exactly where it started, so its displacement — a straight-line vector from start to finish — is zero. The *distance* travelled in that same period is $ 4A $, since it covers $ A $ on each of the four quarter-swings."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m09",
+       "source": "mcq",
+       "prompt": "The average acceleration over one complete period of SHM is",
+       "options": [
+        "$ A\\omega^{2} $",
+        "$ A\\omega^{2}/2 $",
+        "zero",
+        "$ A\\omega^{2}/\\sqrt{2} $"
+       ],
+       "correct_index": 2,
+       "explanation": "Average acceleration is the change in velocity divided by the time, and after a full period the velocity has returned to its original value. So the average is exactly zero. The same reasoning gives zero average velocity — while the average *speed*, $ 4A/T $, is emphatically not zero."
+      }
+     ]
+    },
+    {
+     "id": "springs-and-pendulums",
+     "title": "Springs, Pendulums and Energy",
+     "blurb": "What sets the period, and what stubbornly does not.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch12-m10",
+       "source": "mcq",
+       "prompt": "The period of a simple pendulum does **not** depend on",
+       "options": [
+        "the mass of the bob",
+        "its length",
+        "the local value of $ g $",
+        "the length and $ g $ together"
+       ],
+       "correct_index": 0,
+       "explanation": "From $ T = 2\\pi\\sqrt{l/g} $ the mass is simply absent. A heavier bob experiences a proportionally larger restoring force *and* has proportionally more inertia, and the two effects cancel exactly — the same reason all bodies fall at the same rate."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m11",
+       "source": "mcq",
+       "prompt": "A mass on a spring oscillates with amplitude $ A $. At what displacement is its kinetic energy equal to its potential energy?",
+       "options": [
+        "$ A/\\sqrt{2} $",
+        "$ A/2 $",
+        "$ A/4 $",
+        "$ A\\sqrt{3}/2 $"
+       ],
+       "correct_index": 0,
+       "explanation": "Potential energy is $ \\tfrac12 kx^{2} $ and the total is $ \\tfrac12 kA^{2} $. Equal shares means $ \\tfrac12 kx^{2} = \\tfrac12\\left(\\tfrac12 kA^{2}\\right) $, giving $ x^{2} = A^{2}/2 $ and $ x = A/\\sqrt{2} \\approx 0.71A $. Because energy goes as $ x^{2} $, the halfway point in energy is *not* the halfway point in displacement."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch12-m12",
+       "source": "mcq",
+       "prompt": "A pendulum clock keeping correct time on earth is taken to the moon, where $ g $ is one sixth of its earth value. The clock will",
+       "options": [
+        "run slow",
+        "keep correct time",
+        "run fast",
+        "stop altogether"
+       ],
+       "correct_index": 0,
+       "explanation": "Since $ T \\propto 1/\\sqrt{g} $, a sixth of the gravity lengthens the period by $ \\sqrt{6} \\approx 2.45 $ times. Each swing takes almost two and a half times as long, so the clock falls badly behind. A balance-wheel or quartz watch, whose timing does not depend on gravity, would be unaffected."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch12-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Reading amplitude, period and phase off an equation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle moves as $ x = 5\\sin(4\\pi t + \\pi/6) $ cm. Find its amplitude, period, frequency, and the displacement at $ t = 0 $.",
+    "solution": "Compare with the standard form $ x = A\\sin(\\omega t + \\phi) $.\n\n**Amplitude:** $ A = 5 $ cm\n\n**Angular frequency:** $ \\omega = 4\\pi\\ \\text{rad s}^{-1} $\n\n**Period:** $ T = \\frac{2\\pi}{\\omega} = \\frac{2\\pi}{4\\pi} = 0.5 $ s\n\n**Frequency:** $ f = \\frac{1}{T} = 2 $ Hz\n\n**Displacement at $ t = 0 $:**\n\n$ x = 5\\sin(\\pi/6) = 5(0.5) = 2.5 $ cm\n\n**What the phase constant does.** With $ \\phi = \\pi/6 $ the particle does not start at the mean position — it starts a sixth of the way into the cycle, already displaced by $ 2.5 $ cm and heading outward. The phase constant records only *where in the cycle* the clock was started; it changes nothing about the amplitude or the period."
+   },
+   {
+    "id": "we-ch12-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Velocity and acceleration at a given displacement",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle in SHM has amplitude $ 10 $ cm and period $ 2 $ s. Find its speed and acceleration when it is $ 6 $ cm from the mean position.",
+    "solution": "**Angular frequency:**\n\n$ \\omega = \\frac{2\\pi}{T} = \\frac{2\\pi}{2} = \\pi\\ \\text{rad s}^{-1} $\n\n**Speed**, using $ v = \\omega\\sqrt{A^{2}-x^{2}} $:\n\n$ v = \\pi\\sqrt{10^{2}-6^{2}} = \\pi\\sqrt{64} = 8\\pi = 25.1\\ \\text{cm s}^{-1} $\n\n**Acceleration**, using $ a = -\\omega^{2}x $:\n\n$ a = -\\pi^{2}(6) = -59.2\\ \\text{cm s}^{-2} $\n\nThe minus sign means it points back towards the mean position — as a restoring acceleration always must.\n\n**The two formulae worth internalising.** Speed is greatest at the centre ($ v_{max} = \\omega A = 31.4\\ \\text{cm s}^{-1} $) and zero at the extremes. Acceleration does the exact opposite: zero at the centre, greatest at the extremes ($ a_{max} = \\omega^{2}A $).\n\n**Note** that $ v = \\omega\\sqrt{A^{2}-x^{2}} $ needs no knowledge of the phase or the time — it links speed directly to position, which is what makes it so useful."
+   },
+   {
+    "id": "we-ch12-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Period of a spring-mass system",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 0.5 $ kg mass on a spring of constant $ 200\\ \\text{N m}^{-1} $ oscillates. Find the period. How would hanging it vertically change the answer?",
+    "solution": "$ T = 2\\pi\\sqrt{\\frac{m}{k}} = 2\\pi\\sqrt{\\frac{0.5}{200}} = 2\\pi\\sqrt{0.0025} = 2\\pi(0.05) = 0.314 $ s\n\n**Hanging it vertically changes nothing.** Gravity shifts the equilibrium position down by $ mg/k $, but about that new equilibrium the net restoring force is still $ -kx $ with the same $ k $. The period is identical.\n\n**Why gravity drops out.** Measuring $ x $ from the *new* equilibrium, the net force is $ -k(x_0 + x) + mg $, and since $ kx_0 = mg $ at equilibrium, this is just $ -kx $. A constant force never affects the period of an oscillator — it only relocates the mean position.\n\n**A useful consequence.** Measuring the static extension $ x_0 $ of a vertical spring gives $ k = mg/x_0 $ immediately, and hence the period without any timing at all."
+   },
+   {
+    "id": "we-ch12-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Energy in simple harmonic motion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 0.2 $ kg particle performs SHM of amplitude $ 5 $ cm with period $ 0.4 $ s. Find its total energy and its kinetic energy at half the amplitude.",
+    "solution": "**Angular frequency:**\n\n$ \\omega = \\frac{2\\pi}{0.4} = 15.7\\ \\text{rad s}^{-1} $\n\n**Total energy:**\n\n$ E = \\tfrac12 m\\omega^{2}A^{2} = \\tfrac12 (0.2)(15.7)^{2}(0.05)^{2} = \\tfrac12 (0.2)(246.7)(0.0025) = 0.0617 $ J\n\n**At $ x = A/2 $**, the potential energy is\n\n$ U = \\tfrac12 m\\omega^{2}x^{2} = E\\left(\\frac{x}{A}\\right)^{2} = E\\left(\\frac14\\right) = 0.0154 $ J\n\n**Kinetic energy** is what remains:\n\n$ KE = E - U = 0.0617 - 0.0154 = 0.0463 $ J — three quarters of the total.\n\n**The pattern worth remembering.** At $ x = A/2 $ the split is 25% potential and 75% kinetic. Because energy goes as $ x^{2} $, being halfway out in *distance* is only a quarter of the way in *energy*.\n\n**And the frequency doubling.** Both $ KE $ and $ U $ complete two full cycles per oscillation, since each depends on the square of a sinusoid. Their sum, of course, stays perfectly constant."
+   },
+   {
+    "id": "we-ch12-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Springs in series and in parallel",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two springs of constants $ 300 $ and $ 600\\ \\text{N m}^{-1} $ are attached to a $ 2 $ kg mass, (a) side by side (parallel) and (b) end to end (series). Find the period in each case.",
+    "solution": "**(a) Parallel.** Both springs stretch by the same $ x $ and their forces add:\n\n$ k_{eff} = k_1 + k_2 = 300 + 600 = 900\\ \\text{N m}^{-1} $\n\n$ T = 2\\pi\\sqrt{\\frac{2}{900}} = 2\\pi(0.0471) = 0.30 $ s\n\n**(b) Series.** Both springs carry the same force and their extensions add:\n\n$ \\frac{1}{k_{eff}} = \\frac{1}{300} + \\frac{1}{600} = \\frac{2+1}{600} = \\frac{3}{600} \\Rightarrow k_{eff} = 200\\ \\text{N m}^{-1} $\n\n$ T = 2\\pi\\sqrt{\\frac{2}{200}} = 2\\pi(0.1) = 0.63 $ s\n\n**How to keep the two rules straight.** Parallel springs are *stiffer* than either alone, so the combination oscillates faster. Series springs are *softer* than either alone — a longer spring stretches more easily — so the oscillation slows. If your $ k_{eff} $ for a series pair comes out larger than the smaller spring, you have used the wrong rule.\n\n**Note the contrast with electrical resistors**, where series adds directly. Springs behave like capacitors instead: series combines reciprocally."
+   },
+   {
+    "id": "we-ch12-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Simple pendulum and the value of g",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A simple pendulum of length $ 1 $ m completes $ 30 $ oscillations in $ 60.3 $ s. Find the local value of $ g $.",
+    "solution": "**Period from the measurement:**\n\n$ T = \\frac{60.3}{30} = 2.01 $ s\n\n**Rearrange the pendulum formula** to make $ g $ the subject:\n\n$ T = 2\\pi\\sqrt{\\frac{l}{g}} \\Rightarrow g = \\frac{4\\pi^{2}l}{T^{2}} $\n\n$ g = \\frac{4\\pi^{2}(1)}{(2.01)^{2}} = \\frac{39.48}{4.04} = 9.77\\ \\text{m s}^{-2} $\n\n**Why 30 oscillations rather than one.** Timing a single swing would carry the same absolute reaction-time error — perhaps $ 0.2 $ s — over a much smaller interval. Spread across 30 swings, that error is divided by 30. Since $ g \\propto 1/T^{2} $, the percentage error in $ T $ counts double, so this is the single most valuable precaution in the experiment.\n\n**The assumption hiding in the formula.** $ T = 2\\pi\\sqrt{l/g} $ holds only for small angles, where $ \\sin\\theta \\approx \\theta $. Beyond about $ 15^\\circ $ the true period grows and the measured $ g $ would come out too small."
+   },
+   {
+    "id": "we-ch12-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Combining two perpendicular SHMs",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle is subject to $ x = 3\\sin\\omega t $ and $ y = 4\\sin\\omega t $ simultaneously. Describe its path and find the amplitude of the resulting motion.",
+    "solution": "Both components share the same frequency and are exactly **in phase**, so eliminate $ t $ directly.\n\nFrom the two equations, $ \\frac{x}{3} = \\frac{y}{4} = \\sin\\omega t $, hence\n\n$ y = \\frac{4}{3}x $\n\nThat is a **straight line** through the origin. The particle oscillates back and forth along it — the motion is simple harmonic in a slanted direction.\n\n**Amplitude:**\n\n$ R = \\sqrt{3^{2}+4^{2}} = 5 $ units\n\n**How the phase difference decides the shape.** In phase (as here) gives a straight line. A quarter-cycle out of phase with equal amplitudes gives a circle; with unequal amplitudes, an ellipse with axes along $ x $ and $ y $. Anything between gives a tilted ellipse. These are the Lissajous figures, and the whole family follows from the one phase constant.\n\n**Watch out:** perpendicular SHMs of the same frequency add like vectors only when they are in phase. Out of phase, the path becomes an ellipse and there is no single 'amplitude' in a straight-line sense."
+   },
+   {
+    "id": "we-ch12-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Time to travel between two points",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle in SHM of amplitude $ A $ and period $ T $ starts from the mean position. How long does it take to reach $ x = A/2 $, and how long from there to the extreme?",
+    "solution": "Starting from the mean position means $ x = A\\sin\\omega t $.\n\n**To reach $ x = A/2 $:**\n\n$ \\frac{A}{2} = A\\sin\\omega t \\Rightarrow \\sin\\omega t = 0.5 \\Rightarrow \\omega t = \\frac{\\pi}{6} $\n\n$ t_1 = \\frac{\\pi}{6\\omega} = \\frac{\\pi}{6}\\cdot\\frac{T}{2\\pi} = \\frac{T}{12} $\n\n**To reach the extreme** ($ x = A $, where $ \\omega t = \\pi/2 $):\n\n$ t_{total} = \\frac{\\pi}{2\\omega} = \\frac{T}{4} $\n\n**So the second leg takes** $ \\frac{T}{4} - \\frac{T}{12} = \\frac{3T - T}{12} = \\frac{T}{6} $\n\n**Read the asymmetry.** The particle covers the first half of the distance in $ T/12 $ but needs $ T/6 $ — twice as long — for the second half. It is moving fastest near the centre and slows to a stop at the extreme, so equal distances take very unequal times.\n\n**Watch out:** never assume equal distances take equal times in SHM. That would only hold for uniform velocity, which is the one thing SHM never has."
+   },
+   {
+    "id": "we-ch12-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — A floating cylinder oscillating",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A cylinder of cross-section $ A $, height $ h $ and density $ \\rho $ floats upright in a liquid of density $ \\sigma $. Show that if pushed down slightly and released it performs SHM, and find the period.",
+    "solution": "**At equilibrium**, the weight equals the buoyant force. If the submerged depth is $ d $:\n\n$ \\rho A h g = \\sigma A d g \\Rightarrow d = \\frac{\\rho h}{\\sigma} $\n\n**Push it down by a further $ x $.** The extra volume submerged is $ Ax $, so the extra upward force is\n\n$ F = -\\sigma A x g $\n\nThe minus sign shows it is restoring, and the force is proportional to $ x $ — which is exactly the condition for SHM.\n\n**Find the effective stiffness and hence the period.**\n\n$ k = \\sigma A g $, and the mass is $ m = \\rho A h $\n\n$ T = 2\\pi\\sqrt{\\frac{m}{k}} = 2\\pi\\sqrt{\\frac{\\rho A h}{\\sigma A g}} = 2\\pi\\sqrt{\\frac{\\rho h}{\\sigma g}} $\n\n**Notice** the cross-sectional area cancels — a wide raft and a narrow buoy of the same height and density bob at the same rate. And since $ \\rho h/\\sigma = d $, the period is $ 2\\pi\\sqrt{d/g} $: a floating body oscillates exactly like a pendulum whose length equals its submerged depth.\n\n**The general recipe.** To prove any oscillation is simple harmonic, displace the system slightly, show the restoring force is $ -kx $, then read the period off $ 2\\pi\\sqrt{m/k} $."
+   },
+   {
+    "id": "we-ch12-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Pendulum in an accelerating lift",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A simple pendulum of length $ 1 $ m hangs in a lift. Find its period when the lift (a) accelerates upward at $ 2\\ \\text{m s}^{-2} $ and (b) falls freely. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "In an accelerating lift the pendulum responds to an **effective gravity**.\n\n**(a) Accelerating upward.** The pseudo-force points downward, adding to gravity:\n\n$ g_{eff} = g + a = 12\\ \\text{m s}^{-2} $\n\n$ T = 2\\pi\\sqrt{\\frac{1}{12}} = 2\\pi(0.289) = 1.81 $ s\n\nCompare with $ 1.99 $ s at rest — the pendulum runs faster, because the restoring force is stronger.\n\n**(b) Free fall.** Here $ a = g $ downward, so\n\n$ g_{eff} = g - g = 0 $\n\n$ T = 2\\pi\\sqrt{\\frac{1}{0}} \\to \\infty $\n\n**The pendulum stops oscillating altogether.** With no effective gravity there is no restoring force; displaced from the vertical, the bob simply stays put relative to the lift. Both bob and lift are falling identically, so the string carries no tension and nothing pulls the bob back.\n\n**The general rule:** $ g_{eff} = g + a $ for upward acceleration, $ g - a $ for downward. A clock in a rising lift gains time; in a falling one, loses it."
+   }
+  ]
+ }
+}

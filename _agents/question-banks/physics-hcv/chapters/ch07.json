@@ -1,0 +1,280 @@
+{
+ "hcv_chapter": 7,
+ "hcv_title": "Circular Motion",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Motion in a Plane (uniform circular motion) + Laws of Motion (banking, vertical circles)"
+ },
+ "source_pages": {
+  "worked": "121-125",
+  "obj1": "126-127"
+ },
+ "notes": "10 Objective I items rebuilt. One source item relies on a figure of a road with a crest and a dip — re-cast verbally as a convex bridge / concave dip comparison, which tests the same normal-force reasoning.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch07-circular",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Circular Motion",
+   "intro": "Ten questions on going round in circles. The recurring trap is treating centrifugal force as if it were real in the ground frame.",
+   "sections": [
+    {
+     "id": "kinematics-of-circles",
+     "title": "Describing Circular Motion",
+     "blurb": "Speed can be constant while velocity never is.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch07-m01",
+       "source": "mcq",
+       "prompt": "When a particle moves in a circle at uniform speed,",
+       "options": [
+        "its velocity and acceleration are both constant",
+        "its velocity is constant but the acceleration changes",
+        "its acceleration is constant but the velocity changes",
+        "both its velocity and its acceleration change"
+       ],
+       "correct_index": 3,
+       "explanation": "Velocity is tangential and continually swings round, so it changes even though its magnitude does not. Acceleration points to the centre, so its direction also changes from instant to instant. Both are vectors of constant magnitude but ever-changing direction — neither is constant."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m02",
+       "source": "mcq",
+       "prompt": "Two cars of masses $ m_1 $ and $ m_2 $ travel in circles of radii $ r_1 $ and $ r_2 $, completing one lap in the same time. The ratio $ \\omega_1/\\omega_2 $ is",
+       "options": [
+        "$ r_1/r_2 $",
+        "$ 1 $",
+        "$ m_1/m_2 $",
+        "$ m_1 r_1 / m_2 r_2 $"
+       ],
+       "correct_index": 1,
+       "explanation": "Angular speed is $ \\omega = 2\\pi/T $ and depends on nothing but the period. Equal periods therefore mean equal angular speeds, whatever the masses or radii. The *linear* speeds $ v = \\omega r $ do differ — the car on the bigger circle must travel faster to keep up."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m03",
+       "source": "mcq",
+       "prompt": "A particle fixed on a uniformly rotating turntable has speed $ 20 $ cm/s and acceleration $ 20\\ \\text{cm s}^{-2} $. It is moved to half its original radius on the same turntable. Its new speed and acceleration are",
+       "options": [
+        "$ 40 $ cm/s, $ 40\\ \\text{cm s}^{-2} $",
+        "$ 10 $ cm/s, $ 80\\ \\text{cm s}^{-2} $",
+        "$ 10 $ cm/s, $ 10\\ \\text{cm s}^{-2} $",
+        "$ 40 $ cm/s, $ 10\\ \\text{cm s}^{-2} $"
+       ],
+       "correct_index": 2,
+       "explanation": "The turntable's angular speed $ \\omega $ is unchanged — that is the key. Then $ v = \\omega r $ halves to $ 10 $ cm/s, and $ a = \\omega^{2}r $ also halves to $ 10\\ \\text{cm s}^{-2} $. Using $ a = v^{2}/r $ with $ v $ held fixed is the trap; $ v $ is not fixed here."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m04",
+       "source": "mcq",
+       "prompt": "A particle of mass $ m $ is watched from an **inertial** frame moving in a circle of radius $ r $ at uniform speed $ v $. The centrifugal force on it is",
+       "options": [
+        "$ mv^{2}/r $ towards the centre",
+        "zero",
+        "$ mv^{2}/r $ away from the centre",
+        "$ mv^{2}/r $ along the tangent"
+       ],
+       "correct_index": 1,
+       "explanation": "Centrifugal force is a pseudo-force that exists only in a rotating frame. Seen from an inertial frame there is no such force at all — the real inward force is the centripetal one, supplied by tension, friction or gravity. The word 'inertial' in the question is doing all the work."
+      }
+     ]
+    },
+    {
+     "id": "dynamics-of-circles",
+     "title": "Forces in Circular Motion",
+     "blurb": "Something real must always supply the inward pull.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch07-m05",
+       "source": "mcq",
+       "prompt": "A car travels at constant speed over a road that has a convex bridge at A and a concave dip at B. The normal forces there satisfy",
+       "options": [
+        "$ N_A < N_B $",
+        "$ N_A > N_B $",
+        "$ N_A = N_B $",
+        "there is insufficient information"
+       ],
+       "correct_index": 0,
+       "explanation": "On the convex bridge the centre of the circle is below, so the net force must point down: $ mg - N_A = mv^{2}/r $, making $ N_A < mg $. In the dip the centre is above, so $ N_B - mg = mv^{2}/r $ and $ N_B > mg $. Hence $ N_A < N_B $ — which is why you feel light over a hump and heavy in a dip."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m06",
+       "source": "mcq",
+       "prompt": "A particle is viewed from a frame rotating about the Z-axis with uniform angular speed $ \\omega_0 $. The centrifugal force on a particle at distance $ a $ from the axis is",
+       "options": [
+        "$ m\\omega_0^{2} a $",
+        "$ m\\omega^{2} a $",
+        "$ m\\omega\\omega_0 a $",
+        "$ m\\left(\\frac{\\omega + \\omega_0}{2}\\right)^{2} a $"
+       ],
+       "correct_index": 0,
+       "explanation": "A pseudo-force is a property of the *frame*, not of the particle's own motion. It is $ m\\omega_0^{2}a $ directed outward, where $ \\omega_0 $ is the frame's angular speed. The particle's own $ \\omega $ has no bearing on the centrifugal term — though it does determine any Coriolis force."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m07",
+       "source": "mcq",
+       "prompt": "A bucket of water is whirled in a vertical circle of radius $ r $ and the water does not fall out at the top. At that point",
+       "options": [
+        "$ v^{2} \\le gr $",
+        "$ v^{2} = 2gr $ exactly",
+        "$ v^{2} \\ge gr $",
+        "$ v^{2} \\ge 5gr $"
+       ],
+       "correct_index": 2,
+       "explanation": "At the top, gravity and the bucket's push both act downward and together supply the centripetal force: $ mg + N = mv^{2}/r $. Water stays in as long as $ N \\ge 0 $, which needs $ v^{2} \\ge gr $. At exactly $ v^{2} = gr $ the bucket exerts nothing and gravity alone bends the water round."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m08",
+       "source": "mcq",
+       "prompt": "A particle on a string of length $ l $ is swung in a vertical circle. The minimum speed **when the string is horizontal** for the particle to complete the circle is",
+       "options": [
+        "$ \\sqrt{3gl} $",
+        "$ \\sqrt{gl} $",
+        "$ \\sqrt{2gl} $",
+        "$ \\sqrt{5gl} $"
+       ],
+       "correct_index": 0,
+       "explanation": "The binding condition is at the top, where $ v_{top}^{2} = gl $. Applying energy conservation from the horizontal position up to the top — a further rise of $ l $ — gives $ v_h^{2} = v_{top}^{2} + 2gl = 3gl $. The familiar $ \\sqrt{5gl} $ is the requirement at the *lowest* point, not the horizontal one."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m09",
+       "source": "mcq",
+       "prompt": "A car of mass $ m $ rounds an unbanked curve of radius $ r $ at speed $ v $. The centripetal force is supplied by",
+       "options": [
+        "the engine's thrust",
+        "friction between the tyres and the road",
+        "the normal force from the road",
+        "the car's weight"
+       ],
+       "correct_index": 1,
+       "explanation": "On a level road the only horizontal force available is friction, so it alone bends the car round: $ \\mu mg \\ge mv^{2}/r $, giving a maximum safe speed $ v = \\sqrt{\\mu g r} $. Weight and the normal force are both vertical and cannot turn anything, which is exactly why roads are banked at high-speed curves."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch07-m10",
+       "source": "mcq",
+       "prompt": "For a curve of radius $ r $ banked at angle $ \\theta $, the speed at which no friction at all is needed is",
+       "options": [
+        "$ \\sqrt{rg\\sin\\theta} $",
+        "$ \\sqrt{rg\\cos\\theta} $",
+        "$ \\sqrt{rg/\\tan\\theta} $",
+        "$ \\sqrt{rg\\tan\\theta} $"
+       ],
+       "correct_index": 3,
+       "explanation": "With friction absent the normal force does everything: vertically $ N\\cos\\theta = mg $ and horizontally $ N\\sin\\theta = mv^{2}/r $. Dividing gives $ \\tan\\theta = v^{2}/rg $, so $ v = \\sqrt{rg\\tan\\theta} $. Below this speed friction must act up the slope, above it down the slope."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch07-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Centripetal acceleration from period",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A stone tied to a $ 0.5 $ m string is whirled in a horizontal circle, making $ 2 $ revolutions per second. Find its speed and centripetal acceleration.",
+    "solution": "**Angular speed.** Two revolutions per second means\n\n$ \\omega = 2\\pi f = 2\\pi(2) = 4\\pi \\approx 12.57\\ \\text{rad s}^{-1} $\n\n**Linear speed.**\n\n$ v = \\omega r = 12.57(0.5) = 6.28\\ \\text{m s}^{-1} $\n\n**Centripetal acceleration.**\n\n$ a = \\omega^{2} r = (12.57)^{2}(0.5) = 79\\ \\text{m s}^{-2} $\n\nOr equivalently $ a = v^{2}/r = 39.5/0.5 = 79\\ \\text{m s}^{-2} $ ✓\n\n**Worth noticing:** that is about $ 8g $, from a stone on a half-metre string spun twice a second. Centripetal accelerations grow alarmingly fast because $ a \\propto \\omega^{2} $ — double the spin rate and the acceleration quadruples.\n\n**Watch out:** $ \\omega $ must be in radians per second, never revolutions per second, before it goes into $ v = \\omega r $ or $ a = \\omega^{2}r $. Forgetting the $ 2\\pi $ is the single most common slip in this topic."
+   },
+   {
+    "id": "we-ch07-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Conical pendulum",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A bob of mass $ 0.2 $ kg on a $ 1 $ m string moves in a horizontal circle with the string making $ 30^\\circ $ with the vertical. Find the tension and the bob's speed. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The bob moves in a horizontal circle, so its acceleration is horizontal and points to the centre — there is no vertical acceleration at all.\n\n**Vertical direction (no acceleration):**\n\n$ T\\cos 30^\\circ = mg = 0.2(10) = 2 $ N\n\n$ T = \\frac{2}{0.866} = 2.31 $ N\n\n**Horizontal direction (supplies the centripetal force):**\n\n$ T\\sin 30^\\circ = \\frac{mv^{2}}{r} $\n\nThe circle's radius is *not* the string length — it is the horizontal projection:\n\n$ r = l\\sin 30^\\circ = 1(0.5) = 0.5 $ m\n\n$ 2.31(0.5) = \\frac{0.2 v^{2}}{0.5} \\Rightarrow 1.155 = 0.4v^{2} \\Rightarrow v = 1.70\\ \\text{m s}^{-1} $\n\n**Watch out:** using $ r = 1 $ m instead of $ 0.5 $ m is the standard error here. Draw the cone and read the radius off the horizontal circle, not the slant string.\n\n**Also note** the tension exceeds the weight ($ 2.31 $ N against $ 2 $ N) — it must both hold the bob up and pull it inward."
+   },
+   {
+    "id": "we-ch07-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Maximum speed on a level curve",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A car rounds an unbanked curve of radius $ 50 $ m. If $ \\mu = 0.4 $, find the greatest speed at which it can turn without skidding. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Friction is the only horizontal force, so it must supply the entire centripetal requirement.\n\n$ \\frac{mv^{2}}{r} \\le \\mu mg $\n\nThe mass cancels — a loaded lorry and an empty car skid at the same speed on the same curve.\n\n$ v_{max} = \\sqrt{\\mu g r} = \\sqrt{0.4 \\times 10 \\times 50} = \\sqrt{200} = 14.1\\ \\text{m s}^{-1} $\n\nThat is about $ 51 $ km/h.\n\n**What happens above that speed.** Friction simply cannot grow beyond $ \\mu mg $, so the required inward force is unavailable and the car continues on a wider path — it skids outward. Nothing 'throws' it outward; it is failing to be pulled inward.\n\n**Practical reading of the formula.** On a wet road $ \\mu $ might halve, and since $ v_{max} \\propto \\sqrt{\\mu} $ the safe speed falls by a factor of $ \\sqrt{2} $ — about 30%. And a tighter curve (smaller $ r $) is more dangerous at the same speed, which is why hairpin bends carry the lowest limits."
+   },
+   {
+    "id": "we-ch07-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Banking angle for a curve",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "At what angle should a curve of radius $ 100 $ m be banked so that a vehicle at $ 20\\ \\text{m s}^{-1} $ needs no friction? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "With friction ignored, only the normal force and the weight act — and the normal force is perpendicular to the banked surface, so it has both a vertical and a horizontal component.\n\n**Vertical (no acceleration):** $ N\\cos\\theta = mg $\n\n**Horizontal (centripetal):** $ N\\sin\\theta = \\frac{mv^{2}}{r} $\n\n**Divide the second by the first** — this eliminates both $ N $ and $ m $ in one step:\n\n$ \\tan\\theta = \\frac{v^{2}}{rg} = \\frac{400}{100 \\times 10} = 0.4 $\n\n$ \\theta = \\tan^{-1}(0.4) = 21.8^\\circ $\n\n**What the design means.** At exactly $ 20\\ \\text{m s}^{-1} $ the road itself steers the vehicle and the tyres need no sideways grip at all — the turn works even on ice. Slower, and friction must act up the slope to stop it sliding down; faster, and friction acts down the slope.\n\n**Note** the mass cancels, so one banking angle serves every vehicle. Real roads are banked for an average speed and rely on friction for the spread around it."
+   },
+   {
+    "id": "we-ch07-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Vertical circle: the critical condition",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A ball on a string of length $ 0.8 $ m is swung in a vertical circle. Find the minimum speed at the top, and the corresponding speed at the bottom. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**At the top.** Both gravity and the tension point downward, towards the centre:\n\n$ mg + T = \\frac{mv_t^{2}}{l} $\n\nThe string can pull but not push, so the critical case is $ T = 0 $, where gravity alone bends the ball round:\n\n$ v_t^{2} = gl = 10(0.8) = 8 \\Rightarrow v_t = 2.83\\ \\text{m s}^{-1} $\n\n**At the bottom.** Use energy conservation over the drop of $ 2l = 1.6 $ m:\n\n$ \\tfrac12 mv_b^{2} = \\tfrac12 mv_t^{2} + mg(2l) $\n\n$ v_b^{2} = 8 + 2(10)(1.6) = 8 + 32 = 40 $\n\n$ v_b = 6.32\\ \\text{m s}^{-1} $\n\nIn symbols, $ v_b = \\sqrt{5gl} $ — the familiar result.\n\n**Tension at the bottom**, for interest: $ T - mg = mv_b^{2}/l $ gives $ T = 6mg $. The string must survive six times the ball's weight at the bottom while carrying nothing at the top.\n\n**Watch out:** this analysis assumes a *string*. A rigid rod can push as well as pull, so a rod only needs the ball to *reach* the top ($ v_t \\to 0 $), giving $ v_b = \\sqrt{4gl} $ instead. Read the question for which one it is."
+   },
+   {
+    "id": "we-ch07-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Weight over a convex bridge",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A car of mass $ 1000 $ kg crosses a convex bridge whose radius of curvature is $ 40 $ m, at $ 10\\ \\text{m s}^{-1} $. Find the normal force at the top. At what speed would the car leave the road? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "At the crest the centre of the circular path lies *below* the car, so the net force must point downward.\n\n$ mg - N = \\frac{mv^{2}}{r} $\n\n$ N = m\\left(g - \\frac{v^{2}}{r}\\right) = 1000\\left(10 - \\frac{100}{40}\\right) = 1000(10 - 2.5) = 7500 $ N\n\nCompare with the car's weight of $ 10\\,000 $ N — the road pushes up with only three quarters of it, and the passengers feel correspondingly light.\n\n**Leaving the road.** Contact is lost when $ N = 0 $:\n\n$ g = \\frac{v^{2}}{r} \\Rightarrow v = \\sqrt{gr} = \\sqrt{400} = 20\\ \\text{m s}^{-1} $\n\nAbove $ 20\\ \\text{m s}^{-1} $ gravity alone cannot bend the car's path tightly enough to follow the bridge, and it becomes a projectile.\n\n**Connect it up.** This is exactly the bucket-of-water condition, $ v^{2} = gr $, in a different costume — the boundary at which gravity alone supplies the whole centripetal force."
+   },
+   {
+    "id": "we-ch07-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Tangential and radial acceleration together",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle moves on a circle of radius $ 2 $ m with its speed increasing uniformly at $ 3\\ \\text{m s}^{-2} $. Find the magnitude of its total acceleration when its speed is $ 4\\ \\text{m s}^{-1} $.",
+    "solution": "When the speed changes, the acceleration has two perpendicular parts.\n\n**Radial (centripetal) part** — changes the *direction* of the velocity:\n\n$ a_r = \\frac{v^{2}}{r} = \\frac{16}{2} = 8\\ \\text{m s}^{-2} $, towards the centre.\n\n**Tangential part** — changes the *magnitude* of the velocity:\n\n$ a_t = 3\\ \\text{m s}^{-2} $, along the direction of motion.\n\n**Total.** They are perpendicular, so combine them with Pythagoras:\n\n$ a = \\sqrt{a_r^{2} + a_t^{2}} = \\sqrt{64 + 9} = \\sqrt{73} = 8.54\\ \\text{m s}^{-2} $\n\nIts direction makes an angle $ \\tan^{-1}(3/8) = 20.6^\\circ $ with the inward radius.\n\n**The idea to hold on to.** Uniform circular motion is the special case $ a_t = 0 $, where acceleration is purely centripetal. The moment the speed changes, the acceleration tilts away from the centre — and it no longer points at the centre at all.\n\n**Watch out:** never add $ a_r $ and $ a_t $ arithmetically to get $ 11\\ \\text{m s}^{-2} $. They are perpendicular vectors."
+   },
+   {
+    "id": "we-ch07-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Coin on a rotating turntable",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A coin sits $ 10 $ cm from the centre of a turntable with $ \\mu = 0.5 $. Find the greatest angular speed at which the coin does not slip. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The coin travels in a circle, so something must pull it inward — and friction is the only candidate.\n\n$ m\\omega^{2} r \\le \\mu mg $\n\nAgain the mass cancels: a heavy coin and a light one fly off at the same rate.\n\n$ \\omega_{max} = \\sqrt{\\frac{\\mu g}{r}} = \\sqrt{\\frac{0.5 \\times 10}{0.1}} = \\sqrt{50} = 7.07\\ \\text{rad s}^{-1} $\n\nIn revolutions per second: $ f = \\omega/2\\pi = 1.13\\ \\text{rev s}^{-1} $.\n\n**Which way does friction point?** *Inward*, towards the axis. This surprises people, because the coin seems to want to fly outward — but that outward tendency is simply inertia, its urge to go straight. Friction is what curves it into the circle.\n\n**Where the coin slips first.** Since $ \\omega_{max} \\propto 1/\\sqrt{r} $, coins nearer the rim slip at lower angular speeds. Place several at different radii and speed the table up: the outermost always goes first."
+   },
+   {
+    "id": "we-ch07-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Rounding a banked curve with friction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A curve of radius $ 80 $ m is banked at $ 30^\\circ $. Find the design speed (needing no friction), and explain what friction must do if a car takes the curve more slowly. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**Design speed.**\n\n$ v = \\sqrt{rg\\tan\\theta} = \\sqrt{80 \\times 10 \\times \\tan 30^\\circ} = \\sqrt{800 \\times 0.577} = \\sqrt{462} = 21.5\\ \\text{m s}^{-1} $\n\nAbout $ 77 $ km/h. At exactly this speed the normal force alone turns the car.\n\n**Below the design speed.** The car now needs *less* centripetal force than the banking naturally provides, so the surplus inward push would carry it down the slope. Friction must act **up the slope** to hold it on line.\n\n**Above the design speed.** More centripetal force is required than the banking supplies, so friction must act **down the slope**, adding its own inward component.\n\n**At very low speed on a steep, icy bank**, friction is unavailable and the car simply slides down towards the inside of the curve — the reason steeply banked tracks are dangerous when crawling.\n\n**The mental model.** The banking is tuned for one speed. Friction is the correction term that handles every other speed, and its direction flips as you cross the design speed."
+   },
+   {
+    "id": "we-ch07-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Speed at the bottom of a smooth loop",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A small block slides from rest down a smooth track and enters a vertical circular loop of radius $ r $. From what minimum height must it start in order to complete the loop?",
+    "solution": "**The binding condition is at the top of the loop**, where the track can only push inward (downward) and gravity must do the rest:\n\n$ mg \\le \\frac{mv_{top}^{2}}{r} \\Rightarrow v_{top}^{2} \\ge gr $\n\n**Now use energy conservation** from the starting height $ h $ down to the top of the loop, which sits at height $ 2r $. The track is smooth, so no energy is lost:\n\n$ mgh = mg(2r) + \\tfrac12 mv_{top}^{2} $\n\nPut in the critical $ v_{top}^{2} = gr $:\n\n$ gh = 2gr + \\tfrac12 gr = 2.5gr $\n\n$ h = 2.5r $\n\n**Read the answer.** The block must start at two and a half times the loop's radius — noticeably above the top of the loop itself, which is only at $ 2r $. That extra $ 0.5r $ buys the speed needed to stay pressed against the track at the summit.\n\n**Watch out:** it is not enough merely to *reach* the top. A block released from $ h = 2r $ arrives with zero speed and falls straight off the track. Starting from the loop condition rather than from 'just reaches the top' is the whole point of the problem."
+   }
+  ]
+ }
+}

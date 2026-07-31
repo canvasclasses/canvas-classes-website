@@ -1,0 +1,280 @@
+{
+ "hcv_chapter": 1,
+ "hcv_title": "Introduction to Physics",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Units and Measurements"
+ },
+ "source_pages": {
+  "worked": "21-22",
+  "obj1": "23"
+ },
+ "notes": "Source chapter is short — 6 Objective I items. Bank topped up to 10 MCQs covering the chapter's other core ideas (significant figures, error propagation, order of magnitude) so the section stands on its own.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch01-units",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Units and Dimensions",
+   "intro": "Ten questions on what a dimension really tells you, and where dimensional analysis quietly stops working.",
+   "sections": [
+    {
+     "id": "units-and-standards",
+     "title": "Units, Standards and Measurement",
+     "blurb": "What makes a quantity fundamental, and how the number changes when the unit does.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch01-m01",
+       "source": "mcq",
+       "prompt": "Which of the following sets could **not** serve as the fundamental quantities of a system of units?",
+       "options": [
+        "Length, time and mass",
+        "Mass, time and velocity",
+        "Length, mass and time interval",
+        "Mass, length and temperature"
+       ],
+       "correct_index": 1,
+       "explanation": "Fundamental quantities must be independent — none may be built from the others. Velocity is length ÷ time, so a set containing mass, time and velocity secretly contains length as well: it is not independent. The other three sets are mutually independent and are all usable."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m02",
+       "source": "mcq",
+       "prompt": "A measurement is written as $ n\\,u $, where $ u $ is the unit and $ n $ the numerical value. If the same physical quantity is expressed in a different unit, then",
+       "options": [
+        "$ n \\propto u $",
+        "$ n \\propto 1/u $",
+        "$ n \\propto u^{2} $",
+        "$ n \\propto \\sqrt{u} $"
+       ],
+       "correct_index": 1,
+       "explanation": "The quantity itself does not change, so $ n\\,u $ is fixed. If you pick a bigger unit, fewer of them are needed — $ n $ falls in exact proportion. Hence $ n \\propto 1/u $. A length of 2 m is 200 cm: the unit shrank 100×, the number grew 100×."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m03",
+       "source": "mcq",
+       "prompt": "A quantity that has no unit",
+       "options": [
+        "always has a non-zero dimension",
+        "may have a non-zero dimension",
+        "can never have a non-zero dimension",
+        "cannot exist"
+       ],
+       "correct_index": 2,
+       "explanation": "Dimensions and units travel together. If a quantity had any non-zero dimension — say length — it would have to be reported in some length unit. So no unit means every exponent is zero. Refractive index and strain are ordinary examples."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m04",
+       "source": "mcq",
+       "prompt": "A dimensionless quantity",
+       "options": [
+        "may still have a unit",
+        "never has a unit",
+        "always has a unit",
+        "cannot be measured"
+       ],
+       "correct_index": 0,
+       "explanation": "This is the direction that trips people up. Being dimensionless does not force a quantity to be unitless: an angle is length ÷ length, yet it is measured in radians or degrees. So dimensionless with a unit is possible — while unitless with a dimension is not."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m05",
+       "source": "mcq",
+       "prompt": "The radius of a wire is measured as $ 0.240 $ cm. How many significant figures does this reading carry?",
+       "options": [
+        "Two",
+        "Four",
+        "One",
+        "Three"
+       ],
+       "correct_index": 3,
+       "explanation": "Leading zeros only fix the decimal point and never count, so the zero before the 2 is not significant. The digits 2 and 4 count, and the trailing zero after a decimal point is a genuine claim of precision, so it counts too — three in all."
+      }
+     ]
+    },
+    {
+     "id": "dimensional-analysis",
+     "title": "Dimensional Analysis",
+     "blurb": "Deriving formulae from dimensions — and knowing exactly where the method runs out.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch01-m06",
+       "source": "mcq",
+       "prompt": "Suppose a quantity $ x $ has dimensions $ [x] = M^{a}L^{b}T^{c} $. Mass can be written in terms of $ L $, $ T $ and $ x $",
+       "options": [
+        "only if $ a \\neq 0 $",
+        "only if $ a = 0 $",
+        "always",
+        "never"
+       ],
+       "correct_index": 0,
+       "explanation": "To recover $ M $ you must be able to invert the relation — take the $ a $-th root of $ x $ after dividing out the $ L $ and $ T $ parts. That step needs $ a \\neq 0 $. If $ a = 0 $ then $ x $ carries no information about mass at all, and no combination of $ L $, $ T $ and $ x $ can produce it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m07",
+       "source": "mcq",
+       "prompt": "Which statement about dimensional checking is correct?",
+       "options": [
+        "A dimensionally correct equation is always physically correct",
+        "A dimensionally correct equation may still be physically wrong",
+        "A dimensionally incorrect equation may still be physically correct",
+        "Dimensional correctness decides physical correctness completely"
+       ],
+       "correct_index": 1,
+       "explanation": "Dimensional analysis is a filter, not a proof. It is blind to pure numbers, so $ s = ut + at^{2} $ passes the check even though the true relation carries a $ \\tfrac{1}{2} $. What it can do is condemn: an equation whose terms disagree dimensionally is definitely wrong."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m08",
+       "source": "mcq",
+       "prompt": "In the relation $ \\int \\frac{dx}{\\sqrt{a^{2}-x^{2}}} = k\\,\\sin^{-1}\\!\\left(\\frac{x}{a}\\right) $, where $ x $ and $ a $ are lengths, the constant $ k $ is",
+       "options": [
+        "of dimension $ L $",
+        "of dimension $ L^{-1} $",
+        "dimensionless",
+        "of dimension $ L^{2} $"
+       ],
+       "correct_index": 2,
+       "explanation": "Look at the left side: $ dx $ contributes one power of length and the square root in the denominator removes one, so the integral is dimensionless. The inverse sine is an angle, also dimensionless. A dimensionless quantity equals $ k $ times a dimensionless quantity, so $ k $ must itself be dimensionless."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m09",
+       "source": "mcq",
+       "prompt": "The time period $ T $ of a liquid drop oscillating under surface tension $ S $ depends on its radius $ r $, density $ \\rho $ and $ S $. Dimensional analysis gives $ T \\propto $",
+       "options": [
+        "$ \\sqrt{\\rho r^{3}/S} $",
+        "$ \\sqrt{\\rho r/S} $",
+        "$ \\sqrt{S/\\rho r^{3}} $",
+        "$ \\rho r^{3}/S $"
+       ],
+       "correct_index": 0,
+       "explanation": "Write $ T = k\\,\\rho^{a}r^{b}S^{c} $. With $ [\\rho]=ML^{-3} $ and $ [S]=MT^{-2} $, matching mass gives $ a+c=0 $, matching time gives $ -2c=1 $, matching length gives $ -3a+b=0 $. So $ c=-\\tfrac12 $, $ a=\\tfrac12 $, $ b=\\tfrac32 $ — that is $ T \\propto \\sqrt{\\rho r^{3}/S} $. A quick sanity check: a denser or bigger drop should wobble more slowly, and it does."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch01-m10",
+       "source": "mcq",
+       "prompt": "The percentage errors in measuring $ a $, $ b $ and $ c $ are 1%, 2% and 3%. The maximum percentage error in $ P = \\frac{a\\,b^{2}}{c} $ is",
+       "options": [
+        "6%",
+        "4%",
+        "2%",
+        "8%"
+       ],
+       "correct_index": 3,
+       "explanation": "For a product or quotient the *fractional* errors add, each weighted by its power, and they add whatever the sign of the exponent — errors never cancel in a worst case. So the total is $ 1 + 2(2) + 3 = 8\\% $. Note the square on $ b $ doubles its contribution."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch01-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Dimensional formula from a defining equation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the dimensional formula of (a) Planck's constant $ h $, from $ E = h\\nu $, and (b) the coefficient of viscosity $ \\eta $, from $ F = -\\eta A \\frac{\\Delta v}{\\Delta x} $.",
+    "solution": "The trick every time is the same: make the unknown the subject, then replace every known symbol by its dimensions.\n\n**(a) Planck's constant.**\n\nFrom $ E = h\\nu $ we get $ h = E/\\nu $.\n\nEnergy is force × distance, so $ [E] = (MLT^{-2})(L) = ML^{2}T^{-2} $.\n\nFrequency is one per unit time, so $ [\\nu] = T^{-1} $.\n\nTherefore $ [h] = \\frac{ML^{2}T^{-2}}{T^{-1}} = ML^{2}T^{-1} $.\n\nThat combination — mass × length² × time⁻¹ — is the dimension of angular momentum, which is why $ h $ shows up wherever angular momentum is quantised.\n\n**(b) Coefficient of viscosity.**\n\nMake $ \\eta $ the subject: $ \\eta = \\frac{F\\,\\Delta x}{A\\,\\Delta v} $. The minus sign is a direction, not a dimension, so drop it.\n\n$ [\\eta] = \\frac{(MLT^{-2})(L)}{(L^{2})(LT^{-1})} = \\frac{ML^{2}T^{-2}}{L^{3}T^{-1}} = ML^{-1}T^{-1} $.\n\n**Watch out:** $ \\Delta v/\\Delta x $ is a velocity *gradient*, not a velocity. Students who read it as a velocity get $ ML^{-2}T^{-1} $ and never spot the slip, because the answer still looks respectable. Always dimension the whole fraction."
+   },
+   {
+    "id": "we-ch01-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Converting a unit between systems",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The SI unit of force is the newton and the CGS unit is the dyne. How many dynes make one newton?",
+    "solution": "Force has dimensions $ MLT^{-2} $, so a force unit is (mass unit)(length unit)(time unit)$ ^{-2} $.\n\nWrite the ratio of the two units and substitute:\n\n$ \\frac{1\\ \\text{N}}{1\\ \\text{dyne}} = \\frac{(1\\ \\text{kg})(1\\ \\text{m})(1\\ \\text{s})^{-2}}{(1\\ \\text{g})(1\\ \\text{cm})(1\\ \\text{s})^{-2}} $\n\nThe time units are identical and cancel. That leaves\n\n$ = \\left(\\frac{1000\\ \\text{g}}{1\\ \\text{g}}\\right)\\left(\\frac{100\\ \\text{cm}}{1\\ \\text{cm}}\\right) = 1000 \\times 100 = 10^{5} $.\n\nSo $ 1\\ \\text{N} = 10^{5} $ dyne.\n\n**Shortcut:** you never need to remember conversion factors like this one. Write the dimensional formula, put in the ratio of each base unit, and the answer falls out. The same three lines convert joules to ergs ($ 10^{7} $) or pascals to barye ($ 10 $)."
+   },
+   {
+    "id": "we-ch01-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Converting a compound unit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The density of mercury is $ 13.6\\ \\text{g}\\,\\text{cm}^{-3} $. Express it in $ \\text{kg}\\,\\text{m}^{-3} $.",
+    "solution": "Density has dimensions $ ML^{-3} $.\n\nConvert one unit at a time. $ 1\\ \\text{g} = 10^{-3}\\ \\text{kg} $ and $ 1\\ \\text{cm} = 10^{-2}\\ \\text{m} $, so $ 1\\ \\text{cm}^{3} = 10^{-6}\\ \\text{m}^{3} $.\n\n$ 13.6\\ \\frac{\\text{g}}{\\text{cm}^{3}} = 13.6 \\times \\frac{10^{-3}\\ \\text{kg}}{10^{-6}\\ \\text{m}^{3}} = 13.6 \\times 10^{3}\\ \\text{kg}\\,\\text{m}^{-3} $.\n\nSo mercury is $ 1.36 \\times 10^{4}\\ \\text{kg}\\,\\text{m}^{-3} $.\n\n**Watch out:** the cube applies to the *whole* unit. Cubing $ 10^{-2} $ gives $ 10^{-6} $, not $ 10^{-5} $. This single slip is the most common source of factor-of-ten errors in density and pressure conversions."
+   },
+   {
+    "id": "we-ch01-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Testing an equation dimensionally",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A student writes the time period of a simple pendulum as $ T = 2\\pi \\sqrt{L/g} $ but a friend claims it should be $ T = 2\\pi \\sqrt{L\\,g} $. Settle it dimensionally.",
+    "solution": "Both sides must have dimension $ T $.\n\n**The student's version.** $ [L/g] = \\frac{L}{LT^{-2}} = T^{2} $. Taking the square root gives $ T $. The $ 2\\pi $ is a pure number and carries no dimension. So the left and right sides match — this form survives the test.\n\n**The friend's version.** $ [L g] = (L)(LT^{-2}) = L^{2}T^{-2} $, whose square root is $ LT^{-1} $ — a velocity, not a time. This form is dimensionally wrong and can be rejected outright.\n\n**What this does and does not prove.** The check confirms the friend is wrong, but it cannot confirm the student is right. Dimensional analysis is blind to pure numbers, so $ T = \\sqrt{L/g} $ and $ T = 7\\sqrt{L/g} $ both pass. It rules formulae out with certainty; it only ever lets them through on probation."
+   },
+   {
+    "id": "we-ch01-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Dimensions of every coefficient in a series",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The angular position of a rotating disc varies as $ \\theta = p + qt + rt^{2} $, where $ \\theta $ is in radians and $ t $ in seconds. Find the dimensions of $ p $, $ q $ and $ r $.",
+    "solution": "Terms that are added together must share dimensions — you cannot add a length to a time. So every term here must have the dimension of $ \\theta $.\n\nAngle is arc ÷ radius, a length over a length, so $ \\theta $ is **dimensionless**. Every term must therefore be dimensionless too.\n\n$ [p] = 1 $ — dimensionless.\n\n$ [qt] = 1 $, so $ [q] = T^{-1} $.\n\n$ [rt^{2}] = 1 $, so $ [r] = T^{-2} $.\n\nThose are exactly the dimensions of angular velocity and angular acceleration, which is no accident: differentiating $ \\theta $ once gives $ q + 2rt $ and again gives $ 2r $.\n\n**Watch out:** the usual mistake is to assume $ \\theta $ behaves like a length because the equation looks like $ x = a + bt + ct^{2} $. Always dimension the left-hand side first — here it changes every answer."
+   },
+   {
+    "id": "we-ch01-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Guessing a formula from dimensions",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The speed $ v $ of a transverse wave on a stretched string depends on the tension $ F $ and the mass per unit length $ \\mu $. Guess the formula by dimensional analysis.",
+    "solution": "Assume a product of powers: $ v = k\\,F^{a}\\mu^{b} $, with $ k $ a dimensionless constant.\n\nWrite the dimensions of each symbol:\n\n$ [v] = LT^{-1} $, $ [F] = MLT^{-2} $, $ [\\mu] = ML^{-1} $.\n\nSubstitute:\n\n$ LT^{-1} = (MLT^{-2})^{a}(ML^{-1})^{b} = M^{a+b}\\,L^{a-b}\\,T^{-2a} $\n\nNow match the exponents on each base quantity.\n\nMass: $ a + b = 0 $\n\nTime: $ -2a = -1 $, so $ a = \\tfrac12 $\n\nLength: $ a - b = 1 $ — and with $ a = \\tfrac12 $ this gives $ b = -\\tfrac12 $, which agrees with the mass equation. That agreement is a useful self-check: three equations, two unknowns, and they must be consistent.\n\nSo $ v = k\\sqrt{F/\\mu} $. Experiment shows $ k = 1 $.\n\n**Watch out:** dimensional analysis cannot find $ k $. It also fails outright when a quantity depends on more independent quantities than there are base dimensions, or when the relation involves a sum rather than a product of powers."
+   },
+   {
+    "id": "we-ch01-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — When dimensional analysis needs a hint",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The frequency $ \\nu $ of vibration of a stretched string depends on its length $ L $, tension $ F $ and mass per unit length $ \\mu $. Find how $ \\nu $ depends on these.",
+    "solution": "Let $ \\nu = k\\,L^{a}F^{b}\\mu^{c} $.\n\n$ [\\nu] = T^{-1} $, $ [L] = L $, $ [F] = MLT^{-2} $, $ [\\mu] = ML^{-1} $.\n\n$ T^{-1} = L^{a}(MLT^{-2})^{b}(ML^{-1})^{c} = M^{b+c}\\,L^{a+b-c}\\,T^{-2b} $\n\nMatch each base quantity:\n\nMass: $ b + c = 0 $\n\nTime: $ -2b = -1 \\Rightarrow b = \\tfrac12 $, hence $ c = -\\tfrac12 $\n\nLength: $ a + b - c = 0 \\Rightarrow a + \\tfrac12 + \\tfrac12 = 0 \\Rightarrow a = -1 $\n\nSo $ \\nu = \\frac{k}{L}\\sqrt{\\frac{F}{\\mu}} $. For the fundamental mode $ k = \\tfrac12 $.\n\n**The lesson.** Three unknowns and three base dimensions — the system just closed. Add a fourth quantity and dimensional analysis alone cannot finish the job; you would need physical reasoning to eliminate one first."
+   },
+   {
+    "id": "we-ch01-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Finding exponents in a given form",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The kinetic energy of a rotating body is of the form $ E = k\\,I^{a}\\omega^{b} $, where $ I $ is moment of inertia and $ \\omega $ angular speed. Find $ a $ and $ b $.",
+    "solution": "Dimensions first. Moment of inertia is mass × distance², so $ [I] = ML^{2} $. Angular speed is angle per time, and angle is dimensionless, so $ [\\omega] = T^{-1} $. Energy is $ ML^{2}T^{-2} $.\n\n$ ML^{2}T^{-2} = (ML^{2})^{a}(T^{-1})^{b} = M^{a}L^{2a}T^{-b} $\n\nMatch:\n\nMass: $ a = 1 $\n\nLength: $ 2a = 2 $ — consistent, and a free check on the mass result\n\nTime: $ -b = -2 \\Rightarrow b = 2 $\n\nSo $ E = k\\,I\\omega^{2} $, and the true relation is $ E = \\tfrac12 I\\omega^{2} $.\n\n**Watch out:** because angle is dimensionless, radians vanish from every dimensional equation. That is why $ \\omega $ dimensions as $ T^{-1} $, exactly like frequency, even though the two mean different things physically."
+   },
+   {
+    "id": "we-ch01-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Propagating errors through a formula",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The time period of a pendulum is measured as $ T = 2.00 \\pm 0.02 $ s and its length as $ L = 1.00 \\pm 0.01 $ m. Using $ g = 4\\pi^{2}L/T^{2} $, find the percentage error in $ g $.",
+    "solution": "For a formula built only from products and quotients, work in *fractional* errors, and weight each by its power.\n\n$ \\frac{\\Delta g}{g} = \\frac{\\Delta L}{L} + 2\\,\\frac{\\Delta T}{T} $\n\nThe $ 4\\pi^{2} $ is exact and contributes nothing.\n\n$ \\frac{\\Delta L}{L} = \\frac{0.01}{1.00} = 1\\% $\n\n$ \\frac{\\Delta T}{T} = \\frac{0.02}{2.00} = 1\\% $, and it enters squared, so it contributes $ 2\\% $.\n\nTotal: $ 1\\% + 2\\% = 3\\% $.\n\n**Watch out:** the errors are *added*, never subtracted, even though $ T $ sits in the denominator. We are bounding the worst case, and in the worst case the two errors push the same way. The practical takeaway: because the period is squared, timing is twice as worth improving as measuring the length — so time twenty swings and divide, rather than timing one."
+   },
+   {
+    "id": "we-ch01-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Order-of-magnitude estimate",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Estimate the number of times a human heart beats in an average lifetime of 70 years.",
+    "solution": "Order-of-magnitude work asks for the power of ten, not the digits. Round hard and keep going.\n\nA resting heart beats roughly 70 times a minute — call it $ \\sim 10^{2} $ per minute.\n\nMinutes in a year: $ 60 \\times 24 \\times 365 \\approx 5 \\times 10^{5} $.\n\nBeats in a year: $ 10^{2} \\times 5 \\times 10^{5} = 5 \\times 10^{7} $.\n\nOver 70 years: $ 5 \\times 10^{7} \\times 70 \\approx 3.5 \\times 10^{9} $.\n\nSo a human heart beats a few billion times — of order $ 10^{9} $.\n\n**The point of the exercise.** Every input here was crude, yet the answer is trustworthy to within a factor of two or three. That is enough to decide whether an idea is worth pursuing, and it is a habit worth building before attempting any long calculation: if the estimate and the final answer disagree by orders of magnitude, one of them is wrong."
+   }
+  ]
+ }
+}

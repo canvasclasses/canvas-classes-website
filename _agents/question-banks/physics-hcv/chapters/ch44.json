@@ -1,0 +1,260 @@
+{
+ "hcv_chapter": 44,
+ "hcv_title": "X-rays",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Partly covered under Atoms / Dual Nature; Moseley's law and Coolidge-tube detail are enrichment beyond the current NCERT syllabus"
+ },
+ "source_pages": {
+  "worked": "883",
+  "obj1": "884-885"
+ },
+ "notes": "Short source chapter — 7 Objective I items, all rebuilt, topped up to 10 with Moseley's law and Bragg diffraction items. One source item compares two intensity-vs-wavelength graphs from different tubes; re-cast with the two spectra described in words.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch44-xrays",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — X-rays",
+   "intro": "Ten questions on X-rays. The key distinction throughout: the continuous spectrum depends on the accelerating voltage, the characteristic lines on the target material.",
+   "sections": [
+    {
+     "id": "nature-of-xrays",
+     "title": "Nature and Production",
+     "blurb": "Two spectra from one tube, with two different origins.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch44-m01",
+       "source": "mcq",
+       "prompt": "An X-ray beam can be deflected",
+       "options": [
+        "by neither",
+        "by an electric field",
+        "by a magnetic field",
+        "by either an electric or a magnetic field"
+       ],
+       "correct_index": 0,
+       "explanation": "X-rays are electromagnetic waves and carry no charge, so neither field deflects them. This is precisely how they were distinguished from cathode rays and beta rays, both of which are charged and do deflect."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m02",
+       "source": "mcq",
+       "prompt": "The energy of a photon in the **continuous** X-ray spectrum from a Coolidge tube comes from",
+       "options": [
+        "the kinetic energy of the striking electron",
+        "the kinetic energy of the target's free electrons",
+        "the kinetic energy of the target's ions",
+        "an atomic transition in the target"
+       ],
+       "correct_index": 0,
+       "explanation": "The continuous spectrum is bremsstrahlung — radiation emitted as the incoming electron is decelerated by the target nuclei. Since an electron may lose any fraction of its energy, the spectrum is continuous, with a sharp short-wavelength cutoff where it loses everything at once."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m03",
+       "source": "mcq",
+       "prompt": "The energy of a **characteristic** X-ray photon comes from",
+       "options": [
+        "the kinetic energy of the striking electron",
+        "the kinetic energy of the target's free electrons",
+        "the kinetic energy of the target's ions",
+        "an atomic transition in the target"
+       ],
+       "correct_index": 3,
+       "explanation": "The incoming electron knocks an inner-shell electron out of a target atom, and an outer electron then drops into the vacancy, emitting a photon of a sharply defined energy. The wavelengths are therefore fixed by the *target element*, which is why they are called characteristic and why they identify the material."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m04",
+       "source": "mcq",
+       "prompt": "The accelerating voltage of an X-ray tube is doubled **and** the filament-to-target distance is also doubled. The cutoff wavelength",
+       "options": [
+        "remains unchanged",
+        "is halved",
+        "is doubled",
+        "becomes four times larger"
+       ],
+       "correct_index": 1,
+       "explanation": "The cutoff is $ \\lambda_{min} = hc/eV $, which depends only on the accelerating voltage — doubling $ V $ halves it. The electrode separation is irrelevant, since an electron gains the same energy $ eV $ however far it travels to do so."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m05",
+       "source": "mcq",
+       "prompt": "The filament heating current in an X-ray tube is increased. The cutoff wavelength",
+       "options": [
+        "increases",
+        "remains unchanged",
+        "decreases",
+        "becomes zero"
+       ],
+       "correct_index": 1,
+       "explanation": "A hotter filament emits *more* electrons, so the beam intensity rises — but each electron is still accelerated through the same $ V $ and so has the same maximum energy. The cutoff wavelength is untouched. Filament current controls intensity; accelerating voltage controls hardness."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m06",
+       "source": "mcq",
+       "prompt": "Tube A produces a spectrum with a **shorter cutoff wavelength** but its characteristic lines lie at **longer wavelengths** than tube B's. Comparing accelerating voltages $ V $ and atomic numbers $ Z $,",
+       "options": [
+        "$ V_A > V_B $ and $ Z_A > Z_B $",
+        "$ V_A < V_B $ and $ Z_A > Z_B $",
+        "$ V_A < V_B $ and $ Z_A < Z_B $",
+        "$ V_A > V_B $ and $ Z_A < Z_B $"
+       ],
+       "correct_index": 3,
+       "explanation": "A shorter cutoff means a higher voltage, so $ V_A > V_B $. Characteristic wavelengths shorten as $ Z $ rises (Moseley's law), so *longer* characteristic lines mean a *lower* atomic number: $ Z_A < Z_B $. The two features of the spectrum are set by two independent things."
+      }
+     ]
+    },
+    {
+     "id": "moseley-and-bragg",
+     "title": "Moseley's Law and Bragg Diffraction",
+     "blurb": "Reading the atomic number, and reading crystal spacings.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch44-m07",
+       "source": "mcq",
+       "prompt": "Moseley's law states that for characteristic X-rays, $ \\sqrt{\\nu} $ varies",
+       "options": [
+        "as $ Z^{2} $",
+        "as $ 1/Z $",
+        "linearly with $ Z $",
+        "independently of $ Z $"
+       ],
+       "correct_index": 2,
+       "explanation": "Moseley found $ \\sqrt{\\nu} = a(Z - b) $, a straight line against atomic number. It was decisive historically: it showed that $ Z $, not atomic weight, is the fundamental ordering principle of the periodic table, and it exposed gaps where undiscovered elements had to lie."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m08",
+       "source": "mcq",
+       "prompt": "Bragg's law for X-ray diffraction from crystal planes of spacing $ d $ is",
+       "options": [
+        "$ 2d\\sin\\theta = n\\lambda $",
+        "$ d\\sin\\theta = n\\lambda $",
+        "$ 2d\\cos\\theta = n\\lambda $",
+        "$ d = n\\lambda\\sin\\theta $"
+       ],
+       "correct_index": 0,
+       "explanation": "Waves reflected from successive planes differ in path by $ 2d\\sin\\theta $, and constructive interference requires that to be a whole number of wavelengths. Note $ \\theta $ is the *glancing* angle measured from the plane, not from the normal — the opposite convention to ordinary optics."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m09",
+       "source": "mcq",
+       "prompt": "X-rays rather than visible light are used to study crystal structure because",
+       "options": [
+        "they travel faster",
+        "their wavelength is comparable to atomic spacings",
+        "they carry charge",
+        "they are not absorbed by crystals"
+       ],
+       "correct_index": 1,
+       "explanation": "Diffraction requires a wavelength comparable to the spacing being probed. X-ray wavelengths of around $ 0.1 $ nm match interatomic distances, while visible light at $ 500 $ nm is thousands of times too long and simply passes through without a diffraction pattern."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch44-m10",
+       "source": "mcq",
+       "prompt": "'Hard' X-rays differ from 'soft' X-rays in having",
+       "options": [
+        "longer wavelength and greater penetrating power",
+        "shorter wavelength and less penetrating power",
+        "shorter wavelength and greater penetrating power",
+        "the same wavelength but greater intensity"
+       ],
+       "correct_index": 2,
+       "explanation": "Hardness refers to photon energy: shorter wavelength means higher energy and greater penetration. It is controlled by the accelerating voltage, which is why a chest radiograph uses a higher kV setting than a dental one — and why intensity (set by the filament current) is a separate control entirely."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch44-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Cutoff wavelength of an X-ray tube",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An X-ray tube operates at $ 40 $ kV. Find the shortest wavelength it can produce.",
+    "solution": "The shortest wavelength corresponds to an electron giving up *all* its kinetic energy to a single photon:\n\n$ eV = \\frac{hc}{\\lambda_{min}} \\Rightarrow \\lambda_{min} = \\frac{hc}{eV} $\n\n**Using the eV shortcut**, $ \\lambda(\\text{nm}) = 1240/E(\\text{eV}) $ with $ E = 40\\,000 $ eV:\n\n$ \\lambda_{min} = \\frac{1240}{40\\,000} = 0.031\\ \\text{nm} = 31\\ \\text{pm} $\n\n**Why there is a sharp cutoff at all.** Classical physics predicts no lower limit to the wavelength — an electron could in principle radiate anything. The abrupt cutoff at $ hc/eV $ is direct evidence for the *quantum* nature of radiation, and it provides one of the most accurate measurements of $ h/e $.\n\n**The convenient working formula:** $ \\lambda_{min}(\\text{pm}) = \\frac{1240}{V(\\text{kV})} $. At $ 40 $ kV that gives $ 31 $ pm immediately.\n\n**What the cutoff does not depend on.** The target material. Only the voltage sets it — which is exactly why the continuous and characteristic parts of the spectrum respond to different controls."
+   },
+   {
+    "id": "we-ch44-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Moseley's law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The $ K_\\alpha $ wavelength for molybdenum ($ Z = 42 $) is $ 71 $ pm. Estimate it for copper ($ Z = 29 $), taking Moseley's screening constant as $ b = 1 $.",
+    "solution": "**Moseley's law:** $ \\sqrt{\\nu} = a(Z-1) $, so $ \\nu \\propto (Z-1)^{2} $ and $ \\lambda \\propto \\frac{1}{(Z-1)^{2}} $.\n\n**Take the ratio:**\n\n$ \\frac{\\lambda_{Cu}}{\\lambda_{Mo}} = \\left(\\frac{Z_{Mo}-1}{Z_{Cu}-1}\\right)^{2} = \\left(\\frac{41}{28}\\right)^{2} = (1.464)^{2} = 2.144 $\n\n$ \\lambda_{Cu} = (71)(2.144) = 152\\ \\text{pm} $\n\nThe accepted value is $ 154 $ pm — excellent agreement.\n\n**Why the screening constant is roughly 1.** A $ K_\\alpha $ photon comes from an electron dropping into a $ K $-shell vacancy. The one remaining $ K $ electron screens the nucleus, so the transferring electron feels an effective charge of about $ (Z-1)e $ rather than $ Ze $.\n\n**Why this mattered so much historically.** Moseley's straight-line relation let chemists determine $ Z $ unambiguously from a spectrum, resolving disputes about the ordering of cobalt and nickel and predicting exactly how many elements were still missing between hydrogen and uranium."
+   },
+   {
+    "id": "we-ch44-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Bragg diffraction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "X-rays of wavelength $ 154 $ pm give a first-order Bragg reflection at a glancing angle of $ 22.5^\\circ $. Find the spacing of the crystal planes.",
+    "solution": "**Bragg's law:**\n\n$ 2d\\sin\\theta = n\\lambda $\n\n**For first order ($ n = 1 $):**\n\n$ d = \\frac{\\lambda}{2\\sin\\theta} = \\frac{154 \\times 10^{-12}}{2\\sin 22.5^\\circ} = \\frac{154 \\times 10^{-12}}{2(0.383)} $\n\n$ = \\frac{154 \\times 10^{-12}}{0.766} = 201\\ \\text{pm} $\n\nAbout $ 0.2 $ nm — a typical interatomic spacing.\n\n**Watch the angle convention.** In X-ray crystallography $ \\theta $ is measured from the *plane*, not from the normal. In ordinary reflection optics the angle is measured from the normal, so the two differ by $ 90^\\circ $ and mixing them up turns a sine into a cosine.\n\n**Where the highest order stops.** Since $ \\sin\\theta \\le 1 $, Bragg's law requires $ n\\lambda \\le 2d $. Here $ n_{max} = 2d/\\lambda = 402/154 = 2 $, so only first and second orders are observable.\n\n**Why this technique is so powerful.** Measuring angles and knowing $ \\lambda $ yields atomic spacings directly — the method that determined the structures of salt, of metals, and eventually of DNA."
+   },
+   {
+    "id": "we-ch44-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Energy and efficiency of X-ray production",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An X-ray tube operates at $ 50 $ kV with a beam current of $ 20 $ mA. If $ 0.8\\% $ of the electron energy becomes X-rays, find the X-ray power and the heat to be removed from the target.",
+    "solution": "**Total electrical power:**\n\n$ P = VI = (50 \\times 10^{3})(20 \\times 10^{-3}) = 1000\\ \\text{W} $\n\n**X-ray power:**\n\n$ P_x = (0.008)(1000) = 8\\ \\text{W} $\n\n**Heat to remove:**\n\n$ P_{heat} = 1000 - 8 = 992\\ \\text{W} $\n\n**Why X-ray tubes are so inefficient.** Most incoming electrons undergo many small collisions, losing energy to lattice vibrations rather than radiating. Only the rare hard deceleration produces an X-ray photon, and efficiency scales roughly as $ ZV $ — which is why heavy targets like tungsten are chosen.\n\n**The engineering consequence.** Nearly a kilowatt of heat must be removed from a target the size of a fingernail. Real tubes use tungsten on a copper block, oil or water cooling, and often a *rotating* anode so the beam never dwells on one spot. Target overheating, not electrical limits, is what caps an X-ray tube's output."
+   },
+   {
+    "id": "we-ch44-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Characteristic wavelengths from energy levels",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "In a certain element the $ K $, $ L $ and $ M $ shell energies are $ -25.0 $ keV, $ -3.5 $ keV and $ -0.6 $ keV. Find the wavelengths of the $ K_\\alpha $ and $ K_\\beta $ lines.",
+    "solution": "**$ K_\\alpha $** comes from an $ L \\to K $ transition:\n\n$ \\Delta E = -3.5 - (-25.0) = 21.5\\ \\text{keV} $\n\n$ \\lambda = \\frac{1240}{21\\,500} = 0.0577\\ \\text{nm} = 57.7\\ \\text{pm} $\n\n**$ K_\\beta $** comes from $ M \\to K $:\n\n$ \\Delta E = -0.6 - (-25.0) = 24.4\\ \\text{keV} $\n\n$ \\lambda = \\frac{1240}{24\\,400} = 0.0508\\ \\text{nm} = 50.8\\ \\text{pm} $\n\n**Note that $ K_\\beta $ is the shorter wavelength.** It comes from a bigger energy drop, since the $ M $ shell lies further above $ K $ than $ L $ does. So $ K_\\beta $ is more energetic but — because $ M \\to K $ transitions are less probable — usually fainter than $ K_\\alpha $.\n\n**Why these energies are in keV rather than eV.** Inner-shell electrons in a heavy atom are bound by tens of thousands of electron-volts, against $ 13.6 $ eV for hydrogen's single electron. The nuclear charge is largely unscreened for a $ K $ electron, and binding energy scales roughly as $ Z^{2} $."
+   },
+   {
+    "id": "we-ch44-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Absorption of X-rays",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An X-ray beam's intensity falls to half after passing through $ 2 $ mm of aluminium. Find the absorption coefficient and the thickness needed to reduce the intensity to one eighth.",
+    "solution": "**Absorption is exponential:** $ I = I_0 e^{-\\mu x} $\n\n**From the half-thickness:**\n\n$ \\frac{1}{2} = e^{-\\mu(2)} \\Rightarrow \\ln 2 = 2\\mu \\Rightarrow \\mu = \\frac{0.693}{2} = 0.347\\ \\text{mm}^{-1} $\n\n**For one eighth.** Since $ \\frac{1}{8} = \\left(\\frac{1}{2}\\right)^{3} $, three half-thicknesses are needed:\n\n$ x = 3(2) = 6\\ \\text{mm} $\n\n**Check:** $ e^{-(0.347)(6)} = e^{-2.08} = 0.125 $ ✓\n\n**Why exponential and not linear.** Each thin layer removes the same *fraction* of whatever reaches it, so the losses compound multiplicatively. This is the same mathematics as radioactive decay, and the 'half-thickness' plays the part of the half-life.\n\n**Why lead is used for shielding.** Absorption rises steeply with atomic number — roughly as $ Z^{3} $ or $ Z^{4} $ in the photoelectric regime — so a millimetre of lead does the work of many centimetres of aluminium. The same $ Z $ dependence is why bones show up against soft tissue in a radiograph."
+   },
+   {
+    "id": "we-ch44-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Planck constant from the Duane-Hunt limit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An X-ray tube at $ 25 $ kV has a measured cutoff wavelength of $ 49.6 $ pm. Use this to determine $ h $, taking $ e = 1.6 \\times 10^{-19} $ C.",
+    "solution": "**The Duane-Hunt relation:**\n\n$ eV = \\frac{hc}{\\lambda_{min}} \\Rightarrow h = \\frac{eV\\lambda_{min}}{c} $\n\n**Substitute:**\n\n$ h = \\frac{(1.6 \\times 10^{-19})(25 \\times 10^{3})(49.6 \\times 10^{-12})}{3 \\times 10^{8}} $\n\n**Numerator:** $ (1.6 \\times 10^{-19})(2.5 \\times 10^{4}) = 4.0 \\times 10^{-15} $, times $ 4.96 \\times 10^{-11} $ gives $ 1.98 \\times 10^{-25} $\n\n$ h = \\frac{1.98 \\times 10^{-25}}{3 \\times 10^{8}} = 6.6 \\times 10^{-34}\\ \\text{J s} $\n\nAgreeing with the accepted $ 6.63 \\times 10^{-34} $ J s.\n\n**Why this is such a good measurement.** Only two quantities are needed — an accelerating voltage and a wavelength — and both can be measured to high precision, the wavelength by Bragg diffraction from a crystal of known spacing. The method gives $ h/e $ directly and was for decades among the most accurate routes to it.\n\n**The deeper significance of the cutoff.** Classical electromagnetism predicts no shortest wavelength whatever. That a sharp limit exists, and sits exactly at $ hc/eV $, is direct evidence that radiation is emitted in quanta — the same conclusion the photoelectric effect forces from the opposite direction."
+   },
+   {
+    "id": "we-ch44-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Continuous and characteristic spectra together",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tube with a molybdenum target ($ K_\\alpha $ at $ 71 $ pm) runs at $ 20 $ kV. Find the cutoff wavelength and state whether the $ K_\\alpha $ line appears. Then repeat for $ 15 $ kV, given molybdenum's $ K $-shell binding energy of $ 20.0 $ keV.",
+    "solution": "**At $ 20 $ kV.**\n\nCutoff: $ \\lambda_{min} = \\frac{1240}{20\\,000} = 0.062\\ \\text{nm} = 62\\ \\text{pm} $\n\nThe $ K_\\alpha $ line at $ 71 $ pm is *longer* than the cutoff, so it falls inside the spectrum. But appearing also requires the electrons to be able to eject a $ K $-shell electron, which needs at least $ 20.0 $ keV. At exactly $ 20 $ kV the tube is right on that threshold — the line is only marginally excited.\n\n**At $ 15 $ kV.**\n\nCutoff: $ \\lambda_{min} = \\frac{1240}{15\\,000} = 82.7\\ \\text{pm} $\n\nNow the electrons carry only $ 15 $ keV — not enough to remove a $ K $ electron ($ 20.0 $ keV needed). **The $ K_\\alpha $ line is absent entirely**, even though $ 71 $ pm lies within the continuous spectrum's range.\n\n**The key distinction.** The continuous spectrum shifts with voltage; the characteristic lines either appear at their fixed wavelengths or do not appear at all. There is a sharp threshold voltage for each line, set by the shell's binding energy — not by where the cutoff happens to sit.\n\n**Why this matters practically.** A tube used for crystallography must run well above the target's $ K $ threshold to get a strong monochromatic line. Running just above it gives a weak line swamped by the continuum."
+   }
+  ]
+ }
+}

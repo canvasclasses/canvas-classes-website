@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 38,
+ "hcv_title": "Electromagnetic Induction",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Electromagnetic Induction"
+ },
+ "source_pages": {
+  "worked": "787-794",
+  "obj1": "795-796"
+ },
+ "notes": "11 Objective I items rebuilt. Three source items depend on circuit figures (a switched loop, a sliding rail, a solenoid and a nearby ring); each was re-cast with the arrangement stated in words, since the physics tested is Lenz's law and the flux rule rather than the diagram.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch38-emi",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Electromagnetic Induction",
+   "intro": "Eleven questions on induced emf. Lenz's law settles most of them: the induced effect always opposes the change that caused it.",
+   "sections": [
+    {
+     "id": "motional-emf",
+     "title": "Motional EMF",
+     "blurb": "A conductor sweeping through a field separates charge.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch38-m01",
+       "source": "mcq",
+       "prompt": "A rod of length $ l $ rotates at angular velocity $ \\omega $ about its perpendicular bisector, with a uniform field $ B $ parallel to the axis of rotation. The potential difference between the **centre and one end** is",
+       "options": [
+        "zero",
+        "$ \\frac{1}{2}\\omega B l^{2} $",
+        "$ \\frac{1}{8}\\omega B l^{2} $",
+        "$ B\\omega l^{2} $"
+       ],
+       "correct_index": 2,
+       "explanation": "For a rod of length $ L $ rotating about one end, the emf is $ \\frac{1}{2}\\omega B L^{2} $. Here each half has length $ l/2 $, so the emf across it is $ \\frac{1}{2}\\omega B (l/2)^{2} = \\frac{1}{8}\\omega B l^{2} $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m02",
+       "source": "mcq",
+       "prompt": "For the same rotating rod, the potential difference between the **two ends** is",
+       "options": [
+        "zero",
+        "$ \\frac{1}{2}B l \\omega^{2} $",
+        "$ B l \\omega^{2} $",
+        "$ 2B l \\omega^{2} $"
+       ],
+       "correct_index": 0,
+       "explanation": "Both halves sweep outward from the centre in the same rotational sense, so both ends acquire the *same* polarity relative to the centre and reach the same potential. The difference between them is therefore zero, even though each end differs from the centre by $ \\frac{1}{8}\\omega Bl^{2} $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m03",
+       "source": "mcq",
+       "prompt": "A straight wire slides at constant velocity along fixed rails in a magnetic field, completing a circuit. If the straight wire is replaced by a **semicircular** one of the same end separation, the induced current",
+       "options": [
+        "increases",
+        "remains the same",
+        "decreases",
+        "depends on which way the semicircle bulges"
+       ],
+       "correct_index": 1,
+       "explanation": "The emf is set by the *rate of change of flux*, which depends only on the rate at which the enclosed area grows — and that is governed by the rail separation and the speed, not by the shape of the connecting wire. Equivalently, $ \\varepsilon = Blv $ uses the effective length between the rails."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m04",
+       "source": "mcq",
+       "prompt": "Consider: (A) an emf can be induced by moving a conductor in a magnetic field; (B) an emf can be induced by changing the magnetic field. Then",
+       "options": [
+        "both are true",
+        "A is true, B is false",
+        "A is false, B is true",
+        "both are false"
+       ],
+       "correct_index": 0,
+       "explanation": "Both are routes to the same end. Moving a conductor gives motional emf (the magnetic force separating charges); changing the field gives an induced electric field. Faraday's law $ \\varepsilon = -d\\Phi/dt $ covers both, since either mechanism changes the flux."
+      }
+     ]
+    },
+    {
+     "id": "lenz-law",
+     "title": "Lenz's Law and the Direction of the Effect",
+     "blurb": "Nature opposes whatever you are doing to it.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch38-m05",
+       "source": "mcq",
+       "prompt": "A switch in a circuit near a closed conducting loop is closed and, after some time, opened again. The loop shows",
+       "options": [
+        "a single anticlockwise current pulse",
+        "a single clockwise current pulse",
+        "a steady current throughout",
+        "one pulse on closing and an opposite pulse on opening"
+       ],
+       "correct_index": 3,
+       "explanation": "An emf appears only while the flux is *changing* — at the moment of closing and again at the moment of opening. The two changes are in opposite senses (flux growing, then collapsing), so by Lenz's law the two pulses run opposite ways. In between, with the current steady, there is no emf at all."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m06",
+       "source": "mcq",
+       "prompt": "A bar magnet is dropped with its north pole downward through a horizontal copper ring. As it approaches, the current in the ring, seen from above, flows so as to",
+       "options": [
+        "present a south pole, attracting the magnet",
+        "produce no current, since copper is non-magnetic",
+        "present a north pole to the falling magnet, opposing its approach",
+        "reverse direction repeatedly during the approach"
+       ],
+       "correct_index": 2,
+       "explanation": "Lenz's law requires the induced current to oppose the increasing flux, which it does by making the ring's upper face a north pole — repelling the approaching magnet. The magnet therefore falls more slowly than free fall, and the lost kinetic energy appears as heat in the ring."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m07",
+       "source": "mcq",
+       "prompt": "A conducting ring lies coaxially near a solenoid. When the solenoid's current is switched on, the ring will",
+       "options": [
+        "move towards the solenoid",
+        "stay put",
+        "move either way, depending on the battery's polarity",
+        "move away from the solenoid"
+       ],
+       "correct_index": 3,
+       "explanation": "Switching on increases the flux through the ring, so the induced current opposes it and the ring is pushed away. Reversing the battery reverses *both* the solenoid's field and the induced current, so the repulsion survives — the direction of the force does not depend on polarity, only on whether the flux is rising or falling."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m08",
+       "source": "mcq",
+       "prompt": "Lenz's law is a consequence of the conservation of",
+       "options": [
+        "charge",
+        "momentum",
+        "energy",
+        "magnetic flux"
+       ],
+       "correct_index": 2,
+       "explanation": "If the induced current *aided* the change instead of opposing it, the change would grow without limit and energy would appear from nowhere. The minus sign in Faraday's law is energy conservation written into the equation — and it is why you must do work to push a magnet into a coil."
+      }
+     ]
+    },
+    {
+     "id": "inductance",
+     "title": "Self-Inductance and Energy",
+     "blurb": "A circuit's reluctance to let its own current change.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch38-m09",
+       "source": "mcq",
+       "prompt": "The self-inductance of a coil does **not** depend on",
+       "options": [
+        "the number of turns",
+        "the current through it",
+        "its cross-sectional area",
+        "the core material"
+       ],
+       "correct_index": 1,
+       "explanation": "Inductance is $ L = N\\Phi/i $, a purely geometrical and material property — for a solenoid, $ L = \\mu_0\\mu_r n^{2}Al $. The current cancels out of the definition. (For a ferromagnetic core $ \\mu_r $ itself varies with current, so $ L $ is only *approximately* current-independent there.)"
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m10",
+       "source": "mcq",
+       "prompt": "The energy stored in an inductor carrying current $ i $ is",
+       "options": [
+        "$ \\frac{1}{2}Li^{2} $",
+        "$ Li^{2} $",
+        "$ Li $",
+        "$ \\frac{1}{2}Li $"
+       ],
+       "correct_index": 0,
+       "explanation": "Building the current up from zero requires work against the back-emf, and integrating $ Li\\,di $ from $ 0 $ to $ i $ gives $ \\frac{1}{2}Li^{2} $. The half appears for the same reason as in $ \\frac{1}{2}CV^{2} $ and $ \\frac{1}{2}kx^{2} $ — the opposing effect grows linearly as you build up."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch38-m11",
+       "source": "mcq",
+       "prompt": "A large spark often appears when a switch carrying current through a big inductor is opened. This is because",
+       "options": [
+        "the inductor stores charge that must escape",
+        "the inductor opposes the sudden fall in current, generating a large emf",
+        "the resistance of the switch suddenly falls",
+        "the magnetic field pushes the contacts apart"
+       ],
+       "correct_index": 1,
+       "explanation": "The induced emf is $ -L\\,di/dt $, and opening a switch makes $ di/dt $ enormous, so the emf can reach thousands of volts — enough to ionise the air gap. This is exactly how a car's ignition coil generates its spark, and why inductive circuits need snubbers or freewheel diodes."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch38-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Motional emf on a sliding rod",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A rod of length $ 40 $ cm slides at $ 5\\ \\text{m s}^{-1} $ along rails in a field of $ 0.5 $ T perpendicular to the plane of the rails. The circuit has resistance $ 2\\ \\Omega $. Find the emf, the current and the force needed to keep the rod moving.",
+    "solution": "**EMF:**\n\n$ \\varepsilon = Blv = (0.5)(0.40)(5) = 1.0\\ \\text{V} $\n\n**Current:**\n\n$ i = \\frac{\\varepsilon}{R} = \\frac{1.0}{2} = 0.5\\ \\text{A} $\n\n**Force needed.** The current-carrying rod in the field feels a retarding force $ BiL $, which must be balanced to keep the speed constant:\n\n$ F = BiL = (0.5)(0.5)(0.40) = 0.1\\ \\text{N} $\n\n**Check the energy bookkeeping.**\n\nMechanical power supplied: $ P = Fv = (0.1)(5) = 0.5\\ \\text{W} $\n\nElectrical power dissipated: $ P = i^{2}R = (0.25)(2) = 0.5\\ \\text{W} $ ✓\n\nThey match exactly — the mechanical work done against the magnetic drag becomes heat in the resistor. That balance is Lenz's law expressed as energy conservation, and checking it is a good habit."
+   },
+   {
+    "id": "we-ch38-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — EMF from a changing field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A coil of $ 200 $ turns and area $ 50\\ \\text{cm}^{2} $ sits perpendicular to a field that falls uniformly from $ 0.8 $ T to $ 0.2 $ T in $ 0.1 $ s. Find the induced emf.",
+    "solution": "$ \\varepsilon = -N\\frac{d\\Phi}{dt} = -NA\\frac{dB}{dt} $\n\n**Rate of change of field:**\n\n$ \\frac{dB}{dt} = \\frac{0.2 - 0.8}{0.1} = -6\\ \\text{T s}^{-1} $\n\n**EMF:**\n\n$ \\varepsilon = -(200)(50 \\times 10^{-4})(-6) = 6\\ \\text{V} $\n\n**Reading the signs.** The field is falling, so the flux is falling, so the induced current flows in whatever direction *maintains* the flux — by Lenz's law. The magnitude is what matters for most purposes; the sign records the direction.\n\n**Why the number of turns multiplies the emf.** Each turn links the same flux, and they are in series, so their emfs add. This is the cheapest way to get a large emf, and it is why practical coils have hundreds or thousands of turns.\n\n**Watch the area conversion.** $ 50\\ \\text{cm}^{2} = 50 \\times 10^{-4}\\ \\text{m}^{2} $, not $ 50 \\times 10^{-2} $."
+   },
+   {
+    "id": "we-ch38-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Rotating coil: the a.c. generator",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A coil of $ 100 $ turns and area $ 0.02\\ \\text{m}^{2} $ rotates at $ 50 $ revolutions per second in a field of $ 0.1 $ T. Find the peak emf.",
+    "solution": "**Angular frequency:**\n\n$ \\omega = 2\\pi f = 2\\pi(50) = 314\\ \\text{rad s}^{-1} $\n\n**Flux at angle $ \\theta $:** $ \\Phi = NBA\\cos\\omega t $, so\n\n$ \\varepsilon = -\\frac{d\\Phi}{dt} = NBA\\omega\\sin\\omega t $\n\n**Peak emf:**\n\n$ \\varepsilon_0 = NBA\\omega = (100)(0.1)(0.02)(314) = 62.8\\ \\text{V} $\n\n**Where in the rotation the emf peaks.** At $ \\sin\\omega t = 1 $, which is when the coil's plane is *parallel* to the field — the flux is momentarily zero but changing fastest. The emf is zero when the coil is perpendicular to the field, where the flux is maximum but stationary.\n\n**This is exactly how mains electricity is generated.** The output is inherently sinusoidal, and its frequency is set by the rotation rate — $ 50 $ Hz in India and Europe, $ 60 $ Hz in North America.\n\n**Note that peak is not rms.** The rms emf here is $ 62.8/\\sqrt{2} = 44.4 $ V, and it is the rms value that a voltmeter reports."
+   },
+   {
+    "id": "we-ch38-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Self-inductance of a solenoid",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A solenoid of length $ 50 $ cm, cross-sectional area $ 4\\ \\text{cm}^{2} $ and $ 1000 $ turns has an air core. Find its self-inductance and the energy stored at $ 2 $ A.",
+    "solution": "**Self-inductance:**\n\n$ L = \\frac{\\mu_0 N^{2}A}{l} = \\frac{(4\\pi \\times 10^{-7})(10^{6})(4 \\times 10^{-4})}{0.5} $\n\n$ = \\frac{(4\\pi \\times 10^{-7})(400)}{0.5} = \\frac{5.03 \\times 10^{-4}}{0.5} = 1.01 \\times 10^{-3}\\ \\text{H} $\n\nAbout $ 1 $ mH.\n\n**Energy stored:**\n\n$ U = \\frac{1}{2}Li^{2} = \\frac{1}{2}(1.01 \\times 10^{-3})(4) = 2.0 \\times 10^{-3}\\ \\text{J} $\n\n**Note the $ N^{2} $ dependence.** Doubling the turns quadruples the inductance — one factor because each turn links more flux, another because there are more turns to link it. This is why inductance rises so steeply with winding.\n\n**And why iron cores are used.** Inserting a core of $ \\mu_r = 1000 $ would raise $ L $ to about $ 1 $ H — a thousandfold gain for no extra copper. The cost is that $ \\mu_r $ varies with current, so the inductance is no longer constant."
+   },
+   {
+    "id": "we-ch38-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Growth of current in an LR circuit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ H inductor and a $ 10\\ \\Omega $ resistor are connected to a $ 20 $ V battery. Find the time constant, the final current, and the current after $ 0.2 $ s.",
+    "solution": "**Time constant:**\n\n$ \\tau = \\frac{L}{R} = \\frac{2}{10} = 0.2\\ \\text{s} $\n\n**Final (steady) current.** Once the current stops changing the inductor has no emf, so it behaves as a plain wire:\n\n$ i_0 = \\frac{V}{R} = \\frac{20}{10} = 2\\ \\text{A} $\n\n**Current after $ 0.2 $ s** — exactly one time constant:\n\n$ i = i_0(1 - e^{-t/\\tau}) = 2(1 - e^{-1}) = 2(1 - 0.368) = 1.26\\ \\text{A} $\n\n**What the time constant means.** After one $ \\tau $ the current has reached $ 63\\% $ of its final value; after $ 5\\tau $ it is within $ 1\\% $. Here that is a full second — slow enough to watch on a meter.\n\n**Why the current cannot jump instantly.** A sudden change would mean an infinite $ di/dt $ and hence an infinite back-emf. The inductor's whole character is this resistance to *change* in current — it is the electrical analogue of inertia, with $ L $ playing the part of mass."
+   },
+   {
+    "id": "we-ch38-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Rod rotating in a magnetic field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A rod of length $ 1 $ m rotates about one end at $ 20\\ \\text{rad s}^{-1} $ in a field of $ 0.4 $ T parallel to the rotation axis. Find the emf between its ends.",
+    "solution": "Each element of the rod at radius $ r $ moves at $ v = \\omega r $, so its contribution to the emf is $ B(\\omega r)dr $. Integrate along the rod:\n\n$ \\varepsilon = \\int_{0}^{L} B\\omega r\\,dr = \\frac{1}{2}B\\omega L^{2} $\n\n$ = \\frac{1}{2}(0.4)(20)(1)^{2} = 4\\ \\text{V} $\n\n**Why the integration is necessary.** Different parts of the rod move at different speeds — the far end sweeps fastest, the pivot not at all — so $ \\varepsilon = Blv $ with a single $ v $ will not do. The factor of a half is exactly the average of a linearly varying speed.\n\n**An equivalent route via flux.** In time $ t $ the rod sweeps an area $ \\frac{1}{2}L^{2}\\omega t $, so the flux swept is $ \\frac{1}{2}BL^{2}\\omega t $ and the rate of change is $ \\frac{1}{2}B\\omega L^{2} $ ✓ Two derivations, one answer.\n\n**Where this appears in practice.** This is the principle of the homopolar generator — and, on a planetary scale, it is part of why rotating conducting bodies generate magnetic fields."
+   },
+   {
+    "id": "we-ch38-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Mutual inductance",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two coils have mutual inductance $ 0.05 $ H. The current in the first changes from $ 2 $ A to $ 6 $ A in $ 0.02 $ s. Find the emf induced in the second coil.",
+    "solution": "$ \\varepsilon_2 = -M\\frac{di_1}{dt} $\n\n**Rate of change:**\n\n$ \\frac{di_1}{dt} = \\frac{6-2}{0.02} = 200\\ \\text{A s}^{-1} $\n\n**EMF:**\n\n$ \\varepsilon_2 = -(0.05)(200) = -10\\ \\text{V} $\n\nSo $ 10 $ V in magnitude, with the minus sign recording that it opposes the change.\n\n**A useful symmetry.** $ M_{12} = M_{21} $ always — the mutual inductance is the same whichever coil carries the changing current. This is not obvious and is a genuinely useful theorem.\n\n**Where mutual inductance is the whole point.** A transformer is two coils sharing a magnetic circuit, and the voltage ratio is set by the turns ratio. Note that a transformer works *only* on alternating current: with steady current $ di/dt = 0 $ and no emf is induced at all, which is why d.c. cannot be transformed and why the war of the currents went the way it did."
+   },
+   {
+    "id": "we-ch38-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Eddy currents and magnetic braking",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why a magnet dropped down a vertical copper pipe falls far more slowly than one dropped down a plastic pipe, and why the copper pipe becomes slightly warm.",
+    "solution": "**What happens as the magnet falls.** Each ring-shaped element of the copper pipe experiences a changing flux as the magnet approaches and recedes, so circulating **eddy currents** are induced in the pipe wall.\n\n**Why they slow the magnet.** By Lenz's law those currents oppose the change: the copper ahead of the magnet presents a repelling pole, and the copper behind presents an attracting one. Both retard the fall.\n\n**Where the energy goes.** The magnet loses gravitational potential energy but gains little kinetic energy, so the difference must go somewhere — into resistive heating of the copper by the eddy currents. Hence the warmth.\n\n**Why a terminal velocity is reached.** The retarding force grows with speed (faster fall means faster flux change means larger currents), so the magnet settles at the speed where that force balances its weight.\n\n**Why plastic does nothing.** It is an insulator, so no eddy currents can flow and the magnet falls freely.\n\n**Where this is used and where it is a nuisance.** Deliberately: eddy-current brakes on trains and roller coasters, and induction cooktops. As a nuisance: transformer cores heat up this way, which is why they are built from thin laminations separated by insulation — breaking up the paths available to the eddy currents."
+   }
+  ]
+ }
+}

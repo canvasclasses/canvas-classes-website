@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 41,
+ "hcv_title": "Electric Current through Gases",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Largely OUTSIDE the current NCERT syllabus — discharge tubes, thermionic emission, vacuum diodes and triodes. Retain as enrichment / history-of-physics reading, or skip."
+ },
+ "source_pages": {
+  "worked": "840",
+  "obj1": "842-843"
+ },
+ "notes": "SYLLABUS FLAG: most of this chapter (vacuum tubes, triodes, discharge phenomena) is no longer in the NCERT Class 12 course. The 8 Objective I items are rebuilt for completeness, but the items on triode plate resistance are marked as enrichment. Two source items are graph-identification questions; both re-cast as statements about the underlying dependence.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch41-current-in-gases",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Electric Current through Gases",
+   "intro": "Ten questions on conduction through gases and vacuum. Mostly enrichment now, but the cathode-ray and rectification items still connect to the modern syllabus.",
+   "sections": [
+    {
+     "id": "cathode-rays",
+     "title": "Cathode Rays and Discharge Tubes",
+     "blurb": "The experiments that discovered the electron.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch41-m01",
+       "source": "mcq",
+       "prompt": "Cathode rays are a stream of",
+       "options": [
+        "electrons",
+        "protons",
+        "positive ions",
+        "negative ions"
+       ],
+       "correct_index": 0,
+       "explanation": "Thomson showed in 1897 that cathode rays are deflected by both electric and magnetic fields in a way giving a single charge-to-mass ratio, whatever the gas or electrode material — identifying them as a universal constituent of matter, the electron. Their negative charge is why they stream *away* from the cathode."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch41-m02",
+       "source": "mcq",
+       "prompt": "While cathode rays pass through a discharge tube, inside the tube there is",
+       "options": [
+        "an electric field but no magnetic field",
+        "a magnetic field but no electric field",
+        "both an electric and a magnetic field",
+        "neither"
+       ],
+       "correct_index": 2,
+       "explanation": "The applied potential difference provides an electric field, and the moving charges constitute a current — which necessarily produces a magnetic field. Any moving charge carries both, so a beam of electrons cannot have an electric field without a magnetic one."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch41-m03",
+       "source": "mcq",
+       "prompt": "A gas at atmospheric pressure does not conduct, but the same gas at low pressure in a discharge tube does. This is because at low pressure",
+       "options": [
+        "the gas becomes chemically far more reactive at low pressure",
+        "the mean free path is long enough for ions to gain ionising energy between collisions",
+        "the gas density becomes too low to carry any current at all",
+        "the electric field between the electrodes becomes much stronger"
+       ],
+       "correct_index": 1,
+       "explanation": "Conduction needs ionisation by collision, and that requires an ion to be accelerated to ionising energy before it strikes anything. At atmospheric pressure the mean free path is far too short; reducing the pressure lengthens it enough for the avalanche to build. This is exactly why fluorescent tubes and neon signs run at low pressure."
+      }
+     ]
+    },
+    {
+     "id": "thermionic-emission",
+     "title": "Thermionic Emission and Rectification",
+     "blurb": "Boiling electrons off a hot metal, and using the one-way valve.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch41-m04",
+       "source": "mcq",
+       "prompt": "As the temperature of an emitting surface is raised, the thermionic current",
+       "options": [
+        "rises in proportion to $ T $",
+        "rises extremely steeply, faster than any power of $ T $",
+        "rises in proportion to $ T^{2} $",
+        "is independent of temperature"
+       ],
+       "correct_index": 1,
+       "explanation": "Richardson's equation gives $ i = AT^{2}e^{-\\phi/kT} $, and the exponential dominates completely. A modest rise in temperature multiplies the current many times over, which is why a valve's cathode must be run near white heat and why its brightness is so critical to operation."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch41-m05",
+       "source": "mcq",
+       "prompt": "A vacuum diode conducts appreciably only when",
+       "options": [
+        "the plate is positive with respect to the cathode",
+        "the plate is negative with respect to the cathode",
+        "either polarity is applied",
+        "no potential difference is applied"
+       ],
+       "correct_index": 0,
+       "explanation": "Electrons are emitted only by the heated cathode, so they can travel only from cathode to plate — and only if the plate attracts them by being positive. Reverse the polarity and the cold plate emits nothing, so no current flows. This one-way behaviour is what 'valve' meant."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch41-m06",
+       "source": "mcq",
+       "prompt": "A diode, a resistor and a $ 50 $ Hz a.c. source are connected in series. The number of current pulses through the resistor per second is",
+       "options": [
+        "$ 25 $",
+        "$ 100 $",
+        "$ 50 $",
+        "$ 200 $"
+       ],
+       "correct_index": 2,
+       "explanation": "The diode conducts only during the half-cycles of one polarity, so exactly one pulse passes per cycle — $ 50 $ per second. This is half-wave rectification. A full-wave bridge using four diodes would give $ 100 $ pulses per second by using both halves."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch41-m07",
+       "source": "mcq",
+       "prompt": "In the **saturation** region of a vacuum diode's characteristic, the plate current",
+       "options": [
+        "rises linearly with the plate voltage",
+        "falls away as the plate voltage is raised further",
+        "stops rising with plate voltage, being limited by the emission rate",
+        "drops to zero once saturation has been reached"
+       ],
+       "correct_index": 2,
+       "explanation": "Once the plate voltage is high enough to collect every electron the cathode emits, raising it further cannot increase the current — the bottleneck has moved to the emission itself. Raising the *cathode temperature* is then the only way to increase the current, which is why saturation current is a measure of emission."
+      }
+     ]
+    },
+    {
+     "id": "valves-enrichment",
+     "title": "Vacuum Triodes (Enrichment)",
+     "blurb": "Historical, but the first electronic amplifier.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch41-m08",
+       "source": "mcq",
+       "prompt": "In a triode, the grid controls the plate current effectively because",
+       "options": [
+        "it is itself heated and emits electrons in large numbers",
+        "it sits close to the cathode, so a small grid voltage strongly affects the field there",
+        "it carries the greater part of the total plate current",
+        "it is made of a ferromagnetic material that guides electrons"
+       ],
+       "correct_index": 1,
+       "explanation": "Being much nearer the cathode than the plate is, the grid has a disproportionate influence on the field the emerging electrons see. A change of a volt or two on the grid can do what tens of volts on the plate would — and that leverage is exactly what makes amplification possible."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch41-m09",
+       "source": "mcq",
+       "prompt": "A triode operated in the **linear** region has its plate voltage slightly increased. Its dynamic plate resistance",
+       "options": [
+        "increases sharply",
+        "decreases sharply",
+        "falls to zero",
+        "remains almost the same"
+       ],
+       "correct_index": 3,
+       "explanation": "'Linear region' means the characteristic curve is nearly straight there, so its slope — and hence the dynamic plate resistance $ r_p = \\Delta V_p/\\Delta i_p $ — barely changes. Amplifiers are deliberately biased into this region precisely so that the gain stays constant and the output is undistorted."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch41-m10",
+       "source": "mcq",
+       "prompt": "The amplification factor of a triode, its mutual conductance and its plate resistance are related by",
+       "options": [
+        "$ \\mu = g_m r_p $",
+        "$ \\mu = g_m/r_p $",
+        "$ \\mu = r_p/g_m $",
+        "$ \\mu = g_m + r_p $"
+       ],
+       "correct_index": 0,
+       "explanation": "The amplification factor measures how much more effective the grid is than the plate, and it works out as the product of the transconductance and the plate resistance. The same relation reappears in transistor theory as voltage gain equalling transconductance times load resistance — the valve and the transistor share their small-signal mathematics."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch41-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Charge-to-mass ratio from deflection",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "In a Thomson-type experiment, electrons accelerated through $ 200 $ V pass through crossed fields with $ E = 4 \\times 10^{4}\\ \\text{V m}^{-1} $ and $ B = 2 \\times 10^{-3} $ T, emerging undeflected. Find $ e/m $ for the electron.",
+    "solution": "**Speed from the balance of forces:**\n\n$ eE = evB \\Rightarrow v = \\frac{E}{B} = \\frac{4 \\times 10^{4}}{2 \\times 10^{-3}} = 2 \\times 10^{7}\\ \\text{m s}^{-1} $\n\n**Speed from the accelerating voltage:**\n\n$ eV = \\frac{1}{2}mv^{2} \\Rightarrow \\frac{e}{m} = \\frac{v^{2}}{2V} $\n\n$ = \\frac{(2 \\times 10^{7})^{2}}{2(200)} = \\frac{4 \\times 10^{14}}{400} = 1.0 \\times 10^{12}\\ \\text{C kg}^{-1} $\n\n**Comparison with the accepted value**, $ 1.76 \\times 10^{11}\\ \\text{C kg}^{-1} $: our figure is about six times larger, so the stated field values here are illustrative rather than realistic. The *method*, however, is exactly Thomson's.\n\n**Why the two-stage measurement is necessary.** A single deflection measurement gives only a combination of $ e $, $ m $ and $ v $. The crossed-field balance pins down $ v $ independently, and only then does the accelerating voltage yield $ e/m $. Determining $ e $ itself required Millikan's separate oil-drop experiment — and only then could $ m $ be found."
+   },
+   {
+    "id": "we-ch41-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Richardson's equation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A cathode has work function $ 2.5 $ eV. By what factor does its thermionic emission increase when its temperature rises from $ 1500 $ K to $ 1600 $ K? Take $ k = 8.62 \\times 10^{-5}\\ \\text{eV K}^{-1} $.",
+    "solution": "Richardson's equation: $ i = AT^{2}e^{-\\phi/kT} $\n\n**The exponent at each temperature:**\n\nAt $ 1500 $ K: $ \\frac{\\phi}{kT} = \\frac{2.5}{(8.62 \\times 10^{-5})(1500)} = \\frac{2.5}{0.1293} = 19.34 $\n\nAt $ 1600 $ K: $ \\frac{2.5}{(8.62 \\times 10^{-5})(1600)} = \\frac{2.5}{0.1379} = 18.13 $\n\n**Ratio of currents:**\n\n$ \\frac{i_2}{i_1} = \\left(\\frac{1600}{1500}\\right)^{2}e^{19.34 - 18.13} = (1.138)e^{1.21} $\n\n$ = (1.138)(3.35) = 3.8 $\n\n**A 7% rise in temperature nearly quadruples the emission.** The $ T^{2} $ factor contributes only $ 1.14 $ of that; the exponential supplies the rest.\n\n**Why this dominates cathode design.** Emission is exquisitely sensitive to temperature, so a valve's heater voltage must be held closely regulated. It also explains why low-work-function coatings (barium and strontium oxides) are used — reducing $ \\phi $ moves the exponent far more effectively than heating harder, and lets the cathode run cooler and last longer."
+   },
+   {
+    "id": "we-ch41-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Half-wave rectification",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A single diode half-wave rectifies a $ 220 $ V rms, $ 50 $ Hz supply into a $ 100\\ \\Omega $ load. Find the peak current, the average current and the number of pulses per second.",
+    "solution": "**Peak voltage:**\n\n$ V_0 = \\sqrt{2}(220) = 311\\ \\text{V} $\n\n**Peak current:**\n\n$ i_0 = \\frac{311}{100} = 3.11\\ \\text{A} $\n\n**Average current.** The diode conducts for half of each cycle, and the mean of a half-sine over a full cycle is $ i_0/\\pi $:\n\n$ i_{av} = \\frac{3.11}{\\pi} = 0.99\\ \\text{A} $\n\n**Pulses per second:** one per cycle, so $ 50 $.\n\n**Why the average is $ i_0/\\pi $ and not $ i_0/2 $.** Over the conducting half-cycle the mean of a sine is $ 2i_0/\\pi $; spread over the whole cycle (half of which is dead) that halves to $ i_0/\\pi \\approx 0.318 i_0 $.\n\n**Why full-wave rectification is preferred.** It uses both halves, doubling the average current to $ 2i_0/\\pi $ and doubling the ripple frequency to $ 100 $ Hz — which is far easier to smooth with a capacitor, since higher-frequency ripple meets a lower capacitive reactance."
+   },
+   {
+    "id": "we-ch41-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Mean free path and striking potential",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why the potential needed to strike a discharge in a tube first falls and then rises as the pressure is reduced, and why a very good vacuum will not conduct at all.",
+    "solution": "**At high pressure.** The mean free path is very short, so an ion is accelerated only a tiny distance before colliding. It cannot reach ionising energy, so no avalanche builds and a very high voltage is needed to start one.\n\n**As the pressure falls.** The mean free path lengthens, ions gain more energy between collisions, and ionisation by collision becomes easy. The striking potential therefore *falls* — reaching a minimum at a few millimetres of mercury, which is where discharge tubes are operated.\n\n**At very low pressure.** Now there are too few gas molecules left to ionise. Electrons cross the tube without meeting anything, so no avalanche is possible and the striking potential rises steeply again.\n\n**In a perfect vacuum** there is nothing at all to ionise, so no discharge can occur — however high the voltage. (Current can still flow if electrons are supplied some other way, which is exactly what a heated cathode does in a vacuum valve.)\n\n**The general shape.** The striking potential plotted against pressure × electrode separation has a minimum — Paschen's law. It governs the design of every gas-discharge lamp and the insulation clearances in high-voltage equipment."
+   },
+   {
+    "id": "we-ch41-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Space-charge-limited current",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A vacuum diode obeys the three-halves law $ i = kV^{3/2} $ in its space-charge-limited region. If $ 20 $ V gives $ 8 $ mA, find the current at $ 45 $ V.",
+    "solution": "**Take the ratio** so that $ k $ cancels:\n\n$ \\frac{i_2}{i_1} = \\left(\\frac{V_2}{V_1}\\right)^{3/2} = \\left(\\frac{45}{20}\\right)^{3/2} = (2.25)^{3/2} $\n\n$ (2.25)^{3/2} = (1.5)^{3} = 3.375 $\n\n$ i_2 = (8)(3.375) = 27\\ \\text{mA} $\n\n**Why the exponent is $ 3/2 $ rather than 1.** The electrons already in flight form a cloud of negative charge — a space charge — that partly repels those still leaving the cathode. Raising the plate voltage both accelerates the electrons and sweeps the cloud away faster, so the current grows *faster* than Ohm's law would give. A vacuum diode is emphatically not a resistor.\n\n**Where the law stops applying.** At high enough voltage every emitted electron is being collected and the current saturates, becoming independent of $ V $ and limited by the cathode temperature instead. The three-halves law describes only the space-charge-limited part of the characteristic."
+   },
+   {
+    "id": "we-ch41-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Triode as an amplifier",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A triode has amplification factor $ 20 $ and plate resistance $ 10\\ \\text{k}\\Omega $. Find its mutual conductance, and the voltage gain with a $ 20\\ \\text{k}\\Omega $ load.",
+    "solution": "**Mutual conductance**, from $ \\mu = g_m r_p $:\n\n$ g_m = \\frac{\\mu}{r_p} = \\frac{20}{10\\,000} = 2 \\times 10^{-3}\\ \\text{S} = 2\\ \\text{mS} $\n\n**Voltage gain** with load $ R_L $:\n\n$ A = \\frac{\\mu R_L}{r_p + R_L} = \\frac{(20)(20\\,000)}{10\\,000 + 20\\,000} = \\frac{400\\,000}{30\\,000} = 13.3 $\n\n**Why the gain falls short of $ \\mu $.** The amplification factor is the *ceiling*, achieved only with an infinite load. The load and the valve's own plate resistance form a potential divider, so part of the available signal is dropped inside the valve.\n\n**The design trade-off.** A larger load raises the gain towards $ \\mu $ but also drops more d.c. voltage, reducing the available signal swing. A load of two or three times $ r_p $ is the usual compromise — and the identical reasoning governs the choice of collector resistor in a transistor amplifier."
+   },
+   {
+    "id": "we-ch41-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Ionisation by collision",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Argon has an ionisation energy of $ 15.8 $ eV. In a discharge tube where the field is $ 500\\ \\text{V m}^{-1} $, find the distance an electron must travel between collisions to be able to ionise an argon atom.",
+    "solution": "**Energy gained over a distance $ d $:**\n\n$ W = eEd $\n\n**Set this equal to the ionisation energy.** Working in electron-volts, an electron gains $ Ed $ electron-volts over distance $ d $:\n\n$ Ed = 15.8 \\Rightarrow d = \\frac{15.8}{500} = 0.0316\\ \\text{m} = 3.2\\ \\text{cm} $\n\n**What that tells you about the pressure required.** The electron must travel about $ 3 $ cm without colliding — so the mean free path has to be of that order. At atmospheric pressure it is about $ 10^{-7} $ m, which is a hundred thousand times too short; ionisation is impossible and the gas insulates.\n\n**Reducing the pressure is the fix.** Since $ \\lambda \\propto 1/p $, dropping the pressure to around $ 10^{-3} $ of atmospheric lengthens the mean free path into the centimetre range and the discharge strikes.\n\n**Why raising the field also works.** A field of $ 50\\,000\\ \\text{V m}^{-1} $ would need only $ 0.3 $ mm between collisions. That is the other route to a discharge — and it is why a spark can jump through ordinary air if the voltage is high enough."
+   },
+   {
+    "id": "we-ch41-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Work function from the saturation current",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tungsten cathode of area $ 2\\ \\text{cm}^{2} $ at $ 2000 $ K gives a saturation current of $ 1.5 $ mA. Taking Richardson's constant as $ A = 6 \\times 10^{5}\\ \\text{A m}^{-2}\\text{K}^{-2} $, find the work function.",
+    "solution": "**Current density:**\n\n$ J = \\frac{i}{A_{cathode}} = \\frac{1.5 \\times 10^{-3}}{2 \\times 10^{-4}} = 7.5\\ \\text{A m}^{-2} $\n\n**Richardson's equation:**\n\n$ J = A T^{2}e^{-\\phi/kT} $\n\n$ 7.5 = (6 \\times 10^{5})(2000)^{2}e^{-\\phi/kT} $\n\n$ e^{-\\phi/kT} = \\frac{7.5}{(6 \\times 10^{5})(4 \\times 10^{6})} = \\frac{7.5}{2.4 \\times 10^{12}} = 3.13 \\times 10^{-12} $\n\n**Take logarithms:**\n\n$ \\frac{\\phi}{kT} = -\\ln(3.13 \\times 10^{-12}) = 26.5 $\n\n$ \\phi = (26.5)(8.62 \\times 10^{-5})(2000) = 4.57\\ \\text{eV} $\n\nClose to tungsten's accepted $ 4.5 $ eV.\n\n**Why the exponent is so large.** At $ 2000 $ K the thermal energy $ kT $ is only $ 0.17 $ eV, while the work function is $ 4.5 $ eV — some 26 times larger. Emission depends on the rare electron in the far tail of the energy distribution, which is exactly why the current is so fiercely temperature-sensitive.\n\n**How the measurement is done in practice.** Plot $ \\ln(J/T^{2}) $ against $ 1/T $: the slope gives $ -\\phi/k $ and the intercept gives $ A $. A single reading, as here, requires $ A $ to be assumed."
+   }
+  ]
+ }
+}

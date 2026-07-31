@@ -1,0 +1,335 @@
+{
+ "hcv_chapter": 2,
+ "hcv_title": "Physics and Mathematics",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Motion in a Plane (vectors) + the Ch.0 'Mathematics for Physics' prerequisite unit"
+ },
+ "source_pages": {
+  "worked": "38-41",
+  "obj1": "42"
+ },
+ "notes": "Maps cleanly onto the livebook's Ch.0 'Mathematics for Physics' — vectors, differentiation, integration. Source chapter has 6 Objective I items; topped up to 12 covering dot/cross products and the calculus tools the rest of the book leans on.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch02-vectors-calculus",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Vectors and the Maths Toolkit",
+   "intro": "Twelve questions on vectors, products and calculus — the machinery every later chapter assumes you already own.",
+   "sections": [
+    {
+     "id": "vectors-basics",
+     "title": "Vectors: Addition and Components",
+     "blurb": "What actually defines a vector, and what a component can and cannot be.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch02-m01",
+       "source": "mcq",
+       "prompt": "A vector is left completely unchanged if it is",
+       "options": [
+        "rotated through an arbitrary angle",
+        "multiplied by an arbitrary scalar",
+        "cross-multiplied by a unit vector",
+        "slid parallel to itself to a new starting point"
+       ],
+       "correct_index": 3,
+       "explanation": "A vector is defined by magnitude and direction alone — where you draw it is irrelevant. Sliding it parallel to itself changes neither, so the vector is unchanged. Rotation changes direction, scalar multiplication changes magnitude, and a cross product produces an entirely different vector perpendicular to both."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m02",
+       "source": "mcq",
+       "prompt": "Which of these sets could be the magnitudes of three vectors that add to zero?",
+       "options": [
+        "2, 3, 8",
+        "4, 6, 9",
+        "5, 12, 6",
+        "1, 2, 5"
+       ],
+       "correct_index": 1,
+       "explanation": "Three vectors sum to zero only if they close a triangle, so no magnitude may exceed the sum of the other two. Check the largest each time: $ 9 < 4+6 $ passes; $ 8 > 2+3 $, $ 12 > 5+6 $ and $ 5 > 1+2 $ all fail. Only 4, 6, 9 can close."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m03",
+       "source": "mcq",
+       "prompt": "The resultant of $ \\vec{A} $ and $ \\vec{B} $ makes an angle $ \\alpha $ with $ \\vec{A} $ and $ \\beta $ with $ \\vec{B} $. Then",
+       "options": [
+        "$ \\alpha < \\beta $ if $ A > B $",
+        "$ \\alpha < \\beta $ always",
+        "$ \\alpha < \\beta $ if $ A < B $",
+        "$ \\alpha = \\beta $ always"
+       ],
+       "correct_index": 0,
+       "explanation": "The resultant always leans towards the bigger vector, so it makes the *smaller* angle with the bigger one. If $ A > B $ the resultant hugs $ \\vec{A} $, giving $ \\alpha < \\beta $. Only when $ A = B $ does the resultant bisect the angle."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m04",
+       "source": "mcq",
+       "prompt": "A component of a vector is",
+       "options": [
+        "always less than its magnitude",
+        "always greater than its magnitude",
+        "always equal to its magnitude",
+        "none of these"
+       ],
+       "correct_index": 3,
+       "explanation": "None of the three holds universally. A component equals the magnitude when the axis is along the vector, is zero when the axis is perpendicular, and is *negative* — hence less than the magnitude — when the vector points along the negative axis. Since a component can be equal, smaller, or negative, no single blanket statement survives."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m05",
+       "source": "mcq",
+       "prompt": "Can a vector have zero component along one line and still have non-zero magnitude?",
+       "options": [
+        "Yes — whenever the vector is perpendicular to that line",
+        "No — a zero component forces a zero vector",
+        "Only if the vector lies along that line",
+        "Only in three dimensions, never in a plane"
+       ],
+       "correct_index": 0,
+       "explanation": "The component along a line is $ A\\cos\\theta $, which vanishes at $ \\theta = 90^\\circ $ without $ A $ vanishing. A vector pointing due north has zero east-west component but is perfectly non-zero. Only if *every* component in a complete set of directions vanished would the vector itself be zero."
+      }
+     ]
+    },
+    {
+     "id": "vector-products",
+     "title": "Dot and Cross Products",
+     "blurb": "Two products, two very different meanings — and the direction rule that decides sign.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch02-m06",
+       "source": "mcq",
+       "prompt": "Vector $ \\vec{A} $ points east and $ \\vec{B} $ points north. The direction of $ \\vec{A} \\times \\vec{B} $ is",
+       "options": [
+        "vertically downward",
+        "vertically upward",
+        "along north-east",
+        "zero"
+       ],
+       "correct_index": 1,
+       "explanation": "Take east as $ \\hat{i} $ and north as $ \\hat{j} $; then $ \\hat{i} \\times \\hat{j} = \\hat{k} $, which points vertically up. The right-hand rule agrees: curl the fingers from east towards north and the thumb rises. Reversing the order would flip it downward — the cross product is not commutative."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m07",
+       "source": "mcq",
+       "prompt": "If $ |\\vec{A} \\times \\vec{B}| = \\vec{A} \\cdot \\vec{B} $ with neither vector zero, the angle between them is",
+       "options": [
+        "$ 30^\\circ $",
+        "$ 45^\\circ $",
+        "$ 60^\\circ $",
+        "$ 90^\\circ $"
+       ],
+       "correct_index": 1,
+       "explanation": "The condition reads $ AB\\sin\\theta = AB\\cos\\theta $, so $ \\tan\\theta = 1 $ and $ \\theta = 45^\\circ $. Note that $ A $ and $ B $ cancel entirely — the answer does not depend on how long the vectors are, only on the angle between them."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m08",
+       "source": "mcq",
+       "prompt": "If $ \\vec{A} \\times \\vec{B} = 0 $ for two non-zero vectors, then $ \\vec{A} $ and $ \\vec{B} $",
+       "options": [
+        "must be equal",
+        "are perpendicular",
+        "are parallel or antiparallel",
+        "must have equal magnitudes"
+       ],
+       "correct_index": 2,
+       "explanation": "The cross product has magnitude $ AB\\sin\\theta $, which vanishes at $ \\theta = 0^\\circ $ or $ 180^\\circ $ when neither vector is zero. So the vectors are collinear — parallel or antiparallel — but nothing forces their magnitudes to match. It is the *dot* product that vanishes for perpendicular vectors."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m09",
+       "source": "mcq",
+       "prompt": "For $ \\vec{A} = 2\\hat{i} - \\hat{j} + 2\\hat{k} $, the unit vector along $ \\vec{A} $ is",
+       "options": [
+        "$ \\frac{1}{5}(2\\hat{i} - \\hat{j} + 2\\hat{k}) $",
+        "$ \\frac{1}{9}(2\\hat{i} - \\hat{j} + 2\\hat{k}) $",
+        "$ 2\\hat{i} - \\hat{j} + 2\\hat{k} $",
+        "$ \\frac{1}{3}(2\\hat{i} - \\hat{j} + 2\\hat{k}) $"
+       ],
+       "correct_index": 3,
+       "explanation": "The magnitude is $ \\sqrt{2^{2} + (-1)^{2} + 2^{2}} = \\sqrt{9} = 3 $, and a unit vector is the vector divided by its own magnitude. Dividing by 9 — the sum of squares rather than its root — is the usual slip."
+      }
+     ]
+    },
+    {
+     "id": "calculus-and-figures",
+     "title": "Calculus and Significant Figures",
+     "blurb": "Rates, areas and how many digits you are actually entitled to write down.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch02-m10",
+       "source": "mcq",
+       "prompt": "The side of a square is measured as $ 3.5 $ cm. Its area should be written as",
+       "options": [
+        "$ 12.2\\ \\text{cm}^{2} $",
+        "$ 12.25\\ \\text{cm}^{2} $",
+        "$ 12.3\\ \\text{cm}^{2} $",
+        "$ 12\\ \\text{cm}^{2} $"
+       ],
+       "correct_index": 3,
+       "explanation": "The arithmetic gives $ 12.25 $, but a product carries only as many significant figures as its least precise input. The side has two, so the area must be rounded to two: $ 12\\ \\text{cm}^{2} $. Writing more digits claims a precision the measurement never had."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m11",
+       "source": "mcq",
+       "prompt": "If $ y = x^{3} - 6x $, the value of $ x $ at which $ y $ is a minimum (for $ x > 0 $) is",
+       "options": [
+        "$ 2 $",
+        "$ \\sqrt{6} $",
+        "$ \\sqrt{2} $",
+        "$ 6 $"
+       ],
+       "correct_index": 2,
+       "explanation": "Set $ dy/dx = 3x^{2} - 6 = 0 $, giving $ x^{2} = 2 $ and $ x = \\sqrt{2} $ for positive $ x $. Check the nature with the second derivative: $ d^{2}y/dx^{2} = 6x > 0 $ there, confirming a minimum rather than a maximum."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch02-m12",
+       "source": "mcq",
+       "prompt": "The value of $ \\int_{0}^{\\pi/2} \\cos\\theta \\, d\\theta $ is",
+       "options": [
+        "$ 1 $",
+        "$ 0 $",
+        "$ \\pi/2 $",
+        "$ -1 $"
+       ],
+       "correct_index": 0,
+       "explanation": "The antiderivative of $ \\cos\\theta $ is $ \\sin\\theta $, so the integral is $ \\sin(\\pi/2) - \\sin(0) = 1 - 0 = 1 $. A useful check: the graph of $ \\cos\\theta $ over this range is entirely positive, so the area must come out positive."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch02-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Building a vector from its components",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A vector lying in the XY-plane has an x-component of $ 12 $ units and a y-component of $ 5 $ units. Find its magnitude and the angle it makes with the X-axis.",
+    "solution": "Components are the two legs of a right triangle whose hypotenuse is the vector itself.\n\n**Magnitude.**\n\n$ A = \\sqrt{A_x^{2} + A_y^{2}} = \\sqrt{12^{2} + 5^{2}} = \\sqrt{144 + 25} = \\sqrt{169} = 13 $ units.\n\n**Direction.**\n\n$ \\tan\\theta = \\frac{A_y}{A_x} = \\frac{5}{12} $, so $ \\theta = \\tan^{-1}(5/12) \\approx 22.6^\\circ $ above the X-axis.\n\n**Watch out:** $ \\tan^{-1} $ on a calculator always returns an angle between $ -90^\\circ $ and $ +90^\\circ $, so it cannot distinguish the second quadrant from the fourth. Always check the *signs* of the components first and place the vector in the right quadrant by hand. Here both components are positive, so the first quadrant is correct."
+   },
+   {
+    "id": "we-ch02-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Resultant of two vectors at an angle",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two forces of $ 5 $ N and $ 8 $ N act at a point with $ 60^\\circ $ between them. Find the magnitude of their resultant.",
+    "solution": "Use the parallelogram law:\n\n$ R = \\sqrt{A^{2} + B^{2} + 2AB\\cos\\theta} $\n\nSubstitute $ A = 5 $, $ B = 8 $, $ \\theta = 60^\\circ $, $ \\cos 60^\\circ = 0.5 $:\n\n$ R = \\sqrt{25 + 64 + 2(5)(8)(0.5)} = \\sqrt{25 + 64 + 40} = \\sqrt{129} \\approx 11.4 $ N.\n\n**Sanity check that costs nothing.** The resultant of two vectors must lie between $ |A - B| = 3 $ N and $ A + B = 13 $ N. Our $ 11.4 $ N sits comfortably inside, which it should for an angle less than $ 90^\\circ $.\n\n**Watch out:** the sign in the formula is *plus* $ 2AB\\cos\\theta $, with $ \\theta $ the angle between the vectors when drawn tail-to-tail. Students who half-remember the cosine rule from geometry write a minus and get $ \\sqrt{49} = 7 $ N — a clean-looking answer that is simply wrong."
+   },
+   {
+    "id": "we-ch02-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — When is the resultant perpendicular?",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two vectors $ \\vec{P} $ and $ \\vec{Q} $ have magnitudes $ 6 $ and $ 10 $. For what angle between them is their resultant perpendicular to $ \\vec{P} $?",
+    "solution": "If $ \\vec{R} = \\vec{P} + \\vec{Q} $ is perpendicular to $ \\vec{P} $, then $ \\vec{R} \\cdot \\vec{P} = 0 $.\n\n$ (\\vec{P} + \\vec{Q}) \\cdot \\vec{P} = 0 $\n\n$ P^{2} + \\vec{Q} \\cdot \\vec{P} = 0 $\n\n$ P^{2} + QP\\cos\\theta = 0 $\n\nDivide through by $ P $ (non-zero):\n\n$ \\cos\\theta = -\\frac{P}{Q} = -\\frac{6}{10} = -0.6 $\n\n$ \\theta = \\cos^{-1}(-0.6) \\approx 126.9^\\circ $.\n\n**Reading the answer.** The angle is obtuse, and it has to be: to swing the resultant all the way round to a right angle with $ \\vec{P} $, the second vector must lean backwards. Notice too that this is only possible when $ Q \\geq P $ — if $ Q $ were smaller, $ \\cos\\theta $ would fall below $ -1 $ and no angle would exist.\n\n**Shortcut:** the dot product turns a geometric condition ('perpendicular') into an algebraic one ('equals zero') in a single line. Reach for it whenever a question says *perpendicular*."
+   },
+   {
+    "id": "we-ch02-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Dot product from components",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Given $ \\vec{A} = 3\\hat{i} + 2\\hat{j} - \\hat{k} $ and $ \\vec{B} = \\hat{i} - \\hat{j} + 4\\hat{k} $, find $ \\vec{A} \\cdot \\vec{B} $ and the angle between the vectors.",
+    "solution": "**The dot product.** Multiply matching components and add:\n\n$ \\vec{A} \\cdot \\vec{B} = (3)(1) + (2)(-1) + (-1)(4) = 3 - 2 - 4 = -3 $.\n\n**The magnitudes.**\n\n$ A = \\sqrt{9 + 4 + 1} = \\sqrt{14} $\n\n$ B = \\sqrt{1 + 1 + 16} = \\sqrt{18} $\n\n**The angle.**\n\n$ \\cos\\theta = \\frac{\\vec{A} \\cdot \\vec{B}}{AB} = \\frac{-3}{\\sqrt{14}\\sqrt{18}} = \\frac{-3}{\\sqrt{252}} \\approx -0.189 $\n\n$ \\theta \\approx 100.9^\\circ $.\n\n**What the sign told you before you finished.** A negative dot product means the angle exceeds $ 90^\\circ $ — the vectors partly oppose each other. You could have predicted an obtuse answer the moment you got $ -3 $, which is a good habit for catching arithmetic slips."
+   },
+   {
+    "id": "we-ch02-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Cross product from components",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find $ \\vec{A} \\times \\vec{B} $ for $ \\vec{A} = 2\\hat{i} + 3\\hat{j} $ and $ \\vec{B} = \\hat{i} - \\hat{k} $.",
+    "solution": "Expand the determinant with rows $ (\\hat{i}, \\hat{j}, \\hat{k}) $, then the components of $ \\vec{A} $, then those of $ \\vec{B} $. Write $ \\vec{A} = (2, 3, 0) $ and $ \\vec{B} = (1, 0, -1) $.\n\n$ \\hat{i} $ term: $ (3)(-1) - (0)(0) = -3 $\n\n$ \\hat{j} $ term: $ -[(2)(-1) - (0)(1)] = -(-2) = 2 $\n\n$ \\hat{k} $ term: $ (2)(0) - (3)(1) = -3 $\n\nSo $ \\vec{A} \\times \\vec{B} = -3\\hat{i} + 2\\hat{j} - 3\\hat{k} $.\n\n**Check it for free.** The result must be perpendicular to both inputs, so its dot product with each should vanish:\n\n$ (-3)(2) + (2)(3) + (-3)(0) = -6 + 6 + 0 = 0 $ ✓\n\n$ (-3)(1) + (2)(0) + (-3)(-1) = -3 + 0 + 3 = 0 $ ✓\n\n**Watch out:** the middle term carries a minus sign built into the expansion. Forgetting it is the single most common cross-product error, and the perpendicularity check above catches it every time."
+   },
+   {
+    "id": "we-ch02-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Differentiation as a rate measurer",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The radius of a circular oil slick grows as $ r = 2t + 3 $ (metres, with $ t $ in seconds). How fast is its area increasing at $ t = 1 $ s?",
+    "solution": "The area is $ A = \\pi r^{2} $, and $ r $ itself changes with time — so use the chain rule.\n\n$ \\frac{dA}{dt} = \\frac{dA}{dr} \\cdot \\frac{dr}{dt} $\n\n$ \\frac{dA}{dr} = 2\\pi r $ and $ \\frac{dr}{dt} = 2\\ \\text{m s}^{-1} $\n\n$ \\frac{dA}{dt} = 2\\pi r (2) = 4\\pi r $\n\nAt $ t = 1 $ s the radius is $ r = 2(1) + 3 = 5 $ m, so\n\n$ \\frac{dA}{dt} = 4\\pi (5) = 20\\pi \\approx 62.8\\ \\text{m}^{2}\\,\\text{s}^{-1} $.\n\n**Watch out:** substitute the numerical value of $ r $ only *after* differentiating. Putting $ r = 5 $ in at the start turns the area into a constant, whose derivative is zero — a mistake that produces a confidently wrong answer of nought."
+   },
+   {
+    "id": "we-ch02-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Maxima and minima",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle's potential energy varies as $ U(x) = x^{3} - 12x $ joules, with $ x $ in metres. Locate the positions of stable and unstable equilibrium.",
+    "solution": "Equilibrium means no net force, and force is the negative slope of the potential energy: $ F = -dU/dx $. So equilibrium sits where $ dU/dx = 0 $.\n\n$ \\frac{dU}{dx} = 3x^{2} - 12 = 0 \\Rightarrow x^{2} = 4 \\Rightarrow x = \\pm 2\\ \\text{m} $.\n\nNow decide the character of each using the second derivative:\n\n$ \\frac{d^{2}U}{dx^{2}} = 6x $\n\nAt $ x = +2 $: $ 6(2) = +12 > 0 $ — a minimum of $ U $, so **stable** equilibrium.\n\nAt $ x = -2 $: $ 6(-2) = -12 < 0 $ — a maximum of $ U $, so **unstable** equilibrium.\n\n**The physical picture.** A minimum of potential energy is a valley: nudge the particle and it rolls back. A maximum is a hilltop: nudge it and it runs away. The second derivative is simply asking 'valley or hill?'"
+   },
+   {
+    "id": "we-ch02-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Integration as accumulated change",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle starts from rest at the origin with acceleration $ a = 6t\\ \\text{m s}^{-2} $. Find its velocity and position at $ t = 2 $ s.",
+    "solution": "Acceleration is the rate of change of velocity, so integrating acceleration recovers velocity.\n\n$ v = \\int a\\,dt = \\int 6t\\,dt = 3t^{2} + C_1 $\n\nThe particle starts from rest, so $ v = 0 $ at $ t = 0 $, giving $ C_1 = 0 $. Hence $ v = 3t^{2} $.\n\nAt $ t = 2 $ s: $ v = 3(4) = 12\\ \\text{m s}^{-1} $.\n\nIntegrate once more for position:\n\n$ x = \\int v\\,dt = \\int 3t^{2}\\,dt = t^{3} + C_2 $\n\nIt starts at the origin, so $ C_2 = 0 $ and $ x = t^{3} $.\n\nAt $ t = 2 $ s: $ x = 8 $ m.\n\n**Watch out:** the constant of integration is not decoration — it is where the initial conditions enter. Two particles with identical acceleration but different starting speeds differ only through $ C_1 $. Drop it and you have silently assumed everything starts from rest at the origin.\n\n**Also note:** the standard equations $ v = u + at $ and $ s = ut + \\tfrac12 at^{2} $ do **not** apply here, because they assume constant acceleration and this acceleration grows with time."
+   },
+   {
+    "id": "we-ch02-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Definite integral as area under a graph",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The force on a particle varies with position as $ F = 4x $ newtons. Find the work done in moving it from $ x = 1 $ m to $ x = 3 $ m.",
+    "solution": "Work is $ \\int F\\,dx $ — literally the area under the force-position graph.\n\n$ W = \\int_{1}^{3} 4x\\,dx = \\left[2x^{2}\\right]_{1}^{3} = 2(9) - 2(1) = 18 - 2 = 16\\ \\text{J} $.\n\n**Check it geometrically.** The graph of $ F = 4x $ is a straight line, so the region between $ x = 1 $ and $ x = 3 $ is a trapezium with parallel sides $ F(1) = 4 $ N and $ F(3) = 12 $ N and width $ 2 $ m:\n\n$ W = \\tfrac12 (4 + 12)(2) = 16 $ J ✓\n\n**Why this matters.** Because the force is not constant, $ W = Fs $ would be meaningless here — which value of $ F $ would you even use? Integration handles a varying force automatically, and for a straight-line graph the geometric check keeps you honest."
+   },
+   {
+    "id": "we-ch02-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Significant figures through a calculation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A rectangular plate measures $ 4.2 $ cm by $ 2.15 $ cm. Express its area to the correct number of significant figures.",
+    "solution": "First the arithmetic:\n\n$ A = 4.2 \\times 2.15 = 9.03\\ \\text{cm}^{2} $.\n\nNow the precision. In a product, the answer keeps as many significant figures as the *least* precise factor.\n\n$ 4.2 $ has two significant figures.\n\n$ 2.15 $ has three.\n\nThe weaker link is two, so round to two: $ A = 9.0\\ \\text{cm}^{2} $.\n\n**Keep the trailing zero.** Writing $ 9 $ would claim only one significant figure; $ 9.0 $ correctly claims two. The zero is doing real work here.\n\n**Watch out:** the rule for addition is different — there you match the least number of *decimal places*, not significant figures. Mixing up the two rules is the usual source of confusion, so ask yourself which operation you performed before rounding."
+   },
+   {
+    "id": "we-ch02-11",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 11 — Resolving a vector along chosen axes",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block on an incline of $ 30^\\circ $ has weight $ 40 $ N acting vertically downward. Resolve this weight along and perpendicular to the incline surface.",
+    "solution": "You may choose *any* pair of perpendicular axes. On an incline the sensible choice is one axis along the slope and one perpendicular to it, because the motion happens along the slope.\n\nThe angle between the weight and the perpendicular-to-slope direction equals the angle of the incline, $ 30^\\circ $. (Both are angles between one pair of mutually perpendicular lines.)\n\n**Along the incline (down the slope):**\n\n$ W_{\\parallel} = W\\sin\\theta = 40 \\sin 30^\\circ = 40(0.5) = 20 $ N.\n\n**Perpendicular to the incline (into the surface):**\n\n$ W_{\\perp} = W\\cos\\theta = 40 \\cos 30^\\circ = 40(0.866) \\approx 34.6 $ N.\n\n**Check:** $ \\sqrt{20^{2} + 34.6^{2}} = \\sqrt{400 + 1197} \\approx 40 $ N ✓ — the parts rebuild the whole.\n\n**Watch out:** which component takes the sine and which the cosine is decided by the geometry, never by memory. It is $ \\sin\\theta $ along the slope and $ \\cos\\theta $ into it. A quick limiting check settles any doubt: as $ \\theta \\to 0 $ the slope goes flat, the along-slope pull should vanish — and $ \\sin 0 = 0 $ ✓."
+   },
+   {
+    "id": "we-ch02-12",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 12 — Vector subtraction and change in velocity",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A ball moving east at $ 6\\ \\text{m s}^{-1} $ rebounds off a wall and moves west at $ 4\\ \\text{m s}^{-1} $. Find the magnitude and direction of the change in its velocity.",
+    "solution": "Change in velocity means $ \\Delta\\vec{v} = \\vec{v}_f - \\vec{v}_i $ — a vector subtraction, not a subtraction of speeds.\n\nTake east as positive.\n\n$ \\vec{v}_i = +6\\ \\text{m s}^{-1} $\n\n$ \\vec{v}_f = -4\\ \\text{m s}^{-1} $\n\n$ \\Delta\\vec{v} = (-4) - (+6) = -10\\ \\text{m s}^{-1} $\n\nSo the change has magnitude $ 10\\ \\text{m s}^{-1} $, directed **west**.\n\n**Why it is not 2.** Subtracting the speeds $ 6 - 4 $ ignores the reversal of direction. Because the ball turns around, the two velocities have opposite signs and their difference is larger than either — this is exactly why a rebound loads a wall so much more than a mere slowing-down would.\n\n**Shortcut:** in one dimension, assign a sign convention *first* and then treat the vectors as ordinary signed numbers. Most 'vector' errors in one dimension are really sign-convention errors."
+   }
+  ]
+ }
+}

@@ -1,0 +1,246 @@
+{
+ "hcv_chapter": 20,
+ "hcv_title": "Dispersion and Spectra",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Ray Optics (dispersion by a prism, spectra)"
+ },
+ "source_pages": {
+  "worked": "454",
+  "obj1": "455-456"
+ },
+ "notes": "Short source chapter — 5 Objective I items, all rebuilt, topped up to 9 with items on the rainbow, spectrometer use and the achromatic combination. Worked examples number 8, the chapter's own worked set being brief.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch20-dispersion",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Dispersion and Spectra",
+   "intro": "Nine questions on why a prism splits light. The distinction that matters throughout: dispersion depends on the *difference* between indices, deviation on their average.",
+   "sections": [
+    {
+     "id": "dispersion-by-prisms",
+     "title": "Dispersion and Dispersive Power",
+     "blurb": "Difference versus average — two quantities that behave quite differently.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch20-m01",
+       "source": "mcq",
+       "prompt": "The angular dispersion produced by a prism",
+       "options": [
+        "has no relation with the average refractive index",
+        "increases if the average refractive index increases",
+        "increases if the average refractive index decreases",
+        "stays the same however the average index changes"
+       ],
+       "correct_index": 0,
+       "explanation": "Angular dispersion is $ (\\mu_v - \\mu_r)A $ — it depends only on the *difference* between the extreme indices and the prism angle. Two materials could share the same average index yet differ completely in how widely they spread the spectrum. The average index governs the mean deviation, not the spread."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch20-m02",
+       "source": "mcq",
+       "prompt": "A glass prism is dipped in water. Its dispersive power",
+       "options": [
+        "decreases",
+        "does not change",
+        "may increase or decrease depending on the prism angle",
+        "increases"
+       ],
+       "correct_index": 3,
+       "explanation": "In water the relevant indices become relative ones, so $ \\omega = \\frac{\\mu_v - \\mu_r}{\\mu_y - \\mu_w} $. The numerator is unchanged (both indices are divided by the same $ \\mu_w $, which cancels in the ratio) while the denominator shrinks, since $ \\mu_w > 1 $. So the dispersive power rises, even though the overall deviation falls."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch20-m03",
+       "source": "mcq",
+       "prompt": "A single prism can produce a minimum deviation $ \\delta $. Using three identical such prisms, the **smallest** deviation obtainable is",
+       "options": [
+        "$ \\delta $",
+        "$ 2\\delta $",
+        "zero",
+        "$ 3\\delta $"
+       ],
+       "correct_index": 2,
+       "explanation": "Prisms may be oriented in opposition, so their deviations subtract. With three, two can be set to cancel the third's contribution — or all three arranged so the net deviation vanishes. The question asks for the smallest achievable, and opposed orientations make zero attainable."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch20-m04",
+       "source": "mcq",
+       "prompt": "A converging lens has focal lengths $ f_v $ for violet and $ f_r $ for red light. Then",
+       "options": [
+        "$ f_v < f_r $",
+        "$ f_v > f_r $",
+        "$ f_v = f_r $",
+        "any of these, depending on the average index"
+       ],
+       "correct_index": 0,
+       "explanation": "Violet light is refracted more, so $ \\mu_v > \\mu_r $, and the lens maker's formula $ \\frac{1}{f} = (\\mu-1)(\\ldots) $ makes a larger index give a shorter focal length. Violet therefore focuses closer to the lens than red — which is chromatic aberration, the coloured fringing that plagued early telescopes."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch20-m05",
+       "source": "mcq",
+       "prompt": "An **achromatic** combination of two lenses is one that",
+       "options": [
+        "has zero net power",
+        "brings two chosen colours to the same focus",
+        "produces no deviation of light",
+        "eliminates spherical aberration"
+       ],
+       "correct_index": 1,
+       "explanation": "An achromatic doublet pairs a converging and a diverging lens of different materials so their dispersions cancel while a net converging power survives. It cannot make *all* colours coincide, only two chosen ones — usually red and blue — which is enough to reduce visible fringing dramatically. Spherical aberration is a separate defect with a separate cure."
+      }
+     ]
+    },
+    {
+     "id": "spectra",
+     "title": "Spectra and What They Reveal",
+     "blurb": "Lines come from atoms, bands from molecules.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch20-m06",
+       "source": "mcq",
+       "prompt": "Consider: (A) line spectra carry information about atoms; (B) band spectra carry information about molecules. Then",
+       "options": [
+        "both are wrong",
+        "A is correct but B is wrong",
+        "B is correct but A is wrong",
+        "both are correct"
+       ],
+       "correct_index": 3,
+       "explanation": "An isolated atom has sharply defined electronic energy levels, so it emits discrete lines. A molecule adds closely spaced vibrational and rotational levels on top of each electronic one, so its transitions crowd into bands. Reading which you have is the first step in identifying an unknown source."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch20-m07",
+       "source": "mcq",
+       "prompt": "The dark lines in the sun's spectrum (Fraunhofer lines) arise because",
+       "options": [
+        "cooler gases above the photosphere absorb those wavelengths",
+        "the sun emits no light at those wavelengths",
+        "the earth's atmosphere scatters those wavelengths",
+        "the prism fails to transmit those wavelengths"
+       ],
+       "correct_index": 0,
+       "explanation": "The sun's hot interior emits a continuous spectrum; cooler gas in its outer layers then absorbs precisely the wavelengths its own atoms would emit, leaving dark gaps. Because those wavelengths are element-specific, the lines reveal the sun's composition — which is how helium was discovered in sunlight before it was found on earth."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch20-m08",
+       "source": "mcq",
+       "prompt": "A primary rainbow forms because sunlight in a raindrop undergoes",
+       "options": [
+        "one refraction only",
+        "two internal reflections between two refractions",
+        "one internal reflection between two refractions",
+        "total internal reflection only"
+       ],
+       "correct_index": 2,
+       "explanation": "Light refracts entering the drop, reflects once off the back surface, then refracts again on leaving — and dispersion at the two refractions separates the colours. The secondary bow, fainter and with its colours reversed, involves two internal reflections instead."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch20-m09",
+       "source": "mcq",
+       "prompt": "A spectrometer prism is usually set near minimum deviation because there",
+       "options": [
+        "the dispersion is greatest",
+        "the spectrum is brightest and sharpest",
+        "no dispersion occurs",
+        "the prism transmits the most light"
+       ],
+       "correct_index": 1,
+       "explanation": "At minimum deviation the ray passes symmetrically through the prism and the deviation varies only slowly with the angle of incidence. A small spread of incident angles therefore emerges tightly grouped, giving sharp spectral lines. Away from that setting, the same spread of incidence smears each line out."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch20-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Angular dispersion by a thin prism",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A thin prism of angle $ 6^\\circ $ is made of glass with $ \\mu_v = 1.53 $ and $ \\mu_r = 1.51 $. Find the angular dispersion between violet and red.",
+    "solution": "For a thin prism the deviation of any colour is\n\n$ \\delta = (\\mu - 1)A $\n\n**Violet:** $ \\delta_v = (1.53 - 1)(6^\\circ) = 3.18^\\circ $\n\n**Red:** $ \\delta_r = (1.51 - 1)(6^\\circ) = 3.06^\\circ $\n\n**Angular dispersion:**\n\n$ \\theta = \\delta_v - \\delta_r = 0.12^\\circ $\n\nOr directly: $ \\theta = (\\mu_v - \\mu_r)A = (0.02)(6^\\circ) = 0.12^\\circ $\n\n**Note the scale of the effect.** The whole visible spectrum is spread over only about a tenth of a degree by this prism, while the beam as a whole is bent by more than three degrees. Dispersion is a small correction riding on a much larger deviation — which is why a prism must be used carefully to show a spectrum at all."
+   },
+   {
+    "id": "we-ch20-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Dispersive power",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "For a certain glass $ \\mu_v = 1.532 $, $ \\mu_y = 1.520 $ and $ \\mu_r = 1.514 $. Find its dispersive power.",
+    "solution": "$ \\omega = \\frac{\\mu_v - \\mu_r}{\\mu_y - 1} $\n\n**Numerator:** $ 1.532 - 1.514 = 0.018 $\n\n**Denominator:** $ 1.520 - 1 = 0.520 $\n\n$ \\omega = \\frac{0.018}{0.520} = 0.0346 $\n\n**What the number means.** Dispersive power is a dimensionless material constant — the spread of the spectrum expressed as a fraction of the mean deviation. Crown glass sits around $ 0.02 $, flint glass around $ 0.03 $ to $ 0.05 $.\n\n**Why the difference between glasses matters.** An achromatic doublet needs two materials of *different* dispersive powers so their dispersions can be cancelled while a net power remains. Two lenses of the same glass could only cancel dispersion by cancelling power too, leaving a useless combination."
+   },
+   {
+    "id": "we-ch20-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Deviation without dispersion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A crown-glass prism of angle $ 5^\\circ $ ($ \\omega = 0.02 $, $ \\mu_y = 1.52 $) is combined with a flint-glass prism ($ \\omega' = 0.04 $, $ \\mu_y' = 1.65 $) to give deviation without dispersion. Find the flint prism's angle.",
+    "solution": "**The condition for zero net dispersion** is that the two angular dispersions cancel:\n\n$ \\omega\\,\\delta + \\omega'\\,\\delta' = 0 $\n\nSince the prisms are set in opposition, work with magnitudes:\n\n$ \\omega(\\mu_y - 1)A = \\omega'(\\mu_y' - 1)A' $\n\n**Substitute:**\n\n$ (0.02)(0.52)(5^\\circ) = (0.04)(0.65)A' $\n\n$ 0.052 = 0.026 A' \\Rightarrow A' = 2^\\circ $\n\n**What the combination does.** The two prisms, oppositely oriented, cancel each other's colour spread while leaving a net bending of the beam. The net deviation is\n\n$ \\delta_{net} = (0.52)(5) - (0.65)(2) = 2.6 - 1.3 = 1.3^\\circ $\n\n**This is a direct-vision achromatic prism** — it bends white light without splitting it, and it is the prism analogue of the achromatic lens doublet."
+   },
+   {
+    "id": "we-ch20-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Dispersion without deviation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "For the same two glasses, find the flint prism angle that gives dispersion without any net deviation, taking the crown prism angle as $ 6^\\circ $.",
+    "solution": "**The condition for zero net deviation:**\n\n$ (\\mu_y - 1)A = (\\mu_y' - 1)A' $\n\n$ (0.52)(6^\\circ) = (0.65)A' $\n\n$ A' = \\frac{3.12}{0.65} = 4.8^\\circ $\n\n**The residual dispersion.** Since the deviations cancel but the dispersive powers differ, a spectrum survives:\n\n$ \\theta_{net} = \\omega\\delta - \\omega'\\delta' = (0.02)(3.12) - (0.04)(3.12) = -0.062^\\circ $\n\n**This is a direct-vision spectroscope.** White light passes straight through undeviated, yet emerges split into colours — so the instrument can be pointed directly at a source rather than off to one side.\n\n**Compare the two conditions.** Zero dispersion needs $ \\omega\\delta = \\omega'\\delta' $; zero deviation needs $ \\delta = \\delta' $. They are different requirements and cannot both be met with two prisms unless nothing happens at all."
+   },
+   {
+    "id": "we-ch20-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Chromatic aberration of a lens",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A converging lens has a focal length of $ 20 $ cm for yellow light and a dispersive power of $ 0.03 $. Find the separation between its violet and red focal points.",
+    "solution": "Differentiating $ \\frac{1}{f} = (\\mu - 1)K $ shows that a fractional change in $ (\\mu-1) $ produces the same fractional change in $ 1/f $, so\n\n$ \\frac{\\Delta f}{f} = -\\frac{\\Delta\\mu}{\\mu - 1} = -\\omega $\n\n**Magnitude of the separation:**\n\n$ |\\Delta f| = \\omega f = (0.03)(20) = 0.6\\ \\text{cm} = 6\\ \\text{mm} $\n\n**Which colour focuses first.** Violet has the larger index and so the shorter focal length — it focuses about $ 6 $ mm nearer the lens than red.\n\n**Why this ruined early telescopes.** A star imaged by a single lens is surrounded by coloured haloes, because no screen position focuses all colours at once. Newton's response was to build a *reflecting* telescope — a mirror's focal length has no dependence on wavelength at all, so mirrors are inherently achromatic. That is still why every large modern telescope uses a mirror."
+   },
+   {
+    "id": "we-ch20-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Condition for an achromatic doublet",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two thin lenses in contact form an achromatic combination. Lens 1 has $ \\omega_1 = 0.02 $ and focal length $ +10 $ cm. Find the focal length of lens 2, given $ \\omega_2 = 0.04 $, and the net focal length.",
+    "solution": "**The achromatic condition** for two lenses in contact is\n\n$ \\frac{\\omega_1}{f_1} + \\frac{\\omega_2}{f_2} = 0 $\n\n$ \\frac{0.02}{10} + \\frac{0.04}{f_2} = 0 $\n\n$ \\frac{0.04}{f_2} = -0.002 \\Rightarrow f_2 = -20\\ \\text{cm} $\n\nSo lens 2 must be **diverging**, of focal length $ 20 $ cm.\n\n**Net focal length:**\n\n$ \\frac{1}{F} = \\frac{1}{10} + \\frac{1}{-20} = \\frac{2-1}{20} = \\frac{1}{20} $\n\n$ F = +20\\ \\text{cm} $ — still converging.\n\n**Why the pairing works.** The diverging lens is made of the more dispersive glass, so a *weaker* diverging power suffices to cancel the converging lens's dispersion. That leaves net converging power intact — the whole trick of the achromatic doublet, and the reason two different glasses are essential.\n\n**Note the price.** The combination is half as powerful as the crown lens alone. Achromatism is bought with power."
+   },
+   {
+    "id": "we-ch20-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Refractive index from minimum deviation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A prism of angle $ 60^\\circ $ gives minimum deviations of $ 38^\\circ $ for red and $ 40^\\circ $ for violet light. Find the two refractive indices and the dispersive power.",
+    "solution": "$ \\mu = \\frac{\\sin\\left(\\frac{A + \\delta_m}{2}\\right)}{\\sin\\left(\\frac{A}{2}\\right)} $, with $ \\sin 30^\\circ = 0.5 $ in the denominator throughout.\n\n**Red:**\n\n$ \\mu_r = \\frac{\\sin\\left(\\frac{60+38}{2}\\right)}{0.5} = \\frac{\\sin 49^\\circ}{0.5} = \\frac{0.755}{0.5} = 1.510 $\n\n**Violet:**\n\n$ \\mu_v = \\frac{\\sin\\left(\\frac{60+40}{2}\\right)}{0.5} = \\frac{\\sin 50^\\circ}{0.5} = \\frac{0.766}{0.5} = 1.532 $\n\n**Mean index:** $ \\mu_y \\approx \\frac{1.510 + 1.532}{2} = 1.521 $\n\n**Dispersive power:**\n\n$ \\omega = \\frac{1.532 - 1.510}{1.521 - 1} = \\frac{0.022}{0.521} = 0.042 $\n\n**This is the standard laboratory determination.** Measure the prism angle and the minimum deviation for two colours on a spectrometer, and both indices and the dispersive power follow. Note how a $ 2^\\circ $ difference in deviation corresponds to only $ 0.022 $ in index — the measurement must be made carefully."
+   },
+   {
+    "id": "we-ch20-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Why the sky is blue and sunsets red",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Rayleigh scattering has intensity proportional to $ 1/\\lambda^{4} $. Using $ \\lambda_{blue} = 450 $ nm and $ \\lambda_{red} = 650 $ nm, find how much more strongly blue is scattered, and explain both the blue sky and the red sunset.",
+    "solution": "**The ratio:**\n\n$ \\frac{I_{blue}}{I_{red}} = \\left(\\frac{\\lambda_{red}}{\\lambda_{blue}}\\right)^{4} = \\left(\\frac{650}{450}\\right)^{4} = (1.444)^{4} \\approx 4.3 $\n\nBlue is scattered more than four times as strongly as red.\n\n**Why the sky is blue.** Looking anywhere but at the sun, you see only scattered light — and that light is predominantly blue. (Violet is scattered even more strongly, but the sun emits less of it and the eye is less sensitive to it, so the sky reads as blue rather than violet.)\n\n**Why sunsets are red.** At sunset the light travels a far longer path through the atmosphere, so most of the blue has been scattered *out* of the direct beam before it reaches you. What survives to travel straight to your eye is the red end.\n\n**The same formula, two opposite-looking results.** Scattered light is blue; transmitted light is red. It is why danger signals are red — long wavelengths penetrate haze and fog best — and why the fourth power makes the effect so pronounced."
+   }
+  ]
+ }
+}

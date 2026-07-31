@@ -1,0 +1,260 @@
+{
+ "hcv_chapter": 27,
+ "hcv_title": "Specific Heat Capacities of Gases",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Thermodynamics + Kinetic Theory (molar specific heats, ratio of specific heats)"
+ },
+ "source_pages": {
+  "worked": "563-566",
+  "obj1": "567-568"
+ },
+ "notes": "10 Objective I items rebuilt. Two source items refer to unlabelled p-V process figures; re-cast with the process stated algebraically (one of them as the $ p \\propto 1/V $ case the figure showed).",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch27-specific-heats",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Specific Heat Capacities of Gases",
+   "intro": "Ten questions on why a gas has two specific heats rather than one, and what decides the gap between them.",
+   "sections": [
+    {
+     "id": "cp-and-cv",
+     "title": "Why Two Specific Heats",
+     "blurb": "The difference is the work of expansion.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch27-m01",
+       "source": "mcq",
+       "prompt": "A gas does twice as much work in process A as in process B, with the same temperature rise in each. Comparing the molar heat capacities,",
+       "options": [
+        "$ C_A = C_B $",
+        "$ C_A < C_B $",
+        "$ C_A > C_B $",
+        "neither can be defined"
+       ],
+       "correct_index": 2,
+       "explanation": "For the same $ \\Delta T $, the internal energy change is identical. The first law then means process A needs more heat, because it must also cover the larger work. More heat for the same temperature rise is precisely a larger molar heat capacity."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m02",
+       "source": "mcq",
+       "prompt": "For a solid with a very small expansion coefficient,",
+       "options": [
+        "$ C_P - C_V = R $",
+        "$ C_P \\approx C_V $",
+        "$ C_P $ is very much greater than $ C_V $",
+        "$ C_P $ is slightly less than $ C_V $"
+       ],
+       "correct_index": 1,
+       "explanation": "The gap between $ C_P $ and $ C_V $ exists because a body expands and does work while being heated at constant pressure. A solid barely expands, so that work is negligible and the two specific heats are nearly equal. This is why a single specific heat is quoted for solids and liquids but never for gases."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m03",
+       "source": "mcq",
+       "prompt": "$ C_P - C_V $ is measured as $ 1.00R $ in state A and $ 1.08R $ in state B for the same gas sample. Most likely",
+       "options": [
+        "$ p_A < p_B $ and $ T_A > T_B $",
+        "$ p_A > p_B $ and $ T_A < T_B $",
+        "$ p_A = p_B $ and $ T_A < T_B $",
+        "$ p_A > p_B $ and $ T_A = T_B $"
+       ],
+       "correct_index": 0,
+       "explanation": "Mayer's relation $ C_P - C_V = R $ holds exactly only for an ideal gas. A departure to $ 1.08R $ signals non-ideal behaviour, which sets in at higher pressure and lower temperature. So state B — the deviant one — must be at higher pressure and lower temperature than A."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m04",
+       "source": "mcq",
+       "prompt": "Which combination of the molar heat capacities of an ideal gas is a **universal constant**?",
+       "options": [
+        "$ C_P/C_V $",
+        "$ C_P C_V $",
+        "$ C_P + C_V $",
+        "$ C_P - C_V $"
+       ],
+       "correct_index": 3,
+       "explanation": "Mayer's relation gives $ C_P - C_V = R $ for every ideal gas, monatomic or polyatomic alike. The ratio $ \\gamma = C_P/C_V $ is emphatically *not* universal — it is $ 1.67 $ for a monatomic gas and $ 1.40 $ for a diatomic one, because it depends on the number of degrees of freedom."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m05",
+       "source": "mcq",
+       "prompt": "$ 70 $ calories of heat raise the temperature of $ 2 $ moles of an ideal gas at constant pressure by $ 5 $ °C. The gas is most likely",
+       "options": [
+        "monatomic",
+        "triatomic non-linear",
+        "diatomic",
+        "impossible to identify"
+       ],
+       "correct_index": 2,
+       "explanation": "$ C_P = \\frac{Q}{n\\Delta T} = \\frac{70}{2 \\times 5} = 7\\ \\text{cal mol}^{-1}\\text{K}^{-1} $. Since $ R \\approx 2\\ \\text{cal mol}^{-1}\\text{K}^{-1} $, this is $ \\frac{7}{2}R $ — exactly the diatomic value, giving $ C_V = \\frac{5}{2}R $ and $ \\gamma = 1.4 $."
+      }
+     ]
+    },
+    {
+     "id": "processes-and-gamma",
+     "title": "Processes and the Ratio γ",
+     "blurb": "Where the adiabatic curve is steeper than the isothermal.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch27-m06",
+       "source": "mcq",
+       "prompt": "For a process in which $ pV = $ constant (an isothermal process on an ideal gas), the molar heat capacity is",
+       "options": [
+        "infinite",
+        "zero",
+        "equal to $ C_V $",
+        "equal to $ C_P $"
+       ],
+       "correct_index": 0,
+       "explanation": "Heat is supplied but the temperature does not change, so $ C = Q/n\\Delta T $ has a zero denominator — the capacity is formally infinite. At the other extreme, an adiabatic process has $ Q = 0 $ with a temperature change, giving $ C = 0 $. The two most familiar processes occupy the two extremes."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m07",
+       "source": "mcq",
+       "prompt": "In an **isothermal** process on an ideal gas, the pressure increases by $ 0.5\\% $. The volume decreases by about",
+       "options": [
+        "$ 0.5\\% $",
+        "$ 0.25\\% $",
+        "$ 0.7\\% $",
+        "$ 1\\% $"
+       ],
+       "correct_index": 0,
+       "explanation": "With $ pV = $ constant, the fractional changes are equal and opposite: $ \\frac{\\Delta p}{p} + \\frac{\\Delta V}{V} = 0 $. So a $ 0.5\\% $ pressure rise means a $ 0.5\\% $ volume fall."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m08",
+       "source": "mcq",
+       "prompt": "In an **adiabatic** process on a gas with $ \\gamma = 1.4 $, the pressure increases by $ 0.5\\% $. The volume decreases by about",
+       "options": [
+        "$ 0.5\\% $",
+        "$ 0.36\\% $",
+        "$ 0.7\\% $",
+        "$ 1\\% $"
+       ],
+       "correct_index": 1,
+       "explanation": "From $ pV^{\\gamma} = $ constant, $ \\frac{\\Delta p}{p} + \\gamma\\frac{\\Delta V}{V} = 0 $, so $ \\frac{\\Delta V}{V} = -\\frac{0.5}{1.4} = -0.36\\% $. The adiabatic curve is steeper, so the same pressure change needs a smaller volume change than in the isothermal case."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m09",
+       "source": "mcq",
+       "prompt": "Two identical gas samples expand to the same final volume — A adiabatically, B isothermally. Comparing their final pressures,",
+       "options": [
+        "$ p_A > p_B $",
+        "$ p_A = p_B $",
+        "the comparison depends on $ \\gamma $",
+        "$ p_A < p_B $"
+       ],
+       "correct_index": 3,
+       "explanation": "The adiabatic sample also *cools* as it expands, since it does work with no heat supplied. Lower temperature at the same volume means lower pressure, so $ p_A < p_B $. Graphically, the adiabatic curve falls away more steeply than the isothermal from the same starting point."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch27-m10",
+       "source": "mcq",
+       "prompt": "The ratio $ \\gamma = C_P/C_V $ for a monatomic ideal gas is",
+       "options": [
+        "$ 1.40 $",
+        "$ 1.67 $",
+        "$ 1.33 $",
+        "$ 1.00 $"
+       ],
+       "correct_index": 1,
+       "explanation": "A monatomic gas has only 3 translational degrees of freedom, so $ C_V = \\frac{3}{2}R $ and $ C_P = \\frac{5}{2}R $, giving $ \\gamma = 5/3 = 1.67 $. Adding degrees of freedom always lowers $ \\gamma $: diatomic gives $ 1.40 $ and a non-linear triatomic $ 1.33 $. Measuring $ \\gamma $ therefore reveals a molecule's structure."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch27-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Mayer's relation and the two specific heats",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "For a gas, $ C_P = 29.1\\ \\text{J mol}^{-1}\\text{K}^{-1} $. Find $ C_V $, $ \\gamma $, and identify the type of molecule. Take $ R = 8.31 $.",
+    "solution": "**Mayer's relation:**\n\n$ C_V = C_P - R = 29.1 - 8.31 = 20.8\\ \\text{J mol}^{-1}\\text{K}^{-1} $\n\n**Ratio:**\n\n$ \\gamma = \\frac{C_P}{C_V} = \\frac{29.1}{20.8} = 1.40 $\n\n**Identification.** Compare with the theoretical values:\n\n$ C_V = \\frac{3}{2}R = 12.5 $ — monatomic\n\n$ C_V = \\frac{5}{2}R = 20.8 $ — diatomic ✓\n\n$ C_V = 3R = 24.9 $ — non-linear triatomic\n\nSo this is a **diatomic** gas — nitrogen, oxygen or hydrogen, for instance.\n\n**Why this measurement is powerful.** A purely thermal measurement — how much heat raises the temperature — reveals how many ways a molecule can store energy, and therefore something about its shape. It was among the earliest evidence for molecular structure."
+   },
+   {
+    "id": "we-ch27-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Heat at constant pressure versus constant volume",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two moles of a diatomic gas are heated through $ 50 $ K, once at constant volume and once at constant pressure. Find the heat needed in each case and the work done.",
+    "solution": "For a diatomic gas, $ C_V = \\frac{5}{2}R = 20.8 $ and $ C_P = \\frac{7}{2}R = 29.1\\ \\text{J mol}^{-1}\\text{K}^{-1} $.\n\n**At constant volume:**\n\n$ Q_V = nC_V\\Delta T = 2(20.8)(50) = 2080\\ \\text{J} $\n\n$ W = 0 $, so all of it becomes internal energy: $ \\Delta U = 2080 $ J.\n\n**At constant pressure:**\n\n$ Q_P = nC_P\\Delta T = 2(29.1)(50) = 2910\\ \\text{J} $\n\n**Work done:**\n\n$ W = nR\\Delta T = 2(8.31)(50) = 831\\ \\text{J} $\n\n**Check the first law:** $ \\Delta U = Q_P - W = 2910 - 831 = 2079 $ J — the same $ \\Delta U $ as before ✓\n\n**The point of the comparison.** Internal energy depends only on the temperature change, so it is identical in both processes. The extra $ 831 $ J needed at constant pressure is *exactly* the work of expansion — which is why $ C_P - C_V = R $ per mole."
+   },
+   {
+    "id": "we-ch27-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Determining γ from an adiabatic change",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A gas at $ 1 $ atm and $ 300 $ K is compressed adiabatically to half its volume, reaching $ 2.64 $ atm. Find $ \\gamma $ and the final temperature.",
+    "solution": "**Finding γ.** From $ p_1V_1^{\\gamma} = p_2V_2^{\\gamma} $:\n\n$ \\frac{p_2}{p_1} = \\left(\\frac{V_1}{V_2}\\right)^{\\gamma} \\Rightarrow 2.64 = 2^{\\gamma} $\n\nTake logarithms:\n\n$ \\gamma = \\frac{\\ln 2.64}{\\ln 2} = \\frac{0.971}{0.693} = 1.40 $\n\nA diatomic gas.\n\n**Final temperature.** Using $ TV^{\\gamma-1} = $ constant:\n\n$ T_2 = T_1\\left(\\frac{V_1}{V_2}\\right)^{\\gamma-1} = 300(2)^{0.4} = 300(1.32) = 396\\ \\text{K} $\n\n**Cross-check with the gas law:**\n\n$ \\frac{p_2V_2}{p_1V_1} = \\frac{T_2}{T_1} \\Rightarrow \\frac{2.64 \\times 0.5}{1 \\times 1} = 1.32 = \\frac{396}{300} $ ✓\n\n**Why this is a real experimental method.** Compressing a gas quickly (so no heat escapes) and measuring the pressure rise gives $ \\gamma $ directly — and hence the molecule's degrees of freedom. It is also the principle behind measuring $ \\gamma $ from the speed of sound, since $ v = \\sqrt{\\gamma p/\\rho} $."
+   },
+   {
+    "id": "we-ch27-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Work in an adiabatic process",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two moles of a monatomic gas ($ \\gamma = 5/3 $) at $ 300 $ K expand adiabatically until the temperature falls to $ 200 $ K. Find the work done by the gas.",
+    "solution": "With $ Q = 0 $, the first law gives $ W = -\\Delta U $.\n\n$ \\Delta U = nC_V\\Delta T = 2 \\times \\frac{3}{2}(8.31) \\times (200 - 300) $\n\n$ = 2 \\times 12.47 \\times (-100) = -2494\\ \\text{J} $\n\n$ W = -\\Delta U = +2494\\ \\text{J} $\n\nThe gas does about $ 2.5 $ kJ of work.\n\n**Where the energy came from.** Nowhere outside the gas — it was drawn entirely from the internal energy, which is why the temperature dropped by $ 100 $ K.\n\n**The alternative formula:**\n\n$ W = \\frac{nR(T_1 - T_2)}{\\gamma - 1} = \\frac{2(8.31)(100)}{2/3} = \\frac{1662}{0.667} = 2492\\ \\text{J} $ ✓\n\n**Why the temperature must fall.** An adiabatic expansion has no heat supply, so any work done is paid for out of internal energy. This is the mechanism behind cloud formation: rising air expands adiabatically, cools, and its water vapour condenses."
+   },
+   {
+    "id": "we-ch27-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Mixture of two gases",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find $ C_V $ and $ \\gamma $ for a mixture of $ 2 $ moles of helium ($ \\gamma = 5/3 $) and $ 3 $ moles of nitrogen ($ \\gamma = 7/5 $).",
+    "solution": "Internal energies add, so the mixture's $ C_V $ is the **mole-weighted average**:\n\n$ C_V = \\frac{n_1 C_{V1} + n_2 C_{V2}}{n_1 + n_2} $\n\nWith $ C_{V1} = \\frac{3}{2}R $ (helium) and $ C_{V2} = \\frac{5}{2}R $ (nitrogen):\n\n$ C_V = \\frac{2(1.5R) + 3(2.5R)}{5} = \\frac{3R + 7.5R}{5} = \\frac{10.5R}{5} = 2.1R $\n\n**Then $ C_P $ by Mayer's relation:**\n\n$ C_P = C_V + R = 3.1R $\n\n**Ratio:**\n\n$ \\gamma = \\frac{3.1R}{2.1R} = 1.48 $\n\n**Check the plausibility.** The answer lies between $ 1.40 $ and $ 1.67 $, as it must, and nearer the nitrogen value because nitrogen is the majority component ✓\n\n**Watch out:** you cannot average the $ \\gamma $ values directly. Averaging $ 1.67 $ and $ 1.40 $ by moles would give $ 1.51 $ — close, but wrong. Always average $ C_V $ (an extensive-per-mole quantity) and derive $ \\gamma $ afterwards."
+   },
+   {
+    "id": "we-ch27-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Molar heat capacity of an arbitrary process",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An ideal gas undergoes a process in which $ p \\propto V $. Find the molar heat capacity for this process in terms of $ C_V $ and $ R $.",
+    "solution": "**First find how temperature varies.** With $ p = kV $ and $ pV = nRT $:\n\n$ kV^{2} = nRT \\Rightarrow T \\propto V^{2} $\n\n**Work done** for a small change, using $ p = kV $:\n\n$ W = \\int_{V_1}^{V_2} kV\\,dV = \\frac{k}{2}(V_2^{2} - V_1^{2}) = \\frac{1}{2}(p_2V_2 - p_1V_1) = \\frac{nR\\Delta T}{2} $\n\n**Now the first law:**\n\n$ Q = \\Delta U + W = nC_V\\Delta T + \\frac{nR\\Delta T}{2} $\n\n**Molar heat capacity:**\n\n$ C = \\frac{Q}{n\\Delta T} = C_V + \\frac{R}{2} $\n\n**Where this sits among the familiar cases.** It lies between $ C_V $ (no work) and $ C_P = C_V + R $ (full expansion work at constant pressure). Here the gas does half as much work per degree as in an isobaric process, so it gets half the extra capacity.\n\n**The general method.** For *any* process, find $ W $ in terms of $ \\Delta T $, add $ nC_V\\Delta T $, then divide by $ n\\Delta T $. Every molar heat capacity — including the infinite isothermal one and the zero adiabatic one — comes out of this single recipe."
+   },
+   {
+    "id": "we-ch27-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Speed of sound and γ",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The speed of sound in air at $ 273 $ K is $ 332\\ \\text{m s}^{-1} $. Taking the mean molar mass of air as $ 29\\ \\text{g mol}^{-1} $, find $ \\gamma $ for air.",
+    "solution": "Sound propagates adiabatically — the compressions happen far too fast for heat to flow — so Laplace's formula applies:\n\n$ v = \\sqrt{\\frac{\\gamma RT}{M}} $\n\n**Rearrange for γ:**\n\n$ \\gamma = \\frac{v^{2}M}{RT} = \\frac{(332)^{2}(29 \\times 10^{-3})}{(8.31)(273)} $\n\n$ = \\frac{(110\\,224)(0.029)}{2268} = \\frac{3196}{2268} = 1.41 $\n\n**Air behaves as a diatomic gas** — unsurprising, since it is four-fifths nitrogen and one-fifth oxygen.\n\n**The historical significance.** Newton assumed sound travelled *isothermally*, which gives $ v = \\sqrt{p/\\rho} $ and predicts about $ 280\\ \\text{m s}^{-1} $ — some 15% below the measured value. Laplace's correction, recognising the process as adiabatic, inserted the factor $ \\sqrt{\\gamma} $ and resolved a discrepancy that had stood for over a century.\n\n**Why adiabatic and not isothermal.** At audible frequencies each compression lasts milliseconds, while heat conduction across a wavelength takes far longer. The gas simply has no time to exchange heat."
+   },
+   {
+    "id": "we-ch27-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Comparing isothermal and adiabatic compression",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "One mole of a diatomic gas at $ 300 $ K and $ 1 $ atm is compressed to half its volume, once isothermally and once adiabatically. Compare the final pressures and the work required.",
+    "solution": "**Isothermal compression.** $ pV = $ constant:\n\n$ p_2 = 2p_1 = 2\\ \\text{atm} $, and $ T_2 = 300 $ K\n\n$ W = nRT\\ln\\left(\\frac{V_2}{V_1}\\right) = (1)(8.31)(300)\\ln(0.5) = -1728\\ \\text{J} $\n\nNegative, so $ 1728 $ J of work must be done *on* the gas.\n\n**Adiabatic compression.** $ pV^{\\gamma} = $ constant with $ \\gamma = 1.4 $:\n\n$ p_2 = p_1(2)^{1.4} = 1 \\times 2.64 = 2.64\\ \\text{atm} $\n\n$ T_2 = T_1(2)^{0.4} = 300(1.32) = 396\\ \\text{K} $\n\n$ W = -\\Delta U = -nC_V\\Delta T = -(1)(20.8)(96) = -1997\\ \\text{J} $\n\nSo $ 1997 $ J must be supplied.\n\n**Why the adiabatic case costs more.** The gas heats up as it is compressed, so its pressure rises faster and it pushes back harder throughout the stroke. More opposition means more work.\n\n**The practical consequence.** A cycle pump warms noticeably when used quickly (near-adiabatic) but far less when used slowly (near-isothermal, since heat leaks out through the barrel). Compressing slowly is genuinely cheaper in energy — the reason industrial compressors are intercooled."
+   }
+  ]
+ }
+}

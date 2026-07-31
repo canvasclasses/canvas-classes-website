@@ -11,6 +11,7 @@
 >   SS curriculum — one merged text covering Geography, History, Political Science, Economics).
 > - **Track:** Class 9 "Exploration" template ([`BOOK_PAGE_WORKFLOW.md`](BOOK_PAGE_WORKFLOW.md) §4B),
 >   adapted for humanities per this doc.
+> - **White-text opacity** is governed globally by [`BOOK_PAGE_WORKFLOW.md`](BOOK_PAGE_WORKFLOW.md) §17.3.1 — a strict four-tier scale (`/82` body · `/85` emphasis · `/60` secondary · `/45` meta; ceiling `/85`, floor `/45`, `/90` and the `/25`–`/40` band banned). Applies to every Live Book renderer, this track included — never introduce another `text-white/NN` value.
 > - **Build settings (locked):** English-only · `published: false` on every new page until the
 >   founder reviews · all mutations through `scripts/lib/book-writer.js` (never raw Mongo) · images
 >   are `src: ''` + a `generation_prompt`/`image_prompt` placeholder, filled later via the image

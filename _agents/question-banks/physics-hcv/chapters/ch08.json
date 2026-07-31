@@ -1,0 +1,287 @@
+{
+ "hcv_chapter": 8,
+ "hcv_title": "Work and Energy",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Work, Energy and Power"
+ },
+ "source_pages": {
+  "worked": "140-144",
+  "obj1": "145"
+ },
+ "notes": "10 Objective I items rebuilt. The source set includes four near-identical 'work done by X equals change in Y' items; these were kept but spread across the bank rather than clustered, since they test genuinely different theorems.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch08-work-energy",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Work and Energy",
+   "intro": "Ten questions on work, energy and the theorems connecting them. Knowing which theorem applies to which set of forces is most of the battle.",
+   "sections": [
+    {
+     "id": "work-energy-theorems",
+     "title": "The Theorems, and What Each One Counts",
+     "blurb": "Three statements that look alike and mean different things.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch08-m01",
+       "source": "mcq",
+       "prompt": "The work done by **all** the forces on a system, external and internal together, equals the change in its",
+       "options": [
+        "kinetic energy",
+        "potential energy",
+        "total energy",
+        "mechanical energy"
+       ],
+       "correct_index": 0,
+       "explanation": "This is the work-energy theorem in its most general form: total work equals change in kinetic energy, whatever the forces are and whether or not they are conservative. It is really Newton's second law integrated over displacement, so it holds with no conditions attached."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch08-m02",
+       "source": "mcq",
+       "prompt": "The negative of the work done by the conservative **internal** forces of a system equals the change in its",
+       "options": [
+        "kinetic energy",
+        "potential energy",
+        "total energy",
+        "momentum"
+       ],
+       "correct_index": 1,
+       "explanation": "This is the definition of potential energy: $ \\Delta U = -W_{conservative} $. Lift a book and gravity does negative work, so the potential energy rises. The minus sign is not a convention to memorise — it is what makes stored energy increase when you work against a force."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch08-m03",
+       "source": "mcq",
+       "prompt": "The work done by the **external** forces on a system equals the change in its",
+       "options": [
+        "kinetic energy only",
+        "potential energy only",
+        "momentum",
+        "total energy"
+       ],
+       "correct_index": 3,
+       "explanation": "External work can raise the kinetic energy, the potential energy, or both — so what it tracks is the total. Push a block up a slope and you add both speed and height. Internal conservative forces merely shuffle energy between kinetic and potential without changing the total."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch08-m04",
+       "source": "mcq",
+       "prompt": "The quantity of a two-particle system that depends only on the separation between the particles is its",
+       "options": [
+        "kinetic energy",
+        "potential energy",
+        "total mechanical energy",
+        "momentum"
+       ],
+       "correct_index": 1,
+       "explanation": "Interaction potential energy — gravitational, electrical or elastic — is a function of separation alone. Kinetic energy depends on the particles' speeds, and momentum on their velocities, neither of which the separation fixes."
+      }
+     ]
+    },
+    {
+     "id": "springs-and-stored-energy",
+     "title": "Springs and Stored Energy",
+     "blurb": "Same force, different spring — the stiffer one stores less.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch08-m05",
+       "source": "mcq",
+       "prompt": "Two springs A and B with $ k_A = 2k_B $ are stretched by applying forces of **equal magnitude**. If the energy stored in A is $ E $, that in B is",
+       "options": [
+        "$ E/2 $",
+        "$ 2E $",
+        "$ E/4 $",
+        "$ E $"
+       ],
+       "correct_index": 1,
+       "explanation": "With the force fixed, write the energy as $ U = F^{2}/2k $. The softer spring has half the stiffness, so it stores twice the energy — it stretches twice as far under the same pull. Using $ U = \\tfrac12 kx^{2} $ with the same $ x $ gives the opposite answer, which is why identifying what is held constant matters more than the formula."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch08-m06",
+       "source": "mcq",
+       "prompt": "Two equal masses are attached to the ends of a spring of constant $ k $ and pulled apart symmetrically so the spring stretches by $ x $. The work done by the spring on **each** mass is",
+       "options": [
+        "$ -\\frac{1}{2}kx^{2} $",
+        "$ \\frac{1}{2}kx^{2} $",
+        "$ -\\frac{1}{4}kx^{2} $",
+        "$ \\frac{1}{4}kx^{2} $"
+       ],
+       "correct_index": 2,
+       "explanation": "The spring stores $ \\tfrac12 kx^{2} $ in total, so it does $ -\\tfrac12 kx^{2} $ of work altogether. By symmetry each mass moves half the extension, so each receives half that work: $ -\\tfrac14 kx^{2} $. It is negative because the spring pulls inward while the masses move outward."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch08-m07",
+       "source": "mcq",
+       "prompt": "A spring is stretched from its natural length by $ x $, then from $ x $ to $ 2x $. The work needed for the second stage compared with the first is",
+       "options": [
+        "three times as much",
+        "the same",
+        "twice as much",
+        "four times as much"
+       ],
+       "correct_index": 0,
+       "explanation": "The first stage costs $ \\tfrac12 kx^{2} $; reaching $ 2x $ costs $ \\tfrac12 k(2x)^{2} = 2kx^{2} $ in total, so the second stage alone costs $ 2kx^{2} - \\tfrac12 kx^{2} = \\tfrac32 kx^{2} $ — three times the first. Because energy goes as $ x^{2} $, every further centimetre of stretch is dearer than the last."
+      }
+     ]
+    },
+    {
+     "id": "energy-in-motion",
+     "title": "Energy Applied to Motion",
+     "blurb": "When the path stops mattering, and when it starts.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch08-m08",
+       "source": "mcq",
+       "prompt": "A stone is thrown from a cliff of height $ h $ with speed $ v $. Ignoring air resistance, it hits the ground with the greatest speed if thrown",
+       "options": [
+        "vertically downward, since it starts out heading that way",
+        "horizontally, since gravity then has longest to act",
+        "the landing speed is the same for every throw direction",
+        "vertically upward, since it gains extra height first"
+       ],
+       "correct_index": 2,
+       "explanation": "Energy conservation gives $ \\tfrac12 mv_f^{2} = \\tfrac12 mv^{2} + mgh $, so $ v_f = \\sqrt{v^{2}+2gh} $ — the direction of the throw never enters. It changes the flight time and where the stone lands, but not the speed on arrival. Only the *velocity*, not the speed, depends on the launch direction."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch08-m09",
+       "source": "mcq",
+       "prompt": "A block rests on a rough incline inside a lift rising at **uniform velocity** $ v $, without sliding. The work done by friction on the block in time $ t $ is",
+       "options": [
+        "$ mgvt\\sin^{2}\\theta $",
+        "zero",
+        "$ mgvt\\cos\\theta $",
+        "$ mgvt\\sin 2\\theta $"
+       ],
+       "correct_index": 0,
+       "explanation": "The lift moves at constant velocity, so the block is in equilibrium and friction must balance the down-slope weight component: $ f = mg\\sin\\theta $, directed up the slope. The displacement is $ vt $ vertically upward, and the angle between friction and the vertical is $ (90^\\circ - \\theta) $. So $ W = mg\\sin\\theta \\cdot vt \\cdot \\sin\\theta = mgvt\\sin^{2}\\theta $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch08-m10",
+       "source": "mcq",
+       "prompt": "A body is carried once around a closed loop. The work done on it is certainly zero if the force is",
+       "options": [
+        "friction",
+        "any force at all",
+        "always perpendicular to the path",
+        "conservative"
+       ],
+       "correct_index": 3,
+       "explanation": "A conservative force does zero net work around any closed path — that is precisely what makes a potential energy definable for it. Friction always opposes motion, so it does negative work on every leg and never cancels. A perpendicular force does do zero work, but the question asks which property guarantees it in general."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch08-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Work done by a force at an angle",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A box is dragged $ 8 $ m along a floor by a $ 25 $ N force acting at $ 60^\\circ $ above the horizontal. Find the work done by this force.",
+    "solution": "Only the component of the force *along the displacement* does work.\n\n$ W = Fs\\cos\\theta = 25 \\times 8 \\times \\cos 60^\\circ = 25 \\times 8 \\times 0.5 = 100 $ J\n\n**Why the vertical component contributes nothing.** It is perpendicular to the motion, and $ \\cos 90^\\circ = 0 $. It does affect the problem — it reduces the normal force and so the friction — but it transfers no energy of its own.\n\n**Reading the $ \\cos\\theta $ factor.**\n\n$ \\theta = 0^\\circ $ — force along the motion, maximum work.\n\n$ \\theta = 90^\\circ $ — no work at all. This is why the normal force never does work on a body sliding along a surface, and why the tension in a string does no work on a conical pendulum.\n\n$ \\theta = 180^\\circ $ — negative work, energy being removed. Friction always sits here."
+   },
+   {
+    "id": "we-ch08-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Work-energy theorem beats the equations of motion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block moving at $ 6\\ \\text{m s}^{-1} $ slides onto a rough patch and stops in $ 4 $ m. Find the friction force.",
+    "solution": "Use the work-energy theorem — it connects force and distance directly, with no need to find the acceleration or the time.\n\n$ W_{total} = \\Delta KE $\n\nThe only horizontal force is friction, opposing the motion:\n\n$ -f \\times 4 = 0 - \\tfrac12 (2)(6)^{2} = -36 $ J\n\n$ f = \\frac{36}{4} = 9 $ N\n\n**Check by the longer route.** $ v^{2} = u^{2} - 2as $ gives $ 0 = 36 - 8a $, so $ a = 4.5\\ \\text{m s}^{-2} $ and $ f = ma = 2(4.5) = 9 $ N ✓\n\n**When to reach for which.** The work-energy theorem is the fastest tool whenever a problem links **force and distance** and never mentions time. If the question asks *when* something happens, go back to the equations of motion.\n\n**Incidentally**, the coefficient of friction here is $ \\mu = f/mg = 9/20 = 0.45 $."
+   },
+   {
+    "id": "we-ch08-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Conservation of mechanical energy on a smooth track",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block slides from rest down a smooth curved track from a height of $ 5 $ m. Find its speed at the bottom. Would the answer change if the track were shaped differently? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The track is smooth, so only gravity does work — and gravity is conservative.\n\n$ \\tfrac12 mv^{2} = mgh $\n\n$ v = \\sqrt{2gh} = \\sqrt{2(10)(5)} = 10\\ \\text{m s}^{-1} $\n\nThe mass cancels: a marble and a boulder arrive equally fast.\n\n**Does the shape matter? No.** Gravitational potential energy depends only on the *change in height*, never on the path taken. Steep, gentle, wavy or looping — provided the track is smooth and the drop is $ 5 $ m, the block arrives at $ 10\\ \\text{m s}^{-1} $.\n\n**What the shape does change** is the *time* taken and the normal force along the way. Only the final speed is path-independent.\n\n**The moment this breaks.** Add friction and the shape matters immediately, because friction's work depends on the path *length*, not just the endpoints. A longer route then costs more energy — which is exactly the difference between a conservative and a non-conservative force."
+   },
+   {
+    "id": "we-ch08-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Energy stored in a compressed spring",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A spring of constant $ 200\\ \\text{N m}^{-1} $ is compressed by $ 10 $ cm and used to launch a $ 0.5 $ kg ball horizontally along a smooth surface. Find the ball's launch speed.",
+    "solution": "**Energy stored in the spring.**\n\n$ U = \\tfrac12 kx^{2} = \\tfrac12 (200)(0.1)^{2} = \\tfrac12 (200)(0.01) = 1 $ J\n\n**All of it becomes kinetic energy** on a smooth surface:\n\n$ \\tfrac12 mv^{2} = 1 \\Rightarrow \\tfrac12 (0.5)v^{2} = 1 \\Rightarrow v^{2} = 4 \\Rightarrow v = 2\\ \\text{m s}^{-1} $\n\n**Watch the units.** The compression must go in as $ 0.1 $ m, not $ 10 $ cm. Using centimetres inflates the stored energy by a factor of $ 10\\,000 $ — and the error is easy to miss because the answer still looks like a number.\n\n**Why you cannot use $ F = kx $ and $ W = Fs $ here.** The spring force grows from zero to $ kx $ as it is compressed, so there is no single force to multiply by the distance. The $ \\tfrac12 $ in $ \\tfrac12 kx^{2} $ is precisely the average of a force rising linearly from $ 0 $ to $ kx $."
+   },
+   {
+    "id": "we-ch08-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Block sliding down a rough incline, by energy",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 3 $ kg block slides $ 4 $ m down a $ 30^\\circ $ incline with $ \\mu = 0.2 $. Find its speed at the bottom, starting from rest. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Account for every energy transfer along the way.\n\n**Energy released by gravity.** The vertical drop is $ 4\\sin 30^\\circ = 2 $ m:\n\n$ W_{gravity} = mgh = 3(10)(2) = 60 $ J\n\n**Energy taken by friction.**\n\n$ N = mg\\cos 30^\\circ = 3(10)(0.866) = 26 $ N\n\n$ f = \\mu N = 0.2(26) = 5.2 $ N\n\n$ W_{friction} = -f \\times 4 = -20.8 $ J\n\n**Net work becomes kinetic energy.**\n\n$ \\tfrac12 mv^{2} = 60 - 20.8 = 39.2 $ J\n\n$ v^{2} = \\frac{2(39.2)}{3} = 26.1 \\Rightarrow v = 5.11\\ \\text{m s}^{-1} $\n\n**Compare with a smooth incline**, where all $ 60 $ J would survive and $ v = 6.32\\ \\text{m s}^{-1} $. Friction has removed about a third of the energy as heat.\n\n**Watch out:** the vertical drop is $ s\\sin\\theta $, while friction acts over the full slope length $ s $. Mixing the two — using $ 4 $ m for the height or $ 2 $ m for the friction path — is the standard error."
+   },
+   {
+    "id": "we-ch08-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Power delivered by a motor",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A pump raises $ 600 $ kg of water per minute through a height of $ 20 $ m and delivers it with a speed of $ 5\\ \\text{m s}^{-1} $. Find the power required. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The pump must do two jobs — lift the water and set it moving.\n\n**Per minute it handles $ 600 $ kg**, so per second it handles $ 10 $ kg.\n\n**Potential energy supplied per second:**\n\n$ mgh = 10(10)(20) = 2000 $ W\n\n**Kinetic energy supplied per second:**\n\n$ \\tfrac12 mv^{2} = \\tfrac12 (10)(25) = 125 $ W\n\n**Total power:**\n\n$ P = 2000 + 125 = 2125 $ W $ \\approx 2.1 $ kW\n\n**Watch out:** the discharge speed is easy to overlook, but water leaving a pipe carries kinetic energy that the pump had to provide. Here it is only 6% of the total, though for a high-speed jet it can dominate.\n\n**Useful alternative form.** For a steady force, $ P = Fv $. A car engine delivering $ 50 $ kW against $ 1000 $ N of drag settles at $ v = P/F = 50\\ \\text{m s}^{-1} $ — which is how top speed is set."
+   },
+   {
+    "id": "we-ch08-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Work done by a variable force",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A force $ F = (3x^{2} + 2)\\ \\text{N} $ acts along the X-axis. Find the work it does in moving a particle from $ x = 0 $ to $ x = 2 $ m.",
+    "solution": "The force varies with position, so $ W = Fs $ is unusable — integrate instead.\n\n$ W = \\int_{0}^{2} F\\,dx = \\int_{0}^{2}(3x^{2} + 2)\\,dx $\n\n$ = \\left[x^{3} + 2x\\right]_{0}^{2} $\n\n$ = (8 + 4) - (0 + 0) = 12 $ J\n\n**Why an average would mislead.** The force runs from $ 2 $ N at the start to $ 14 $ N at the end. Averaging those gives $ 8 $ N and hence $ 16 $ J — wrong, because the force grows quadratically rather than linearly, so it spends more of the journey near the low end. Averaging endpoints is valid only for a force that varies linearly.\n\n**The geometric reading.** The integral is the area under the force-position graph. For a straight-line graph that area is a trapezium and the endpoint average works; for any curve you must integrate."
+   },
+   {
+    "id": "we-ch08-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Vertical circle solved by energy",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A pendulum bob of mass $ 0.5 $ kg on a $ 2 $ m string is released from the horizontal position. Find its speed and the string tension at the lowest point. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**Speed at the bottom — by energy.** The bob falls through the string's length, $ 2 $ m:\n\n$ \\tfrac12 mv^{2} = mgl \\Rightarrow v^{2} = 2gl = 2(10)(2) = 40 $\n\n$ v = 6.32\\ \\text{m s}^{-1} $\n\n**Tension at the bottom — by Newton's second law.** Here the bob moves in a circle, so the net upward force supplies the centripetal requirement:\n\n$ T - mg = \\frac{mv^{2}}{l}$\n\n$ T = mg + \\frac{mv^{2}}{l} = 0.5(10) + \\frac{0.5(40)}{2} = 5 + 10 = 15 $ N\n\n**The tension is three times the weight** of $ 5 $ N. This is the general result for a bob released from the horizontal: $ T = 3mg $ at the lowest point.\n\n**The division of labour worth remembering.** Energy conservation gives you *speeds*; Newton's second law with $ mv^{2}/r $ gives you *forces*. Trying to get the tension from energy alone will not work, because tension does no work — it is always perpendicular to the motion."
+   },
+   {
+    "id": "we-ch08-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Force from a potential energy function",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The potential energy of a particle is $ U(x) = 4x^{2} - 8x $ joules. Find the force at $ x = 3 $ m and locate the equilibrium position.",
+    "solution": "Force is the negative slope of the potential energy curve:\n\n$ F = -\\frac{dU}{dx} = -(8x - 8) = 8 - 8x $\n\n**At $ x = 3 $ m:**\n\n$ F = 8 - 24 = -16 $ N\n\nNegative, meaning it points towards decreasing $ x $ — back towards the origin.\n\n**Equilibrium** is where $ F = 0 $:\n\n$ 8 - 8x = 0 \\Rightarrow x = 1 $ m\n\n**Stable or unstable?** Check the curvature:\n\n$ \\frac{d^{2}U}{dx^{2}} = 8 > 0 $ — a minimum of $ U $, so the equilibrium is **stable**.\n\n**The picture behind the algebra.** A potential energy graph is a landscape and the particle is a ball rolling on it. Force always points downhill, towards lower $ U $. Valleys are stable equilibria, hilltops unstable. At $ x = 3 $ the particle sits on the right-hand slope of the valley at $ x = 1 $, so it is pushed back left — exactly what the negative sign said."
+   },
+   {
+    "id": "we-ch08-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Spring and gravity together",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block is released from rest on top of a vertical spring of constant $ 500\\ \\text{N m}^{-1} $. Find the maximum compression of the spring. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "At maximum compression the block is momentarily at rest, so all the gravitational energy it has released has gone into the spring.\n\nLet the compression be $ x $. The block descends by $ x $ during the compression.\n\n$ mgx = \\tfrac12 kx^{2} $\n\nDivide through by $ x $ (non-zero):\n\n$ mg = \\tfrac12 kx \\Rightarrow x = \\frac{2mg}{k} = \\frac{2(2)(10)}{500} = 0.08\\ \\text{m} = 8 $ cm\n\n**Now compare with the equilibrium compression**, where the spring force balances the weight:\n\n$ kx_{eq} = mg \\Rightarrow x_{eq} = \\frac{mg}{k} = 0.04\\ \\text{m} = 4 $ cm\n\n**The maximum compression is exactly twice the equilibrium one.** That is not a coincidence: the block overshoots its equilibrium position and oscillates about it, and $ 8 $ cm is the far end of that oscillation.\n\n**Watch out:** answering $ 4 $ cm is the classic error — that is where the block would eventually *settle* once damping kills the oscillation, not how far it goes on the first push. Read whether the question asks for maximum compression or for the resting position."
+   }
+  ]
+ }
+}

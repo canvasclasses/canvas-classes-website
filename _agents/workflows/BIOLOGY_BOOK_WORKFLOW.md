@@ -5,6 +5,8 @@
 > built. It supersedes nothing — it's the first biology exam-track book — but it inherits and
 > narrows [`BOOK_PAGE_WORKFLOW.md`](BOOK_PAGE_WORKFLOW.md) §4A (Class 11–12 JEE/NEET template) and
 > §3.13–3.14 (biology-specific blocks + image style, proven on Class 9 Science's biology chapters).
+>
+> **White-text opacity is governed globally** by [`BOOK_PAGE_WORKFLOW.md`](BOOK_PAGE_WORKFLOW.md) §17.3.1 — a strict four-tier scale (`/82` body · `/85` emphasis · `/60` secondary · `/45` meta; ceiling `/85`, floor `/45`, `/90` and the `/25`–`/40` band banned). It applies to every Live Book renderer, this track included — never introduce another `text-white/NN` value.
 
 - **Book:** `class11-biology` (not yet created in DB) · subject `biology` · grade `11`
 - **⚠️ Naming collision to be aware of:** an existing book `anatomy-physiology` is ALSO

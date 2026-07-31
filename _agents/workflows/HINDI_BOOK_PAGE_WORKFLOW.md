@@ -10,6 +10,8 @@
 >
 > Where this document conflicts with either sibling on anything Hindi-specific, **this document wins**.
 >
+> **White-text opacity is governed globally** by [`BOOK_PAGE_WORKFLOW.md`](./BOOK_PAGE_WORKFLOW.md) §17.3.1 — a strict four-tier scale (`/82` body · `/85` emphasis · `/60` secondary · `/45` meta; ceiling `/85`, floor `/45`, `/90` and the `/25`–`/40` band banned). It applies to every Live Book renderer, this track included — never introduce another `text-white/NN` value.
+>
 > **Project state** lives in [`_agents/state/LIVE_BOOKS_STATE.md`](../state/LIVE_BOOKS_STATE.md) — refresh with `node scripts/livebooks-state.js` after any content change.
 
 ---

@@ -1,0 +1,315 @@
+{
+ "hcv_chapter": 15,
+ "hcv_title": "Wave Motion and Waves on a String",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Waves"
+ },
+ "source_pages": {
+  "worked": "332-335",
+  "obj1": "336-337"
+ },
+ "notes": "12 Objective I items rebuilt. One source item refers to a figure of two pulses meeting; re-cast as a verbal superposition question.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch15-waves-string",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Wave Motion and Waves on a String",
+   "intro": "Twelve questions on travelling and standing waves. A recurring theme: the medium sets the speed, the source sets the frequency.",
+   "sections": [
+    {
+     "id": "describing-waves",
+     "title": "Describing a Travelling Wave",
+     "blurb": "Reading amplitude, direction and phase straight off the equation.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch15-m01",
+       "source": "mcq",
+       "prompt": "A sine wave travels through a medium. The minimum distance between two particles that always have the **same speed** is",
+       "options": [
+        "$ \\lambda/4 $",
+        "$ \\lambda/3 $",
+        "$ \\lambda/2 $",
+        "$ \\lambda $"
+       ],
+       "correct_index": 2,
+       "explanation": "Particles half a wavelength apart move in exactly opposite directions but with equal speeds at every instant, since their velocities differ only in sign. Particles a full wavelength apart also match, but that is a larger distance. Note the question asks for equal *speed*, not equal velocity — which is why $ \\lambda/2 $ qualifies."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m02",
+       "source": "mcq",
+       "prompt": "At a certain instant a particle in a sine wave has zero displacement. The nearest particle also having zero displacement at that instant is at a distance",
+       "options": [
+        "$ \\lambda/4 $",
+        "$ \\lambda/3 $",
+        "$ \\lambda/2 $",
+        "$ \\lambda $"
+       ],
+       "correct_index": 2,
+       "explanation": "A sine curve crosses zero twice per cycle, at points separated by half a wavelength. So the nearest other zero is $ \\lambda/2 $ away — though that particle is moving the opposite way. A full wavelength away the particle matches in both displacement and velocity, but it is not the nearest."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m03",
+       "source": "mcq",
+       "prompt": "Which equation represents a wave travelling along the Y-axis?",
+       "options": [
+        "$ x = A\\sin(ky - \\omega t) $",
+        "$ y = A\\sin(kx - \\omega t) $",
+        "$ y = A\\sin ky\\cos\\omega t $",
+        "$ y = A\\cos ky\\sin\\omega t $"
+       ],
+       "correct_index": 0,
+       "explanation": "The direction of travel is set by the coordinate paired with time inside the bracket. Here $ (ky - \\omega t) $ means the disturbance moves along $ y $, and the displacement $ x $ is perpendicular to it — a transverse wave along the Y-axis. The last two options contain $ y $ but are standing waves, not travelling ones."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m04",
+       "source": "mcq",
+       "prompt": "The equation $ y = A\\sin^{2}(kx - \\omega t) $ represents a wave with",
+       "options": [
+        "amplitude $ A $, frequency $ \\omega/2\\pi $",
+        "amplitude $ A/2 $, frequency $ \\omega/\\pi $",
+        "amplitude $ 2A $, frequency $ \\omega/4\\pi $",
+        "no wave motion at all"
+       ],
+       "correct_index": 1,
+       "explanation": "Use $ \\sin^{2}\\theta = \\frac{1 - \\cos 2\\theta}{2} $, giving $ y = \\frac{A}{2} - \\frac{A}{2}\\cos 2(kx-\\omega t) $. That is an oscillation of amplitude $ A/2 $ about a constant offset, at angular frequency $ 2\\omega $ — so the frequency is $ 2\\omega/2\\pi = \\omega/\\pi $. Squaring a sinusoid always doubles its frequency."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m05",
+       "source": "mcq",
+       "prompt": "Which of these is a mechanical wave?",
+       "options": [
+        "Radio waves",
+        "X-rays",
+        "Light waves",
+        "Sound waves"
+       ],
+       "correct_index": 3,
+       "explanation": "A mechanical wave needs a material medium to carry it, because it propagates by displacing particles that pull on their neighbours. Sound qualifies; the other three are electromagnetic and travel perfectly well through vacuum. This is why space is silent but not dark."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m06",
+       "source": "mcq",
+       "prompt": "A cork floating on a pond bobs up and down at frequency $ \\nu $ as a wave passes. The frequency of the wave is",
+       "options": [
+        "$ \\nu/2 $",
+        "$ \\nu $",
+        "$ 2\\nu $",
+        "$ \\sqrt{2}\\nu $"
+       ],
+       "correct_index": 1,
+       "explanation": "Every particle of the medium oscillates at exactly the wave's frequency — that is what frequency means for a wave. One complete bob of the cork corresponds to one full wavelength passing it. The frequency is set by the source and never changes as the wave travels."
+      }
+     ]
+    },
+    {
+     "id": "wave-speed-on-strings",
+     "title": "Speed of a Wave on a String",
+     "blurb": "Tension pulls it along; mass per unit length holds it back.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch15-m07",
+       "source": "mcq",
+       "prompt": "Strings A and B are of the same material and under the same tension, but A's radius is double B's. The wave speeds satisfy",
+       "options": [
+        "$ v_A = v_B $",
+        "$ v_A = 2v_B $",
+        "$ v_A = v_B/4 $",
+        "$ v_A = v_B/2 $"
+       ],
+       "correct_index": 3,
+       "explanation": "Speed is $ v = \\sqrt{T/\\mu} $, and mass per unit length goes as the square of the radius, so A has four times B's $ \\mu $. The speed therefore falls by $ \\sqrt{4} = 2 $: $ v_A = v_B/2 $. A thicker string carries waves more slowly, which is why bass guitar strings are the heavy ones."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m08",
+       "source": "mcq",
+       "prompt": "Wires A and B are geometrically identical and stretched by equal small amounts. Given $ Y_A > Y_B $ and $ \\rho_A > \\rho_B $, a transverse pulse takes time $ t_1 $ to cross A and $ t_2 $ to cross B. Then",
+       "options": [
+        "$ t_1 < t_2 $, since A carries the greater tension",
+        "$ t_1 = t_2 $, since the wires are geometrically identical",
+        "the given information cannot decide between $ t_1 $ and $ t_2 $",
+        "$ t_1 > t_2 $, since A is the denser of the two wires"
+       ],
+       "correct_index": 2,
+       "explanation": "Equal strain means the tension is $ T = YA\\varepsilon $, so A carries the greater tension (raising its speed) — but A is also denser (lowering it). With $ v = \\sqrt{Y\\varepsilon/\\rho} $, the outcome depends on the ratio $ Y/\\rho $ for each wire, and knowing only that both $ Y $ and $ \\rho $ are larger for A does not fix which ratio wins."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m09",
+       "source": "mcq",
+       "prompt": "A wave passes from a thin string into a thicker one joined to it. Comparing the wavelengths, $ \\lambda' $ in the thick string and $ \\lambda $ in the thin one,",
+       "options": [
+        "$ \\lambda' < \\lambda $",
+        "$ \\lambda' > \\lambda $",
+        "$ \\lambda' = \\lambda $",
+        "nothing can be said"
+       ],
+       "correct_index": 0,
+       "explanation": "The frequency is fixed by the source and cannot change at a boundary — the two strings must vibrate together. The thicker string has a larger $ \\mu $ and so a smaller speed, and since $ \\lambda = v/\\nu $, the wavelength shrinks with it."
+      }
+     ]
+    },
+    {
+     "id": "superposition",
+     "title": "Superposition and Standing Waves",
+     "blurb": "Displacements add; energies do not.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch15-m10",
+       "source": "mcq",
+       "prompt": "The waves $ y = a\\sin(\\omega t - kx) $ and $ y = a\\cos(\\omega t - kx) $ are superposed. The resultant amplitude is",
+       "options": [
+        "$ a $",
+        "$ \\sqrt{2}a $",
+        "$ 2a $",
+        "zero"
+       ],
+       "correct_index": 1,
+       "explanation": "The two differ in phase by $ \\pi/2 $, so they combine like perpendicular vectors: $ \\sqrt{a^{2}+a^{2}} = \\sqrt{2}a $. Amplitudes add arithmetically only when the waves are exactly in phase, and cancel only when exactly out of phase."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m11",
+       "source": "mcq",
+       "prompt": "The superposition principle applies to the net displacement of a particle carrying two waves. Stated for the particle's **velocity** and its **kinetic energy**, such a principle would be valid for",
+       "options": [
+        "both velocity and kinetic energy",
+        "kinetic energy but not velocity",
+        "velocity but not kinetic energy",
+        "neither"
+       ],
+       "correct_index": 2,
+       "explanation": "Velocity is the time derivative of displacement, and differentiation is linear, so velocities add just as displacements do. Kinetic energy goes as the *square* of velocity, and $ (v_1+v_2)^{2} \\ne v_1^{2}+v_2^{2} $ — the cross term is exactly what produces interference. Energy is redistributed, never simply summed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch15-m12",
+       "source": "mcq",
+       "prompt": "Two identical pulses of opposite sign travel towards each other along a string. At the instant they exactly overlap,",
+       "options": [
+        "the string is straight and completely at rest",
+        "the pulses have destroyed one another",
+        "the string shows a pulse of double the height",
+        "the string is momentarily straight but its particles are moving"
+       ],
+       "correct_index": 3,
+       "explanation": "The displacements cancel everywhere, so the string looks flat — but the particle *velocities* add rather than cancel, so the energy is entirely kinetic at that instant. A moment later the pulses re-emerge unchanged and continue on their way. Waves pass through each other; they never annihilate."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch15-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Reading a wave equation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A wave is described by $ y = 0.02\\sin(300t - 5x) $ in SI units. Find its amplitude, frequency, wavelength, speed and direction of travel.",
+    "solution": "Compare with the standard form $ y = A\\sin(\\omega t - kx) $.\n\n**Amplitude:** $ A = 0.02 $ m $ = 2 $ cm\n\n**Angular frequency:** $ \\omega = 300\\ \\text{rad s}^{-1} $, so\n\n$ \\nu = \\frac{\\omega}{2\\pi} = \\frac{300}{6.28} = 47.7 $ Hz\n\n**Wave number:** $ k = 5\\ \\text{rad m}^{-1} $, so\n\n$ \\lambda = \\frac{2\\pi}{k} = \\frac{6.28}{5} = 1.26 $ m\n\n**Speed:**\n\n$ v = \\frac{\\omega}{k} = \\frac{300}{5} = 60\\ \\text{m s}^{-1} $\n\nOr equivalently $ v = \\nu\\lambda = 47.7 \\times 1.26 = 60\\ \\text{m s}^{-1} $ ✓\n\n**Direction.** The signs of the $ t $ and $ x $ terms are opposite, so the wave travels in the $ +x $ direction. Same signs, as in $ \\sin(300t + 5x) $, would mean travel in $ -x $.\n\n**Shortcut worth remembering:** $ v = \\omega/k $ gets you the speed directly, with no need to compute $ \\nu $ and $ \\lambda $ separately."
+   },
+   {
+    "id": "we-ch15-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Speed of a wave on a stretched string",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A string of mass $ 20 $ g and length $ 2 $ m is stretched by a tension of $ 40 $ N. Find the speed of a transverse wave on it, and the time a pulse takes to travel its length.",
+    "solution": "**Mass per unit length:**\n\n$ \\mu = \\frac{m}{l} = \\frac{0.020}{2} = 0.01\\ \\text{kg m}^{-1} $\n\n**Wave speed:**\n\n$ v = \\sqrt{\\frac{T}{\\mu}} = \\sqrt{\\frac{40}{0.01}} = \\sqrt{4000} = 63.2\\ \\text{m s}^{-1} $\n\n**Time to cross:**\n\n$ t = \\frac{l}{v} = \\frac{2}{63.2} = 0.032 $ s\n\n**What controls the speed.** Tension is the restoring agent — tighten the string and waves move faster. Mass per unit length is the inertia — a heavier string responds more sluggishly. Note the square root: to double the speed you must **quadruple** the tension.\n\n**Watch out:** $ \\mu $ must be the mass per unit length in kg m⁻¹, not the total mass. Using $ 0.020 $ instead of $ 0.01 $ here would inflate the speed by $ \\sqrt{2} $."
+   },
+   {
+    "id": "we-ch15-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Frequency stays, wavelength changes",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A wave of frequency $ 100 $ Hz travels along a string at $ 50\\ \\text{m s}^{-1} $ and passes into a heavier string where its speed drops to $ 30\\ \\text{m s}^{-1} $. Find the wavelength in each string.",
+    "solution": "**In the first string:**\n\n$ \\lambda_1 = \\frac{v_1}{\\nu} = \\frac{50}{100} = 0.5 $ m\n\n**In the second string.** The frequency is unchanged — the junction point is shared by both strings and must oscillate at one rate:\n\n$ \\lambda_2 = \\frac{v_2}{\\nu} = \\frac{30}{100} = 0.3 $ m\n\n**The rule that governs every boundary problem.** Frequency is fixed by the *source* and survives any change of medium. Speed is fixed by the *medium*. Wavelength is whatever $ v/\\nu $ requires, so it is the quantity that adjusts.\n\n**The same logic elsewhere.** Light entering glass slows down and its wavelength shortens, but its colour — its frequency — is unchanged. Sound entering water speeds up and its wavelength lengthens. One principle, many settings."
+   },
+   {
+    "id": "we-ch15-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Standing waves on a string fixed at both ends",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A string of length $ 1.5 $ m fixed at both ends carries waves at $ 60\\ \\text{m s}^{-1} $. Find its fundamental frequency and the first two overtones.",
+    "solution": "Both ends are fixed, so both must be nodes. The longest wave that fits has one loop, of length $ \\lambda/2 $.\n\n**Fundamental:**\n\n$ \\frac{\\lambda_1}{2} = L \\Rightarrow \\lambda_1 = 2L = 3 $ m\n\n$ \\nu_1 = \\frac{v}{\\lambda_1} = \\frac{60}{3} = 20 $ Hz\n\n**Harmonics.** In general $ \\nu_n = \\frac{nv}{2L} $, so\n\nFirst overtone (2nd harmonic): $ \\nu_2 = 40 $ Hz\n\nSecond overtone (3rd harmonic): $ \\nu_3 = 60 $ Hz\n\n**All integer multiples are allowed**, which is what gives a plucked string its musical quality — the ear hears the fundamental as the pitch and the harmonics as timbre.\n\n**Watch the vocabulary.** The first *overtone* is the second *harmonic*. Overtones are counted after the fundamental; harmonics include it. Exam questions exploit this distinction routinely."
+   },
+   {
+    "id": "we-ch15-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Tuning a string by changing tension",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A sonometer wire vibrates at $ 200 $ Hz under a tension of $ 50 $ N. What tension is needed to raise its fundamental to $ 300 $ Hz?",
+    "solution": "For a fixed length and string,\n\n$ \\nu = \\frac{1}{2L}\\sqrt{\\frac{T}{\\mu}} \\Rightarrow \\nu \\propto \\sqrt{T} $\n\n**Take the ratio** so the constants disappear:\n\n$ \\frac{\\nu_2}{\\nu_1} = \\sqrt{\\frac{T_2}{T_1}} \\Rightarrow \\frac{300}{200} = \\sqrt{\\frac{T_2}{50}} $\n\n$ 1.5^{2} = \\frac{T_2}{50} \\Rightarrow T_2 = 2.25 \\times 50 = 112.5 $ N\n\n**Note how steep the dependence is.** Raising the pitch by half again requires more than doubling the tension. Because $ \\nu \\propto \\sqrt{T} $, tuning becomes progressively harder at higher pitches — and it is why over-tightening snaps strings.\n\n**The instrument-maker's three levers.** Frequency can be raised by increasing tension, shortening the length, or using a lighter string. A guitar uses all three: tuning pegs for $ T $, frets for $ L $, and different gauges for $ \\mu $."
+   },
+   {
+    "id": "we-ch15-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Particle velocity versus wave velocity",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "For the wave $ y = 0.05\\sin(200t - 4x) $ m, find the maximum speed of a particle of the medium and compare it with the wave speed.",
+    "solution": "These are two entirely different speeds and confusing them is the classic error in this chapter.\n\n**Wave speed** — how fast the disturbance travels along $ x $:\n\n$ v_{wave} = \\frac{\\omega}{k} = \\frac{200}{4} = 50\\ \\text{m s}^{-1} $\n\n**Particle speed** — how fast a bit of the medium moves up and down. Differentiate $ y $ with respect to $ t $:\n\n$ v_{particle} = \\frac{\\partial y}{\\partial t} = 0.05(200)\\cos(200t - 4x) $\n\n$ v_{max} = A\\omega = 0.05 \\times 200 = 10\\ \\text{m s}^{-1} $\n\n**The two are unrelated in direction and in size.** The wave moves horizontally at $ 50\\ \\text{m s}^{-1} $; the particles never travel anywhere at all, merely oscillating vertically at up to $ 10\\ \\text{m s}^{-1} $.\n\n**The picture to hold.** A wave in a stadium crowd moves right around the ground, but no spectator leaves their seat. The wave transports energy and a pattern — never matter."
+   },
+   {
+    "id": "we-ch15-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Power carried by a wave on a string",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A string of $ \\mu = 0.02\\ \\text{kg m}^{-1} $ carries a wave of amplitude $ 1 $ cm and frequency $ 50 $ Hz at $ 40\\ \\text{m s}^{-1} $. Find the average power transmitted.",
+    "solution": "$ P = \\frac{1}{2}\\mu\\omega^{2}A^{2}v $\n\n**Angular frequency:**\n\n$ \\omega = 2\\pi(50) = 314\\ \\text{rad s}^{-1} $\n\n**Substitute:**\n\n$ P = \\frac{1}{2}(0.02)(314)^{2}(0.01)^{2}(40) $\n\n$ = \\frac{1}{2}(0.02)(98\\,596)(10^{-4})(40) $\n\n$ = \\frac{1}{2}(0.02)(394.4) = 3.94\\ \\text{W} $\n\n**The two squares are what matter.** Power goes as $ A^{2} $ *and* as $ \\omega^{2} $. Doubling the amplitude quadruples the power; doubling the frequency does the same.\n\n**Why this shape recurs everywhere.** Any wave's intensity goes as amplitude squared — sound, light, water waves alike. It is why the decibel scale is logarithmic, and why doubling a loudspeaker's cone movement demands four times the power."
+   },
+   {
+    "id": "we-ch15-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Reflection at a fixed and a free end",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A pulse travels along a string towards its end. Describe what happens if that end is (a) rigidly clamped and (b) free to move on a frictionless ring, and state the phase change in each case.",
+    "solution": "**(a) Fixed (rigid) end.** The end cannot move, so its displacement must stay zero. The only way an incoming pulse and its reflection can always cancel there is for the reflected pulse to be **inverted**.\n\nPhase change: $ \\pi $ (half a cycle).\n\nAn upward pulse returns as a downward one, and the fixed end is a permanent node.\n\n**(b) Free end.** Nothing restrains the end, so it overshoots to twice the pulse's amplitude. The reflected pulse comes back **upright**.\n\nPhase change: zero.\n\nThe free end is an antinode.\n\n**Why the fixed end inverts.** By Newton's third law the string pulls up on the clamp, so the clamp pulls down on the string, and that downward pull launches the inverted reflection.\n\n**Where the same rule reappears.** Light reflecting off a denser medium suffers a $ \\pi $ phase change; off a rarer medium, none. Sound in a closed pipe has a node at the closed end and an antinode at the open one. The physics of boundaries is remarkably portable."
+   },
+   {
+    "id": "we-ch15-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Locating nodes in a standing wave",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A standing wave is described by $ y = 0.04\\sin(5\\pi x)\\cos(200\\pi t) $ in SI units. Find the distance between adjacent nodes and the frequency of oscillation.",
+    "solution": "In a standing wave the space part and the time part are separate factors — that is how you recognise one.\n\n**Nodes** are where the string never moves, so $ \\sin(5\\pi x) = 0 $:\n\n$ 5\\pi x = n\\pi \\Rightarrow x = \\frac{n}{5} $ metres, i.e. at $ 0,\\ 0.2,\\ 0.4,\\ \\ldots $\n\n**Distance between adjacent nodes:** $ 0.2 $ m.\n\n**Check against the wavelength.** $ k = 5\\pi $, so $ \\lambda = 2\\pi/k = 0.4 $ m — and node spacing is $ \\lambda/2 = 0.2 $ m ✓\n\n**Frequency:**\n\n$ \\omega = 200\\pi \\Rightarrow \\nu = \\frac{200\\pi}{2\\pi} = 100 $ Hz\n\n**Two facts worth carrying.** Adjacent nodes are $ \\lambda/2 $ apart, and antinodes sit exactly midway between them, also $ \\lambda/2 $ from each other. A node and its neighbouring antinode are $ \\lambda/4 $ apart.\n\n**How to spot a standing wave in an equation.** A travelling wave has $ x $ and $ t $ inside a single bracket; a standing wave has them in separate factors. Nothing propagates in the second case — the pattern simply pulses in place."
+   },
+   {
+    "id": "we-ch15-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Two pulses meeting",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two identical pulses, one upward and one downward, travel towards each other on a string. Describe the string at the instant of complete overlap, and account for the energy.",
+    "solution": "**At the instant of overlap the string is perfectly straight.** By superposition every displacement cancels: $ y_{net} = y_1 + y_2 = 0 $ everywhere.\n\n**But the string is not at rest.** Particle velocities superpose too, and here they *add* rather than cancel — where one pulse is pushing a particle upward, the other is also pushing it upward, because a downward-moving trough lifts the string ahead of it just as a crest does behind.\n\n**So where is the energy?** Entirely kinetic. A moment earlier it was partly potential (stored in the stretched, curved string) and partly kinetic; at the instant of flatness there is no curvature, so all of it is kinetic.\n\n**And afterwards** the two pulses emerge completely unchanged and carry on in their original directions.\n\n**The principle this illustrates.** Waves superpose; they do not collide. Two pulses can cancel in *displacement* at an instant without cancelling in energy — which is exactly why destructive interference never destroys energy, only relocates it."
+   }
+  ]
+ }
+}

@@ -1,0 +1,315 @@
+{
+ "hcv_chapter": 17,
+ "hcv_title": "Light Waves",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Wave Optics"
+ },
+ "source_pages": {
+  "worked": "390-392",
+  "obj1": "393-394"
+ },
+ "notes": "12 Objective I items rebuilt. Interference/Young's-slit worked examples added, since that is where the chapter's numerical work lives.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch17-light-waves",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Light Waves",
+   "intro": "Twelve questions on the wave nature of light. Note how often the answer follows from 'frequency belongs to the source'.",
+   "sections": [
+    {
+     "id": "nature-of-light",
+     "title": "The Nature of Light",
+     "blurb": "An electromagnetic wave that needs no medium at all.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch17-m01",
+       "source": "mcq",
+       "prompt": "Light is best described as",
+       "options": [
+        "both a wave and a particle phenomenon",
+        "a purely wave phenomenon",
+        "a purely particle phenomenon",
+        "neither"
+       ],
+       "correct_index": 0,
+       "explanation": "Interference and diffraction can only be explained by waves; the photoelectric effect and Compton scattering demand particles. Light is both, and which face it shows depends on the experiment — this is wave-particle duality, and it applies to matter as much as to light."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m02",
+       "source": "mcq",
+       "prompt": "The speed of light in vacuum depends",
+       "options": [
+        "on the elasticity of the medium only",
+        "on the inertia of the medium only",
+        "on neither elasticity nor inertia",
+        "on both elasticity and inertia"
+       ],
+       "correct_index": 2,
+       "explanation": "Light is an electromagnetic wave and needs no material medium, so no mechanical property of matter enters. Its speed is set by $ c = 1/\\sqrt{\\mu_0\\varepsilon_0} $ — two properties of vacuum itself. Sound, being mechanical, is the case where elasticity and inertia do decide the speed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m03",
+       "source": "mcq",
+       "prompt": "A light wave is written as $ y = A\\sin(kx - \\omega t) $. Here $ y $ represents",
+       "options": [
+        "the displacement of ether particles",
+        "the electric field",
+        "the pressure in the medium",
+        "the density of the medium"
+       ],
+       "correct_index": 1,
+       "explanation": "What oscillates in a light wave is the electric field (and, perpendicular to it, the magnetic field) — not any material. The luminiferous ether was abandoned after the Michelson-Morley experiment found no trace of it, and pressure or density oscillations belong to sound."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m04",
+       "source": "mcq",
+       "prompt": "Which property of light establishes that it is a **transverse** wave?",
+       "options": [
+        "Reflection",
+        "Interference",
+        "Polarization",
+        "Diffraction"
+       ],
+       "correct_index": 2,
+       "explanation": "Only a transverse wave can be polarized, because only then is there a direction of oscillation perpendicular to travel that can be selected. Interference and diffraction prove light is a *wave* but say nothing about its transverseness — sound shows both and is longitudinal."
+      }
+     ]
+    },
+    {
+     "id": "refraction-and-wavefronts",
+     "title": "Refraction and Wavefronts",
+     "blurb": "What survives a change of medium, and what a wavefront tells you.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch17-m05",
+       "source": "mcq",
+       "prompt": "When light passes from air into glass,",
+       "options": [
+        "both wavelength and frequency increase",
+        "wavelength increases, frequency is unchanged",
+        "wavelength decreases, frequency is unchanged",
+        "both wavelength and frequency decrease"
+       ],
+       "correct_index": 2,
+       "explanation": "Frequency is fixed by the source and cannot change at a boundary. The speed drops to $ c/n $ in glass, so $ \\lambda = v/\\nu $ shrinks by the same factor $ n $. This is why a colour looks the same underwater — colour tracks frequency, not wavelength."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m06",
+       "source": "mcq",
+       "prompt": "AM radio waves bend appreciably round the corners of a $ 1\\ \\text{m} \\times 1\\ \\text{m} $ board while FM waves barely do. Comparing their wavelengths,",
+       "options": [
+        "$ \\lambda_{AM} = \\lambda_{FM} $",
+        "$ \\lambda_{AM} < \\lambda_{FM} $",
+        "there is insufficient information",
+        "$ \\lambda_{AM} > \\lambda_{FM} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Diffraction is appreciable only when the wavelength is comparable to or larger than the obstacle. The AM wave bends round a one-metre board, so its wavelength must be of that order or bigger; the FM wave does not, so its wavelength is much smaller. (AM is hundreds of metres, FM a few metres — which is also why AM reaches behind hills and FM needs line of sight.)"
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m07",
+       "source": "mcq",
+       "prompt": "The wavefronts of light travelling in vacuum satisfy $ x + y + z = c $. The angle the direction of propagation makes with the X-axis is",
+       "options": [
+        "$ 0^\\circ $ — directly along the X-axis",
+        "$ 45^\\circ $ to the X-axis",
+        "$ 90^\\circ $ — perpendicular to the X-axis",
+        "$ \\cos^{-1}(1/\\sqrt{3}) \\approx 54.7^\\circ $"
+       ],
+       "correct_index": 3,
+       "explanation": "Light travels perpendicular to its wavefronts, and the normal to the plane $ x+y+z = c $ is along $ (1,1,1) $. The unit vector is $ (1,1,1)/\\sqrt{3} $, so its X-component — and hence $ \\cos\\theta $ — is $ 1/\\sqrt{3} $, giving $ \\theta \\approx 54.7^\\circ $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m08",
+       "source": "mcq",
+       "prompt": "The wavefronts reaching us from a very distant source of unknown shape are nearly",
+       "options": [
+        "plane",
+        "spherical",
+        "cylindrical",
+        "elliptical"
+       ],
+       "correct_index": 0,
+       "explanation": "Any wavefront looks flat if you examine a small enough patch far enough from the source — just as the earth's surface looks flat locally. This is why starlight is treated as a plane wave and why the parallel-beam idealisation is legitimate in optics."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m09",
+       "source": "mcq",
+       "prompt": "The inverse-square law of intensity, $ I \\propto 1/r^{2} $, holds for",
+       "options": [
+        "a line source",
+        "a plane source",
+        "a cylindrical source",
+        "a point source"
+       ],
+       "correct_index": 3,
+       "explanation": "A point source spreads its power over a sphere of area $ 4\\pi r^{2} $, so the intensity falls as $ 1/r^{2} $. A long line source spreads over a cylinder, giving $ 1/r $, and an infinite plane source gives an intensity that does not fall with distance at all. The geometry of the spreading sets the exponent."
+      }
+     ]
+    },
+    {
+     "id": "interference",
+     "title": "Coherence and Interference",
+     "blurb": "Two sources only interfere usefully if their phase relationship holds still.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch17-m10",
+       "source": "mcq",
+       "prompt": "Two sources are coherent if they produce waves",
+       "options": [
+        "of equal wavelength",
+        "having a constant phase difference",
+        "of equal velocity",
+        "with the same shape of wavefront"
+       ],
+       "correct_index": 1,
+       "explanation": "Coherence is about the phase relationship holding steady in time. Equal wavelength is necessary but nowhere near sufficient — two independent bulbs of the same colour have wildly fluctuating relative phase, so their interference pattern washes out instantly. This is why a single source split in two is the standard experimental trick."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m11",
+       "source": "mcq",
+       "prompt": "A film of oil spread on water shows vivid colours in daylight because of",
+       "options": [
+        "dispersion",
+        "interference",
+        "polarization",
+        "total internal reflection"
+       ],
+       "correct_index": 1,
+       "explanation": "Light reflected from the top and bottom surfaces of the film interferes. The film's thickness decides which wavelengths reinforce and which cancel, so different thicknesses show different colours. Soap bubbles and the sheen on a beetle's wing are the same effect — thin-film interference, not a prism-like splitting."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch17-m12",
+       "source": "mcq",
+       "prompt": "In a two-slit experiment each slit alone produces intensity $ I_0 $ at a point. With both open and the waves arriving in phase, the intensity there is",
+       "options": [
+        "$ 4I_0 $",
+        "$ I_0 $",
+        "$ 2I_0 $",
+        "$ I_0/2 $"
+       ],
+       "correct_index": 0,
+       "explanation": "Amplitudes add, not intensities. Each slit contributes amplitude $ A $ with $ I_0 \\propto A^{2} $; in phase they give $ 2A $, so the intensity is $ (2A)^{2} \\propto 4I_0 $. Energy is still conserved — the extra brightness at maxima is exactly balanced by darkness at the minima."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch17-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Wavelength inside a medium",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Light of wavelength $ 600 $ nm in air enters glass of refractive index $ 1.5 $. Find its speed, wavelength and frequency in the glass.",
+    "solution": "**Frequency first — it never changes.**\n\n$ \\nu = \\frac{c}{\\lambda} = \\frac{3 \\times 10^{8}}{600 \\times 10^{-9}} = 5 \\times 10^{14}\\ \\text{Hz} $\n\nThis is the same in air and in glass.\n\n**Speed in glass:**\n\n$ v = \\frac{c}{n} = \\frac{3 \\times 10^{8}}{1.5} = 2 \\times 10^{8}\\ \\text{m s}^{-1} $\n\n**Wavelength in glass:**\n\n$ \\lambda' = \\frac{v}{\\nu} = \\frac{2 \\times 10^{8}}{5 \\times 10^{14}} = 4 \\times 10^{-7}\\ \\text{m} = 400\\ \\text{nm} $\n\nOr more directly, $ \\lambda' = \\lambda/n = 600/1.5 = 400 $ nm.\n\n**Watch out:** it is tempting to say the light 'turns blue' in glass since $ 400 $ nm is blue in air. It does not — colour is determined by frequency, which is unchanged. The eye responds to frequency, so the light still looks orange."
+   },
+   {
+    "id": "we-ch17-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Fringe width in Young's experiment",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two slits $ 0.5 $ mm apart are illuminated by light of wavelength $ 600 $ nm, and the screen is $ 1.5 $ m away. Find the fringe width and the distance of the third bright fringe from the centre.",
+    "solution": "**Fringe width:**\n\n$ \\beta = \\frac{\\lambda D}{d} = \\frac{(600 \\times 10^{-9})(1.5)}{0.5 \\times 10^{-3}} = \\frac{9 \\times 10^{-7}}{5 \\times 10^{-4}} = 1.8 \\times 10^{-3}\\ \\text{m} $\n\nThat is $ 1.8 $ mm between successive bright fringes.\n\n**Third bright fringe:**\n\n$ y_3 = 3\\beta = 5.4\\ \\text{mm} $ from the central maximum.\n\n**How to widen the fringes.** Since $ \\beta \\propto \\lambda D/d $, you can move the screen further back, bring the slits closer together, or use longer-wavelength light. Bringing the slits closer is the most effective lever in practice, and it is why the slit separation must be small for the pattern to be visible at all.\n\n**Watch the units.** Millimetres and nanometres must both go into metres before dividing. This is the single commonest source of wrong answers here."
+   },
+   {
+    "id": "we-ch17-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Path difference and the order of a fringe",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "In a two-slit experiment with light of wavelength $ 500 $ nm, the path difference at a point on the screen is $ 1.25\\ \\mu\\text{m} $. Is the point bright or dark?",
+    "solution": "Compare the path difference with the wavelength.\n\n$ \\frac{\\Delta}{\\lambda} = \\frac{1.25 \\times 10^{-6}}{500 \\times 10^{-9}} = \\frac{1.25 \\times 10^{-6}}{5 \\times 10^{-7}} = 2.5 $\n\nThat is $ 2.5\\lambda $, an **odd number of half wavelengths** ($ 5\\lambda/2 $).\n\n**So the point is dark** — the waves arrive exactly out of phase.\n\n**The two conditions:**\n\nBright: $ \\Delta = n\\lambda $ ($ n = 0, 1, 2, \\ldots $)\n\nDark: $ \\Delta = (n + \\tfrac12)\\lambda $\n\n**A useful habit.** Always express the path difference as a multiple of $ \\lambda $ before deciding. A whole number means bright, a half-integer means dark, and anything else means partial brightness somewhere in between."
+   },
+   {
+    "id": "we-ch17-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Effect of immersing the apparatus in water",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A Young's double-slit apparatus with fringe width $ 2 $ mm in air is immersed in water of refractive index $ 4/3 $. Find the new fringe width.",
+    "solution": "The wavelength in water shrinks:\n\n$ \\lambda' = \\frac{\\lambda}{n} $\n\nSince $ \\beta \\propto \\lambda $ and $ D $ and $ d $ are unchanged,\n\n$ \\beta' = \\frac{\\beta}{n} = \\frac{2}{4/3} = 2 \\times \\frac{3}{4} = 1.5\\ \\text{mm} $\n\n**The pattern contracts.** All the fringes crowd closer to the centre because the effective wavelength is smaller.\n\n**Why the frequency being unchanged does not save the fringe width.** Interference depends on path difference measured *in wavelengths*, so it is the wavelength inside the medium that matters, not the frequency. A given physical path now contains more wavelengths, so the phase difference builds up faster with position.\n\n**The general lesson.** Whenever a question changes the medium, ask what happens to $ \\lambda $ — that is almost always the quantity the answer hinges on."
+   },
+   {
+    "id": "we-ch17-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Intensity at an arbitrary point",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two coherent sources of equal intensity $ I_0 $ interfere with a phase difference of $ 60^\\circ $ at a point. Find the resultant intensity there.",
+    "solution": "$ I = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\phi $\n\nWith $ I_1 = I_2 = I_0 $:\n\n$ I = 2I_0 + 2I_0\\cos\\phi = 2I_0(1 + \\cos 60^\\circ) = 2I_0(1.5) = 3I_0 $\n\n**Check the limiting cases.**\n\n$ \\phi = 0 $: $ I = 4I_0 $ — maximum brightness ✓\n\n$ \\phi = 180^\\circ $: $ I = 0 $ — complete darkness ✓\n\n$ \\phi = 90^\\circ $: $ I = 2I_0 $ — exactly the sum, as if no interference occurred\n\nOur $ 3I_0 $ sits sensibly between the last two.\n\n**Where the energy goes.** Averaging $ I $ over all phases gives $ 2I_0 $ — precisely the sum of the two intensities. Interference never creates or destroys light; the $ 2\\sqrt{I_1I_2}\\cos\\phi $ term simply moves it from the dark fringes into the bright ones."
+   },
+   {
+    "id": "we-ch17-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Thin-film interference",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A soap film of refractive index $ 1.33 $ appears brightest in reflected light of wavelength $ 600 $ nm at normal incidence. Find the film's minimum thickness.",
+    "solution": "Reflection from the top surface (air into a denser film) brings an extra phase change of $ \\pi $, equivalent to half a wavelength. Reflection from the bottom surface (film into air, rarer) brings none. That built-in half-wavelength is why the condition looks 'inverted'.\n\n**Condition for a bright reflection:**\n\n$ 2nt = \\left(m + \\tfrac12\\right)\\lambda $\n\n**For the minimum thickness**, take $ m = 0 $:\n\n$ 2nt = \\frac{\\lambda}{2} \\Rightarrow t = \\frac{\\lambda}{4n} = \\frac{600 \\times 10^{-9}}{4(1.33)} = 113\\ \\text{nm} $\n\n**Why $ 2nt $ and not $ 2t $.** The light travels through the film twice, and inside the film the wavelength is $ \\lambda/n $, so the *optical* path is $ 2nt $. Optical path — geometric path times refractive index — is the quantity interference always counts.\n\n**Why bubbles are so colourful.** A bubble's wall varies in thickness, so different regions satisfy the bright condition for different wavelengths. As the film thins and drains, the colours shift and eventually the wall goes black just before it bursts, when $ t $ becomes far smaller than $ \\lambda $."
+   },
+   {
+    "id": "we-ch17-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Coherence and why two bulbs do not interfere",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why two identical light bulbs placed side by side produce no visible interference pattern, while a single bulb shining through two slits does.",
+    "solution": "**The problem with two bulbs.** Light is emitted by countless atoms, each radiating independently in bursts lasting around $ 10^{-8} $ s. The phase of each bulb's output therefore jumps randomly millions of times a second, and the two bulbs' phases are entirely unrelated.\n\n**What that does to the pattern.** A pattern still forms at every instant, but its position shifts randomly on a $ 10^{-8} $ s timescale. The eye — and any camera — averages over far longer than that, so bright and dark fringes smear into uniform illumination.\n\n**Why two slits work.** Both slits are fed by the *same* wavefront from one source. Whatever random phase jump the source makes, both slits make it together, so their *difference* in phase stays fixed. That constant phase difference is exactly the definition of coherence.\n\n**The general principle.** Coherent sources are almost always made by splitting one source, whether by slits (Young), by reflection (Lloyd's mirror), or by a beam splitter (Michelson). A laser is special because its emission is coherent over long times and distances by nature."
+   },
+   {
+    "id": "we-ch17-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Missing fringes and slit width",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "In a two-slit experiment the slit separation is $ d = 0.3 $ mm and each slit has width $ a = 0.1 $ mm. Which interference orders are missing from the pattern?",
+    "solution": "An interference maximum vanishes if it falls exactly where the single-slit diffraction pattern has a zero.\n\n**Interference maxima:** $ d\\sin\\theta = n\\lambda $\n\n**Diffraction minima:** $ a\\sin\\theta = m\\lambda $\n\n**Set them equal** to find the coincidences:\n\n$ \\frac{n}{d} = \\frac{m}{a} \\Rightarrow \\frac{n}{m} = \\frac{d}{a} = \\frac{0.3}{0.1} = 3 $\n\nSo $ n = 3m $ — the **3rd, 6th, 9th…** orders are missing.\n\n**What the observer sees.** The bright fringes run 0, 1, 2, (gap), 4, 5, (gap), 7… with a dark space where the third and sixth should be.\n\n**The useful diagnostic.** The ratio $ d/a $ can be read straight off which orders are absent. This is a standard way to measure slit width without a microscope, and it is a reminder that a real two-slit pattern is always interference *modulated by* diffraction."
+   },
+   {
+    "id": "we-ch17-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Optical path and a glass slab in one arm",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A thin glass sheet of thickness $ 6\\ \\mu\\text{m} $ and refractive index $ 1.5 $ is placed in front of one slit in a two-slit experiment using light of wavelength $ 600 $ nm. By how many fringes does the pattern shift?",
+    "solution": "Inserting the sheet lengthens the *optical* path in that arm without changing the geometric one.\n\n**Extra optical path:**\n\n$ \\Delta = (n - 1)t = (1.5 - 1)(6 \\times 10^{-6}) = 3 \\times 10^{-6}\\ \\text{m} $\n\n**Convert to a number of fringes:**\n\n$ N = \\frac{\\Delta}{\\lambda} = \\frac{3 \\times 10^{-6}}{600 \\times 10^{-9}} = 5 $\n\nThe pattern shifts by **5 fringes**, towards the side carrying the sheet.\n\n**Why $ (n-1)t $ and not $ nt $.** The sheet *replaces* $ t $ of air with $ t $ of glass. The optical path gains $ nt $ but loses the $ t $ it displaced, so the net gain is $ (n-1)t $. Forgetting to subtract the displaced air is the standard error.\n\n**Which way it shifts.** The central bright fringe always moves towards the slit with the extra optical path, because the other beam must now travel further to restore equality. This technique — counting fringe shifts — measures thicknesses and refractive indices to a fraction of a wavelength."
+   },
+   {
+    "id": "we-ch17-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Polarization by a pair of sheets",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Unpolarized light of intensity $ I_0 $ passes through two polarizing sheets whose axes are at $ 60^\\circ $ to each other. Find the emerging intensity.",
+    "solution": "**Through the first sheet.** Unpolarized light contains all orientations equally, so a polarizer transmits exactly half:\n\n$ I_1 = \\frac{I_0}{2} $\n\nThe emerging light is now polarized along the first sheet's axis.\n\n**Through the second sheet**, using Malus's law:\n\n$ I_2 = I_1\\cos^{2}\\theta = \\frac{I_0}{2}\\cos^{2}60^\\circ = \\frac{I_0}{2}(0.5)^{2} = \\frac{I_0}{8} $\n\n**Note the two different rules.** The first sheet halves the intensity — no $ \\cos^{2} $ applies, because there is no single incoming polarization direction to measure an angle from. Only the second sheet, receiving already-polarized light, obeys Malus's law. Applying $ \\cos^{2} $ at the first sheet is the usual mistake.\n\n**The crossed-polarizer curiosity.** At $ \\theta = 90^\\circ $ nothing gets through. But slide a *third* polarizer at $ 45^\\circ $ between them and light reappears — a result that makes no sense for particles filtered through gates, and perfect sense for a wave whose direction of oscillation is being progressively rotated."
+   }
+  ]
+ }
+}

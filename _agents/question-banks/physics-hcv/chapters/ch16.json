@@ -1,0 +1,315 @@
+{
+ "hcv_chapter": 16,
+ "hcv_title": "Sound Waves",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Waves (sound, organ pipes, beats, Doppler effect)"
+ },
+ "source_pages": {
+  "worked": "360-364",
+  "obj1": "365-366"
+ },
+ "notes": "12 Objective I items rebuilt. One source item depends on an unstated sonometer/beat context; replaced with a self-contained beats item testing the same skill.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch16-sound",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Sound Waves",
+   "intro": "Twelve questions on sound. Several turn on remembering that a source fixes the frequency while the medium fixes the speed.",
+   "sections": [
+    {
+     "id": "nature-of-sound",
+     "title": "The Nature of Sound",
+     "blurb": "A longitudinal wave, describable by displacement or by pressure.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch16-m01",
+       "source": "mcq",
+       "prompt": "For sound passing through a gas, consider: (A) the pressure at a point oscillates in time; (B) the position of a thin layer of gas oscillates in time. Then",
+       "options": [
+        "A is correct but B is wrong",
+        "both A and B are correct",
+        "B is correct but A is wrong",
+        "both are wrong"
+       ],
+       "correct_index": 1,
+       "explanation": "Sound is a longitudinal wave, so layers of gas really do slide back and forth about their rest positions, and the resulting compressions and rarefactions make the pressure at any fixed point rise and fall. The two descriptions are the same wave viewed two ways — and they are a quarter-cycle out of phase, so pressure peaks where displacement is zero."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m02",
+       "source": "mcq",
+       "prompt": "The sound of a hand-clap is best described by",
+       "options": [
+        "$ p = p_0\\sin(kx - \\omega t) $",
+        "$ p = p_0\\sin kx\\cos\\omega t $",
+        "$ p = p_0\\cos kx\\sin\\omega t $",
+        "$ p = \\sum_n p_{0n}\\sin(k_n x - \\omega_n t) $"
+       ],
+       "correct_index": 3,
+       "explanation": "A clap is a brief noise, not a sustained musical note, so it contains a whole spread of frequencies rather than one. Only a superposition of many components can represent it. A single sine wave would be a pure tone lasting forever, and the middle two options are standing waves."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m03",
+       "source": "mcq",
+       "prompt": "The bulk modulus **and** the density of water both exceed those of air. From this alone, the speed of sound in air",
+       "options": [
+        "cannot be compared with that in water",
+        "is larger than in water",
+        "is smaller than in water",
+        "equals that in water"
+       ],
+       "correct_index": 0,
+       "explanation": "Speed is $ v = \\sqrt{B/\\rho} $, so a larger $ B $ raises it while a larger $ \\rho $ lowers it. Knowing both are larger for water tells you nothing about the ratio without actual values. (In fact water wins decisively — about $ 1500\\ \\text{m s}^{-1} $ — but that is extra knowledge, not a deduction from what is given.)"
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m04",
+       "source": "mcq",
+       "prompt": "The speed of sound in a medium depends on",
+       "options": [
+        "the elastic property but not the inertial property",
+        "both the elastic and the inertial properties",
+        "the inertial property but not the elastic property",
+        "neither"
+       ],
+       "correct_index": 1,
+       "explanation": "Every mechanical wave speed has the form $ \\sqrt{\\text{elasticity}/\\text{inertia}} $ — here $ \\sqrt{B/\\rho} $, and on a string $ \\sqrt{T/\\mu} $. Elasticity is the restoring agent that hurries the disturbance along; inertia is what resists being moved."
+      }
+     ]
+    },
+    {
+     "id": "sound-in-changing-media",
+     "title": "What Changes When the Medium Does",
+     "blurb": "Frequency belongs to the source; speed belongs to the medium.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch16-m05",
+       "source": "mcq",
+       "prompt": "A tuning fork sounds in air. If the air temperature rises, which quantity changes?",
+       "options": [
+        "The frequency",
+        "The time period",
+        "The displacement amplitude",
+        "The wavelength"
+       ],
+       "correct_index": 3,
+       "explanation": "The fork's frequency — and hence its period — is a property of the fork and is unaffected by the air. But the speed of sound rises with temperature ($ v \\propto \\sqrt{T} $), so $ \\lambda = v/\\nu $ must lengthen to match."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m06",
+       "source": "mcq",
+       "prompt": "When a sound wave passes from air into water, the quantity that remains unchanged is",
+       "options": [
+        "the wave number",
+        "the wavelength",
+        "the frequency",
+        "the wave velocity"
+       ],
+       "correct_index": 2,
+       "explanation": "At the boundary the two media must vibrate together, so the frequency carries across unchanged. The speed jumps to water's much higher value, and the wavelength stretches in proportion. Wave number $ k = 2\\pi/\\lambda $ changes with the wavelength."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m07",
+       "source": "mcq",
+       "prompt": "Two sound waves travel the same way in the same medium with equal **pressure amplitudes**, the first having twice the wavelength of the second. Their average transmitted powers satisfy",
+       "options": [
+        "$ P_1 = 4P_2 $",
+        "$ P_2 = 2P_1 $",
+        "$ P_1 = P_2 $",
+        "$ P_2 = 4P_1 $"
+       ],
+       "correct_index": 2,
+       "explanation": "Written in terms of pressure amplitude, the intensity is $ I = p_0^{2}/2\\rho v $ — frequency and wavelength do not appear at all. Equal pressure amplitudes in the same medium therefore carry equal power. (Written in terms of *displacement* amplitude the frequency does appear, which is why the two forms must not be mixed up.)"
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m08",
+       "source": "mcq",
+       "prompt": "When two waves of the same frequency and a constant phase difference interfere,",
+       "options": [
+        "energy is redistributed, and the distribution is steady in time",
+        "energy is gained",
+        "energy is lost",
+        "energy is redistributed, and the distribution changes with time"
+       ],
+       "correct_index": 0,
+       "explanation": "Interference never creates or destroys energy — it moves it from the destructive regions into the constructive ones. Because the phase difference is *constant* (the sources are coherent), the pattern of bright and dark, or loud and quiet, stays fixed. Incoherent sources would give a pattern that washed out."
+      }
+     ]
+    },
+    {
+     "id": "pipes-beats-doppler",
+     "title": "Organ Pipes, Beats and the Doppler Effect",
+     "blurb": "Standing waves in air columns, and what motion does to pitch.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch16-m09",
+       "source": "mcq",
+       "prompt": "An open organ pipe of length $ L $ vibrates in its fundamental mode. The **pressure** variation is greatest",
+       "options": [
+        "at the two ends",
+        "one quarter of the way along",
+        "at the middle of the pipe",
+        "nowhere — it is uniform"
+       ],
+       "correct_index": 2,
+       "explanation": "The open ends are displacement antinodes, where the air moves most freely and the pressure barely changes. The middle is a displacement node, where the air is alternately squeezed from both sides — so it is a *pressure* antinode. Pressure and displacement are always a quarter-wavelength out of step."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m10",
+       "source": "mcq",
+       "prompt": "A closed organ pipe and an open pipe have the same length. The ratio of their fundamental frequencies (closed : open) is",
+       "options": [
+        "$ 2 : 1 $",
+        "$ 1 : 1 $",
+        "$ 1 : 4 $",
+        "$ 1 : 2 $"
+       ],
+       "correct_index": 3,
+       "explanation": "A closed pipe fits only a quarter wavelength in its fundamental ($ \\nu = v/4L $), while an open pipe fits half ($ \\nu = v/2L $). So a closed pipe sounds an octave lower than an open pipe of the same length — and it produces only odd harmonics, giving it a distinctly different tone."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m11",
+       "source": "mcq",
+       "prompt": "A tuning fork of $ 512 $ Hz gives $ 4 $ beats per second with a sonometer wire. On slightly increasing the wire's tension, the beat frequency rises to $ 6 $ per second. The wire's original frequency was",
+       "options": [
+        "$ 508 $ Hz",
+        "$ 516 $ Hz",
+        "$ 512 $ Hz",
+        "$ 506 $ Hz"
+       ],
+       "correct_index": 1,
+       "explanation": "Four beats means the wire was at $ 508 $ or $ 516 $ Hz. Raising the tension raises the wire's frequency; since the beats grew to 6, the wire moved *further* from $ 512 $ Hz, so it must already have been above it — $ 516 $ Hz. Had it been $ 508 $ Hz, tightening would have closed the gap and reduced the beats."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch16-m12",
+       "source": "mcq",
+       "prompt": "A train's engine sounds a whistle of frequency $ \\nu $. The frequency heard by a passenger **on that train** is",
+       "options": [
+        "equal to $ \\nu $",
+        "greater than $ \\nu $",
+        "less than $ \\nu $",
+        "equal to $ 1/\\nu $"
+       ],
+       "correct_index": 0,
+       "explanation": "The Doppler effect depends on *relative* motion between source and observer, and a passenger is at rest relative to the whistle. So they hear the true frequency. Only someone on the platform hears the pitch shift up on approach and down on recession."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch16-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Speed of sound and temperature",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The speed of sound in air at $ 0 $ °C is $ 332\\ \\text{m s}^{-1} $. Find it at $ 27 $ °C.",
+    "solution": "For an ideal gas, $ v = \\sqrt{\\gamma RT/M} $, so $ v \\propto \\sqrt{T} $ with $ T $ in **kelvin**.\n\n$ \\frac{v_2}{v_1} = \\sqrt{\\frac{T_2}{T_1}} = \\sqrt{\\frac{300}{273}} = \\sqrt{1.099} = 1.048 $\n\n$ v_2 = 332 \\times 1.048 = 348\\ \\text{m s}^{-1} $\n\n**Watch out:** the temperatures must be absolute. Using $ 27/0 $ is not merely wrong, it is undefined — and using Celsius anywhere in a $ \\sqrt{T} $ relation is one of the most reliable ways to get a nonsense answer.\n\n**A handy approximation.** Near room temperature the speed rises by about $ 0.6\\ \\text{m s}^{-1} $ per °C. From $ 0 $ °C to $ 27 $ °C that predicts $ 332 + 16 = 348\\ \\text{m s}^{-1} $ ✓\n\n**What it does not depend on.** Pressure. Raising the pressure of a gas raises its density in exact proportion, and the two effects cancel in $ \\sqrt{B/\\rho} $. Sound travels at the same speed on a mountain as at sea level, at the same temperature."
+   },
+   {
+    "id": "we-ch16-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Fundamental frequency of organ pipes",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the fundamental frequency of (a) an open pipe and (b) a closed pipe, each $ 50 $ cm long. Take $ v = 340\\ \\text{m s}^{-1} $.",
+    "solution": "**(a) Open pipe.** Both ends are displacement antinodes, so the fundamental fits half a wavelength:\n\n$ \\lambda = 2L = 1.0 $ m\n\n$ \\nu = \\frac{v}{\\lambda} = \\frac{340}{1.0} = 340 $ Hz\n\n**(b) Closed pipe.** One end is a node (closed) and the other an antinode (open), so only a quarter wavelength fits:\n\n$ \\lambda = 4L = 2.0 $ m\n\n$ \\nu = \\frac{340}{2.0} = 170 $ Hz\n\n**The closed pipe sounds an octave lower** for the same length — worth remembering as a check.\n\n**The harmonics differ too.** An open pipe gives all multiples: $ 340, 680, 1020, \\ldots $ Hz. A closed pipe gives only **odd** multiples: $ 170, 510, 850, \\ldots $ Hz. Missing even harmonics is what gives a stopped organ pipe or a clarinet its characteristic hollow tone."
+   },
+   {
+    "id": "we-ch16-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Beats",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two tuning forks of $ 256 $ Hz and $ 260 $ Hz are sounded together. Find the beat frequency and the time between successive maxima of loudness.",
+    "solution": "**Beat frequency** is simply the difference:\n\n$ \\nu_{beat} = |260 - 256| = 4 $ Hz\n\n**Time between maxima:**\n\n$ T = \\frac{1}{4} = 0.25 $ s\n\n**Where beats come from.** The two waves drift in and out of step. When they are in phase the amplitudes add and the sound is loud; half a beat-period later they are out of phase and it is faint. The ear perceives this slow throbbing rather than the two separate pitches.\n\n**Why beats must be slow to be heard.** Above about $ 15 $ Hz the throbbing is too rapid to follow, and the ear begins to hear two distinct tones instead. That is why piano tuners work with beats of only a few per second.\n\n**Note what beats cannot tell you.** A $ 4 $ Hz beat against a $ 256 $ Hz fork means the unknown is $ 252 $ or $ 260 $ Hz — the difference alone cannot say which. Loading one fork slightly and seeing whether the beats speed up or slow down resolves it."
+   },
+   {
+    "id": "we-ch16-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Doppler effect: moving source",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A train sounds a $ 500 $ Hz whistle while moving at $ 30\\ \\text{m s}^{-1} $. Find the frequency heard by a stationary observer as it approaches and as it recedes. Take $ v = 330\\ \\text{m s}^{-1} $.",
+    "solution": "For a moving source and stationary observer,\n\n$ \\nu' = \\nu\\left(\\frac{v}{v \\mp v_s}\\right) $\n\nwith the minus sign for approach and the plus for recession.\n\n**Approaching:**\n\n$ \\nu' = 500\\left(\\frac{330}{330-30}\\right) = 500\\left(\\frac{330}{300}\\right) = 550 $ Hz\n\n**Receding:**\n\n$ \\nu' = 500\\left(\\frac{330}{330+30}\\right) = 500\\left(\\frac{330}{360}\\right) = 458 $ Hz\n\n**Note the asymmetry.** The pitch rises by $ 50 $ Hz on approach but falls by $ 42 $ Hz on recession — the shifts are not equal, because the source speed enters the denominator.\n\n**Why the source's motion crowds the waves.** Moving forward, the whistle chases its own sound and each successive crest is emitted a little closer to the last, shortening the wavelength. The medium's speed is unaffected; only the spacing changes.\n\n**A memory aid that never fails:** approaching always raises the pitch. If your algebra says otherwise, you have the sign wrong."
+   },
+   {
+    "id": "we-ch16-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Doppler effect: moving observer",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An observer drives at $ 20\\ \\text{m s}^{-1} $ towards a stationary siren of frequency $ 400 $ Hz. Find the frequency heard. Take $ v = 340\\ \\text{m s}^{-1} $.",
+    "solution": "For a moving observer and stationary source,\n\n$ \\nu' = \\nu\\left(\\frac{v \\pm v_o}{v}\\right) $\n\nwith the plus sign when approaching.\n\n$ \\nu' = 400\\left(\\frac{340+20}{340}\\right) = 400\\left(\\frac{360}{340}\\right) = 424 $ Hz\n\n**Why this case is physically different** from a moving source. Here the wavelength in the air is completely unchanged — the siren is stationary, so it lays down crests at their normal spacing. What changes is that the observer runs into those crests more often, so the *rate* of arrival rises.\n\nIn the moving-source case, by contrast, the wavelength itself is compressed.\n\n**Both effects together.** If both move, use\n\n$ \\nu' = \\nu\\left(\\frac{v \\pm v_o}{v \\mp v_s}\\right) $\n\nchoosing signs so that any approach raises the pitch. Get in the habit of checking the *direction* of the shift before trusting the arithmetic."
+   },
+   {
+    "id": "we-ch16-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Resonance tube and end correction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "In a resonance-tube experiment the first resonance occurs at a column length of $ 16 $ cm and the second at $ 50 $ cm, with a $ 480 $ Hz fork. Find the speed of sound and the end correction.",
+    "solution": "**Use the difference of the two lengths.** Successive resonances in a closed tube are half a wavelength apart, and — crucially — the end correction cancels in the difference:\n\n$ l_2 - l_1 = \\frac{\\lambda}{2} \\Rightarrow 50 - 16 = 34\\ \\text{cm} = \\frac{\\lambda}{2} $\n\n$ \\lambda = 68\\ \\text{cm} = 0.68\\ \\text{m} $\n\n**Speed of sound:**\n\n$ v = \\nu\\lambda = 480 \\times 0.68 = 326\\ \\text{m s}^{-1} $\n\n**End correction.** The first resonance should be at $ \\lambda/4 = 17 $ cm, but was found at $ 16 $ cm:\n\n$ e = \\frac{\\lambda}{4} - l_1 = 17 - 16 = 1\\ \\text{cm} $\n\n**Why the end correction exists.** The displacement antinode sits slightly *outside* the open end, because the air just beyond the rim also takes part in the vibration. It is roughly $ 0.6r $ for a tube of radius $ r $.\n\n**Why the two-resonance method is the good one.** Taking the difference eliminates $ e $ entirely, so the speed comes out right even before you know it. Using only the first resonance would build the unknown error straight into the answer."
+   },
+   {
+    "id": "we-ch16-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Intensity and the decibel scale",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A sound has intensity $ 10^{-6}\\ \\text{W m}^{-2} $. Find its level in decibels. What happens to the level if the intensity is doubled? Take $ I_0 = 10^{-12}\\ \\text{W m}^{-2} $.",
+    "solution": "**Sound level:**\n\n$ \\beta = 10\\log_{10}\\left(\\frac{I}{I_0}\\right) = 10\\log_{10}\\left(\\frac{10^{-6}}{10^{-12}}\\right) = 10\\log_{10}(10^{6}) = 60\\ \\text{dB} $\n\n**On doubling the intensity:**\n\n$ \\Delta\\beta = 10\\log_{10}(2) = 3\\ \\text{dB} $\n\nso the level rises to $ 63 $ dB.\n\n**The rule worth memorising:** doubling the intensity always adds $ 3 $ dB, whatever the starting point. Ten times the intensity adds $ 10 $ dB.\n\n**Why the scale is logarithmic.** The ear handles a range of about $ 10^{12} $ in intensity, from the threshold of hearing to the threshold of pain. A linear scale would be unusable, and human loudness perception is itself roughly logarithmic.\n\n**A counter-intuitive consequence.** Two identical speakers instead of one give only $ +3 $ dB — barely noticeable. To sound convincingly 'twice as loud' takes about $ +10 $ dB, which means *ten* speakers."
+   },
+   {
+    "id": "we-ch16-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Pressure amplitude and displacement amplitude",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A sound wave of frequency $ 500 $ Hz in air has a displacement amplitude of $ 10^{-6} $ m. Find its pressure amplitude. Take $ \\rho = 1.2\\ \\text{kg m}^{-3} $ and $ v = 340\\ \\text{m s}^{-1} $.",
+    "solution": "The two amplitudes are linked by\n\n$ p_0 = \\rho v \\omega s_0 $\n\n**Angular frequency:**\n\n$ \\omega = 2\\pi(500) = 3142\\ \\text{rad s}^{-1} $\n\n**Substitute:**\n\n$ p_0 = (1.2)(340)(3142)(10^{-6}) $\n\n$ = (408)(3142)(10^{-6}) = 1.28\\ \\text{Pa} $\n\n**Put that in perspective.** Atmospheric pressure is about $ 10^{5} $ Pa, so this quite loud sound wobbles the pressure by roughly one part in $ 10^{5} $ — while moving air molecules by a millionth of a metre. The ear is an extraordinarily sensitive instrument.\n\n**The quarter-cycle relationship.** Pressure and displacement are $ 90^\\circ $ out of phase: where the displacement is greatest the pressure change is zero, and vice versa. That is why an open pipe end is a displacement antinode but a pressure node.\n\n**Note the frequency dependence.** For a given displacement amplitude, $ p_0 \\propto \\omega $ — high notes produce larger pressure swings than low notes of the same air movement."
+   },
+   {
+    "id": "we-ch16-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Interference of two sound sources",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two loudspeakers $ 3 $ m apart emit identical sounds of $ 340 $ Hz in phase. A listener stands $ 4 $ m from one and $ 5.5 $ m from the other. Is the sound loud or faint there? Take $ v = 340\\ \\text{m s}^{-1} $.",
+    "solution": "**Wavelength:**\n\n$ \\lambda = \\frac{v}{\\nu} = \\frac{340}{340} = 1.0 $ m\n\n**Path difference:**\n\n$ \\Delta = 5.5 - 4 = 1.5 $ m\n\n**Compare with the wavelength:**\n\n$ \\frac{\\Delta}{\\lambda} = 1.5 $\n\nThat is an **odd number of half wavelengths** ($ 3\\lambda/2 $), so the waves arrive exactly out of phase.\n\n**The sound is faint** — destructive interference.\n\n**The general condition** for sources emitting in phase:\n\nConstructive: $ \\Delta = n\\lambda $ (loud)\n\nDestructive: $ \\Delta = (n + \\tfrac12)\\lambda $ (faint)\n\n**Why it is never truly silent.** The two speakers are at different distances, so their intensities at the listener differ slightly and cannot cancel perfectly. Complete silence needs exactly equal amplitudes — which is what makes noise-cancelling headphones a genuine engineering achievement rather than a trivial one."
+   },
+   {
+    "id": "we-ch16-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Finding an unknown frequency using beats",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tuning fork of unknown frequency gives $ 5 $ beats per second with a standard $ 384 $ Hz fork. When the unknown fork is loaded with a little wax, the beat frequency drops to $ 3 $ per second. Find its original frequency.",
+    "solution": "**Step 1 — the two candidates.** Five beats means the unknown is $ 5 $ Hz away:\n\n$ 384 + 5 = 389 $ Hz or $ 384 - 5 = 379 $ Hz\n\n**Step 2 — use the effect of loading.** Adding wax increases the prong's mass, which always *lowers* a fork's frequency.\n\n**If it were $ 389 $ Hz:** loading lowers it towards $ 384 $, so the gap shrinks and the beats would fall — consistent with the observed drop to 3.\n\n**If it were $ 379 $ Hz:** loading lowers it further from $ 384 $, so the gap widens and the beats would *rise* to more than 5 — contrary to observation.\n\n**So the original frequency was $ 389 $ Hz.**\n\n**Why the second measurement is essential.** Beats give only the magnitude of the difference, never its sign. A single reading always leaves two candidates; deliberately changing one frequency in a known direction is what resolves the ambiguity.\n\n**The two standard tricks.** Loading a fork with wax lowers its frequency; filing its prongs raises it. For a sonometer wire, tightening raises and loosening lowers."
+   }
+  ]
+ }
+}

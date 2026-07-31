@@ -1,0 +1,315 @@
+{
+ "hcv_chapter": 18,
+ "hcv_title": "Geometrical Optics",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Ray Optics and Optical Instruments"
+ },
+ "source_pages": {
+  "worked": "414-423",
+  "obj1": "424-425"
+ },
+ "notes": "12 Objective I items rebuilt. Sign-convention traps are the recurring theme, so the worked examples deliberately re-derive signs rather than quoting results.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch18-ray-optics",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Geometrical Optics",
+   "intro": "Twelve questions on mirrors, refraction and lenses. Almost every numerical error in this topic is a sign-convention error, not an algebraic one.",
+   "sections": [
+    {
+     "id": "mirrors-and-reflection",
+     "title": "Reflection and Mirrors",
+     "blurb": "Why only paraxial rays give a sharp image.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch18-m01",
+       "source": "mcq",
+       "prompt": "A point source of light stands in front of a plane mirror. Then",
+       "options": [
+        "only rays close to the normal meet at a point when produced backward",
+        "all the reflected rays, produced backward, meet at one point",
+        "only rays making a small angle with the mirror meet at a point",
+        "light of different colours forms images at different places"
+       ],
+       "correct_index": 1,
+       "explanation": "A plane mirror is the one reflecting surface with no aberration at all — every reflected ray, however steeply inclined, appears to come from a single point exactly as far behind the mirror as the object is in front. Spherical mirrors are the ones that need the paraxial restriction, and dispersion needs refraction, which a mirror does not involve."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m02",
+       "source": "mcq",
+       "prompt": "In image formation by spherical mirrors, only paraxial rays are considered because they",
+       "options": [
+        "are easier to handle geometrically",
+        "form very nearly a point image of a point object",
+        "carry most of the incident intensity",
+        "show the least dispersion"
+       ],
+       "correct_index": 1,
+       "explanation": "Rays far from the axis cross the axis at different points — spherical aberration — smearing the image. Restricting attention to paraxial rays is what makes a sharp point image possible, and hence what makes the mirror formula valid at all. It is a physical requirement, not a mathematical convenience."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m03",
+       "source": "mcq",
+       "prompt": "A point object is placed $ 30 $ cm from a convex mirror of focal length $ 30 $ cm. The image forms",
+       "options": [
+        "$ 15 $ cm behind the mirror",
+        "$ 30 $ cm behind the mirror",
+        "$ 15 $ cm in front of the mirror",
+        "at infinity"
+       ],
+       "correct_index": 0,
+       "explanation": "Using $ \\frac{1}{v} + \\frac{1}{u} = \\frac{1}{f} $ with $ u = -30 $ cm and $ f = +30 $ cm for a convex mirror: $ \\frac{1}{v} = \\frac{1}{30} + \\frac{1}{30} = \\frac{2}{30} $, so $ v = +15 $ cm — positive, meaning behind the mirror. A convex mirror always gives a virtual, diminished image, wherever the object sits."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m04",
+       "source": "mcq",
+       "prompt": "An object moves towards a concave mirror from beyond the centre of curvature to the focus. Its real image",
+       "options": [
+        "moves towards the mirror and shrinks",
+        "stays the same size",
+        "remains at the focus",
+        "moves away from the mirror and grows"
+       ],
+       "correct_index": 3,
+       "explanation": "As the object approaches the focus, the image recedes and magnifies without limit — at the focus itself the rays emerge parallel and the image goes to infinity. This is exactly the behaviour exploited in a projector, where the slide sits just outside the focal point to throw a large image far away."
+      }
+     ]
+    },
+    {
+     "id": "refraction-and-tir",
+     "title": "Refraction and Total Internal Reflection",
+     "blurb": "The condition for light to be trapped.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch18-m05",
+       "source": "mcq",
+       "prompt": "Total internal reflection can occur only if light travels",
+       "options": [
+        "from an optically denser to an optically rarer medium",
+        "from an optically rarer to an optically denser medium",
+        "between media of nearly equal refractive index",
+        "between media of widely different refractive index"
+       ],
+       "correct_index": 0,
+       "explanation": "Going from denser to rarer, the refracted ray bends *away* from the normal, so at a large enough angle of incidence it would need to exceed $ 90^\\circ $ — impossible, so all the light reflects instead. Going the other way the ray bends towards the normal and can always emerge, so no critical angle exists."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m06",
+       "source": "mcq",
+       "prompt": "The critical angle for a glass-air interface is $ 42^\\circ $. The refractive index of the glass is about",
+       "options": [
+        "$ 1.3 $",
+        "$ 1.7 $",
+        "$ 1.5 $",
+        "$ 2.0 $"
+       ],
+       "correct_index": 2,
+       "explanation": "At the critical angle $ \\sin C = 1/n $, so $ n = 1/\\sin 42^\\circ = 1/0.669 = 1.49 $. A larger refractive index gives a *smaller* critical angle, which is why diamond ($ n = 2.42 $, $ C = 24^\\circ $) traps light so effectively and sparkles."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m07",
+       "source": "mcq",
+       "prompt": "An object lies at the bottom of a pool of water ($ n = 4/3 $) of real depth $ 4 $ m. Its apparent depth when viewed from directly above is",
+       "options": [
+        "$ 4 $ m",
+        "$ 5.33 $ m",
+        "$ 3 $ m",
+        "$ 2 $ m"
+       ],
+       "correct_index": 2,
+       "explanation": "Apparent depth is real depth divided by the refractive index: $ 4 \\div (4/3) = 3 $ m. The pool looks shallower than it is because rays bend away from the normal on leaving the water, which is a well-known hazard for anyone judging the depth of clear water."
+      }
+     ]
+    },
+    {
+     "id": "lenses",
+     "title": "Lenses and Lens Formulae",
+     "blurb": "Focal length from curvature, and where the light actually concentrates.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch18-m08",
+       "source": "mcq",
+       "prompt": "A double convex lens has both surfaces of radius $ R $ and refractive index $ 1.5 $. Its focal length is",
+       "options": [
+        "$ R/2 $",
+        "$ -R $",
+        "$ R $",
+        "$ 2R $"
+       ],
+       "correct_index": 2,
+       "explanation": "The lens maker's formula gives $ \\frac{1}{f} = (n-1)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right) $. For a double convex lens $ R_1 = +R $ and $ R_2 = -R $, so the bracket is $ 2/R $ and $ \\frac{1}{f} = 0.5 \\times \\frac{2}{R} = \\frac{1}{R} $, giving $ f = R $. The sign of the second radius is what most errors here come down to."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m09",
+       "source": "mcq",
+       "prompt": "A point source sits at distance $ 2f $ from a converging lens of focal length $ f $. On the far side, the light intensity is greatest at a distance",
+       "options": [
+        "$ 2f $",
+        "$ f $",
+        "between $ f $ and $ 2f $",
+        "more than $ 2f $"
+       ],
+       "correct_index": 0,
+       "explanation": "Intensity peaks where the rays converge — at the image. With $ u = 2f $, the lens formula gives $ v = 2f $, so the brightest point is $ 2f $ beyond the lens. The focal point $ f $ is where *parallel* light would converge, which is a different situation entirely."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m10",
+       "source": "mcq",
+       "prompt": "A parallel beam falls on a converging lens along its axis. Moving away from the lens on the far side along the axis, the intensity",
+       "options": [
+        "stays constant all the way along the axis",
+        "increases continuously as you move away",
+        "increases up to the focus and then decreases",
+        "decreases continuously as you move away"
+       ],
+       "correct_index": 2,
+       "explanation": "The lens squeezes a wide parallel beam down to a point at the focus, so the intensity climbs steadily as the cross-section shrinks, peaks sharply at the focal point, then falls as the beam diverges again. This is why a lens can set paper alight only at one particular distance."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m11",
+       "source": "mcq",
+       "prompt": "Two thin lenses of focal lengths $ +20 $ cm and $ -30 $ cm are placed in contact. The focal length of the combination is",
+       "options": [
+        "$ +12 $ cm",
+        "$ -60 $ cm",
+        "$ +50 $ cm",
+        "$ +60 $ cm"
+       ],
+       "correct_index": 3,
+       "explanation": "Powers add for thin lenses in contact: $ \\frac{1}{F} = \\frac{1}{20} + \\frac{1}{-30} = \\frac{3-2}{60} = \\frac{1}{60} $, so $ F = +60 $ cm. The combination is still converging but distinctly weaker than the convex lens alone — the concave lens has cancelled part of its power."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch18-m12",
+       "source": "mcq",
+       "prompt": "The lower half of a converging lens is covered with black paper. The image of an object placed in front of it will be",
+       "options": [
+        "only the upper half of the object",
+        "the complete image, but dimmer",
+        "only the lower half of the object",
+        "no image at all"
+       ],
+       "correct_index": 1,
+       "explanation": "Every point of the object sends rays through *every* part of the lens, so the uncovered half still collects rays from the whole object and forms a complete image. Blocking half the aperture halves the light gathered, so the image is simply fainter. This is one of the most reliably mispredicted results in ray optics."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch18-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Image in a concave mirror",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An object $ 2 $ cm tall is placed $ 30 $ cm in front of a concave mirror of focal length $ 20 $ cm. Find the image position, magnification and height.",
+    "solution": "**Set the signs first.** Using the standard convention with distances measured from the mirror and the incident direction as negative:\n\n$ u = -30 $ cm, $ f = -20 $ cm (concave)\n\n**Mirror formula:**\n\n$ \\frac{1}{v} + \\frac{1}{u} = \\frac{1}{f} $\n\n$ \\frac{1}{v} = \\frac{1}{-20} - \\frac{1}{-30} = -\\frac{1}{20} + \\frac{1}{30} = \\frac{-3+2}{60} = -\\frac{1}{60} $\n\n$ v = -60 $ cm — negative, so the image is $ 60 $ cm in *front* of the mirror: it is **real**.\n\n**Magnification:**\n\n$ m = -\\frac{v}{u} = -\\frac{-60}{-30} = -2 $\n\n**Image height:**\n\n$ h' = m h = -2(2) = -4 $ cm\n\nThe minus sign means **inverted**, and the image is twice as tall.\n\n**Reading the signs is the whole skill.** Negative $ v $ → real image. Negative $ m $ → inverted. Since the object was between $ f $ and $ 2f $ (here $ 20 $ and $ 40 $ cm), a real, inverted, magnified image is exactly what should be expected — a useful sanity check before trusting the arithmetic."
+   },
+   {
+    "id": "we-ch18-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Image in a convex mirror",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An object is $ 20 $ cm from a convex mirror of focal length $ 15 $ cm. Find the image position and magnification.",
+    "solution": "$ u = -20 $ cm, $ f = +15 $ cm (convex mirrors have positive focal length in this convention)\n\n$ \\frac{1}{v} = \\frac{1}{15} - \\frac{1}{-20} = \\frac{1}{15} + \\frac{1}{20} = \\frac{4+3}{60} = \\frac{7}{60} $\n\n$ v = +8.57 $ cm — positive, so the image is **behind** the mirror: **virtual**.\n\n**Magnification:**\n\n$ m = -\\frac{v}{u} = -\\frac{8.57}{-20} = +0.43 $\n\nPositive means **erect**, and less than 1 means **diminished**.\n\n**A convex mirror always behaves this way** — virtual, erect and diminished for every object position, with the image confined between the pole and the focus. That is precisely why it is used as a vehicle wing mirror and in shop security: a wide field of view, at the cost of making everything look smaller and further away."
+   },
+   {
+    "id": "we-ch18-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Refraction through a glass slab",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Light strikes a glass slab ($ n = 1.5 $) at $ 30^\\circ $ to the normal. Find the angle of refraction, and the lateral shift for a slab $ 6 $ cm thick.",
+    "solution": "**Snell's law:**\n\n$ 1 \\times \\sin 30^\\circ = 1.5 \\sin r $\n\n$ \\sin r = \\frac{0.5}{1.5} = 0.333 \\Rightarrow r = 19.5^\\circ $\n\nThe ray bends **towards** the normal on entering the denser medium, as it must.\n\n**Lateral shift:**\n\n$ d = \\frac{t\\sin(i - r)}{\\cos r} = \\frac{6\\sin(30^\\circ - 19.5^\\circ)}{\\cos 19.5^\\circ} = \\frac{6\\sin 10.5^\\circ}{0.943} $\n\n$ = \\frac{6(0.182)}{0.943} = 1.16\\ \\text{cm} $\n\n**What a slab does and does not do.** The emerging ray is exactly **parallel** to the incident one — the second surface undoes the first surface's bending — but it is displaced sideways. So a slab shifts an image without rotating it, and it makes objects seen through it appear closer.\n\n**Watch out:** the two refractions are not independent. Whatever angle the ray acquires inside is the angle of incidence at the far face, and the geometry guarantees the exit angle equals the original $ i $."
+   },
+   {
+    "id": "we-ch18-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Critical angle and total internal reflection",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the critical angle for a water-air interface ($ n_w = 1.33 $). What does a fish at the bottom of a still pond see when looking up?",
+    "solution": "**Critical angle:**\n\n$ \\sin C = \\frac{1}{n} = \\frac{1}{1.33} = 0.752 \\Rightarrow C = 48.8^\\circ $\n\n**What the fish sees.** Looking straight up, the whole sky above the water is compressed into a bright circular window of half-angle $ 48.8^\\circ $ — 'Snell's window'. Outside that cone, the surface acts as a perfect mirror and the fish sees a reflection of the pond bottom.\n\n**Why the sky compresses.** Rays arriving from the horizon at grazing incidence refract to exactly $ 48.8^\\circ $ inside the water. Every direction in the entire hemisphere above thus maps into that one cone.\n\n**Where the same physics is used.** Optical fibres trap light by total internal reflection at every bounce, which is why they carry signals for kilometres with almost no leakage. A diamond's small critical angle of $ 24^\\circ $ traps light through many internal reflections before it escapes — the source of its brilliance."
+   },
+   {
+    "id": "we-ch18-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Thin lens image formation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An object $ 3 $ cm tall is $ 15 $ cm from a converging lens of focal length $ 10 $ cm. Find the image position, nature and size.",
+    "solution": "$ u = -15 $ cm, $ f = +10 $ cm\n\n**Lens formula** — note it has a *minus* where the mirror formula has a plus:\n\n$ \\frac{1}{v} - \\frac{1}{u} = \\frac{1}{f} $\n\n$ \\frac{1}{v} = \\frac{1}{10} + \\frac{1}{-15} = \\frac{3-2}{30} = \\frac{1}{30} $\n\n$ v = +30 $ cm — positive, so the image is on the far side of the lens: **real**.\n\n**Magnification:**\n\n$ m = \\frac{v}{u} = \\frac{30}{-15} = -2 $\n\n$ h' = -2(3) = -6 $ cm — **inverted** and twice as tall.\n\n**Watch the two formulae.** Mirrors use $ \\frac{1}{v} + \\frac{1}{u} = \\frac{1}{f} $ and $ m = -v/u $; lenses use $ \\frac{1}{v} - \\frac{1}{u} = \\frac{1}{f} $ and $ m = v/u $. Mixing them is the single most common error in this chapter.\n\n**Sanity check:** the object was between $ f $ and $ 2f $, which always gives a real, inverted, magnified image beyond $ 2f $ — and $ 30 $ cm is indeed beyond $ 2f = 20 $ cm ✓"
+   },
+   {
+    "id": "we-ch18-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Lens maker's formula",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A thin lens of refractive index $ 1.5 $ has surfaces of radii $ 20 $ cm and $ 30 $ cm, both convex outward. Find its focal length. What becomes of it when immersed in a liquid of $ n = 1.5 $?",
+    "solution": "For a double convex lens, the first surface is convex towards the light ($ R_1 = +20 $ cm) and the second is concave towards it ($ R_2 = -30 $ cm).\n\n$ \\frac{1}{f} = (n-1)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right) = (0.5)\\left(\\frac{1}{20} - \\frac{1}{-30}\\right) $\n\n$ = (0.5)\\left(\\frac{1}{20} + \\frac{1}{30}\\right) = (0.5)\\left(\\frac{3+2}{60}\\right) = (0.5)\\left(\\frac{5}{60}\\right) = \\frac{1}{24} $\n\n$ f = +24 $ cm — converging.\n\n**Immersed in a liquid of the same index.** The formula becomes\n\n$ \\frac{1}{f} = \\left(\\frac{n_{lens}}{n_{medium}} - 1\\right)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right) $\n\nWith $ n_{lens} = n_{medium} $ the bracket is zero, so $ \\frac{1}{f} = 0 $ and $ f \\to \\infty $.\n\n**The lens vanishes optically.** It bends no light at all and becomes invisible — light crosses the boundary without any change of speed, so there is nothing to refract. This is exactly how index-matching fluid works, and why a glass rod disappears in a liquid of matching refractive index."
+   },
+   {
+    "id": "we-ch18-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Combination of two lenses in contact",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A converging lens of focal length $ 15 $ cm is placed in contact with a diverging lens of focal length $ 20 $ cm. Find the focal length and power of the combination.",
+    "solution": "For thin lenses in contact, **powers add**:\n\n$ \\frac{1}{F} = \\frac{1}{f_1} + \\frac{1}{f_2} = \\frac{1}{15} + \\frac{1}{-20} $\n\n$ = \\frac{4 - 3}{60} = \\frac{1}{60} $\n\n$ F = +60 $ cm — still converging, but four times weaker than the convex lens alone.\n\n**In dioptres**, with focal lengths in metres:\n\n$ P_1 = \\frac{1}{0.15} = +6.67 $ D, $ P_2 = \\frac{1}{-0.20} = -5.0 $ D\n\n$ P = 6.67 - 5.0 = +1.67 $ D, and $ F = 1/1.67 = 0.60 $ m ✓\n\n**Why opticians work in dioptres.** Adding powers is simple arithmetic; adding reciprocals of focal lengths is not. A prescription of $ -2.5 $ D means a diverging lens of focal length $ 40 $ cm, and combining lenses is then just addition.\n\n**A practical use of the cancellation.** Pairing lenses of opposite sign but different materials lets a designer cancel chromatic aberration while keeping net converging power — that is exactly what an achromatic doublet is."
+   },
+   {
+    "id": "we-ch18-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Minimum deviation by a prism",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A prism of angle $ 60^\\circ $ produces a minimum deviation of $ 30^\\circ $. Find the refractive index of its material.",
+    "solution": "At minimum deviation the ray passes symmetrically through the prism, so\n\n$ n = \\frac{\\sin\\left(\\frac{A + \\delta_m}{2}\\right)}{\\sin\\left(\\frac{A}{2}\\right)} $\n\n**Substitute** $ A = 60^\\circ $, $ \\delta_m = 30^\\circ $:\n\n$ n = \\frac{\\sin\\left(\\frac{60+30}{2}\\right)}{\\sin\\left(\\frac{60}{2}\\right)} = \\frac{\\sin 45^\\circ}{\\sin 30^\\circ} = \\frac{0.707}{0.5} = 1.41 $\n\nAbout $ \\sqrt{2} $.\n\n**What 'minimum deviation' means physically.** As the angle of incidence is increased from grazing, the deviation first falls, reaches a minimum, then rises again. At the minimum the ray inside the prism runs parallel to the base and $ i = e $ — the path is symmetric.\n\n**Why the symmetry is useful.** It gives the sharpest and brightest spectrum, so spectrometers are always set near minimum deviation. And since $ n $ depends slightly on wavelength, each colour has its own $ \\delta_m $ — which is precisely how a prism spreads white light into a spectrum."
+   },
+   {
+    "id": "we-ch18-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Apparent depth and a two-layer liquid",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tank holds $ 12 $ cm of water ($ n = 4/3 $) above which floats $ 6 $ cm of oil ($ n = 1.5 $). Find the apparent depth of the tank's bottom viewed from directly above.",
+    "solution": "Each layer contributes its own apparent depth, and the contributions simply add.\n\n**Water layer:**\n\n$ \\frac{12}{4/3} = 12 \\times \\frac{3}{4} = 9\\ \\text{cm} $\n\n**Oil layer:**\n\n$ \\frac{6}{1.5} = 4\\ \\text{cm} $\n\n**Total apparent depth:**\n\n$ 9 + 4 = 13\\ \\text{cm} $\n\nagainst a real depth of $ 18 $ cm.\n\n**Why the layers are independent.** For near-normal viewing, each layer of thickness $ t $ and index $ n $ appears to be $ t/n $ thick, regardless of what lies above or below it. Summing $ \\sum t_i/n_i $ handles any number of layers.\n\n**Watch out:** you cannot use an 'average refractive index' here. The correct combination is a sum of $ t/n $ terms, not a single division by a mean index — and the two give different answers whenever the layers differ in thickness."
+   },
+   {
+    "id": "we-ch18-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Silvered lens acting as a mirror",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A thin converging lens of focal length $ 20 $ cm has one face silvered. Treating it as an equivalent mirror, find its focal length. Take the silvered surface's mirror focal length as $ 30 $ cm.",
+    "solution": "Light passes through the lens, reflects at the silvered surface, then passes through the lens again — so the lens acts **twice** and the mirror once.\n\n**The equivalent mirror power:**\n\n$ P = 2P_{lens} + P_{mirror} $\n\nIn focal-length form,\n\n$ \\frac{1}{F} = \\frac{2}{f_l} + \\frac{1}{f_m} = \\frac{2}{20} + \\frac{1}{30} $\n\n$ = \\frac{1}{10} + \\frac{1}{30} = \\frac{3+1}{30} = \\frac{4}{30} $\n\n$ F = 7.5\\ \\text{cm} $\n\nThe combination behaves as a converging mirror of focal length $ 7.5 $ cm — much stronger than either component alone.\n\n**Why the factor of two.** The light genuinely traverses the lens on the way in and again on the way out, and each pass contributes its full power. Counting the lens once is the standard error.\n\n**Where this is used.** Silvered-lens combinations are the basis of catadioptric telescope designs, which get long effective focal lengths into short tubes by folding the light path."
+   }
+  ]
+ }
+}

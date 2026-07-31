@@ -1,0 +1,335 @@
+{
+ "hcv_chapter": 5,
+ "hcv_title": "Newton's Laws of Motion",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Laws of Motion"
+ },
+ "source_pages": {
+  "worked": "86-90",
+  "obj1": "91-92"
+ },
+ "notes": "14 Objective I items; 12 rebuilt. Two source items depend on printed figures (a spring-balance chain and a wedge inside a hanging chamber) — the spring-balance idea was re-cast verbally, the hanging-chamber one replaced by a pseudo-force item testing the same non-inertial-frame reasoning.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch05-newton-laws",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Newton's Laws of Motion",
+   "intro": "Twelve questions on free-body thinking. Most of them are decided by asking one thing: which body am I looking at?",
+   "sections": [
+    {
+     "id": "third-law-and-agents",
+     "title": "Which Force Moves What",
+     "blurb": "The force that accelerates a body is never the one it exerts itself.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch05-m01",
+       "source": "mcq",
+       "prompt": "When a horse pulls a cart, the force that drives the horse forward is exerted by",
+       "options": [
+        "the ground on the horse",
+        "the cart on the horse",
+        "the horse on the ground",
+        "the horse on the cart"
+       ],
+       "correct_index": 0,
+       "explanation": "A body accelerates only because of forces acting *on* it, exerted by something else. The horse pushes backward on the ground; the ground's friction pushes it forward. The cart pulls the horse *backward*, so that force cannot be what drives it, and the forces the horse itself exerts act on other bodies entirely."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m02",
+       "source": "mcq",
+       "prompt": "A car accelerates along a horizontal road because of the force exerted by",
+       "options": [
+        "the engine of the car",
+        "the driver",
+        "the road",
+        "the earth's gravity"
+       ],
+       "correct_index": 2,
+       "explanation": "The engine is internal to the car, and internal forces cannot accelerate the whole system. What the engine does is turn the wheels so they push backward on the road; friction from the road then pushes the car forward. Take the road away — put the car on frictionless ice — and the engine can roar all it likes without moving it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m03",
+       "source": "mcq",
+       "prompt": "A body of weight $ w_1 $ hangs from the ceiling by a chain of weight $ w_2 $. The force with which the ceiling pulls the chain is",
+       "options": [
+        "$ w_1 $",
+        "$ w_1 + w_2 $",
+        "$ w_2 $",
+        "$ \\frac{w_1 + w_2}{2} $"
+       ],
+       "correct_index": 1,
+       "explanation": "Take the chain-plus-body as one system in equilibrium. The only upward force on it is the ceiling's pull, and the total downward weight is $ w_1 + w_2 $, so the pull must equal that sum. The chain's own weight is easy to forget precisely because chains are usually treated as light."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m04",
+       "source": "mcq",
+       "prompt": "A $ 10 $ kg block hangs from a spring balance, which itself hangs from a second spring balance fixed to the ceiling. Neglecting the balances' own weights, the readings are",
+       "options": [
+        "both read $ 5 $ kg",
+        "the upper reads $ 10 $ kg and the lower zero",
+        "any readings adding to $ 10 $ kg",
+        "both read $ 10 $ kg"
+       ],
+       "correct_index": 3,
+       "explanation": "A spring balance reads the tension in it. The lower balance carries the $ 10 $ kg block, so it reads $ 10 $ kg. The upper one carries the block *and* the (weightless) lower balance, so it reads $ 10 $ kg too. Tension is not shared out between balances in series — each one transmits the full load."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m05",
+       "source": "mcq",
+       "prompt": "If the earth suddenly stopped attracting objects near its surface (ignore rotation), a person standing on the ground would",
+       "options": [
+        "fly upward",
+        "slip along the surface",
+        "fly off along a tangent",
+        "remain standing"
+       ],
+       "correct_index": 3,
+       "explanation": "Remove the weight and the ground's normal force disappears with it — the floor only ever pushes back as hard as it is pushed. With no net force at all, Newton's first law keeps the person exactly as they were: at rest. Flying off tangentially would require the rotation this question told you to ignore."
+      }
+     ]
+    },
+    {
+     "id": "inclines-and-constraints",
+     "title": "Inclines, Wedges and Contact Forces",
+     "blurb": "The surface pushes perpendicular — the rest follows from geometry.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch05-m06",
+       "source": "mcq",
+       "prompt": "A block of mass $ m $ rests on a **smooth** incline of angle $ \\theta $, free to slide. The force exerted by the plane on the block has magnitude",
+       "options": [
+        "$ mg $",
+        "$ mg/\\cos\\theta $",
+        "$ mg\\cos\\theta $",
+        "$ mg\\tan\\theta $"
+       ],
+       "correct_index": 2,
+       "explanation": "A smooth surface can push only perpendicular to itself, so the plane's whole force is the normal force. Perpendicular to the incline the block has no acceleration, so $ N = mg\\cos\\theta $. The remaining component $ mg\\sin\\theta $ is unbalanced — which is exactly why the block slides."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m07",
+       "source": "mcq",
+       "prompt": "A block of mass $ m $ sits on a smooth wedge of inclination $ \\theta $. The whole system is accelerated horizontally so that the block does **not** slip. The force exerted by the wedge on the block is",
+       "options": [
+        "$ mg\\cos\\theta $",
+        "$ mg/\\cos\\theta $",
+        "$ mg $",
+        "$ mg\\tan\\theta $"
+       ],
+       "correct_index": 1,
+       "explanation": "Here the block has no *vertical* acceleration, so the vertical component of the normal force alone must carry the full weight: $ N\\cos\\theta = mg $, giving $ N = mg/\\cos\\theta $. Its horizontal component $ N\\sin\\theta = mg\\tan\\theta $ supplies the acceleration. Contrast this with the free-sliding block, where $ N = mg\\cos\\theta $ instead — same geometry, completely different condition."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m08",
+       "source": "mcq",
+       "prompt": "Three rigid rods form an equilateral triangle with equal charges fixed at its vertices, the whole system at rest in an inertial frame. The resultant force on the charge at one vertex is",
+       "options": [
+        "along the bisector of that vertex angle",
+        "zero",
+        "directed towards the triangle's centre",
+        "directed away from the triangle's centre"
+       ],
+       "correct_index": 1,
+       "explanation": "The particle is at rest and staying at rest, so by Newton's second law the *net* force on it must be zero. The electrical repulsion from the other two charges is real, but the rods supply exactly compensating forces. The question asks for the resultant, not for the electrical part alone."
+      }
+     ]
+    },
+    {
+     "id": "frames-and-resistance",
+     "title": "Frames, Free Fall and Air Resistance",
+     "blurb": "What changes when the laboratory itself is accelerating.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch05-m09",
+       "source": "mcq",
+       "prompt": "A force $ F_1 $ accelerates a particle from rest to speed $ v $; it is then replaced by $ F_2 $, which brings it back to rest. Then",
+       "options": [
+        "$ F_1 $ must be equal to $ F_2 $",
+        "$ F_1 $ must be unequal to $ F_2 $",
+        "$ F_1 $ may be equal to $ F_2 $",
+        "$ F_1 $ must be greater than $ F_2 $"
+       ],
+       "correct_index": 2,
+       "explanation": "Only the change of momentum is fixed — the same size either way. But impulse is force × time, so a small force acting for a long time does the same job as a large one acting briefly. The two forces are therefore equal only if the two stages take equal times, which nothing here guarantees."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m10",
+       "source": "mcq",
+       "prompt": "Two balls A and B are thrown upward with the same speed; A is heavier. If air resists both with the same constant force, then",
+       "options": [
+        "A goes higher than B",
+        "both reach the same height",
+        "B goes higher than A",
+        "either may go higher, depending on the throw"
+       ],
+       "correct_index": 0,
+       "explanation": "Going up, the retardation is $ g + F/m $. The same resisting force $ F $ divided by a larger mass is a smaller extra deceleration, so the heavier ball is slowed less and climbs higher. Without air both would reach the same height — mass only matters once a mass-independent force like air drag enters."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m11",
+       "source": "mcq",
+       "prompt": "In an imaginary atmosphere the air pushes every particle along its direction of motion with a small force $ F $. A ball thrown upward takes $ t_1 $ to rise and $ t_2 $ to return to the launch point. Then",
+       "options": [
+        "$ t_1 > t_2 $",
+        "$ t_1 < t_2 $",
+        "$ t_1 = t_2 $",
+        "the relation depends on the ball's mass"
+       ],
+       "correct_index": 0,
+       "explanation": "This air *helps* the motion instead of opposing it. Going up, the retardation is only $ g - F/m $, so the ball takes longer to stop. Coming down, the acceleration is $ g + F/m $, so it returns quickly. Hence $ t_1 > t_2 $ — the reverse of ordinary air resistance, which is what makes this worth thinking through rather than recalling."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch05-m12",
+       "source": "mcq",
+       "prompt": "A person in a lift drops a coin. It reaches the floor in time $ t_1 $ when the lift is stationary and $ t_2 $ when the lift moves with constant velocity. Then",
+       "options": [
+        "$ t_1 < t_2 $",
+        "$ t_1 > t_2 $",
+        "the comparison depends on whether the lift rises or descends",
+        "$ t_1 = t_2 $"
+       ],
+       "correct_index": 3,
+       "explanation": "A lift moving at constant velocity is just as inertial as one standing still — no pseudo-force appears. Relative to the lift the coin starts at rest and falls with acceleration $ g $, exactly as before, so the times match. Only if the lift *accelerated* would the effective gravity change."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch05-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Free-body diagram for a block on a smooth incline",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 4 $ kg block slides freely down a smooth incline of $ 30^\\circ $. Find its acceleration and the normal force from the surface. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Choose axes along and perpendicular to the incline — that way the acceleration has only one component.\n\n**Forces on the block.** Its weight $ mg = 40 $ N vertically down, and the normal force $ N $ perpendicular to the surface. The incline is smooth, so there is no friction.\n\n**Resolve the weight.**\n\nAlong the incline (down-slope): $ mg\\sin 30^\\circ = 40(0.5) = 20 $ N\n\nPerpendicular to it: $ mg\\cos 30^\\circ = 40(0.866) = 34.6 $ N\n\n**Perpendicular direction — no acceleration.**\n\n$ N = mg\\cos 30^\\circ = 34.6 $ N\n\n**Along the incline — this is where it accelerates.**\n\n$ ma = mg\\sin 30^\\circ \\Rightarrow a = g\\sin 30^\\circ = 5\\ \\text{m s}^{-2} $, directed down the slope.\n\n**Two things worth noticing.** The acceleration $ g\\sin\\theta $ contains no mass — every block slides down a smooth incline at the same rate, just as every body falls at the same rate. And $ N = 34.6 $ N is *less* than the weight of $ 40 $ N, because the surface only has to balance the perpendicular part of it.\n\n**Watch out:** resolve the *weight* into incline-aligned components, never the normal force into vertical and horizontal ones. Choosing the axes to match the motion is what keeps the algebra to two lines."
+   },
+   {
+    "id": "we-ch05-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Two blocks connected over a pulley",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Masses $ 3 $ kg and $ 5 $ kg hang from the two ends of a light string over a frictionless pulley. Find the acceleration of the system and the tension in the string. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The string is inextensible, so both blocks share the same magnitude of acceleration; the heavier one descends while the lighter rises.\n\n**Write Newton's second law for each block separately.** Take each block's own direction of motion as positive.\n\nFor the $ 5 $ kg block (descending): $ 5g - T = 5a $\n\nFor the $ 3 $ kg block (rising): $ T - 3g = 3a $\n\n**Add the two equations** — the tension cancels, which is the whole point of adding them:\n\n$ 5g - 3g = 8a \\Rightarrow 2(10) = 8a \\Rightarrow a = 2.5\\ \\text{m s}^{-2} $\n\n**Back-substitute for the tension:**\n\n$ T = 3(g + a) = 3(10 + 2.5) = 37.5 $ N\n\n**Check with the other equation:** $ T = 5(g - a) = 5(7.5) = 37.5 $ N ✓\n\n**Sanity check the size of $ T $.** The tension lies between the two weights, $ 30 $ N and $ 50 $ N — it must, since it is too small to hold the heavy block up and more than enough to lift the light one. If your tension ever falls outside that range, you have a sign error.\n\n**Shortcut:** for this classic arrangement, $ a = \\frac{(m_2-m_1)g}{m_1+m_2} $ and $ T = \\frac{2m_1m_2 g}{m_1+m_2} $ — but derive it once as above so you know when it applies."
+   },
+   {
+    "id": "we-ch05-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Apparent weight in a lift",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 60 $ kg person stands on a weighing scale in a lift. What does the scale read when the lift (a) accelerates upward at $ 2\\ \\text{m s}^{-2} $, (b) accelerates downward at $ 2\\ \\text{m s}^{-2} $, and (c) falls freely? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "A scale reads the normal force it pushes up with — not the weight, which never changes.\n\n**(a) Accelerating upward.** Taking up as positive:\n\n$ N - mg = ma \\Rightarrow N = m(g + a) = 60(12) = 720 $ N\n\nThat is $ 72 $ kgf — the person feels heavier, as everyone does when a lift starts up.\n\n**(b) Accelerating downward.**\n\n$ mg - N = ma \\Rightarrow N = m(g - a) = 60(8) = 480 $ N\n\nEquivalent to $ 48 $ kgf — the familiar light-headed feeling as a lift starts down.\n\n**(c) Free fall.** Here $ a = g $:\n\n$ N = m(g - g) = 0 $\n\nThe scale reads zero. This is weightlessness — and note that the person's weight $ mg = 600 $ N is entirely unchanged. What has vanished is the contact force, because floor and person are falling together.\n\n**The pattern to carry away:** $ N = m(g \\pm a) $, plus for upward acceleration, minus for downward. Astronauts in orbit are weightless for exactly this reason — they are in free fall, not beyond gravity's reach."
+   },
+   {
+    "id": "we-ch05-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Connected blocks on a smooth table",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block on a smooth horizontal table is joined by a light string over a pulley at the table's edge to a $ 3 $ kg block hanging freely. Find the acceleration and the string tension. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Both blocks move together with the same acceleration, one horizontally and one vertically.\n\n**The hanging block (taking downward as positive):**\n\n$ 3g - T = 3a $\n\n**The table block (taking its motion as positive).** Its weight and the normal force cancel vertically, so only the tension acts horizontally:\n\n$ T = 2a $\n\n**Substitute the second into the first:**\n\n$ 30 - 2a = 3a \\Rightarrow 30 = 5a \\Rightarrow a = 6\\ \\text{m s}^{-2} $\n\n$ T = 2(6) = 12 $ N\n\n**Check:** for the hanging block, $ 3g - T = 30 - 12 = 18 = 3(6) $ ✓\n\n**Why the tension is not $ 30 $ N.** If the hanging block were simply held still the string would carry its full $ 30 $ N weight. Because it is allowed to accelerate downward, the string need not support all of it — and the tension drops accordingly. Tension equals weight only in equilibrium.\n\n**Shortcut:** treating the two blocks as one system of mass $ 5 $ kg pulled by the unbalanced $ 30 $ N gives $ a = 30/5 = 6\\ \\text{m s}^{-2} $ immediately. Use the system view for the acceleration, then a single block for the internal tension."
+   },
+   {
+    "id": "we-ch05-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Reading a pseudo-force correctly",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A pendulum hangs from the roof of a car accelerating forward at $ 5\\ \\text{m s}^{-2} $. Find the angle its string makes with the vertical. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "There are two equally valid routes. Both must give the same angle.\n\n**Route 1 — ground frame (inertial).** The bob accelerates forward at $ 5\\ \\text{m s}^{-2} $, so the net force on it is forward. Only gravity and tension act.\n\nHorizontal: $ T\\sin\\theta = ma $\n\nVertical: $ T\\cos\\theta = mg $\n\nDividing: $ \\tan\\theta = \\frac{a}{g} = \\frac{5}{10} = 0.5 \\Rightarrow \\theta = 26.6^\\circ $\n\n**Route 2 — car frame (non-inertial).** In the accelerating car the bob hangs still, so the forces must balance — provided we add a pseudo-force $ ma $ pointing *backward*.\n\nHorizontal balance: $ T\\sin\\theta = ma $\n\nVertical balance: $ T\\cos\\theta = mg $\n\nIdentical equations, same answer: $ \\theta = 26.6^\\circ $, with the bob swinging **backward**.\n\n**Watch out:** the pseudo-force points *opposite* to the frame's acceleration. The car accelerates forward, so the pseudo-force acts backward and the bob lags behind — matching everyday experience. Getting this direction backwards is the commonest error in non-inertial problems.\n\n**Note also** that the mass cancels: every pendulum in that car hangs at the same angle, whatever its bob."
+   },
+   {
+    "id": "we-ch05-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Force between blocks pushed together",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two blocks of $ 2 $ kg and $ 3 $ kg sit touching each other on a smooth floor. A horizontal force of $ 10 $ N pushes on the $ 2 $ kg block. Find the acceleration and the contact force between the blocks.",
+    "solution": "**Step 1 — the whole system.** The two blocks move together, so treat them as a single $ 5 $ kg body:\n\n$ a = \\frac{F}{m_{total}} = \\frac{10}{5} = 2\\ \\text{m s}^{-2} $\n\n**Step 2 — one block alone, to expose the internal force.** The neatest choice is the $ 3 $ kg block, since the only horizontal force on it is the contact push $ N $ from its neighbour:\n\n$ N = m a = 3(2) = 6 $ N\n\n**Check using the other block.** On the $ 2 $ kg block: the applied $ 10 $ N forward and the reaction $ N $ backward.\n\n$ 10 - N = 2(2) = 4 \\Rightarrow N = 6 $ N ✓\n\n**Now reverse the push.** Apply the same $ 10 $ N to the $ 3 $ kg block instead. The acceleration is unchanged at $ 2\\ \\text{m s}^{-2} $, but now the contact force must accelerate only the $ 2 $ kg block:\n\n$ N = 2(2) = 4 $ N\n\n**The lesson.** The contact force depends on *which side you push from* — it is whatever is needed to accelerate the blocks ahead of it. Push the light block and the contact force is larger, because it must drag the heavier one along."
+   },
+   {
+    "id": "we-ch05-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Tension varies along a heavy rope",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A uniform rope of mass $ 2 $ kg and length $ 4 $ m hangs from a ceiling with a $ 3 $ kg block tied to its lower end. Find the tension in the rope at its top, at its midpoint, and at the bottom. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Everything is in equilibrium, so at any cut the tension supports whatever hangs below that point.\n\n**At the bottom** (rope-block junction): only the block hangs below.\n\n$ T_{bottom} = 3(10) = 30 $ N\n\n**At the midpoint:** the block plus the lower half of the rope ($ 1 $ kg) hang below.\n\n$ T_{mid} = (3 + 1)(10) = 40 $ N\n\n**At the top:** the block plus the whole rope hang below.\n\n$ T_{top} = (3 + 2)(10) = 50 $ N\n\n**The picture.** Tension increases smoothly from $ 30 $ N at the bottom to $ 50 $ N at the top — the higher you go, the more the rope has to carry. Only for a *light* rope, whose mass we neglect, is tension the same throughout, and that is the assumption doing quiet work in almost every textbook pulley problem.\n\n**Watch out:** this is why a real rope always snaps at the top. When a question says 'a heavy rope' or gives the rope a mass, the uniform-tension shortcut is off the table."
+   },
+   {
+    "id": "we-ch05-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Impulse and momentum change",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 0.2 $ kg ball strikes a wall horizontally at $ 15\\ \\text{m s}^{-1} $ and rebounds at $ 10\\ \\text{m s}^{-1} $. If the contact lasts $ 0.05 $ s, find the average force the wall exerts on the ball.",
+    "solution": "Impulse equals change of momentum — and momentum is a vector, so the reversal of direction is the crux.\n\nTake the initial direction as positive.\n\n$ p_i = (0.2)(+15) = +3\\ \\text{kg m s}^{-1} $\n\n$ p_f = (0.2)(-10) = -2\\ \\text{kg m s}^{-1} $\n\n$ \\Delta p = p_f - p_i = -2 - 3 = -5\\ \\text{kg m s}^{-1} $\n\n$ F_{av} = \\frac{\\Delta p}{\\Delta t} = \\frac{-5}{0.05} = -100 $ N\n\nThe magnitude is $ 100 $ N, directed away from the wall — as it must be.\n\n**Watch out:** using $ 15 - 10 = 5\\ \\text{m s}^{-1} $ as the 'change in speed' gives $ \\Delta p = 1 $ and a force of $ 20 $ N — five times too small. Because the ball reverses, the two momenta have opposite signs and their difference is larger than either.\n\n**Why contact time matters so much.** The same momentum change spread over a longer contact needs a smaller force. That single idea explains airbags, crash barriers, and why a cricketer draws their hands back while catching."
+   },
+   {
+    "id": "we-ch05-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — A block that must not slip on an accelerating wedge",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block rests on a smooth wedge of angle $ 30^\\circ $. What horizontal acceleration must the wedge have so that the block does not slide relative to it? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "With no friction, only two forces act on the block: its weight and the normal force perpendicular to the incline.\n\n**Vertical direction — the block must not accelerate vertically:**\n\n$ N\\cos\\theta = mg $\n\n**Horizontal direction — this is what accelerates it:**\n\n$ N\\sin\\theta = ma $\n\n**Divide the second by the first:**\n\n$ \\tan\\theta = \\frac{a}{g} \\Rightarrow a = g\\tan\\theta = 10\\tan 30^\\circ = 5.77\\ \\text{m s}^{-2} $\n\nThe wedge must accelerate towards the raised side.\n\n**Reading the result.** The mass cancels — any block stays put at this one acceleration. Steeper wedges need larger accelerations, and as $ \\theta \\to 90^\\circ $ the required acceleration runs off to infinity, which makes sense: a vertical wall cannot hold a frictionless block up at all.\n\n**Note the contrast with the free-sliding case.** There $ N = mg\\cos\\theta $; here $ N = mg/\\cos\\theta $, which is *larger* than the weight. Same wedge, same block — different condition, different normal force. Always start from the acceleration you are told about, not from a remembered formula."
+   },
+   {
+    "id": "we-ch05-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Man in a lift pulling himself up",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 50 $ kg man stands on a $ 20 $ kg platform and pulls on a rope that passes over a pulley above and attaches to the platform. With what force must he pull to rise with acceleration $ 1\\ \\text{m s}^{-2} $? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Treat the man and platform as one system of mass $ 70 $ kg, and count only the *external* forces on it.\n\n**The upward forces.** The rope pulls up on the platform with tension $ T $. The man also grips the rope, and the rope pulls up on *him* with the same $ T $. So the system receives $ 2T $ upward.\n\n**The downward force.** The total weight, $ 70(10) = 700 $ N.\n\n**Newton's second law for the system:**\n\n$ 2T - 700 = 70(1)$\n\n$ 2T = 770 \\Rightarrow T = 385 $ N\n\nSo he must pull with $ 385 $ N.\n\n**Why $ 2T $ and not $ T $.** The rope touches the system at two places — his hands and the platform — and pulls up at each. Counting only one is the standard mistake here and doubles the required force.\n\n**Note what is internal.** The force between the man's feet and the platform is internal to the chosen system and cancels out entirely. Choosing the system well is what removes it from the problem; if you needed that contact force, you would then analyse the man alone."
+   },
+   {
+    "id": "we-ch05-11",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 11 — When the string goes slack",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block hangs from a string inside a lift. Find the tension when the lift accelerates downward at (a) $ 4\\ \\text{m s}^{-2} $ and (b) $ 12\\ \\text{m s}^{-2} $. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**(a) Downward acceleration of $ 4\\ \\text{m s}^{-2} $.** Taking downward as positive:\n\n$ mg - T = ma \\Rightarrow T = m(g - a) = 2(10 - 4) = 12 $ N\n\nA sensible positive tension — the string is taut and doing less work than the $ 20 $ N it carries at rest.\n\n**(b) Downward acceleration of $ 12\\ \\text{m s}^{-2} $.** The same formula gives\n\n$ T = 2(10 - 12) = -4 $ N\n\n**Stop — a negative tension is physically impossible.** A string can pull but never push. The negative answer is the algebra's way of saying the assumption behind it has failed.\n\n**What actually happens.** The lift is accelerating downward faster than free fall, so the block cannot keep up while merely hanging. The string goes slack, $ T = 0 $, and the block falls freely at $ g = 10\\ \\text{m s}^{-2} $ while the lift floor rushes up to meet it.\n\n**The general rule.** Whenever a calculation returns a negative tension or a negative normal force, do not report it — recognise that the contact or the string has been lost and redo the problem with that force set to zero."
+   },
+   {
+    "id": "we-ch05-12",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 12 — Three blocks in a chain",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Blocks of $ 1 $ kg, $ 2 $ kg and $ 3 $ kg are joined in that order by light strings on a smooth horizontal floor. A force of $ 12 $ N pulls the $ 1 $ kg block forward. Find the acceleration and the tension in each string.",
+    "solution": "**Acceleration of the whole chain.** Total mass $ = 6 $ kg:\n\n$ a = \\frac{12}{6} = 2\\ \\text{m s}^{-2} $\n\n**Tension in the second string** (between the $ 2 $ kg and $ 3 $ kg blocks). It has to accelerate only the $ 3 $ kg block behind it:\n\n$ T_2 = 3(2) = 6 $ N\n\n**Tension in the first string** (between the $ 1 $ kg and $ 2 $ kg blocks). It must accelerate everything behind it — $ 2 + 3 = 5 $ kg:\n\n$ T_1 = 5(2) = 10 $ N\n\n**Check on the leading block:** $ 12 - T_1 = 12 - 10 = 2 = 1(2) $ ✓\n\n**The pattern.** Tension falls off along the chain — $ 12 $ N applied, then $ 10 $ N, then $ 6 $ N — because each string is responsible for less and less mass. The link nearest the applied force always carries the most, which is why a towing chain breaks at the front.\n\n**Shortcut:** to find the tension anywhere in a chain, add up the mass *behind* that point and multiply by the common acceleration. No simultaneous equations needed."
+   }
+  ]
+ }
+}

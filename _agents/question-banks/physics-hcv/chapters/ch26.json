@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 26,
+ "hcv_title": "Laws of Thermodynamics",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Thermodynamics"
+ },
+ "source_pages": {
+  "worked": "548-551",
+  "obj1": "552"
+ },
+ "notes": "11 Objective I items rebuilt. Four source items refer to p-V and p-T diagrams; each was re-cast with the process described in words (the physics tested — sign of work, path-independence of internal energy — is unchanged).",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch26-thermodynamics",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Laws of Thermodynamics",
+   "intro": "Eleven questions on the first and second laws. The habit to build: internal energy depends only on the state, while heat and work depend on the path.",
+   "sections": [
+    {
+     "id": "first-law",
+     "title": "The First Law",
+     "blurb": "Energy bookkeeping, with signs that must be right.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch26-m01",
+       "source": "mcq",
+       "prompt": "The first law of thermodynamics is a statement of the conservation of",
+       "options": [
+        "heat",
+        "work",
+        "momentum",
+        "energy"
+       ],
+       "correct_index": 3,
+       "explanation": "Written $ \\Delta U = Q - W $, the law says that energy entering as heat either raises the internal energy or leaves as work — none of it vanishes. Heat and work individually are not conserved; they are two channels by which energy moves."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m02",
+       "source": "mcq",
+       "prompt": "If heat is supplied to an ideal gas in an **isothermal** process,",
+       "options": [
+        "its internal energy increases",
+        "the gas does negative work",
+        "the gas does positive work",
+        "the process is impossible"
+       ],
+       "correct_index": 2,
+       "explanation": "An ideal gas's internal energy depends only on temperature, so an isothermal process has $ \\Delta U = 0 $. The first law then gives $ Q = W $ — every joule supplied leaves as work done by the expanding gas. Nothing is stored."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m03",
+       "source": "mcq",
+       "prompt": "A gas is taken from state $ i $ to state $ f $ by two different paths, A and B. Comparing the changes in internal energy,",
+       "options": [
+        "$ \\Delta U_A > \\Delta U_B $",
+        "$ \\Delta U_A = \\Delta U_B $",
+        "$ \\Delta U_A < \\Delta U_B $",
+        "no comparison is possible"
+       ],
+       "correct_index": 1,
+       "explanation": "Internal energy is a *state function* — it depends only on where the system is, never on how it got there. Both paths share the same endpoints, so $ \\Delta U $ is identical. The heat and the work will generally differ between the paths, and their difference is exactly what keeps $ \\Delta U $ the same."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m04",
+       "source": "mcq",
+       "prompt": "Consider: (A) if positive work is done *on* a system, its internal energy must increase; (B) if positive work is done *by* a system, its volume must increase. Then",
+       "options": [
+        "both are correct",
+        "A is correct but B is wrong",
+        "both are wrong",
+        "B is correct but A is wrong"
+       ],
+       "correct_index": 3,
+       "explanation": "B is sound: work done by a gas is $ \\int p\\,dV $, which is positive only when the volume grows. A fails because heat could leave at the same time — compress a gas while cooling it and the internal energy can fall despite the work done on it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m05",
+       "source": "mcq",
+       "prompt": "In a **cyclic** process, over one complete cycle",
+       "options": [
+        "$ \\Delta U = 0 $ and $ Q = 0 $",
+        "$ \\Delta U = 0 $ and $ Q = W $",
+        "$ W = 0 $ and $ Q = \\Delta U $",
+        "all of $ \\Delta U $, $ Q $ and $ W $ vanish"
+       ],
+       "correct_index": 1,
+       "explanation": "A cycle returns the system to its starting state, so every state function — including $ U $ — comes back to its original value and $ \\Delta U = 0 $. The first law then forces $ Q = W $: the net heat absorbed equals the net work done. This is precisely how a heat engine operates."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m06",
+       "source": "mcq",
+       "prompt": "For a gas taken round a cycle **clockwise** on a $ p $-$ V $ diagram, the net work done by the gas is",
+       "options": [
+        "positive, equal to the enclosed area",
+        "negative, equal to the enclosed area",
+        "zero",
+        "equal to the change in internal energy"
+       ],
+       "correct_index": 0,
+       "explanation": "Work is the area under the curve, taken with sign. Going clockwise, the expansion happens at higher pressure than the compression, so the positive contribution wins and the net work equals the enclosed area. An anticlockwise cycle gives negative net work — which is what a refrigerator does."
+      }
+     ]
+    },
+    {
+     "id": "processes",
+     "title": "Particular Processes",
+     "blurb": "Isothermal, adiabatic, isobaric, isochoric — each kills a different term.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch26-m07",
+       "source": "mcq",
+       "prompt": "In an **adiabatic** expansion of an ideal gas,",
+       "options": [
+        "the temperature rises",
+        "the temperature is unchanged",
+        "the temperature falls",
+        "the internal energy is unchanged"
+       ],
+       "correct_index": 2,
+       "explanation": "Adiabatic means $ Q = 0 $, so the first law gives $ \\Delta U = -W $. An expanding gas does positive work, so its internal energy — and therefore its temperature — must fall. This is why a gas escaping from a cylinder feels cold, and why air cools as it rises and expands."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m08",
+       "source": "mcq",
+       "prompt": "In an **isochoric** (constant-volume) process, the heat supplied goes entirely into",
+       "options": [
+        "the internal energy",
+        "work done by the gas",
+        "both equally",
+        "neither"
+       ],
+       "correct_index": 0,
+       "explanation": "With the volume fixed, $ W = \\int p\\,dV = 0 $, so the first law reduces to $ Q = \\Delta U $. Every joule supplied raises the internal energy. This is exactly why $ C_V $ — measured at constant volume — is the specific heat that connects directly to internal energy."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m09",
+       "source": "mcq",
+       "prompt": "Why is $ C_P $ greater than $ C_V $ for a gas?",
+       "options": [
+        "Because pressure raises the internal energy",
+        "Because at constant pressure the gas must also do work as it expands",
+        "Because the gas is denser at constant pressure",
+        "Because heat flows faster at constant pressure"
+       ],
+       "correct_index": 1,
+       "explanation": "At constant volume all the heat raises the internal energy. At constant pressure the gas expands, so some heat is spent doing work against the surroundings — meaning more heat is needed for the same temperature rise. The extra amount is exactly $ R $ per mole, which is Mayer's relation $ C_P - C_V = R $."
+      }
+     ]
+    },
+    {
+     "id": "second-law",
+     "title": "The Second Law and Engines",
+     "blurb": "What the first law permits but nature refuses.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch26-m10",
+       "source": "mcq",
+       "prompt": "A heat engine working between $ 400 $ K and $ 300 $ K has a maximum possible efficiency of",
+       "options": [
+        "$ 33\\% $",
+        "$ 75\\% $",
+        "$ 25\\% $",
+        "$ 100\\% $"
+       ],
+       "correct_index": 2,
+       "explanation": "The Carnot limit is $ \\eta = 1 - T_c/T_h = 1 - 300/400 = 0.25 $, so $ 25\\% $. Note both temperatures must be absolute, and that no engine — however cleverly built — can beat this figure between those two reservoirs."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch26-m11",
+       "source": "mcq",
+       "prompt": "An engine that converts heat from a single reservoir entirely into work is forbidden by",
+       "options": [
+        "the second law",
+        "the first law",
+        "both laws",
+        "neither — it is merely difficult to build"
+       ],
+       "correct_index": 0,
+       "explanation": "Such a machine conserves energy perfectly, so the first law has no objection. It is the second law that forbids it: some heat must always be rejected to a colder reservoir. This is the Kelvin-Planck statement, and it is why waste heat is unavoidable rather than an engineering failing."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch26-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Applying the first law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A gas absorbs $ 500 $ J of heat and does $ 200 $ J of work on its surroundings. Find the change in its internal energy. What if instead $ 200 $ J of work were done *on* the gas?",
+    "solution": "**Case 1 — the gas does the work.**\n\n$ \\Delta U = Q - W = 500 - 200 = 300\\ \\text{J} $\n\nThe internal energy rises by $ 300 $ J — some of the heat was spent expanding.\n\n**Case 2 — work is done on the gas.** Now $ W = -200 $ J:\n\n$ \\Delta U = 500 - (-200) = 700\\ \\text{J} $\n\n**The sign convention that matters.** In $ \\Delta U = Q - W $:\n\n$ Q > 0 $ — heat *into* the system\n\n$ W > 0 $ — work done *by* the system\n\n**Watch out:** chemists often write $ \\Delta U = Q + W $ with $ W $ meaning work done *on* the system. Both conventions are correct and give the same physics, but mixing them mid-problem guarantees a wrong sign. Decide which you are using and state it."
+   },
+   {
+    "id": "we-ch26-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Work done in an isothermal expansion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two moles of an ideal gas expand isothermally at $ 300 $ K from $ 10 $ litres to $ 20 $ litres. Find the work done and the heat absorbed.",
+    "solution": "For an isothermal process the pressure varies, so the work must be integrated:\n\n$ W = nRT\\ln\\left(\\frac{V_2}{V_1}\\right) $\n\n$ = 2(8.31)(300)\\ln(2) = 4986 \\times 0.693 = 3455\\ \\text{J} $\n\n**Heat absorbed.** Since the temperature is constant and the gas is ideal, $ \\Delta U = 0 $, so\n\n$ Q = W = 3455\\ \\text{J} $\n\n**Every joule of heat left as work** — nothing was stored.\n\n**Why the logarithm appears.** Substituting $ p = nRT/V $ into $ W = \\int p\\,dV $ gives $ \\int \\frac{dV}{V} $, whose integral is a logarithm. Using $ W = p\\Delta V $ with some 'average' pressure is only a rough approximation and is not valid here.\n\n**A useful sanity check.** Doubling the volume gives $ \\ln 2 $; quadrupling it gives $ \\ln 4 = 2\\ln 2 $ — twice the work, not four times. Logarithmic growth means each successive doubling costs the same."
+   },
+   {
+    "id": "we-ch26-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Adiabatic process",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An ideal monatomic gas ($ \\gamma = 5/3 $) at $ 300 $ K is compressed adiabatically to one eighth of its volume. Find the final temperature.",
+    "solution": "For an adiabatic process, $ TV^{\\gamma-1} = $ constant, so\n\n$ T_1 V_1^{\\gamma-1} = T_2 V_2^{\\gamma-1} $\n\n$ T_2 = T_1\\left(\\frac{V_1}{V_2}\\right)^{\\gamma-1} = 300 \\times (8)^{2/3} $\n\n$ (8)^{2/3} = (8^{1/3})^{2} = 2^{2} = 4 $\n\n$ T_2 = 300 \\times 4 = 1200\\ \\text{K} $\n\n**A dramatic rise** — the temperature quadruples with no heat added at all. All the energy came from the work done compressing the gas.\n\n**Where this shows up.** A diesel engine has no spark plug: it compresses air about 20-fold, raising it well above the fuel's ignition temperature. A bicycle pump warms for the same reason.\n\n**The three adiabatic relations, and when to use which.**\n\n$ pV^{\\gamma} = $ const — when pressure and volume are given\n\n$ TV^{\\gamma-1} = $ const — when temperature and volume are given\n\n$ p^{1-\\gamma}T^{\\gamma} = $ const — when pressure and temperature are given\n\nAll three are the same statement; pick the one whose variables match the question."
+   },
+   {
+    "id": "we-ch26-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Work in a cyclic process",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A gas is taken clockwise round a rectangular cycle on a $ p $-$ V $ diagram between pressures $ 1 \\times 10^{5} $ and $ 3 \\times 10^{5} $ Pa and volumes $ 2 $ and $ 5 $ litres. Find the net work done per cycle and the net heat absorbed.",
+    "solution": "**Net work is the enclosed area.** For a rectangle,\n\n$ W = \\Delta p \\times \\Delta V = (3 \\times 10^{5} - 1 \\times 10^{5}) \\times (5 - 2) \\times 10^{-3} $\n\n$ = (2 \\times 10^{5})(3 \\times 10^{-3}) = 600\\ \\text{J} $\n\nThe cycle is clockwise, so the work is **positive** — the gas does $ 600 $ J of net work on its surroundings.\n\n**Net heat.** Over a complete cycle $ \\Delta U = 0 $, so the first law gives\n\n$ Q = W = 600\\ \\text{J} $\n\n**What is happening around the loop.** The gas expands at the higher pressure (doing $ 900 $ J) and is compressed at the lower pressure (absorbing $ 300 $ J), netting $ 600 $ J. The two constant-volume legs do no work at all.\n\n**Reading the direction.** Clockwise means net work out — an engine. Anticlockwise means net work in and heat pumped from cold to hot — a refrigerator. The area is the same either way; only the sign changes."
+   },
+   {
+    "id": "we-ch26-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Efficiency of a Carnot engine",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A Carnot engine works between $ 500 $ K and $ 300 $ K, absorbing $ 1000 $ J per cycle from the hot reservoir. Find its efficiency, the work done and the heat rejected.",
+    "solution": "**Efficiency:**\n\n$ \\eta = 1 - \\frac{T_c}{T_h} = 1 - \\frac{300}{500} = 0.40 $, i.e. $ 40\\% $\n\n**Work per cycle:**\n\n$ W = \\eta Q_h = 0.40 \\times 1000 = 400\\ \\text{J} $\n\n**Heat rejected:**\n\n$ Q_c = Q_h - W = 1000 - 400 = 600\\ \\text{J} $\n\n**Check with the temperature ratio.** For a Carnot cycle $ \\frac{Q_c}{Q_h} = \\frac{T_c}{T_h} $:\n\n$ \\frac{600}{1000} = 0.6 = \\frac{300}{500} $ ✓\n\n**Why 60% must be thrown away.** It is not friction or poor design — the second law requires heat to be rejected to the cold reservoir. The only routes to higher efficiency are a hotter source or a colder sink, and the sink is usually the atmosphere.\n\n**Why real engines fall short.** A Carnot cycle needs infinitely slow, reversible steps. A real petrol engine between the same temperatures might reach $ 25\\% $ — the Carnot figure is a ceiling, not a target."
+   },
+   {
+    "id": "we-ch26-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Refrigerator and coefficient of performance",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A refrigerator maintains its interior at $ 273 $ K while the room is at $ 303 $ K. Find its maximum coefficient of performance and the work needed to remove $ 600 $ J of heat.",
+    "solution": "**Coefficient of performance** for an ideal (reversed Carnot) refrigerator:\n\n$ \\text{COP} = \\frac{T_c}{T_h - T_c} = \\frac{273}{303 - 273} = \\frac{273}{30} = 9.1 $\n\n**Work required:**\n\n$ W = \\frac{Q_c}{\\text{COP}} = \\frac{600}{9.1} = 66\\ \\text{J} $\n\n**More heat moved than work supplied** — nine times as much. A COP above 1 is perfectly normal and does not violate anything, because the refrigerator is *moving* heat rather than creating it.\n\n**Heat dumped into the room:**\n\n$ Q_h = Q_c + W = 600 + 66 = 666\\ \\text{J} $\n\nSo running a fridge with its door open warms the room.\n\n**Why the COP collapses for a large temperature difference.** As $ T_h - T_c $ grows the denominator grows, so efficiency falls. A freezer at $ 253 $ K in the same room has COP $ = 253/50 = 5.1 $ — nearly half as efficient, which is exactly why deep-freezing costs disproportionately more."
+   },
+   {
+    "id": "we-ch26-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Comparing work along different paths",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A gas expands from $ (1 \\times 10^{5}\\ \\text{Pa},\\ 2\\ \\text{L}) $ to $ (0.5 \\times 10^{5}\\ \\text{Pa},\\ 4\\ \\text{L}) $ by two routes: (a) expand at constant pressure then drop the pressure at constant volume, and (b) drop the pressure first, then expand. Find the work in each case.",
+    "solution": "**Route (a) — expand first at $ 1 \\times 10^{5} $ Pa, then depressurise.**\n\nExpansion: $ W = p\\Delta V = (1 \\times 10^{5})(2 \\times 10^{-3}) = 200\\ \\text{J} $\n\nPressure drop at constant volume: $ W = 0 $\n\n**Total: $ 200 $ J**\n\n**Route (b) — depressurise first, then expand at $ 0.5 \\times 10^{5} $ Pa.**\n\nPressure drop at constant volume: $ W = 0 $\n\nExpansion: $ W = (0.5 \\times 10^{5})(2 \\times 10^{-3}) = 100\\ \\text{J} $\n\n**Total: $ 100 $ J**\n\n**Same endpoints, different work.** Work is a *path* function — it is the area under the particular curve followed, and the two routes enclose different areas.\n\n**But $ \\Delta U $ is identical for both**, since it depends only on the endpoints. The first law then requires the *heat* to differ too: route (a) must absorb $ 100 $ J more than route (b). Neither $ Q $ nor $ W $ is a state function; only their difference is."
+   },
+   {
+    "id": "we-ch26-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Free expansion of a gas",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An ideal gas expands into a vacuum inside a rigid, insulated container. Find $ Q $, $ W $, $ \\Delta U $ and the temperature change.",
+    "solution": "Take each term in turn.\n\n**Heat:** the container is insulated, so $ Q = 0 $.\n\n**Work:** the gas expands against *nothing* — there is no opposing pressure — so $ W = \\int p_{ext}dV = 0 $.\n\n**Internal energy:** the first law gives\n\n$ \\Delta U = Q - W = 0 - 0 = 0 $\n\n**Temperature:** for an ideal gas $ U $ depends only on $ T $, so $ \\Delta T = 0 $. The gas does not cool.\n\n**Contrast this with an adiabatic expansion.** There the gas pushes a piston, does positive work, and cools. Here it pushes nothing, so it does no work and its temperature holds.\n\n**Why a *real* gas does cool slightly.** Real molecules attract one another, so separating them costs potential energy, drawn from the kinetic store. That is the Joule-Thomson effect, and it is the basis of gas liquefaction — a reminder that 'ideal gas' results can fail in exactly the interesting cases.\n\n**One more point.** This expansion is irreversible: the gas will never spontaneously crowd back into half the container. Entropy has increased even though $ Q = 0 $, which is why entropy needs the *reversible* heat in its definition."
+   }
+  ]
+ }
+}

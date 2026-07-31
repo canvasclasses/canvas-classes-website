@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 39,
+ "hcv_title": "Alternating Current",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Alternating Current"
+ },
+ "source_pages": {
+  "worked": "818-819",
+  "obj1": "820"
+ },
+ "notes": "Short source chapter — 9 Objective I items, all rebuilt, topped up to 10 with a resonance item. One source item asks which of four curves shows reactance against frequency; re-cast as a question about how each reactance varies.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch39-ac",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Alternating Current",
+   "intro": "Ten questions on a.c. circuits. The recurring idea: reactance depends on frequency, and that single fact drives filters, resonance and transformers alike.",
+   "sections": [
+    {
+     "id": "reactance-and-impedance",
+     "title": "Reactance and Impedance",
+     "blurb": "Capacitors block low frequencies; inductors block high ones.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch39-m01",
+       "source": "mcq",
+       "prompt": "A capacitor acts as an infinite resistance for",
+       "options": [
+        "a.c.",
+        "both d.c. and a.c.",
+        "neither",
+        "d.c."
+       ],
+       "correct_index": 3,
+       "explanation": "Capacitive reactance is $ X_C = 1/\\omega C $, which becomes infinite as $ \\omega \\to 0 $. So a capacitor blocks d.c. completely while passing a.c. — the higher the frequency the more freely. This is why capacitors are used to block d.c. while coupling a signal through."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch39-m02",
+       "source": "mcq",
+       "prompt": "As the frequency rises, the reactances of an inductor and a capacitor respectively",
+       "options": [
+        "fall and rise",
+        "both rise",
+        "both fall",
+        "rise and fall"
+       ],
+       "correct_index": 3,
+       "explanation": "$ X_L = \\omega L $ grows in proportion to frequency, while $ X_C = 1/\\omega C $ falls inversely. They cross at the resonant frequency, where they cancel. This opposite behaviour is exactly what makes frequency-selective circuits possible."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch39-m03",
+       "source": "mcq",
+       "prompt": "A series a.c. circuit has resistance $ 4\\ \\Omega $ and reactance $ 3\\ \\Omega $. Its impedance is",
+       "options": [
+        "$ 7\\ \\Omega $",
+        "$ 12/7\\ \\Omega $",
+        "$ 5\\ \\Omega $",
+        "$ 7/12\\ \\Omega $"
+       ],
+       "correct_index": 2,
+       "explanation": "Resistance and reactance are $ 90^\\circ $ out of phase, so they combine as perpendicular vectors: $ Z = \\sqrt{R^{2}+X^{2}} = \\sqrt{16+9} = 5\\ \\Omega $. Adding them arithmetically to get $ 7\\ \\Omega $ ignores the phase difference and is the standard error."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch39-m04",
+       "source": "mcq",
+       "prompt": "An a.c. source producing $ E = E_0[\\cos(100\\pi t) + \\cos(500\\pi t)] $ drives a series $ RC $ circuit, giving currents of amplitude $ i_1 $ and $ i_2 $ at the two frequencies. Then",
+       "options": [
+        "$ i_1 < i_2 $",
+        "$ i_1 > i_2 $",
+        "$ i_1 = i_2 $",
+        "the information is insufficient"
+       ],
+       "correct_index": 0,
+       "explanation": "The higher frequency meets a smaller capacitive reactance, hence a smaller impedance, hence a larger current. Since $ 500\\pi > 100\\pi $, we get $ i_2 > i_1 $. An $ RC $ circuit therefore passes high frequencies preferentially — a high-pass filter."
+      }
+     ]
+    },
+    {
+     "id": "rms-and-peak",
+     "title": "RMS and Peak Values",
+     "blurb": "What a meter reads, and what the insulation must withstand.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch39-m05",
+       "source": "mcq",
+       "prompt": "The peak voltage of a $ 220 $ V a.c. supply is about",
+       "options": [
+        "$ 310 $ V",
+        "$ 220 $ V",
+        "$ 160 $ V",
+        "$ 440 $ V"
+       ],
+       "correct_index": 0,
+       "explanation": "Quoted a.c. voltages are rms values, and $ V_0 = \\sqrt{2}\\,V_{rms} = 1.414 \\times 220 \\approx 311 $ V. Insulation has to survive the *peak*, not the rms, which is why this distinction matters practically as well as numerically."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch39-m06",
+       "source": "mcq",
+       "prompt": "The rms value of the current $ i = i_0\\sin\\omega t $ is",
+       "options": [
+        "$ i_0/\\sqrt{2} $",
+        "$ i_0 $",
+        "$ 2i_0/\\pi $",
+        "zero"
+       ],
+       "correct_index": 0,
+       "explanation": "Averaging $ i^{2} $ over a cycle gives $ i_0^{2}/2 $, whose square root is $ i_0/\\sqrt{2} \\approx 0.707 i_0 $. The rms value is defined this way precisely so that $ i_{rms}^{2}R $ gives the true average power — the *mean* current over a cycle is zero and would be useless."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch39-m07",
+       "source": "mcq",
+       "prompt": "The average power consumed in a **purely inductive** a.c. circuit over a full cycle is",
+       "options": [
+        "$ V_{rms}i_{rms} $",
+        "zero",
+        "$ V_{rms}i_{rms}/2 $",
+        "$ i_{rms}^{2}X_L $"
+       ],
+       "correct_index": 1,
+       "explanation": "Current and voltage are exactly $ 90^\\circ $ out of phase in a pure inductor, so the power factor $ \\cos\\phi $ is zero. Energy flows into the magnetic field for a quarter cycle and back out the next — a 'wattless' current. Only resistance dissipates energy."
+      }
+     ]
+    },
+    {
+     "id": "transformers-resonance",
+     "title": "Transformers and Resonance",
+     "blurb": "Two applications that only a.c. makes possible.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch39-m08",
+       "source": "mcq",
+       "prompt": "Transformers are used",
+       "options": [
+        "in d.c. circuits only",
+        "in a.c. circuits only",
+        "in both a.c. and d.c. circuits",
+        "in neither"
+       ],
+       "correct_index": 1,
+       "explanation": "A transformer works by mutual induction, which requires a *changing* flux. Steady d.c. gives $ di/dt = 0 $ and induces nothing in the secondary. This inability to transform d.c. voltages is the reason electrical grids worldwide are a.c."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch39-m09",
+       "source": "mcq",
+       "prompt": "A step-up transformer raises the voltage. Ignoring losses, the current in the secondary compared with the primary is",
+       "options": [
+        "larger",
+        "the same",
+        "smaller",
+        "zero"
+       ],
+       "correct_index": 2,
+       "explanation": "Power is conserved, so $ V_p i_p = V_s i_s $ — raising the voltage must lower the current in proportion. This is why power is transmitted at high voltage: the same power travels as a smaller current, and $ i^{2}R $ losses in the cables fall as the square."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch39-m10",
+       "source": "mcq",
+       "prompt": "At resonance in a series $ LCR $ circuit,",
+       "options": [
+        "the impedance is maximum",
+        "the impedance is minimum and equals $ R $",
+        "the current is minimum",
+        "the power factor is zero"
+       ],
+       "correct_index": 1,
+       "explanation": "At $ \\omega = 1/\\sqrt{LC} $ the two reactances cancel, leaving only $ R $. Impedance is therefore least, current greatest, and the power factor exactly 1 — voltage and current in phase. A *parallel* $ LCR $ circuit does the opposite, which is why it is used to reject a frequency rather than select it."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch39-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — RMS and peak values",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An a.c. supply is $ V = 311\\sin(314t) $ volts. Find the rms voltage, the frequency and the period.",
+    "solution": "**Peak voltage:** $ V_0 = 311 $ V\n\n**RMS voltage:**\n\n$ V_{rms} = \\frac{V_0}{\\sqrt{2}} = \\frac{311}{1.414} = 220\\ \\text{V} $\n\n**Angular frequency:** $ \\omega = 314\\ \\text{rad s}^{-1} $, so\n\n$ f = \\frac{\\omega}{2\\pi} = \\frac{314}{6.28} = 50\\ \\text{Hz} $\n\n**Period:** $ T = 1/50 = 0.02 $ s\n\n**These are exactly the Indian mains values** — $ 220 $ V rms at $ 50 $ Hz, with a peak of $ 311 $ V.\n\n**Why rms is the useful measure.** It is the d.c. value that would deliver the same average power. A $ 220 $ V a.c. supply heats a resistor exactly as a $ 220 $ V battery would, even though its instantaneous voltage swings between $ \\pm 311 $ V and passes through zero a hundred times a second."
+   },
+   {
+    "id": "we-ch39-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Impedance of a series LCR circuit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A series circuit has $ R = 30\\ \\Omega $, $ L = 0.2 $ H and $ C = 50\\ \\mu\\text{F} $, driven at $ 50 $ Hz. Find the impedance and the current for a $ 220 $ V supply.",
+    "solution": "**Angular frequency:** $ \\omega = 2\\pi(50) = 314\\ \\text{rad s}^{-1} $\n\n**Inductive reactance:**\n\n$ X_L = \\omega L = (314)(0.2) = 62.8\\ \\Omega $\n\n**Capacitive reactance:**\n\n$ X_C = \\frac{1}{\\omega C} = \\frac{1}{(314)(50 \\times 10^{-6})} = \\frac{1}{0.0157} = 63.7\\ \\Omega $\n\n**Impedance:**\n\n$ Z = \\sqrt{R^{2} + (X_L - X_C)^{2}} = \\sqrt{900 + (62.8-63.7)^{2}} = \\sqrt{900 + 0.81} = 30.0\\ \\Omega $\n\n**Current:**\n\n$ i_{rms} = \\frac{220}{30.0} = 7.33\\ \\text{A} $\n\n**Note how nearly the reactances cancelled.** $ X_L $ and $ X_C $ differ by less than $ 1\\ \\Omega $, so this circuit is almost exactly at resonance — and the impedance has collapsed to essentially $ R $ alone.\n\n**The subtraction, not addition, is the key point.** $ X_L $ and $ X_C $ are $ 180^\\circ $ out of phase with each other, so they oppose. Adding them to get $ 126\\ \\Omega $ would give a badly wrong impedance."
+   },
+   {
+    "id": "we-ch39-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Resonance",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "For the circuit above ($ R = 30\\ \\Omega $, $ L = 0.2 $ H, $ C = 50\\ \\mu\\text{F} $), find the resonant frequency and the current at resonance on a $ 220 $ V supply.",
+    "solution": "**Resonant frequency:**\n\n$ f_0 = \\frac{1}{2\\pi\\sqrt{LC}} = \\frac{1}{2\\pi\\sqrt{(0.2)(50 \\times 10^{-6})}} $\n\n$ = \\frac{1}{2\\pi\\sqrt{10^{-5}}} = \\frac{1}{2\\pi(3.162 \\times 10^{-3})} = \\frac{1}{0.01986} = 50.3\\ \\text{Hz} $\n\n**At resonance** the reactances cancel exactly, so $ Z = R = 30\\ \\Omega $:\n\n$ i = \\frac{220}{30} = 7.33\\ \\text{A} $\n\n**Why the answer barely changed from the previous example.** The supply was already at $ 50 $ Hz, essentially the resonant frequency — which is why the reactances nearly cancelled there.\n\n**The voltages across L and C at resonance are remarkable.**\n\n$ V_L = i X_L = (7.33)(63.2) = 463\\ \\text{V} $\n\n$ V_C = i X_C = 463\\ \\text{V} $\n\nBoth exceed the $ 220 $ V supply — and they cancel each other exactly, being $ 180^\\circ $ apart. This voltage magnification is real and can destroy components, which is why resonance in power circuits is something to design around rather than towards."
+   },
+   {
+    "id": "we-ch39-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Power factor and real power",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A circuit draws $ 5 $ A rms from a $ 220 $ V supply with a phase difference of $ 60^\\circ $ between voltage and current. Find the apparent power, the real power and the power factor.",
+    "solution": "**Apparent power:**\n\n$ S = V_{rms}i_{rms} = (220)(5) = 1100\\ \\text{VA} $\n\n**Power factor:**\n\n$ \\cos\\phi = \\cos 60^\\circ = 0.5 $\n\n**Real power** — what the meter actually charges for:\n\n$ P = V_{rms}i_{rms}\\cos\\phi = (1100)(0.5) = 550\\ \\text{W} $\n\n**Why the difference matters commercially.** The supply cables must carry the full $ 5 $ A and suffer $ i^{2}R $ losses accordingly, but only half the apparent power does useful work. Industrial consumers are therefore penalised for a poor power factor.\n\n**How it is corrected.** Most industrial loads are inductive (motors), so banks of capacitors are connected in parallel to pull the phase back towards zero. Bringing $ \\cos\\phi $ from $ 0.5 $ to $ 0.95 $ nearly halves the current needed for the same real power.\n\n**The two extremes.** A pure resistor has $ \\cos\\phi = 1 $ and wastes nothing; a pure inductor or capacitor has $ \\cos\\phi = 0 $ and consumes no real power at all."
+   },
+   {
+    "id": "we-ch39-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Transformer",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A transformer steps $ 220 $ V down to $ 11 $ V to run a $ 44 $ W lamp. Find the turns ratio and the primary current, assuming no losses.",
+    "solution": "**Turns ratio:**\n\n$ \\frac{N_s}{N_p} = \\frac{V_s}{V_p} = \\frac{11}{220} = \\frac{1}{20} $\n\nSo the primary has twenty times as many turns.\n\n**Secondary current:**\n\n$ i_s = \\frac{P}{V_s} = \\frac{44}{11} = 4\\ \\text{A} $\n\n**Primary current**, from power conservation:\n\n$ i_p = \\frac{P}{V_p} = \\frac{44}{220} = 0.2\\ \\text{A} $\n\n**Check the current ratio:** $ i_p/i_s = 0.2/4 = 1/20 $ — the inverse of the voltage ratio, as it must be ✓\n\n**Why voltage down means current up.** The transformer conserves power, not current. Stepping voltage down by 20 steps current up by 20, which is why the low-voltage secondary needs much thicker wire than the primary.\n\n**Where the losses actually are.** Real transformers reach $ 95$–$99\\% $ efficiency, losing energy to copper resistance ($ i^{2}R $), hysteresis in the core, and eddy currents — the last being why cores are laminated."
+   },
+   {
+    "id": "we-ch39-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Choke coil versus resistor",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 100 $ V, $ 50 $ Hz supply must be reduced to run a lamp needing $ 60 $ V at $ 0.5 $ A. Compare using (a) a series resistor and (b) a series inductor, on grounds of wasted power.",
+    "solution": "**(a) Series resistor.** It must drop $ 40 $ V at $ 0.5 $ A:\n\n$ R = \\frac{40}{0.5} = 80\\ \\Omega $\n\nPower wasted: $ P = i^{2}R = (0.25)(80) = 20\\ \\text{W} $ — dissipated as heat.\n\n**(b) Series inductor.** Voltage and current are $ 90^\\circ $ out of phase, so voltages combine as perpendicular vectors:\n\n$ V_L = \\sqrt{100^{2} - 60^{2}} = \\sqrt{10\\,000 - 3600} = \\sqrt{6400} = 80\\ \\text{V} $\n\n$ X_L = \\frac{80}{0.5} = 160\\ \\Omega $, so $ L = \\frac{160}{314} = 0.51\\ \\text{H} $\n\nPower wasted: **zero** (for an ideal inductor).\n\n**Note the difference in how the voltages combine.** With a resistor they add arithmetically ($ 60 + 40 = 100 $); with an inductor they add in quadrature ($ \\sqrt{60^{2}+80^{2}} = 100 $). That is why the inductor must drop $ 80 $ V, not $ 40 $ V.\n\n**Why chokes are used in practice.** A fluorescent tube uses exactly this — a choke rather than a resistor — precisely to avoid wasting the $ 20 $ W as heat. The catch is that a choke worsens the power factor, which is why such fittings often include a correcting capacitor."
+   },
+   {
+    "id": "we-ch39-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Phase relationships in single-element circuits",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "State and account for the phase relation between voltage and current for (a) a pure resistor, (b) a pure inductor and (c) a pure capacitor.",
+    "solution": "**(a) Resistor — in phase.** Ohm's law $ v = iR $ holds instantaneously, so current peaks exactly when voltage does. Phase difference: $ 0 $.\n\n**(b) Inductor — current lags by $ 90^\\circ $.** Since $ v = L\\,di/dt $, the voltage is largest when the *rate of change* of current is largest, which is when the current itself is zero. The current therefore trails a quarter cycle behind.\n\n**(c) Capacitor — current leads by $ 90^\\circ $.** Since $ i = C\\,dv/dt $, the current is largest when the voltage is changing fastest — again at the voltage's zero crossing. Here the current runs a quarter cycle ahead.\n\n**The mnemonic.** In a **CIVIL** circuit: in **C**, **I** leads **V**; in **V**, **I** lags in **L**.\n\n**Why only the resistor consumes power.** Average power is $ V_{rms}i_{rms}\\cos\\phi $, and $ \\cos 90^\\circ = 0 $. Inductors and capacitors store energy for a quarter cycle and return it the next, so their net consumption over a full cycle is nil."
+   },
+   {
+    "id": "we-ch39-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — LC oscillations",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 20\\ \\mu\\text{F} $ capacitor charged to $ 100 $ V is connected across a $ 5 $ mH inductor. Find the frequency of oscillation and the maximum current.",
+    "solution": "**Frequency:**\n\n$ f = \\frac{1}{2\\pi\\sqrt{LC}} = \\frac{1}{2\\pi\\sqrt{(5 \\times 10^{-3})(20 \\times 10^{-6})}} $\n\n$ = \\frac{1}{2\\pi\\sqrt{10^{-7}}} = \\frac{1}{2\\pi(3.162 \\times 10^{-4})} = 503\\ \\text{Hz} $\n\n**Maximum current.** Energy shuttles entirely between the capacitor and the inductor:\n\n$ \\frac{1}{2}CV^{2} = \\frac{1}{2}Li_{max}^{2} $\n\n$ i_{max} = V\\sqrt{\\frac{C}{L}} = 100\\sqrt{\\frac{20 \\times 10^{-6}}{5 \\times 10^{-3}}} = 100\\sqrt{4 \\times 10^{-3}} $\n\n$ = 100(0.0632) = 6.32\\ \\text{A} $\n\n**The mechanical analogy is exact.** Charge plays the part of displacement, current of velocity, $ 1/C $ of the spring constant and $ L $ of the mass. The capacitor's energy is 'potential', the inductor's 'kinetic', and the total is conserved.\n\n**Why real oscillations die away.** Any resistance dissipates energy, giving a damped oscillation — precisely analogous to a mass on a spring with friction. An ideal $ LC $ circuit would ring forever."
+   }
+  ]
+ }
+}

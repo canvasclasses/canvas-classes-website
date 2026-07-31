@@ -158,3 +158,4 @@ html_output.txt
 # The extracted per-chapter _ncert_source.txt files stay tracked; only the raw
 # PDFs are ignored. Untracked 2026-07-19; local copies retained on disk.
 **/_ncert_pdfs/*.pdf
+.scratch/

@@ -1,0 +1,349 @@
+{
+ "hcv_chapter": 3,
+ "hcv_title": "Rest and Motion: Kinematics",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Motion in a Straight Line + Motion in a Plane (projectile, relative velocity)"
+ },
+ "source_pages": {
+  "worked": "55-62",
+  "obj1": "63-64"
+ },
+ "notes": "13 Objective I items rebuilt. Two source items depend on a printed figure (a displacement-time graph and a pulley-string arrangement); both were re-cast into wholly verbal equivalents that test the same idea, so the bank needs no diagrams.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch03-kinematics",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Kinematics",
+   "intro": "Thirteen questions on motion in a line and in a plane. Several look like they need algebra but fall to one clean idea instead.",
+   "sections": [
+    {
+     "id": "straight-line-motion",
+     "title": "Motion in a Straight Line",
+     "blurb": "Speed versus velocity, averages, and reading motion off a graph.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch03-m01",
+       "source": "mcq",
+       "prompt": "A cyclist travelling east at $ 30 $ km/h takes a $ 90^\\circ $ right turn without changing speed. The magnitude and direction of the change in velocity is about",
+       "options": [
+        "$ 42 $ km/h towards south-west",
+        "$ 30 $ km/h towards south",
+        "$ 60 $ km/h towards south-west",
+        "zero"
+       ],
+       "correct_index": 0,
+       "explanation": "A right turn from east points the cyclist south. Change in velocity is $ \\vec{v}_f - \\vec{v}_i $, which here is $ 30 $ south *minus* $ 30 $ east — equivalently $ 30 $ south plus $ 30 $ west. Those combine to $ 30\\sqrt{2} \\approx 42 $ km/h pointing south-west. The speed never changed, but the velocity certainly did."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m02",
+       "source": "mcq",
+       "prompt": "The displacement-time graph of a particle is a straight line parallel to the time axis. The particle",
+       "options": [
+        "moves with constant non-zero velocity",
+        "is at rest",
+        "moves with constant acceleration",
+        "moves with increasing speed"
+       ],
+       "correct_index": 1,
+       "explanation": "Velocity is the slope of a displacement-time graph. A line parallel to the time axis has zero slope everywhere, so the velocity is zero at every instant — the particle sits still while time passes. A constant non-zero velocity would give a sloping straight line instead."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m03",
+       "source": "mcq",
+       "prompt": "A particle has velocity $ u $ towards east at $ t = 0 $ and a constant acceleration towards west. Let $ x_A $ and $ x_B $ be the magnitudes of its displacements in the first $ 10 $ s and the next $ 10 $ s. Then",
+       "options": [
+        "$ x_A < x_B $ for every choice of $ u $ and $ a $",
+        "$ x_A = x_B $ for every choice of $ u $ and $ a $",
+        "$ x_A > x_B $ for every choice of $ u $ and $ a $",
+        "the comparison depends on the values of $ u $ and $ a $"
+       ],
+       "correct_index": 3,
+       "explanation": "Everything depends on the unspecified sizes of $ u $ and $ a $. If the particle turns around early, it can retrace enough ground in the second interval to make $ x_B $ larger, smaller, or exactly equal to $ x_A $. Without numbers for $ u $ and $ a $ no comparison can be forced."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m04",
+       "source": "mcq",
+       "prompt": "A person moves in a straight line with uniform velocity $ v_1 $ for some time and then with uniform velocity $ v_2 $ for an equal *time*. The average velocity is",
+       "options": [
+        "$ \\sqrt{v_1 v_2} $",
+        "$ \\frac{2v_1 v_2}{v_1 + v_2} $",
+        "$ \\frac{v_1 + v_2}{2} $",
+        "$ \\frac{v_1 v_2}{v_1 + v_2} $"
+       ],
+       "correct_index": 2,
+       "explanation": "With each speed held for the same time $ t $, the total distance is $ v_1 t + v_2 t $ over a total time $ 2t $, giving the plain arithmetic mean. Equal *times* give the arithmetic mean; equal *distances* give the harmonic mean — the two cases have different answers and are easy to swap."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m05",
+       "source": "mcq",
+       "prompt": "A person covers one half of a journey at speed $ v_1 $ and the other half — an equal *distance* — at speed $ v_2 $. The average speed is",
+       "options": [
+        "$ \\frac{v_1 + v_2}{2} $",
+        "$ \\sqrt{v_1 v_2} $",
+        "$ \\frac{v_1 + v_2}{2 v_1 v_2} $",
+        "$ \\frac{2v_1 v_2}{v_1 + v_2} $"
+       ],
+       "correct_index": 3,
+       "explanation": "For each half-distance $ d $, the times are $ d/v_1 $ and $ d/v_2 $. Average speed is total distance over total time: $ 2d \\div (d/v_1 + d/v_2) $, which simplifies to the harmonic mean. It is always smaller than the arithmetic mean, which makes sense — more time is spent at the slower speed."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m06",
+       "source": "mcq",
+       "prompt": "A ball is released from a lift that is moving upward with acceleration $ a $. Immediately after release, the acceleration of the ball is",
+       "options": [
+        "$ (g - a) $ downward",
+        "$ a $ upward",
+        "$ g $ downward",
+        "$ (g + a) $ downward"
+       ],
+       "correct_index": 2,
+       "explanation": "Once released, the only force on the ball is gravity — the lift's floor no longer touches it and cannot influence it. So its acceleration is $ g $ downward regardless of what the lift is doing. The lift's motion sets the ball's initial *velocity*, not its acceleration."
+      }
+     ]
+    },
+    {
+     "id": "projectile-motion",
+     "title": "Projectile Motion",
+     "blurb": "Two independent motions glued together by a shared clock.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch03-m07",
+       "source": "mcq",
+       "prompt": "From the top of a tower, ball A is thrown vertically upward and ball B vertically downward, both with the same speed. Ignoring air resistance, their speeds on reaching the ground satisfy",
+       "options": [
+        "$ v_A = v_B $",
+        "$ v_A > v_B $",
+        "$ v_A < v_B $",
+        "the relation depends on the height of the tower"
+       ],
+       "correct_index": 0,
+       "explanation": "Ball A rises, stops, and comes back down past the launch point with exactly its original speed, now heading downward — from that moment its history is identical to B's. Energy conservation says the same thing directly: both start with the same kinetic and potential energy, so both arrive with the same speed. A merely takes longer."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m08",
+       "source": "mcq",
+       "prompt": "During projectile motion, the velocity is perpendicular to the acceleration",
+       "options": [
+        "at all times",
+        "at exactly one instant",
+        "never",
+        "at exactly two instants"
+       ],
+       "correct_index": 1,
+       "explanation": "The acceleration is always vertically downward, so the velocity is perpendicular to it only when the velocity is purely horizontal — which happens just once, at the highest point. Before that the velocity tilts up, after it tilts down."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m09",
+       "source": "mcq",
+       "prompt": "Two stones are thrown horizontally from the same height with different speeds. Which reaches the ground first?",
+       "options": [
+        "The faster one",
+        "The slower one",
+        "Both reach at the same time",
+        "It depends on their masses"
+       ],
+       "correct_index": 2,
+       "explanation": "The vertical and horizontal motions are independent. Both stones start with zero vertical velocity and fall under the same $ g $ through the same height, so both take $ t = \\sqrt{2h/g} $. The faster stone simply lands further away, not sooner."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m10",
+       "source": "mcq",
+       "prompt": "A projectile fired at $ 30^\\circ $ has a range of $ 60 $ m. Fired with the same speed at $ 60^\\circ $, its range will be",
+       "options": [
+        "$ 60 $ m",
+        "$ 30 $ m",
+        "$ 120 $ m",
+        "$ 90 $ m"
+       ],
+       "correct_index": 0,
+       "explanation": "Range is $ R = u^{2}\\sin 2\\theta / g $. At $ 30^\\circ $, $ \\sin 60^\\circ $; at $ 60^\\circ $, $ \\sin 120^\\circ $ — and those are equal. Complementary angles always give the same range for the same speed, though the steeper shot flies higher and takes longer."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m11",
+       "source": "mcq",
+       "prompt": "Projectiles A and B are launched with the same speed at $ 20^\\circ $ and $ 70^\\circ $ respectively. Their horizontal ranges satisfy",
+       "options": [
+        "$ R_A < R_B $",
+        "$ R_A > R_B $",
+        "$ R_A = R_B $",
+        "the information is insufficient"
+       ],
+       "correct_index": 2,
+       "explanation": "The two angles add to $ 90^\\circ $, so they are complementary and $ \\sin 40^\\circ = \\sin 140^\\circ $ makes the ranges identical. Maximum range comes at $ 45^\\circ $, and any pair equally spaced either side of it lands in the same place."
+      }
+     ]
+    },
+    {
+     "id": "relative-motion",
+     "title": "Relative Velocity and Constraints",
+     "blurb": "Changing the observer, and reading the hidden equation in a taut string.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch03-m12",
+       "source": "mcq",
+       "prompt": "A river flows west to east at $ 4 $ m/min. A swimmer on the south bank, able to swim at $ 8 $ m/min in still water, wants to cross in the **shortest time**. He should swim",
+       "options": [
+        "$ 30^\\circ $ west of north",
+        "$ 30^\\circ $ east of north",
+        "$ 60^\\circ $ west of north",
+        "due north"
+       ],
+       "correct_index": 3,
+       "explanation": "Crossing time depends only on the component of his velocity across the river. That component is largest when he aims his full $ 8 $ m/min straight across — due north. The current then carries him downstream, so he lands further east, but no aiming choice gets him across sooner. Aiming upstream to land directly opposite is the *shortest path*, a different question."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch03-m13",
+       "source": "mcq",
+       "prompt": "A boat is hauled towards a jetty by a rope that runs over a pulley mounted above the water line. The rope is pulled in at a steady $ 2 $ m/s while it makes an angle $ \\theta $ with the horizontal. The boat's speed is",
+       "options": [
+        "$ 2\\cos\\theta $",
+        "$ 2/\\cos\\theta $",
+        "$ 2\\sin\\theta $",
+        "$ 2 $ m/s, always"
+       ],
+       "correct_index": 1,
+       "explanation": "The rope shortens at the rate at which the boat's velocity projects *onto the rope*. So $ 2 = v\\cos\\theta $, giving $ v = 2/\\cos\\theta $. The boat therefore moves faster than the rope is drawn in, and speeds up further as it nears the jetty and $ \\theta $ grows."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch03-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Average speed over two stretches",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A man walks $ 2 $ km at $ 4 $ km/h and the next $ 2 $ km at $ 6 $ km/h. Find his average speed for the whole walk.",
+    "solution": "Average speed is total distance ÷ total time. It is never the average of the two speeds unless the *times* happen to be equal — and here the distances are equal instead.\n\n**Time for each stretch.**\n\n$ t_1 = \\frac{2}{4} = 0.5 $ h\n\n$ t_2 = \\frac{2}{6} = 0.333 $ h\n\n**Total.**\n\nDistance $ = 4 $ km, time $ = 0.833 $ h.\n\n$ v_{av} = \\frac{4}{0.833} = 4.8 $ km/h.\n\n**Watch out:** the tempting answer is $ (4+6)/2 = 5 $ km/h, and it is wrong. He spends *more time* in the slow stretch, so the slow speed gets more weight and the true average is pulled below 5. Whenever equal distances are involved the answer always comes out below the arithmetic mean."
+   },
+   {
+    "id": "we-ch03-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Instantaneous velocity from a position function",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The position of a particle on the X-axis is $ x = 3t^{2} - t^{3} $ metres, with $ t $ in seconds. Find (a) its velocity at $ t = 2 $ s and (b) the time at which it momentarily comes to rest.",
+    "solution": "**(a) Velocity.** Differentiate the position:\n\n$ v = \\frac{dx}{dt} = 6t - 3t^{2} $\n\nAt $ t = 2 $ s: $ v = 6(2) - 3(4) = 12 - 12 = 0 $.\n\n**(b) When at rest.** Set $ v = 0 $:\n\n$ 6t - 3t^{2} = 0 \\Rightarrow 3t(2 - t) = 0 \\Rightarrow t = 0 $ or $ t = 2 $ s.\n\nSo the particle is at rest at the very start and again at $ t = 2 $ s.\n\n**Reading the motion.** Between $ t = 0 $ and $ t = 2 $ s the velocity $ 6t - 3t^{2} $ is positive, so the particle moves in the $ +x $ direction; after $ t = 2 $ s it turns negative and the particle heads back. That instant of rest is a turning point, not the end of the motion.\n\n**Watch out:** 'at rest' means $ v = 0 $, not $ x = 0 $. The particle is at $ x = 3(4) - 8 = 4 $ m when it stops — nowhere near the origin."
+   },
+   {
+    "id": "we-ch03-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Uniform acceleration: a braking car",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A car moving at $ 20\\ \\text{m s}^{-1} $ brakes uniformly and stops in $ 50 $ m. Find (a) the deceleration and (b) the time taken to stop.",
+    "solution": "The acceleration is constant, so the standard equations apply. List what you have: $ u = 20\\ \\text{m s}^{-1} $, $ v = 0 $, $ s = 50 $ m.\n\n**(a) Deceleration.** Pick the equation without time in it:\n\n$ v^{2} = u^{2} + 2as $\n\n$ 0 = 400 + 2a(50) $\n\n$ a = -\\frac{400}{100} = -4\\ \\text{m s}^{-2} $\n\nThe minus sign means the acceleration opposes the motion — a deceleration of $ 4\\ \\text{m s}^{-2} $.\n\n**(b) Time.** Now use $ v = u + at $:\n\n$ 0 = 20 + (-4)t \\Rightarrow t = 5 $ s.\n\n**Shortcut worth knowing.** With uniform acceleration the average velocity is simply $ (u+v)/2 = 10\\ \\text{m s}^{-1} $, so the time follows from $ 50/10 = 5 $ s without touching the acceleration at all. Choosing the equation that skips the quantity you don't need saves a whole step.\n\n**Watch out:** stopping distance goes as $ u^{2} $, not $ u $. Double the speed and the car needs four times the distance — the single most important consequence of this formula."
+   },
+   {
+    "id": "we-ch03-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Stone dropped from a rising balloon",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A balloon rising steadily at $ 5\\ \\text{m s}^{-1} $ releases a stone when it is $ 60 $ m above the ground. How long does the stone take to reach the ground? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The crucial point: 'released' does not mean 'dropped from rest'. The stone shares the balloon's velocity at the moment of release, so it starts moving **upward** at $ 5\\ \\text{m s}^{-1} $.\n\nTake upward as positive, with the origin at the release point.\n\n$ u = +5\\ \\text{m s}^{-1} $, $ a = -10\\ \\text{m s}^{-2} $, and the ground is at $ s = -60 $ m.\n\n$ s = ut + \\tfrac12 at^{2} $\n\n$ -60 = 5t - 5t^{2} $\n\n$ 5t^{2} - 5t - 60 = 0 \\Rightarrow t^{2} - t - 12 = 0 \\Rightarrow (t-4)(t+3) = 0 $\n\n$ t = 4 $ s (rejecting $ t = -3 $ s, which is before the stone was released).\n\n**Watch out:** two errors are common here. First, taking $ u = 0 $ — that would give $ \\sqrt{12} \\approx 3.5 $ s and understate the fall. Second, mixing sign conventions midway: having chosen upward as positive, the displacement to the ground *must* be entered as $ -60 $ m, not $ +60 $."
+   },
+   {
+    "id": "we-ch03-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Horizontal projectile from a height",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A ball is thrown horizontally at $ 15\\ \\text{m s}^{-1} $ from a cliff $ 20 $ m high. Find (a) the time of flight, (b) the horizontal distance covered and (c) the speed with which it strikes the ground. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Split the motion into two independent parts that share one clock.\n\n**Vertical — decides the time.** The initial vertical velocity is zero.\n\n$ h = \\tfrac12 g t^{2} \\Rightarrow 20 = 5t^{2} \\Rightarrow t = 2 $ s.\n\n**Horizontal — decides the distance.** No horizontal force, so the horizontal velocity never changes.\n\n$ x = u t = 15 \\times 2 = 30 $ m.\n\n**(c) Landing speed.** Combine the two velocity components at $ t = 2 $ s.\n\nHorizontal: $ 15\\ \\text{m s}^{-1} $ (unchanged)\n\nVertical: $ v_y = gt = 10(2) = 20\\ \\text{m s}^{-1} $\n\n$ v = \\sqrt{15^{2} + 20^{2}} = \\sqrt{225 + 400} = \\sqrt{625} = 25\\ \\text{m s}^{-1} $.\n\n**The idea to carry forward.** The horizontal throw does not delay the fall by even a fraction of a second — a ball dropped from the same cliff at the same moment lands at the same time. Gravity acts vertically and simply has no opinion about horizontal motion."
+   },
+   {
+    "id": "we-ch03-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Projectile at an angle",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A ball is projected at $ 20\\ \\text{m s}^{-1} $ at $ 30^\\circ $ above the horizontal. Find its time of flight, maximum height and horizontal range. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Resolve the launch velocity once, then treat each direction separately.\n\n$ u_x = 20\\cos 30^\\circ = 17.3\\ \\text{m s}^{-1} $\n\n$ u_y = 20\\sin 30^\\circ = 10\\ \\text{m s}^{-1} $\n\n**Time of flight.** The ball returns to launch height, so its vertical displacement is zero.\n\n$ T = \\frac{2u_y}{g} = \\frac{2(10)}{10} = 2 $ s.\n\n**Maximum height.** At the top the vertical velocity is zero.\n\n$ H = \\frac{u_y^{2}}{2g} = \\frac{100}{20} = 5 $ m.\n\n**Range.** Horizontal velocity is constant throughout.\n\n$ R = u_x T = 17.3 \\times 2 = 34.6 $ m.\n\n**Check against the standard formula:** $ R = u^{2}\\sin 2\\theta/g = 400\\sin 60^\\circ/10 = 34.6 $ m ✓\n\n**Watch out:** at the highest point the ball is *not* at rest — only its vertical velocity vanishes. It is still sailing along horizontally at $ 17.3\\ \\text{m s}^{-1} $, which is why it keeps travelling forward rather than dropping straight down."
+   },
+   {
+    "id": "we-ch03-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Why an aimed shot still falls short",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A bullet is fired horizontally at $ 100\\ \\text{m s}^{-1} $ directly at a small target $ 50 $ m away, on the same level as the gun. By how much does it miss, and in which direction? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**Time to reach the target's horizontal position.**\n\n$ t = \\frac{x}{u} = \\frac{50}{100} = 0.5 $ s.\n\n**Vertical drop in that time.**\n\n$ y = \\tfrac12 g t^{2} = \\tfrac12 (10)(0.25) = 1.25 $ m.\n\nSo the bullet passes $ 1.25 $ m **below** the target — aiming straight at something never hits it.\n\n**The correction.** To hit the target, the barrel must be raised so the bullet's parabola crosses the target's position. Marksmen call this hold-over, and it is why sights are calibrated for a specific range.\n\n**A striking companion result.** If the target were *dropped* at the very instant the gun fired, the bullet would hit it — both fall by exactly $ \\tfrac12 gt^{2} $ from where they would have been, so they stay level with each other the whole way. This is the classic 'monkey and hunter' demonstration."
+   },
+   {
+    "id": "we-ch03-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Crossing a river in the shortest time",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A river $ 120 $ m wide flows at $ 3\\ \\text{m s}^{-1} $. A swimmer who manages $ 4\\ \\text{m s}^{-1} $ in still water heads straight across. Find the crossing time and how far downstream he lands.",
+    "solution": "Treat the two directions separately — the current cannot help or hinder his progress *across*.\n\n**Time to cross.** Only the across-stream velocity matters, and by heading straight across he devotes all $ 4\\ \\text{m s}^{-1} $ to it.\n\n$ t = \\frac{120}{4} = 30 $ s.\n\n**Drift downstream.** During those same $ 30 $ s the current carries him sideways at $ 3\\ \\text{m s}^{-1} $.\n\n$ d = 3 \\times 30 = 90 $ m.\n\nHe lands $ 90 $ m downstream, having swum a resultant path of $ \\sqrt{120^{2} + 90^{2}} = 150 $ m at a resultant speed of $ 5\\ \\text{m s}^{-1} $.\n\n**Watch out:** it is tempting to use the resultant speed $ 5\\ \\text{m s}^{-1} $ to find the crossing time. That gives $ 150/5 = 30 $ s — the same answer, but only because the path length was computed consistently. Using $ 120/5 = 24 $ s is the actual trap: the resultant speed is not directed across the river, so it cannot be paired with the river's width.\n\n**Contrast:** to land *directly opposite* he would have to aim upstream, spending part of his effort fighting the current, and the crossing would take longer."
+   },
+   {
+    "id": "we-ch03-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Rain, and the tilt of an umbrella",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Rain falls vertically at $ 4\\ \\text{m s}^{-1} $. A cyclist rides at $ 3\\ \\text{m s}^{-1} $. At what angle from the vertical should the umbrella be held?",
+    "solution": "The umbrella must point along the rain's velocity *relative to the cyclist* — that is the direction from which the rain appears to come.\n\n$ \\vec{v}_{\\text{rain, cyclist}} = \\vec{v}_{\\text{rain}} - \\vec{v}_{\\text{cyclist}} $\n\nThe rain contributes $ 4\\ \\text{m s}^{-1} $ downward. Subtracting the cyclist's forward $ 3\\ \\text{m s}^{-1} $ adds a $ 3\\ \\text{m s}^{-1} $ *backward* component.\n\nSo relative to the rider the rain falls at $ 4 $ down and $ 3 $ backward:\n\n$ \\tan\\theta = \\frac{3}{4} \\Rightarrow \\theta = 36.9^\\circ $ from the vertical, tilted **forward** into the direction of travel.\n\nIts apparent speed is $ \\sqrt{3^{2}+4^{2}} = 5\\ \\text{m s}^{-1} $ — the rain seems both faster and slanted.\n\n**The physical sense of it.** Ride faster and $ \\tan\\theta $ grows, so the umbrella tips further forward; stop, and it returns to vertical. Everyone has done this experiment without noticing.\n\n**Watch out:** the tilt is *forward*, not backward. The minus sign in the relative-velocity formula is doing that work, so write the vector subtraction out rather than guessing the direction."
+   },
+   {
+    "id": "we-ch03-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Relative velocity of two vehicles",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two trains, each $ 150 $ m long, run on parallel tracks at $ 20\\ \\text{m s}^{-1} $ and $ 10\\ \\text{m s}^{-1} $. How long do they take to pass each other completely when moving (a) in the same direction and (b) in opposite directions?",
+    "solution": "Sit on one train and watch the other. The distance that must go past you is the sum of the two lengths, $ 300 $ m, in both cases — what changes is the relative speed.\n\n**(a) Same direction.**\n\n$ v_{rel} = 20 - 10 = 10\\ \\text{m s}^{-1} $\n\n$ t = \\frac{300}{10} = 30 $ s.\n\n**(b) Opposite directions.**\n\n$ v_{rel} = 20 + 10 = 30\\ \\text{m s}^{-1} $\n\n$ t = \\frac{300}{30} = 10 $ s.\n\n**Why 300 m and not 150 m.** 'Completely passed' means from the instant the front ends meet to the instant the rear ends separate. In that interval the relative displacement equals both trains' lengths added together.\n\n**Shortcut:** relative-velocity problems collapse the moment you park yourself on one of the objects. From that seat, one body is stationary and the whole question becomes single-body motion."
+   },
+   {
+    "id": "we-ch03-11",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 11 — Displacement from a velocity function",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A particle's velocity varies as $ v = 4 - 2t $ (SI units). Find (a) its displacement and (b) the distance travelled, between $ t = 0 $ and $ t = 4 $ s.",
+    "solution": "The particle reverses direction partway through, which is exactly why displacement and distance differ here.\n\n**When does it turn?** $ v = 0 $ when $ 4 - 2t = 0 $, i.e. $ t = 2 $ s. It moves forward before that and backward after.\n\n**(a) Displacement** — integrate the velocity straight through, signs and all:\n\n$ s = \\int_{0}^{4}(4 - 2t)\\,dt = \\left[4t - t^{2}\\right]_{0}^{4} = (16 - 16) - 0 = 0 $.\n\nThe particle ends exactly where it began.\n\n**(b) Distance** — integrate each leg separately and add the magnitudes:\n\nFrom $ 0 $ to $ 2 $ s: $ \\left[4t - t^{2}\\right]_{0}^{2} = 8 - 4 = +4 $ m\n\nFrom $ 2 $ to $ 4 $ s: $ \\left[4t - t^{2}\\right]_{2}^{4} = 0 - 4 = -4 $ m\n\nDistance $ = |{+4}| + |{-4}| = 8 $ m.\n\n**The rule to remember:** displacement is the signed area under the velocity-time graph; distance is the total unsigned area. They agree only when the motion never reverses — so always check for a sign change in $ v $ before assuming they are the same."
+   },
+   {
+    "id": "we-ch03-12",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 12 — Ball thrown vertically upward",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A ball thrown vertically upward from the ground at $ 30\\ \\text{m s}^{-1} $ is caught at the same height. Find (a) the greatest height reached, (b) the total time in the air, and (c) the times at which it is $ 40 $ m above the ground. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Take upward as positive: $ u = +30\\ \\text{m s}^{-1} $, $ a = -10\\ \\text{m s}^{-2} $.\n\n**(a) Greatest height.** At the top, $ v = 0 $.\n\n$ v^{2} = u^{2} + 2as \\Rightarrow 0 = 900 - 20s \\Rightarrow s = 45 $ m.\n\n**(b) Total time.** By symmetry it takes as long to come down as to go up. Time up: $ 0 = 30 - 10t \\Rightarrow t = 3 $ s, so the total is $ 6 $ s.\n\n**(c) At $ 40 $ m.**\n\n$ 40 = 30t - 5t^{2} \\Rightarrow 5t^{2} - 30t + 40 = 0 \\Rightarrow t^{2} - 6t + 8 = 0 \\Rightarrow (t-2)(t-4) = 0 $\n\n$ t = 2 $ s and $ t = 4 $ s.\n\n**Both roots are real answers.** The ball passes $ 40 $ m once on the way up and again on the way down — the quadratic is telling you about a height it visits twice. Discard a root only when it is negative or otherwise outside the physical situation, never merely because two answers feel like one too many.\n\n**Note the symmetry:** $ 2 $ s and $ 4 $ s sit equally either side of the $ 3 $ s peak, as they must."
+   }
+  ]
+ }
+}

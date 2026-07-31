@@ -1,0 +1,1811 @@
+{
+ "generated_from": "chapters/*.json",
+ "totals": {
+  "chapters": 47,
+  "mcqs": 505,
+  "numericals": 0,
+  "worked_examples": 418
+ },
+ "chapters": [
+  {
+   "file": "ch01.json",
+   "hcv_chapter": 1,
+   "hcv_title": "Introduction to Physics",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Units and Measurements",
+   "practice_bank_id": "pb-ch01-units",
+   "sections": [
+    {
+     "id": "units-and-standards",
+     "title": "Units, Standards and Measurement",
+     "items": 5
+    },
+    {
+     "id": "dimensional-analysis",
+     "title": "Dimensional Analysis",
+     "items": 5
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch01-01",
+    "we-ch01-02",
+    "we-ch01-03",
+    "we-ch01-04",
+    "we-ch01-05",
+    "we-ch01-06",
+    "we-ch01-07",
+    "we-ch01-08",
+    "we-ch01-09",
+    "we-ch01-10"
+   ],
+   "notes": "Source chapter is short — 6 Objective I items. Bank topped up to 10 MCQs covering the chapter's other core ideas (significant figures, error propagation, order of magnitude) so the section stands on its own."
+  },
+  {
+   "file": "ch02.json",
+   "hcv_chapter": 2,
+   "hcv_title": "Physics and Mathematics",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Motion in a Plane (vectors) + the Ch.0 'Mathematics for Physics' prerequisite unit",
+   "practice_bank_id": "pb-ch02-vectors-calculus",
+   "sections": [
+    {
+     "id": "vectors-basics",
+     "title": "Vectors: Addition and Components",
+     "items": 5
+    },
+    {
+     "id": "vector-products",
+     "title": "Dot and Cross Products",
+     "items": 4
+    },
+    {
+     "id": "calculus-and-figures",
+     "title": "Calculus and Significant Figures",
+     "items": 3
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 12,
+   "worked_example_ids": [
+    "we-ch02-01",
+    "we-ch02-02",
+    "we-ch02-03",
+    "we-ch02-04",
+    "we-ch02-05",
+    "we-ch02-06",
+    "we-ch02-07",
+    "we-ch02-08",
+    "we-ch02-09",
+    "we-ch02-10",
+    "we-ch02-11",
+    "we-ch02-12"
+   ],
+   "notes": "Maps cleanly onto the livebook's Ch.0 'Mathematics for Physics' — vectors, differentiation, integration. Source chapter has 6 Objective I items; topped up to 12 covering dot/cross products and the calculus tools the rest of the book leans on."
+  },
+  {
+   "file": "ch03.json",
+   "hcv_chapter": 3,
+   "hcv_title": "Rest and Motion: Kinematics",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Motion in a Straight Line + Motion in a Plane (projectile, relative velocity)",
+   "practice_bank_id": "pb-ch03-kinematics",
+   "sections": [
+    {
+     "id": "straight-line-motion",
+     "title": "Motion in a Straight Line",
+     "items": 6
+    },
+    {
+     "id": "projectile-motion",
+     "title": "Projectile Motion",
+     "items": 5
+    },
+    {
+     "id": "relative-motion",
+     "title": "Relative Velocity and Constraints",
+     "items": 2
+    }
+   ],
+   "mcqs": 13,
+   "numericals": 0,
+   "worked_examples": 12,
+   "worked_example_ids": [
+    "we-ch03-01",
+    "we-ch03-02",
+    "we-ch03-03",
+    "we-ch03-04",
+    "we-ch03-05",
+    "we-ch03-06",
+    "we-ch03-07",
+    "we-ch03-08",
+    "we-ch03-09",
+    "we-ch03-10",
+    "we-ch03-11",
+    "we-ch03-12"
+   ],
+   "notes": "13 Objective I items rebuilt. Two source items depend on a printed figure (a displacement-time graph and a pulley-string arrangement); both were re-cast into wholly verbal equivalents that test the same idea, so the bank needs no diagrams."
+  },
+  {
+   "file": "ch04.json",
+   "hcv_chapter": 4,
+   "hcv_title": "The Forces",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Laws of Motion — the nature of forces (fundamental forces, contact forces)",
+   "practice_bank_id": "pb-ch04-forces",
+   "sections": [
+    {
+     "id": "which-force",
+     "title": "Identifying the Force at Work",
+     "items": 4
+    },
+    {
+     "id": "third-law-and-range",
+     "title": "Third-Law Pairs, Range and Strength",
+     "items": 5
+    }
+   ],
+   "mcqs": 9,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch04-01",
+    "we-ch04-02",
+    "we-ch04-03",
+    "we-ch04-04",
+    "we-ch04-05",
+    "we-ch04-06",
+    "we-ch04-07",
+    "we-ch04-08"
+   ],
+   "notes": "Short source chapter — only 4 Objective I items. Topped up to 9 covering the range and relative strength of the four fundamental forces and the electromagnetic origin of everyday contact forces."
+  },
+  {
+   "file": "ch05.json",
+   "hcv_chapter": 5,
+   "hcv_title": "Newton's Laws of Motion",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Laws of Motion",
+   "practice_bank_id": "pb-ch05-newton-laws",
+   "sections": [
+    {
+     "id": "third-law-and-agents",
+     "title": "Which Force Moves What",
+     "items": 5
+    },
+    {
+     "id": "inclines-and-constraints",
+     "title": "Inclines, Wedges and Contact Forces",
+     "items": 3
+    },
+    {
+     "id": "frames-and-resistance",
+     "title": "Frames, Free Fall and Air Resistance",
+     "items": 4
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 12,
+   "worked_example_ids": [
+    "we-ch05-01",
+    "we-ch05-02",
+    "we-ch05-03",
+    "we-ch05-04",
+    "we-ch05-05",
+    "we-ch05-06",
+    "we-ch05-07",
+    "we-ch05-08",
+    "we-ch05-09",
+    "we-ch05-10",
+    "we-ch05-11",
+    "we-ch05-12"
+   ],
+   "notes": "14 Objective I items; 12 rebuilt. Two source items depend on printed figures (a spring-balance chain and a wedge inside a hanging chamber) — the spring-balance idea was re-cast verbally, the hanging-chamber one replaced by a pseudo-force item testing the same non-inertial-frame reasoning."
+  },
+  {
+   "file": "ch06.json",
+   "hcv_chapter": 6,
+   "hcv_title": "Friction",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Laws of Motion — friction",
+   "practice_bank_id": "pb-ch06-friction",
+   "sections": [
+    {
+     "id": "static-vs-kinetic",
+     "title": "Static Friction Adjusts Itself",
+     "items": 4
+    },
+    {
+     "id": "braking-and-sliding",
+     "title": "Braking, Stopping and Sliding",
+     "items": 4
+    },
+    {
+     "id": "friction-in-systems",
+     "title": "Friction Inside a System",
+     "items": 2
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch06-01",
+    "we-ch06-02",
+    "we-ch06-03",
+    "we-ch06-04",
+    "we-ch06-05",
+    "we-ch06-06",
+    "we-ch06-07",
+    "we-ch06-08",
+    "we-ch06-09",
+    "we-ch06-10"
+   ],
+   "notes": "10 Objective I items rebuilt. Two source items reference a figure of two blocks against a smooth wall; both re-cast as verbal block-on-block friction questions testing the same reasoning."
+  },
+  {
+   "file": "ch07.json",
+   "hcv_chapter": 7,
+   "hcv_title": "Circular Motion",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Motion in a Plane (uniform circular motion) + Laws of Motion (banking, vertical circles)",
+   "practice_bank_id": "pb-ch07-circular",
+   "sections": [
+    {
+     "id": "kinematics-of-circles",
+     "title": "Describing Circular Motion",
+     "items": 4
+    },
+    {
+     "id": "dynamics-of-circles",
+     "title": "Forces in Circular Motion",
+     "items": 6
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch07-01",
+    "we-ch07-02",
+    "we-ch07-03",
+    "we-ch07-04",
+    "we-ch07-05",
+    "we-ch07-06",
+    "we-ch07-07",
+    "we-ch07-08",
+    "we-ch07-09",
+    "we-ch07-10"
+   ],
+   "notes": "10 Objective I items rebuilt. One source item relies on a figure of a road with a crest and a dip — re-cast verbally as a convex bridge / concave dip comparison, which tests the same normal-force reasoning."
+  },
+  {
+   "file": "ch08.json",
+   "hcv_chapter": 8,
+   "hcv_title": "Work and Energy",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Work, Energy and Power",
+   "practice_bank_id": "pb-ch08-work-energy",
+   "sections": [
+    {
+     "id": "work-energy-theorems",
+     "title": "The Theorems, and What Each One Counts",
+     "items": 4
+    },
+    {
+     "id": "springs-and-stored-energy",
+     "title": "Springs and Stored Energy",
+     "items": 3
+    },
+    {
+     "id": "energy-in-motion",
+     "title": "Energy Applied to Motion",
+     "items": 3
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch08-01",
+    "we-ch08-02",
+    "we-ch08-03",
+    "we-ch08-04",
+    "we-ch08-05",
+    "we-ch08-06",
+    "we-ch08-07",
+    "we-ch08-08",
+    "we-ch08-09",
+    "we-ch08-10"
+   ],
+   "notes": "10 Objective I items rebuilt. The source set includes four near-identical 'work done by X equals change in Y' items; these were kept but spread across the bank rather than clustered, since they test genuinely different theorems."
+  },
+  {
+   "file": "ch09.json",
+   "hcv_chapter": 9,
+   "hcv_title": "Centre of Mass, Linear Momentum, Collision",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "System of Particles and Rotational Motion (centre of mass) + Work, Energy and Power (collisions)",
+   "practice_bank_id": "pb-ch09-com-momentum",
+   "sections": [
+    {
+     "id": "centre-of-mass",
+     "title": "Locating and Moving the Centre of Mass",
+     "items": 7
+    },
+    {
+     "id": "collisions",
+     "title": "Collisions and Impulse",
+     "items": 4
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch09-01",
+    "we-ch09-02",
+    "we-ch09-03",
+    "we-ch09-04",
+    "we-ch09-05",
+    "we-ch09-06",
+    "we-ch09-07",
+    "we-ch09-08",
+    "we-ch09-09",
+    "we-ch09-10"
+   ],
+   "notes": "11 Objective I items rebuilt. One source item uses a figure of a circular plate touching a square plate; re-cast verbally, since the areas alone decide the answer. Collision items added to cover the chapter's second half."
+  },
+  {
+   "file": "ch10.json",
+   "hcv_chapter": 10,
+   "hcv_title": "Rotational Mechanics",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "System of Particles and Rotational Motion",
+   "practice_bank_id": "pb-ch10-rotation",
+   "sections": [
+    {
+     "id": "rotational-kinematics",
+     "title": "Axis, Angular Velocity and Directions",
+     "items": 5
+    },
+    {
+     "id": "moment-of-inertia",
+     "title": "Moment of Inertia",
+     "items": 5
+    },
+    {
+     "id": "torque-and-angular-momentum",
+     "title": "Torque, Angular Momentum and Rolling",
+     "items": 3
+    }
+   ],
+   "mcqs": 13,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch10-01",
+    "we-ch10-02",
+    "we-ch10-03",
+    "we-ch10-04",
+    "we-ch10-05",
+    "we-ch10-06",
+    "we-ch10-07",
+    "we-ch10-08",
+    "we-ch10-09",
+    "we-ch10-10"
+   ],
+   "notes": "13 Objective I items rebuilt. One source item uses a figure of two coaxial wheels with strings; re-cast verbally since only the radius ratio matters. The paired disc items (11 and 12) are kept as a pair because the second builds on the first."
+  },
+  {
+   "file": "ch11.json",
+   "hcv_chapter": 11,
+   "hcv_title": "Gravitation",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Gravitation",
+   "practice_bank_id": "pb-ch11-gravitation",
+   "sections": [
+    {
+     "id": "field-and-acceleration",
+     "title": "Gravitational Field and g",
+     "items": 5
+    },
+    {
+     "id": "potential-and-energy",
+     "title": "Gravitational Potential and Energy",
+     "items": 3
+    },
+    {
+     "id": "orbits-and-satellites",
+     "title": "Orbits, Satellites and Kepler's Laws",
+     "items": 3
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch11-01",
+    "we-ch11-02",
+    "we-ch11-03",
+    "we-ch11-04",
+    "we-ch11-05",
+    "we-ch11-06",
+    "we-ch11-07",
+    "we-ch11-08",
+    "we-ch11-09",
+    "we-ch11-10"
+   ],
+   "notes": "11 Objective I items rebuilt. One source item depends on a graph figure (weight vs time on an earth-to-Mars trip); re-cast verbally as a question about where the net gravitational force vanishes. Items 1-2 of the source form a linked pair and are kept adjacent."
+  },
+  {
+   "file": "ch12.json",
+   "hcv_chapter": 12,
+   "hcv_title": "Simple Harmonic Motion",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Oscillations",
+   "practice_bank_id": "pb-ch12-shm",
+   "sections": [
+    {
+     "id": "what-counts-as-shm",
+     "title": "Recognising Simple Harmonic Motion",
+     "items": 5
+    },
+    {
+     "id": "period-and-averages",
+     "title": "Period, Displacement and Averages",
+     "items": 4
+    },
+    {
+     "id": "springs-and-pendulums",
+     "title": "Springs, Pendulums and Energy",
+     "items": 3
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch12-01",
+    "we-ch12-02",
+    "we-ch12-03",
+    "we-ch12-04",
+    "we-ch12-05",
+    "we-ch12-06",
+    "we-ch12-07",
+    "we-ch12-08",
+    "we-ch12-09",
+    "we-ch12-10"
+   ],
+   "notes": "12 Objective I items rebuilt. One source item asks students to compare two SHM curves in a figure; re-cast as a phase-difference question stated algebraically."
+  },
+  {
+   "file": "ch13.json",
+   "hcv_chapter": 13,
+   "hcv_title": "Fluid Mechanics",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Mechanical Properties of Fluids",
+   "practice_bank_id": "pb-ch13-fluids",
+   "sections": [
+    {
+     "id": "pressure-in-fluids",
+     "title": "Pressure and Depth",
+     "items": 6
+    },
+    {
+     "id": "buoyancy-and-flow",
+     "title": "Buoyancy and Flow",
+     "items": 4
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch13-01",
+    "we-ch13-02",
+    "we-ch13-03",
+    "we-ch13-04",
+    "we-ch13-05",
+    "we-ch13-06",
+    "we-ch13-07",
+    "we-ch13-08",
+    "we-ch13-09",
+    "we-ch13-10"
+   ],
+   "notes": "10 Objective I items rebuilt. Two source items depend on figures of differently-shaped vessels; re-cast verbally, since only the liquid *height* above the base decides the answer."
+  },
+  {
+   "file": "ch14.json",
+   "hcv_chapter": 14,
+   "hcv_title": "Some Mechanical Properties of Matter",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Mechanical Properties of Solids + Mechanical Properties of Fluids (surface tension, viscosity)",
+   "practice_bank_id": "pb-ch14-properties-matter",
+   "sections": [
+    {
+     "id": "elasticity",
+     "title": "Elasticity and Breaking Stress",
+     "items": 8
+    },
+    {
+     "id": "surface-tension",
+     "title": "Surface Tension",
+     "items": 4
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch14-01",
+    "we-ch14-02",
+    "we-ch14-03",
+    "we-ch14-04",
+    "we-ch14-05",
+    "we-ch14-06",
+    "we-ch14-07",
+    "we-ch14-08",
+    "we-ch14-09",
+    "we-ch14-10"
+   ],
+   "notes": "12 Objective I items rebuilt, spanning the chapter's three distinct topics — elasticity, surface tension and viscosity — kept in separate sections so a teacher can drop just one."
+  },
+  {
+   "file": "ch15.json",
+   "hcv_chapter": 15,
+   "hcv_title": "Wave Motion and Waves on a String",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Waves",
+   "practice_bank_id": "pb-ch15-waves-string",
+   "sections": [
+    {
+     "id": "describing-waves",
+     "title": "Describing a Travelling Wave",
+     "items": 6
+    },
+    {
+     "id": "wave-speed-on-strings",
+     "title": "Speed of a Wave on a String",
+     "items": 3
+    },
+    {
+     "id": "superposition",
+     "title": "Superposition and Standing Waves",
+     "items": 3
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch15-01",
+    "we-ch15-02",
+    "we-ch15-03",
+    "we-ch15-04",
+    "we-ch15-05",
+    "we-ch15-06",
+    "we-ch15-07",
+    "we-ch15-08",
+    "we-ch15-09",
+    "we-ch15-10"
+   ],
+   "notes": "12 Objective I items rebuilt. One source item refers to a figure of two pulses meeting; re-cast as a verbal superposition question."
+  },
+  {
+   "file": "ch16.json",
+   "hcv_chapter": 16,
+   "hcv_title": "Sound Waves",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Waves (sound, organ pipes, beats, Doppler effect)",
+   "practice_bank_id": "pb-ch16-sound",
+   "sections": [
+    {
+     "id": "nature-of-sound",
+     "title": "The Nature of Sound",
+     "items": 4
+    },
+    {
+     "id": "sound-in-changing-media",
+     "title": "What Changes When the Medium Does",
+     "items": 4
+    },
+    {
+     "id": "pipes-beats-doppler",
+     "title": "Organ Pipes, Beats and the Doppler Effect",
+     "items": 4
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch16-01",
+    "we-ch16-02",
+    "we-ch16-03",
+    "we-ch16-04",
+    "we-ch16-05",
+    "we-ch16-06",
+    "we-ch16-07",
+    "we-ch16-08",
+    "we-ch16-09",
+    "we-ch16-10"
+   ],
+   "notes": "12 Objective I items rebuilt. One source item depends on an unstated sonometer/beat context; replaced with a self-contained beats item testing the same skill."
+  },
+  {
+   "file": "ch17.json",
+   "hcv_chapter": 17,
+   "hcv_title": "Light Waves",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Wave Optics",
+   "practice_bank_id": "pb-ch17-light-waves",
+   "sections": [
+    {
+     "id": "nature-of-light",
+     "title": "The Nature of Light",
+     "items": 4
+    },
+    {
+     "id": "refraction-and-wavefronts",
+     "title": "Refraction and Wavefronts",
+     "items": 5
+    },
+    {
+     "id": "interference",
+     "title": "Coherence and Interference",
+     "items": 3
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch17-01",
+    "we-ch17-02",
+    "we-ch17-03",
+    "we-ch17-04",
+    "we-ch17-05",
+    "we-ch17-06",
+    "we-ch17-07",
+    "we-ch17-08",
+    "we-ch17-09",
+    "we-ch17-10"
+   ],
+   "notes": "12 Objective I items rebuilt. Interference/Young's-slit worked examples added, since that is where the chapter's numerical work lives."
+  },
+  {
+   "file": "ch18.json",
+   "hcv_chapter": 18,
+   "hcv_title": "Geometrical Optics",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Ray Optics and Optical Instruments",
+   "practice_bank_id": "pb-ch18-ray-optics",
+   "sections": [
+    {
+     "id": "mirrors-and-reflection",
+     "title": "Reflection and Mirrors",
+     "items": 4
+    },
+    {
+     "id": "refraction-and-tir",
+     "title": "Refraction and Total Internal Reflection",
+     "items": 3
+    },
+    {
+     "id": "lenses",
+     "title": "Lenses and Lens Formulae",
+     "items": 5
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch18-01",
+    "we-ch18-02",
+    "we-ch18-03",
+    "we-ch18-04",
+    "we-ch18-05",
+    "we-ch18-06",
+    "we-ch18-07",
+    "we-ch18-08",
+    "we-ch18-09",
+    "we-ch18-10"
+   ],
+   "notes": "12 Objective I items rebuilt. Sign-convention traps are the recurring theme, so the worked examples deliberately re-derive signs rather than quoting results."
+  },
+  {
+   "file": "ch19.json",
+   "hcv_chapter": 19,
+   "hcv_title": "Optical Instruments",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Ray Optics and Optical Instruments (the eye, microscope, telescope)",
+   "practice_bank_id": "pb-ch19-optical-instruments",
+   "sections": [
+    {
+     "id": "the-eye",
+     "title": "The Human Eye",
+     "items": 7
+    },
+    {
+     "id": "microscopes-and-telescopes",
+     "title": "Magnifiers and Telescopes",
+     "items": 3
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch19-01",
+    "we-ch19-02",
+    "we-ch19-03",
+    "we-ch19-04",
+    "we-ch19-05",
+    "we-ch19-06",
+    "we-ch19-07",
+    "we-ch19-08"
+   ],
+   "notes": "10 Objective I items rebuilt. One source item (comparing two eyes with different near points) needs a stated numerical premise, so it was re-cast with the premise supplied in the stem."
+  },
+  {
+   "file": "ch20.json",
+   "hcv_chapter": 20,
+   "hcv_title": "Dispersion and Spectra",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Ray Optics (dispersion by a prism, spectra)",
+   "practice_bank_id": "pb-ch20-dispersion",
+   "sections": [
+    {
+     "id": "dispersion-by-prisms",
+     "title": "Dispersion and Dispersive Power",
+     "items": 5
+    },
+    {
+     "id": "spectra",
+     "title": "Spectra and What They Reveal",
+     "items": 4
+    }
+   ],
+   "mcqs": 9,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch20-01",
+    "we-ch20-02",
+    "we-ch20-03",
+    "we-ch20-04",
+    "we-ch20-05",
+    "we-ch20-06",
+    "we-ch20-07",
+    "we-ch20-08"
+   ],
+   "notes": "Short source chapter — 5 Objective I items, all rebuilt, topped up to 9 with items on the rainbow, spectrometer use and the achromatic combination. Worked examples number 8, the chapter's own worked set being brief."
+  },
+  {
+   "file": "ch21.json",
+   "hcv_chapter": 21,
+   "hcv_title": "Speed of Light",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Ray Optics / Wave Optics — supplementary; the historical measurement of c is not a separate NCERT chapter",
+   "practice_bank_id": "pb-ch21-speed-of-light",
+   "sections": [
+    {
+     "id": "speed-in-media",
+     "title": "Speed of Light in Different Media",
+     "items": 4
+    },
+    {
+     "id": "measuring-c",
+     "title": "Measuring the Speed of Light",
+     "items": 4
+    }
+   ],
+   "mcqs": 8,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch21-01",
+    "we-ch21-02",
+    "we-ch21-03",
+    "we-ch21-04",
+    "we-ch21-05",
+    "we-ch21-06",
+    "we-ch21-07",
+    "we-ch21-08"
+   ],
+   "notes": "The shortest chapter in the source: 3 Objective I items and NO Worked Out Examples section at all. The 3 items are rebuilt and the bank topped up to 8 on the historical methods and on c itself. The 6 worked examples are authored on the chapter's own content (Fizeau's wheel, Michelson's rotating mirror, refractive index from speed) rather than adapted, since there was nothing to adapt."
+  },
+  {
+   "file": "ch22.json",
+   "hcv_chapter": 22,
+   "hcv_title": "Photometry",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Not a standalone NCERT chapter — pairs with Ray Optics / the eye; useful as enrichment on luminous intensity and illuminance",
+   "practice_bank_id": "pb-ch22-photometry",
+   "sections": [
+    {
+     "id": "luminous-quantities",
+     "title": "Radiant Versus Luminous Quantities",
+     "items": 3
+    },
+    {
+     "id": "illuminance-laws",
+     "title": "Illuminance: Distance and Tilt",
+     "items": 5
+    },
+    {
+     "id": "units-and-photometers",
+     "title": "Units and Comparison of Sources",
+     "items": 2
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch22-01",
+    "we-ch22-02",
+    "we-ch22-03",
+    "we-ch22-04",
+    "we-ch22-05",
+    "we-ch22-06",
+    "we-ch22-07",
+    "we-ch22-08"
+   ],
+   "notes": "10 Objective I items rebuilt. The recurring skill is the cosine law of illuminance, so several items and worked examples deliberately force the student to decide whether a cosine factor applies."
+  },
+  {
+   "file": "ch23.json",
+   "hcv_chapter": 23,
+   "hcv_title": "Heat and Temperature",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Thermal Properties of Matter (temperature, thermal expansion)",
+   "practice_bank_id": "pb-ch23-heat-temperature",
+   "sections": [
+    {
+     "id": "temperature-and-scales",
+     "title": "Temperature, Equilibrium and Scales",
+     "items": 4
+    },
+    {
+     "id": "thermal-expansion",
+     "title": "Thermal Expansion",
+     "items": 6
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch23-01",
+    "we-ch23-02",
+    "we-ch23-03",
+    "we-ch23-04",
+    "we-ch23-05",
+    "we-ch23-06",
+    "we-ch23-07",
+    "we-ch23-08"
+   ],
+   "notes": "10 Objective I items rebuilt. One source item shows a Celsius-Fahrenheit graph; re-cast as a numerical scale-conversion item. The chapter's opening pages (492-498) have a corrupt text layer in the source PDF, but the Worked Out Examples and Objective sections (499-503) extract cleanly — only the section heading itself was unreadable, which is why the automated section map missed it. Worked examples here track the source's own set: pendulum-clock timing, apparent expansion of a liquid, thermal stress in a clamped wire, and two dissimilar rods side by side."
+  },
+  {
+   "file": "ch24.json",
+   "hcv_chapter": 24,
+   "hcv_title": "Kinetic Theory of Gases",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Kinetic Theory",
+   "practice_bank_id": "pb-ch24-kinetic-theory",
+   "sections": [
+    {
+     "id": "molecular-picture",
+     "title": "The Molecular Picture",
+     "items": 6
+    },
+    {
+     "id": "gas-laws",
+     "title": "Applying the Gas Laws",
+     "items": 6
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 10,
+   "worked_example_ids": [
+    "we-ch24-01",
+    "we-ch24-02",
+    "we-ch24-03",
+    "we-ch24-04",
+    "we-ch24-05",
+    "we-ch24-06",
+    "we-ch24-07",
+    "we-ch24-08",
+    "we-ch24-09",
+    "we-ch24-10"
+   ],
+   "notes": "12 Objective I items rebuilt. Two source items depend on graph figures (pressure-vs-density at two temperatures, and an unlabelled process on a p-V diagram); both re-cast with the graph's content stated in words."
+  },
+  {
+   "file": "ch25.json",
+   "hcv_chapter": 25,
+   "hcv_title": "Calorimetry",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Thermal Properties of Matter (calorimetry, latent heat)",
+   "practice_bank_id": "pb-ch25-calorimetry",
+   "sections": [
+    {
+     "id": "heat-and-specific-heat",
+     "title": "Heat, Temperature and Specific Heat",
+     "items": 5
+    },
+    {
+     "id": "mixing-and-conservation",
+     "title": "Mixtures and What Is Conserved",
+     "items": 5
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch25-01",
+    "we-ch25-02",
+    "we-ch25-03",
+    "we-ch25-04",
+    "we-ch25-05",
+    "we-ch25-06",
+    "we-ch25-07",
+    "we-ch25-08"
+   ],
+   "notes": "Short source chapter — 7 Objective I items, all rebuilt, topped up to 10 with latent-heat and method-of-mixtures items so the bank covers the chapter's numerical work as well as its definitions."
+  },
+  {
+   "file": "ch26.json",
+   "hcv_chapter": 26,
+   "hcv_title": "Laws of Thermodynamics",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Thermodynamics",
+   "practice_bank_id": "pb-ch26-thermodynamics",
+   "sections": [
+    {
+     "id": "first-law",
+     "title": "The First Law",
+     "items": 6
+    },
+    {
+     "id": "processes",
+     "title": "Particular Processes",
+     "items": 3
+    },
+    {
+     "id": "second-law",
+     "title": "The Second Law and Engines",
+     "items": 2
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch26-01",
+    "we-ch26-02",
+    "we-ch26-03",
+    "we-ch26-04",
+    "we-ch26-05",
+    "we-ch26-06",
+    "we-ch26-07",
+    "we-ch26-08"
+   ],
+   "notes": "11 Objective I items rebuilt. Four source items refer to p-V and p-T diagrams; each was re-cast with the process described in words (the physics tested — sign of work, path-independence of internal energy — is unchanged)."
+  },
+  {
+   "file": "ch27.json",
+   "hcv_chapter": 27,
+   "hcv_title": "Specific Heat Capacities of Gases",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Thermodynamics + Kinetic Theory (molar specific heats, ratio of specific heats)",
+   "practice_bank_id": "pb-ch27-specific-heats",
+   "sections": [
+    {
+     "id": "cp-and-cv",
+     "title": "Why Two Specific Heats",
+     "items": 5
+    },
+    {
+     "id": "processes-and-gamma",
+     "title": "Processes and the Ratio γ",
+     "items": 5
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch27-01",
+    "we-ch27-02",
+    "we-ch27-03",
+    "we-ch27-04",
+    "we-ch27-05",
+    "we-ch27-06",
+    "we-ch27-07",
+    "we-ch27-08"
+   ],
+   "notes": "10 Objective I items rebuilt. Two source items refer to unlabelled p-V process figures; re-cast with the process stated algebraically (one of them as the $ p \\propto 1/V $ case the figure showed)."
+  },
+  {
+   "file": "ch28.json",
+   "hcv_chapter": 28,
+   "hcv_title": "Heat Transfer",
+   "ncert_class": 11,
+   "ncert_chapter_hint": "Thermal Properties of Matter (conduction, convection, radiation, Newton's law of cooling)",
+   "practice_bank_id": "pb-ch28-heat-transfer",
+   "sections": [
+    {
+     "id": "conduction",
+     "title": "Conduction",
+     "items": 3
+    },
+    {
+     "id": "radiation",
+     "title": "Radiation and Stefan's Law",
+     "items": 4
+    },
+    {
+     "id": "cooling",
+     "title": "Newton's Law of Cooling",
+     "items": 4
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch28-01",
+    "we-ch28-02",
+    "we-ch28-03",
+    "we-ch28-04",
+    "we-ch28-05",
+    "we-ch28-06",
+    "we-ch28-07",
+    "we-ch28-08"
+   ],
+   "notes": "11 Objective I items rebuilt. One source item shows four candidate cooling curves; re-cast as a question about the *shape* of the cooling curve, which is what the figure was testing."
+  },
+  {
+   "file": "ch29.json",
+   "hcv_chapter": 29,
+   "hcv_title": "Electric Field and Potential",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Electric Charges and Fields + Electrostatic Potential and Capacitance",
+   "practice_bank_id": "pb-ch29-electric-field",
+   "sections": [
+    {
+     "id": "field-lines-and-field",
+     "title": "Field Lines and Electric Field",
+     "items": 4
+    },
+    {
+     "id": "potential-and-energy",
+     "title": "Potential and Potential Energy",
+     "items": 5
+    },
+    {
+     "id": "coulomb-and-superposition",
+     "title": "Coulomb's Law and Superposition",
+     "items": 2
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch29-01",
+    "we-ch29-02",
+    "we-ch29-03",
+    "we-ch29-04",
+    "we-ch29-05",
+    "we-ch29-06",
+    "we-ch29-07",
+    "we-ch29-08"
+   ],
+   "notes": "11 Objective I items rebuilt. Three source items depend on figures (field-line spacing, a charge with three labelled destination points, and a circle around the origin); each was re-cast so the geometry is stated in words."
+  },
+  {
+   "file": "ch30.json",
+   "hcv_chapter": 30,
+   "hcv_title": "Gauss's Law",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Electric Charges and Fields (Gauss's law and its applications)",
+   "practice_bank_id": "pb-ch30-gauss-law",
+   "sections": [
+    {
+     "id": "flux-and-enclosed-charge",
+     "title": "Flux Depends Only on the Enclosed Charge",
+     "items": 4
+    },
+    {
+     "id": "conductors",
+     "title": "Fields and Charges on Conductors",
+     "items": 4
+    },
+    {
+     "id": "symmetric-distributions",
+     "title": "Fields of Symmetric Distributions",
+     "items": 2
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch30-01",
+    "we-ch30-02",
+    "we-ch30-03",
+    "we-ch30-04",
+    "we-ch30-05",
+    "we-ch30-06",
+    "we-ch30-07",
+    "we-ch30-08"
+   ],
+   "notes": "This chapter's text layer is corrupt in the source PDF (a broken ToUnicode font that drops digits), so the Objective I set and the worked-example/exercise topics were read from the rendered page images instead. All 7 Objective I items rebuilt; one (a rod moving through a cube, answered from a flux-vs-time graph) was re-cast as a verbal question about what the flux depends on. Worked examples follow the verified source topics: flux through a plane surface, charged sheet, sphere and shell, line charge, and conductor cavities."
+  },
+  {
+   "file": "ch31.json",
+   "hcv_chapter": 31,
+   "hcv_title": "Capacitors",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Electrostatic Potential and Capacitance",
+   "practice_bank_id": "pb-ch31-capacitors",
+   "sections": [
+    {
+     "id": "combinations",
+     "title": "Series and Parallel Combinations",
+     "items": 5
+    },
+    {
+     "id": "dielectrics-and-energy",
+     "title": "Dielectrics and Stored Energy",
+     "items": 5
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch31-01",
+    "we-ch31-02",
+    "we-ch31-03",
+    "we-ch31-04",
+    "we-ch31-05",
+    "we-ch31-06",
+    "we-ch31-07",
+    "we-ch31-08"
+   ],
+   "notes": "10 Objective I items rebuilt. Three source items depend on circuit figures (a three-capacitor network, a metal foil bridging the plates, and a potential-vs-position graph); each was re-cast with the arrangement stated in words."
+  },
+  {
+   "file": "ch32.json",
+   "hcv_chapter": 32,
+   "hcv_title": "Electric Current in Conductors",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Current Electricity",
+   "practice_bank_id": "pb-ch32-current",
+   "sections": [
+    {
+     "id": "resistance-and-resistivity",
+     "title": "Resistance, Resistivity and Conduction",
+     "items": 5
+    },
+    {
+     "id": "current-and-drift",
+     "title": "Current, Drift and the Battery",
+     "items": 3
+    },
+    {
+     "id": "power-and-heating",
+     "title": "Power and Heating",
+     "items": 3
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch32-01",
+    "we-ch32-02",
+    "we-ch32-03",
+    "we-ch32-04",
+    "we-ch32-05",
+    "we-ch32-06",
+    "we-ch32-07",
+    "we-ch32-08"
+   ],
+   "notes": "11 Objective I items rebuilt. The two thermal-energy-ratio items (series and parallel) are kept as an adjacent pair, since the contrast between them is the teaching point."
+  },
+  {
+   "file": "ch33.json",
+   "hcv_chapter": 33,
+   "hcv_title": "Thermal and Chemical Effects of Electric Current",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Current Electricity (heating effect); thermoelectricity and electrolysis are largely beyond the current NCERT syllabus — treat as enrichment",
+   "practice_bank_id": "pb-ch33-thermal-chemical",
+   "sections": [
+    {
+     "id": "joule-heating",
+     "title": "Joule Heating",
+     "items": 3
+    },
+    {
+     "id": "thermoelectricity",
+     "title": "Thermoelectric Effects",
+     "items": 3
+    },
+    {
+     "id": "electrolysis",
+     "title": "Chemical Effects and Electrolysis",
+     "items": 4
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch33-01",
+    "we-ch33-02",
+    "we-ch33-03",
+    "we-ch33-04",
+    "we-ch33-05",
+    "we-ch33-06",
+    "we-ch33-07",
+    "we-ch33-08"
+   ],
+   "notes": "Short source chapter — 8 Objective I items, of which the first two are graph-identification questions; both re-cast verbally (what power depends on, and how the temperature coefficient bends the curve). Topped up to 10 with electrolysis and Seebeck items. Thermoelectricity and Faraday's laws of electrolysis sit outside the current NCERT syllabus, so this chapter is flagged as enrichment rather than core."
+  },
+  {
+   "file": "ch34.json",
+   "hcv_chapter": 34,
+   "hcv_title": "Magnetic Field",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Moving Charges and Magnetism (magnetic force, cyclotron, force on a current)",
+   "practice_bank_id": "pb-ch34-magnetic-field",
+   "sections": [
+    {
+     "id": "force-on-a-charge",
+     "title": "Force on a Moving Charge",
+     "items": 5
+    },
+    {
+     "id": "paths-in-fields",
+     "title": "Paths in Combined Fields",
+     "items": 4
+    },
+    {
+     "id": "force-on-currents",
+     "title": "Force on Currents and Loops",
+     "items": 2
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch34-01",
+    "we-ch34-02",
+    "we-ch34-03",
+    "we-ch34-04",
+    "we-ch34-05",
+    "we-ch34-06",
+    "we-ch34-07",
+    "we-ch34-08"
+   ],
+   "notes": "11 Objective I items rebuilt. Several source items are a linked family comparing electron/proton/He⁺/Li⁺ on force, radius and frequency; these are kept as a group since the contrast between the three quantities is the teaching point."
+  },
+  {
+   "file": "ch35.json",
+   "hcv_chapter": 35,
+   "hcv_title": "Magnetic Field due to a Current",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Moving Charges and Magnetism (Biot-Savart law, Ampere's law, solenoids, force between currents)",
+   "practice_bank_id": "pb-ch35-field-due-to-current",
+   "sections": [
+    {
+     "id": "directions",
+     "title": "Getting the Direction Right",
+     "items": 5
+    },
+    {
+     "id": "wires-and-loops",
+     "title": "Fields of Wires and Loops",
+     "items": 4
+    },
+    {
+     "id": "paths-and-frames",
+     "title": "Paths, Radii and Reference Frames",
+     "items": 3
+    }
+   ],
+   "mcqs": 12,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch35-01",
+    "we-ch35-02",
+    "we-ch35-03",
+    "we-ch35-04",
+    "we-ch35-05",
+    "we-ch35-06",
+    "we-ch35-07",
+    "we-ch35-08"
+   ],
+   "notes": "The second chapter whose text layer is corrupt in the source PDF, so the full Objective I set (12 items) and the worked-example/exercise topics were read from rendered page images. All 12 items rebuilt; one (a square loop beside a straight wire, answered from a figure) was re-cast with the geometry stated in words."
+  },
+  {
+   "file": "ch36.json",
+   "hcv_chapter": 36,
+   "hcv_title": "Permanent Magnets",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Magnetism and Matter (bar magnets, earth's magnetism, dip and declination)",
+   "practice_bank_id": "pb-ch36-permanent-magnets",
+   "sections": [
+    {
+     "id": "dipoles-and-loops",
+     "title": "Magnetic Dipoles and Current Loops",
+     "items": 5
+    },
+    {
+     "id": "earths-magnetism",
+     "title": "Earth's Magnetism, Dip and Declination",
+     "items": 4
+    },
+    {
+     "id": "measurement",
+     "title": "Measuring Magnetic Quantities",
+     "items": 2
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch36-01",
+    "we-ch36-02",
+    "we-ch36-03",
+    "we-ch36-04",
+    "we-ch36-05",
+    "we-ch36-06",
+    "we-ch36-07",
+    "we-ch36-08"
+   ],
+   "notes": "11 Objective I items rebuilt. One source item asks students to pick a current-deflection graph for a tangent galvanometer; re-cast as a question about the proportionality it embodies."
+  },
+  {
+   "file": "ch37.json",
+   "hcv_chapter": 37,
+   "hcv_title": "Magnetic Properties of Matter",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Magnetism and Matter (dia-, para- and ferromagnetism, hysteresis)",
+   "practice_bank_id": "pb-ch37-magnetic-materials",
+   "sections": [
+    {
+     "id": "three-classes",
+     "title": "Dia-, Para- and Ferromagnetism",
+     "items": 5
+    },
+    {
+     "id": "H-B-and-M",
+     "title": "The Three Magnetic Vectors",
+     "items": 3
+    },
+    {
+     "id": "hysteresis",
+     "title": "Hysteresis and Choosing a Material",
+     "items": 2
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch37-01",
+    "we-ch37-02",
+    "we-ch37-03",
+    "we-ch37-04",
+    "we-ch37-05",
+    "we-ch37-06",
+    "we-ch37-07",
+    "we-ch37-08"
+   ],
+   "notes": "Short source chapter — 7 Objective I items, all rebuilt, topped up to 10 with items on Curie temperature, hysteresis loss and the three magnetic vectors. Worked examples number 8, the source's own worked set being brief."
+  },
+  {
+   "file": "ch38.json",
+   "hcv_chapter": 38,
+   "hcv_title": "Electromagnetic Induction",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Electromagnetic Induction",
+   "practice_bank_id": "pb-ch38-emi",
+   "sections": [
+    {
+     "id": "motional-emf",
+     "title": "Motional EMF",
+     "items": 4
+    },
+    {
+     "id": "lenz-law",
+     "title": "Lenz's Law and the Direction of the Effect",
+     "items": 4
+    },
+    {
+     "id": "inductance",
+     "title": "Self-Inductance and Energy",
+     "items": 3
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch38-01",
+    "we-ch38-02",
+    "we-ch38-03",
+    "we-ch38-04",
+    "we-ch38-05",
+    "we-ch38-06",
+    "we-ch38-07",
+    "we-ch38-08"
+   ],
+   "notes": "11 Objective I items rebuilt. Three source items depend on circuit figures (a switched loop, a sliding rail, a solenoid and a nearby ring); each was re-cast with the arrangement stated in words, since the physics tested is Lenz's law and the flux rule rather than the diagram."
+  },
+  {
+   "file": "ch39.json",
+   "hcv_chapter": 39,
+   "hcv_title": "Alternating Current",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Alternating Current",
+   "practice_bank_id": "pb-ch39-ac",
+   "sections": [
+    {
+     "id": "reactance-and-impedance",
+     "title": "Reactance and Impedance",
+     "items": 4
+    },
+    {
+     "id": "rms-and-peak",
+     "title": "RMS and Peak Values",
+     "items": 3
+    },
+    {
+     "id": "transformers-resonance",
+     "title": "Transformers and Resonance",
+     "items": 3
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch39-01",
+    "we-ch39-02",
+    "we-ch39-03",
+    "we-ch39-04",
+    "we-ch39-05",
+    "we-ch39-06",
+    "we-ch39-07",
+    "we-ch39-08"
+   ],
+   "notes": "Short source chapter — 9 Objective I items, all rebuilt, topped up to 10 with a resonance item. One source item asks which of four curves shows reactance against frequency; re-cast as a question about how each reactance varies."
+  },
+  {
+   "file": "ch40.json",
+   "hcv_chapter": 40,
+   "hcv_title": "Electromagnetic Waves",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Electromagnetic Waves",
+   "practice_bank_id": "pb-ch40-em-waves",
+   "sections": [
+    {
+     "id": "sources-and-displacement-current",
+     "title": "What Makes an Electromagnetic Wave",
+     "items": 4
+    },
+    {
+     "id": "wave-structure",
+     "title": "Structure of the Wave",
+     "items": 3
+    },
+    {
+     "id": "spectrum-and-pressure",
+     "title": "The Spectrum and Radiation Pressure",
+     "items": 3
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch40-01",
+    "we-ch40-02",
+    "we-ch40-03",
+    "we-ch40-04",
+    "we-ch40-05",
+    "we-ch40-06",
+    "we-ch40-07",
+    "we-ch40-08"
+   ],
+   "notes": "Short source chapter — 6 Objective I items, all rebuilt, topped up to 10 with items on the spectrum, energy density and radiation pressure. Worked examples number 8; the source's own worked set is brief."
+  },
+  {
+   "file": "ch41.json",
+   "hcv_chapter": 41,
+   "hcv_title": "Electric Current through Gases",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Largely OUTSIDE the current NCERT syllabus — discharge tubes, thermionic emission, vacuum diodes and triodes. Retain as enrichment / history-of-physics reading, or skip.",
+   "practice_bank_id": "pb-ch41-current-in-gases",
+   "sections": [
+    {
+     "id": "cathode-rays",
+     "title": "Cathode Rays and Discharge Tubes",
+     "items": 3
+    },
+    {
+     "id": "thermionic-emission",
+     "title": "Thermionic Emission and Rectification",
+     "items": 4
+    },
+    {
+     "id": "valves-enrichment",
+     "title": "Vacuum Triodes (Enrichment)",
+     "items": 3
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch41-01",
+    "we-ch41-02",
+    "we-ch41-03",
+    "we-ch41-04",
+    "we-ch41-05",
+    "we-ch41-06",
+    "we-ch41-07",
+    "we-ch41-08"
+   ],
+   "notes": "SYLLABUS FLAG: most of this chapter (vacuum tubes, triodes, discharge phenomena) is no longer in the NCERT Class 12 course. The 8 Objective I items are rebuilt for completeness, but the items on triode plate resistance are marked as enrichment. Two source items are graph-identification questions; both re-cast as statements about the underlying dependence."
+  },
+  {
+   "file": "ch42.json",
+   "hcv_chapter": 42,
+   "hcv_title": "Photoelectric Effect and Wave-Particle Duality",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Dual Nature of Radiation and Matter",
+   "practice_bank_id": "pb-ch42-photoelectric",
+   "sections": [
+    {
+     "id": "photons",
+     "title": "Photons: Energy and Momentum",
+     "items": 5
+    },
+    {
+     "id": "photoelectric-effect",
+     "title": "The Photoelectric Effect",
+     "items": 4
+    },
+    {
+     "id": "matter-waves",
+     "title": "Matter Waves",
+     "items": 2
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch42-01",
+    "we-ch42-02",
+    "we-ch42-03",
+    "we-ch42-04",
+    "we-ch42-05",
+    "we-ch42-06",
+    "we-ch42-07",
+    "we-ch42-08"
+   ],
+   "notes": "11 Objective I items rebuilt, plus de Broglie items to cover the chapter's second half. The photon-momentum family (items 2, 3, 5) is kept together, since the contrast between $ E \\propto 1/\\lambda $ and $ p \\propto 1/\\lambda $ is the point."
+  },
+  {
+   "file": "ch43.json",
+   "hcv_chapter": 43,
+   "hcv_title": "Bohr's Model and Physics of the Atom",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Atoms",
+   "practice_bank_id": "pb-ch43-bohr-model",
+   "sections": [
+    {
+     "id": "quantisation",
+     "title": "Quantisation and Orbits",
+     "items": 5
+    },
+    {
+     "id": "transitions-and-spectra",
+     "title": "Transitions and Spectral Lines",
+     "items": 4
+    },
+    {
+     "id": "limits-of-the-model",
+     "title": "What the Model Gets Right and Wrong",
+     "items": 2
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch43-01",
+    "we-ch43-02",
+    "we-ch43-03",
+    "we-ch43-04",
+    "we-ch43-05",
+    "we-ch43-06",
+    "we-ch43-07",
+    "we-ch43-08"
+   ],
+   "notes": "11 Objective I items rebuilt. One source item asks students to pick a velocity-vs-n graph; re-cast as a question about how orbital speed scales with n. The 'which one-electron system is it?' items exercise the $ Z^{2} $ and $ 1/Z $ scalings and are kept as a pair."
+  },
+  {
+   "file": "ch44.json",
+   "hcv_chapter": 44,
+   "hcv_title": "X-rays",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Partly covered under Atoms / Dual Nature; Moseley's law and Coolidge-tube detail are enrichment beyond the current NCERT syllabus",
+   "practice_bank_id": "pb-ch44-xrays",
+   "sections": [
+    {
+     "id": "nature-of-xrays",
+     "title": "Nature and Production",
+     "items": 6
+    },
+    {
+     "id": "moseley-and-bragg",
+     "title": "Moseley's Law and Bragg Diffraction",
+     "items": 4
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch44-01",
+    "we-ch44-02",
+    "we-ch44-03",
+    "we-ch44-04",
+    "we-ch44-05",
+    "we-ch44-06",
+    "we-ch44-07",
+    "we-ch44-08"
+   ],
+   "notes": "Short source chapter — 7 Objective I items, all rebuilt, topped up to 10 with Moseley's law and Bragg diffraction items. One source item compares two intensity-vs-wavelength graphs from different tubes; re-cast with the two spectra described in words."
+  },
+  {
+   "file": "ch45.json",
+   "hcv_chapter": 45,
+   "hcv_title": "Semiconductors and Semiconductor Devices",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Semiconductor Electronics: Materials, Devices and Simple Circuits",
+   "practice_bank_id": "pb-ch45-semiconductors",
+   "sections": [
+    {
+     "id": "carriers",
+     "title": "Charge Carriers in Semiconductors",
+     "items": 5
+    },
+    {
+     "id": "pn-junction",
+     "title": "The p-n Junction",
+     "items": 4
+    },
+    {
+     "id": "devices",
+     "title": "Diodes, Transistors and Bands",
+     "items": 2
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch45-01",
+    "we-ch45-02",
+    "we-ch45-03",
+    "we-ch45-04",
+    "we-ch45-05",
+    "we-ch45-06",
+    "we-ch45-07",
+    "we-ch45-08"
+   ],
+   "notes": "11 Objective I items rebuilt. The drift/diffusion current pair is kept adjacent, since the contrast between them is the whole basis of junction behaviour."
+  },
+  {
+   "file": "ch46.json",
+   "hcv_chapter": 46,
+   "hcv_title": "The Nucleus",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Nuclei",
+   "practice_bank_id": "pb-ch46-nucleus",
+   "sections": [
+    {
+     "id": "nuclear-structure",
+     "title": "Nuclear Structure and Composition",
+     "items": 5
+    },
+    {
+     "id": "nuclear-force",
+     "title": "The Nuclear Force",
+     "items": 3
+    },
+    {
+     "id": "radioactivity",
+     "title": "Radioactivity and Binding Energy",
+     "items": 3
+    }
+   ],
+   "mcqs": 11,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch46-01",
+    "we-ch46-02",
+    "we-ch46-03",
+    "we-ch46-04",
+    "we-ch46-05",
+    "we-ch46-06",
+    "we-ch46-07",
+    "we-ch46-08"
+   ],
+   "notes": "11 Objective I items rebuilt, including the linked pair contrasting the *nuclear* force alone with the *net* force between nucleons — the contrast is the teaching point, so they are kept adjacent. Radioactivity items added to cover the chapter's second half."
+  },
+  {
+   "file": "ch47.json",
+   "hcv_chapter": 47,
+   "hcv_title": "The Special Theory of Relativity",
+   "ncert_class": 12,
+   "ncert_chapter_hint": "Not a standalone NCERT chapter — mass-energy equivalence appears under Nuclei. Length contraction, time dilation and relativistic momentum are enrichment beyond the current syllabus.",
+   "practice_bank_id": "pb-ch47-relativity",
+   "sections": [
+    {
+     "id": "length-and-time",
+     "title": "Length Contraction and Time Dilation",
+     "items": 4
+    },
+    {
+     "id": "momentum-and-energy",
+     "title": "Relativistic Momentum and Energy",
+     "items": 4
+    },
+    {
+     "id": "mass-energy",
+     "title": "Mass-Energy Equivalence",
+     "items": 2
+    }
+   ],
+   "mcqs": 10,
+   "numericals": 0,
+   "worked_examples": 8,
+   "worked_example_ids": [
+    "we-ch47-01",
+    "we-ch47-02",
+    "we-ch47-03",
+    "we-ch47-04",
+    "we-ch47-05",
+    "we-ch47-06",
+    "we-ch47-07",
+    "we-ch47-08"
+   ],
+   "notes": "SYLLABUS FLAG: only $ E = mc^{2} $ is in the current NCERT course (under Nuclei); the rest of this chapter is enrichment. 9 Objective I items rebuilt, topped up to 10 with a time-dilation item. The 'rod moves' versus 'observer moves' pair is the chapter's central point about relativity of motion and is kept adjacent."
+  }
+ ]
+}

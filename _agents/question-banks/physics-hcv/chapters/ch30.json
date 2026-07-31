@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 30,
+ "hcv_title": "Gauss's Law",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Electric Charges and Fields (Gauss's law and its applications)"
+ },
+ "source_pages": {
+  "worked": "628-630 (read from page images)",
+  "obj1": "631-632 (read from page images)"
+ },
+ "notes": "This chapter's text layer is corrupt in the source PDF (a broken ToUnicode font that drops digits), so the Objective I set and the worked-example/exercise topics were read from the rendered page images instead. All 7 Objective I items rebuilt; one (a rod moving through a cube, answered from a flux-vs-time graph) was re-cast as a verbal question about what the flux depends on. Worked examples follow the verified source topics: flux through a plane surface, charged sheet, sphere and shell, line charge, and conductor cavities.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch30-gauss-law",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Gauss's Law",
+   "intro": "Ten questions on Gauss's law. The single most powerful idea: the flux through a closed surface depends on the enclosed charge and on nothing else at all.",
+   "sections": [
+    {
+     "id": "flux-and-enclosed-charge",
+     "title": "Flux Depends Only on the Enclosed Charge",
+     "blurb": "Not on the shape of the surface, not on where the charge sits inside it.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch30-m01",
+       "source": "mcq",
+       "prompt": "The flux of the electric field through a spherical surface of radius $ 10 $ cm surrounding a total charge is $ 25\\ \\text{V m} $. The flux through a concentric sphere of radius $ 20 $ cm will be",
+       "options": [
+        "$ 50\\ \\text{V m} $",
+        "$ 25\\ \\text{V m} $",
+        "$ 100\\ \\text{V m} $",
+        "$ 200\\ \\text{V m} $"
+       ],
+       "correct_index": 1,
+       "explanation": "Gauss's law gives $ \\Phi = q_{enc}/\\varepsilon_0 $, and the larger sphere encloses the same charge — so the flux is unchanged. The field itself is four times weaker at twice the radius, but the area is four times larger, and the two effects cancel exactly."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch30-m02",
+       "source": "mcq",
+       "prompt": "A charge $ q $ is placed at the centre of the open end of a cylindrical vessel. The flux of the electric field through the surface of the vessel is",
+       "options": [
+        "zero",
+        "$ q/2\\varepsilon_0 $",
+        "$ q/\\varepsilon_0 $",
+        "$ 2q/\\varepsilon_0 $"
+       ],
+       "correct_index": 1,
+       "explanation": "Sitting at the plane of the open mouth, the charge sends half its flux into the vessel and half out into the space beyond. The total flux from the charge is $ q/\\varepsilon_0 $, so the vessel intercepts $ q/2\\varepsilon_0 $. Symmetry, not integration, settles it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch30-m03",
+       "source": "mcq",
+       "prompt": "A charged rod is moved slowly through a small imaginary cube. The flux of the electric field through the cube at any instant depends on",
+       "options": [
+        "how much of the rod's charge is inside the cube at that instant",
+        "the rod's speed",
+        "the total charge on the rod, wherever it lies",
+        "the cube's orientation"
+       ],
+       "correct_index": 0,
+       "explanation": "Only the *enclosed* charge counts. As the rod enters, more of its charge lies inside and the flux rises; once it is entirely within, the flux plateaus; as it leaves, the flux falls. Speed affects only how fast this happens, and charge outside the cube contributes exactly zero net flux."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch30-m04",
+       "source": "mcq",
+       "prompt": "If the flux of the electric field through a closed surface is zero, then",
+       "options": [
+        "the field must be zero everywhere on the surface",
+        "there can be no charge anywhere inside",
+        "there can be no charge near the surface",
+        "the net charge inside must be zero"
+       ],
+       "correct_index": 3,
+       "explanation": "Zero flux means zero *net* enclosed charge — but the surface could well contain a dipole, with equal positive and negative charge inside and a perfectly non-zero field everywhere on it. Gauss's law constrains the net charge, never the field point by point."
+      }
+     ]
+    },
+    {
+     "id": "conductors",
+     "title": "Fields and Charges on Conductors",
+     "blurb": "Why the inside of a metal shell is a sanctuary.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch30-m05",
+       "source": "mcq",
+       "prompt": "A charge $ Q $ is spread uniformly over a large **plastic** plate, giving a field of $ 10\\ \\text{V m}^{-1} $ just outside its centre. If the plate is replaced by a **copper** plate of the same dimensions carrying the same charge $ Q $, the field there becomes",
+       "options": [
+        "zero",
+        "$ 10\\ \\text{V m}^{-1} $",
+        "$ 5\\ \\text{V m}^{-1} $",
+        "$ 20\\ \\text{V m}^{-1} $"
+       ],
+       "correct_index": 1,
+       "explanation": "On the plastic plate the charge stays where it is put, giving $ E = \\sigma/2\\varepsilon_0 $ with $ \\sigma = Q/A $. On the copper plate the charge splits equally between the two faces, so each face carries $ Q/2A $ — but the field just outside a conductor is $ \\sigma/\\varepsilon_0 $, not $ \\sigma/2\\varepsilon_0 $. The factor of two appears twice and cancels: the field is unchanged."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch30-m06",
+       "source": "mcq",
+       "prompt": "An uncharged metallic particle is placed near a finite metal plate carrying a positive charge. The electric force on the particle is",
+       "options": [
+        "away from the plate",
+        "parallel to the plate",
+        "towards the plate",
+        "zero"
+       ],
+       "correct_index": 2,
+       "explanation": "The plate's field induces charge separation in the particle — negative on the near face, positive on the far. The near face sits in a stronger field, so the attraction wins and the particle is pulled in. This is why a charged comb picks up neutral paper scraps."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch30-m07",
+       "source": "mcq",
+       "prompt": "A thin metallic spherical shell carries charge $ Q $. A point charge $ q $ sits at its centre and another charge $ q_1 $ outside it. All charges are positive. The force on the charge at the centre is",
+       "options": [
+        "zero",
+        "directed towards $ q_1 $",
+        "directed away from $ q_1 $",
+        "$ kqq_1/r^{2} $, where $ r $ is the distance to $ q_1 $"
+       ],
+       "correct_index": 0,
+       "explanation": "Charges induced on the shell by the external $ q_1 $ arrange themselves so as to cancel its field completely throughout the shell's interior — electrostatic shielding. The shell's own charge $ Q $, being uniformly distributed, also contributes nothing inside. So the central charge feels no force at all."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch30-m08",
+       "source": "mcq",
+       "prompt": "The electric field inside the material of a charged conductor in electrostatic equilibrium is",
+       "options": [
+        "zero",
+        "$ \\sigma/\\varepsilon_0 $",
+        "$ \\sigma/2\\varepsilon_0 $",
+        "greatest at the centre"
+       ],
+       "correct_index": 0,
+       "explanation": "If any field existed inside the metal, free electrons would move — and that motion is precisely what equilibrium rules out. So the field must be zero, which forces all excess charge to the surface. Applying Gauss's law to a surface just inside then confirms zero enclosed charge."
+      }
+     ]
+    },
+    {
+     "id": "symmetric-distributions",
+     "title": "Fields of Symmetric Distributions",
+     "blurb": "Gauss's law is only useful where symmetry lets you guess the field's shape.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch30-m09",
+       "source": "mcq",
+       "prompt": "Inside a uniformly charged solid sphere, the electric field at distance $ r $ from the centre varies as",
+       "options": [
+        "$ \\propto 1/r^{2} $",
+        "$ \\propto 1/r $",
+        "$ \\propto r $",
+        "it is zero"
+       ],
+       "correct_index": 2,
+       "explanation": "A Gaussian sphere of radius $ r $ encloses charge $ \\propto r^{3} $, and dividing by the area $ \\propto r^{2} $ leaves $ E \\propto r $. So the field rises linearly from zero at the centre to its maximum at the surface, then falls as $ 1/r^{2} $ outside — exactly the pattern gravity shows inside the earth."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch30-m10",
+       "source": "mcq",
+       "prompt": "The electric field at distance $ r $ from a very long uniformly charged straight wire varies as",
+       "options": [
+        "$ \\propto 1/r^{2} $",
+        "$ \\propto 1/r^{3} $",
+        "independent of $ r $",
+        "$ \\propto 1/r $"
+       ],
+       "correct_index": 3,
+       "explanation": "A cylindrical Gaussian surface of radius $ r $ and length $ L $ has curved area $ 2\\pi rL $ and encloses charge $ \\lambda L $, giving $ E = \\lambda/2\\pi\\varepsilon_0 r $. The geometry of the surface sets the power: a sphere gives $ 1/r^{2} $, a cylinder $ 1/r $, and an infinite plane gives a field independent of distance."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch30-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Flux through a plane surface in a uniform field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A uniform electric field of $ 200\\ \\text{N C}^{-1} $ points along the $ +x $ direction. Find the flux through a rectangular surface of area $ 0.4\\ \\text{m}^{2} $ when its plane is (a) perpendicular to the field and (b) tilted so its normal makes $ 60^\\circ $ with the field.",
+    "solution": "$ \\Phi = \\vec{E} \\cdot \\vec{A} = EA\\cos\\theta $, with $ \\theta $ the angle between the field and the **normal** to the surface.\n\n**(a) Plane perpendicular to the field**, so the normal is *along* it and $ \\theta = 0 $:\n\n$ \\Phi = (200)(0.4)(1) = 80\\ \\text{N m}^{2}\\text{C}^{-1} $\n\n**(b) Normal at $ 60^\\circ $:**\n\n$ \\Phi = (200)(0.4)\\cos 60^\\circ = 80(0.5) = 40\\ \\text{N m}^{2}\\text{C}^{-1} $\n\n**Watch out:** the angle in the formula is measured from the normal, not from the plane. A surface *parallel* to the field has its normal perpendicular to it, so $ \\theta = 90^\\circ $ and the flux is zero — no field lines pass through.\n\n**The physical meaning of flux.** It counts the field lines threading the surface. Tilting a window to a stream of rain lets fewer drops through, and the cosine is exactly that geometrical factor."
+   },
+   {
+    "id": "we-ch30-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Field near a large charged sheet",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A large non-conducting sheet carries a uniform surface charge density $ \\sigma = 2 \\times 10^{-6}\\ \\text{C m}^{-2} $. Find the electric field near it, and contrast it with the field near the surface of a charged conductor of the same $ \\sigma $.",
+    "solution": "**For the non-conducting sheet.** Take a Gaussian cylinder piercing the sheet, with flat faces of area $ A $ on either side. Flux emerges through *both* faces:\n\n$ 2EA = \\frac{\\sigma A}{\\varepsilon_0} \\Rightarrow E = \\frac{\\sigma}{2\\varepsilon_0} $\n\n$ E = \\frac{2 \\times 10^{-6}}{2(8.85 \\times 10^{-12})} = 1.13 \\times 10^{5}\\ \\text{N C}^{-1} $\n\n**For a conductor.** The field inside the metal is zero, so flux leaves through only the *one* outer face:\n\n$ EA = \\frac{\\sigma A}{\\varepsilon_0} \\Rightarrow E = \\frac{\\sigma}{\\varepsilon_0} $\n\n— twice as large for the same surface density.\n\n**Where the factor of two comes from.** It is purely about how many faces the flux escapes through: two for a sheet with field on both sides, one for a conductor with a dead interior. Confusing $ \\sigma/\\varepsilon_0 $ with $ \\sigma/2\\varepsilon_0 $ is the most common error in this chapter.\n\n**Note what is absent from the answer:** the distance. An infinite sheet gives a uniform field, because the area of the Gaussian surface does not grow as you move away."
+   },
+   {
+    "id": "we-ch30-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Flux through the faces of a cube",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A charge $ Q $ sits at the centre of a cube. Find the flux through the whole cube and through one face. What if the charge is moved to one corner of the cube?",
+    "solution": "**Charge at the centre.** Gauss's law gives the total flux immediately:\n\n$ \\Phi_{total} = \\frac{Q}{\\varepsilon_0} $\n\nBy symmetry the six faces share it equally:\n\n$ \\Phi_{face} = \\frac{Q}{6\\varepsilon_0} $\n\n**Charge at a corner.** Now the charge sits where eight such cubes would meet, so only one eighth of its flux enters this cube:\n\n$ \\Phi_{total} = \\frac{Q}{8\\varepsilon_0} $\n\nOf the six faces, the three touching the charge receive no flux (the field is parallel to them), so the remaining three share it:\n\n$ \\Phi_{face} = \\frac{Q}{24\\varepsilon_0} $\n\n**Why this is easy and direct integration is not.** Computing $ \\int \\vec{E}\\cdot d\\vec{A} $ over a flat square face with a point charge nearby is a genuinely awkward integral. Gauss's law plus a symmetry argument replaces it with arithmetic.\n\n**The general trick.** Ask how many identical cubes would have to surround the charge to enclose it completely, then divide $ Q/\\varepsilon_0 $ by that number. Centre → 1, face-centre → 2, edge → 4, corner → 8."
+   },
+   {
+    "id": "we-ch30-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Field of a uniformly charged sphere, inside and out",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A sphere of radius $ R $ carries charge $ Q $ spread uniformly through its volume. Find the field at distance $ r $ from the centre for $ r > R $ and $ r < R $.",
+    "solution": "**Outside ($ r > R $).** A Gaussian sphere of radius $ r $ encloses all of $ Q $:\n\n$ E(4\\pi r^{2}) = \\frac{Q}{\\varepsilon_0} \\Rightarrow E = \\frac{Q}{4\\pi\\varepsilon_0 r^{2}} $\n\nExactly as if all the charge were concentrated at the centre.\n\n**Inside ($ r < R $).** Now only the charge within radius $ r $ counts:\n\n$ q_{enc} = Q\\frac{r^{3}}{R^{3}} $\n\n$ E(4\\pi r^{2}) = \\frac{Q r^{3}}{\\varepsilon_0 R^{3}} \\Rightarrow E = \\frac{Qr}{4\\pi\\varepsilon_0 R^{3}} $\n\nSo $ E \\propto r $ inside — zero at the centre, rising linearly.\n\n**The two expressions agree at the surface.** Putting $ r = R $ into either gives $ E = \\frac{Q}{4\\pi\\varepsilon_0 R^{2}} $, which is where the field is greatest. That agreement is a free check on the algebra.\n\n**Compare with a hollow shell**, where the interior field is *zero* rather than proportional to $ r $, because no charge is enclosed at all. Solid and hollow behave identically outside and completely differently inside."
+   },
+   {
+    "id": "we-ch30-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Field of a long charged wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A long straight wire carries a linear charge density $ \\lambda = 4 \\times 10^{-7}\\ \\text{C m}^{-1} $. Find the electric field $ 5 $ cm from it.",
+    "solution": "**Choose a Gaussian surface that matches the symmetry:** a cylinder of radius $ r $ and length $ L $, coaxial with the wire.\n\nThe field is radial, so it is parallel to the flat end faces and contributes no flux there. Only the curved surface counts, with area $ 2\\pi rL $:\n\n$ E(2\\pi rL) = \\frac{\\lambda L}{\\varepsilon_0} $\n\n$ E = \\frac{\\lambda}{2\\pi\\varepsilon_0 r} = \\frac{2k\\lambda}{r} $\n\n**Substitute:**\n\n$ E = \\frac{2(9 \\times 10^{9})(4 \\times 10^{-7})}{0.05} = \\frac{7.2 \\times 10^{3}}{0.05} = 1.44 \\times 10^{5}\\ \\text{N C}^{-1} $\n\n**Note the $ L $ cancelled.** It had to — the answer cannot depend on how long a stretch of wire you chose to enclose.\n\n**Why the choice of surface is the whole art.** Gauss's law is always true but only *useful* when symmetry lets you argue that $ E $ is constant over the surface and perpendicular to it. Sphere for a point charge, cylinder for a line, box for a plane — outside those three symmetries you must integrate instead."
+   },
+   {
+    "id": "we-ch30-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Charge induced on a cavity wall",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A charge $ +5\\ \\mu\\text{C} $ is placed inside a cavity in an uncharged metal block. Find the charge on the cavity wall and on the outer surface of the block.",
+    "solution": "**On the cavity wall.** Take a Gaussian surface within the metal, just outside the cavity. The field inside a conductor is zero, so the flux is zero, so the enclosed charge must be zero:\n\n$ q_{cavity} + q_{wall} = 0 \\Rightarrow q_{wall} = -5\\ \\mu\\text{C} $\n\n**On the outer surface.** The block as a whole was uncharged and remains so, so the charges on it must sum to zero:\n\n$ q_{wall} + q_{outer} = 0 \\Rightarrow q_{outer} = +5\\ \\mu\\text{C} $\n\n**What an outside observer sees.** A field exactly as though $ +5\\ \\mu\\text{C} $ sat at the block's position — the metal hides *where* the charge is, but cannot hide *that* it is there.\n\n**And if the block were earthed?** The outer charge would drain away, leaving only the $ -5\\ \\mu\\text{C} $ on the cavity wall and **no** external field at all. That is the principle of a Faraday cage: earthed metal genuinely conceals what is inside it."
+   },
+   {
+    "id": "we-ch30-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Field inside a hollow charged shell",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Charge $ Q $ is distributed uniformly over the material of a hollow sphere of inner radius $ r_1 $ and outer radius $ r_2 $. Find the field at a point (a) inside the hollow, (b) within the material, and (c) outside.",
+    "solution": "**(a) Inside the hollow ($ r < r_1 $).** A Gaussian sphere there encloses no charge at all:\n\n$ E = 0 $\n\n**(b) Within the material ($ r_1 < r < r_2 $).** The enclosed charge is the fraction of the shell's *volume* lying inside radius $ r $:\n\n$ q_{enc} = Q\\frac{r^{3} - r_1^{3}}{r_2^{3} - r_1^{3}} $\n\n$ E = \\frac{Q}{4\\pi\\varepsilon_0 r^{2}}\\cdot\\frac{r^{3} - r_1^{3}}{r_2^{3} - r_1^{3}} $\n\n**(c) Outside ($ r > r_2 $).** All the charge is enclosed:\n\n$ E = \\frac{Q}{4\\pi\\varepsilon_0 r^{2}} $\n\n**Check the boundaries.** At $ r = r_1 $ the middle expression gives zero, matching (a). At $ r = r_2 $ it reduces to $ \\frac{Q}{4\\pi\\varepsilon_0 r_2^{2}} $, matching (c). Both joins are continuous, which is the reassurance you want.\n\n**Note the assumption.** The charge is spread through the *material*, not on the surfaces — which is only possible for an insulator. On a conductor the charge would flee to the surfaces and the field in the material would be zero throughout."
+   },
+   {
+    "id": "we-ch30-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Field of a charged nucleus",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A gold nucleus ($ Z = 79 $) has radius $ 7.0 \\times 10^{-15} $ m, with its positive charge spread uniformly through its volume. Find the field at (a) its surface and (b) the midpoint of a radius.",
+    "solution": "**Total charge:**\n\n$ Q = Ze = 79(1.6 \\times 10^{-19}) = 1.264 \\times 10^{-17}\\ \\text{C} $\n\n**(a) At the surface**, using the outside formula at $ r = R $:\n\n$ E = \\frac{kQ}{R^{2}} = \\frac{(9 \\times 10^{9})(1.264 \\times 10^{-17})}{(7.0 \\times 10^{-15})^{2}} $\n\n$ = \\frac{1.138 \\times 10^{-7}}{4.9 \\times 10^{-29}} = 2.32 \\times 10^{21}\\ \\text{N C}^{-1} $\n\n**(b) At half the radius.** Inside a uniformly charged sphere $ E \\propto r $, so the field is simply half the surface value:\n\n$ E = 1.16 \\times 10^{21}\\ \\text{N C}^{-1} $\n\n**A staggering magnitude.** Some $ 10^{21}\\ \\text{N C}^{-1} $ — around $ 10^{16} $ times the field that breaks down air. Nuclear-scale fields are in a different universe from laboratory ones.\n\n**Is the uniform-charge assumption justified?** Gold is a conductor in bulk, so one might expect the charge on the outer surface. But a *nucleus* is not a conductor — its protons are bound in place by the strong force and cannot migrate. Bulk conductor reasoning simply does not transfer to nuclear matter, which is exactly why the question is worth asking."
+   }
+  ]
+ }
+}

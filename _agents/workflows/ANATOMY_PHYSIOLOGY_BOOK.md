@@ -7,6 +7,8 @@ supersedes: nothing (extends BOOK_PAGE_WORKFLOW.md for the A&P book specifically
 
 # Anatomy & Physiology Live Book — Canonical Workflow
 
+> **White-text opacity is governed globally** by [`BOOK_PAGE_WORKFLOW.md`](BOOK_PAGE_WORKFLOW.md) §17.3.1 — a strict four-tier scale (`/82` body · `/85` emphasis · `/60` secondary · `/45` meta; ceiling `/85`, floor `/45`, `/90` and the `/25`–`/40` band banned). It applies to every Live Book renderer, this track included — never introduce another `text-white/NN` value.
+>
 > **Read this before authoring or editing ANY page of the `anatomy-physiology` book.**
 > It is the single source of truth for the A&P page template. It **extends**
 > [`BOOK_PAGE_WORKFLOW.md`](BOOK_PAGE_WORKFLOW.md) (block reference, LaTeX, §3.6.1 quiz

@@ -1,0 +1,260 @@
+{
+ "hcv_chapter": 19,
+ "hcv_title": "Optical Instruments",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Ray Optics and Optical Instruments (the eye, microscope, telescope)"
+ },
+ "source_pages": {
+  "worked": "441-444",
+  "obj1": "445"
+ },
+ "notes": "10 Objective I items rebuilt. One source item (comparing two eyes with different near points) needs a stated numerical premise, so it was re-cast with the premise supplied in the stem.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch19-optical-instruments",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — The Eye and Optical Instruments",
+   "intro": "Ten questions on the eye, magnifiers and telescopes. Note that the eye focuses by changing its focal length, never its length.",
+   "sections": [
+    {
+     "id": "the-eye",
+     "title": "The Human Eye",
+     "blurb": "A lens of fixed image distance and variable power.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch19-m01",
+       "source": "mcq",
+       "prompt": "The apparent size of an object as perceived by the eye depends primarily on",
+       "options": [
+        "the size of the image formed on the retina",
+        "the actual size of the object",
+        "the distance of the object from the eye",
+        "the aperture of the pupil"
+       ],
+       "correct_index": 0,
+       "explanation": "The brain judges size from how much of the retina is stimulated, so the retinal image size is what matters directly. Actual size and distance matter only through their effect on it — which is exactly why the moon and a coin held at arm's length can look the same size."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m02",
+       "source": "mcq",
+       "prompt": "The muscles of a normal eye are least strained when it is focused on an object",
+       "options": [
+        "very close to the eye",
+        "at about $ 25 $ cm",
+        "at about $ 1 $ m",
+        "far away"
+       ],
+       "correct_index": 3,
+       "explanation": "The relaxed eye lens is at its flattest and longest focal length, which brings parallel rays from infinity to focus on the retina. Focusing nearer requires the ciliary muscles to contract and fatten the lens. This is why prolonged close work tires the eyes and why looking into the distance rests them."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m03",
+       "source": "mcq",
+       "prompt": "A normal eye cannot focus on objects closer than about $ 25 $ cm because",
+       "options": [
+        "the eye cannot reduce the lens's focal length beyond a limit",
+        "the focal length of the eye is $ 25 $ cm",
+        "the retina is $ 25 $ cm from the eye-lens",
+        "the eye cannot reduce the lens-to-retina distance further"
+       ],
+       "correct_index": 0,
+       "explanation": "The image distance is fixed by the eyeball's geometry — about $ 2 $ cm — so focusing must be done by changing the *focal length*. The ciliary muscles can only fatten the lens so far, which sets a shortest focal length and hence a nearest focusable point."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m04",
+       "source": "mcq",
+       "prompt": "When the eye views objects at different distances, the quantity that stays constant is",
+       "options": [
+        "the focal length of the eye-lens",
+        "the power of the eye-lens",
+        "the distance from the eye-lens to the retina",
+        "the size of the retinal image"
+       ],
+       "correct_index": 2,
+       "explanation": "Unlike a camera, which moves its lens to focus, the eye's lens-to-retina distance is fixed. Accommodation works by altering the lens's curvature, so its focal length and power both change while the image distance never does."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m05",
+       "source": "mcq",
+       "prompt": "The focal length of a normal relaxed eye-lens is about",
+       "options": [
+        "$ 1 $ mm",
+        "$ 25 $ cm",
+        "$ 2 $ cm",
+        "$ 1 $ m"
+       ],
+       "correct_index": 2,
+       "explanation": "A relaxed eye focuses parallel light onto the retina, so the focal length must roughly equal the lens-to-retina distance — about $ 2 $ cm. The figure of $ 25 $ cm is the near point, a property of the shortest focal length the eye can reach, not of the relaxed lens."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m06",
+       "source": "mcq",
+       "prompt": "If the eye-lens sits a distance $ x $ from the retina, the **maximum** focal length of a normal eye-lens is",
+       "options": [
+        "$ < x $",
+        "$ = x $",
+        "$ > x $",
+        "$ = 2x $"
+       ],
+       "correct_index": 1,
+       "explanation": "The longest focal length corresponds to the most relaxed lens, which focuses light from infinity. For that image to land on the retina, the focal length must equal the lens-to-retina distance $ x $. Shorter focal lengths handle nearer objects; a focal length longer than $ x $ would leave even distant objects out of focus."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m07",
+       "source": "mcq",
+       "prompt": "A man wearing spectacles of focal length $ +1 $ m cannot see clearly beyond $ 1 $ m. He must be",
+       "options": [
+        "farsighted",
+        "nearsighted",
+        "of normal vision",
+        "any of these"
+       ],
+       "correct_index": 2,
+       "explanation": "A $ +1 $ m converging lens brings light from infinity to a focus $ 1 $ m away. Placed before a *normal* eye, it makes distant objects appear to come from $ 1 $ m, so anything beyond that becomes blurred. A person with normal vision wearing the wrong glasses gets exactly this symptom."
+      }
+     ]
+    },
+    {
+     "id": "microscopes-and-telescopes",
+     "title": "Magnifiers and Telescopes",
+     "blurb": "Angular magnification, and which focal length to shorten.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch19-m08",
+       "source": "mcq",
+       "prompt": "An object is placed a distance $ u $ from a simple microscope of focal length $ f $. The angular magnification obtained depends",
+       "options": [
+        "on both $ f $ and $ u $",
+        "on $ f $ but not on $ u $",
+        "on $ u $ but not on $ f $",
+        "on neither"
+       ],
+       "correct_index": 0,
+       "explanation": "The angular magnification is $ m = D/u $ where the image position — and hence the usable $ u $ — is itself set by $ f $ through the lens equation. Moving the object changes the magnification, and so does changing the lens. The familiar $ 1 + D/f $ is only the special case where the image is formed at the near point."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m09",
+       "source": "mcq",
+       "prompt": "To increase the angular magnification of a simple microscope, one should increase",
+       "options": [
+        "the focal length of the lens",
+        "the power of the lens",
+        "the aperture of the lens",
+        "the object's actual size"
+       ],
+       "correct_index": 1,
+       "explanation": "Magnification is $ 1 + D/f $, so a *shorter* focal length magnifies more — and shorter focal length means higher power. A larger aperture gathers more light and gives a brighter, better-resolved image, but does not magnify."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch19-m10",
+       "source": "mcq",
+       "prompt": "For an astronomical telescope in normal adjustment, the magnifying power is greatest when",
+       "options": [
+        "both focal lengths are large",
+        "the objective's focal length is large and the eyepiece's small",
+        "the objective's focal length is small and the eyepiece's large",
+        "both focal lengths are small"
+       ],
+       "correct_index": 1,
+       "explanation": "The magnifying power is $ m = f_o/f_e $, so a long objective and a short eyepiece maximise it. A long objective focal length also means a long tube, which is why high-magnification refractors are physically large — and why a big objective *aperture* is separately valuable for gathering light."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch19-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Correcting short sight",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A short-sighted person can see clearly only up to $ 50 $ cm. Find the focal length and power of the correcting lens.",
+    "solution": "The lens must take an object at infinity and produce a virtual image at the person's far point, $ 50 $ cm away, where their eye can focus it.\n\n$ u = \\infty $, $ v = -50 $ cm (virtual, on the same side as the object)\n\n$ \\frac{1}{v} - \\frac{1}{u} = \\frac{1}{f} \\Rightarrow \\frac{1}{-50} - 0 = \\frac{1}{f} $\n\n$ f = -50\\ \\text{cm} = -0.5\\ \\text{m} $\n\n**Power:**\n\n$ P = \\frac{1}{f} = \\frac{1}{-0.5} = -2.0\\ \\text{D} $\n\nA **diverging** lens of $ 2 $ dioptres.\n\n**Why diverging.** A short-sighted eye is too powerful and focuses distant light in front of the retina. Adding negative power spreads the light slightly first, moving the focus back onto the retina.\n\n**A rule worth remembering:** for myopia, $ P = -1/(\\text{far point in metres}) $. A far point of $ 25 $ cm needs $ -4 $ D; a far point of $ 1 $ m needs $ -1 $ D."
+   },
+   {
+    "id": "we-ch19-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Correcting long sight",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A long-sighted person has a near point of $ 75 $ cm. Find the power of the lens needed to let them read at the normal $ 25 $ cm.",
+    "solution": "The lens must take an object at $ 25 $ cm and form a virtual image at $ 75 $ cm, where the eye can focus.\n\n$ u = -25 $ cm, $ v = -75 $ cm\n\n$ \\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u} = \\frac{1}{-75} - \\frac{1}{-25} = -\\frac{1}{75} + \\frac{1}{25} $\n\n$ = \\frac{-1 + 3}{75} = \\frac{2}{75} $\n\n$ f = 37.5\\ \\text{cm} = 0.375\\ \\text{m} $\n\n**Power:**\n\n$ P = \\frac{1}{0.375} = +2.67\\ \\text{D} $\n\nA **converging** lens.\n\n**Why converging.** A long-sighted eye is too weak for close work, focusing near objects behind the retina. Extra positive power pre-converges the light so the eye can finish the job.\n\n**Watch the signs.** Both $ u $ and $ v $ are negative here, and getting either sign wrong flips the lens type entirely. Always state which side each is on before substituting."
+   },
+   {
+    "id": "we-ch19-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Magnifying power of a simple microscope",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A magnifying glass of focal length $ 5 $ cm is used with the image formed (a) at the near point of $ 25 $ cm and (b) at infinity. Find the magnifying power in each case.",
+    "solution": "**(a) Image at the near point.** This gives the maximum magnification:\n\n$ m = 1 + \\frac{D}{f} = 1 + \\frac{25}{5} = 6 $\n\n**(b) Image at infinity.** The eye is relaxed:\n\n$ m = \\frac{D}{f} = \\frac{25}{5} = 5 $\n\n**The trade-off.** Focusing at the near point gains one extra unit of magnification but requires the eye to accommodate fully, which is tiring. Focusing at infinity is slightly weaker but comfortable for prolonged use — which is why instruments are usually set that way.\n\n**Note the direction of the dependence.** Since $ m \\propto 1/f $, a *shorter* focal length magnifies more. A $ 1 $ cm lens would give $ m = 26 $ at the near point — but such a lens is tiny, must be held very close to the object, and suffers badly from aberration, which is the practical ceiling on a single-lens magnifier."
+   },
+   {
+    "id": "we-ch19-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Compound microscope",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A compound microscope has an objective of focal length $ 1 $ cm and an eyepiece of focal length $ 5 $ cm, separated by $ 20 $ cm. The final image is at infinity. Find the magnifying power.",
+    "solution": "**Work through the eyepiece backwards.** For the final image at infinity, the objective's image must lie at the eyepiece's focus:\n\ndistance of intermediate image from objective $ = 20 - 5 = 15\\ \\text{cm} $\n\n**Objective magnification.** Find $ u $ from the lens formula with $ v = 15 $ cm, $ f = 1 $ cm:\n\n$ \\frac{1}{15} - \\frac{1}{u} = \\frac{1}{1} \\Rightarrow \\frac{1}{u} = \\frac{1}{15} - 1 = \\frac{1-15}{15} = -\\frac{14}{15} $\n\n$ u = -1.07\\ \\text{cm} $\n\n$ m_o = \\frac{v}{u} = \\frac{15}{-1.07} = -14 $\n\n**Eyepiece magnification** (image at infinity):\n\n$ m_e = \\frac{D}{f_e} = \\frac{25}{5} = 5 $\n\n**Total:**\n\n$ m = |m_o| \\times m_e = 14 \\times 5 = 70 $\n\n**How a microscope achieves high power.** The objective forms a real, enlarged image, which the eyepiece then magnifies again — magnifications multiply. Note the object sits only just outside the objective's focal length ($ 1.07 $ cm against $ 1 $ cm), which is why the specimen must be almost touching the lens."
+   },
+   {
+    "id": "we-ch19-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Astronomical telescope in normal adjustment",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A telescope has an objective of focal length $ 100 $ cm and an eyepiece of focal length $ 4 $ cm. Find its magnifying power and tube length in normal adjustment.",
+    "solution": "**Magnifying power:**\n\n$ m = \\frac{f_o}{f_e} = \\frac{100}{4} = 25 $\n\n**Tube length.** In normal adjustment the objective's focal point coincides with the eyepiece's, so\n\n$ L = f_o + f_e = 100 + 4 = 104\\ \\text{cm} $\n\n**Why a telescope differs from a microscope.** A telescope views objects effectively at infinity, so the objective's image forms at its focal plane and there is nothing to gain by a short objective. Magnification comes from the *ratio* of focal lengths, so a long objective and short eyepiece are what you want — hence long tubes.\n\n**What the aperture does instead.** A larger objective diameter gathers more light and resolves finer detail, but adds no magnification. Astronomers quote aperture rather than magnification precisely because light-gathering is the binding constraint on seeing faint objects."
+   },
+   {
+    "id": "we-ch19-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Range of clear vision with spectacles",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A person's unaided vision spans $ 20 $ cm to $ 100 $ cm. They wear spectacles that let them see distant objects clearly. Find the new near point.",
+    "solution": "**First find the lens.** To bring infinity to the far point of $ 100 $ cm:\n\n$ f = -100\\ \\text{cm} $ (a diverging lens, $ P = -1 $ D)\n\n**Now find where an object must sit** so this lens forms a virtual image at the unaided near point of $ 20 $ cm:\n\n$ v = -20 $ cm, $ f = -100 $ cm\n\n$ \\frac{1}{u} = \\frac{1}{v} - \\frac{1}{f} = \\frac{1}{-20} - \\frac{1}{-100} = -\\frac{1}{20} + \\frac{1}{100} $\n\n$ = \\frac{-5 + 1}{100} = -\\frac{4}{100} $\n\n$ u = -25\\ \\text{cm} $\n\n**So the new near point is $ 25 $ cm** — the person can now see from $ 25 $ cm to infinity.\n\n**The trade-off spectacles always make.** Correcting the far point pushed the near point out from $ 20 $ cm to $ 25 $ cm. Every corrective lens shifts the *whole* range, so gaining distance vision costs a little close vision. This is exactly why many people remove their distance glasses to read, and why bifocals exist."
+   },
+   {
+    "id": "we-ch19-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Resolving power and the limit of magnification",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why simply increasing a microscope's magnification does not reveal ever finer detail, and what actually sets the limit.",
+    "solution": "**Magnification and resolution are different things.** Magnification makes the image bigger; resolution decides whether two nearby points appear as two points or blur into one.\n\n**What sets the resolution.** Diffraction. The smallest resolvable separation is\n\n$ d_{min} \\approx \\frac{\\lambda}{2\\,n\\sin\\theta} $\n\nwhere $ n\\sin\\theta $ is the numerical aperture. With visible light ($ \\lambda \\approx 500 $ nm) and the best oil-immersion optics, this bottoms out around $ 200 $ nm.\n\n**Empty magnification.** Enlarging beyond that point simply produces a bigger blur — more image, no more information. Optical microscopes are therefore capped near $ 1500\\times $ in useful terms.\n\n**How the limit is beaten.** Since $ d_{min} \\propto \\lambda $, using a much shorter wavelength helps enormously. An electron microscope exploits electron wavelengths of a few picometres and resolves individual atoms — the same formula, a wavelength a hundred thousand times smaller."
+   },
+   {
+    "id": "we-ch19-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Galilean telescope",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A Galilean telescope uses a converging objective of focal length $ 60 $ cm and a **diverging** eyepiece of focal length $ 5 $ cm. Find the magnifying power and tube length for a final image at infinity.",
+    "solution": "**Magnifying power:**\n\n$ m = \\frac{f_o}{|f_e|} = \\frac{60}{5} = 12 $\n\n**Tube length.** The diverging eyepiece must be placed so that the objective's focal point coincides with the eyepiece's *virtual* focus, which lies beyond it:\n\n$ L = f_o - |f_e| = 60 - 5 = 55\\ \\text{cm} $\n\n**Two advantages over the astronomical design.** The tube is shorter ($ 55 $ cm against $ 65 $ cm), and — more importantly — the final image is **erect**. An astronomical telescope with two converging lenses gives an inverted image, which is harmless for stars but useless for terrestrial viewing.\n\n**The cost.** A Galilean telescope has a narrow field of view, which is why opera glasses use it but serious instruments do not. Modern terrestrial telescopes instead use converging lenses plus an erecting prism, keeping the wide field and correcting the inversion separately."
+   }
+  ]
+ }
+}

@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 43,
+ "hcv_title": "Bohr's Model and Physics of the Atom",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Atoms"
+ },
+ "source_pages": {
+  "worked": "869-873",
+  "obj1": "874"
+ },
+ "notes": "11 Objective I items rebuilt. One source item asks students to pick a velocity-vs-n graph; re-cast as a question about how orbital speed scales with n. The 'which one-electron system is it?' items exercise the $ Z^{2} $ and $ 1/Z $ scalings and are kept as a pair.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch43-bohr-model",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Bohr's Model and the Atom",
+   "intro": "Eleven questions on the hydrogen atom. Almost everything follows from three scalings: $ r \\propto n^{2}/Z $, $ E \\propto -Z^{2}/n^{2} $ and $ v \\propto Z/n $.",
+   "sections": [
+    {
+     "id": "quantisation",
+     "title": "Quantisation and Orbits",
+     "blurb": "Angular momentum in units of h/2π.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch43-m01",
+       "source": "mcq",
+       "prompt": "The minimum orbital angular momentum of the electron in a hydrogen atom is",
+       "options": [
+        "$ h $",
+        "$ h/2 $",
+        "$ h/\\lambda $",
+        "$ h/2\\pi $"
+       ],
+       "correct_index": 3,
+       "explanation": "Bohr's condition is $ L = nh/2\\pi $, and the smallest allowed $ n $ is 1, giving $ L = h/2\\pi = \\hbar $. This quantum of angular momentum is why $ \\hbar $ appears throughout atomic physics — it is the natural unit in which nature measures spin and orbital motion."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m02",
+       "source": "mcq",
+       "prompt": "As one considers orbits of higher $ n $ in a hydrogen atom, the electron's orbital **speed**",
+       "options": [
+        "increases as $ n $",
+        "decreases as $ 1/n $",
+        "stays the same",
+        "decreases as $ 1/n^{2} $"
+       ],
+       "correct_index": 1,
+       "explanation": "The three Bohr scalings are $ r \\propto n^{2} $, $ v \\propto 1/n $ and $ E \\propto -1/n^{2} $. Outer electrons orbit larger circles more slowly — and since the period goes as $ r/v \\propto n^{3} $, they take dramatically longer per orbit."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m03",
+       "source": "mcq",
+       "prompt": "As $ n $ increases, the electric **potential energy** of a hydrogen atom",
+       "options": [
+        "decreases",
+        "remains the same",
+        "does not change sign",
+        "increases"
+       ],
+       "correct_index": 3,
+       "explanation": "The potential energy is $ U = -2 \\times 13.6/n^{2} $ eV — negative, and rising towards zero as $ n $ grows. Moving the electron further out means less tightly bound, hence *higher* (less negative) potential energy. Confusing 'larger magnitude' with 'larger value' is the trap here."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m04",
+       "source": "mcq",
+       "prompt": "An atom or ion has a ground-state energy of $ -54.4 $ eV. It may be",
+       "options": [
+        "$ \\text{He}^{+} $",
+        "hydrogen",
+        "deuterium",
+        "$ \\text{Li}^{++} $"
+       ],
+       "correct_index": 0,
+       "explanation": "For a one-electron system $ E_1 = -13.6\\,Z^{2} $ eV. Setting this to $ -54.4 $ gives $ Z^{2} = 4 $, so $ Z = 2 $ — singly ionised helium. $ \\text{Li}^{++} $ with $ Z = 3 $ would give $ -122.4 $ eV, and hydrogen or deuterium $ -13.6 $ eV."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m05",
+       "source": "mcq",
+       "prompt": "The radius of the smallest orbit in a one-electron system is $ 18 $ pm. The system is",
+       "options": [
+        "hydrogen",
+        "$ \\text{He}^{+} $",
+        "$ \\text{Li}^{++} $",
+        "$ \\text{Be}^{+++} $"
+       ],
+       "correct_index": 2,
+       "explanation": "The Bohr radius scales as $ r_1 = 53/Z $ pm, so $ 18 $ pm gives $ Z = 53/18 \\approx 3 $ — doubly ionised lithium. Note that radius goes as $ 1/Z $ while energy goes as $ Z^{2} $: a higher nuclear charge pulls the electron in *and* binds it much more tightly."
+      }
+     ]
+    },
+    {
+     "id": "transitions-and-spectra",
+     "title": "Transitions and Spectral Lines",
+     "blurb": "One photon per jump, and what a set of photons reveals.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch43-m06",
+       "source": "mcq",
+       "prompt": "Three photons from an excited hydrogen sample have energies $ 12.1 $ eV, $ 10.2 $ eV and $ 1.9 $ eV. They must come from",
+       "options": [
+        "a single atom, cascading all the way down",
+        "exactly two atoms, and no more",
+        "either two atoms or three atoms",
+        "exactly three atoms, and no fewer"
+       ],
+       "correct_index": 2,
+       "explanation": "Note that $ 10.2 + 1.9 = 12.1 $, so these are the $ 3\\to1 $, $ 2\\to1 $ and $ 3\\to2 $ transitions. One atom falling $ 3\\to2\\to1 $ produces the $ 1.9 $ and $ 10.2 $ eV photons; another falling $ 3\\to1 $ directly gives $ 12.1 $ eV. So two atoms suffice — but three atoms each making one transition also works."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m07",
+       "source": "mcq",
+       "prompt": "Which transition in hydrogen emits the **longest** wavelength?",
+       "options": [
+        "$ n = 2 \\to n = 1 $",
+        "$ n = 4 \\to n = 3 $",
+        "$ n = 3 \\to n = 1 $",
+        "$ n = 4 \\to n = 1 $"
+       ],
+       "correct_index": 1,
+       "explanation": "Longest wavelength means smallest energy gap. Levels crowd together as $ n $ rises, so $ 4 \\to 3 $ has the smallest gap ($ 0.66 $ eV) of these, against $ 10.2 $ eV for $ 2 \\to 1 $. Transitions to $ n = 1 $ are always the most energetic, which is why the Lyman series lies in the ultraviolet."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m08",
+       "source": "mcq",
+       "prompt": "The ionisation energy of hydrogen from its ground state is",
+       "options": [
+        "$ 10.2 $ eV",
+        "$ 3.4 $ eV",
+        "$ 13.6 $ eV",
+        "$ 27.2 $ eV"
+       ],
+       "correct_index": 2,
+       "explanation": "The ground state sits at $ -13.6 $ eV, so raising the electron to $ E = 0 $ — free, with no kinetic energy — costs exactly $ 13.6 $ eV. Note that $ 10.2 $ eV is the first *excitation* energy ($ n=1 \\to 2 $), a quite different quantity."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m09",
+       "source": "mcq",
+       "prompt": "A hydrogen atom in the $ n = 4 $ state can emit at most how many different wavelengths as it returns to the ground state?",
+       "options": [
+        "$ 3 $",
+        "$ 6 $",
+        "$ 4 $",
+        "$ 10 $"
+       ],
+       "correct_index": 1,
+       "explanation": "The number of distinct transitions from level $ n $ down to the ground state is $ \\frac{n(n-1)}{2} = \\frac{4 \\times 3}{2} = 6 $ — namely $ 4\\to3 $, $ 4\\to2 $, $ 4\\to1 $, $ 3\\to2 $, $ 3\\to1 $ and $ 2\\to1 $. A single atom emits only one cascade, but a *sample* shows all six lines."
+      }
+     ]
+    },
+    {
+     "id": "limits-of-the-model",
+     "title": "What the Model Gets Right and Wrong",
+     "blurb": "Spectacularly successful for hydrogen, and only for hydrogen.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch43-m10",
+       "source": "mcq",
+       "prompt": "Bohr's model fails to account for",
+       "options": [
+        "the spectrum of multi-electron atoms and the fine structure of lines",
+        "the hydrogen spectrum",
+        "the existence of discrete energy levels",
+        "the ionisation energy of hydrogen"
+       ],
+       "correct_index": 0,
+       "explanation": "The model handles one-electron systems beautifully but cannot cope with electron-electron interactions, so it fails for helium onwards. It also offers no account of spectral fine structure, line intensities, or why the quantisation condition should hold — all of which needed quantum mechanics."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch43-m11",
+       "source": "mcq",
+       "prompt": "In Bohr's model, the electron's kinetic energy compared with the magnitude of its total energy is",
+       "options": [
+        "half as large",
+        "twice as large",
+        "equal",
+        "one quarter as large"
+       ],
+       "correct_index": 2,
+       "explanation": "For an inverse-square attraction, $ KE = -E $ and $ U = 2E $ — so the kinetic energy equals the magnitude of the total energy. In hydrogen's ground state that means $ KE = 13.6 $ eV and $ U = -27.2 $ eV. This is the virial theorem, and the same 2:1 relation governs satellite orbits."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch43-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Radius and energy of Bohr orbits",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the radius and energy of the $ n = 3 $ orbit in hydrogen, and in $ \\text{Li}^{++} $.",
+    "solution": "**The two scalings:** $ r_n = \\frac{n^{2}}{Z}(53\\ \\text{pm}) $ and $ E_n = -\\frac{13.6Z^{2}}{n^{2}}\\ \\text{eV} $\n\n**Hydrogen ($ Z = 1 $), $ n = 3 $:**\n\n$ r = 9(53) = 477\\ \\text{pm} $\n\n$ E = -\\frac{13.6}{9} = -1.51\\ \\text{eV} $\n\n**$ \\text{Li}^{++} $ ($ Z = 3 $), $ n = 3 $:**\n\n$ r = \\frac{9}{3}(53) = 159\\ \\text{pm} $\n\n$ E = -\\frac{13.6(9)}{9} = -13.6\\ \\text{eV} $\n\n**Note the opposite dependences on $ Z $.** The radius shrinks as $ 1/Z $ while the binding energy grows as $ Z^{2} $ — a higher nuclear charge pulls the electron closer *and* holds it far more tightly. Nine times the binding energy at one third the radius.\n\n**A coincidence worth noticing.** $ \\text{Li}^{++} $ at $ n = 3 $ has exactly hydrogen's ground-state energy, because $ Z^{2}/n^{2} = 9/9 = 1 $. Any one-electron system with $ n = Z $ shares that energy."
+   },
+   {
+    "id": "we-ch43-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Wavelength of a spectral line",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the wavelength of the photon emitted when a hydrogen atom falls from $ n = 3 $ to $ n = 2 $ (the H-alpha line).",
+    "solution": "**Energy of each level:**\n\n$ E_3 = -\\frac{13.6}{9} = -1.51\\ \\text{eV} $\n\n$ E_2 = -\\frac{13.6}{4} = -3.40\\ \\text{eV} $\n\n**Photon energy:**\n\n$ \\Delta E = E_3 - E_2 = -1.51 - (-3.40) = 1.89\\ \\text{eV} $\n\n**Wavelength**, using $ \\lambda(\\text{nm}) = 1240/E(\\text{eV}) $:\n\n$ \\lambda = \\frac{1240}{1.89} = 656\\ \\text{nm} $\n\n**This is the red H-alpha line** — the brightest line in the Balmer series, and the reason hydrogen-rich nebulae photograph red.\n\n**Watch the sign convention.** Both energies are negative, and the *difference* must come out positive since a photon is emitted. Subtracting the wrong way round gives a negative photon energy, which should stop you immediately."
+   },
+   {
+    "id": "we-ch43-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Series limits",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the shortest and longest wavelengths of the Lyman series in hydrogen.",
+    "solution": "The Lyman series consists of all transitions ending at $ n = 1 $.\n\n**Shortest wavelength (series limit)** — from $ n = \\infty $:\n\n$ \\Delta E = 0 - (-13.6) = 13.6\\ \\text{eV} $\n\n$ \\lambda = \\frac{1240}{13.6} = 91.2\\ \\text{nm} $\n\n**Longest wavelength** — from the nearest level, $ n = 2 $:\n\n$ \\Delta E = -3.40 - (-13.6) = 10.2\\ \\text{eV} $\n\n$ \\lambda = \\frac{1240}{10.2} = 121.6\\ \\text{nm} $\n\n**Both lie deep in the ultraviolet**, which is why the Lyman series is invisible to the eye and was discovered only with photographic and vacuum-spectrograph techniques.\n\n**Why every series converges.** The energy levels crowd towards $ E = 0 $, so the transitions bunch up towards the series limit — the lines get closer and closer together and then stop. Beyond the limit lies a *continuum*, corresponding to a free electron with kinetic energy to spare.\n\n**Contrast the Balmer series** (ending at $ n = 2 $), whose limit is $ 365 $ nm and whose longest line is the $ 656 $ nm H-alpha — putting four of its lines in the visible band."
+   },
+   {
+    "id": "we-ch43-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Excitation by electron collision",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Electrons of kinetic energy $ 12.5 $ eV bombard ground-state hydrogen atoms. Which levels can be excited, and what wavelengths will be emitted?",
+    "solution": "**Energy needed for each excitation** from $ n = 1 $ at $ -13.6 $ eV:\n\nTo $ n = 2 $ ($ -3.40 $ eV): $ 10.2 $ eV ✓ available\n\nTo $ n = 3 $ ($ -1.51 $ eV): $ 12.1 $ eV ✓ available\n\nTo $ n = 4 $ ($ -0.85 $ eV): $ 12.75 $ eV ✗ exceeds $ 12.5 $ eV\n\n**So excitation reaches $ n = 3 $ at most.**\n\n**Emitted wavelengths.** Three transitions are possible:\n\n$ 3 \\to 2 $: $ 1.89 $ eV → $ 656 $ nm\n\n$ 3 \\to 1 $: $ 12.1 $ eV → $ 102 $ nm\n\n$ 2 \\to 1 $: $ 10.2 $ eV → $ 122 $ nm\n\n**Why the electron may give up only part of its energy.** A colliding electron is free to transfer any amount, keeping the rest as kinetic energy — so $ 12.5 $ eV electrons can excite the $ 10.2 $ eV or $ 12.1 $ eV transitions and carry on with the remainder.\n\n**Contrast with photon absorption.** A photon must be absorbed whole, so only photons of *exactly* $ 10.2 $, $ 12.1 $ eV and so on can excite the atom. This difference between collisional and radiative excitation is exactly what the Franck-Hertz experiment demonstrated."
+   },
+   {
+    "id": "we-ch43-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Speed and period of the electron",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the electron's speed in the ground state of hydrogen, and the number of revolutions it makes per second.",
+    "solution": "**Speed from the quantisation condition.** With $ mvr = \\frac{nh}{2\\pi} $ and $ r_1 = 53 $ pm:\n\n$ v = \\frac{h}{2\\pi m r} = \\frac{6.63 \\times 10^{-34}}{2\\pi(9.1 \\times 10^{-31})(53 \\times 10^{-12})} $\n\n$ = \\frac{6.63 \\times 10^{-34}}{3.03 \\times 10^{-40}} = 2.19 \\times 10^{6}\\ \\text{m s}^{-1} $\n\n**Revolutions per second:**\n\n$ f = \\frac{v}{2\\pi r} = \\frac{2.19 \\times 10^{6}}{2\\pi(53 \\times 10^{-12})} = \\frac{2.19 \\times 10^{6}}{3.33 \\times 10^{-10}} = 6.6 \\times 10^{15}\\ \\text{s}^{-1} $\n\n**Six and a half thousand million million orbits per second.** This is why an atom appears to have a smooth, static electron cloud on any observable timescale.\n\n**Note the fine-structure constant hiding here.** $ v/c = 2.19 \\times 10^{6}/3 \\times 10^{8} = 1/137 $ — the electron in hydrogen moves at $ 0.73\\% $ of light speed. That the ratio is small is why non-relativistic Bohr theory works as well as it does; that it is not *zero* is why fine structure exists at all."
+   },
+   {
+    "id": "we-ch43-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Number of spectral lines from an excited level",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A hydrogen sample is excited to the $ n = 5 $ level. How many distinct spectral lines can it emit, and how many of them belong to the Balmer series?",
+    "solution": "**Total number of lines.** Every pair of levels from 1 to 5 gives one transition:\n\n$ N = \\frac{n(n-1)}{2} = \\frac{5 \\times 4}{2} = 10 $\n\n**Balmer lines** — those ending at $ n = 2 $:\n\n$ 5 \\to 2 $, $ 4 \\to 2 $, $ 3 \\to 2 $ — **three** lines.\n\n**The full breakdown.**\n\nLyman (to $ n=1 $): $ 5\\to1, 4\\to1, 3\\to1, 2\\to1 $ — 4 lines\n\nBalmer (to $ n=2 $): 3 lines\n\nPaschen (to $ n=3 $): $ 5\\to3, 4\\to3 $ — 2 lines\n\nBrackett (to $ n=4 $): $ 5\\to4 $ — 1 line\n\nTotal $ 4+3+2+1 = 10 $ ✓\n\n**Why the counting formula works.** Choosing any 2 of the $ n $ levels defines one transition, and $ \\binom{n}{2} = \\frac{n(n-1)}{2} $. Note that a *single* atom emits only one cascade of at most $ n-1 $ photons; seeing all ten lines requires a sample of many atoms taking different routes down."
+   },
+   {
+    "id": "we-ch43-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Rydberg constant from the Bohr model",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Use the Bohr energy levels to find the Rydberg constant, and check it against the H-alpha wavelength.",
+    "solution": "**The Bohr result** written in wavenumber form:\n\n$ \\frac{1}{\\lambda} = \\frac{\\Delta E}{hc} = \\frac{13.6}{hc}\\left(\\frac{1}{n_1^{2}} - \\frac{1}{n_2^{2}}\\right) $\n\nSo $ R = \\frac{13.6\\ \\text{eV}}{hc} $.\n\n**Evaluate**, with $ 13.6\\ \\text{eV} = 2.18 \\times 10^{-18} $ J:\n\n$ R = \\frac{2.18 \\times 10^{-18}}{(6.63 \\times 10^{-34})(3 \\times 10^{8})} = \\frac{2.18 \\times 10^{-18}}{1.989 \\times 10^{-25}} $\n\n$ = 1.096 \\times 10^{7}\\ \\text{m}^{-1} $\n\nThe accepted value is $ 1.097 \\times 10^{7}\\ \\text{m}^{-1} $ ✓\n\n**Check against H-alpha ($ 3 \\to 2 $):**\n\n$ \\frac{1}{\\lambda} = R\\left(\\frac{1}{4} - \\frac{1}{9}\\right) = (1.097 \\times 10^{7})(0.1389) = 1.524 \\times 10^{6}\\ \\text{m}^{-1} $\n\n$ \\lambda = 656\\ \\text{nm} $ ✓ — matching the earlier calculation.\n\n**Why this was Bohr's decisive triumph.** The Rydberg constant had been *measured* spectroscopically for decades with no explanation. Bohr's model derived it from $ m $, $ e $, $ h $ and $ \\varepsilon_0 $ alone — an entirely independent route to a known number, agreeing to four figures."
+   },
+   {
+    "id": "we-ch43-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Recoil and the limits of the model",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why the Bohr model gives slightly different spectral wavelengths for hydrogen and deuterium, even though both have $ Z = 1 $.",
+    "solution": "**The flaw in treating the nucleus as fixed.** Both the electron and the nucleus orbit their common centre of mass. The correct treatment replaces the electron mass $ m $ by the *reduced mass*\n\n$ \\mu = \\frac{m M}{m + M} $\n\nwhere $ M $ is the nuclear mass.\n\n**For hydrogen** ($ M \\approx 1836m $):\n\n$ \\mu = \\frac{1836}{1837}m = 0.99946m $\n\n**For deuterium** ($ M \\approx 3672m $):\n\n$ \\mu = \\frac{3672}{3673}m = 0.99973m $\n\n**Effect on the spectrum.** Since $ E \\propto \\mu $, deuterium's levels are deeper by a factor of about $ 1.00027 $, so its lines sit at slightly *shorter* wavelengths. For H-alpha at $ 656.3 $ nm the shift is about $ 0.18 $ nm — small, but easily resolved.\n\n**How this was used.** Urey discovered deuterium in 1932 by spotting exactly these faint companion lines beside the hydrogen ones, and won the Nobel Prize for it. A refinement to a model can be as informative as the model itself."
+   }
+  ]
+ }
+}

@@ -1,0 +1,4 @@
+{
+  "_readme": "Reusable Live Book diagram library. NOT tied to any specific page/block — these are canonical, chapter-level reference illustrations (orbital shapes, energy diagrams, standard experiments) redrawn in the platform's dark hand-drawn style from real reference images, meant to be reused across multiple pages/chapters. See _agents/assets/image_library/README.md for the workflow. Populated via scripts/livebook-images/library_ingest.js.",
+  "entries": []
+}

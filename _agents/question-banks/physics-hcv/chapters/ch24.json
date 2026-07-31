@@ -1,0 +1,308 @@
+{
+ "hcv_chapter": 24,
+ "hcv_title": "Kinetic Theory of Gases",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Kinetic Theory"
+ },
+ "source_pages": {
+  "worked": "517-523",
+  "obj1": "524"
+ },
+ "notes": "12 Objective I items rebuilt. Two source items depend on graph figures (pressure-vs-density at two temperatures, and an unlabelled process on a p-V diagram); both re-cast with the graph's content stated in words.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch24-kinetic-theory",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Kinetic Theory of Gases",
+   "intro": "Twelve questions on gases as swarms of molecules. The single most useful fact: average translational kinetic energy depends on temperature alone.",
+   "sections": [
+    {
+     "id": "molecular-picture",
+     "title": "The Molecular Picture",
+     "blurb": "What temperature actually measures.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch24-m01",
+       "source": "mcq",
+       "prompt": "At a given temperature, which quantity is the same for the molecules of **all** gases?",
+       "options": [
+        "Mass of a molecule",
+        "Root-mean-square speed",
+        "Average linear momentum",
+        "Average translational kinetic energy"
+       ],
+       "correct_index": 3,
+       "explanation": "The average translational kinetic energy is $ \\frac{3}{2}kT $ — it depends on temperature and nothing else. Heavier molecules compensate for their greater mass by moving more slowly, so speed, momentum and mass all differ from gas to gas while the energy does not."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m02",
+       "source": "mcq",
+       "prompt": "A real gas behaves most nearly like an ideal gas at",
+       "options": [
+        "low pressure and low temperature",
+        "high pressure and low temperature",
+        "high pressure and high temperature",
+        "low pressure and high temperature"
+       ],
+       "correct_index": 3,
+       "explanation": "The ideal-gas model assumes point molecules with no mutual attraction. Low pressure keeps them far apart so their own volume is negligible, and high temperature gives them enough kinetic energy to ignore intermolecular attraction. The opposite corner — high pressure, low temperature — is exactly where gases liquefy."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m03",
+       "source": "mcq",
+       "prompt": "The pressure of an ideal gas is written $ p = \\frac{2E}{3V} $. Here $ E $ refers to the gas's",
+       "options": [
+        "rotational kinetic energy",
+        "vibrational kinetic energy",
+        "total kinetic energy",
+        "translational kinetic energy"
+       ],
+       "correct_index": 3,
+       "explanation": "Pressure comes from molecules striking the walls, and only their *translational* motion carries them into the walls. Rotation and vibration store energy but contribute nothing to wall collisions — which is why a diatomic gas exerts the same pressure as a monatomic one at the same temperature and density."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m04",
+       "source": "mcq",
+       "prompt": "The internal energy of a given sample of an ideal gas depends only on its",
+       "options": [
+        "volume",
+        "pressure",
+        "temperature",
+        "density"
+       ],
+       "correct_index": 2,
+       "explanation": "With no intermolecular forces there is no potential energy to speak of, so the internal energy is purely kinetic — and that is fixed by temperature. This is why an ideal gas expanding isothermally has unchanged internal energy, however much its volume and pressure alter."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m05",
+       "source": "mcq",
+       "prompt": "At a given temperature, which gas has the greatest rms speed?",
+       "options": [
+        "Hydrogen",
+        "Nitrogen",
+        "Oxygen",
+        "Carbon dioxide"
+       ],
+       "correct_index": 0,
+       "explanation": "Since $ v_{rms} = \\sqrt{3RT/M} $, the lightest gas is the fastest — and hydrogen, with $ M = 2 $, is lightest by a wide margin. This is also why hydrogen and helium escape a planet's atmosphere most readily: their molecules most often exceed escape velocity."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m06",
+       "source": "mcq",
+       "prompt": "For an ideal gas, graphs of pressure against **density** are straight lines through the origin, one for each temperature. The line of greater slope corresponds to",
+       "options": [
+        "the higher temperature",
+        "the lower temperature",
+        "neither — the slopes are equal",
+        "a temperature that cannot be inferred"
+       ],
+       "correct_index": 0,
+       "explanation": "Writing $ pV = nRT $ in terms of density gives $ p = \\frac{\\rho RT}{M} $, so the slope of $ p $ against $ \\rho $ is $ RT/M $ — directly proportional to temperature. A steeper line therefore means a hotter gas."
+      }
+     ]
+    },
+    {
+     "id": "gas-laws",
+     "title": "Applying the Gas Laws",
+     "blurb": "Which variable is being held still?",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch24-m07",
+       "source": "mcq",
+       "prompt": "A gas in an isothermal container is at $ 200 $ kPa. If half the gas is removed, the pressure becomes",
+       "options": [
+        "$ 200 $ kPa",
+        "$ 400 $ kPa",
+        "$ 50 $ kPa",
+        "$ 100 $ kPa"
+       ],
+       "correct_index": 3,
+       "explanation": "With $ V $ and $ T $ fixed, $ p \\propto n $. Halving the number of molecules halves the rate of wall collisions and so halves the pressure, to $ 100 $ kPa. Note this is *not* Boyle's law — the amount of gas is changing, which Boyle's law assumes it does not."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m08",
+       "source": "mcq",
+       "prompt": "The rms speed of oxygen molecules is $ v $. If the temperature is doubled **and** the molecules dissociate into oxygen atoms, the rms speed becomes",
+       "options": [
+        "$ 2v $",
+        "$ v $",
+        "$ \\sqrt{2}v $",
+        "$ 4v $"
+       ],
+       "correct_index": 0,
+       "explanation": "$ v_{rms} = \\sqrt{3RT/M} $. Doubling $ T $ multiplies it by $ \\sqrt{2} $; halving $ M $ (molecules to atoms) multiplies it by another $ \\sqrt{2} $. Together that is $ \\sqrt{2}\\times\\sqrt{2} = 2 $, so the speed doubles. Both changes must be applied, and each contributes a square root."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m09",
+       "source": "mcq",
+       "prompt": "The quantity $ \\frac{pV}{kT} $ represents",
+       "options": [
+        "the mass of the gas",
+        "the kinetic energy of the gas",
+        "the number of molecules in the gas",
+        "the number of moles of the gas"
+       ],
+       "correct_index": 2,
+       "explanation": "Writing the gas law in molecular form, $ pV = NkT $, gives $ N = pV/kT $ directly. Using $ R $ instead of $ k $ in the denominator would give the number of *moles*, since $ R = N_A k $ — the two constants are what distinguish molecule-counting from mole-counting."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m10",
+       "source": "mcq",
+       "prompt": "A process on an ideal gas is represented by a vertical straight line on a $ p $-$ V $ diagram (pressure axis vertical). The process is",
+       "options": [
+        "isothermal",
+        "isochoric",
+        "isobaric",
+        "adiabatic"
+       ],
+       "correct_index": 1,
+       "explanation": "A vertical line means the volume is unchanged while the pressure varies — that is an isochoric (constant-volume) process. An isobaric process would be horizontal, and both isothermal and adiabatic processes give curves."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m11",
+       "source": "mcq",
+       "prompt": "Some liquid sits in a closed bottle at constant temperature. The amount of vapour above it",
+       "options": [
+        "keeps increasing indefinitely",
+        "settles at a value fixed by the temperature",
+        "keeps decreasing",
+        "depends on the bottle's volume alone"
+       ],
+       "correct_index": 1,
+       "explanation": "Evaporation and condensation reach a dynamic balance, and the resulting saturated vapour pressure depends only on the temperature and the liquid. Once that pressure is reached the vapour density is fixed, whatever the space above the liquid — which is why humidity is quoted relative to a temperature."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch24-m12",
+       "source": "mcq",
+       "prompt": "The mean free path of gas molecules at constant temperature varies with pressure as",
+       "options": [
+        "$ \\propto p $",
+        "$ \\propto p^{2} $",
+        "$ \\propto 1/p $",
+        "independent of $ p $"
+       ],
+       "correct_index": 2,
+       "explanation": "Mean free path is $ \\lambda = \\frac{1}{\\sqrt{2}\\pi d^{2}n} $, and at fixed temperature the number density $ n $ is proportional to pressure. So $ \\lambda \\propto 1/p $ — pump a vessel down and molecules travel much further between collisions, which is exactly what makes a vacuum tube or an electron microscope possible."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch24-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — rms speed of a gas",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the rms speed of nitrogen molecules at $ 27 $ °C. Take $ M = 28\\ \\text{g mol}^{-1} $ and $ R = 8.31\\ \\text{J mol}^{-1}\\text{K}^{-1} $.",
+    "solution": "**Convert to kelvin and to SI units for the molar mass:**\n\n$ T = 300 $ K, $ M = 28 \\times 10^{-3}\\ \\text{kg mol}^{-1} $\n\n$ v_{rms} = \\sqrt{\\frac{3RT}{M}} = \\sqrt{\\frac{3(8.31)(300)}{28 \\times 10^{-3}}} $\n\n$ = \\sqrt{\\frac{7479}{0.028}} = \\sqrt{2.67 \\times 10^{5}} = 517\\ \\text{m s}^{-1} $\n\n**Put that in perspective.** Air molecules around you are moving at roughly $ 500\\ \\text{m s}^{-1} $ — faster than a rifle bullet. They travel nowhere fast only because they collide about $ 10^{9} $ times per second.\n\n**Watch the two unit traps.** The temperature must be absolute, and the molar mass must be in kg per mole. Using $ 28 $ instead of $ 0.028 $ shrinks the answer by a factor of $ \\sqrt{1000} \\approx 32 $, and the result still looks like a plausible speed."
+   },
+   {
+    "id": "we-ch24-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Three kinds of average speed",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "For oxygen at $ 300 $ K ($ M = 32\\ \\text{g mol}^{-1} $), find the rms speed, the mean speed and the most probable speed.",
+    "solution": "**rms speed:**\n\n$ v_{rms} = \\sqrt{\\frac{3RT}{M}} = \\sqrt{\\frac{3(8.31)(300)}{0.032}} = \\sqrt{2.34 \\times 10^{5}} = 484\\ \\text{m s}^{-1} $\n\n**Mean speed:**\n\n$ \\bar{v} = \\sqrt{\\frac{8RT}{\\pi M}} = 0.921\\,v_{rms} = 446\\ \\text{m s}^{-1} $\n\n**Most probable speed:**\n\n$ v_{mp} = \\sqrt{\\frac{2RT}{M}} = 0.816\\,v_{rms} = 395\\ \\text{m s}^{-1} $\n\n**The ordering is always the same:**\n\n$ v_{mp} < \\bar{v} < v_{rms} $, in the fixed ratio $ 1 : 1.128 : 1.225 $\n\n**Why they differ at all.** The Maxwell distribution has a long tail towards high speeds. Squaring before averaging weights that tail heavily, which pushes $ v_{rms} $ highest; the peak of the distribution sits lowest. Knowing the ordering is a quick check on any answer — if your 'mean' exceeds your 'rms', something has gone wrong."
+   },
+   {
+    "id": "we-ch24-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Using the ideal gas equation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A vessel of volume $ 8.3\\ \\text{litres} $ contains oxygen at $ 27 $ °C and $ 1 $ atm. Find the number of moles and the number of molecules. Take $ 1\\ \\text{atm} = 1.0 \\times 10^{5} $ Pa.",
+    "solution": "**Convert to SI:** $ V = 8.3 \\times 10^{-3}\\ \\text{m}^{3} $, $ T = 300 $ K\n\n**Number of moles:**\n\n$ n = \\frac{pV}{RT} = \\frac{(1.0 \\times 10^{5})(8.3 \\times 10^{-3})}{(8.31)(300)} = \\frac{830}{2493} = 0.333\\ \\text{mol} $\n\n**Number of molecules:**\n\n$ N = nN_A = 0.333 \\times 6.02 \\times 10^{23} = 2.0 \\times 10^{23} $\n\n**A sense of the scale.** A third of a mole in a vessel the size of a large bottle contains two hundred thousand billion billion molecules. This is why statistical averages are so reliable in thermodynamics — fluctuations go as $ 1/\\sqrt{N} $, which here is about $ 10^{-12} $.\n\n**Note what did not matter.** Oxygen's molar mass never entered. The gas law counts molecules, not their mass, so any gas at the same $ p $, $ V $ and $ T $ holds the same number of them — which is Avogadro's hypothesis."
+   },
+   {
+    "id": "we-ch24-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Average kinetic energy and temperature",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the average translational kinetic energy of a molecule at $ 27 $ °C, and the total translational kinetic energy of one mole. Take $ k = 1.38 \\times 10^{-23}\\ \\text{J K}^{-1} $.",
+    "solution": "**Per molecule:**\n\n$ \\bar{E} = \\frac{3}{2}kT = \\frac{3}{2}(1.38 \\times 10^{-23})(300) = 6.21 \\times 10^{-21}\\ \\text{J} $\n\n**Per mole:**\n\n$ E = \\frac{3}{2}RT = \\frac{3}{2}(8.31)(300) = 3739\\ \\text{J} \\approx 3.7\\ \\text{kJ} $\n\n**What this reveals about temperature.** It contains no reference to which gas — hydrogen and carbon dioxide molecules at $ 300 $ K have identical average translational energy. Temperature *is* a measure of that energy, which is why thermal equilibrium means equal temperature.\n\n**Note the restriction to 'translational'.** A diatomic molecule also stores rotational energy, so its *total* internal energy is $ \\frac{5}{2}RT $ per mole rather than $ \\frac{3}{2}RT $. But the translational share — the part that produces pressure — is the same for every gas."
+   },
+   {
+    "id": "we-ch24-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Mixture of two gases",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A vessel holds $ 2 $ g of hydrogen and $ 16 $ g of oxygen at $ 300 $ K in a volume of $ 10 $ litres. Find the total pressure.",
+    "solution": "**Moles of each gas:**\n\nHydrogen: $ n_1 = \\frac{2}{2} = 1\\ \\text{mol} $\n\nOxygen: $ n_2 = \\frac{16}{32} = 0.5\\ \\text{mol} $\n\n**Total moles:** $ n = 1.5 $\n\n**Total pressure**, using Dalton's law (each gas exerts its own partial pressure and they simply add):\n\n$ p = \\frac{nRT}{V} = \\frac{(1.5)(8.31)(300)}{10 \\times 10^{-3}} = \\frac{3739}{0.01} = 3.74 \\times 10^{5}\\ \\text{Pa} $\n\nAbout $ 3.7 $ atm.\n\n**Why the partial pressures simply add.** In an ideal gas the molecules ignore one another, so each species behaves as though it alone occupied the vessel. Hydrogen contributes $ 2.49 \\times 10^{5} $ Pa and oxygen $ 1.25 \\times 10^{5} $ Pa.\n\n**Worth noticing:** hydrogen supplies two thirds of the pressure despite being one eighth of the mass. Pressure counts molecules, not grams — and $ 2 $ g of hydrogen is a whole mole of them."
+   },
+   {
+    "id": "we-ch24-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Boyle's and Charles's laws combined",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A gas at $ 27 $ °C and $ 1 $ atm occupies $ 6 $ litres. Find its volume at $ 127 $ °C and $ 2 $ atm.",
+    "solution": "Use the combined gas law, which handles both changes at once:\n\n$ \\frac{p_1V_1}{T_1} = \\frac{p_2V_2}{T_2} $\n\n**Convert temperatures to kelvin** — this is where most errors occur:\n\n$ T_1 = 300 $ K, $ T_2 = 400 $ K\n\n$ V_2 = V_1 \\times \\frac{p_1}{p_2} \\times \\frac{T_2}{T_1} = 6 \\times \\frac{1}{2} \\times \\frac{400}{300} $\n\n$ = 6 \\times 0.5 \\times 1.333 = 4\\ \\text{litres} $\n\n**Read the two competing effects.** Doubling the pressure alone would halve the volume to $ 3 $ litres; the temperature rise then expands it by a third, back up to $ 4 $ litres. Pressure wins here, so the gas ends up compressed overall.\n\n**Watch out:** using Celsius would give $ \\frac{127}{27} = 4.7 $ as the temperature ratio instead of $ 1.33 $ — an enormous error. Only absolute temperature is proportional to molecular energy, so only kelvin may appear in a ratio."
+   },
+   {
+    "id": "we-ch24-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Mean free path",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Estimate the mean free path of nitrogen molecules at $ 1 $ atm and $ 300 $ K, taking the molecular diameter as $ 3.0 \\times 10^{-10} $ m.",
+    "solution": "**Number density first:**\n\n$ n = \\frac{p}{kT} = \\frac{1.0 \\times 10^{5}}{(1.38 \\times 10^{-23})(300)} = \\frac{10^{5}}{4.14 \\times 10^{-21}} = 2.42 \\times 10^{25}\\ \\text{m}^{-3} $\n\n**Mean free path:**\n\n$ \\lambda = \\frac{1}{\\sqrt{2}\\pi d^{2} n} = \\frac{1}{(1.414)(3.14)(9 \\times 10^{-20})(2.42 \\times 10^{25})} $\n\n$ = \\frac{1}{9.67 \\times 10^{6}} = 1.03 \\times 10^{-7}\\ \\text{m} $\n\nAbout $ 100 $ nm — roughly 300 molecular diameters.\n\n**The collision frequency that follows.** With $ v_{rms} \\approx 517\\ \\text{m s}^{-1} $,\n\n$ f = \\frac{v}{\\lambda} = \\frac{517}{1.03 \\times 10^{-7}} \\approx 5 \\times 10^{9}\\ \\text{s}^{-1} $\n\nFive billion collisions per second per molecule.\n\n**Why this explains diffusion's slowness.** A molecule moves at $ 500\\ \\text{m s}^{-1} $ yet takes minutes to cross a room, because it is knocked into a new direction every $ 100 $ nm. Its net progress is a random walk, not a straight run."
+   },
+   {
+    "id": "we-ch24-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Degrees of freedom and specific heat",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find $ C_V $, $ C_P $ and $ \\gamma $ for (a) a monatomic gas and (b) a diatomic gas at ordinary temperatures.",
+    "solution": "The equipartition theorem gives each degree of freedom $ \\frac{1}{2}RT $ per mole.\n\n**(a) Monatomic** — 3 translational degrees of freedom only:\n\n$ U = \\frac{3}{2}RT \\Rightarrow C_V = \\frac{3}{2}R = 12.5\\ \\text{J mol}^{-1}\\text{K}^{-1} $\n\n$ C_P = C_V + R = \\frac{5}{2}R $, so $ \\gamma = \\frac{5/2}{3/2} = 1.67 $\n\n**(b) Diatomic** — 3 translational plus 2 rotational:\n\n$ U = \\frac{5}{2}RT \\Rightarrow C_V = \\frac{5}{2}R = 20.8\\ \\text{J mol}^{-1}\\text{K}^{-1} $\n\n$ C_P = \\frac{7}{2}R $, so $ \\gamma = \\frac{7/2}{5/2} = 1.40 $\n\n**Why only two rotational modes for a diatomic.** Rotation about the axis joining the two atoms has negligible moment of inertia, so it stores no appreciable energy. Only the two perpendicular axes count.\n\n**Why vibration is left out.** Vibrational modes need much higher temperatures to activate. At room temperature they are 'frozen out' — a fact classical physics could not explain and quantum mechanics did, which is part of why $ \\gamma $ for air is measured at $ 1.40 $ rather than something smaller."
+   },
+   {
+    "id": "we-ch24-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Escape of gases from the atmosphere",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The escape velocity from the moon is $ 2.4\\ \\text{km s}^{-1} $. At what temperature would the rms speed of hydrogen molecules equal it? Comment on why the moon has no atmosphere.",
+    "solution": "Set $ v_{rms} = 2400\\ \\text{m s}^{-1} $ for hydrogen ($ M = 2 \\times 10^{-3}\\ \\text{kg mol}^{-1} $):\n\n$ \\sqrt{\\frac{3RT}{M}} = 2400 $\n\n$ \\frac{3(8.31)T}{2 \\times 10^{-3}} = 5.76 \\times 10^{6} $\n\n$ T = \\frac{(5.76 \\times 10^{6})(2 \\times 10^{-3})}{24.93} = 462\\ \\text{K} $\n\n**Why the moon still loses its gases well below that.** Two reasons. First, the Maxwell distribution has a long high-speed tail, so even at $ 100 $ K a small fraction of molecules exceed escape velocity — and once they leave, collisions repopulate the tail. Second, the moon's daytime surface reaches around $ 400 $ K.\n\n**The general rule.** A body retains a gas long-term only if the escape velocity is roughly six or more times the rms speed. The moon fails this for every gas; the earth passes it comfortably for nitrogen and oxygen but not for hydrogen and helium — which is exactly why our atmosphere is short of both."
+   },
+   {
+    "id": "we-ch24-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Pressure from molecular collisions",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Derive $ p = \\frac{1}{3}\\rho v_{rms}^{2} $ from the molecular picture, and use it to find the rms speed of air molecules at $ 1 $ atm given $ \\rho = 1.29\\ \\text{kg m}^{-3} $.",
+    "solution": "**The derivation in outline.** Consider a molecule of mass $ m $ moving towards a wall with x-velocity $ v_x $. On elastic rebound its momentum change is $ 2mv_x $. Between successive hits on the same wall it travels $ 2L $, so it strikes $ \\frac{v_x}{2L} $ times per second.\n\nForce from one molecule: $ \\frac{2mv_x \\cdot v_x}{2L} = \\frac{mv_x^{2}}{L} $\n\nSumming over $ N $ molecules and dividing by the wall area $ L^{2} $:\n\n$ p = \\frac{Nm\\overline{v_x^{2}}}{L^{3}} = \\frac{Nm\\overline{v_x^{2}}}{V} $\n\nMotion is isotropic, so $ \\overline{v_x^{2}} = \\frac{1}{3}v_{rms}^{2} $, and with $ \\rho = Nm/V $:\n\n$ p = \\frac{1}{3}\\rho v_{rms}^{2} $\n\n**Now the number.**\n\n$ v_{rms} = \\sqrt{\\frac{3p}{\\rho}} = \\sqrt{\\frac{3(1.0 \\times 10^{5})}{1.29}} = \\sqrt{2.33 \\times 10^{5}} = 483\\ \\text{m s}^{-1} $\n\n**Why the factor of one third appears.** Only one of the three spatial directions pushes on any given wall, and the $ \\frac{1}{3} $ is precisely that share. It is the fingerprint of three-dimensional isotropy in the formula."
+   }
+  ]
+ }
+}

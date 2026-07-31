@@ -1,0 +1,308 @@
+{
+ "hcv_chapter": 14,
+ "hcv_title": "Some Mechanical Properties of Matter",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Mechanical Properties of Solids + Mechanical Properties of Fluids (surface tension, viscosity)"
+ },
+ "source_pages": {
+  "worked": "307-311",
+  "obj1": "312-313"
+ },
+ "notes": "12 Objective I items rebuilt, spanning the chapter's three distinct topics — elasticity, surface tension and viscosity — kept in separate sections so a teacher can drop just one.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch14-properties-matter",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Elasticity, Surface Tension and Viscosity",
+   "intro": "Twelve questions across the three properties. The elasticity items turn almost entirely on one idea: stress depends on area, not on length.",
+   "sections": [
+    {
+     "id": "elasticity",
+     "title": "Elasticity and Breaking Stress",
+     "blurb": "Why cutting a wire in half does not weaken it.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch14-m01",
+       "source": "mcq",
+       "prompt": "A rope of diameter $ 1 $ cm breaks when the tension exceeds $ 500 $ N. The greatest tension a similar rope of diameter $ 2 $ cm can take is",
+       "options": [
+        "$ 2000 $ N",
+        "$ 500 $ N",
+        "$ 1000 $ N",
+        "$ 250 $ N"
+       ],
+       "correct_index": 0,
+       "explanation": "Breaking stress — force per unit area — is a property of the material and is the same for both ropes. Doubling the diameter quadruples the cross-sectional area, so it takes four times the force: $ 4 \\times 500 = 2000 $ N. Ropes get stronger as the square of their diameter, not in proportion to it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m02",
+       "source": "mcq",
+       "prompt": "The breaking stress of a wire depends on",
+       "options": [
+        "the length of the wire",
+        "the radius of the wire",
+        "the shape of its cross-section",
+        "the material of the wire"
+       ],
+       "correct_index": 3,
+       "explanation": "Breaking stress is force per unit area at failure, so the geometry has already been divided out. It reflects how strongly the material's own bonds hold, and nothing else. The breaking *force* certainly depends on the radius — but the stress does not."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m03",
+       "source": "mcq",
+       "prompt": "A wire supports $ 20 $ kg before breaking. If it is cut into two equal halves, each half can support",
+       "options": [
+        "$ 10 $ kg",
+        "$ 20 $ kg",
+        "$ 40 $ kg",
+        "$ 80 $ kg"
+       ],
+       "correct_index": 1,
+       "explanation": "Cutting changes the length but not the cross-sectional area, and it is area that sets the breaking force. Each half still fails at $ 20 $ kg. This is the same reason a chain's strength does not depend on how many links it has — only on the weakest link's cross-section."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m04",
+       "source": "mcq",
+       "prompt": "Wires A and B are of the same material. A has length $ l $ and diameter $ r $; B has length $ 2l $ and diameter $ r/2 $. Stretched by equal forces, the ratio (elongation of A)/(elongation of B) is",
+       "options": [
+        "$ 8 $",
+        "$ 1/4 $",
+        "$ 1/8 $",
+        "$ 4 $"
+       ],
+       "correct_index": 2,
+       "explanation": "Elongation is $ \\Delta l = Fl/AY $, so it scales as length ÷ area. B is twice as long (×2 elongation) and has a quarter the area (×4 elongation), making it 8 times as stretchy. Hence A elongates only $ 1/8 $ as much."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m05",
+       "source": "mcq",
+       "prompt": "A wire elongates by $ 1.0 $ mm when a load $ W $ hangs from it. If the wire passes over a pulley with a load $ W $ hanging at **each** end, the elongation is",
+       "options": [
+        "$ 1.0 $ mm",
+        "$ 0.5 $ mm",
+        "$ 2.0 $ mm",
+        "$ 4.0 $ mm"
+       ],
+       "correct_index": 0,
+       "explanation": "Elongation depends on the *tension in the wire*, and with $ W $ on each end the tension is still $ W $ — the second load simply replaces the ceiling that held the first case up. A wire is always pulled at both ends; a fixed support does it invisibly. So the extension is unchanged at $ 1.0 $ mm."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m06",
+       "source": "mcq",
+       "prompt": "A heavy uniform rod hangs vertically from a support and stretches under its own weight. Its diameter is",
+       "options": [
+        "largest at the top, decreasing downward",
+        "smallest at the top, increasing downward",
+        "uniform everywhere",
+        "greatest in the middle"
+       ],
+       "correct_index": 1,
+       "explanation": "Each cross-section carries the weight of everything below it, so the tension — and hence the stress — is greatest at the top and zero at the bottom. Where the longitudinal stretching is greatest, the lateral contraction is greatest too (Poisson's effect), so the rod is thinnest at the top."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m07",
+       "source": "mcq",
+       "prompt": "A load hung on a metal wire lowers it, so gravitational potential energy decreases. That energy",
+       "options": [
+        "appears entirely as elastic potential energy in the wire",
+        "appears entirely as kinetic energy of the load",
+        "appears entirely as heat",
+        "is split between elastic energy and heat"
+       ],
+       "correct_index": 3,
+       "explanation": "If the load is simply released, the wire stores only $ \\tfrac12 F\\Delta l $ while gravity releases $ F\\Delta l $ — exactly twice as much. The missing half is dissipated as heat while the load oscillates and settles. Only if the load is lowered *slowly* does the stored energy account for the whole drop."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m08",
+       "source": "mcq",
+       "prompt": "The dimensional formula $ ML^{-1}T^{-2} $ can correspond to",
+       "options": [
+        "the moment of a force",
+        "surface tension",
+        "modulus of elasticity",
+        "coefficient of viscosity"
+       ],
+       "correct_index": 2,
+       "explanation": "$ ML^{-1}T^{-2} $ is force per unit area — the dimensions of pressure, stress and every elastic modulus. Surface tension is force per unit length, $ MT^{-2} $; viscosity is $ ML^{-1}T^{-1} $; a moment of force is $ ML^{2}T^{-2} $."
+      }
+     ]
+    },
+    {
+     "id": "surface-tension",
+     "title": "Surface Tension",
+     "blurb": "A liquid surface behaves like a stretched skin — and skins want to shrink.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch14-m09",
+       "source": "mcq",
+       "prompt": "By the 'surface' of a liquid we mean",
+       "options": [
+        "a layer of thickness of order $ 10^{-8} $ m",
+        "a geometrical plane such as $ x = 0 $",
+        "every molecule exposed to the atmosphere",
+        "a layer of thickness of order $ 10^{-4} $ m"
+       ],
+       "correct_index": 0,
+       "explanation": "Surface effects arise because molecules within one molecular-attraction range of the boundary have unbalanced neighbours. That range is a few molecular diameters — around $ 10^{-8} $ m. A pure geometrical plane has no thickness and could hold no energy, while $ 10^{-4} $ m is thousands of molecules deep."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m10",
+       "source": "mcq",
+       "prompt": "An ice cube floats in vacuum in a gravity-free hall. As it melts, the water",
+       "options": [
+        "keeps its cubical shape",
+        "takes a spherical shape",
+        "falls to the floor",
+        "flies upward"
+       ],
+       "correct_index": 1,
+       "explanation": "With no gravity, surface tension is the only shaping force, and it always acts to minimise surface area. For a fixed volume the sphere has the least area, so the liquid pulls itself into a ball. This is why raindrops and free-falling droplets in orbit are spherical."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m11",
+       "source": "mcq",
+       "prompt": "When small water droplets merge into a single bigger drop,",
+       "options": [
+        "energy is absorbed",
+        "energy is neither liberated nor absorbed",
+        "energy may be liberated or absorbed depending on the liquid",
+        "energy is liberated"
+       ],
+       "correct_index": 3,
+       "explanation": "Merging conserves volume but reduces total surface area — one big sphere has less surface than many small ones of the same total volume. Surface energy is $ S \\times $ area, so the surplus is released, usually appearing as a slight warming. The reverse, spraying a liquid into a mist, requires energy input."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch14-m12",
+       "source": "mcq",
+       "prompt": "Air is blown into a soap bubble of radius $ r $ to double its radius. If the surface tension is $ S $, the work done is",
+       "options": [
+        "$ 12\\pi r^{2}S $",
+        "$ 8\\pi r^{2}S $",
+        "$ 24\\pi r^{2}S $",
+        "$ 4\\pi r^{2}S $"
+       ],
+       "correct_index": 2,
+       "explanation": "A soap bubble has **two** surfaces, inner and outer, so its effective area is $ 2 \\times 4\\pi r^{2} $. Going from $ r $ to $ 2r $ changes it by $ 8\\pi[(2r)^{2} - r^{2}] = 8\\pi(3r^{2}) = 24\\pi r^{2} $. Multiplying by $ S $ gives the work. Forgetting the factor of two — the commonest error here — halves the answer."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch14-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Young's modulus from an extension",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A steel wire of length $ 2 $ m and cross-sectional area $ 1\\ \\text{mm}^{2} $ stretches by $ 1 $ mm under a $ 10 $ kg load. Find Young's modulus. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Young's modulus is stress ÷ strain.\n\n**Stress:**\n\n$ \\sigma = \\frac{F}{A} = \\frac{10 \\times 10}{1 \\times 10^{-6}} = 1.0 \\times 10^{8}\\ \\text{N m}^{-2} $\n\n**Strain** — a pure ratio, with no units:\n\n$ \\varepsilon = \\frac{\\Delta l}{l} = \\frac{1 \\times 10^{-3}}{2} = 5 \\times 10^{-4} $\n\n**Young's modulus:**\n\n$ Y = \\frac{\\sigma}{\\varepsilon} = \\frac{1.0 \\times 10^{8}}{5 \\times 10^{-4}} = 2.0 \\times 10^{11}\\ \\text{N m}^{-2} $\n\nThat is the standard value for steel, which is a useful check on the arithmetic.\n\n**Watch the unit conversion.** $ 1\\ \\text{mm}^{2} = 10^{-6}\\ \\text{m}^{2} $, not $ 10^{-3} $ — the square applies to the whole unit. This single slip is responsible for most wrong answers in elasticity problems.\n\n**What a large $ Y $ means.** Steel's enormous modulus says it takes a huge stress to produce even a tiny strain — here $ 10^{8} $ pascals for a stretch of five parts in ten thousand."
+   },
+   {
+    "id": "we-ch14-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Elastic energy stored in a stretched wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A wire is stretched by $ 2 $ mm under a force of $ 100 $ N. Find the elastic potential energy stored in it.",
+    "solution": "The force builds up from zero to $ 100 $ N as the wire stretches, so the *average* force is $ 50 $ N.\n\n$ U = \\frac{1}{2} F \\Delta l = \\frac{1}{2}(100)(2 \\times 10^{-3}) = 0.1\\ \\text{J} $\n\n**Where the factor of a half comes from.** A wire obeys Hooke's law, so the force-extension graph is a straight line from the origin. The stored energy is the area under it — a triangle, hence the half. Using $ W = F\\Delta l $ would assume the full $ 100 $ N acted from the very first instant.\n\n**The alternative form.** Energy per unit volume is $ \\frac{1}{2} \\times \\text{stress} \\times \\text{strain} $, which is often more convenient when the wire's dimensions are given rather than the force.\n\n**Why the load loses twice this much.** Gravity releases $ F\\Delta l = 0.2 $ J while the wire stores only $ 0.1 $ J. The other half goes into the oscillation that friction eventually turns to heat — the point behind one of the objective questions above."
+   },
+   {
+    "id": "we-ch14-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Two wires in series",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A steel wire ($ Y = 2 \\times 10^{11} $) and a copper wire ($ Y = 1 \\times 10^{11} $) of equal length and equal area are joined end to end and stretched by a force $ F $. Compare their extensions.",
+    "solution": "Joined end to end, both wires carry the **same tension** $ F $ — this is the key observation, exactly as with springs in series.\n\n$ \\Delta l = \\frac{Fl}{AY} $\n\nWith $ F $, $ l $ and $ A $ all equal, the extension varies only as $ 1/Y $:\n\n$ \\frac{\\Delta l_{steel}}{\\Delta l_{copper}} = \\frac{Y_{copper}}{Y_{steel}} = \\frac{1 \\times 10^{11}}{2 \\times 10^{11}} = \\frac{1}{2} $\n\nThe copper stretches **twice** as much as the steel.\n\n**The general principle.** In series, force is shared equally and the softer material takes most of the deformation. In parallel — two wires side by side supporting one load — the *extensions* are equal instead, and the stiffer wire carries the larger share of the force.\n\n**A practical consequence.** In a composite cable, the stiff component bears the load and the soft one contributes little strength, which is why reinforcement is chosen to be stiffer than the matrix, not softer."
+   },
+   {
+    "id": "we-ch14-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Excess pressure inside a drop and a bubble",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the excess pressure inside (a) a water drop of radius $ 1 $ mm ($ S = 0.072\\ \\text{N m}^{-1} $) and (b) a soap bubble of the same radius ($ S = 0.03\\ \\text{N m}^{-1} $).",
+    "solution": "**(a) A liquid drop has one surface:**\n\n$ \\Delta P = \\frac{2S}{r} = \\frac{2(0.072)}{1 \\times 10^{-3}} = 144\\ \\text{Pa} $\n\n**(b) A soap bubble has two surfaces**, inner and outer, so the excess pressure doubles:\n\n$ \\Delta P = \\frac{4S}{r} = \\frac{4(0.03)}{1 \\times 10^{-3}} = 120\\ \\text{Pa} $\n\n**The pattern to keep straight.**\n\nLiquid drop — one surface — $ 2S/r $\n\nSoap bubble — two surfaces — $ 4S/r $\n\nBubble inside a liquid (a cavity) — one surface — $ 2S/r $\n\n**Why small bubbles are the pushy ones.** Since $ \\Delta P \\propto 1/r $, a smaller bubble holds a *higher* internal pressure. Connect a small bubble to a large one and the small one blows itself into the large one — the opposite of what most people predict."
+   },
+   {
+    "id": "we-ch14-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Capillary rise",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Water rises to $ 6 $ cm in a capillary tube. To what height would it rise in a tube of half the radius? And what happens to the rise if the tube is only $ 4 $ cm long?",
+    "solution": "**The capillary formula:**\n\n$ h = \\frac{2S\\cos\\theta}{r\\rho g} $\n\nso $ h \\propto 1/r $. Halving the radius doubles the rise:\n\n$ h = 2 \\times 6 = 12\\ \\text{cm} $\n\n**Now the short tube.** If the tube is only $ 4 $ cm long, the water cannot rise to $ 12 $ cm — but it does **not** overflow either. Instead the meniscus adjusts its radius of curvature until the surface-tension force exactly balances the shorter column. The water rises to the top and stops there, with a flatter meniscus.\n\n**Why no fountain.** A liquid that overflowed would be a perpetual-motion machine, endlessly converting surface energy to gravitational energy. Surface tension can only hold a column up; it cannot keep pumping.\n\n**The everyday version.** Narrow tubes lift liquid higher — which is how blotting paper, plant xylem and a wick all work, and why fine-grained soil holds water further above the water table than coarse sand."
+   },
+   {
+    "id": "we-ch14-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Energy released when drops coalesce",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Eight identical water droplets of radius $ 1 $ mm merge into a single drop. Find the energy released. Take $ S = 0.072\\ \\text{N m}^{-1} $.",
+    "solution": "**First find the big drop's radius**, using conservation of volume:\n\n$ 8 \\times \\frac{4}{3}\\pi r^{3} = \\frac{4}{3}\\pi R^{3} \\Rightarrow R^{3} = 8r^{3} \\Rightarrow R = 2r = 2\\ \\text{mm} $\n\n**Surface area before:**\n\n$ 8 \\times 4\\pi r^{2} = 32\\pi r^{2} $\n\n**Surface area after:**\n\n$ 4\\pi R^{2} = 4\\pi(2r)^{2} = 16\\pi r^{2} $\n\n**The area has halved.** Energy released:\n\n$ E = S \\times \\Delta A = 0.072 \\times 16\\pi (10^{-3})^{2} = 0.072 \\times 16\\pi \\times 10^{-6} = 3.6 \\times 10^{-6}\\ \\text{J} $\n\n**Why volume grows faster than area.** Merging $ n $ drops multiplies the radius by $ n^{1/3} $ but the area by only $ n^{2/3} $, so the total area always falls. That is why a spray of mist has an enormous surface for its volume — and why finely divided liquids evaporate and react so much faster."
+   },
+   {
+    "id": "we-ch14-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Terminal velocity and Stokes' law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A steel ball of radius $ 1 $ mm and density $ 8000\\ \\text{kg m}^{-3} $ falls through glycerine of density $ 1300\\ \\text{kg m}^{-3} $ and viscosity $ 0.83\\ \\text{Pa s} $. Find its terminal velocity. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "At terminal velocity the ball stops accelerating, so the three forces balance:\n\nweight = buoyancy + viscous drag\n\n$ \\frac{4}{3}\\pi r^{3}\\rho g = \\frac{4}{3}\\pi r^{3}\\sigma g + 6\\pi\\eta r v $\n\nSolving for $ v $:\n\n$ v = \\frac{2r^{2}(\\rho - \\sigma)g}{9\\eta} $\n\n**Substitute:**\n\n$ v = \\frac{2(10^{-3})^{2}(8000 - 1300)(10)}{9(0.83)} = \\frac{2(10^{-6})(6700)(10)}{7.47} $\n\n$ = \\frac{0.134}{7.47} = 0.018\\ \\text{m s}^{-1} $\n\nAbout $ 1.8 $ cm per second — slow enough to time by eye, which is exactly why this is the standard laboratory method for measuring viscosity.\n\n**The $ r^{2} $ dependence matters.** Double the radius and the terminal velocity quadruples. This is why fine dust hangs in the air for hours while a pebble drops straight down, and why mist droplets float but raindrops fall.\n\n**When the formula fails.** Stokes' law assumes smooth, streamline flow around a sphere. At higher speeds the flow becomes turbulent and drag goes as $ v^{2} $ instead."
+   },
+   {
+    "id": "we-ch14-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Breaking length of a wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The breaking stress of a metal is $ 4 \\times 10^{8}\\ \\text{N m}^{-2} $ and its density is $ 8000\\ \\text{kg m}^{-3} $. What is the greatest length of wire of this metal that can hang vertically without breaking under its own weight? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The wire is most heavily stressed at the very top, where it carries the whole of its own weight.\n\n**Stress at the top:**\n\n$ \\sigma = \\frac{\\text{weight}}{\\text{area}} = \\frac{(\\rho A l)g}{A} = \\rho l g $\n\n**The area cancels** — a thick wire weighs more but has proportionally more cross-section to carry it. That is the whole point of the problem.\n\n**Set the stress to the breaking value:**\n\n$ l_{max} = \\frac{\\sigma_{break}}{\\rho g} = \\frac{4 \\times 10^{8}}{8000 \\times 10} = \\frac{4 \\times 10^{8}}{8 \\times 10^{4}} = 5000\\ \\text{m} $\n\nFive kilometres.\n\n**Why thickening does not help.** Since the area drops out, you cannot hang a longer wire by making it fatter — the extra material adds exactly as much weight as strength. Only a higher strength-to-density ratio helps, which is why cables for very deep mines use high-strength steel or synthetic fibre rather than simply thicker rope. It is also the fundamental obstacle to a space elevator."
+   },
+   {
+    "id": "we-ch14-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Force needed to lift a plate off a liquid",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A rectangular glass plate $ 10 $ cm by $ 5 $ cm rests on a water surface. Find the extra force needed to lift it clear, given $ S = 0.072\\ \\text{N m}^{-1} $ and assuming the contact angle is zero.",
+    "solution": "Surface tension acts along the **perimeter** where the liquid meets the plate, pulling downward all round.\n\n**Perimeter:**\n\n$ P = 2(0.10 + 0.05) = 0.30\\ \\text{m} $\n\n**Extra force:**\n\n$ F = S \\times P = 0.072 \\times 0.30 = 0.0216\\ \\text{N} $\n\nAbout $ 22 $ millinewtons, the weight of roughly $ 2 $ grams.\n\n**Perimeter, not area.** Surface tension is a force per unit *length*, so what matters is the line of contact, not how much of the plate touches the water. Doubling the plate's area while keeping its shape only increases the perimeter by $ \\sqrt{2} $.\n\n**Where this is used.** This is exactly the principle of the Wilhelmy plate and the du Noüy ring — measure the extra pull needed to detach a body of known perimeter and divide by that perimeter to get $ S $."
+   },
+   {
+    "id": "we-ch14-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Thermal stress in a clamped rod",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A steel rod is clamped rigidly at both ends at $ 20 $ °C and then cooled to $ 0 $ °C. Find the stress developed. Take $ Y = 2 \\times 10^{11}\\ \\text{N m}^{-2} $ and $ \\alpha = 1.2 \\times 10^{-5}\\ \\text{°C}^{-1} $.",
+    "solution": "The rod *wants* to contract but the clamps forbid it, so the material is held stretched relative to its natural length.\n\n**The strain it is prevented from having:**\n\n$ \\frac{\\Delta l}{l} = \\alpha \\Delta T = (1.2 \\times 10^{-5})(20) = 2.4 \\times 10^{-4} $\n\n**The stress required to hold it there:**\n\n$ \\sigma = Y \\times \\text{strain} = (2 \\times 10^{11})(2.4 \\times 10^{-4}) = 4.8 \\times 10^{7}\\ \\text{N m}^{-2} $\n\nThat is $ 48 $ MPa of *tensile* stress — the rod is pulling inward on its clamps.\n\n**Note what is absent:** the rod's length and its cross-section. Thermal stress depends only on the material and the temperature change, so a short rod is stressed exactly as much as a long one.\n\n**Why this governs real construction.** A $ 20 $ °C swing produces stresses a substantial fraction of steel's working limit, which is why railway tracks have expansion gaps, bridges sit on rollers, and long pipelines are laid in zigzags. Heating the rod instead would put it in compression, which is the more dangerous case because it can buckle."
+   }
+  ]
+ }
+}

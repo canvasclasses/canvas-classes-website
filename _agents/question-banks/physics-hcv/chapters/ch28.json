@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 28,
+ "hcv_title": "Heat Transfer",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Thermal Properties of Matter (conduction, convection, radiation, Newton's law of cooling)"
+ },
+ "source_pages": {
+  "worked": "580-587",
+  "obj1": "588"
+ },
+ "notes": "11 Objective I items rebuilt. One source item shows four candidate cooling curves; re-cast as a question about the *shape* of the cooling curve, which is what the figure was testing.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch28-heat-transfer",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Heat Transfer",
+   "intro": "Eleven questions on conduction, convection and radiation. The fourth-power law in radiation is where most of the surprises live.",
+   "sections": [
+    {
+     "id": "conduction",
+     "title": "Conduction",
+     "blurb": "A material property, and a geometry that merely scales it.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch28-m01",
+       "source": "mcq",
+       "prompt": "The thermal conductivity of a rod depends on its",
+       "options": [
+        "length",
+        "material",
+        "mass",
+        "cross-sectional area"
+       ],
+       "correct_index": 1,
+       "explanation": "Conductivity is defined so that the geometry has been divided out: $ \\frac{dQ}{dt} = \\frac{kA\\Delta T}{L} $. The *rate of heat flow* certainly depends on length and area, but $ k $ itself is a property of the substance — copper's value is copper's, whatever its shape."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m02",
+       "source": "mcq",
+       "prompt": "In a room containing air, heat can travel from one place to another",
+       "options": [
+        "by conduction only",
+        "by convection only",
+        "by radiation only",
+        "by all three modes"
+       ],
+       "correct_index": 3,
+       "explanation": "All three operate at once: air conducts (poorly), it convects (very effectively, since warm air rises), and every surface in the room radiates. Which dominates depends on the situation — convection usually leads in a room, while radiation dominates across a vacuum."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m03",
+       "source": "mcq",
+       "prompt": "One end of a metal rod is in a furnace. In the steady state, the temperature along the rod",
+       "options": [
+        "is uniform throughout",
+        "falls linearly from the hot end to the cold end",
+        "falls exponentially along the rod",
+        "rises towards the cold end"
+       ],
+       "correct_index": 1,
+       "explanation": "In the steady state the same heat current passes every cross-section, so the temperature gradient must be the same everywhere along a uniform, laterally insulated rod — giving a straight-line fall. Without lateral insulation heat leaks from the sides and the profile curves instead."
+      }
+     ]
+    },
+    {
+     "id": "radiation",
+     "title": "Radiation and Stefan's Law",
+     "blurb": "The fourth power makes hot bodies dramatically brighter.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch28-m04",
+       "source": "mcq",
+       "prompt": "The thermal radiation emitted by a body is proportional to $ T^{n} $. The value of $ n $ is exactly 4 for",
+       "options": [
+        "a blackbody",
+        "all bodies",
+        "bodies painted black only",
+        "polished bodies only"
+       ],
+       "correct_index": 0,
+       "explanation": "Stefan's law $ E = \\sigma T^{4} $ holds exactly for an ideal blackbody. Real bodies follow $ E = e\\sigma T^{4} $ with an emissivity $ e < 1 $ that itself varies somewhat with temperature and wavelength, so their exponent is only approximately 4. 'Painted black' is a good approximation to a blackbody, not the definition of one."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m05",
+       "source": "mcq",
+       "prompt": "Two bodies of equal surface area are held at $ 10 $ °C and $ 20 $ °C. The thermal radiation they emit in a given time is in the ratio",
+       "options": [
+        "$ 1 : 2 $",
+        "$ 1 : 4 $",
+        "$ 1 : 16 $",
+        "$ 1 : 1.15 $"
+       ],
+       "correct_index": 3,
+       "explanation": "Stefan's law needs absolute temperatures: $ 283 $ K and $ 293 $ K. The ratio is $ (293/283)^{4} = (1.035)^{4} = 1.15 $. Using Celsius would give $ (20/10)^{4} = 16 $ — wildly wrong, and the reason this item is worth doing carefully."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m06",
+       "source": "mcq",
+       "prompt": "A body at temperature $ T_1 $ sits in an evacuated chamber at $ T_2 > T_1 $. Its rate of temperature increase is proportional to",
+       "options": [
+        "$ T_2 - T_1 $",
+        "$ T_2^{2} - T_1^{2} $",
+        "$ T_2^{4} - T_1^{4} $",
+        "$ T_2^{3} - T_1^{3} $"
+       ],
+       "correct_index": 2,
+       "explanation": "In a vacuum only radiation operates, so the net gain is $ e\\sigma A(T_2^{4} - T_1^{4}) $ by Stefan's law. Newton's linear law of cooling is only the small-difference approximation to this, and it does not apply when the temperatures differ substantially."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m07",
+       "source": "mcq",
+       "prompt": "Newton's law of cooling is a special case of",
+       "options": [
+        "Stefan's law",
+        "Wien's displacement law",
+        "Kirchhoff's law",
+        "Planck's law"
+       ],
+       "correct_index": 0,
+       "explanation": "Expanding $ T^{4} - T_0^{4} $ for a small excess temperature gives approximately $ 4T_0^{3}(T - T_0) $ — linear in the temperature difference, which is exactly Newton's law. So Newton's law is Stefan's law linearised, valid only for small temperature differences."
+      }
+     ]
+    },
+    {
+     "id": "cooling",
+     "title": "Newton's Law of Cooling",
+     "blurb": "Exponential decay, and how to spot it on a graph.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch28-m08",
+       "source": "mcq",
+       "prompt": "A hot liquid stands in a large room. Its temperature plotted against time gives a curve that",
+       "options": [
+        "falls at a constant rate to the room temperature",
+        "falls slowly at first and then steeply",
+        "falls steeply at first and flattens towards the room temperature",
+        "falls below the room temperature before rising back"
+       ],
+       "correct_index": 2,
+       "explanation": "The cooling rate is proportional to the excess temperature, so it is greatest at the start and shrinks as the liquid approaches the room. The curve is an exponential decay towards the room temperature, approaching it asymptotically without ever crossing it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m09",
+       "source": "mcq",
+       "prompt": "For a hot liquid cooling in a large room, a graph of $ \\ln(\\text{temperature excess}) $ against time is very nearly",
+       "options": [
+        "a straight line",
+        "a circular arc",
+        "a parabola",
+        "an ellipse"
+       ],
+       "correct_index": 0,
+       "explanation": "Newton's law gives $ \\theta = \\theta_0 e^{-kt} $, so taking logarithms yields $ \\ln\\theta = \\ln\\theta_0 - kt $ — a straight line of slope $ -k $. Plotting logarithms is the standard way to test for exponential behaviour and to extract the decay constant."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m10",
+       "source": "mcq",
+       "prompt": "A body cools from $ 65 $ °C to $ 60 $ °C in $ 5 $ minutes. Cooling from $ 60 $ °C to $ 55 $ °C will take",
+       "options": [
+        "$ 5 $ minutes",
+        "less than $ 5 $ minutes",
+        "more than $ 5 $ minutes",
+        "an unpredictable time"
+       ],
+       "correct_index": 2,
+       "explanation": "The excess temperature above the room is now smaller, so the cooling rate has dropped and the same $ 5 $ °C drop takes longer. Each successive interval of equal temperature fall takes progressively more time — which is the signature of exponential decay."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch28-m11",
+       "source": "mcq",
+       "prompt": "Two identical vessels, one dull black and one shiny silver, hold water at the same temperature in the same room. The one that cools faster is",
+       "options": [
+        "the silver vessel",
+        "the black vessel",
+        "neither — they cool equally",
+        "the silver one at first, then the black one"
+       ],
+       "correct_index": 1,
+       "explanation": "A good emitter is a good absorber and vice versa — that is Kirchhoff's law. The black surface has the higher emissivity, so it radiates more strongly at the same temperature and cools faster. It is also why a thermos flask is silvered on both inner surfaces."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch28-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Rate of conduction through a slab",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A glass window $ 2\\ \\text{m}^{2} $ in area and $ 4 $ mm thick separates a room at $ 25 $ °C from outside air at $ 5 $ °C. Find the rate of heat loss. Take $ k_{glass} = 0.8\\ \\text{W m}^{-1}\\text{K}^{-1} $.",
+    "solution": "$ \\frac{dQ}{dt} = \\frac{kA\\Delta T}{L} = \\frac{(0.8)(2)(20)}{4 \\times 10^{-3}} $\n\n$ = \\frac{32}{0.004} = 8000\\ \\text{W} $\n\nEight kilowatts through a single window — a startling figure.\n\n**Why the real loss is far smaller.** This calculation assumes the glass surfaces are at exactly $ 25 $ °C and $ 5 $ °C. In practice thin, still layers of air cling to both faces and they, not the glass, dominate the resistance. The glass is a good conductor compared with the air films around it.\n\n**Why double glazing works so well.** It traps a gap of air (or argon) between two panes. Air's conductivity is about $ 0.025\\ \\text{W m}^{-1}\\text{K}^{-1} $ — some thirty times worse than glass — so a $ 10 $ mm gap adds far more resistance than the glass itself. The insulator is the gap, not the extra pane."
+   },
+   {
+    "id": "we-ch28-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Two slabs in series",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two slabs of equal area and thickness, with conductivities $ k $ and $ 2k $, are joined face to face. The outer faces are at $ 100 $ °C and $ 0 $ °C. Find the temperature of the junction.",
+    "solution": "In the steady state the **same heat current** passes through both slabs — otherwise heat would accumulate at the junction.\n\nLet the junction be at $ T $, and let each slab have thickness $ L $ and area $ A $.\n\n$ \\frac{kA(100 - T)}{L} = \\frac{2kA(T - 0)}{L} $\n\nCancel $ A $, $ L $ and $ k $:\n\n$ 100 - T = 2T \\Rightarrow T = 33.3\\ \\text{°C} $\n\n**Read the result.** The junction sits much nearer the cold side. The better conductor ($ 2k $) needs only a small temperature drop to carry the same current, so most of the $ 100 $ °C difference is spent across the poorer conductor.\n\n**The electrical analogy.** Thermal resistance is $ R = L/kA $, and slabs in series add their resistances just like resistors. The bigger resistance takes the bigger 'voltage' drop. That analogy makes multi-layer wall calculations almost mechanical."
+   },
+   {
+    "id": "we-ch28-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Stefan's law and a hot filament",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tungsten filament of surface area $ 1 \\times 10^{-5}\\ \\text{m}^{2} $ and emissivity $ 0.35 $ runs at $ 2500 $ K. Find the power it radiates. Take $ \\sigma = 5.67 \\times 10^{-8}\\ \\text{W m}^{-2}\\text{K}^{-4} $.",
+    "solution": "$ P = e\\sigma A T^{4} $\n\n**Compute $ T^{4} $ first:**\n\n$ (2500)^{4} = 3.906 \\times 10^{13} $\n\n**Now the power:**\n\n$ P = (0.35)(5.67 \\times 10^{-8})(1 \\times 10^{-5})(3.906 \\times 10^{13}) $\n\n$ = (0.35)(5.67)(3.906) \\times 10^{-8-5+13} = 77.5\\ \\text{W} $\n\nA realistic figure for an incandescent bulb.\n\n**How steeply the fourth power bites.** Halve the temperature to $ 1250 $ K and the power falls by $ 2^{4} = 16 $, to under $ 5 $ W. This is why a filament must run white-hot to be useful, and why a dimmed bulb turns orange and dramatically less bright.\n\n**Why the surroundings can be ignored here.** The net radiated power is $ e\\sigma A(T^{4} - T_0^{4}) $, but with $ T = 2500 $ K and $ T_0 = 300 $ K, $ T_0^{4} $ is smaller by a factor of $ (2500/300)^{4} \\approx 4800 $ — entirely negligible."
+   },
+   {
+    "id": "we-ch28-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Newton's law of cooling",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A body cools from $ 80 $ °C to $ 70 $ °C in $ 5 $ minutes in a room at $ 20 $ °C. How long will it take to cool from $ 70 $ °C to $ 60 $ °C?",
+    "solution": "Newton's law in the average form: the rate of fall is proportional to the *average* excess over the room.\n\n**First interval.** Mean temperature $ = 75 $ °C, so mean excess $ = 55 $ °C:\n\n$ \\frac{10}{5} = k(55) \\Rightarrow k = \\frac{2}{55} $\n\n**Second interval.** Mean temperature $ = 65 $ °C, so mean excess $ = 45 $ °C:\n\n$ \\frac{10}{t} = k(45) = \\frac{2 \\times 45}{55} = 1.636 $\n\n$ t = \\frac{10}{1.636} = 6.1\\ \\text{minutes} $\n\n**Longer than the first interval**, as it must be — the body is now closer to room temperature, so it cools more slowly.\n\n**Why the average excess is used.** The exact treatment integrates $ \\frac{d\\theta}{dt} = -k\\theta $ to give an exponential. Using the mean excess over a modest interval is an excellent approximation and avoids logarithms; for large temperature drops, integrate properly instead."
+   },
+   {
+    "id": "we-ch28-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Wien's displacement law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The sun's radiation peaks at about $ 500 $ nm. Estimate its surface temperature, and find where a human body at $ 310 $ K peaks. Take Wien's constant as $ 2.9 \\times 10^{-3}\\ \\text{m K} $.",
+    "solution": "**Wien's law:** $ \\lambda_{max}T = b $\n\n**The sun:**\n\n$ T = \\frac{2.9 \\times 10^{-3}}{500 \\times 10^{-9}} = \\frac{2.9 \\times 10^{-3}}{5 \\times 10^{-7}} = 5800\\ \\text{K} $\n\n**A human body:**\n\n$ \\lambda_{max} = \\frac{2.9 \\times 10^{-3}}{310} = 9.35 \\times 10^{-6}\\ \\text{m} = 9.35\\ \\mu\\text{m} $\n\nSquarely in the infrared.\n\n**Two things this explains.** First, the sun's peak lands in the middle of the visible band — our eyes evolved to use exactly the light most abundantly available. Second, people are invisible in the dark but glow brightly to a thermal camera tuned to around $ 10\\ \\mu\\text{m} $.\n\n**The general rule.** Hotter bodies peak at shorter wavelengths, which is why heating iron takes it from invisible to dull red to orange to white. Astronomers use exactly this to read a star's temperature from its colour."
+   },
+   {
+    "id": "we-ch28-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Composite wall of unequal thickness",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A wall consists of $ 20 $ cm of brick ($ k = 0.6 $) and $ 5 $ cm of insulation ($ k = 0.04\\ \\text{W m}^{-1}\\text{K}^{-1} $). For $ 1\\ \\text{m}^{2} $ with faces at $ 25 $ °C and $ 0 $ °C, find the heat flow rate and the junction temperature.",
+    "solution": "**Thermal resistances**, $ R = L/kA $ with $ A = 1\\ \\text{m}^{2} $:\n\nBrick: $ R_1 = \\frac{0.20}{0.6} = 0.333\\ \\text{K W}^{-1} $\n\nInsulation: $ R_2 = \\frac{0.05}{0.04} = 1.25\\ \\text{K W}^{-1} $\n\n**Total resistance:** $ R = 1.583\\ \\text{K W}^{-1} $\n\n**Heat flow:**\n\n$ \\frac{dQ}{dt} = \\frac{\\Delta T}{R} = \\frac{25}{1.583} = 15.8\\ \\text{W} $\n\n**Junction temperature.** The same current flows through the brick, so the drop across it is\n\n$ \\Delta T_1 = (15.8)(0.333) = 5.3\\ \\text{°C} $\n\nStarting from the $ 25 $ °C face, the junction sits at $ 25 - 5.3 = 19.7\\ \\text{°C} $.\n\n**What the numbers show.** Just $ 5 $ cm of insulation contributes nearly four times the resistance of $ 20 $ cm of brick, and takes $ 19.7 $ °C of the $ 25 $ °C drop. A thin layer of a genuinely poor conductor outperforms a thick layer of a mediocre one — which is the entire economics of home insulation."
+   },
+   {
+    "id": "we-ch28-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Net radiation exchange with the surroundings",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A blackened sphere of area $ 0.02\\ \\text{m}^{2} $ at $ 500 $ K sits in surroundings at $ 300 $ K. Find the net rate at which it loses energy by radiation.",
+    "solution": "The sphere radiates *and* absorbs, so the net loss depends on the difference of fourth powers:\n\n$ P_{net} = e\\sigma A(T^{4} - T_0^{4}) $\n\n**Compute the fourth powers:**\n\n$ (500)^{4} = 6.25 \\times 10^{10} $\n\n$ (300)^{4} = 0.81 \\times 10^{10} $\n\nDifference: $ 5.44 \\times 10^{10} $\n\n**Net power**, with $ e = 1 $ for a blackbody:\n\n$ P = (1)(5.67 \\times 10^{-8})(0.02)(5.44 \\times 10^{10}) $\n\n$ = (5.67)(0.02)(5.44) \\times 10^{2} = 61.7\\ \\text{W} $\n\n**Why the surroundings matter here.** Ignoring $ T_0^{4} $ would give $ 70.9 $ W — an overestimate of 15%. When the two temperatures are within a factor of two or so, the absorbed radiation is not negligible.\n\n**Compare with the filament example**, where the surroundings contributed less than a thousandth. Whether to include $ T_0^{4} $ is decided by the *ratio* of the temperatures, not by their difference."
+   },
+   {
+    "id": "we-ch28-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Growth of an ice layer on a pond",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Ice forms on a pond whose surface air is at $ -10 $ °C. Show that the time to grow a layer of thickness $ x $ goes as $ x^{2} $, and comment on what that means.",
+    "solution": "**Set up the heat flow.** Latent heat released as a layer $ dx $ freezes must be conducted up through the existing ice of thickness $ x $:\n\n$ \\rho L A\\,dx = \\frac{kA\\,\\Delta T}{x}\\,dt $\n\n**Separate and integrate:**\n\n$ x\\,dx = \\frac{k\\Delta T}{\\rho L}\\,dt $\n\n$ \\frac{x^{2}}{2} = \\frac{k\\Delta T}{\\rho L}\\,t $\n\n$ t = \\frac{\\rho L x^{2}}{2k\\Delta T} $\n\nSo indeed $ t \\propto x^{2} $.\n\n**What that implies.** Doubling the thickness takes **four times** as long. The first centimetre of ice forms quickly; the tenth takes far longer than the first.\n\n**Why ice growth self-limits.** The ice already formed is itself the insulator through which the heat must escape, so each new layer is harder to freeze than the last. This is exactly why deep lakes never freeze solid, and why fish survive under a modest ice sheet however long the winter lasts."
+   }
+  ]
+ }
+}

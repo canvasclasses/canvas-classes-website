@@ -1,0 +1,294 @@
+{
+ "hcv_chapter": 9,
+ "hcv_title": "Centre of Mass, Linear Momentum, Collision",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "System of Particles and Rotational Motion (centre of mass) + Work, Energy and Power (collisions)"
+ },
+ "source_pages": {
+  "worked": "163-170",
+  "obj1": "171-172"
+ },
+ "notes": "11 Objective I items rebuilt. One source item uses a figure of a circular plate touching a square plate; re-cast verbally, since the areas alone decide the answer. Collision items added to cover the chapter's second half.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch09-com-momentum",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Centre of Mass, Momentum and Collisions",
+   "intro": "Eleven questions on systems of particles. Watch for the ones asking whether one statement *implies* another — they are logic questions wearing physics clothes.",
+   "sections": [
+    {
+     "id": "centre-of-mass",
+     "title": "Locating and Moving the Centre of Mass",
+     "blurb": "A point that obeys Newton's laws as if all the mass sat there.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch09-m01",
+       "source": "mcq",
+       "prompt": "Consider (A) $ \\vec{R} = \\frac{1}{M}\\sum m_i \\vec{r}_i $ and (B) $ \\vec{a}_{CM} = \\vec{F}/M $. In a **non-inertial** frame,",
+       "options": [
+        "A is correct but B is wrong",
+        "both are correct",
+        "B is correct but A is wrong",
+        "both are wrong"
+       ],
+       "correct_index": 0,
+       "explanation": "Statement A is just the *definition* of the centre of mass — a weighted average of positions, valid in any frame whatever. Statement B is Newton's second law, which needs an inertial frame; in a rotating or accelerating frame it fails unless pseudo-forces are added to $ \\vec{F} $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m02",
+       "source": "mcq",
+       "prompt": "(A) The linear momentum of a system stays constant. (B) The centre of mass stays at rest. Then",
+       "options": [
+        "A implies B and B implies A",
+        "neither implies the other",
+        "B implies A but A does not imply B",
+        "A implies B but B does not imply A"
+       ],
+       "correct_index": 2,
+       "explanation": "If the centre of mass is at rest then $ \\vec{p} = M\\vec{v}_{CM} = 0 $, a constant — so B does imply A. The reverse fails: constant momentum also covers a centre of mass gliding along at steady non-zero velocity. Constant does not mean zero."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m03",
+       "source": "mcq",
+       "prompt": "(A) The linear momentum of a system of particles is zero. (B) Its kinetic energy is zero. Then",
+       "options": [
+        "B implies A but A does not imply B",
+        "A implies B and B implies A",
+        "neither implies the other",
+        "A implies B but B does not imply A"
+       ],
+       "correct_index": 0,
+       "explanation": "Zero kinetic energy means every particle is at rest, so the momentum must vanish too — B implies A. But zero momentum does not force zero energy: two equal masses rushing at each other with opposite velocities have $ \\vec{p} = 0 $ and plenty of kinetic energy. Momentum cancels vectorially; energy, being a positive scalar, never does."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m04",
+       "source": "mcq",
+       "prompt": "(A) A particle's linear momentum is independent of the frame of reference. (B) Its kinetic energy is independent of the frame. Then",
+       "options": [
+        "both are true",
+        "A is true, B is false",
+        "both are false",
+        "A is false, B is true"
+       ],
+       "correct_index": 2,
+       "explanation": "Both depend on velocity, and velocity is frame-dependent. A car at $ 20\\ \\text{m s}^{-1} $ on the road has zero momentum and zero kinetic energy as measured by a passenger travelling alongside it. What *is* frame-independent is whether momentum is conserved — that holds in every inertial frame."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m05",
+       "source": "mcq",
+       "prompt": "Every particle of a body lies at distance $ R $ from the origin. The centre of mass is at a distance",
+       "options": [
+        "$ = R $",
+        "$ > R $",
+        "$ \\ge R $",
+        "$ \\le R $"
+       ],
+       "correct_index": 3,
+       "explanation": "The centre of mass is a weighted average of position vectors, so it must lie inside (or on) the sphere of radius $ R $. A hemispherical shell has its centre of mass strictly inside; a complete spherical shell has it at the very centre, distance zero. Only for a single particle does it sit exactly at $ R $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m06",
+       "source": "mcq",
+       "prompt": "A circular plate of diameter $ d $ touches a square plate of edge $ d $, both of the same material and thickness. The centre of mass of the pair lies",
+       "options": [
+        "at the point of contact",
+        "inside the square plate",
+        "inside the circular plate",
+        "outside the system"
+       ],
+       "correct_index": 1,
+       "explanation": "Area decides the mass here: the square has $ d^{2} $ against the circle's $ \\pi d^{2}/4 \\approx 0.79d^{2} $. The centre of mass always sits nearer the heavier body, so it falls inside the square plate. It never lies at the contact point unless the two masses are equal."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m07",
+       "source": "mcq",
+       "prompt": "Of two identical particles, one is at rest and the other has acceleration $ \\vec{a} $. The acceleration of their centre of mass is",
+       "options": [
+        "$ \\vec{a} $",
+        "$ 2\\vec{a} $",
+        "zero",
+        "$ \\vec{a}/2 $"
+       ],
+       "correct_index": 3,
+       "explanation": "The centre-of-mass acceleration is the mass-weighted average, $ (m\\vec{a} + m \\cdot 0)/2m = \\vec{a}/2 $. With equal masses it is simply the ordinary average of the two accelerations."
+      }
+     ]
+    },
+    {
+     "id": "collisions",
+     "title": "Collisions and Impulse",
+     "blurb": "Momentum survives every collision; kinetic energy does not.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch09-m08",
+       "source": "mcq",
+       "prompt": "A moving ball collides head-on and **elastically** with a stationary ball of equal mass. After the collision",
+       "options": [
+        "both move forward with half the speed",
+        "they move off together",
+        "the first stops and the second moves off with the original speed",
+        "the first rebounds with the original speed"
+       ],
+       "correct_index": 2,
+       "explanation": "Equal masses in a head-on elastic collision simply exchange velocities — the only outcome satisfying both momentum and kinetic-energy conservation. Newton's cradle is this result on display. Moving off together would conserve momentum but lose energy, so it cannot be elastic."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m09",
+       "source": "mcq",
+       "prompt": "In a **perfectly inelastic** collision between two bodies, the quantity that is certainly conserved is",
+       "options": [
+        "kinetic energy",
+        "total momentum",
+        "kinetic energy and momentum both",
+        "neither"
+       ],
+       "correct_index": 1,
+       "explanation": "Momentum is conserved in *every* collision, because the colliding forces are internal to the system. Kinetic energy is not: in a perfectly inelastic collision the bodies stick together and the maximum possible energy is lost to heat and deformation. Total *energy* is of course still conserved, just not in kinetic form."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m10",
+       "source": "mcq",
+       "prompt": "A ball dropped from height $ h $ rebounds to $ h/4 $. Its coefficient of restitution is",
+       "options": [
+        "$ 0.5 $",
+        "$ 0.25 $",
+        "$ 0.75 $",
+        "$ 0.125 $"
+       ],
+       "correct_index": 0,
+       "explanation": "Impact speed is $ \\sqrt{2gh} $ and rebound speed is $ \\sqrt{2g(h/4)} $, so $ e = \\sqrt{(h/4)/h} = \\sqrt{1/4} = 0.5 $. Note that $ e $ compares *speeds*, so it is the square root of the height ratio, not the ratio itself."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch09-m11",
+       "source": "mcq",
+       "prompt": "A shell explodes in mid-flight into several fragments. The centre of mass of the fragments",
+       "options": [
+        "stops instantly",
+        "continues along the original parabolic path",
+        "flies off along a new straight line",
+        "falls vertically from the burst point"
+       ],
+       "correct_index": 1,
+       "explanation": "The explosive forces are internal and cannot shift the centre of mass. The only external force is still gravity, so the centre of mass sails on along exactly the parabola the intact shell would have followed — even as the fragments scatter wildly around it. Firework shells demonstrate this every time."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch09-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Centre of mass of a set of particles",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Masses of $ 1 $ kg, $ 2 $ kg and $ 3 $ kg sit at $ (0,0) $, $ (2,0) $ and $ (0,2) $ metres. Find the centre of mass.",
+    "solution": "Take a mass-weighted average of each coordinate separately.\n\n**Total mass:** $ M = 1 + 2 + 3 = 6 $ kg\n\n**x-coordinate:**\n\n$ x_{CM} = \\frac{1(0) + 2(2) + 3(0)}{6} = \\frac{4}{6} = 0.67 $ m\n\n**y-coordinate:**\n\n$ y_{CM} = \\frac{1(0) + 2(0) + 3(2)}{6} = \\frac{6}{6} = 1.0 $ m\n\nSo the centre of mass is at $ (0.67,\\ 1.0) $ m.\n\n**Sanity check.** It lies inside the triangle formed by the three particles, and it is pulled towards the $ 3 $ kg mass — the heaviest — which is why $ y_{CM} $ is larger than $ x_{CM} $. The centre of mass of a set of particles always lies within their convex hull."
+   },
+   {
+    "id": "we-ch09-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Centre of mass of a body with a hole",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A circular disc of radius $ R $ has a circular hole of radius $ R/2 $ cut out, the hole's edge touching the disc's centre. Find the centre of mass of the remainder.",
+    "solution": "Use the **negative mass** trick: treat the remaining body as the full disc plus a hole of negative mass.\n\nLet the full disc have mass $ M $ with its centre at the origin. Since mass goes as area, the removed piece has\n\n$ m_{hole} = M\\left(\\frac{R/2}{R}\\right)^{2} = \\frac{M}{4} $\n\nThe hole's centre lies at $ x = R/2 $ (its edge touches the origin, and its radius is $ R/2 $).\n\n**Now take the weighted average with the hole counted as negative:**\n\n$ x_{CM} = \\frac{M(0) - \\frac{M}{4}\\left(\\frac{R}{2}\\right)}{M - \\frac{M}{4}} = \\frac{-\\frac{MR}{8}}{\\frac{3M}{4}} = -\\frac{R}{6} $\n\nSo the centre of mass sits at $ R/6 $ from the centre, on the side **away** from the hole.\n\n**Does that make sense?** Yes — removing material from the right shifts the balance point left. And it lies inside the remaining material, as it must.\n\n**Shortcut worth keeping:** for any body with a piece removed, treat the removed piece as negative mass at its own centre. It turns a hard integral into two lines of arithmetic."
+   },
+   {
+    "id": "we-ch09-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Conservation of momentum in an explosion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 6 $ kg shell at rest explodes into two fragments of $ 2 $ kg and $ 4 $ kg. If the $ 2 $ kg fragment flies off at $ 30\\ \\text{m s}^{-1} $, find the speed of the other and the energy released.",
+    "solution": "**Momentum.** The shell started at rest, so the total momentum must remain zero:\n\n$ 0 = (2)(30) + (4)v_2 $\n\n$ v_2 = -\\frac{60}{4} = -15\\ \\text{m s}^{-1} $\n\nThe minus sign means the heavier fragment moves the opposite way, at $ 15\\ \\text{m s}^{-1} $.\n\n**Energy released.** Initially zero kinetic energy; afterwards:\n\n$ KE = \\tfrac12 (2)(30)^{2} + \\tfrac12 (4)(15)^{2} = 900 + 450 = 1350 $ J\n\nAll of it came from the chemical energy of the explosive.\n\n**Notice how the energy divides.** The light fragment carries $ 900 $ J and the heavy one only $ 450 $ J — twice as much to the lighter piece. With equal momenta, $ KE = p^{2}/2m $ favours the smaller mass. This is why a rifle's bullet carries far more energy than its recoiling stock, even though the two have equal and opposite momenta."
+   },
+   {
+    "id": "we-ch09-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Perfectly inelastic collision",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block moving at $ 10\\ \\text{m s}^{-1} $ strikes a stationary $ 3 $ kg block and they stick together. Find their common velocity and the kinetic energy lost.",
+    "solution": "**Momentum is conserved** (the collision forces are internal):\n\n$ (2)(10) + (3)(0) = (5)v \\Rightarrow v = 4\\ \\text{m s}^{-1} $\n\n**Kinetic energy before:**\n\n$ \\tfrac12 (2)(100) = 100 $ J\n\n**Kinetic energy after:**\n\n$ \\tfrac12 (5)(16) = 40 $ J\n\n**Energy lost:** $ 100 - 40 = 60 $ J, which becomes heat, sound and permanent deformation.\n\n**Where 60% of the energy went.** A perfectly inelastic collision always loses the most energy possible while still conserving momentum. It cannot lose *all* of it — momentum conservation forces the combined mass to keep moving, and that motion carries $ 40 $ J.\n\n**Watch out:** never start such a problem from energy conservation. Momentum is conserved in every collision; kinetic energy only in elastic ones. Getting these two the wrong way round is the most consequential error in the whole topic."
+   },
+   {
+    "id": "we-ch09-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Elastic collision between unequal masses",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg ball moving at $ 6\\ \\text{m s}^{-1} $ collides elastically head-on with a stationary $ 4 $ kg ball. Find both velocities afterwards.",
+    "solution": "For a head-on elastic collision with the target at rest, the standard results are\n\n$ v_1 = \\frac{m_1 - m_2}{m_1 + m_2}u $ and $ v_2 = \\frac{2m_1}{m_1 + m_2}u $\n\n**Substituting** $ m_1 = 2 $, $ m_2 = 4 $, $ u = 6 $:\n\n$ v_1 = \\frac{2-4}{6}(6) = -2\\ \\text{m s}^{-1} $\n\n$ v_2 = \\frac{2(2)}{6}(6) = 4\\ \\text{m s}^{-1} $\n\nThe lighter ball **bounces back** at $ 2\\ \\text{m s}^{-1} $ while the heavier moves forward at $ 4\\ \\text{m s}^{-1} $.\n\n**Check both conservation laws.**\n\nMomentum: $ 2(6) = 12 $ before; $ 2(-2) + 4(4) = 12 $ after ✓\n\nEnergy: $ \\tfrac12(2)(36) = 36 $ J before; $ \\tfrac12(2)(4) + \\tfrac12(4)(16) = 4 + 32 = 36 $ J after ✓\n\n**The rule these formulae encode.** A light body striking a heavier one always rebounds; a heavy body striking a lighter one always carries on forward. And if the masses are equal, $ v_1 = 0 $ and $ v_2 = u $ — the velocity exchange seen in Newton's cradle."
+   },
+   {
+    "id": "we-ch09-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Recoil of a gun",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 4 $ kg rifle fires a $ 20 $ g bullet at $ 400\\ \\text{m s}^{-1} $. Find the recoil speed and compare the kinetic energies.",
+    "solution": "**Momentum conservation**, starting from rest:\n\n$ 0 = (0.02)(400) + (4)v $\n\n$ v = -\\frac{8}{4} = -2\\ \\text{m s}^{-1} $\n\nThe rifle recoils at $ 2\\ \\text{m s}^{-1} $.\n\n**Kinetic energies.**\n\nBullet: $ \\tfrac12 (0.02)(400)^{2} = 1600 $ J\n\nRifle: $ \\tfrac12 (4)(2)^{2} = 8 $ J\n\n**The asymmetry is the point.** The momenta are equal and opposite, yet the bullet carries $ 200 $ times the energy. Since $ KE = p^{2}/2m $, the same momentum in a heavier body means far less energy.\n\n**Why this matters practically.** It is what makes a rifle usable: the recoil energy of $ 8 $ J is absorbed comfortably by the shoulder, while the bullet's $ 1600 $ J does the work downrange. Making a gun heavier reduces recoil energy without changing the bullet at all."
+   },
+   {
+    "id": "we-ch09-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — The ballistic pendulum",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 10 $ g bullet embeds itself in a $ 990 $ g block hanging from a string. The block swings up by $ 20 $ cm. Find the bullet's speed. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "This needs **two different principles, in the right order** — and mixing them is the classic failure.\n\n**Stage 1 — the collision. Momentum is conserved, energy is not.**\n\n$ (0.01)u = (1.0)v \\Rightarrow u = 100v $\n\n**Stage 2 — the swing. Energy is conserved, momentum is not** (the string and gravity are external).\n\n$ \\tfrac12 (1.0)v^{2} = (1.0)(10)(0.2) \\Rightarrow v^{2} = 4 \\Rightarrow v = 2\\ \\text{m s}^{-1} $\n\n**Combine:**\n\n$ u = 100(2) = 200\\ \\text{m s}^{-1} $\n\n**Why the order cannot be reversed.** During the collision, huge internal forces act over a very short time, so momentum survives but most of the kinetic energy is lost to heat in the block. During the swing there is no such loss, but gravity is external so momentum changes freely.\n\n**Watch out:** applying energy conservation across the collision gives roughly $ 20\\ \\text{m s}^{-1} $ — ten times too small. Always split a problem like this at the instant the collision ends."
+   },
+   {
+    "id": "we-ch09-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Man walking on a boat",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 60 $ kg man stands at one end of a $ 120 $ kg boat of length $ 3 $ m floating on still water. He walks to the other end. How far does the boat move?",
+    "solution": "No external horizontal force acts, and everything starts at rest — so the **centre of mass cannot move at all**.\n\nLet the boat shift by $ x $ opposite to the man's walk. Relative to the water, the man's displacement is $ (3 - x) $ forward while the boat's is $ x $ backward.\n\n$ m_{man}(3 - x) = m_{boat}(x) $\n\n$ 60(3 - x) = 120x $\n\n$ 180 - 60x = 120x \\Rightarrow 180 = 180x \\Rightarrow x = 1 $ m\n\nThe boat slides $ 1 $ m backward; the man advances $ 2 $ m over the water.\n\n**Check the centre of mass.** The man moves $ +2 $ m and the boat $ -1 $ m:\n\n$ \\frac{60(2) + 120(-1)}{180} = \\frac{120 - 120}{180} = 0 $ ✓ — it has not budged.\n\n**The general result:** the heavier the boat, the less it moves. Water friction, ignored here, is what eventually stops everything; without it the boat would stay displaced permanently."
+   },
+   {
+    "id": "we-ch09-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Impulse from a variable force",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A force acting on a $ 2 $ kg body grows uniformly from $ 0 $ to $ 40 $ N over $ 4 $ s. Find the impulse and the final speed if the body started from rest.",
+    "solution": "**Impulse is the area under the force-time graph**, and here that graph is a straight line from $ 0 $ to $ 40 $ N — a triangle.\n\n$ J = \\tfrac12 (\\text{base})(\\text{height}) = \\tfrac12 (4)(40) = 80\\ \\text{N s} $\n\n**Impulse equals the change in momentum:**\n\n$ J = m v - m u = 2v - 0 \\Rightarrow v = 40\\ \\text{m s}^{-1} $\n\n**Why $ F = ma $ alone will not do.** The force changes throughout, so there is no single acceleration to use. Impulse handles a varying force just as work handles a varying force over distance — by integrating.\n\n**The parallel worth noticing.** $ \\int F\\,dt $ gives momentum change; $ \\int F\\,dx $ gives energy change. Same force, two different integrals, two different conservation laws."
+   },
+   {
+    "id": "we-ch09-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Two-dimensional collision",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 3 $ kg body moving east at $ 4\\ \\text{m s}^{-1} $ collides with a $ 2 $ kg body moving north at $ 5\\ \\text{m s}^{-1} $, and they stick together. Find their common velocity.",
+    "solution": "Momentum is a vector, so conserve each component separately.\n\n**East component:**\n\n$ p_x = (3)(4) + (2)(0) = 12\\ \\text{kg m s}^{-1} $\n\n**North component:**\n\n$ p_y = (3)(0) + (2)(5) = 10\\ \\text{kg m s}^{-1} $\n\n**Combined mass** is $ 5 $ kg, so\n\n$ v_x = \\frac{12}{5} = 2.4\\ \\text{m s}^{-1} $, $ v_y = \\frac{10}{5} = 2.0\\ \\text{m s}^{-1} $\n\n**Magnitude and direction:**\n\n$ v = \\sqrt{2.4^{2} + 2.0^{2}} = \\sqrt{5.76 + 4} = \\sqrt{9.76} = 3.12\\ \\text{m s}^{-1} $\n\n$ \\theta = \\tan^{-1}\\!\\left(\\frac{2.0}{2.4}\\right) = 39.8^\\circ $ north of east.\n\n**Watch out:** combining the momenta as $ 12 + 10 = 22 $ before dividing is wrong — they are perpendicular vectors and must be added with Pythagoras. Resolving into components first makes the vector nature impossible to forget."
+   }
+  ]
+ }
+}

@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 37,
+ "hcv_title": "Magnetic Properties of Matter",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Magnetism and Matter (dia-, para- and ferromagnetism, hysteresis)"
+ },
+ "source_pages": {
+  "worked": "775",
+  "obj1": "776-777"
+ },
+ "notes": "Short source chapter — 7 Objective I items, all rebuilt, topped up to 10 with items on Curie temperature, hysteresis loss and the three magnetic vectors. Worked examples number 8, the source's own worked set being brief.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch37-magnetic-materials",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Magnetic Properties of Matter",
+   "intro": "Ten questions on how materials respond to a magnetic field. Keeping retentivity and coercivity distinct answers several of them at once.",
+   "sections": [
+    {
+     "id": "three-classes",
+     "title": "Dia-, Para- and Ferromagnetism",
+     "blurb": "Three responses, distinguished by the sign and size of the susceptibility.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch37-m01",
+       "source": "mcq",
+       "prompt": "Magnetic susceptibility is **negative** for",
+       "options": [
+        "diamagnetic materials only",
+        "paramagnetic materials only",
+        "ferromagnetic materials only",
+        "paramagnetic and ferromagnetic materials"
+       ],
+       "correct_index": 0,
+       "explanation": "A diamagnetic material develops a magnetisation *opposing* the applied field, so its susceptibility is small and negative — and it is feebly repelled by a magnet. Paramagnetic and ferromagnetic materials both magnetise along the field, giving positive susceptibilities (tiny for the former, enormous for the latter)."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch37-m02",
+       "source": "mcq",
+       "prompt": "A paramagnetic material is placed in a magnetic field. Consider: (A) increasing the field increases the magnetisation; (B) increasing the temperature increases the magnetisation. Then",
+       "options": [
+        "both are true",
+        "A is false, B is true",
+        "A is true, B is false",
+        "both are false"
+       ],
+       "correct_index": 2,
+       "explanation": "Curie's law gives $ M \\propto B/T $. A stronger field aligns more dipoles, so A holds. A higher temperature increases the thermal jostling that *randomises* them, so magnetisation falls — B is false. Field and temperature compete, and the ratio is what matters."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch37-m03",
+       "source": "mcq",
+       "prompt": "A paramagnetic sample is placed in a field strong enough that its magnetisation has **saturated**. The temperature is now lowered. The magnetisation",
+       "options": [
+        "increases",
+        "remains constant",
+        "decreases",
+        "may change either way"
+       ],
+       "correct_index": 1,
+       "explanation": "Saturation means every dipole is already aligned — there is nothing left to align. Curie's law applies only below saturation; once every moment points the same way, cooling cannot improve on it, so the magnetisation holds."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch37-m04",
+       "source": "mcq",
+       "prompt": "A ferromagnetic material is placed in an external field. Its magnetic **domains**",
+       "options": [
+        "may increase or decrease in size",
+        "all increase in size",
+        "all decrease in size",
+        "are unaffected by the field"
+       ],
+       "correct_index": 0,
+       "explanation": "Domains already aligned with the field grow at the expense of those aligned against it, so some expand while others shrink — and domain walls migrate. That is what produces the enormous magnetisation of a ferromagnet, and the wall movement is why the process is not perfectly reversible."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch37-m05",
+       "source": "mcq",
+       "prompt": "Above its Curie temperature, a ferromagnetic material becomes",
+       "options": [
+        "paramagnetic",
+        "diamagnetic",
+        "more strongly ferromagnetic",
+        "non-magnetic in every sense"
+       ],
+       "correct_index": 0,
+       "explanation": "Thermal agitation destroys the domain structure above the Curie point, leaving individual moments that still align weakly with an applied field — paramagnetic behaviour. Iron's Curie temperature is $ 1043 $ K, which is why a red-hot nail is no longer attracted by a magnet."
+      }
+     ]
+    },
+    {
+     "id": "H-B-and-M",
+     "title": "The Three Magnetic Vectors",
+     "blurb": "H comes from the currents you control; B and M respond.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch37-m06",
+       "source": "mcq",
+       "prompt": "The magnetising field $ H $ is measured at a point P near a long current-carrying wire. A long iron rod is then brought close to the wire. The value of $ H $ at P will",
+       "options": [
+        "increase many times",
+        "decrease many times",
+        "become zero",
+        "remain almost constant"
+       ],
+       "correct_index": 3,
+       "explanation": "$ H $ is determined by the *free* currents alone — by Ampere's law in the form $ \\oint \\vec{H}\\cdot d\\vec{l} = i_{free} $. Bringing iron near changes the magnetisation and hence $ B $ dramatically, but leaves $ H $ essentially untouched. This is exactly why $ H $ is a useful quantity to define."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch37-m07",
+       "source": "mcq",
+       "prompt": "The relation between $ B $, $ H $ and $ M $ inside a magnetised material is",
+       "options": [
+        "$ B = \\mu_0 H M $",
+        "$ B = \\mu_0(H - M) $",
+        "$ B = \\mu_0(H + M) $",
+        "$ B = H + \\mu_0 M $"
+       ],
+       "correct_index": 2,
+       "explanation": "The total field has two sources: the free currents (through $ H $) and the material's own aligned dipoles (through $ M $). They add, giving $ B = \\mu_0(H+M) $. Dividing through gives $ \\mu_r = 1 + \\chi $, which is why a susceptibility of $ 1000 $ means a relative permeability of about $ 1001 $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch37-m08",
+       "source": "mcq",
+       "prompt": "The relative permeability of a diamagnetic material is",
+       "options": [
+        "slightly greater than 1",
+        "slightly less than 1",
+        "very much greater than 1",
+        "exactly zero"
+       ],
+       "correct_index": 1,
+       "explanation": "With $ \\mu_r = 1 + \\chi $ and $ \\chi $ small and negative, $ \\mu_r $ falls just below 1 — typically $ 0.99999 $. Paramagnetics sit just above 1, and ferromagnetics reach thousands. A perfect diamagnet would have $ \\mu_r = 0 $, and a superconductor comes remarkably close."
+      }
+     ]
+    },
+    {
+     "id": "hysteresis",
+     "title": "Hysteresis and Choosing a Material",
+     "blurb": "Retentivity and coercivity decide what a magnet is good for.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch37-m09",
+       "source": "mcq",
+       "prompt": "The desirable properties for a **permanent** magnet are",
+       "options": [
+        "high retentivity and low coercive force",
+        "high retentivity and high coercive force",
+        "low retentivity and high coercive force",
+        "low retentivity and low coercive force"
+       ],
+       "correct_index": 1,
+       "explanation": "High retentivity means it stays strongly magnetised once the field is removed; high coercivity means a large reverse field is needed to demagnetise it, so it resists being spoiled. Steel and alnico have both, which is why they are used for permanent magnets."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch37-m10",
+       "source": "mcq",
+       "prompt": "Electromagnets are made with soft iron because it has",
+       "options": [
+        "high retentivity and high coercive force",
+        "low retentivity and high coercive force",
+        "low retentivity and low coercive force",
+        "high retentivity and low coercive force"
+       ],
+       "correct_index": 3,
+       "explanation": "An electromagnet needs a strong field while the current flows — hence high retentivity in the sense of a large magnetisation — but must release it the instant the current stops, hence *low* coercivity. Soft iron's narrow hysteresis loop delivers exactly that, and also wastes little energy per cycle, which matters in a transformer core."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch37-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Susceptibility, permeability and magnetisation",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A material of susceptibility $ 599 $ is placed in a magnetising field of $ H = 1000\\ \\text{A m}^{-1} $. Find its magnetisation, relative permeability and the field $ B $ inside it.",
+    "solution": "**Magnetisation:**\n\n$ M = \\chi H = (599)(1000) = 5.99 \\times 10^{5}\\ \\text{A m}^{-1} $\n\n**Relative permeability:**\n\n$ \\mu_r = 1 + \\chi = 600 $\n\n**Field inside:**\n\n$ B = \\mu_0(H + M) = (4\\pi \\times 10^{-7})(1000 + 5.99 \\times 10^{5}) $\n\n$ = (4\\pi \\times 10^{-7})(6.0 \\times 10^{5}) = 0.754\\ \\text{T} $\n\n**Or equivalently:** $ B = \\mu_0\\mu_r H = (4\\pi \\times 10^{-7})(600)(1000) = 0.754 $ T ✓\n\n**What the numbers reveal.** The material's own magnetisation contributes $ 599 $ parts out of $ 600 $ of the total field — the free currents supply less than $ 0.2\\% $ of it. This is why an iron core transforms a feeble coil into a powerful electromagnet.\n\n**A susceptibility of $ 599 $ marks this as ferromagnetic.** A paramagnet would have $ \\chi \\sim 10^{-5} $ and a diamagnet $ \\sim -10^{-5} $ — five orders of magnitude smaller either way."
+   },
+   {
+    "id": "we-ch37-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Curie's law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A paramagnetic salt has susceptibility $ 4.0 \\times 10^{-4} $ at $ 300 $ K. Find its susceptibility at $ 200 $ K, and at $ 4 $ K.",
+    "solution": "Curie's law gives $ \\chi \\propto 1/T $, so\n\n$ \\chi_2 = \\chi_1\\frac{T_1}{T_2} $\n\n**At $ 200 $ K:**\n\n$ \\chi = (4.0 \\times 10^{-4})\\frac{300}{200} = 6.0 \\times 10^{-4} $\n\n**At $ 4 $ K:**\n\n$ \\chi = (4.0 \\times 10^{-4})\\frac{300}{4} = 3.0 \\times 10^{-2} $\n\n— a seventy-five-fold increase over room temperature.\n\n**Why cooling helps so much.** Magnetisation is a contest between the field trying to align the dipoles and thermal energy randomising them. Removing the thermal competition lets even a modest field align a large fraction.\n\n**Where this is exploited.** Adiabatic demagnetisation uses precisely this: magnetise a paramagnetic salt at low temperature, then remove the field adiabatically. The dipoles re-randomise by drawing energy from the lattice, and temperatures below a millikelvin become reachable.\n\n**The limit of the law.** Curie's law fails as saturation approaches, since $ \\chi $ cannot grow without bound — every dipole can only align once."
+   },
+   {
+    "id": "we-ch37-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Field inside a solenoid with an iron core",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A solenoid of $ 500 $ turns per metre carries $ 2 $ A. Find the field inside it when the core is (a) air and (b) iron of relative permeability $ 800 $.",
+    "solution": "**Magnetising field**, set by the current alone:\n\n$ H = ni = (500)(2) = 1000\\ \\text{A m}^{-1} $\n\n**(a) Air core** ($ \\mu_r \\approx 1 $):\n\n$ B = \\mu_0 H = (4\\pi \\times 10^{-7})(1000) = 1.26 \\times 10^{-3}\\ \\text{T} $\n\n**(b) Iron core** ($ \\mu_r = 800 $):\n\n$ B = \\mu_0\\mu_r H = (1.26 \\times 10^{-3})(800) = 1.01\\ \\text{T} $\n\n**An eight-hundred-fold increase from the same current.** This is the entire reason electromagnets, transformers and motors have iron cores rather than empty ones.\n\n**Note that $ H $ was unchanged.** Inserting the core does not alter the current, so $ H = ni $ stays at $ 1000\\ \\text{A m}^{-1} $. What changes is the material's contribution $ M $, and hence $ B $. This is the practical payoff of separating the two vectors.\n\n**The caveat.** $ \\mu_r $ for iron is not a constant — it depends strongly on $ H $ and falls sharply as the iron saturates near $ 1$–$2 $ T. Doubling the current here would *not* double $ B $."
+   },
+   {
+    "id": "we-ch37-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Hysteresis loss",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "The hysteresis loop of a transformer core encloses an area corresponding to $ 250\\ \\text{J m}^{-3} $ per cycle. Find the power lost in a $ 0.01\\ \\text{m}^{3} $ core operated at $ 50 $ Hz.",
+    "solution": "**Energy lost per cycle:**\n\n$ E = (250)(0.01) = 2.5\\ \\text{J} $\n\n**Power lost:**\n\n$ P = E \\times f = (2.5)(50) = 125\\ \\text{W} $\n\n**Why the loop's area *is* the energy.** Taking the material once round the loop returns it to its original state, so the net work done on it must have gone somewhere — into heat, through the irreversible movement of domain walls. The enclosed area of the $ B $-$ H $ loop measures exactly that work per unit volume.\n\n**Why transformer cores use soft magnetic material.** A narrow loop means a small area and little loss per cycle. At $ 50 $ Hz a core goes round its loop $ 50 $ times a second, so even a modest area accumulates real waste heat.\n\n**And why permanent magnets want the opposite.** A *fat* loop means high retentivity and coercivity — excellent for a magnet that must hold its state, hopeless for a core that must reverse fifty times a second. Same physics, opposite design goal."
+   },
+   {
+    "id": "we-ch37-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Magnetisation from atomic moments",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Iron has $ 8.5 \\times 10^{28} $ atoms per cubic metre, each with a magnetic moment of about $ 2.2 $ Bohr magnetons. Find the saturation magnetisation. Take $ \\mu_B = 9.27 \\times 10^{-24}\\ \\text{A m}^{2} $.",
+    "solution": "**Moment per atom:**\n\n$ m = (2.2)(9.27 \\times 10^{-24}) = 2.04 \\times 10^{-23}\\ \\text{A m}^{2} $\n\n**Saturation magnetisation** — every atomic moment aligned:\n\n$ M_s = nm = (8.5 \\times 10^{28})(2.04 \\times 10^{-23}) = 1.73 \\times 10^{6}\\ \\text{A m}^{-1} $\n\n**Corresponding field:**\n\n$ B_s = \\mu_0 M_s = (4\\pi \\times 10^{-7})(1.73 \\times 10^{6}) = 2.18\\ \\text{T} $\n\n**A ceiling you cannot exceed.** Once every atomic moment points the same way, no increase in the applied field can raise the material's contribution further. Iron's measured saturation is about $ 2.15 $ T — remarkably close to this estimate.\n\n**Why this limits machine design.** Motors, generators and transformers cannot exploit fields much above $ 2 $ T using iron, whatever current they carry. Going higher demands superconducting coils with no core at all — which is why MRI magnets are built that way."
+   },
+   {
+    "id": "we-ch37-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Diamagnetism and the levitating frog",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Explain why a diamagnetic material is repelled by a magnet, and estimate the field needed to levitate water ($ \\chi \\approx -9 \\times 10^{-6} $).",
+    "solution": "**Why repulsion.** An applied field induces atomic currents that, by Lenz's law, oppose the change — producing a magnetisation *against* the field. The sample therefore behaves like a tiny magnet aligned in opposition, and is pushed towards *weaker* field.\n\n**Levitation condition.** A diamagnetic body in a field gradient feels a force per unit volume of roughly\n\n$ f = \\frac{\\chi}{\\mu_0}B\\frac{dB}{dz} $\n\nSetting this equal to the weight per unit volume $ \\rho g $:\n\n$ B\\frac{dB}{dz} = \\frac{\\mu_0\\rho g}{|\\chi|} = \\frac{(4\\pi \\times 10^{-7})(1000)(9.8)}{9 \\times 10^{-6}} \\approx 1.4 \\times 10^{3}\\ \\text{T}^{2}\\text{m}^{-1} $\n\nWith a gradient of order $ B $ per centimetre, this needs $ B \\sim \\sqrt{1.4 \\times 10^{3} \\times 0.01} \\approx 4\\ \\text{T} $ — but in practice around $ 16 $ T is required for water.\n\n**This has actually been done.** Living frogs and water droplets have been levitated in $ 16 $ T magnets, exploiting the diamagnetism of water. The effect is minute — $ \\chi \\sim 10^{-5} $ — which is precisely why such an enormous field is needed.\n\n**The general lesson.** Every substance is diamagnetic to some degree; in para- and ferromagnetic materials the effect is simply swamped by the much larger alignment of permanent moments."
+   },
+   {
+    "id": "we-ch37-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Comparing the three classes numerically",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Three samples in the same field $ H = 10^{4}\\ \\text{A m}^{-1} $ have susceptibilities $ -1.0 \\times 10^{-5} $, $ +2.0 \\times 10^{-5} $ and $ +1500 $. Identify each and find its magnetisation.",
+    "solution": "**Sample 1** — $ \\chi = -1.0 \\times 10^{-5} $, negative, so **diamagnetic** (bismuth, copper, water):\n\n$ M = \\chi H = -0.1\\ \\text{A m}^{-1} $\n\nOpposing the field, and utterly negligible.\n\n**Sample 2** — $ \\chi = +2.0 \\times 10^{-5} $, small and positive, so **paramagnetic** (aluminium, oxygen):\n\n$ M = +0.2\\ \\text{A m}^{-1} $\n\n**Sample 3** — $ \\chi = +1500 $, enormous, so **ferromagnetic** (iron, cobalt, nickel):\n\n$ M = 1.5 \\times 10^{7}\\ \\text{A m}^{-1} $\n\n**The scale of the difference.** The ferromagnet's magnetisation exceeds the paramagnet's by a factor of $ 10^{8} $. Dia- and paramagnetism are laboratory curiosities requiring sensitive apparatus to detect; ferromagnetism is the effect you feel when a fridge magnet grabs the door.\n\n**Why ferromagnetism is so much stronger.** In dia- and paramagnets each atom responds independently to the applied field. In a ferromagnet, quantum exchange coupling locks neighbouring moments into whole *domains* of typically $ 10^{17} $ atoms that swing into line together."
+   },
+   {
+    "id": "we-ch37-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Choosing between two materials",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Material A has retentivity $ 1.2 $ T and coercivity $ 50\\,000\\ \\text{A m}^{-1} $; material B has retentivity $ 1.4 $ T and coercivity $ 80\\ \\text{A m}^{-1} $. Which suits a permanent magnet, and which a transformer core?",
+    "solution": "**Read the coercivity first — it is the discriminator.**\n\nMaterial A resists demagnetisation strongly ($ 50\\,000\\ \\text{A m}^{-1} $ needed to wipe it), so it has a **fat** hysteresis loop. Material B gives up its magnetisation almost immediately ($ 80\\ \\text{A m}^{-1} $), so its loop is **narrow**.\n\n**Permanent magnet → material A.** It holds its field and shrugs off stray demagnetising influences. Its large loop area means high loss per cycle, but a permanent magnet is never cycled, so that costs nothing.\n\n**Transformer core → material B.** Its narrow loop means very little energy is wasted on each of the $ 50 $ reversals per second, and it releases its magnetisation instantly when the current reverses. Its slightly higher retentivity is a bonus — a strong field while energised.\n\n**The design principle in one line.** For anything that must *hold* a magnetic state, choose high coercivity. For anything that must *change* it repeatedly, choose low coercivity. Retentivity alone cannot decide, which is why the two materials here differ far more in coercivity than in retentivity."
+   }
+  ]
+ }
+}

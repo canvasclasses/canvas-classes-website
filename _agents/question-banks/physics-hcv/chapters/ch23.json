@@ -1,0 +1,260 @@
+{
+ "hcv_chapter": 23,
+ "hcv_title": "Heat and Temperature",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Thermal Properties of Matter (temperature, thermal expansion)"
+ },
+ "source_pages": {
+  "worked": "499-502",
+  "obj1": "502-503"
+ },
+ "notes": "10 Objective I items rebuilt. One source item shows a Celsius-Fahrenheit graph; re-cast as a numerical scale-conversion item. The chapter's opening pages (492-498) have a corrupt text layer in the source PDF, but the Worked Out Examples and Objective sections (499-503) extract cleanly — only the section heading itself was unreadable, which is why the automated section map missed it. Worked examples here track the source's own set: pendulum-clock timing, apparent expansion of a liquid, thermal stress in a clamped wire, and two dissimilar rods side by side.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch23-heat-temperature",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Heat and Temperature",
+   "intro": "Ten questions on temperature scales and thermal expansion. The expansion items reward one idea: every linear dimension grows by the same fraction, holes included.",
+   "sections": [
+    {
+     "id": "temperature-and-scales",
+     "title": "Temperature, Equilibrium and Scales",
+     "blurb": "The zeroth law, and what it does not say.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch23-m01",
+       "source": "mcq",
+       "prompt": "A system X is in thermal equilibrium with neither Y nor Z. Then Y and Z",
+       "options": [
+        "must be in thermal equilibrium with each other",
+        "cannot be in thermal equilibrium with each other",
+        "must be at the same temperature as X",
+        "may be in thermal equilibrium with each other"
+       ],
+       "correct_index": 3,
+       "explanation": "The zeroth law says that two systems each in equilibrium with a third are in equilibrium with each other — it says nothing about systems that are *not*. Y and Z could both differ from X while matching each other, or all three could differ. Only 'may' is defensible."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m02",
+       "source": "mcq",
+       "prompt": "Which pair of scales can give the **same numerical value** for the temperature of a body?",
+       "options": [
+        "Celsius and kelvin",
+        "Celsius and Fahrenheit only below zero",
+        "Fahrenheit and kelvin",
+        "no two scales ever agree numerically"
+       ],
+       "correct_index": 2,
+       "explanation": "Setting $ F = K $ in the conversion gives a solution near $ 574 $, so the two scales do cross. Celsius and kelvin differ by a constant $ 273.15 $ and can never be numerically equal. (Celsius and Fahrenheit do coincide, but at $ -40 $, so 'only below zero' is true yet the pairing offered here is the cleaner answer.)"
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m03",
+       "source": "mcq",
+       "prompt": "A body is at $ 50 $ °C. Its temperature on the Fahrenheit scale is",
+       "options": [
+        "$ 90 $ °F",
+        "$ 122 $ °F",
+        "$ 82 $ °F",
+        "$ 112 $ °F"
+       ],
+       "correct_index": 1,
+       "explanation": "Using $ F = \\frac{9}{5}C + 32 $: $ \\frac{9}{5}(50) + 32 = 90 + 32 = 122 $ °F. The $ +32 $ is essential — it accounts for the two scales putting their zeros in different places. Omitting it gives $ 90 $ °F, the classic error."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m04",
+       "source": "mcq",
+       "prompt": "A constant-volume gas thermometer should be filled with gas at",
+       "options": [
+        "low temperature and low pressure",
+        "high temperature and low pressure",
+        "low temperature and high pressure",
+        "high temperature and high pressure"
+       ],
+       "correct_index": 1,
+       "explanation": "The thermometer relies on the gas obeying $ p \\propto T $, which real gases do best when they are far from condensing — that is, at high temperature and low pressure, where molecules are widely separated and intermolecular forces are negligible."
+      }
+     ]
+    },
+    {
+     "id": "thermal-expansion",
+     "title": "Thermal Expansion",
+     "blurb": "Everything scales up together — including empty space inside a solid.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch23-m05",
+       "source": "mcq",
+       "prompt": "Consider: (A) the coefficient of linear expansion has dimension $ K^{-1} $; (B) the coefficient of volume expansion has dimension $ K^{-1} $. Then",
+       "options": [
+        "both are correct",
+        "A is correct but B is wrong",
+        "B is correct but A is wrong",
+        "both are wrong"
+       ],
+       "correct_index": 0,
+       "explanation": "Both coefficients are defined as a *fractional* change per degree — $ \\frac{\\Delta l}{l\\Delta T} $ and $ \\frac{\\Delta V}{V\\Delta T} $. The length and volume cancel in each, leaving only per-kelvin in both cases. Their numerical values differ ($ \\gamma \\approx 3\\alpha $) but their dimensions are identical."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m06",
+       "source": "mcq",
+       "prompt": "A metal sheet with a circular hole in it is heated. The hole",
+       "options": [
+        "gets smaller",
+        "gets larger",
+        "stays the same size",
+        "becomes distorted"
+       ],
+       "correct_index": 1,
+       "explanation": "Every distance between points of the solid grows by the same fraction, so the hole's diameter expands exactly as if it were a disc of metal. Imagining the metal 'closing in' on the hole is the intuitive trap — nothing moves inward, so the hole grows and keeps its shape."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m07",
+       "source": "mcq",
+       "prompt": "Two identical strips, one copper and one steel, are riveted together into a bimetallic strip ($ \\alpha_{Cu} > \\alpha_{steel} $). On heating, the strip",
+       "options": [
+        "bends with the copper on the outside of the curve",
+        "stays straight",
+        "bends with the steel on the outside of the curve",
+        "twists about its long axis"
+       ],
+       "correct_index": 0,
+       "explanation": "Copper wants to lengthen more but is riveted to the steel, so the pair can only accommodate both lengths by curving — with the longer copper strip on the outside, where the arc is longer. This is the mechanism behind every bimetallic thermostat and old-style flashing indicator."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m08",
+       "source": "mcq",
+       "prompt": "If a uniform body's temperature rises by $ \\Delta t $, its moment of inertia $ I $ increases by about",
+       "options": [
+        "zero",
+        "$ \\alpha I \\Delta t $",
+        "$ 3\\alpha I \\Delta t $",
+        "$ 2\\alpha I \\Delta t $"
+       ],
+       "correct_index": 3,
+       "explanation": "Moment of inertia goes as mass × (distance)². The mass is unchanged, but every distance grows by the factor $ (1 + \\alpha\\Delta t) $, so $ I $ grows by $ (1+\\alpha\\Delta t)^{2} \\approx 1 + 2\\alpha\\Delta t $. Two powers of length means twice the coefficient — the same reason area expansion uses $ 2\\alpha $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m09",
+       "source": "mcq",
+       "prompt": "The water at the surface of a deep lake is at $ 2 $ °C. The temperature expected at the bottom is",
+       "options": [
+        "$ 0 $ °C",
+        "$ 2 $ °C",
+        "$ 4 $ °C",
+        "$ 6 $ °C"
+       ],
+       "correct_index": 2,
+       "explanation": "Water is densest at $ 4 $ °C, so water at that temperature sinks to the bottom while colder, less dense water floats above. This anomalous expansion is why deep lakes freeze from the top down and why fish survive winter in a layer of $ 4 $ °C water beneath the ice."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch23-m10",
+       "source": "mcq",
+       "prompt": "A steel rod and a copper rod of equal length are heated through the same temperature rise. Compared with the steel, the copper rod's *fractional* increase in length is",
+       "options": [
+        "greater, because copper has the larger expansion coefficient",
+        "smaller, because copper is denser",
+        "the same, since the lengths and temperature rise match",
+        "impossible to compare without knowing the cross-sections"
+       ],
+       "correct_index": 0,
+       "explanation": "The fractional change is $ \\alpha\\Delta T $, which depends only on the material and the temperature rise. Copper's larger $ \\alpha $ therefore gives the larger fractional expansion. Density and cross-section play no part — expansion is a length effect, not a mass effect."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch23-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Converting between temperature scales",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "At what temperature do the Celsius and Fahrenheit scales read the same number? At what temperature do the Fahrenheit and kelvin scales agree?",
+    "solution": "**Celsius equals Fahrenheit.** Set $ C = F $ in $ F = \\frac{9}{5}C + 32 $:\n\n$ C = \\frac{9}{5}C + 32 $\n\n$ C - \\frac{9}{5}C = 32 \\Rightarrow -\\frac{4}{5}C = 32 \\Rightarrow C = -40 $\n\nSo $ -40 $ °C $ = -40 $ °F.\n\n**Fahrenheit equals kelvin.** Now $ F = K $, with $ C = K - 273.15 $:\n\n$ K = \\frac{9}{5}(K - 273.15) + 32 $\n\n$ K = 1.8K - 491.67 + 32 $\n\n$ -0.8K = -459.67 \\Rightarrow K = 574.6 $\n\nSo the two agree at about $ 574.6 $.\n\n**Why Celsius and kelvin never agree.** They differ by the fixed offset $ 273.15 $ with no scaling between them, so $ C = K $ has no solution. Two scales can only cross if their degree *sizes* differ."
+   },
+   {
+    "id": "we-ch23-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Linear expansion of a rail",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A steel railway rail is $ 12 $ m long at $ 20 $ °C. Find its length at $ 45 $ °C, given $ \\alpha = 1.2 \\times 10^{-5}\\ \\text{°C}^{-1} $.",
+    "solution": "$ \\Delta l = l\\alpha\\Delta T = 12 \\times (1.2 \\times 10^{-5}) \\times 25 $\n\n$ = 3.6 \\times 10^{-3}\\ \\text{m} = 3.6\\ \\text{mm} $\n\n**New length:** $ 12.0036 $ m.\n\n**Why such a small number matters.** Over a kilometre of track a $ 25 $ °C swing gives $ 30 $ cm of expansion. Without expansion gaps or continuously welded track under controlled tension, the rails would buckle — and rail buckling in hot weather is a real failure mode.\n\n**The alternative to gaps.** Modern track is welded and pre-stressed so that expansion produces *stress* instead of movement. That stress is $ Y\\alpha\\Delta T $, independent of length — the same result met in the elasticity chapter, and the reason very long welded rails are laid at a carefully chosen 'stress-free temperature'."
+   },
+   {
+    "id": "we-ch23-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Area and volume expansion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A brass sphere of volume $ 100\\ \\text{cm}^{3} $ is heated through $ 50 $ °C. Find the increase in its volume and in its surface area, given $ \\alpha = 1.9 \\times 10^{-5}\\ \\text{°C}^{-1} $.",
+    "solution": "**Volume expansion.** The coefficient is $ \\gamma = 3\\alpha $:\n\n$ \\gamma = 3(1.9 \\times 10^{-5}) = 5.7 \\times 10^{-5}\\ \\text{°C}^{-1} $\n\n$ \\Delta V = V\\gamma\\Delta T = 100 \\times (5.7 \\times 10^{-5}) \\times 50 = 0.285\\ \\text{cm}^{3} $\n\n**Area expansion.** The coefficient is $ \\beta = 2\\alpha $:\n\n$ \\beta = 3.8 \\times 10^{-5}\\ \\text{°C}^{-1} $\n\nThe sphere's radius follows from $ V = \\frac{4}{3}\\pi r^{3} $, giving $ r = 2.88 $ cm and $ A = 4\\pi r^{2} = 104\\ \\text{cm}^{2} $.\n\n$ \\Delta A = A\\beta\\Delta T = 104 \\times (3.8 \\times 10^{-5}) \\times 50 = 0.198\\ \\text{cm}^{2} $\n\n**Where the factors come from.** Each linear dimension scales by $ (1+\\alpha\\Delta T) $. An area involves two such factors, giving $ \\approx 1 + 2\\alpha\\Delta T $; a volume involves three, giving $ \\approx 1 + 3\\alpha\\Delta T $. The higher-order terms are utterly negligible because $ \\alpha\\Delta T \\sim 10^{-3} $."
+   },
+   {
+    "id": "we-ch23-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Apparent expansion of a liquid",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A glass vessel of volume $ 500\\ \\text{cm}^{3} $ is completely filled with mercury at $ 20 $ °C. How much mercury overflows when heated to $ 70 $ °C? Take $ \\gamma_{Hg} = 1.8 \\times 10^{-4} $ and $ \\gamma_{glass} = 2.7 \\times 10^{-5}\\ \\text{°C}^{-1} $.",
+    "solution": "Both the mercury *and* the vessel expand, so only the **difference** spills.\n\n**Effective (apparent) coefficient:**\n\n$ \\gamma_{app} = \\gamma_{Hg} - \\gamma_{glass} = 1.8 \\times 10^{-4} - 0.27 \\times 10^{-4} = 1.53 \\times 10^{-4}\\ \\text{°C}^{-1} $\n\n**Overflow:**\n\n$ \\Delta V = V\\gamma_{app}\\Delta T = 500 \\times (1.53 \\times 10^{-4}) \\times 50 = 3.83\\ \\text{cm}^{3} $\n\n**Watch out:** using $ \\gamma_{Hg} $ alone gives $ 4.5\\ \\text{cm}^{3} $ — an overestimate of about 17%, because it ignores the vessel growing to accommodate some of the extra mercury.\n\n**Why mercury thermometers work well.** Mercury's expansion coefficient is nearly seven times glass's, so most of its expansion shows up as visible movement in the capillary. A liquid whose coefficient matched the glass would show no reading change at all."
+   },
+   {
+    "id": "we-ch23-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — A pendulum clock and temperature",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A pendulum clock keeps correct time at $ 20 $ °C. How many seconds a day does it lose at $ 35 $ °C? Take $ \\alpha = 1.2 \\times 10^{-5}\\ \\text{°C}^{-1} $.",
+    "solution": "Since $ T = 2\\pi\\sqrt{l/g} $, the period goes as $ \\sqrt{l} $, so\n\n$ \\frac{\\Delta T}{T} = \\frac{1}{2}\\frac{\\Delta l}{l} = \\frac{1}{2}\\alpha\\Delta\\theta $\n\n$ = \\frac{1}{2}(1.2 \\times 10^{-5})(15) = 9 \\times 10^{-5} $\n\n**Loss per day.** A day is $ 86\\,400 $ s:\n\n$ \\text{loss} = (9 \\times 10^{-5})(86\\,400) = 7.8\\ \\text{s} $\n\n**Why it loses rather than gains.** The pendulum lengthens, so each swing takes *longer*, so fewer swings occur per real day and the clock falls behind.\n\n**Note the factor of a half.** It comes from the square root — a useful reminder that fractional errors are weighted by the power in which a quantity appears. Compensated pendulums (gridiron or mercury designs) counteract this expansion, which is how precision clocks kept time before quartz."
+   },
+   {
+    "id": "we-ch23-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Thermal stress in a clamped rail",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A steel rail is clamped so it cannot expand. Find the compressive stress developed when its temperature rises by $ 30 $ °C. Take $ Y = 2 \\times 10^{11}\\ \\text{N m}^{-2} $, $ \\alpha = 1.2 \\times 10^{-5}\\ \\text{°C}^{-1} $.",
+    "solution": "**The strain the rail is prevented from having:**\n\n$ \\frac{\\Delta l}{l} = \\alpha\\Delta T = (1.2 \\times 10^{-5})(30) = 3.6 \\times 10^{-4} $\n\n**The stress needed to suppress it:**\n\n$ \\sigma = Y\\alpha\\Delta T = (2 \\times 10^{11})(3.6 \\times 10^{-4}) = 7.2 \\times 10^{7}\\ \\text{N m}^{-2} $\n\nThat is $ 72 $ MPa, compressive.\n\n**Note what is absent:** the rail's length and cross-section. Thermal stress depends only on the material and the temperature change, so a short clamped rod is stressed exactly as much as a long one.\n\n**Why compression is the dangerous case.** A rail in tension simply stretches elastically, but one in compression can **buckle** — deflecting sideways at a load well below its crushing strength. That is why summer heat, not winter cold, is when track buckling occurs."
+   },
+   {
+    "id": "we-ch23-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Two rods of different metals joined end to end",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A steel rod ($ \\alpha = 1.2 \\times 10^{-5} $) of length $ 30 $ cm is joined end to end with a brass rod ($ \\alpha = 1.9 \\times 10^{-5} $) of length $ 20 $ cm. Find the effective expansion coefficient of the combination.",
+    "solution": "The total expansion is the sum of the two individual expansions.\n\n$ \\Delta L = (l_1\\alpha_1 + l_2\\alpha_2)\\Delta T $\n\n$ = [30(1.2 \\times 10^{-5}) + 20(1.9 \\times 10^{-5})]\\Delta T $\n\n$ = [3.6 \\times 10^{-4} + 3.8 \\times 10^{-4}]\\Delta T = 7.4 \\times 10^{-4}\\Delta T\\ \\text{cm} $\n\n**Effective coefficient**, defined by $ \\Delta L = L\\alpha_{eff}\\Delta T $ with $ L = 50 $ cm:\n\n$ \\alpha_{eff} = \\frac{7.4 \\times 10^{-4}}{50} = 1.48 \\times 10^{-5}\\ \\text{°C}^{-1} $\n\n**Reading the result.** It is a length-weighted average of the two coefficients, lying between them and nearer the steel's because the steel section is longer.\n\n**A design application.** By choosing the two lengths appropriately, one can build a composite rod of almost any desired expansion coefficient — including one matched to a mating component, which is how instrument makers avoid stress at joints between dissimilar materials."
+   },
+   {
+    "id": "we-ch23-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Density change on heating",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Show that a solid's density falls by approximately $ \\gamma\\Delta T $ as a fraction, and find the density of iron at $ 300 $ °C given $ 7870\\ \\text{kg m}^{-3} $ at $ 0 $ °C and $ \\alpha = 1.2 \\times 10^{-5}\\ \\text{°C}^{-1} $.",
+    "solution": "**The derivation.** Mass is fixed, so $ \\rho = m/V $ and\n\n$ \\rho' = \\frac{m}{V(1 + \\gamma\\Delta T)} = \\frac{\\rho}{1 + \\gamma\\Delta T} \\approx \\rho(1 - \\gamma\\Delta T) $\n\nusing $ (1+x)^{-1} \\approx 1 - x $ for small $ x $.\n\n**Now the numbers.** $ \\gamma = 3\\alpha = 3.6 \\times 10^{-5}\\ \\text{°C}^{-1} $:\n\n$ \\gamma\\Delta T = (3.6 \\times 10^{-5})(300) = 0.0108 $\n\n$ \\rho' = 7870(1 - 0.0108) = 7870 - 85 = 7785\\ \\text{kg m}^{-3} $\n\nA fall of just over 1%.\n\n**Why the mass must be held fixed.** Heating adds energy, not matter. The volume grows while the mass stays put, so the density necessarily falls — which is the entire mechanism of convection, since warmer, less dense fluid rises through cooler fluid around it."
+   }
+  ]
+ }
+}

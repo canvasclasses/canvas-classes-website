@@ -1,0 +1,301 @@
+{
+ "hcv_chapter": 11,
+ "hcv_title": "Gravitation",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Gravitation"
+ },
+ "source_pages": {
+  "worked": "233-237",
+  "obj1": "238-239"
+ },
+ "notes": "11 Objective I items rebuilt. One source item depends on a graph figure (weight vs time on an earth-to-Mars trip); re-cast verbally as a question about where the net gravitational force vanishes. Items 1-2 of the source form a linked pair and are kept adjacent.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch11-gravitation",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Gravitation",
+   "intro": "Eleven questions on the inverse-square law, from apples to orbits. Several hinge on remembering that the field depends on distance from the *centre*.",
+   "sections": [
+    {
+     "id": "field-and-acceleration",
+     "title": "Gravitational Field and g",
+     "blurb": "Why the moon's acceleration is not the apple's.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch11-m01",
+       "source": "mcq",
+       "prompt": "The moon's acceleration towards the earth is $ 0.0027\\ \\text{m s}^{-2} $. If the moon were stopped for an instant and then released, its initial acceleration towards the earth would be",
+       "options": [
+        "$ 10\\ \\text{m s}^{-2} $",
+        "$ 6.4\\ \\text{m s}^{-2} $",
+        "zero",
+        "$ 0.0027\\ \\text{m s}^{-2} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Acceleration depends on the gravitational field, which depends only on *where* the moon is — not on how fast it is moving. Stopping it does not change its distance from the earth, so its acceleration is unchanged at $ 0.0027\\ \\text{m s}^{-2} $. What changes is that it now falls straight in instead of curving around."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m02",
+       "source": "mcq",
+       "prompt": "Continuing the previous question, the moon's acceleration just before it strikes the earth (moon radius $ = R_e/4 $, surface $ g = 10\\ \\text{m s}^{-2} $) would be about",
+       "options": [
+        "$ 6.4\\ \\text{m s}^{-2} $",
+        "$ 10\\ \\text{m s}^{-2} $",
+        "$ 0.0027\\ \\text{m s}^{-2} $",
+        "$ 5.0\\ \\text{m s}^{-2} $"
+       ],
+       "correct_index": 0,
+       "explanation": "At contact the moon's *centre* is $ R_e + R_e/4 = 1.25R_e $ from the earth's centre — the distance in the inverse-square law is always centre-to-centre. So $ a = g/(1.25)^{2} = 10/1.5625 = 6.4\\ \\text{m s}^{-2} $. Using $ R_e $ and getting $ 10\\ \\text{m s}^{-2} $ ignores the moon's own size."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m03",
+       "source": "mcq",
+       "prompt": "A spaceship travels from earth to Mars along the line joining them. The net gravitational force on a passenger",
+       "options": [
+        "decreases steadily throughout the trip",
+        "stays constant once the ship leaves earth",
+        "falls to zero at one point and then grows again",
+        "increases steadily throughout"
+       ],
+       "correct_index": 2,
+       "explanation": "Near earth the pull is earthward and weakens with distance; near Mars it is Marsward and strengthens. Somewhere between, the two pulls balance exactly and the net force passes through zero. The passenger's *weight* therefore falls, vanishes, and grows again in the opposite direction."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m04",
+       "source": "mcq",
+       "prompt": "For a uniform **spherical shell**, consider (A) the plot of potential $ V $ against $ r $ is discontinuous, and (B) the plot of field $ E $ against $ r $ is discontinuous. Then",
+       "options": [
+        "both are correct",
+        "B is correct, A is wrong",
+        "A is correct, B is wrong",
+        "both are wrong"
+       ],
+       "correct_index": 1,
+       "explanation": "Inside a shell the field is exactly zero, while just outside it is $ GM/R^{2} $ — so $ E $ jumps at the surface. The potential, however, is constant inside at $ -GM/R $ and equals the same value just outside, so $ V $ joins smoothly. Potential is continuous even where the field is not."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m05",
+       "source": "mcq",
+       "prompt": "For a uniform **solid sphere**, consider (A) the plot of $ V $ against $ r $ is discontinuous, and (B) the plot of $ E $ against $ r $ is discontinuous. Then",
+       "options": [
+        "both are wrong",
+        "both are correct",
+        "A is correct, B is wrong",
+        "B is correct, A is wrong"
+       ],
+       "correct_index": 0,
+       "explanation": "Inside a solid sphere the field rises linearly as $ E \\propto r $, reaching $ GM/R^{2} $ exactly at the surface where the external formula takes over — no jump. The potential is likewise smooth. A solid sphere has mass everywhere, so nothing changes abruptly at the boundary, unlike a shell."
+      }
+     ]
+    },
+    {
+     "id": "potential-and-energy",
+     "title": "Gravitational Potential and Energy",
+     "blurb": "Signs matter here more than anywhere else in mechanics.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch11-m06",
+       "source": "mcq",
+       "prompt": "The work done in slowly lifting a body of mass $ m $ from the earth's surface to a height equal to the earth's radius $ R $ is",
+       "options": [
+        "$ mgR $",
+        "$ \\frac{1}{2}mgR $",
+        "$ 2mgR $",
+        "$ \\frac{1}{4}mgR $"
+       ],
+       "correct_index": 1,
+       "explanation": "Potential energy goes as $ -GMm/r $, so lifting from $ R $ to $ 2R $ changes it by $ -\\frac{GMm}{2R} + \\frac{GMm}{R} = \\frac{GMm}{2R} $, which is $ \\tfrac12 mgR $ since $ g = GM/R^{2} $. Using $ mgh $ with $ h = R $ gives $ mgR $ — double the truth, because $ g $ weakens badly over such a large climb."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m07",
+       "source": "mcq",
+       "prompt": "A person brings a $ 1 $ kg mass from infinity (at rest) to point A, where it arrives moving at $ 2\\ \\text{m s}^{-1} $. The person does $ -3 $ J of work. The gravitational potential at A is",
+       "options": [
+        "$ -3\\ \\text{J kg}^{-1} $",
+        "$ -2\\ \\text{J kg}^{-1} $",
+        "$ -5\\ \\text{J kg}^{-1} $",
+        "none of these"
+       ],
+       "correct_index": 2,
+       "explanation": "By the work-energy theorem, $ W_{person} + W_{gravity} = \\Delta KE = \\tfrac12(1)(4) = 2 $ J, so $ W_{gravity} = 2 - (-3) = 5 $ J. Potential energy change is $ -W_{gravity} = -5 $ J, and since $ U = 0 $ at infinity, $ U_A = -5 $ J. Dividing by the $ 1 $ kg mass gives $ V_A = -5\\ \\text{J kg}^{-1} $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m08",
+       "source": "mcq",
+       "prompt": "The escape velocity from the earth's surface does **not** depend on",
+       "options": [
+        "the mass of the escaping body",
+        "the mass of the earth",
+        "the radius of the earth",
+        "the value of $ G $"
+       ],
+       "correct_index": 0,
+       "explanation": "From $ \\tfrac12 mv_e^{2} = GMm/R $ the escaping body's mass cancels, leaving $ v_e = \\sqrt{2GM/R} $. A pebble and a rocket need the same $ 11.2\\ \\text{km s}^{-1} $. The energy required does of course scale with mass, but the *speed* does not."
+      }
+     ]
+    },
+    {
+     "id": "orbits-and-satellites",
+     "title": "Orbits, Satellites and Kepler's Laws",
+     "blurb": "Orbiting is falling — just fast enough sideways to keep missing.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch11-m09",
+       "source": "mcq",
+       "prompt": "A satellite in a circular orbit of radius $ r $ has orbital speed proportional to",
+       "options": [
+        "$ r $",
+        "$ 1/\\sqrt{r} $",
+        "$ \\sqrt{r} $",
+        "$ 1/r^{2} $"
+       ],
+       "correct_index": 1,
+       "explanation": "Equating gravity to the centripetal requirement, $ GMm/r^{2} = mv^{2}/r $, gives $ v = \\sqrt{GM/r} $. So higher orbits are *slower* — the International Space Station outruns a distant communications satellite. The period nevertheless grows, since the orbit is much longer."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m10",
+       "source": "mcq",
+       "prompt": "For a planet in an elliptical orbit, the quantity that stays constant throughout is",
+       "options": [
+        "its speed",
+        "its kinetic energy",
+        "its distance from the sun",
+        "its angular momentum about the sun"
+       ],
+       "correct_index": 3,
+       "explanation": "Gravity acts along the line to the sun, so it exerts no torque about the sun and angular momentum is conserved. That is exactly Kepler's second law — equal areas in equal times. Speed, kinetic energy and distance all vary continuously round the ellipse, though the *total* energy is also conserved."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch11-m11",
+       "source": "mcq",
+       "prompt": "An astronaut in an orbiting space station floats because",
+       "options": [
+        "there is no gravity at that altitude",
+        "the station's speed cancels gravity",
+        "the station and the astronaut are in free fall together",
+        "the earth's pull is balanced by the sun's"
+       ],
+       "correct_index": 2,
+       "explanation": "At the station's altitude gravity is still about 90% of its surface value — it is what holds the orbit. Astronaut and station fall around the earth with the same acceleration, so no contact force arises between them and the astronaut floats. This is the free-fall lift from Chapter 5 on a grander scale."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch11-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Variation of g with height",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the acceleration due to gravity at a height equal to half the earth's radius. Take surface $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Distances in the inverse-square law are measured from the **centre** of the earth.\n\nAt height $ h = R/2 $, the distance from the centre is $ r = R + R/2 = 1.5R $.\n\n$ g' = g\\left(\\frac{R}{r}\\right)^{2} = 10\\left(\\frac{R}{1.5R}\\right)^{2} = 10\\left(\\frac{1}{1.5}\\right)^{2} = \\frac{10}{2.25} = 4.44\\ \\text{m s}^{-2} $\n\n**Watch out:** using $ h = R/2 $ directly as the distance gives $ 40\\ \\text{m s}^{-2} $ — gravity apparently *increasing* with height. Any answer larger than the surface value should stop you immediately.\n\n**When the approximation is safe.** For small heights, $ g' \\approx g(1 - 2h/R) $. At the top of Everest ($ h \\approx 9 $ km against $ R \\approx 6400 $ km) that is a drop of only 0.3% — which is why $ g $ is treated as constant in every ordinary projectile problem."
+   },
+   {
+    "id": "we-ch11-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — g inside the earth",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Assuming the earth to be a uniform sphere, find $ g $ at a depth equal to half the earth's radius. Take surface $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Inside a uniform sphere only the mass *within* your radius pulls on you — the shell outside contributes exactly nothing.\n\nAt radius $ r $, the enclosed mass is $ M_{enc} = M(r/R)^{3} $, so\n\n$ g' = \\frac{GM_{enc}}{r^{2}} = \\frac{GM r^{3}/R^{3}}{r^{2}} = \\frac{GMr}{R^{3}} = g\\frac{r}{R} $\n\n**Gravity falls off linearly with depth.** At $ r = R/2 $:\n\n$ g' = 10 \\times 0.5 = 5\\ \\text{m s}^{-2} $\n\n**The full picture.** Going *up* from the surface, $ g $ falls as $ 1/r^{2} $. Going *down*, it falls linearly to zero at the centre. The maximum is exactly at the surface — a fact worth carrying, since it makes the shape of the whole graph memorable.\n\n**Why the outer shell contributes nothing.** A uniform spherical shell exerts zero net gravitational force everywhere inside it: the nearer parts pull harder but subtend less area, and the two effects cancel exactly for an inverse-square law."
+   },
+   {
+    "id": "we-ch11-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Escape velocity",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the escape velocity from the earth's surface. Take $ g = 9.8\\ \\text{m s}^{-2} $ and $ R = 6.4 \\times 10^{6} $ m.",
+    "solution": "To escape means to just reach infinity with zero speed left over — so the total energy must be exactly zero.\n\n$ \\tfrac12 mv_e^{2} - \\frac{GMm}{R} = 0 $\n\n$ v_e = \\sqrt{\\frac{2GM}{R}} = \\sqrt{2gR} $ (using $ g = GM/R^{2} $)\n\n$ v_e = \\sqrt{2(9.8)(6.4 \\times 10^{6})} = \\sqrt{1.254 \\times 10^{8}} = 1.12 \\times 10^{4}\\ \\text{m s}^{-1} $\n\nThat is $ 11.2\\ \\text{km s}^{-1} $.\n\n**Note what does not appear:** the escaping body's mass, and the *direction* of launch. Fired sideways or straight up, the required speed is the same, because energy is a scalar.\n\n**A relation worth remembering:** $ v_e = \\sqrt{2}\\,v_{orbit} $ for a low orbit. Reaching orbit needs $ 7.9\\ \\text{km s}^{-1} $; escaping needs only 41% more.\n\n**Why the moon has no atmosphere.** Its escape velocity is just $ 2.4\\ \\text{km s}^{-1} $ — comparable to the thermal speeds of light gas molecules, so any atmosphere leaks away over geological time."
+   },
+   {
+    "id": "we-ch11-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Orbital speed and period of a satellite",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A satellite orbits at a height of $ 3600 $ km above the earth's surface. Find its orbital speed and period. Take $ R = 6400 $ km and $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**Orbital radius**, from the earth's centre:\n\n$ r = 6400 + 3600 = 10\\,000\\ \\text{km} = 10^{7} $ m\n\n**Orbital speed.** Gravity supplies the centripetal force:\n\n$ \\frac{GMm}{r^{2}} = \\frac{mv^{2}}{r} \\Rightarrow v = \\sqrt{\\frac{GM}{r}} = \\sqrt{\\frac{gR^{2}}{r}} $\n\n$ v = \\sqrt{\\frac{10 \\times (6.4 \\times 10^{6})^{2}}{10^{7}}} = \\sqrt{\\frac{4.096 \\times 10^{14}}{10^{7}}} = \\sqrt{4.096 \\times 10^{7}} = 6.4 \\times 10^{3}\\ \\text{m s}^{-1} $\n\n**Period:**\n\n$ T = \\frac{2\\pi r}{v} = \\frac{2\\pi (10^{7})}{6400} = 9820\\ \\text{s} \\approx 2.7 $ hours\n\n**The substitution that saves you.** $ GM = gR^{2} $ lets you avoid looking up $ G $ and the earth's mass altogether. It is worth committing to memory.\n\n**Watch out:** $ r $ is measured from the centre, so the earth's radius must be added to the height. Using $ 3600 $ km alone is the standard error and produces an impossible orbit inside the planet."
+   },
+   {
+    "id": "we-ch11-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Kepler's third law in practice",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A planet's mean distance from the sun is four times the earth's. Find its year in earth-years.",
+    "solution": "Kepler's third law states $ T^{2} \\propto r^{3} $.\n\n$ \\left(\\frac{T_p}{T_e}\\right)^{2} = \\left(\\frac{r_p}{r_e}\\right)^{3} = 4^{3} = 64 $\n\n$ \\frac{T_p}{T_e} = \\sqrt{64} = 8 $\n\nSo its year lasts **8 earth-years**.\n\n**Where the law comes from.** Setting gravity equal to the centripetal force for a circular orbit and substituting $ v = 2\\pi r/T $ gives $ T^{2} = \\frac{4\\pi^{2}r^{3}}{GM} $ directly — Kepler's empirical law falls out of Newton's in three lines.\n\n**Why ratios are the smart route.** Because the constant $ 4\\pi^{2}/GM $ is the same for every body orbiting the same star, comparing two orbits lets it cancel. You never need to know $ G $, the sun's mass, or the actual distances in metres."
+   },
+   {
+    "id": "we-ch11-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Energy of a satellite in orbit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Show that a satellite's total energy in a circular orbit of radius $ r $ is $ -GMm/2r $, and find the energy needed to move it from radius $ r $ to $ 2r $.",
+    "solution": "**Kinetic energy.** From $ mv^{2}/r = GMm/r^{2} $:\n\n$ \\tfrac12 mv^{2} = \\frac{GMm}{2r} $\n\n**Potential energy:**\n\n$ U = -\\frac{GMm}{r} $\n\n**Total:**\n\n$ E = \\frac{GMm}{2r} - \\frac{GMm}{r} = -\\frac{GMm}{2r} $\n\n**Energy to raise the orbit:**\n\n$ \\Delta E = -\\frac{GMm}{4r} - \\left(-\\frac{GMm}{2r}\\right) = \\frac{GMm}{4r} $ — positive, so energy must be supplied.\n\n**Two things worth noticing.** The total energy is negative, which is what 'bound' means — reaching $ E = 0 $ is precisely escape. And $ E = -KE $, so the kinetic energy is half the magnitude of the potential energy. This 2:1 relationship, the virial theorem, holds for any inverse-square orbit.\n\n**The counter-intuitive part.** Boosting a satellite to a higher orbit makes it move *slower*, even though you had to add energy. The extra energy all goes into potential energy, and then some — kinetic energy actually falls."
+   },
+   {
+    "id": "we-ch11-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Geostationary orbit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the radius of a geostationary orbit. Take $ GM = 4 \\times 10^{14}\\ \\text{m}^{3}\\text{s}^{-2} $ and a period of $ 24 $ hours.",
+    "solution": "A geostationary satellite must circle the earth in exactly one day, so it hangs over the same spot.\n\n$ T = 24 \\times 3600 = 8.64 \\times 10^{4} $ s\n\nFrom $ T^{2} = \\frac{4\\pi^{2}r^{3}}{GM} $:\n\n$ r^{3} = \\frac{GM\\,T^{2}}{4\\pi^{2}} = \\frac{(4 \\times 10^{14})(8.64 \\times 10^{4})^{2}}{4\\pi^{2}} $\n\n$ = \\frac{(4 \\times 10^{14})(7.46 \\times 10^{9})}{39.48} = \\frac{2.99 \\times 10^{24}}{39.48} = 7.56 \\times 10^{22} $\n\n$ r = (7.56 \\times 10^{22})^{1/3} = 4.23 \\times 10^{7}\\ \\text{m} $\n\nThat is about $ 42\\,300 $ km from the centre — some $ 35\\,900 $ km above the surface, roughly six earth-radii up.\n\n**Why the orbit must be equatorial.** The orbital plane always contains the earth's centre. Only an equatorial orbit keeps the satellite over a fixed latitude; any tilted orbit would make it trace a figure-of-eight in the sky. That is why satellite dishes in the northern hemisphere all point south."
+   },
+   {
+    "id": "we-ch11-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Gravitational field of two masses",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two masses of $ 4 $ kg and $ 1 $ kg are $ 3 $ m apart. At what point on the line joining them is the gravitational field zero?",
+    "solution": "The null point must lie **between** the masses, where the two pulls oppose. Let it be $ x $ from the $ 4 $ kg mass, hence $ (3-x) $ from the $ 1 $ kg mass.\n\n$ \\frac{G(4)}{x^{2}} = \\frac{G(1)}{(3-x)^{2}} $\n\n$ G $ and the test mass cancel. Take square roots of both sides:\n\n$ \\frac{2}{x} = \\frac{1}{3-x} $\n\n$ 2(3-x) = x \\Rightarrow 6 = 3x \\Rightarrow x = 2 $ m\n\nThe field vanishes $ 2 $ m from the $ 4 $ kg mass and $ 1 $ m from the $ 1 $ kg mass.\n\n**Check it against intuition.** The null point sits closer to the *smaller* mass, as it must — you have to move nearer the weaker source for its field to catch up.\n\n**Watch out:** the *potential* is not zero at this point. Potentials are scalars and both are negative, so they add to something distinctly negative. Zero field means no force; it does not mean no potential energy."
+   },
+   {
+    "id": "we-ch11-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Weight at the equator and the pole",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "By what fraction is the apparent weight of a body at the equator less than at the pole, because of the earth's rotation? Take $ R = 6.4 \\times 10^{6} $ m, $ T = 24 $ h and $ g = 9.8\\ \\text{m s}^{-2} $.",
+    "solution": "At the equator a body travels in a circle, so part of gravity is spent supplying the centripetal force and less remains to press it on the scales.\n\n$ g_{eq} = g - \\omega^{2}R $\n\n**Angular speed:**\n\n$ \\omega = \\frac{2\\pi}{T} = \\frac{2\\pi}{86400} = 7.27 \\times 10^{-5}\\ \\text{rad s}^{-1} $\n\n**Centripetal term:**\n\n$ \\omega^{2}R = (7.27 \\times 10^{-5})^{2}(6.4 \\times 10^{6}) = (5.29 \\times 10^{-9})(6.4 \\times 10^{6}) = 0.034\\ \\text{m s}^{-2} $\n\n**Fractional reduction:**\n\n$ \\frac{0.034}{9.8} = 0.0035 $, about **0.35%**\n\n**At the pole** the body sits on the rotation axis, moves in no circle at all, and feels the full $ g $.\n\n**How fast would the earth have to spin** for objects at the equator to float? Setting $ \\omega^{2}R = g $ gives $ T \\approx 1.4 $ hours — a day seventeen times shorter than now."
+   },
+   {
+    "id": "we-ch11-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Speed of a body falling from a great height",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A body is released from rest at a height equal to the earth's radius $ R $ above the surface. Find its speed on striking the ground. Take $ g = 10\\ \\text{m s}^{-2} $ and $ R = 6.4 \\times 10^{6} $ m.",
+    "solution": "The fall covers a distance comparable with $ R $, so $ g $ changes substantially and $ v^{2} = 2gh $ is unusable. Use energy conservation with the exact potential.\n\n**Initially**, at $ r = 2R $, at rest:\n\n$ E_i = -\\frac{GMm}{2R} $\n\n**Finally**, at $ r = R $, with speed $ v $:\n\n$ E_f = \\tfrac12 mv^{2} - \\frac{GMm}{R} $\n\n**Equate and solve:**\n\n$ \\tfrac12 mv^{2} = \\frac{GMm}{R} - \\frac{GMm}{2R} = \\frac{GMm}{2R} $\n\n$ v^{2} = \\frac{GM}{R} = gR $\n\n$ v = \\sqrt{gR} = \\sqrt{10 \\times 6.4 \\times 10^{6}} = 8 \\times 10^{3}\\ \\text{m s}^{-1} $\n\n**Compare with the naive answer.** Using $ v = \\sqrt{2gh} $ with $ h = R $ gives $ 11.3\\ \\text{km s}^{-1} $ — 41% too high, because it assumes the full surface gravity acted throughout a fall during which it was often only a quarter as strong.\n\n**The rule of thumb.** Use $ mgh $ only when the height is small compared with $ R $. Once it is not, switch to $ -GMm/r $."
+   }
+  ]
+ }
+}

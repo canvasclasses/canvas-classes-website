@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 34,
+ "hcv_title": "Magnetic Field",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Moving Charges and Magnetism (magnetic force, cyclotron, force on a current)"
+ },
+ "source_pages": {
+  "worked": "716-719",
+  "obj1": "720"
+ },
+ "notes": "11 Objective I items rebuilt. Several source items are a linked family comparing electron/proton/He⁺/Li⁺ on force, radius and frequency; these are kept as a group since the contrast between the three quantities is the teaching point.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch34-magnetic-field",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Magnetic Field",
+   "intro": "Eleven questions on magnetic force. The one fact that resolves half of them: a magnetic force is always perpendicular to the velocity, so it can never change a particle's speed.",
+   "sections": [
+    {
+     "id": "force-on-a-charge",
+     "title": "Force on a Moving Charge",
+     "blurb": "Perpendicular to both the velocity and the field — always.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch34-m01",
+       "source": "mcq",
+       "prompt": "A positively charged particle projected towards the east is deflected towards the north by a magnetic field. The field may be directed",
+       "options": [
+        "towards the west",
+        "towards the south",
+        "upward",
+        "downward"
+       ],
+       "correct_index": 3,
+       "explanation": "With $ \\vec{F} = q\\vec{v} \\times \\vec{B} $, take east as $ \\hat{i} $, north as $ \\hat{j} $ and up as $ \\hat{k} $. We need $ \\hat{i} \\times \\vec{B} $ to point along $ \\hat{j} $, and since $ \\hat{i} \\times (-\\hat{k}) = +\\hat{j} $, the field must point *downward*. A field along the velocity (east or west) would give no force at all."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m02",
+       "source": "mcq",
+       "prompt": "A charged particle is whirled in a **horizontal** circle on a frictionless table by a string. A magnetic field is switched on in the **vertical** direction. The tension in the string",
+       "options": [
+        "may increase or decrease",
+        "will increase",
+        "will decrease",
+        "will remain the same"
+       ],
+       "correct_index": 0,
+       "explanation": "The magnetic force is $ qvB $ directed radially — inward or outward depending on the signs of the charge and the field and the sense of rotation. If it points inward it helps the string and the tension falls; if outward, the string must pull harder. Without knowing those signs, either is possible."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m03",
+       "source": "mcq",
+       "prompt": "Of an electron, a proton, a $ \\text{He}^{+} $ ion and a $ \\text{Li}^{+} $ ion projected with the **same velocity** perpendicular to a magnetic field, the greatest magnetic force is felt by",
+       "options": [
+        "the electron",
+        "all four equally",
+        "the proton",
+        "the $ \\text{He}^{+} $ ion"
+       ],
+       "correct_index": 1,
+       "explanation": "The force is $ qvB $, and all four carry the same magnitude of charge, one elementary unit. With equal $ v $ and $ B $ the forces are identical. Mass plays no part in the *force* — only in the resulting acceleration and radius."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m04",
+       "source": "mcq",
+       "prompt": "Of the same four particles projected with the same velocity perpendicular to a magnetic field, the **smallest circle** is described by",
+       "options": [
+        "the proton",
+        "the $ \\text{He}^{+} $ ion",
+        "the $ \\text{Li}^{+} $ ion",
+        "the electron"
+       ],
+       "correct_index": 3,
+       "explanation": "The radius is $ r = mv/qB $, so with equal $ v $, $ q $ and $ B $ it is proportional to mass. The electron, lighter than a proton by a factor of $ 1836 $, curls into by far the tightest circle. Same force, but far less inertia to resist it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m05",
+       "source": "mcq",
+       "prompt": "Of the same four particles, the **minimum frequency** of revolution belongs to",
+       "options": [
+        "the electron",
+        "the $ \\text{Li}^{+} $ ion",
+        "the proton",
+        "the $ \\text{He}^{+} $ ion"
+       ],
+       "correct_index": 1,
+       "explanation": "The cyclotron frequency is $ f = qB/2\\pi m $, so with equal charges it is inversely proportional to mass. Lithium, the heaviest of the four, circulates most slowly. Note the frequency does not depend on the speed at all — which is precisely what makes a cyclotron workable."
+      }
+     ]
+    },
+    {
+     "id": "paths-in-fields",
+     "title": "Paths in Combined Fields",
+     "blurb": "Circle, helix, or something stranger.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch34-m06",
+       "source": "mcq",
+       "prompt": "A charged particle's velocity makes an **acute angle** with a uniform magnetic field. Its path is",
+       "options": [
+        "a straight line",
+        "a circle",
+        "a helix of uniform pitch",
+        "a helix of non-uniform pitch"
+       ],
+       "correct_index": 2,
+       "explanation": "Resolve the velocity into components along and across the field. The parallel component feels no force and stays constant; the perpendicular component circles. Together they trace a helix, and since the parallel speed never changes, the pitch is uniform."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m07",
+       "source": "mcq",
+       "prompt": "A region has a uniform magnetic field and a **parallel** uniform electric field. A particle's velocity is momentarily perpendicular to both. Its path is",
+       "options": [
+        "a helix of increasing pitch",
+        "a straight line",
+        "a circle",
+        "a helix of uniform pitch"
+       ],
+       "correct_index": 0,
+       "explanation": "The magnetic field curls the perpendicular velocity into a circle, while the electric field — parallel to $ \\vec{B} $ — steadily accelerates the particle along the axis. The circular motion continues at a fixed radius while the axial speed grows, so the helix stretches out: the pitch increases."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m08",
+       "source": "mcq",
+       "prompt": "A beam containing both protons and electrons of the same speed enters a region of uniform magnetic field perpendicular to the beam. The two species",
+       "options": [
+        "are deviated by different angles and separate",
+        "pass through undeviated",
+        "are deviated by the same angle and stay together",
+        "are deviated by the same angle but separate"
+       ],
+       "correct_index": 0,
+       "explanation": "Being oppositely charged they curve in *opposite* directions, and their very different masses give radii differing by a factor of $ 1836 $. So they separate decisively — which is the working principle of a mass spectrometer."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m09",
+       "source": "mcq",
+       "prompt": "The work done by a magnetic force on a moving charge over any path is",
+       "options": [
+        "positive",
+        "negative",
+        "zero",
+        "equal to the change in kinetic energy"
+       ],
+       "correct_index": 2,
+       "explanation": "The force is always perpendicular to the velocity, so $ \\vec{F}\\cdot d\\vec{s} = 0 $ at every instant. A magnetic field can bend a particle's path but never speed it up or slow it down — which is exactly why a cyclotron needs an *electric* field to do the accelerating."
+      }
+     ]
+    },
+    {
+     "id": "force-on-currents",
+     "title": "Force on Currents and Loops",
+     "blurb": "A current-carrying wire is a stream of moving charges.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch34-m10",
+       "source": "mcq",
+       "prompt": "A straight wire of length $ L $ carrying current $ I $ lies **parallel** to a uniform magnetic field $ B $. The force on it is",
+       "options": [
+        "$ BIL $",
+        "zero",
+        "$ BIL/2 $",
+        "$ 2BIL $"
+       ],
+       "correct_index": 1,
+       "explanation": "The force is $ BIL\\sin\\theta $, and with the current parallel to the field $ \\theta = 0 $ so the force vanishes. It is maximum at $ BIL $ when the wire is perpendicular to the field. This is the current-carrying version of the rule that a charge moving along a field feels nothing."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch34-m11",
+       "source": "mcq",
+       "prompt": "A closed current-carrying loop of any shape is placed in a **uniform** magnetic field. The net force on it is",
+       "options": [
+        "$ BIL $, where $ L $ is its perimeter",
+        "proportional to its area",
+        "zero",
+        "directed along the field"
+       ],
+       "correct_index": 2,
+       "explanation": "Summing $ Id\\vec{l} \\times \\vec{B} $ round a closed loop involves $ \\oint d\\vec{l} $, which is zero because the loop returns to its start. So there is no net force — but there generally *is* a torque $ \\vec{\\tau} = \\vec{M} \\times \\vec{B} $, and that torque is what turns an electric motor."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch34-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Force on a charge moving in a field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A proton moves at $ 2 \\times 10^{6}\\ \\text{m s}^{-1} $ at $ 30^\\circ $ to a magnetic field of $ 0.5 $ T. Find the magnetic force on it. Take $ e = 1.6 \\times 10^{-19} $ C.",
+    "solution": "$ F = qvB\\sin\\theta $\n\n$ = (1.6 \\times 10^{-19})(2 \\times 10^{6})(0.5)\\sin 30^\\circ $\n\n$ = (1.6 \\times 10^{-19})(2 \\times 10^{6})(0.5)(0.5) $\n\n$ = 8 \\times 10^{-14}\\ \\text{N} $\n\n**Direction.** Perpendicular to *both* the velocity and the field, given by the right-hand rule for $ \\vec{v} \\times \\vec{B} $ (and reversed for a negative charge).\n\n**Compare with gravity.** The proton's weight is $ m g \\approx (1.67 \\times 10^{-27})(10) = 1.7 \\times 10^{-26} $ N — smaller by twelve orders of magnitude. Gravity is always ignored in charged-particle dynamics for exactly this reason.\n\n**Note the $ \\sin\\theta $.** At $ 30^\\circ $ only half the maximum force acts. The component of velocity *along* the field contributes nothing, which is what turns this motion into a helix rather than a circle."
+   },
+   {
+    "id": "we-ch34-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Radius and period of a circular path",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An electron enters a $ 0.01 $ T field at $ 3 \\times 10^{6}\\ \\text{m s}^{-1} $, perpendicular to the field. Find the radius of its path and the time for one revolution. Take $ m_e = 9.1 \\times 10^{-31} $ kg.",
+    "solution": "**Radius.** The magnetic force supplies the centripetal force:\n\n$ qvB = \\frac{mv^{2}}{r} \\Rightarrow r = \\frac{mv}{qB} $\n\n$ = \\frac{(9.1 \\times 10^{-31})(3 \\times 10^{6})}{(1.6 \\times 10^{-19})(0.01)} = \\frac{2.73 \\times 10^{-24}}{1.6 \\times 10^{-21}} = 1.71 \\times 10^{-3}\\ \\text{m} $\n\nAbout $ 1.7 $ mm.\n\n**Period:**\n\n$ T = \\frac{2\\pi m}{qB} = \\frac{2\\pi(9.1 \\times 10^{-31})}{(1.6 \\times 10^{-19})(0.01)} = \\frac{5.72 \\times 10^{-30}}{1.6 \\times 10^{-21}} = 3.57 \\times 10^{-9}\\ \\text{s} $\n\n**The remarkable feature of the period.** It contains no $ v $ — a fast electron simply traces a proportionally larger circle in the same time. This velocity-independence is what allows a cyclotron to accelerate particles with a fixed-frequency alternating voltage.\n\n**Where it breaks down.** At relativistic speeds the mass grows, so $ T $ increases and the fixed frequency falls out of step. That is precisely why high-energy machines are *synchro*cyclotrons or synchrotrons, with a frequency that tracks the particle."
+   },
+   {
+    "id": "we-ch34-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Velocity selector",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "In a region, $ \\vec{E} $ and $ \\vec{B} $ are mutually perpendicular with $ E = 3 \\times 10^{5}\\ \\text{V m}^{-1} $ and $ B = 0.6 $ T. Find the speed at which a charged particle passes through undeflected.",
+    "solution": "For no deflection, the electric and magnetic forces must cancel:\n\n$ qE = qvB \\Rightarrow v = \\frac{E}{B} $\n\n$ v = \\frac{3 \\times 10^{5}}{0.6} = 5 \\times 10^{5}\\ \\text{m s}^{-1} $\n\n**What makes this device useful.** The condition contains neither $ q $ nor $ m $, so it selects purely on *speed* — every particle at $ 5 \\times 10^{5}\\ \\text{m s}^{-1} $ passes straight through, whatever its charge or mass, and everything else is deflected out of the beam.\n\n**Where it is used.** Ahead of a mass spectrometer, so that the subsequent magnetic separation reflects only $ m/q $ rather than a mixture of $ m/q $ and speed. J. J. Thomson used exactly this arrangement to measure $ e/m $ for the electron.\n\n**A note on the geometry.** The two forces are antiparallel only for a particular orientation of $ \\vec{E} $, $ \\vec{B} $ and $ \\vec{v} $ — all three mutually perpendicular. Reverse the particle's direction and the magnetic force flips while the electric one does not, so the balance is lost."
+   },
+   {
+    "id": "we-ch34-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Cyclotron",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A cyclotron with a $ 1.5 $ T field accelerates protons to a maximum radius of $ 0.5 $ m. Find the operating frequency and the protons' maximum kinetic energy. Take $ m_p = 1.67 \\times 10^{-27} $ kg.",
+    "solution": "**Frequency:**\n\n$ f = \\frac{qB}{2\\pi m} = \\frac{(1.6 \\times 10^{-19})(1.5)}{2\\pi(1.67 \\times 10^{-27})} = \\frac{2.4 \\times 10^{-19}}{1.049 \\times 10^{-26}} = 2.29 \\times 10^{7}\\ \\text{Hz} $\n\nAbout $ 23 $ MHz — a radio frequency.\n\n**Maximum speed**, at the largest radius:\n\n$ v = \\frac{qBr}{m} = \\frac{(1.6 \\times 10^{-19})(1.5)(0.5)}{1.67 \\times 10^{-27}} = 7.19 \\times 10^{7}\\ \\text{m s}^{-1} $\n\n**Maximum kinetic energy:**\n\n$ KE = \\frac{1}{2}mv^{2} = \\frac{1}{2}(1.67 \\times 10^{-27})(5.17 \\times 10^{15}) = 4.3 \\times 10^{-12}\\ \\text{J} $\n\nIn electron-volts: $ \\frac{4.3 \\times 10^{-12}}{1.6 \\times 10^{-19}} = 27\\ \\text{MeV} $\n\n**How the machine works.** The magnetic field does no work at all — it merely keeps the protons circulating. All the energy comes from the alternating electric field in the gap between the dees, crossed twice per revolution.\n\n**A caveat on the answer.** At $ 7.2 \\times 10^{7}\\ \\text{m s}^{-1} $ the protons are moving at about $ 24\\% $ of light speed, so relativistic corrections are becoming significant and the true energy is a little different. This is exactly the limit that ended the classical cyclotron's usefulness."
+   },
+   {
+    "id": "we-ch34-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Force on a current-carrying wire",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A wire of length $ 20 $ cm carrying $ 5 $ A lies at $ 30^\\circ $ to a $ 0.4 $ T field. Find the force on it, and the orientation for maximum force.",
+    "solution": "$ F = BIL\\sin\\theta $\n\n$ = (0.4)(5)(0.20)\\sin 30^\\circ = (0.4)(5)(0.20)(0.5) = 0.2\\ \\text{N} $\n\n**For maximum force**, set $ \\theta = 90^\\circ $ — the wire perpendicular to the field:\n\n$ F_{max} = (0.4)(5)(0.20) = 0.4\\ \\text{N} $\n\n**Where the formula comes from.** A current is $ n $ charges per unit volume drifting at $ v_d $. Summing $ qv_d B $ over all the carriers in a length $ L $ gives exactly $ BIL $ — the wire version of the single-charge force, with $ I $ absorbing $ nqv_dA $.\n\n**Direction.** Perpendicular to both the wire and the field, from $ I\\vec{L} \\times \\vec{B} $. Reversing either the current or the field reverses the force; reversing both leaves it unchanged — which is why a d.c. motor needs a commutator to keep turning the same way."
+   },
+   {
+    "id": "we-ch34-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Torque on a current loop",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A rectangular coil of $ 50 $ turns and area $ 20\\ \\text{cm}^{2} $ carries $ 2 $ A in a $ 0.3 $ T field, with its plane parallel to the field. Find the torque on it.",
+    "solution": "**Magnetic moment:**\n\n$ M = NIA = (50)(2)(20 \\times 10^{-4}) = 0.2\\ \\text{A m}^{2} $\n\n**Torque:**\n\n$ \\tau = MB\\sin\\theta $\n\nHere the coil's *plane* is parallel to the field, so its **normal** is perpendicular to the field and $ \\theta = 90^\\circ $:\n\n$ \\tau = (0.2)(0.3)(1) = 0.06\\ \\text{N m} $\n\nThis is the maximum possible torque for this coil.\n\n**Watch the angle carefully.** $ \\theta $ in the formula is between the field and the coil's *normal*, not its plane. 'Plane parallel to the field' therefore means $ \\theta = 90^\\circ $ and maximum torque — the exact opposite of what a careless reading suggests.\n\n**Why a motor needs a commutator.** The torque falls to zero when the normal aligns with the field ($ \\theta = 0 $), and beyond that point it would push the coil back. Reversing the current at that instant keeps the torque acting the same way round, which is precisely the commutator's job."
+   },
+   {
+    "id": "we-ch34-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Helical path in a magnetic field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A proton enters a $ 0.2 $ T field at $ 4 \\times 10^{5}\\ \\text{m s}^{-1} $, at $ 60^\\circ $ to the field. Find the radius and pitch of its helical path.",
+    "solution": "**Resolve the velocity.**\n\nPerpendicular to $ \\vec{B} $: $ v_\\perp = v\\sin 60^\\circ = (4 \\times 10^{5})(0.866) = 3.46 \\times 10^{5}\\ \\text{m s}^{-1} $\n\nParallel to $ \\vec{B} $: $ v_\\parallel = v\\cos 60^\\circ = 2 \\times 10^{5}\\ \\text{m s}^{-1} $\n\n**Radius**, set by the perpendicular component only:\n\n$ r = \\frac{mv_\\perp}{qB} = \\frac{(1.67 \\times 10^{-27})(3.46 \\times 10^{5})}{(1.6 \\times 10^{-19})(0.2)} = \\frac{5.78 \\times 10^{-22}}{3.2 \\times 10^{-20}} = 0.0181\\ \\text{m} $\n\n**Period:**\n\n$ T = \\frac{2\\pi m}{qB} = \\frac{2\\pi(1.67 \\times 10^{-27})}{3.2 \\times 10^{-20}} = 3.28 \\times 10^{-7}\\ \\text{s} $\n\n**Pitch** — the axial advance in one revolution:\n\n$ p = v_\\parallel T = (2 \\times 10^{5})(3.28 \\times 10^{-7}) = 0.066\\ \\text{m} $\n\n**The division of labour.** The perpendicular component sets the radius; the parallel component sets the pitch; and the period depends on neither. That separation is what makes helical motion tractable — treat the two components independently and recombine at the end."
+   },
+   {
+    "id": "we-ch34-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Mass spectrometer",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Singly charged ions of neon-20 and neon-22 are accelerated through $ 1000 $ V and then enter a $ 0.5 $ T field perpendicular to their motion. Find the ratio of their path radii. Take $ 1\\ \\text{u} = 1.66 \\times 10^{-27} $ kg.",
+    "solution": "**Speed after acceleration** through a potential difference $ V $:\n\n$ qV = \\frac{1}{2}mv^{2} \\Rightarrow v = \\sqrt{\\frac{2qV}{m}} $\n\n**Radius in the field:**\n\n$ r = \\frac{mv}{qB} = \\frac{m}{qB}\\sqrt{\\frac{2qV}{m}} = \\frac{1}{B}\\sqrt{\\frac{2mV}{q}} $\n\nSo $ r \\propto \\sqrt{m} $ for equal charge and accelerating voltage.\n\n**Ratio:**\n\n$ \\frac{r_{22}}{r_{20}} = \\sqrt{\\frac{22}{20}} = \\sqrt{1.1} = 1.049 $\n\nThe heavier isotope's radius is about $ 4.9\\% $ larger.\n\n**Why that small difference is enough.** With radii of, say, $ 20 $ cm, a $ 4.9\\% $ gap is nearly a centimetre at the detector — easily resolved. Mass spectrometry can separate isotopes differing by a single neutron precisely because the geometry amplifies the difference.\n\n**Note the square root.** Radius goes as $ \\sqrt{m} $, not $ m $, because the heavier ion also emerges from the accelerator more slowly. Two competing effects, and the square root is what survives."
+   }
+  ]
+ }
+}

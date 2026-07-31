@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 36,
+ "hcv_title": "Permanent Magnets",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Magnetism and Matter (bar magnets, earth's magnetism, dip and declination)"
+ },
+ "source_pages": {
+  "worked": "761-766",
+  "obj1": "767-768"
+ },
+ "notes": "11 Objective I items rebuilt. One source item asks students to pick a current-deflection graph for a tangent galvanometer; re-cast as a question about the proportionality it embodies.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch36-permanent-magnets",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Permanent Magnets and Earth's Magnetism",
+   "intro": "Eleven questions on bar magnets and the earth's field. The dip-and-declination items reward picturing where you are standing on the globe.",
+   "sections": [
+    {
+     "id": "dipoles-and-loops",
+     "title": "Magnetic Dipoles and Current Loops",
+     "blurb": "A current loop and a short bar magnet are the same object in different clothing.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch36-m01",
+       "source": "mcq",
+       "prompt": "A current loop is replaced by an equivalent magnetic dipole. A point on the **axis** of the loop is in the",
+       "options": [
+        "end-on position",
+        "broadside-on position",
+        "both",
+        "neither"
+       ],
+       "correct_index": 0,
+       "explanation": "The equivalent dipole points along the loop's axis, so an axial point lies along the dipole's own direction — the end-on (axial) position, where the field is $ \\frac{\\mu_0}{4\\pi}\\frac{2M}{r^{3}} $. A point in the loop's *plane* would be broadside-on instead."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m02",
+       "source": "mcq",
+       "prompt": "When a current loop is replaced by an equivalent magnetic dipole, what is fixed?",
+       "options": [
+        "the pole strength $ m $ of each pole",
+        "the separation $ d $ between the poles",
+        "the product $ md $",
+        "none of these"
+       ],
+       "correct_index": 2,
+       "explanation": "Only the magnetic moment $ M = md $ is determined, and it must equal $ iA $ for the loop. Any combination of pole strength and separation giving that product represents the loop equally well — which is why the individual quantities are not physically meaningful for a loop."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m03",
+       "source": "mcq",
+       "prompt": "At distance $ r $ on the axis of a short magnetic **dipole**, the field is proportional to",
+       "options": [
+        "$ 1/r $",
+        "$ 1/r^{2} $",
+        "$ 1/r^{3} $",
+        "none of these"
+       ],
+       "correct_index": 2,
+       "explanation": "A dipole field falls as $ 1/r^{3} $, because the two opposite poles nearly cancel at a distance and only their small separation survives. Note this is faster than a single charge's $ 1/r^{2} $ — and there are no isolated magnetic poles, so $ 1/r^{2} $ never occurs in magnetism."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m04",
+       "source": "mcq",
+       "prompt": "At distance $ r $ on the axis of a **bar magnet of appreciable length**, measured from its centre, the field is proportional to",
+       "options": [
+        "$ 1/r $",
+        "$ 1/r^{2} $",
+        "$ 1/r^{3} $",
+        "none of these"
+       ],
+       "correct_index": 3,
+       "explanation": "The clean $ 1/r^{3} $ law holds only for a *short* dipole, where $ r \\gg $ length. For a bar magnet of comparable length the exact axial field is $ \\frac{\\mu_0}{4\\pi}\\frac{2Mr}{(r^{2}-l^{2})^{2}} $, which is no simple power at all. It approaches $ 1/r^{3} $ only far away."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m05",
+       "source": "mcq",
+       "prompt": "The magnetic field at a point in the **equatorial** plane of a short dipole, compared with an axial point at the same distance, is",
+       "options": [
+        "twice as large and parallel to the moment",
+        "equal in magnitude and direction",
+        "half as large and antiparallel to the moment",
+        "zero"
+       ],
+       "correct_index": 2,
+       "explanation": "The axial field is $ \\frac{\\mu_0}{4\\pi}\\frac{2M}{r^{3}} $ and the equatorial field $ \\frac{\\mu_0}{4\\pi}\\frac{M}{r^{3}} $ — exactly half. The equatorial field also points *opposite* to the moment, since field lines return through that region. The same 2:1 ratio holds for an electric dipole."
+      }
+     ]
+    },
+    {
+     "id": "earths-magnetism",
+     "title": "Earth's Magnetism, Dip and Declination",
+     "blurb": "Where a compass gives up.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch36-m06",
+       "source": "mcq",
+       "prompt": "A compass needle free to move in a **horizontal** plane is taken to a geomagnetic pole. It",
+       "options": [
+        "stays in the north-south direction only",
+        "rests in any position it is left in",
+        "stays in the east-west direction only",
+        "becomes rigid and will not move"
+       ],
+       "correct_index": 1,
+       "explanation": "At a magnetic pole the earth's field is entirely *vertical*, so its horizontal component is zero. A horizontally constrained needle feels no aligning torque and simply stays wherever it is put. This is precisely why a magnetic compass is useless in the polar regions."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m07",
+       "source": "mcq",
+       "prompt": "A dip circle is taken to the geomagnetic **equator**, with its needle free to move in a vertical plane **perpendicular** to the magnetic meridian. The needle will rest",
+       "options": [
+        "horizontally only",
+        "in any direction it is released",
+        "vertically only",
+        "in any direction except vertical and horizontal"
+       ],
+       "correct_index": 1,
+       "explanation": "At the equator the field is horizontal and lies *in* the magnetic meridian. A vertical plane perpendicular to the meridian therefore contains no component of the field at all, so the needle feels no torque and rests anywhere."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m08",
+       "source": "mcq",
+       "prompt": "The angle of dip at the magnetic equator is",
+       "options": [
+        "$ 0^\\circ $",
+        "$ 45^\\circ $",
+        "$ 90^\\circ $",
+        "it varies with longitude"
+       ],
+       "correct_index": 0,
+       "explanation": "Dip is the angle the field makes with the horizontal. At the magnetic equator the field is purely horizontal, so the dip is zero; at the magnetic poles it is $ 90^\\circ $, with the field straight down (or up). It grows steadily with magnetic latitude between the two."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m09",
+       "source": "mcq",
+       "prompt": "Magnetic **declination** at a place is the angle between",
+       "options": [
+        "the earth's field and the horizontal",
+        "the earth's field and the vertical",
+        "the geographic and magnetic meridians",
+        "the horizontal and vertical components of the field"
+       ],
+       "correct_index": 2,
+       "explanation": "Declination is a horizontal angle — how far magnetic north departs from true north. The angle with the horizontal is the *dip*. Navigators must correct for declination, and since it drifts over years, charts carry a date."
+      }
+     ]
+    },
+    {
+     "id": "measurement",
+     "title": "Measuring Magnetic Quantities",
+     "blurb": "The tangent law, and what it lets you measure.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch36-m10",
+       "source": "mcq",
+       "prompt": "In a tangent galvanometer, the current is proportional to",
+       "options": [
+        "$ \\tan\\theta $",
+        "$ \\theta $",
+        "$ \\sin\\theta $",
+        "$ \\cos\\theta $"
+       ],
+       "correct_index": 0,
+       "explanation": "The needle settles where the coil's field $ B $ and the earth's horizontal field $ B_H $ give equal torques, requiring $ B = B_H\\tan\\theta $. Since $ B \\propto i $, we get $ i \\propto \\tan\\theta $ — the tangent law. The graph of $ i $ against $ \\theta $ is therefore a tangent curve, not a straight line."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch36-m11",
+       "source": "mcq",
+       "prompt": "A tangent galvanometer is most sensitive when its deflection is near",
+       "options": [
+        "$ 0^\\circ $",
+        "$ 90^\\circ $",
+        "$ 60^\\circ $",
+        "$ 45^\\circ $"
+       ],
+       "correct_index": 3,
+       "explanation": "The fractional error is $ \\frac{di}{i} = \\frac{2\\,d\\theta}{\\sin 2\\theta} $, which is smallest when $ \\sin 2\\theta = 1 $, i.e. at $ \\theta = 45^\\circ $. Near $ 0^\\circ $ or $ 90^\\circ $ a small reading error translates into a large current error — which is why the instrument is arranged to deflect near the middle of its range."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch36-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Field on the axis of a bar magnet",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A short bar magnet of moment $ 0.4\\ \\text{A m}^{2} $ is placed with its axis east-west. Find the field at a point $ 20 $ cm from its centre on the axis.",
+    "solution": "For a short dipole in the end-on (axial) position:\n\n$ B = \\frac{\\mu_0}{4\\pi}\\frac{2M}{r^{3}} $\n\n$ = (10^{-7})\\frac{2(0.4)}{(0.2)^{3}} = (10^{-7})\\frac{0.8}{8 \\times 10^{-3}} $\n\n$ = (10^{-7})(100) = 1 \\times 10^{-5}\\ \\text{T} $\n\nThat is $ 10\\ \\mu\\text{T} $ — about a fifth of the earth's field, so a compass placed there would deflect appreciably but not decisively.\n\n**A convenient constant.** $ \\frac{\\mu_0}{4\\pi} = 10^{-7} $ exactly in SI, which keeps magnetism arithmetic tidy.\n\n**The $ 1/r^{3} $ fall-off is steep.** At $ 40 $ cm the field would be eight times smaller, just $ 1.25\\ \\mu\\text{T} $. This is why a magnet's influence seems to vanish so suddenly as you move it away."
+   },
+   {
+    "id": "we-ch36-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Axial and equatorial fields compared",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A short magnet of moment $ 2\\ \\text{A m}^{2} $ is at the origin with its moment along $ +x $. Find the field at $ (0.5, 0, 0) $ m and at $ (0, 0.5, 0) $ m.",
+    "solution": "**Axial point $ (0.5, 0, 0) $:**\n\n$ B = \\frac{\\mu_0}{4\\pi}\\frac{2M}{r^{3}} = (10^{-7})\\frac{2(2)}{0.125} = (10^{-7})(32) = 3.2 \\times 10^{-6}\\ \\text{T} $\n\ndirected along $ +x $ — parallel to the moment.\n\n**Equatorial point $ (0, 0.5, 0) $:**\n\n$ B = \\frac{\\mu_0}{4\\pi}\\frac{M}{r^{3}} = (10^{-7})\\frac{2}{0.125} = 1.6 \\times 10^{-6}\\ \\text{T} $\n\ndirected along $ -x $ — *antiparallel* to the moment.\n\n**The 2:1 ratio.** The axial field is always twice the equatorial field at the same distance, for both magnetic and electric dipoles. It falls out of the geometry of how the two poles' contributions combine.\n\n**Why the equatorial field reverses.** Field lines leave the north pole, arc round through the equatorial region, and re-enter at the south pole. In that arc they are running *backwards* relative to the moment — which is exactly what the minus sign records."
+   },
+   {
+    "id": "we-ch36-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Torque and period of a magnet in a field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A bar magnet of moment $ 0.5\\ \\text{A m}^{2} $ and moment of inertia $ 2 \\times 10^{-4}\\ \\text{kg m}^{2} $ oscillates in a horizontal field of $ 3 \\times 10^{-5} $ T. Find its period.",
+    "solution": "For small oscillations the restoring torque is $ \\tau = -MB\\sin\\theta \\approx -MB\\theta $, which is the angular analogue of Hooke's law with 'stiffness' $ MB $.\n\n$ T = 2\\pi\\sqrt{\\frac{I}{MB}} $\n\n$ = 2\\pi\\sqrt{\\frac{2 \\times 10^{-4}}{(0.5)(3 \\times 10^{-5})}} = 2\\pi\\sqrt{\\frac{2 \\times 10^{-4}}{1.5 \\times 10^{-5}}} $\n\n$ = 2\\pi\\sqrt{13.33} = 2\\pi(3.65) = 22.9\\ \\text{s} $\n\n**Why this is a useful experiment.** Timing the oscillation gives the product $ MB $. Combine it with a separate deflection measurement, which gives the *ratio* $ M/B $, and both quantities can be extracted — the classic method for measuring the earth's horizontal field.\n\n**Note the small-angle assumption.** Beyond about $ 15^\\circ $ the $ \\sin\\theta \\approx \\theta $ approximation fails and the period lengthens, exactly as for a pendulum."
+   },
+   {
+    "id": "we-ch36-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Tangent law and the earth's horizontal field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tangent galvanometer with $ 50 $ turns of radius $ 10 $ cm shows a deflection of $ 45^\\circ $ when carrying $ 0.05 $ A. Find the earth's horizontal field.",
+    "solution": "**Field at the coil's centre:**\n\n$ B = \\frac{\\mu_0 N i}{2R} = \\frac{(4\\pi \\times 10^{-7})(50)(0.05)}{2(0.10)} $\n\n$ = \\frac{3.14 \\times 10^{-6}}{0.2} = 1.57 \\times 10^{-5}\\ \\text{T} $\n\n**Tangent law:**\n\n$ B = B_H\\tan\\theta \\Rightarrow B_H = \\frac{B}{\\tan 45^\\circ} = \\frac{1.57 \\times 10^{-5}}{1} = 1.57 \\times 10^{-5}\\ \\text{T} $\n\nAbout $ 16\\ \\mu\\text{T} $ — a plausible value for a low-latitude location.\n\n**How the instrument must be set up.** The coil's plane has to lie in the magnetic meridian, so that its field is perpendicular to the earth's horizontal field. Only then do the two combine to give $ \\tan\\theta = B/B_H $.\n\n**Why $ 45^\\circ $ is the ideal reading.** The instrument is most sensitive there, and it is also the deflection at which the coil's field exactly equals the earth's — a convenient calibration point."
+   },
+   {
+    "id": "we-ch36-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Dip and the components of the earth's field",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "At a place the earth's horizontal field is $ 3.0 \\times 10^{-5} $ T and the dip is $ 60^\\circ $. Find the vertical component and the total field.",
+    "solution": "**Vertical component:**\n\n$ \\tan\\delta = \\frac{B_V}{B_H} \\Rightarrow B_V = B_H\\tan 60^\\circ = (3.0 \\times 10^{-5})(1.732) = 5.20 \\times 10^{-5}\\ \\text{T} $\n\n**Total field:**\n\n$ B = \\sqrt{B_H^{2} + B_V^{2}} = \\sqrt{(3.0)^{2} + (5.20)^{2}} \\times 10^{-5} = \\sqrt{9 + 27.0} \\times 10^{-5} $\n\n$ = 6.0 \\times 10^{-5}\\ \\text{T} $\n\nOr more directly, $ B = \\frac{B_H}{\\cos\\delta} = \\frac{3.0 \\times 10^{-5}}{0.5} = 6.0 \\times 10^{-5} $ T ✓\n\n**What a dip of $ 60^\\circ $ tells you.** The field points steeply downward, so this is a fairly high magnetic latitude — northern Europe, say, rather than the tropics. At the magnetic equator the dip would be $ 0 $ and $ B_V $ zero; at the poles the dip is $ 90^\\circ $ and $ B_H $ vanishes.\n\n**The three quantities that specify the earth's field** at any place are $ B_H $, the dip $ \\delta $, and the declination — together the 'magnetic elements'. Any two of $ B_H $, $ B_V $, $ B $ and $ \\delta $ determine the rest."
+   },
+   {
+    "id": "we-ch36-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Neutral points near a bar magnet",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A short bar magnet of moment $ 0.8\\ \\text{A m}^{2} $ is placed with its north pole pointing **south**. Find where the neutral points lie, given the earth's horizontal field as $ 3.2 \\times 10^{-5} $ T.",
+    "solution": "**Where to look.** With the north pole pointing south, the magnet's field opposes the earth's along the magnet's *axis*. So the neutral points lie on the axis, one on each side.\n\n**Set the magnet's axial field equal to the earth's:**\n\n$ \\frac{\\mu_0}{4\\pi}\\frac{2M}{r^{3}} = B_H $\n\n$ (10^{-7})\\frac{2(0.8)}{r^{3}} = 3.2 \\times 10^{-5} $\n\n$ \\frac{1.6 \\times 10^{-7}}{r^{3}} = 3.2 \\times 10^{-5} $\n\n$ r^{3} = \\frac{1.6 \\times 10^{-7}}{3.2 \\times 10^{-5}} = 5 \\times 10^{-3} $\n\n$ r = 0.171\\ \\text{m} = 17.1\\ \\text{cm} $\n\n**What a neutral point is.** A place where the magnet's field exactly cancels the earth's, so the total field is zero and a compass needle placed there rests in any direction.\n\n**The other orientation.** With the north pole pointing *north*, the two fields oppose in the *equatorial* plane instead, and the neutral points appear there — at $ r $ satisfying $ \\frac{\\mu_0}{4\\pi}\\frac{M}{r^{3}} = B_H $. Deciding which region to search *before* doing algebra is the whole skill here."
+   },
+   {
+    "id": "we-ch36-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Two magnets combined",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two identical bar magnets, each of moment $ M $, are placed (a) with their like poles together, in line, and (b) at right angles to each other. Find the resultant magnetic moment in each case.",
+    "solution": "Magnetic moment is a **vector**, so combine the two accordingly.\n\n**(a) Like poles together, in line.** The two moments then point in *opposite* directions:\n\n$ M_{net} = M - M = 0 $\n\nThe pair behaves as though it had no moment at all — it will not align with a field.\n\n**(b) At right angles:**\n\n$ M_{net} = \\sqrt{M^{2} + M^{2}} = M\\sqrt{2} $\n\ndirected along the bisector of the two magnets.\n\n**Why the first case is worth pausing over.** Physically joining north to north does not 'add' the magnets — it cancels them. Only unlike poles together (north to south, in line) gives $ 2M $.\n\n**How this is used experimentally.** Oscillating a pair of magnets in the sum ($ 2M $) and difference ($ 0 $, or a small residue for unequal magnets) configurations lets you compare two magnetic moments precisely, from the ratio of the two periods."
+   },
+   {
+    "id": "we-ch36-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Magnetic moment of a current loop and of an orbiting electron",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the magnetic moment of (a) a $ 100 $-turn coil of area $ 5\\ \\text{cm}^{2} $ carrying $ 0.2 $ A, and (b) an electron in a circular orbit of radius $ 5 \\times 10^{-11} $ m at $ 2 \\times 10^{6}\\ \\text{m s}^{-1} $.",
+    "solution": "**(a) The coil:**\n\n$ M = NiA = (100)(0.2)(5 \\times 10^{-4}) = 0.01\\ \\text{A m}^{2} $\n\n**(b) The orbiting electron.** Treat it as a current loop. The electron completes an orbit in $ T = \\frac{2\\pi r}{v} $, so the equivalent current is\n\n$ i = \\frac{e}{T} = \\frac{ev}{2\\pi r} = \\frac{(1.6 \\times 10^{-19})(2 \\times 10^{6})}{2\\pi(5 \\times 10^{-11})} = \\frac{3.2 \\times 10^{-13}}{3.14 \\times 10^{-10}} = 1.02 \\times 10^{-3}\\ \\text{A} $\n\n$ M = iA = (1.02 \\times 10^{-3})\\pi(5 \\times 10^{-11})^{2} = (1.02 \\times 10^{-3})(7.85 \\times 10^{-21}) $\n\n$ = 8.0 \\times 10^{-24}\\ \\text{A m}^{2} $\n\n**A number worth recognising.** That is close to the Bohr magneton, $ 9.27 \\times 10^{-24}\\ \\text{A m}^{2} $ — the natural quantum unit of magnetic moment.\n\n**Why this calculation matters.** It shows that atomic magnetism comes from orbiting (and spinning) electrons, so a bar magnet's field is ultimately the sum of countless microscopic current loops. There are no magnetic charges anywhere in the story — only currents."
+   }
+  ]
+ }
+}

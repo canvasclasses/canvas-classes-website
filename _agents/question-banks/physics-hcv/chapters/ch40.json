@@ -1,0 +1,267 @@
+{
+ "hcv_chapter": 40,
+ "hcv_title": "Electromagnetic Waves",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Electromagnetic Waves"
+ },
+ "source_pages": {
+  "worked": "828",
+  "obj1": "829-830"
+ },
+ "notes": "Short source chapter — 6 Objective I items, all rebuilt, topped up to 10 with items on the spectrum, energy density and radiation pressure. Worked examples number 8; the source's own worked set is brief.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch40-em-waves",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Electromagnetic Waves",
+   "intro": "Ten questions on electromagnetic waves. The unifying idea: a changing electric field makes a magnetic field and vice versa, so the two sustain each other through empty space.",
+   "sections": [
+    {
+     "id": "sources-and-displacement-current",
+     "title": "What Makes an Electromagnetic Wave",
+     "blurb": "Maxwell's missing term, and what radiates.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch40-m01",
+       "source": "mcq",
+       "prompt": "A magnetic field can be produced by",
+       "options": [
+        "a moving charge only",
+        "a changing electric field only",
+        "neither",
+        "both a moving charge and a changing electric field"
+       ],
+       "correct_index": 3,
+       "explanation": "Conduction current (moving charge) and displacement current (a changing electric field) both source a magnetic field. Maxwell's addition of the second term to Ampere's law was what made electromagnetic waves possible — without it the theory is inconsistent for a charging capacitor."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch40-m02",
+       "source": "mcq",
+       "prompt": "A compass needle sits in the gap of a parallel-plate capacitor that is being charged through a resistor. The needle",
+       "options": [
+        "does not deflect at all",
+        "deflects while the capacitor charges and returns as the charging current dies away",
+        "deflects and stays deflected as long as the battery is connected",
+        "deflects only at the instant the circuit is broken"
+       ],
+       "correct_index": 1,
+       "explanation": "While charging, the electric field between the plates is changing, so a displacement current flows there and produces a magnetic field. Once the capacitor is fully charged the field stops changing, the displacement current ceases, and the needle returns — over a time set by the circuit's $ RC $ constant."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch40-m03",
+       "source": "mcq",
+       "prompt": "Electromagnetic waves are produced by",
+       "options": [
+        "a static charge",
+        "an accelerating charge",
+        "a charge moving at constant velocity",
+        "chargeless particles"
+       ],
+       "correct_index": 1,
+       "explanation": "A static charge has only a steady electric field; one moving uniformly adds a steady magnetic field. Only *acceleration* makes the fields change in the self-sustaining way that detaches them as radiation. This is why antennas drive charges back and forth, and why circular accelerators lose energy as synchrotron radiation."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch40-m04",
+       "source": "mcq",
+       "prompt": "The dimensions of $ 1/\\mu_0\\varepsilon_0 $ are",
+       "options": [
+        "$ L/T $",
+        "$ T/L $",
+        "$ T^{2}/L^{2} $",
+        "$ L^{2}/T^{2} $"
+       ],
+       "correct_index": 3,
+       "explanation": "Since $ c = 1/\\sqrt{\\mu_0\\varepsilon_0} $, the quantity $ 1/\\mu_0\\varepsilon_0 $ equals $ c^{2} $ and has the dimensions of a velocity squared. Maxwell's realisation that this combination of two purely electrical constants gave the measured speed of light was the moment optics became part of electromagnetism."
+      }
+     ]
+    },
+    {
+     "id": "wave-structure",
+     "title": "Structure of the Wave",
+     "blurb": "E, B and the direction of travel — mutually perpendicular, in fixed ratio.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch40-m05",
+       "source": "mcq",
+       "prompt": "For an electromagnetic wave in vacuum described by $ E = E_0\\sin(kx - \\omega t) $ and $ B = B_0\\sin(kx - \\omega t) $,",
+       "options": [
+        "$ E_0 k = B_0\\omega $",
+        "$ E_0 B_0 = \\omega k $",
+        "$ E_0\\omega = B_0 k $",
+        "none of these"
+       ],
+       "correct_index": 0,
+       "explanation": "The field amplitudes are locked in the ratio $ E_0/B_0 = c $, and for any wave $ c = \\omega/k $. Combining gives $ E_0/B_0 = \\omega/k $, i.e. $ E_0 k = B_0\\omega $. The two fields peak together and vanish together — they are in phase, not a quarter cycle apart."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch40-m06",
+       "source": "mcq",
+       "prompt": "In an electromagnetic wave, the electric field, the magnetic field and the direction of propagation are",
+       "options": [
+        "all parallel",
+        "mutually perpendicular",
+        "E and B parallel, both perpendicular to the propagation",
+        "E perpendicular to B, both along the propagation"
+       ],
+       "correct_index": 1,
+       "explanation": "The three form a right-handed mutually perpendicular set, with propagation along $ \\vec{E} \\times \\vec{B} $. Both fields being transverse is what makes electromagnetic waves polarizable, and it is why polaroid sunglasses work."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch40-m07",
+       "source": "mcq",
+       "prompt": "In an electromagnetic wave, the average energy density of the electric field compared with that of the magnetic field is",
+       "options": [
+        "twice as large",
+        "half as large",
+        "equal",
+        "$ c^{2} $ times as large"
+       ],
+       "correct_index": 2,
+       "explanation": "The two energy densities are $ \\frac{1}{2}\\varepsilon_0 E^{2} $ and $ \\frac{B^{2}}{2\\mu_0} $, and substituting $ B = E/c $ with $ c^{2} = 1/\\mu_0\\varepsilon_0 $ makes them identical. The energy is shared exactly equally between the electric and magnetic parts of the wave."
+      }
+     ]
+    },
+    {
+     "id": "spectrum-and-pressure",
+     "title": "The Spectrum and Radiation Pressure",
+     "blurb": "One family of waves, differing only in frequency.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch40-m08",
+       "source": "mcq",
+       "prompt": "Arranged in order of **increasing** wavelength, the correct sequence is",
+       "options": [
+        "radio waves, microwaves, infrared, visible, X-rays, gamma rays",
+        "visible, ultraviolet, X-rays, gamma rays, infrared, radio",
+        "gamma rays, X-rays, ultraviolet, visible, infrared, microwaves",
+        "microwaves, infrared, radio waves, visible, X-rays"
+       ],
+       "correct_index": 2,
+       "explanation": "Gamma rays have the shortest wavelengths (below $ 10^{-12} $ m) and radio waves the longest (metres to kilometres), with the visible band a narrow slice around $ 400$–$700 $ nm. All travel at $ c $ in vacuum and differ only in frequency — the divisions between them are historical, not physical."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch40-m09",
+       "source": "mcq",
+       "prompt": "Electromagnetic waves carry momentum, so light falling on a surface exerts a pressure. For a **perfectly absorbing** surface, that pressure is",
+       "options": [
+        "$ I/c $",
+        "$ 2I/c $",
+        "$ I/c^{2} $",
+        "zero"
+       ],
+       "correct_index": 0,
+       "explanation": "An absorbed wave delivers its momentum $ U/c $ entirely, giving a pressure $ I/c $. A perfect *reflector* receives twice as much, $ 2I/c $, since the momentum is reversed rather than merely stopped — the same factor-of-two as a ball bouncing versus sticking."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch40-m10",
+       "source": "mcq",
+       "prompt": "An electromagnetic wave passes from vacuum into glass. What remains unchanged?",
+       "options": [
+        "its frequency",
+        "its speed",
+        "its wavelength",
+        "its amplitude"
+       ],
+       "correct_index": 0,
+       "explanation": "Frequency is fixed by the source and survives any change of medium. The speed drops to $ c/n $ and the wavelength shrinks in proportion. This is the same rule met in wave optics — and it is why a colour does not change on entering water."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch40-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Speed of light from μ₀ and ε₀",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Compute the speed of electromagnetic waves in vacuum from $ \\mu_0 = 4\\pi \\times 10^{-7} $ and $ \\varepsilon_0 = 8.85 \\times 10^{-12} $ SI.",
+    "solution": "$ c = \\frac{1}{\\sqrt{\\mu_0\\varepsilon_0}} $\n\n**Product first:**\n\n$ \\mu_0\\varepsilon_0 = (4\\pi \\times 10^{-7})(8.85 \\times 10^{-12}) = (1.257 \\times 10^{-6})(8.85 \\times 10^{-12}) $\n\n$ = 1.112 \\times 10^{-17} $\n\n**Square root:**\n\n$ \\sqrt{1.112 \\times 10^{-17}} = 3.335 \\times 10^{-9} $\n\n**Hence:**\n\n$ c = \\frac{1}{3.335 \\times 10^{-9}} = 3.00 \\times 10^{8}\\ \\text{m s}^{-1} $\n\n**Why this was one of the great moments in physics.** $ \\mu_0 $ came from experiments on forces between currents and $ \\varepsilon_0 $ from experiments on forces between charges — neither had anything to do with light. That their combination reproduced the measured speed of light told Maxwell that light *is* an electromagnetic wave.\n\n**A note on the modern definitions.** Since $ c $ is now defined exactly and the ampere is fixed by the elementary charge, $ \\varepsilon_0 $ is the measured quantity and this relation is a definition rather than a discovery. The physics is unchanged; only which quantity is primary has shifted."
+   },
+   {
+    "id": "we-ch40-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Field amplitudes in a wave",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An electromagnetic wave has an electric field amplitude of $ 300\\ \\text{V m}^{-1} $. Find the magnetic field amplitude and the wave's intensity.",
+    "solution": "**Magnetic field amplitude:**\n\n$ B_0 = \\frac{E_0}{c} = \\frac{300}{3 \\times 10^{8}} = 1 \\times 10^{-6}\\ \\text{T} $\n\nJust one microtesla — some fifty times weaker than the earth's field.\n\n**Intensity:**\n\n$ I = \\frac{1}{2}\\varepsilon_0 E_0^{2}c = \\frac{1}{2}(8.85 \\times 10^{-12})(9 \\times 10^{4})(3 \\times 10^{8}) $\n\n$ = \\frac{1}{2}(8.85 \\times 10^{-12})(2.7 \\times 10^{13}) = 119\\ \\text{W m}^{-2} $\n\n**Why $ B_0 $ always looks so small.** Dividing by $ c $ makes the magnetic amplitude tiny in SI units — but this is a unit artefact, not a physical asymmetry. The two fields carry *equal* energy densities, as shown by substituting $ B = E/c $ into the two expressions.\n\n**For a sense of scale:** sunlight at the earth's surface delivers about $ 1000\\ \\text{W m}^{-2} $, so this wave is roughly a tenth as intense — comparable to bright indoor lighting."
+   },
+   {
+    "id": "we-ch40-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Displacement current in a charging capacitor",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A parallel-plate capacitor of area $ 100\\ \\text{cm}^{2} $ is charged so that the electric field between its plates grows at $ 10^{12}\\ \\text{V m}^{-1}\\text{s}^{-1} $. Find the displacement current.",
+    "solution": "$ i_d = \\varepsilon_0 A\\frac{dE}{dt} $\n\n$ = (8.85 \\times 10^{-12})(100 \\times 10^{-4})(10^{12}) $\n\n$ = (8.85 \\times 10^{-12})(10^{-2})(10^{12}) = 8.85 \\times 10^{-2}\\ \\text{A} $\n\nAbout $ 89 $ mA.\n\n**Why Maxwell needed this term.** Apply Ampere's law to a loop encircling the wire feeding a capacitor. Choose a surface that cuts the wire and you enclose the conduction current; choose one that passes between the plates and you enclose *no* conduction current at all — yet the same loop cannot have two different answers. The displacement current between the plates resolves the contradiction, and it exactly equals the conduction current in the wire.\n\n**What it is not.** No charge crosses the gap. It is a *changing electric field* that produces a magnetic field just as a real current would — which is precisely the effect the compass-in-the-gap question probes."
+   },
+   {
+    "id": "we-ch40-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Energy density in an electromagnetic wave",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Sunlight at the earth's surface has intensity about $ 1000\\ \\text{W m}^{-2} $. Find the average energy density and the electric field amplitude.",
+    "solution": "**Energy density.** Intensity is energy density times speed:\n\n$ u = \\frac{I}{c} = \\frac{1000}{3 \\times 10^{8}} = 3.33 \\times 10^{-6}\\ \\text{J m}^{-3} $\n\n**Electric field amplitude.** From $ I = \\frac{1}{2}\\varepsilon_0 E_0^{2}c $:\n\n$ E_0 = \\sqrt{\\frac{2I}{\\varepsilon_0 c}} = \\sqrt{\\frac{2000}{(8.85 \\times 10^{-12})(3 \\times 10^{8})}} $\n\n$ = \\sqrt{\\frac{2000}{2.655 \\times 10^{-3}}} = \\sqrt{7.53 \\times 10^{5}} = 868\\ \\text{V m}^{-1} $\n\n**And the magnetic amplitude:** $ B_0 = E_0/c = 2.9\\ \\mu\\text{T} $.\n\n**Two things worth noticing.** The energy density of full sunlight is minute — a cubic metre of sunlit air holds only microjoules of radiant energy. Yet the field amplitude of $ 868\\ \\text{V m}^{-1} $ is substantial, comparable to the fields inside electronic components.\n\n**Why solar panels need area.** With so little energy per cubic metre, capturing useful power requires intercepting a large cross-section — which is the fundamental reason solar farms occupy the space they do."
+   },
+   {
+    "id": "we-ch40-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Radiation pressure",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the force sunlight exerts on a perfectly reflecting sail of area $ 100\\ \\text{m}^{2} $ held perpendicular to the beam, taking $ I = 1400\\ \\text{W m}^{-2} $.",
+    "solution": "**Radiation pressure on a perfect reflector:**\n\n$ P = \\frac{2I}{c} = \\frac{2(1400)}{3 \\times 10^{8}} = 9.33 \\times 10^{-6}\\ \\text{Pa} $\n\n**Force:**\n\n$ F = PA = (9.33 \\times 10^{-6})(100) = 9.33 \\times 10^{-4}\\ \\text{N} $\n\nUnder a millinewton — about the weight of a tenth of a gram.\n\n**Why the factor of two.** An absorbed photon delivers momentum $ p $; a reflected one delivers $ 2p $, since its momentum is reversed. Same reasoning as a ball bouncing off a wall versus sticking to it.\n\n**Why solar sails still work.** The force is feeble but it never stops, and in space there is nothing to oppose it. Sustained over months, $ 10^{-3} $ N on a light craft produces a large velocity change — and it needs no propellant at all. Japan's IKAROS demonstrated this in 2010.\n\n**Where radiation pressure genuinely dominates.** Inside stars, where it helps hold the star up against gravity, and in comet tails, which are pushed away from the sun by sunlight and the solar wind."
+   },
+   {
+    "id": "we-ch40-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Wavelength across the spectrum",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the wavelength of (a) a $ 100 $ MHz FM radio wave, (b) a $ 2.45 $ GHz microwave and (c) an X-ray of frequency $ 3 \\times 10^{18} $ Hz.",
+    "solution": "Use $ \\lambda = c/\\nu $ throughout.\n\n**(a) FM radio:**\n\n$ \\lambda = \\frac{3 \\times 10^{8}}{10^{8}} = 3\\ \\text{m} $\n\n**(b) Microwave oven:**\n\n$ \\lambda = \\frac{3 \\times 10^{8}}{2.45 \\times 10^{9}} = 0.122\\ \\text{m} = 12.2\\ \\text{cm} $\n\n**(c) X-ray:**\n\n$ \\lambda = \\frac{3 \\times 10^{8}}{3 \\times 10^{18}} = 10^{-10}\\ \\text{m} $\n\n**What each wavelength explains.** The three-metre FM wave needs an antenna of order a metre — hence the size of car aerials. The $ 12 $ cm microwave sets the scale of an oven cavity, and the standing-wave pattern inside it is why food must be rotated. The $ 10^{-10} $ m X-ray matches atomic spacings in crystals, which is exactly why X-ray diffraction reveals crystal structure.\n\n**The unifying point.** All three are the same phenomenon, travelling at the same $ c $, differing only in frequency by ten orders of magnitude — and every practical difference between them follows from the wavelength."
+   },
+   {
+    "id": "we-ch40-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Wave in a dielectric medium",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "An electromagnetic wave of frequency $ 5 \\times 10^{14} $ Hz travels through a medium of relative permittivity $ 2.25 $ and relative permeability $ 1 $. Find its speed, wavelength and refractive index.",
+    "solution": "**Speed in the medium:**\n\n$ v = \\frac{1}{\\sqrt{\\mu\\varepsilon}} = \\frac{c}{\\sqrt{\\mu_r\\varepsilon_r}} = \\frac{3 \\times 10^{8}}{\\sqrt{1 \\times 2.25}} = \\frac{3 \\times 10^{8}}{1.5} = 2 \\times 10^{8}\\ \\text{m s}^{-1} $\n\n**Refractive index:**\n\n$ n = \\frac{c}{v} = 1.5 $\n\n**Wavelength in the medium.** The frequency is unchanged:\n\n$ \\lambda = \\frac{v}{\\nu} = \\frac{2 \\times 10^{8}}{5 \\times 10^{14}} = 4 \\times 10^{-7}\\ \\text{m} = 400\\ \\text{nm} $\n\n(In vacuum it would be $ 600 $ nm.)\n\n**The relation worth carrying:** $ n = \\sqrt{\\mu_r\\varepsilon_r} $, which for most transparent materials reduces to $ n = \\sqrt{\\varepsilon_r} $ since $ \\mu_r \\approx 1 $. Glass with $ \\varepsilon_r = 2.25 $ has $ n = 1.5 $ — and this connects an *electrical* measurement to an *optical* one.\n\n**A subtlety worth knowing.** The $ \\varepsilon_r $ measured at low frequency often does not predict the optical $ n $, because $ \\varepsilon_r $ itself varies with frequency. Water is the famous case: $ \\varepsilon_r = 80 $ statically would predict $ n = 9 $, whereas the optical value is $ 1.33 $."
+   },
+   {
+    "id": "we-ch40-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Photon count in a light beam",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 10 $ mW laser emits light of wavelength $ 632.8 $ nm. How many photons does it emit per second? Take $ h = 6.63 \\times 10^{-34} $ J s.",
+    "solution": "**Energy of one photon:**\n\n$ E = \\frac{hc}{\\lambda} = \\frac{(6.63 \\times 10^{-34})(3 \\times 10^{8})}{632.8 \\times 10^{-9}} $\n\n$ = \\frac{1.989 \\times 10^{-25}}{6.328 \\times 10^{-7}} = 3.14 \\times 10^{-19}\\ \\text{J} $\n\nOr about $ 1.96 $ eV.\n\n**Photons per second:**\n\n$ n = \\frac{P}{E} = \\frac{0.010}{3.14 \\times 10^{-19}} = 3.2 \\times 10^{16}\\ \\text{s}^{-1} $\n\nThirty-two thousand million million photons every second.\n\n**Why light normally looks continuous.** With $ 10^{16} $ photons per second arriving, the graininess is utterly invisible — the wave picture is an excellent description. Only at extremely low intensities, where individual photons arrive seconds apart, does the particle nature become directly observable.\n\n**The bridge to the next chapter.** This calculation used $ E = hc/\\lambda $ — a *particle* property — to describe a beam we have just been treating as a *wave*. Both descriptions are needed, and reconciling them is where the photoelectric effect leads."
+   }
+  ]
+ }
+}

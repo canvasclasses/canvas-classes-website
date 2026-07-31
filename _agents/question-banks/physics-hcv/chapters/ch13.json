@@ -1,0 +1,280 @@
+{
+ "hcv_chapter": 13,
+ "hcv_title": "Fluid Mechanics",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Mechanical Properties of Fluids"
+ },
+ "source_pages": {
+  "worked": "281-284",
+  "obj1": "285-286"
+ },
+ "notes": "10 Objective I items rebuilt. Two source items depend on figures of differently-shaped vessels; re-cast verbally, since only the liquid *height* above the base decides the answer.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch13-fluids",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Fluid Mechanics",
+   "intro": "Ten questions on fluids at rest and in motion. The single most useful habit: pressure depends on depth, never on the shape of the container.",
+   "sections": [
+    {
+     "id": "pressure-in-fluids",
+     "title": "Pressure and Depth",
+     "blurb": "The hydrostatic paradox, and where it comes from.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch13-m01",
+       "source": "mcq",
+       "prompt": "A liquid changes its shape easily but a solid does not, because",
+       "options": [
+        "a liquid is less dense than a solid",
+        "intermolecular forces are stronger in a solid than in a liquid",
+        "atoms combine into larger molecules in a solid",
+        "molecules are further apart in a solid"
+       ],
+       "correct_index": 1,
+       "explanation": "In a solid the molecules are locked in place by strong intermolecular forces, so the body resists any change of shape. In a liquid those forces are weak enough to let molecules slide past one another while still holding them together — which is why a liquid keeps its volume but not its shape. Density and molecular spacing are consequences, not causes."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m02",
+       "source": "mcq",
+       "prompt": "Consider $ P = \\lim_{\\Delta S \\to 0} F/\\Delta S $ and $ P_1 - P_2 = \\rho g z $. In a lift accelerating upward,",
+       "options": [
+        "both are valid",
+        "the second is valid but not the first",
+        "the first is valid but not the second",
+        "both are invalid"
+       ],
+       "correct_index": 2,
+       "explanation": "The first is simply the *definition* of pressure and holds in any frame. The second was derived assuming the fluid is in equilibrium under gravity alone; in an accelerating lift you must replace $ g $ with $ g + a $. So the definition survives and the hydrostatic result needs amending."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m03",
+       "source": "mcq",
+       "prompt": "Three vessels of different shapes but the same base area are filled with **equal volumes** of the same liquid. The force on the base is greatest in the vessel where",
+       "options": [
+        "the liquid stands highest",
+        "the vessel is widest",
+        "the vessel holds the most liquid",
+        "it is the same in all three"
+       ],
+       "correct_index": 0,
+       "explanation": "Force on the base is $ P \\times A = \\rho g h \\times A $, so with equal base areas only the *height* matters. Equal volumes in differently shaped vessels reach different heights, and the tallest column presses hardest — even though every vessel holds the same weight of liquid. This is the hydrostatic paradox; the walls take up the difference."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m04",
+       "source": "mcq",
+       "prompt": "Equal **masses** of three different liquids are poured into three identical vessels. The pressure at the bottom is",
+       "options": [
+        "the same for all three",
+        "greatest for the densest liquid",
+        "greatest for the least dense liquid",
+        "greatest for the liquid of middling density"
+       ],
+       "correct_index": 0,
+       "explanation": "The denser liquid forms a shorter column, since $ h = m/\\rho A $. Substituting into $ P = \\rho g h $ gives $ P = \\rho g \\cdot m/\\rho A = mg/A $ — the density cancels completely. Equal masses over equal base areas press equally hard, however tall or short the column. Contrast this with equal *volumes*, where the densest liquid does win."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m05",
+       "source": "mcq",
+       "prompt": "A beaker of liquid sits inside a sealed jar. As air is pumped out of the jar, the pressure near the bottom of the liquid will",
+       "options": [
+        "increase",
+        "remain constant",
+        "first decrease, then increase",
+        "decrease"
+       ],
+       "correct_index": 3,
+       "explanation": "The pressure at depth $ h $ is $ P_{atm} + \\rho g h $. Pumping the jar out lowers the pressure pressing on the liquid's surface, and by Pascal's principle that reduction is transmitted throughout. The $ \\rho g h $ term is unchanged, so the total falls."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m06",
+       "source": "mcq",
+       "prompt": "'The pressures at two points in the same horizontal plane of a liquid are equal.' This holds in",
+       "options": [
+        "a lift accelerating upward only",
+        "an accelerating car only",
+        "both cases",
+        "neither case"
+       ],
+       "correct_index": 0,
+       "explanation": "In the lift the effective gravity is still vertical (just larger), so surfaces of constant pressure stay horizontal. In the horizontally accelerating car the effective gravity tilts, the liquid surface slopes, and two points at the same height are then at different depths below that sloping surface — so their pressures differ."
+      }
+     ]
+    },
+    {
+     "id": "buoyancy-and-flow",
+     "title": "Buoyancy and Flow",
+     "blurb": "Archimedes, continuity and Bernoulli.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch13-m07",
+       "source": "mcq",
+       "prompt": "In a mercury barometer, $ P_1 $ is the pressure just above the mercury in the tube and $ P_2 $ that at the mercury surface in the cup. Then",
+       "options": [
+        "$ P_1 = P_2 $",
+        "$ P_1 < P_2 $",
+        "$ P_1 > P_2 $",
+        "$ P_1 = 2P_2 $"
+       ],
+       "correct_index": 1,
+       "explanation": "Above the mercury in a barometer tube is a near-vacuum, so $ P_1 \\approx 0 $, while the cup's surface is open to the atmosphere and $ P_2 = P_{atm} $. The difference $ P_2 - P_1 $ is exactly what the $ 76 $ cm mercury column balances."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m08",
+       "source": "mcq",
+       "prompt": "A block floats with three quarters of its volume submerged in water. Its density is",
+       "options": [
+        "$ 1333\\ \\text{kg m}^{-3} $",
+        "$ 250\\ \\text{kg m}^{-3} $",
+        "$ 750\\ \\text{kg m}^{-3} $",
+        "$ 1000\\ \\text{kg m}^{-3} $"
+       ],
+       "correct_index": 2,
+       "explanation": "For a floating body, weight equals buoyancy: $ \\rho_{body}V g = \\rho_{water}(0.75V)g $, so $ \\rho_{body} = 0.75 \\times 1000 = 750\\ \\text{kg m}^{-3} $. The submerged fraction *is* the ratio of densities — which is why roughly 90% of an iceberg sits below the waterline."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m09",
+       "source": "mcq",
+       "prompt": "Water flows steadily through a pipe whose radius halves at a constriction. The speed in the narrow section, compared with the wide one, is",
+       "options": [
+        "twice as great",
+        "half as great",
+        "unchanged",
+        "four times as great"
+       ],
+       "correct_index": 3,
+       "explanation": "The equation of continuity, $ A_1v_1 = A_2v_2 $, fixes the volume flow rate. Halving the radius quarters the area, so the speed must quadruple. Because area depends on $ r^{2} $, a modest narrowing produces a dramatic speed-up — which is why a thumb over a hose nozzle works so well."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch13-m10",
+       "source": "mcq",
+       "prompt": "According to Bernoulli's principle, where a fluid flows faster along a horizontal pipe, its pressure",
+       "options": [
+        "is greater",
+        "is smaller",
+        "is unchanged",
+        "may be greater or smaller"
+       ],
+       "correct_index": 1,
+       "explanation": "Bernoulli's equation $ P + \\tfrac12\\rho v^{2} + \\rho g h = $ constant means that along a horizontal pipe, a rise in $ v $ must be paid for by a fall in $ P $. It is really energy conservation for a fluid, and it explains aerofoil lift, the spin on a cricket ball, and why a shower curtain is drawn inward."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch13-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Pressure at depth",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the absolute and gauge pressure at a depth of $ 20 $ m in a lake. Take $ \\rho = 1000\\ \\text{kg m}^{-3} $, $ g = 10\\ \\text{m s}^{-2} $, $ P_{atm} = 1.0 \\times 10^{5} $ Pa.",
+    "solution": "**Gauge pressure** is the excess over atmospheric — the part due to the water alone:\n\n$ P_{gauge} = \\rho g h = 1000(10)(20) = 2.0 \\times 10^{5} $ Pa\n\n**Absolute pressure** adds the atmosphere pressing on the surface:\n\n$ P_{abs} = P_{atm} + \\rho g h = 1.0 \\times 10^{5} + 2.0 \\times 10^{5} = 3.0 \\times 10^{5} $ Pa\n\nThat is three atmospheres.\n\n**A number worth carrying.** Every $ 10 $ m of water adds one atmosphere. Divers use this constantly, and it explains why the pressure change from the surface to $ 10 $ m is as large as the entire atmosphere above them.\n\n**Which pressure does a gauge read?** Almost every practical instrument — tyre gauges, blood-pressure cuffs — reads *gauge* pressure. A tyre at '$ 2 $ bar' actually holds $ 3 $ bar absolute. Read the question carefully to see which is wanted."
+   },
+   {
+    "id": "we-ch13-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — The hydraulic lift",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A hydraulic lift has pistons of area $ 20\\ \\text{cm}^{2} $ and $ 800\\ \\text{cm}^{2} $. What force on the small piston will support a $ 2000 $ kg car? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Pascal's principle: pressure applied to an enclosed fluid is transmitted undiminished, so the pressure is the same at both pistons.\n\n$ \\frac{F_1}{A_1} = \\frac{F_2}{A_2} $\n\n$ F_1 = F_2 \\frac{A_1}{A_2} = (2000 \\times 10)\\frac{20}{800} = 20\\,000 \\times \\frac{1}{40} = 500 $ N\n\nA $ 500 $ N push — about the weight of a 50 kg person — lifts two tonnes.\n\n**What you do not get for free.** Energy is conserved, so the small piston must move 40 times further than the large one rises. To lift the car by $ 10 $ cm you must push the small piston down by $ 4 $ m, usually in many strokes with a valve.\n\n**Note** the areas were left in cm² on both sides. Because only their *ratio* enters, they need not be converted — though converting both is never wrong."
+   },
+   {
+    "id": "we-ch13-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Archimedes' principle and apparent weight",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A metal block weighs $ 50 $ N in air and $ 30 $ N when fully immersed in water. Find its volume and density. Take $ \\rho_w = 1000\\ \\text{kg m}^{-3} $, $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**The loss of weight is the buoyant force:**\n\n$ F_B = 50 - 30 = 20 $ N\n\n**Buoyancy equals the weight of displaced water**, and since the block is fully immersed the displaced volume is the block's own volume:\n\n$ F_B = \\rho_w V g \\Rightarrow 20 = 1000(V)(10) \\Rightarrow V = 2 \\times 10^{-3}\\ \\text{m}^{3} $\n\n**Mass of the block:**\n\n$ m = \\frac{W}{g} = \\frac{50}{10} = 5 $ kg\n\n**Density:**\n\n$ \\rho = \\frac{m}{V} = \\frac{5}{2 \\times 10^{-3}} = 2500\\ \\text{kg m}^{-3} $\n\n**The elegant shortcut.** Relative density is $ \\frac{\\text{weight in air}}{\\text{loss of weight in water}} = \\frac{50}{20} = 2.5 $ — so the density is $ 2.5 $ times water's, with no need to find the volume at all. This is the standard laboratory method for measuring density."
+   },
+   {
+    "id": "we-ch13-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Equation of continuity",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Water flows at $ 2\\ \\text{m s}^{-1} $ through a pipe of radius $ 4 $ cm, which narrows to radius $ 2 $ cm. Find the speed in the narrow section and the volume flow rate.",
+    "solution": "**Continuity** says the volume passing any cross-section per second is the same everywhere:\n\n$ A_1 v_1 = A_2 v_2 $\n\n$ \\pi r_1^{2} v_1 = \\pi r_2^{2} v_2 $\n\n$ v_2 = v_1 \\left(\\frac{r_1}{r_2}\\right)^{2} = 2\\left(\\frac{4}{2}\\right)^{2} = 2(4) = 8\\ \\text{m s}^{-1} $\n\n**Volume flow rate:**\n\n$ Q = A_1 v_1 = \\pi (0.04)^{2}(2) = \\pi(1.6 \\times 10^{-3})(2) = 1.0 \\times 10^{-2}\\ \\text{m}^{3}\\text{s}^{-1} $\n\nAbout $ 10 $ litres per second.\n\n**The squared dependence is the point.** Halving the radius quarters the area and quadruples the speed. This is why a river runs fast through a narrow gorge and slowly across a wide plain — the same water has to get through either way.\n\n**The assumption underneath.** Continuity in this form assumes an incompressible fluid. It works beautifully for liquids and for gases at low speeds, but not for a gas being strongly compressed."
+   },
+   {
+    "id": "we-ch13-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Bernoulli's equation applied to a pipe",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Water flows through a horizontal pipe at $ 3\\ \\text{m s}^{-1} $ where the pressure is $ 2.0 \\times 10^{5} $ Pa. At a constriction the speed rises to $ 9\\ \\text{m s}^{-1} $. Find the pressure there. Take $ \\rho = 1000\\ \\text{kg m}^{-3} $.",
+    "solution": "The pipe is horizontal, so the $ \\rho g h $ terms are equal and cancel:\n\n$ P_1 + \\tfrac12\\rho v_1^{2} = P_2 + \\tfrac12\\rho v_2^{2} $\n\n$ P_2 = P_1 + \\tfrac12\\rho(v_1^{2} - v_2^{2}) $\n\n$ = 2.0 \\times 10^{5} + \\tfrac12 (1000)(9 - 81) $\n\n$ = 2.0 \\times 10^{5} + 500(-72) $\n\n$ = 2.0 \\times 10^{5} - 3.6 \\times 10^{4} = 1.64 \\times 10^{5} $ Pa\n\n**The pressure has dropped** — faster flow, lower pressure, exactly as Bernoulli requires.\n\n**Why this feels wrong at first.** Intuition says squeezing the water should raise the pressure. But the fluid speeds up *because* it is pushed from a high-pressure region into a lower-pressure one; the pressure difference is what does the accelerating.\n\n**Where it shows up.** An aerofoil, a spinning ball's swerve, a carburettor, a Venturi flow meter, and the way two ships sailing close in parallel are drawn together — all the same equation."
+   },
+   {
+    "id": "we-ch13-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Speed of efflux (Torricelli's law)",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tank of water has a small hole $ 5 $ m below the surface. Find the speed of the water leaving the hole, and the horizontal distance it travels if the hole is $ 2 $ m above the ground. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**Speed of efflux.** Apply Bernoulli between the top surface (moving negligibly, at atmospheric pressure) and the hole (also at atmospheric pressure):\n\n$ v = \\sqrt{2gh} = \\sqrt{2(10)(5)} = 10\\ \\text{m s}^{-1} $\n\nThis is exactly the speed a body would reach falling freely through $ 5 $ m — Torricelli's law.\n\n**Horizontal range.** The water leaves horizontally and then behaves as a projectile falling $ 2 $ m:\n\n$ t = \\sqrt{\\frac{2h'}{g}} = \\sqrt{\\frac{2(2)}{10}} = \\sqrt{0.4} = 0.63 $ s\n\n$ x = vt = 10(0.63) = 6.3 $ m\n\n**Note what the speed does *not* depend on.** Not the liquid's density, and not the hole's size — only the depth below the surface. Mercury and water would spurt out at the same rate from the same depth.\n\n**A tidy extra result.** For a tank of total height $ H $, the range is greatest when the hole is at exactly half the height."
+   },
+   {
+    "id": "we-ch13-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Floating and the submerged fraction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block of wood of density $ 600\\ \\text{kg m}^{-3} $ floats in water ($ 1000\\ \\text{kg m}^{-3} $). What fraction is submerged? What fraction would be submerged in oil of density $ 800\\ \\text{kg m}^{-3} $?",
+    "solution": "For a floating body the weight equals the buoyant force:\n\n$ \\rho_{body} V g = \\rho_{liquid} V_{sub} g $\n\n$ \\frac{V_{sub}}{V} = \\frac{\\rho_{body}}{\\rho_{liquid}} $\n\n**In water:**\n\n$ \\frac{600}{1000} = 0.60 $ — 60% submerged.\n\n**In oil:**\n\n$ \\frac{600}{800} = 0.75 $ — 75% submerged.\n\n**Read the comparison.** Oil is the *lighter* liquid, so each cubic metre displaced buys less buoyancy. The block must therefore sink deeper to stay afloat — 75% against 60%. The lighter the liquid, the more of the body goes under.\n\n**Where the limit is.** If the liquid's density drops to $ 600\\ \\text{kg m}^{-3} $, the ratio reaches 1 and the block floats fully submerged, neutrally buoyant. Below that it sinks.\n\n**The everyday version.** A ship rides lower in fresh water than in sea water, which is exactly why hulls carry separate load lines for the two."
+   },
+   {
+    "id": "we-ch13-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Manometer reading",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A U-tube manometer containing mercury shows a difference of levels of $ 15 $ cm when connected to a gas cylinder. Find the gauge pressure of the gas. Take $ \\rho_{Hg} = 13\\,600\\ \\text{kg m}^{-3} $, $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The height difference of the two mercury columns measures the pressure difference directly.\n\n$ P_{gauge} = \\rho g h = 13\\,600 \\times 10 \\times 0.15 $\n\n$ = 20\\,400 $ Pa $ \\approx 2.0 \\times 10^{4} $ Pa\n\nIn atmospheres, $ 20\\,400/101\\,325 \\approx 0.2 $ atm above ambient.\n\n**Why mercury and not water.** The same pressure would need a water column of\n\n$ h = \\frac{P}{\\rho g} = \\frac{20\\,400}{1000 \\times 10} = 2.04\\ \\text{m} $\n\n— an impractically tall instrument. Mercury's density, 13.6 times water's, shrinks every reading by that factor.\n\n**Watch the units.** The height must go in as $ 0.15 $ m, not $ 15 $ cm. Using centimetres inflates the answer a hundredfold, and the result still looks like a plausible pressure — which is what makes the slip dangerous."
+   },
+   {
+    "id": "we-ch13-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Fluid in a horizontally accelerating container",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A tank of water accelerates horizontally at $ 2\\ \\text{m s}^{-2} $. Find the angle its surface makes with the horizontal. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Work in the tank's frame, where a pseudo-force $ ma $ acts backward on every element of water. Combined with gravity, the **effective gravity** tilts.\n\nThe free surface must be perpendicular to the effective gravity — that is what 'free surface' means — so it tilts by the same angle.\n\n$ \\tan\\theta = \\frac{a}{g} = \\frac{2}{10} = 0.2 $\n\n$ \\theta = 11.3^\\circ $\n\nThe surface rises at the **back** of the tank and falls at the front.\n\n**Why the back is higher.** The water lags behind the accelerating tank, piling up against the rear wall — the same reason you are pressed back into a car seat.\n\n**A related consequence.** Lines of constant pressure are now parallel to this tilted surface, not horizontal. That is precisely why the statement 'pressure is equal at equal heights' fails in a horizontally accelerating fluid — and it is the same $ \\tan\\theta = a/g $ that governed the pendulum in a car back in Chapter 5."
+   },
+   {
+    "id": "we-ch13-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Force on a dam wall",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A dam holds water to a depth of $ 10 $ m. Find the average pressure on the wall and the total force per metre of its width. Take $ \\rho = 1000\\ \\text{kg m}^{-3} $, $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Pressure grows linearly with depth — zero (gauge) at the surface and maximum at the bottom.\n\n**Maximum pressure**, at the base:\n\n$ P_{max} = \\rho g h = 1000(10)(10) = 1.0 \\times 10^{5} $ Pa\n\n**Average pressure.** Because the variation is linear, the average is simply the mean of the two ends:\n\n$ P_{av} = \\frac{0 + \\rho g h}{2} = \\frac{\\rho g h}{2} = 5.0 \\times 10^{4} $ Pa\n\n**Force per metre of width.** The wetted area per metre is $ 10\\ \\text{m}^{2} $:\n\n$ F = P_{av} \\times A = 5.0 \\times 10^{4} \\times 10 = 5.0 \\times 10^{5} $ N per metre\n\n**Watch out:** using $ P_{max} $ rather than $ P_{av} $ doubles the answer. Averaging is legitimate here only because pressure varies *linearly* with depth; for a non-linear variation you would have to integrate.\n\n**Why dams are built thick at the base.** The force goes as $ h^{2} $ — double the depth and the load quadruples — and it acts at one third of the height from the bottom, where the pressure is greatest."
+   }
+  ]
+ }
+}

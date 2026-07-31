@@ -1,0 +1,287 @@
+{
+ "hcv_chapter": 6,
+ "hcv_title": "Friction",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Laws of Motion — friction"
+ },
+ "source_pages": {
+  "worked": "105-109",
+  "obj1": "110"
+ },
+ "notes": "10 Objective I items rebuilt. Two source items reference a figure of two blocks against a smooth wall; both re-cast as verbal block-on-block friction questions testing the same reasoning.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch06-friction",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Friction",
+   "intro": "Ten questions on the force that adjusts itself. Most errors here come from treating static friction as if it had a fixed value.",
+   "sections": [
+    {
+     "id": "static-vs-kinetic",
+     "title": "Static Friction Adjusts Itself",
+     "blurb": "Static friction is whatever it needs to be — up to a limit.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch06-m01",
+       "source": "mcq",
+       "prompt": "A body of mass $ M $ rests on a rough horizontal surface (coefficient $ \\mu $). A person pulls horizontally but the body does not move. The total force $ F $ exerted by the surface on the body satisfies",
+       "options": [
+        "$ F = Mg $, whatever the applied pull",
+        "$ Mg \\le F \\le Mg\\sqrt{1+\\mu^{2}} $",
+        "$ F = \\mu Mg $, whatever the applied pull",
+        "$ F \\le \\mu Mg $, whatever the applied pull"
+       ],
+       "correct_index": 1,
+       "explanation": "The surface exerts two things at once: a normal force $ Mg $ upward and a friction force $ f $ backward. Their resultant is $ \\sqrt{(Mg)^{2}+f^{2}} $. With no pull, $ f = 0 $ and $ F = Mg $; at the point of slipping $ f = \\mu Mg $ and $ F = Mg\\sqrt{1+\\mu^{2}} $. Everything in between is possible, because static friction takes only the value required."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch06-m02",
+       "source": "mcq",
+       "prompt": "The contact force from a rough horizontal surface on a body has constant magnitude. If the angle between this force and the vertical is decreased, the friction between surface and body will",
+       "options": [
+        "increase",
+        "decrease",
+        "remain the same",
+        "may increase or decrease"
+       ],
+       "correct_index": 1,
+       "explanation": "The contact force resolves into a vertical normal component and a horizontal friction component, so friction is $ F\\sin\\theta $ where $ \\theta $ is the angle from the vertical. With $ F $ fixed, shrinking $ \\theta $ shrinks $ \\sin\\theta $ and hence the friction. At $ \\theta = 0 $ the contact force is purely normal and friction has vanished."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch06-m03",
+       "source": "mcq",
+       "prompt": "One takes small steps while walking on ice mainly because small steps ensure",
+       "options": [
+        "a larger normal force",
+        "a larger friction force",
+        "a smaller friction requirement",
+        "a smaller normal force"
+       ],
+       "correct_index": 2,
+       "explanation": "Walking needs friction to push you forward, and a longer stride means a more slanted push — demanding a bigger horizontal component. Ice can supply very little friction, so the requirement must be kept small. Short steps keep the push nearly vertical, so the friction needed stays within what the ice can provide."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch06-m04",
+       "source": "mcq",
+       "prompt": "Block A rests on top of block B, which rests on a rough floor. A horizontal force is applied to B, and the two move together. The friction acting on A from B is",
+       "options": [
+        "backward, opposing A's motion",
+        "forward, and it is what accelerates A",
+        "zero, since A does not slide on B",
+        "backward, equal to the applied force"
+       ],
+       "correct_index": 1,
+       "explanation": "A accelerates, so some force must act on it in the direction of motion — and the only horizontal force available is friction from B. So friction on A points *forward* and equals $ m_A a $. Friction opposes *relative sliding*, not motion itself, and here it is the very thing preventing A from being left behind."
+      }
+     ]
+    },
+    {
+     "id": "braking-and-sliding",
+     "title": "Braking, Stopping and Sliding",
+     "blurb": "Why mass drops out, and why locked wheels are the wrong idea.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch06-m05",
+       "source": "mcq",
+       "prompt": "Two cars of unequal mass have similar tyres and the same initial speed. Their minimum stopping distances are",
+       "options": [
+        "the same for both",
+        "smaller for the heavier car",
+        "smaller for the lighter car",
+        "dependent on the size of the cars"
+       ],
+       "correct_index": 0,
+       "explanation": "The retardation is $ a = \\mu m g / m = \\mu g $ — the mass cancels, because a heavier car gets proportionally more friction. With the same $ a $ and the same initial speed, $ v^{2} = 2as $ gives the same stopping distance. Mass matters for the *force* needed on the brakes, not for the distance."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch06-m06",
+       "source": "mcq",
+       "prompt": "To stop a car in the shortest distance on a horizontal road, one should",
+       "options": [
+        "brake so hard that the wheels stop rotating",
+        "pump the brakes on and off",
+        "switch the engine off and coast",
+        "brake hard enough to just prevent the wheels from slipping"
+       ],
+       "correct_index": 3,
+       "explanation": "A rolling tyre grips through *static* friction, whose maximum exceeds kinetic friction. Lock the wheels and they skid, dropping you to the smaller kinetic value and lengthening the stop. Braking right at the edge of slipping uses the largest force available — exactly what an anti-lock braking system automates."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch06-m07",
+       "source": "mcq",
+       "prompt": "Block A just begins to slide on an incline tilted to $ 30^\\circ $. Replaced by block B, sliding just begins at $ 40^\\circ $. Comparing their masses,",
+       "options": [
+        "mass of A > mass of B",
+        "all three are possible",
+        "mass of A < mass of B",
+        "the masses are equal"
+       ],
+       "correct_index": 1,
+       "explanation": "At the angle of repose $ \\mu = \\tan\\theta $, and mass cancels completely from that condition. The experiment therefore reveals only that B's surface is rougher ($ \\mu = 0.84 $ against A's $ 0.58 $) and says nothing whatever about the masses, which could be in any relation."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch06-m08",
+       "source": "mcq",
+       "prompt": "A boy of mass $ M $ pushes a box of mass $ M' $ across a rough floor. The coefficient of friction under his shoes is $ \\mu $ and under the box is $ \\mu' $. Sliding the box is **certainly impossible** when",
+       "options": [
+        "$ \\mu < \\mu' $ and $ M < M' $",
+        "$ \\mu > \\mu' $ and $ M > M' $",
+        "$ \\mu > \\mu' $ and $ M < M' $",
+        "$ \\mu < \\mu' $ and $ M > M' $"
+       ],
+       "correct_index": 0,
+       "explanation": "The largest push the boy can apply before his own shoes slip is $ \\mu M g $; the box needs $ \\mu' M' g $ to start moving. He fails whenever $ \\mu M < \\mu' M' $. With both $ \\mu < \\mu' $ and $ M < M' $, every factor works against him, so failure is certain. In the mixed cases the actual numbers decide."
+      }
+     ]
+    },
+    {
+     "id": "friction-in-systems",
+     "title": "Friction Inside a System",
+     "blurb": "Contact forces on people and blocks that ride along.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch06-m09",
+       "source": "mcq",
+       "prompt": "A scooter starts from rest, accelerates for $ \\Delta t_1 $, moves at constant velocity for $ \\Delta t_2 $, then decelerates for $ \\Delta t_3 $. A $ 500 $ N pillion rider stays at rest relative to the scooter without holding anything. The force exerted by the seat on the rider is",
+       "options": [
+        "exactly $ 500 $ N throughout, in all three phases of the journey",
+        "less than $ 500 $ N throughout the whole journey",
+        "more than $ 500 $ N throughout the whole journey",
+        "more than $ 500 $ N during $ \\Delta t_1 $ and $ \\Delta t_3 $, but $ 500 $ N during $ \\Delta t_2 $"
+       ],
+       "correct_index": 3,
+       "explanation": "The seat must always support the rider's $ 500 $ N vertically, and while the scooter accelerates or decelerates it must also supply a horizontal friction force. The resultant of the two is $ \\sqrt{500^{2}+f^{2}} > 500 $ N. During constant velocity no horizontal force is needed, so the seat's force drops back to exactly $ 500 $ N."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch06-m10",
+       "source": "mcq",
+       "prompt": "A block is pressed against a **smooth** vertical wall by a horizontal force, and stays in equilibrium. This is",
+       "options": [
+        "possible, because the normal force holds it up",
+        "possible only if the force is large enough",
+        "impossible, since a smooth wall offers no upward force",
+        "possible only if the block is light"
+       ],
+       "correct_index": 2,
+       "explanation": "A smooth wall can push only perpendicular to itself — horizontally — so nothing balances the weight, however hard you press. Equilibrium needs friction, which requires a rough wall; then $ f = mg $ and the condition becomes $ \\mu N \\ge mg $. Pressing harder helps only when the wall is rough."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch06-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Does the block move at all?",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 5 $ kg block rests on a horizontal floor with $ \\mu_s = 0.4 $. A horizontal force of $ 15 $ N is applied. Find the friction force acting. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Never assume friction equals $ \\mu N $. First find out whether the block moves.\n\n**The maximum static friction available:**\n\n$ f_{max} = \\mu_s N = \\mu_s mg = 0.4(5)(10) = 20 $ N\n\n**Compare with the applied force.** The push is $ 15 $ N, which is *less* than $ 20 $ N. So the block does not move.\n\n**Therefore friction is $ 15 $ N** — exactly enough to balance the push and hold the block still.\n\n**Why not $ 20 $ N?** Because static friction is a *response*, not a fixed quantity. It supplies precisely what equilibrium demands, up to its ceiling of $ 20 $ N. If friction really were $ 20 $ N here, the block would accelerate backwards — plainly absurd.\n\n**The procedure to follow every time.** Compute $ f_{max} = \\mu_s N $. If the applied force is smaller, friction equals the applied force and nothing moves. If it is larger, the block slides and friction takes the kinetic value $ \\mu_k N $, which is smaller still."
+   },
+   {
+    "id": "we-ch06-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Angle of repose",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block placed on an incline just begins to slide when the incline is raised to $ 25^\\circ $. Find the coefficient of static friction. What happens at $ 30^\\circ $?",
+    "solution": "At the verge of sliding, friction sits exactly at its maximum and the block is still in equilibrium.\n\n**Along the incline:** $ mg\\sin\\theta = f_{max} = \\mu N $\n\n**Perpendicular to it:** $ N = mg\\cos\\theta $\n\n**Divide the first by the second:**\n\n$ \\mu = \\frac{mg\\sin\\theta}{mg\\cos\\theta} = \\tan\\theta = \\tan 25^\\circ = 0.47 $\n\n**At $ 30^\\circ $.** Now $ \\tan 30^\\circ = 0.58 > \\mu $, so gravity's pull along the slope exceeds what friction can resist and the block slides. Its acceleration follows from\n\n$ a = g(\\sin\\theta - \\mu_k\\cos\\theta) $\n\nwhich, taking $ \\mu_k \\approx \\mu_s $, gives $ a \\approx 10(0.5 - 0.47 \\times 0.866) = 0.93\\ \\text{m s}^{-2} $ — a slow slide, since $ 30^\\circ $ only just exceeds the critical angle.\n\n**Why this is such a useful experiment.** The mass cancels entirely, so $ \\mu = \\tan\\theta_{repose} $ needs no weighing at all — just a protractor. It is the standard laboratory method for measuring a friction coefficient."
+   },
+   {
+    "id": "we-ch06-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Stopping distance of a braking car",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A car travelling at $ 20\\ \\text{m s}^{-1} $ brakes on a road with $ \\mu = 0.5 $. Find the shortest stopping distance. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The only horizontal force decelerating the car is friction.\n\n$ ma = \\mu mg \\Rightarrow a = \\mu g = 0.5(10) = 5\\ \\text{m s}^{-2} $\n\nNotice the mass cancelled — the car's weight is irrelevant to the distance.\n\n**Now use the equation without time in it:**\n\n$ v^{2} = u^{2} - 2as \\Rightarrow 0 = 400 - 2(5)s \\Rightarrow s = 40 $ m\n\n**The dangerous part of this formula.** The distance goes as $ u^{2} $. At $ 40\\ \\text{m s}^{-1} $ — merely double the speed — the stopping distance becomes $ 160 $ m, four times as far. This is the whole argument behind speed limits, and it is worth internalising as a ratio rather than a formula.\n\n**And on a wet road**, where $ \\mu $ might fall to $ 0.25 $, the same $ 20\\ \\text{m s}^{-1} $ needs $ 80 $ m. Halving the grip doubles the distance."
+   },
+   {
+    "id": "we-ch06-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Two blocks, one of which may slip",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block sits on a $ 6 $ kg block on a smooth floor. The coefficient of friction between the blocks is $ 0.3 $. What is the largest horizontal force that can be applied to the lower block so that they still move together? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "The upper block has only one horizontal force available to it — friction from the block beneath. That friction is what accelerates it, and it has a ceiling.\n\n**Maximum acceleration of the upper block.**\n\n$ f_{max} = \\mu m_{upper} g = 0.3(2)(10) = 6 $ N\n\n$ a_{max} = \\frac{f_{max}}{m_{upper}} = \\frac{6}{2} = 3\\ \\text{m s}^{-2} $\n\nBeyond this the top block cannot keep up and begins to slide backwards relative to the lower one.\n\n**Force needed to give the whole system that acceleration.**\n\n$ F = (m_{upper} + m_{lower}) a_{max} = (8)(3) = 24 $ N\n\n**Check the logic.** At $ F = 24 $ N both blocks accelerate at $ 3\\ \\text{m s}^{-2} $; friction on the top block is exactly $ 6 $ N, right at its limit. Any larger force and the top block slips.\n\n**The general method.** Find which body is held along only by friction, work out the greatest acceleration friction can give it, then ask what force produces that acceleration for the whole system. Note that $ a_{max} = \\mu g $ here is independent of the upper mass."
+   },
+   {
+    "id": "we-ch06-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Pulling at an angle: the best direction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 10 $ kg box on a floor with $ \\mu = 0.5 $ is pulled by a rope at $ 30^\\circ $ above the horizontal. Find the tension needed to just start it moving. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Pulling at an angle does two things at once — and the second is the one students forget.\n\n**Vertical direction.** The rope's upward component lightens the box, reducing the normal force:\n\n$ N = mg - T\\sin 30^\\circ = 100 - 0.5T $\n\n**Horizontal direction, at the point of slipping:**\n\n$ T\\cos 30^\\circ = \\mu N = 0.5(100 - 0.5T) $\n\n$ 0.866T = 50 - 0.25T $\n\n$ 1.116T = 50 \\Rightarrow T = 44.8 $ N\n\n**Compare with pulling horizontally**, where $ T = \\mu mg = 50 $ N. Tilting the rope needs *less* force, even though part of the pull is now wasted vertically.\n\n**Why tilting wins.** Lifting slightly reduces $ N $, which reduces friction — and that saving outweighs the loss of horizontal component, up to a point. The optimum angle is $ \\theta = \\tan^{-1}\\mu $, here $ 26.6^\\circ $, close to the $ 30^\\circ $ used. This is exactly why a suitcase handle is designed to be pulled at a slant."
+   },
+   {
+    "id": "we-ch06-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Block sliding down a rough incline",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block slides down a $ 37^\\circ $ incline with $ \\mu_k = 0.25 $. Find its acceleration. Take $ g = 10\\ \\text{m s}^{-2} $, $ \\sin 37^\\circ = 0.6 $, $ \\cos 37^\\circ = 0.8 $.",
+    "solution": "The block is sliding, so friction is kinetic, acts *up* the slope, and has the definite value $ \\mu_k N $.\n\n**Perpendicular to the incline:**\n\n$ N = mg\\cos\\theta = m(10)(0.8) = 8m $\n\n**Along the incline, taking down-slope as positive:**\n\n$ ma = mg\\sin\\theta - \\mu_k N $\n\n$ ma = m(10)(0.6) - 0.25(8m) = 6m - 2m = 4m $\n\n$ a = 4\\ \\text{m s}^{-2} $ down the slope.\n\n**In symbols:** $ a = g(\\sin\\theta - \\mu_k\\cos\\theta) $, again independent of mass.\n\n**A check worth doing.** Is the block *able* to slide? It slides only if $ \\tan\\theta > \\mu_s $. Here $ \\tan 37^\\circ = 0.75 $, comfortably above $ 0.25 $ — so yes.\n\n**Watch out:** kinetic friction points up the slope here because the block moves down. Had the block been projected *up* the incline, friction would act *downward* and the deceleration would be $ g(\\sin\\theta + \\mu_k\\cos\\theta) $ — a much larger number. Always fix the direction of motion before placing friction."
+   },
+   {
+    "id": "we-ch06-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Up and down the same rough incline",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block is projected up a rough $ 30^\\circ $ incline at $ 10\\ \\text{m s}^{-1} $ with $ \\mu = 0.2 $. Find how far it travels before stopping, and its speed when it returns to the starting point. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "Friction always opposes the *current* motion, so it changes direction at the turning point. The journey must be split in two.\n\n**Going up.** Both gravity and friction retard the block:\n\n$ a_{up} = g(\\sin\\theta + \\mu\\cos\\theta) = 10(0.5 + 0.2 \\times 0.866) = 10(0.673) = 6.73\\ \\text{m s}^{-2} $\n\n$ 0 = 10^{2} - 2(6.73)s \\Rightarrow s = \\frac{100}{13.46} = 7.43 $ m\n\n**Coming down.** Now gravity drives and friction resists:\n\n$ a_{down} = g(\\sin\\theta - \\mu\\cos\\theta) = 10(0.5 - 0.173) = 3.27\\ \\text{m s}^{-2} $\n\n$ v^{2} = 2(3.27)(7.43) = 48.6 \\Rightarrow v = 6.97\\ \\text{m s}^{-1} $\n\n**The physics in the numbers.** It returns at $ 6.97\\ \\text{m s}^{-1} $, not the $ 10\\ \\text{m s}^{-1} $ it left with — friction has dissipated energy on both legs. On a smooth incline it would come back at exactly $ 10\\ \\text{m s}^{-1} $.\n\n**Watch out:** using the same acceleration for both legs is the classic error. The two differ by $ 2\\mu g\\cos\\theta $, and the upward trip is always the more sharply retarded."
+   },
+   {
+    "id": "we-ch06-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — A block held against a rough wall",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block is pressed against a vertical wall by a horizontal force of $ 50 $ N. If $ \\mu = 0.6 $, will the block slide down? Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**The normal force here is horizontal**, set entirely by the applied push:\n\n$ N = 50 $ N\n\n**Maximum friction available**, acting vertically along the wall:\n\n$ f_{max} = \\mu N = 0.6(50) = 30 $ N\n\n**Weight to be supported:**\n\n$ mg = 2(10) = 20 $ N\n\nSince $ 30 > 20 $, friction can hold the block. **It does not slide.**\n\n**And the friction actually acting is $ 20 $ N, not $ 30 $ N** — just enough to balance the weight, as static friction always is.\n\n**The minimum push required.** Setting $ \\mu N = mg $:\n\n$ N_{min} = \\frac{mg}{\\mu} = \\frac{20}{0.6} = 33.3 $ N\n\nPress with less and the block slides, however hard you try to hold it.\n\n**The key structural point.** On a horizontal floor $ N = mg $, so friction is tied to the weight. Against a vertical wall $ N $ is whatever you push with, and the weight instead becomes the load friction must carry. Identifying which direction the normal force acts in is the whole problem."
+   },
+   {
+    "id": "we-ch06-09",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 9 — Work done against friction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 4 $ kg block is dragged $ 5 $ m across a rough floor ($ \\mu = 0.3 $) at constant speed by a horizontal force. Find the applied force, the work it does, and the heat generated. Take $ g = 10\\ \\text{m s}^{-2} $.",
+    "solution": "**Constant speed means zero acceleration**, so the applied force exactly balances friction:\n\n$ F = f = \\mu mg = 0.3(4)(10) = 12 $ N\n\n**Work done by the applied force:**\n\n$ W_{applied} = Fs = 12(5) = 60 $ J\n\n**Work done by friction:**\n\n$ W_{friction} = -fs = -60 $ J\n\nNegative, because friction points opposite to the displacement.\n\n**Where the energy went.** The two works cancel, which is consistent with the kinetic energy being unchanged. All $ 60 $ J has become heat at the sliding interface:\n\n$ Q = 60 $ J\n\n**Why friction is different from gravity.** Carry the block up and back down and gravity returns every joule — gravity is conservative. Drag the block out and back and friction takes $ 60 $ J each way, $ 120 $ J in total, and returns none. That path-dependence is exactly what makes friction non-conservative, and it is why no potential energy can be defined for it."
+   },
+   {
+    "id": "we-ch06-10",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 10 — Minimum force to prevent slipping",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A block of mass $ m $ rests on a rough incline of angle $ \\theta $ where $ \\tan\\theta > \\mu $, so it would slide on its own. Find the minimum force, applied along the incline, needed to hold it in place.",
+    "solution": "Because $ \\tan\\theta > \\mu $, gravity's pull along the slope beats the maximum friction and the block tends to slide **down**. So friction acts **up** the slope, already at its maximum, and the applied force supplies the shortfall.\n\n**Perpendicular to the incline:**\n\n$ N = mg\\cos\\theta $\n\n$ f_{max} = \\mu mg\\cos\\theta $\n\n**Along the incline, in equilibrium:**\n\nDown-slope pull $ = mg\\sin\\theta $\n\nUp-slope resistance $ = F + \\mu mg\\cos\\theta $\n\nSetting them equal:\n\n$ F_{min} = mg\\sin\\theta - \\mu mg\\cos\\theta = mg(\\sin\\theta - \\mu\\cos\\theta) $\n\n**Check the limiting cases.** If $ \\tan\\theta = \\mu $ exactly, then $ \\sin\\theta = \\mu\\cos\\theta $ and $ F_{min} = 0 $ — the block is on the verge of sliding and needs no help, exactly as expected. As the incline steepens, $ F_{min} $ grows towards $ mg $ for a vertical wall.\n\n**Watch out:** friction is taken at its maximum here *and* pointing up the slope, but only because we established the block's tendency first. If instead you pushed hard enough to make it tend to slide *up*, friction would flip to point down and the required force would be $ mg(\\sin\\theta + \\mu\\cos\\theta) $. Decide the direction of impending motion before you place friction on the diagram."
+   }
+  ]
+ }
+}

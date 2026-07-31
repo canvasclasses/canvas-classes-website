@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 32,
+ "hcv_title": "Electric Current in Conductors",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Current Electricity"
+ },
+ "source_pages": {
+  "worked": "678-686",
+  "obj1": "687-688"
+ },
+ "notes": "11 Objective I items rebuilt. The two thermal-energy-ratio items (series and parallel) are kept as an adjacent pair, since the contrast between them is the teaching point.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch32-current",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Electric Current in Conductors",
+   "intro": "Eleven questions on current, resistance and power. The pair on series versus parallel heating is worth doing together — the answers reverse.",
+   "sections": [
+    {
+     "id": "resistance-and-resistivity",
+     "title": "Resistance, Resistivity and Conduction",
+     "blurb": "One is a property of the object, the other of the material.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch32-m01",
+       "source": "mcq",
+       "prompt": "A metallic resistor is connected across a battery. If the number of collisions of free electrons with the lattice is somehow reduced (say by cooling), the current will",
+       "options": [
+        "decrease",
+        "remain constant",
+        "become zero",
+        "increase"
+       ],
+       "correct_index": 3,
+       "explanation": "Collisions are what impede the electrons' drift, so fewer collisions mean a longer relaxation time $ \\tau $, a higher drift velocity for the same field, and hence a larger current. This is precisely why a metal's resistance falls as it is cooled."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m02",
+       "source": "mcq",
+       "prompt": "Resistors A and B have $ R_A < R_B $, with resistivities $ \\rho_A $ and $ \\rho_B $. Then",
+       "options": [
+        "$ \\rho_A > \\rho_B $",
+        "$ \\rho_A = \\rho_B $",
+        "$ \\rho_A < \\rho_B $",
+        "the information is insufficient"
+       ],
+       "correct_index": 3,
+       "explanation": "Resistance is $ R = \\rho L/A $, so it depends on the geometry as well as the material. A thick short wire of a poor conductor can easily have less resistance than a thin long wire of a good one. Nothing about the resistivities follows from the resistances alone."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m03",
+       "source": "mcq",
+       "prompt": "The **product** of the resistivity and the conductivity of a cylindrical conductor depends on",
+       "options": [
+        "temperature",
+        "the material",
+        "the area of cross-section",
+        "none of these"
+       ],
+       "correct_index": 3,
+       "explanation": "Conductivity is defined as $ \\sigma = 1/\\rho $, so their product is exactly 1 — always, for every material at every temperature. It is a definition, not a physical relationship, so nothing can influence it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m04",
+       "source": "mcq",
+       "prompt": "As the temperature of a metallic resistor rises, the product of its resistivity and conductivity",
+       "options": [
+        "remains constant",
+        "increases",
+        "decreases",
+        "may change either way"
+       ],
+       "correct_index": 0,
+       "explanation": "Both quantities change with temperature — resistivity rises and conductivity falls — but they remain exact reciprocals, so their product stays at 1. This item is the previous one in disguise, and it catches anyone who reasons about the individual quantities without noticing what is being asked."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m05",
+       "source": "mcq",
+       "prompt": "A uniform wire of resistance $ 50\\ \\Omega $ is cut into $ 5 $ equal parts, which are then connected in parallel. The equivalent resistance is",
+       "options": [
+        "$ 10\\ \\Omega $",
+        "$ 2\\ \\Omega $",
+        "$ 250\\ \\Omega $",
+        "$ 6250\\ \\Omega $"
+       ],
+       "correct_index": 1,
+       "explanation": "Each piece has $ 50/5 = 10\\ \\Omega $, and five equal resistors in parallel give $ 10/5 = 2\\ \\Omega $. The two divisions compound, so the result is $ 50/25 = R/n^{2} $ — a useful shortcut for this classic arrangement."
+      }
+     ]
+    },
+    {
+     "id": "current-and-drift",
+     "title": "Current, Drift and the Battery",
+     "blurb": "What actually moves, and which way.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch32-m06",
+       "source": "mcq",
+       "prompt": "In a circuit containing a battery, positive charge **inside** the battery",
+       "options": [
+        "always goes from the positive terminal to the negative",
+        "may go from positive to negative",
+        "always goes from the negative terminal to the positive",
+        "does not move"
+       ],
+       "correct_index": 2,
+       "explanation": "Inside the battery, chemical forces drive charge 'uphill' from the low-potential (negative) terminal to the high-potential (positive) one — that is exactly what a source of emf does. In the external circuit the charge then flows back downhill from positive to negative."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m07",
+       "source": "mcq",
+       "prompt": "A current passes through a resistor. Comparing $ K_1 $, the average kinetic energy of the conduction electrons, with $ K_2 $, that of the metal ions,",
+       "options": [
+        "$ K_1 < K_2 $",
+        "$ K_1 = K_2 $",
+        "$ K_1 > K_2 $",
+        "any of these may occur"
+       ],
+       "correct_index": 2,
+       "explanation": "Electrons continually gain energy from the field between collisions, so they run slightly 'hotter' than the lattice they collide with — and it is this excess, handed over at each collision, that heats the resistor. Without the current the two would be in thermal equilibrium and equal."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m08",
+       "source": "mcq",
+       "prompt": "A resistor $ R $ is connected to an **ideal** battery. If $ R $ is decreased, the power dissipated in it",
+       "options": [
+        "decreases",
+        "remains unchanged",
+        "increases",
+        "first rises then falls"
+       ],
+       "correct_index": 2,
+       "explanation": "An ideal battery holds $ V $ fixed, so $ P = V^{2}/R $ rises as $ R $ falls. Using $ P = I^{2}R $ and concluding that smaller $ R $ means less power is the trap — $ I $ is not fixed here, and it rises faster than $ R $ falls. Always use the form whose quantities are actually constant."
+      }
+     ]
+    },
+    {
+     "id": "power-and-heating",
+     "title": "Power and Heating",
+     "blurb": "The same two resistors, opposite answers in series and in parallel.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch32-m09",
+       "source": "mcq",
+       "prompt": "Resistors $ R $ and $ 2R $ are connected in **series**. The thermal energies developed in them are in the ratio",
+       "options": [
+        "$ 1 : 2 $",
+        "$ 2 : 1 $",
+        "$ 1 : 4 $",
+        "$ 4 : 1 $"
+       ],
+       "correct_index": 0,
+       "explanation": "In series the *current* is common, so use $ P = I^{2}R $: the power is proportional to $ R $, giving $ 1 : 2 $. The larger resistance dissipates more."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m10",
+       "source": "mcq",
+       "prompt": "The same resistors $ R $ and $ 2R $ are connected in **parallel**. The thermal energies developed are in the ratio",
+       "options": [
+        "$ 1 : 2 $",
+        "$ 1 : 4 $",
+        "$ 4 : 1 $",
+        "$ 2 : 1 $"
+       ],
+       "correct_index": 3,
+       "explanation": "In parallel the *voltage* is common, so use $ P = V^{2}/R $: the power is inversely proportional to $ R $, giving $ 2 : 1 $. The answer has reversed compared with the series case — which is why the two items belong together. Choosing the right power formula is the whole skill."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch32-m11",
+       "source": "mcq",
+       "prompt": "The drift speed of electrons in a copper wire carrying an ordinary current is of the order of",
+       "options": [
+        "$ 10^{-4}\\ \\text{m s}^{-1} $",
+        "$ 10^{2}\\ \\text{m s}^{-1} $",
+        "$ 10^{6}\\ \\text{m s}^{-1} $",
+        "$ 3 \\times 10^{8}\\ \\text{m s}^{-1} $"
+       ],
+       "correct_index": 0,
+       "explanation": "Drift speeds are astonishingly slow — a fraction of a millimetre per second — because the free-electron density is enormous. A lamp lights instantly not because electrons race along the wire but because the *electric field* is established at nearly light speed, setting electrons everywhere in motion at once."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch32-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Resistance from resistivity and geometry",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A copper wire of length $ 2 $ m and diameter $ 0.5 $ mm carries a current. Find its resistance, given $ \\rho_{Cu} = 1.7 \\times 10^{-8}\\ \\Omega\\,\\text{m} $.",
+    "solution": "**Cross-sectional area:**\n\n$ A = \\pi r^{2} = \\pi (0.25 \\times 10^{-3})^{2} = \\pi(6.25 \\times 10^{-8}) = 1.96 \\times 10^{-7}\\ \\text{m}^{2} $\n\n**Resistance:**\n\n$ R = \\frac{\\rho L}{A} = \\frac{(1.7 \\times 10^{-8})(2)}{1.96 \\times 10^{-7}} = \\frac{3.4 \\times 10^{-8}}{1.96 \\times 10^{-7}} = 0.173\\ \\Omega $\n\n**Watch the radius.** The *diameter* is $ 0.5 $ mm, so the radius is $ 0.25 $ mm. Using the diameter as the radius would quarter the resistance — the single most common error in this calculation.\n\n**Why copper is used for wiring.** At $ 0.17\\ \\Omega $ for two metres of thin wire, the loss is negligible compared with the appliance it feeds. Only silver is a better conductor, and only marginally — at many times the cost."
+   },
+   {
+    "id": "we-ch32-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Drift velocity",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A copper wire of cross-section $ 1\\ \\text{mm}^{2} $ carries $ 2 $ A. Find the drift velocity of the electrons, taking the free-electron density as $ 8.5 \\times 10^{28}\\ \\text{m}^{-3} $.",
+    "solution": "$ I = nAev_d $\n\n$ v_d = \\frac{I}{nAe} = \\frac{2}{(8.5 \\times 10^{28})(1 \\times 10^{-6})(1.6 \\times 10^{-19})} $\n\n**Denominator:** $ (8.5 \\times 10^{28})(10^{-6})(1.6 \\times 10^{-19}) = 1.36 \\times 10^{4} $\n\n$ v_d = \\frac{2}{1.36 \\times 10^{4}} = 1.5 \\times 10^{-4}\\ \\text{m s}^{-1} $\n\nAbout $ 0.15 $ mm per second — a single electron would take nearly two hours to travel a metre.\n\n**So why does a lamp light instantly?** Because the *field* propagates through the wire at close to light speed, and every electron along the whole length starts drifting almost simultaneously. The water-in-a-full-pipe analogy is apt: open the tap and water emerges at once, though no individual molecule has crossed the pipe.\n\n**Contrast with thermal speed.** The electrons' random thermal motion is around $ 10^{5}\\ \\text{m s}^{-1} $ — a billion times the drift speed. The current is a barely perceptible bias superimposed on furious random motion."
+   },
+   {
+    "id": "we-ch32-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Series and parallel resistors",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Resistors of $ 4\\ \\Omega $, $ 6\\ \\Omega $ and $ 12\\ \\Omega $ are connected (a) in series and (b) in parallel across a $ 12 $ V ideal battery. Find the equivalent resistance and total current in each case.",
+    "solution": "**(a) In series:**\n\n$ R_{eq} = 4 + 6 + 12 = 22\\ \\Omega $\n\n$ I = \\frac{12}{22} = 0.545\\ \\text{A} $\n\nThe same current passes through all three.\n\n**(b) In parallel:**\n\n$ \\frac{1}{R_{eq}} = \\frac{1}{4} + \\frac{1}{6} + \\frac{1}{12} = \\frac{3 + 2 + 1}{12} = \\frac{6}{12} = \\frac{1}{2} $\n\n$ R_{eq} = 2\\ \\Omega $, so $ I = \\frac{12}{2} = 6\\ \\text{A} $\n\n**Two checks worth habitual use.** Series must exceed the largest member ($ 22 > 12 $ ✓); parallel must fall below the smallest ($ 2 < 4 $ ✓).\n\n**Note the eleven-fold difference in current** between the two arrangements of exactly the same components. This is why household appliances are wired in parallel — each gets the full mains voltage and can be switched independently, and one failing does not break the circuit for the rest."
+   },
+   {
+    "id": "we-ch32-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Internal resistance and terminal voltage",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A battery of emf $ 12 $ V and internal resistance $ 0.5\\ \\Omega $ drives a $ 5.5\\ \\Omega $ resistor. Find the current, the terminal voltage and the power wasted inside the battery.",
+    "solution": "**Current**, with the internal resistance in series:\n\n$ I = \\frac{\\varepsilon}{R + r} = \\frac{12}{5.5 + 0.5} = \\frac{12}{6} = 2\\ \\text{A} $\n\n**Terminal voltage:**\n\n$ V = \\varepsilon - Ir = 12 - 2(0.5) = 11\\ \\text{V} $\n\n**Power wasted internally:**\n\n$ P_r = I^{2}r = (4)(0.5) = 2\\ \\text{W} $\n\n(and $ 22 $ W delivered to the external resistor).\n\n**Why the terminal voltage is less than the emf.** Some of the emf is spent driving current through the battery's own resistance, and that share appears as heat inside the cell rather than useful output. Only on open circuit, with $ I = 0 $, does the terminal voltage equal the emf.\n\n**Why old batteries dim a torch.** Internal resistance rises as a cell ages, so more of the emf is lost internally and less reaches the bulb — even though the emf itself has barely changed. Measuring a battery with a voltmeter alone (drawing almost no current) can therefore be misleading."
+   },
+   {
+    "id": "we-ch32-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Maximum power transfer",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A battery of emf $ \\varepsilon $ and internal resistance $ r $ drives an external resistance $ R $. Show that the power delivered to $ R $ is greatest when $ R = r $, and find that maximum power.",
+    "solution": "**Power in the external resistor:**\n\n$ P = I^{2}R = \\frac{\\varepsilon^{2}R}{(R+r)^{2}} $\n\n**Maximise.** Differentiate with respect to $ R $ and set to zero:\n\n$ \\frac{dP}{dR} = \\varepsilon^{2}\\cdot\\frac{(R+r)^{2} - R \\cdot 2(R+r)}{(R+r)^{4}} = \\varepsilon^{2}\\cdot\\frac{(R+r) - 2R}{(R+r)^{3}} $\n\nThis vanishes when $ r - R = 0 $, i.e. $ R = r $.\n\n**Maximum power:**\n\n$ P_{max} = \\frac{\\varepsilon^{2}r}{(2r)^{2}} = \\frac{\\varepsilon^{2}}{4r} $\n\n**The efficiency at that point is only 50%.** Equal resistances mean equal power dissipated inside and outside, so half the energy is wasted heating the battery.\n\n**Why this matters in practice — and where it does not.** Impedance matching is what you want in signal circuits, where getting the most power *out* is the goal. In power distribution the opposite holds: generators are built with the smallest possible internal resistance so efficiency approaches 100%, and nobody matches loads to sources."
+   },
+   {
+    "id": "we-ch32-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Kirchhoff's laws on a two-loop circuit",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Two batteries of $ 10 $ V and $ 4 $ V, with internal resistances $ 1\\ \\Omega $ and $ 1\\ \\Omega $, are connected in parallel across a $ 2\\ \\Omega $ resistor, both driving current the same way. Find the current through the $ 2\\ \\Omega $ resistor.",
+    "solution": "Let $ I_1 $ and $ I_2 $ be the currents from the two batteries, so the resistor carries $ I_1 + I_2 $.\n\n**Loop with the $ 10 $ V battery:**\n\n$ 10 = 1(I_1) + 2(I_1 + I_2) $ … (i)\n\n**Loop with the $ 4 $ V battery:**\n\n$ 4 = 1(I_2) + 2(I_1 + I_2) $ … (ii)\n\n**Expand:**\n\n(i) $ 10 = 3I_1 + 2I_2 $\n\n(ii) $ 4 = 2I_1 + 3I_2 $\n\n**Solve.** Multiply (i) by 3 and (ii) by 2:\n\n$ 30 = 9I_1 + 6I_2 $\n\n$ 8 = 4I_1 + 6I_2 $\n\nSubtract: $ 22 = 5I_1 \\Rightarrow I_1 = 4.4\\ \\text{A} $\n\nFrom (ii): $ 3I_2 = 4 - 8.8 = -4.8 \\Rightarrow I_2 = -1.6\\ \\text{A} $\n\n**Current through the resistor:** $ 4.4 - 1.6 = 2.8\\ \\text{A} $\n\n**Read the negative sign.** $ I_2 $ came out negative, meaning the $ 4 $ V battery is being *charged* — the stronger battery drives current backwards through it. That is a genuine physical result, not an error, and it is exactly what happens when you parallel a fresh cell with a weak one.\n\n**The habit to build:** assume directions freely, and let the signs tell you the truth afterwards."
+   },
+   {
+    "id": "we-ch32-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Temperature dependence of resistance",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A platinum wire has resistance $ 10\\ \\Omega $ at $ 0 $ °C and $ 13.9\\ \\Omega $ at $ 100 $ °C. Find its temperature coefficient, and the temperature at which its resistance is $ 15\\ \\Omega $.",
+    "solution": "**Temperature coefficient:**\n\n$ R_t = R_0(1 + \\alpha t) $\n\n$ 13.9 = 10(1 + 100\\alpha) \\Rightarrow 1.39 = 1 + 100\\alpha $\n\n$ \\alpha = 3.9 \\times 10^{-3}\\ \\text{°C}^{-1} $\n\n**Temperature for $ 15\\ \\Omega $:**\n\n$ 15 = 10(1 + 3.9 \\times 10^{-3}t) \\Rightarrow 1.5 = 1 + 3.9 \\times 10^{-3}t $\n\n$ t = \\frac{0.5}{3.9 \\times 10^{-3}} = 128\\ \\text{°C} $\n\n**Why platinum specifically.** Its resistance varies with temperature in a highly linear and reproducible way over a wide range, which is what makes a platinum resistance thermometer a precision instrument — accurate to a few thousandths of a degree.\n\n**Why metals behave this way.** Heating makes the lattice ions vibrate more vigorously, so electrons collide more often, the relaxation time falls and the resistance rises. Semiconductors do the opposite — heat liberates more carriers, so their resistance *falls*, which is the basis of the thermistor."
+   },
+   {
+    "id": "we-ch32-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Heating effect and choice of power formula",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A heater rated $ 1000 $ W at $ 220 $ V is used on a $ 110 $ V supply. Find the power it actually consumes, and the time it would then take to boil $ 1 $ kg of water from $ 20 $ °C. Take $ c_w = 4200\\ \\text{J kg}^{-1}\\text{K}^{-1} $.",
+    "solution": "**Find the resistance from the rating:**\n\n$ R = \\frac{V^{2}}{P} = \\frac{(220)^{2}}{1000} = 48.4\\ \\Omega $\n\n**Power on $ 110 $ V**, with $ R $ unchanged:\n\n$ P' = \\frac{V'^{2}}{R} = \\frac{(110)^{2}}{48.4} = \\frac{12\\,100}{48.4} = 250\\ \\text{W} $\n\n**Only a quarter of the rated power** — halving the voltage quarters the power, since $ P \\propto V^{2} $.\n\n**Time to boil:**\n\n$ Q = mc\\Delta T = (1)(4200)(80) = 336\\,000\\ \\text{J} $\n\n$ t = \\frac{Q}{P'} = \\frac{336\\,000}{250} = 1344\\ \\text{s} \\approx 22\\ \\text{minutes} $\n\nAt full rating it would take about $ 5.6 $ minutes.\n\n**Why $ R $ is the quantity to carry over.** The heater's resistance is a physical property of its element; its 'power rating' is only true at the stated voltage. Whenever the supply changes, find $ R $ first and recompute the power from it."
+   }
+  ]
+ }
+}

@@ -1,0 +1,260 @@
+{
+ "hcv_chapter": 25,
+ "hcv_title": "Calorimetry",
+ "ncert": {
+  "class": 11,
+  "chapter_hint": "Thermal Properties of Matter (calorimetry, latent heat)"
+ },
+ "source_pages": {
+  "worked": "535-536",
+  "obj1": "537"
+ },
+ "notes": "Short source chapter — 7 Objective I items, all rebuilt, topped up to 10 with latent-heat and method-of-mixtures items so the bank covers the chapter's numerical work as well as its definitions.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch25-calorimetry",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — Calorimetry",
+   "intro": "Ten questions on measuring heat. The distinction that carries most of them: heat is energy in transit, temperature is not.",
+   "sections": [
+    {
+     "id": "heat-and-specific-heat",
+     "title": "Heat, Temperature and Specific Heat",
+     "blurb": "Two quantities that are constantly confused, and never interchangeable.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch25-m01",
+       "source": "mcq",
+       "prompt": "The specific heat capacity of a body depends on",
+       "options": [
+        "the heat given to it",
+        "the material of the body",
+        "the temperature rise produced",
+        "the mass of the body"
+       ],
+       "correct_index": 1,
+       "explanation": "Specific heat capacity is the heat needed *per unit mass per degree*, so both the mass and the temperature rise have already been divided out. What remains is a property of the substance alone. The *heat capacity* of a body does depend on its mass, but the specific heat capacity does not."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m02",
+       "source": "mcq",
+       "prompt": "The water equivalent of a body is measured in",
+       "options": [
+        "calorie",
+        "kelvin",
+        "$ \\text{m}^{3} $",
+        "kg"
+       ],
+       "correct_index": 3,
+       "explanation": "Water equivalent is the mass of water that would have the same heat capacity as the body, so it is a mass and is measured in kilograms. It is a convenient device: a calorimeter's water equivalent can simply be added to the mass of water inside it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m03",
+       "source": "mcq",
+       "prompt": "Which pair of quantities may be expressed in the **same** unit?",
+       "options": [
+        "Heat and temperature",
+        "Temperature and amount of substance",
+        "Specific heat and heat",
+        "Heat and work"
+       ],
+       "correct_index": 3,
+       "explanation": "Heat and work are both transfers of energy, so both are measured in joules. Temperature is an intensive property with its own unit, and specific heat carries per-mass-per-degree factors that heat does not. Recognising heat and work as the same kind of quantity is exactly what the first law rests on."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m04",
+       "source": "mcq",
+       "prompt": "Which pair are units of the **same** physical quantity?",
+       "options": [
+        "Kelvin and joule",
+        "Joule and calorie",
+        "Kelvin and calorie",
+        "Newton and calorie"
+       ],
+       "correct_index": 1,
+       "explanation": "Both the joule and the calorie measure energy, related by $ 1\\ \\text{cal} = 4.186 $ J. The calorie is simply an older unit that survived in the heat literature, and the number 4.186 is the mechanical equivalent of heat."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m05",
+       "source": "mcq",
+       "prompt": "The mechanical equivalent of heat",
+       "options": [
+        "is dimensionless",
+        "has the dimensions of heat",
+        "has the dimensions of work",
+        "has the dimensions of energy"
+       ],
+       "correct_index": 0,
+       "explanation": "It is the number of joules per calorie — a ratio of two energies, so the dimensions cancel entirely. Its whole significance is historical: it demonstrated that heat is not a separate substance but simply energy, measured in inconveniently different units."
+      }
+     ]
+    },
+    {
+     "id": "mixing-and-conservation",
+     "title": "Mixtures and What Is Conserved",
+     "blurb": "Energy is conserved in a calorimeter; temperature is not.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch25-m06",
+       "source": "mcq",
+       "prompt": "When a hot liquid is mixed with a cold one, the temperature of the mixture",
+       "options": [
+        "is undefined for a while and then becomes nearly constant",
+        "first decreases and then becomes constant",
+        "first increases and then becomes constant",
+        "increases continuously"
+       ],
+       "correct_index": 0,
+       "explanation": "Immediately after mixing, different parts of the liquid are at different temperatures, so there is no single temperature to speak of — the system is not in thermal equilibrium. Only once conduction and convection have evened things out does a well-defined, steady temperature exist."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m07",
+       "source": "mcq",
+       "prompt": "Two bodies at different temperatures are mixed in a calorimeter. The quantity that remains conserved is",
+       "options": [
+        "the total internal energy of the two bodies",
+        "the sum of the two temperatures",
+        "the total heat of the two bodies",
+        "the internal energy of each body separately"
+       ],
+       "correct_index": 0,
+       "explanation": "In an insulated calorimeter no energy leaves, so the *total* internal energy is fixed — one body's loss is the other's gain. Temperatures do not add meaningfully, and 'total heat' is not a property a body possesses: heat is energy in transit, not something stored."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m08",
+       "source": "mcq",
+       "prompt": "Ice at $ 0 $ °C is added to water at $ 0 $ °C in an insulated flask. Then",
+       "options": [
+        "some ice melts and the temperature falls",
+        "some water freezes and the temperature rises",
+        "nothing happens — the system is already in equilibrium",
+        "all the ice melts at constant temperature"
+       ],
+       "correct_index": 2,
+       "explanation": "Both are already at the same temperature, so there is no temperature difference to drive any net heat flow. Melting would require latent heat that nothing can supply, and freezing would release latent heat that nothing can absorb. The mixture simply sits there."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m09",
+       "source": "mcq",
+       "prompt": "Steam at $ 100 $ °C is far more effective at scalding than water at $ 100 $ °C because",
+       "options": [
+        "steam is hotter than boiling water",
+        "steam has a higher specific heat capacity",
+        "steam releases its large latent heat of vaporisation on condensing",
+        "steam conducts heat better"
+       ],
+       "correct_index": 2,
+       "explanation": "Both are at the same temperature, so it is not a temperature effect. Condensing steam releases about $ 2260\\ \\text{kJ kg}^{-1} $ of latent heat before it even begins to cool — some five times the energy released by boiling water cooling all the way to $ 0 $ °C."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch25-m10",
+       "source": "mcq",
+       "prompt": "Equal masses of water and oil (specific heat half that of water) absorb the same amount of heat. Comparing their temperature rises,",
+       "options": [
+        "the oil's rise is half the water's",
+        "the oil's rise is twice the water's",
+        "both rise equally",
+        "the comparison needs their densities"
+       ],
+       "correct_index": 1,
+       "explanation": "From $ Q = mc\\Delta T $ with $ Q $ and $ m $ fixed, $ \\Delta T \\propto 1/c $. Halving the specific heat doubles the temperature rise. Water's unusually high specific heat is exactly why it is used as a coolant and why coastal climates are so much milder than inland ones."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch25-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Method of mixtures",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "$ 200 $ g of water at $ 80 $ °C is mixed with $ 300 $ g of water at $ 20 $ °C. Find the final temperature, ignoring the calorimeter.",
+    "solution": "Heat lost by the hot water equals heat gained by the cold water.\n\n$ m_1 c (80 - T) = m_2 c (T - 20) $\n\nThe specific heat $ c $ is the same on both sides and cancels:\n\n$ 200(80 - T) = 300(T - 20) $\n\n$ 16\\,000 - 200T = 300T - 6000 $\n\n$ 22\\,000 = 500T \\Rightarrow T = 44\\ \\text{°C} $\n\n**Check it against intuition.** The answer must lie between $ 20 $ and $ 80 $ °C, and nearer the $ 20 $ °C water since there is more of it. Indeed $ 44 $ is closer to $ 20 $ than to $ 80 $ ✓\n\n**The shortcut for same-substance mixing.** The final temperature is the mass-weighted average:\n\n$ T = \\frac{200(80) + 300(20)}{500} = \\frac{22\\,000}{500} = 44\\ \\text{°C} $\n\nThis works only when the specific heats match — otherwise weight by $ mc $ rather than by $ m $."
+   },
+   {
+    "id": "we-ch25-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Specific heat by the method of mixtures",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 100 $ g metal block at $ 100 $ °C is dropped into $ 200 $ g of water at $ 25 $ °C. The final temperature is $ 30 $ °C. Find the metal's specific heat. Take $ c_w = 4200\\ \\text{J kg}^{-1}\\text{K}^{-1} $.",
+    "solution": "**Heat gained by the water:**\n\n$ Q = m_w c_w \\Delta T = 0.200 \\times 4200 \\times (30 - 25) = 4200\\ \\text{J} $\n\n**Heat lost by the metal**, cooling from $ 100 $ °C to $ 30 $ °C:\n\n$ Q = m_m c_m \\Delta T = 0.100 \\times c_m \\times 70 = 7 c_m $\n\n**Equate:**\n\n$ 7 c_m = 4200 \\Rightarrow c_m = 600\\ \\text{J kg}^{-1}\\text{K}^{-1} $\n\n**Note the temperature differences.** The water rose by only $ 5 $ °C while the metal fell by $ 70 $ °C, yet they exchanged the same energy. That is water's high specific heat at work.\n\n**What has been neglected.** A real calorimeter also absorbs heat, so the true $ c_m $ would be slightly smaller. Including it means replacing $ m_w c_w $ with $ (m_w + w)c_w $, where $ w $ is the calorimeter's water equivalent — which is precisely what water equivalent is for."
+   },
+   {
+    "id": "we-ch25-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Latent heat of fusion",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "How much heat is needed to convert $ 50 $ g of ice at $ -10 $ °C into water at $ 20 $ °C? Take $ c_{ice} = 2100 $, $ c_w = 4200\\ \\text{J kg}^{-1}\\text{K}^{-1} $, $ L_f = 3.36 \\times 10^{5}\\ \\text{J kg}^{-1} $.",
+    "solution": "Three separate stages, and the middle one happens at constant temperature.\n\n**Stage 1 — warm the ice from $ -10 $ °C to $ 0 $ °C:**\n\n$ Q_1 = 0.050 \\times 2100 \\times 10 = 1050\\ \\text{J} $\n\n**Stage 2 — melt the ice at $ 0 $ °C:**\n\n$ Q_2 = mL_f = 0.050 \\times 3.36 \\times 10^{5} = 16\\,800\\ \\text{J} $\n\n**Stage 3 — warm the water from $ 0 $ °C to $ 20 $ °C:**\n\n$ Q_3 = 0.050 \\times 4200 \\times 20 = 4200\\ \\text{J} $\n\n**Total:**\n\n$ Q = 1050 + 16\\,800 + 4200 = 22\\,050\\ \\text{J} \\approx 22\\ \\text{kJ} $\n\n**Where the energy goes.** Melting alone accounts for 76% of the total — more than warming the ice and the water put together. Latent heat dominates any calculation involving a phase change.\n\n**Watch out:** never apply $ mc\\Delta T $ across a phase change. During melting the temperature does not move, so $ \\Delta T = 0 $ and the formula would return zero — missing the largest term entirely."
+   },
+   {
+    "id": "we-ch25-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Ice added to warm water",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "$ 20 $ g of ice at $ 0 $ °C is added to $ 200 $ g of water at $ 40 $ °C. Find the final temperature. Take $ L_f = 3.36 \\times 10^{5}\\ \\text{J kg}^{-1} $, $ c_w = 4200\\ \\text{J kg}^{-1}\\text{K}^{-1} $.",
+    "solution": "**First check whether all the ice can melt.**\n\nHeat needed to melt all the ice:\n\n$ Q_{melt} = 0.020 \\times 3.36 \\times 10^{5} = 6720\\ \\text{J} $\n\nHeat available from the water cooling to $ 0 $ °C:\n\n$ Q_{avail} = 0.200 \\times 4200 \\times 40 = 33\\,600\\ \\text{J} $\n\nSince $ 33\\,600 > 6720 $, **all the ice melts** and the mixture ends above $ 0 $ °C.\n\n**Now balance the energies.** Let the final temperature be $ T $. The melted ice (now $ 20 $ g of water at $ 0 $ °C) warms to $ T $:\n\n$ 0.200 \\times 4200 \\times (40 - T) = 6720 + 0.020 \\times 4200 \\times T $\n\n$ 33\\,600 - 840T = 6720 + 84T $\n\n$ 26\\,880 = 924T \\Rightarrow T = 29.1\\ \\text{°C} $\n\n**Why the preliminary check matters.** Had the ice been enough to absorb all the available heat, the answer would be $ 0 $ °C with some ice left unmelted, and the equation above would have returned a negative temperature — a signal that the assumption was wrong. Always test the phase change before writing the balance."
+   },
+   {
+    "id": "we-ch25-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Water equivalent of a calorimeter",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A copper calorimeter of mass $ 150 $ g has a specific heat of $ 390\\ \\text{J kg}^{-1}\\text{K}^{-1} $. Find its water equivalent, and explain why the idea is useful.",
+    "solution": "Water equivalent $ w $ is the mass of water having the same heat capacity:\n\n$ w c_w = m c $\n\n$ w = \\frac{m c}{c_w} = \\frac{0.150 \\times 390}{4200} = 0.0139\\ \\text{kg} = 13.9\\ \\text{g} $\n\n**Why it simplifies calculations.** In any mixing problem, the calorimeter can now be treated as an extra $ 13.9 $ g of water. If it holds $ 200 $ g of water, you simply use $ 213.9 $ g and forget the copper entirely — one term instead of two.\n\n**A design lesson hidden in the number.** Copper's low specific heat means a fairly heavy calorimeter behaves like only $ 14 $ g of water, so its influence on the result is small. That is precisely why calorimeters are made of copper rather than, say, a material with a high specific heat — the vessel should intrude on the measurement as little as possible."
+   },
+   {
+    "id": "we-ch25-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Steam condensing into water",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Steam at $ 100 $ °C is passed into $ 500 $ g of water at $ 20 $ °C until the temperature reaches $ 60 $ °C. Find the mass of steam condensed. Take $ L_v = 2.26 \\times 10^{6}\\ \\text{J kg}^{-1} $, $ c_w = 4200\\ \\text{J kg}^{-1}\\text{K}^{-1} $.",
+    "solution": "**Heat gained by the original water:**\n\n$ Q = 0.500 \\times 4200 \\times (60 - 20) = 84\\,000\\ \\text{J} $\n\n**Heat supplied by the steam**, in two stages: condensing at $ 100 $ °C, then cooling as water from $ 100 $ °C to $ 60 $ °C. For a mass $ m $:\n\n$ Q = mL_v + m c_w (100 - 60) = m(2.26 \\times 10^{6}) + m(4200)(40) $\n\n$ = m(2.26 \\times 10^{6} + 1.68 \\times 10^{5}) = m(2.428 \\times 10^{6}) $\n\n**Equate:**\n\n$ m = \\frac{84\\,000}{2.428 \\times 10^{6}} = 0.0346\\ \\text{kg} = 34.6\\ \\text{g} $\n\n**Note how little steam is needed.** Just $ 35 $ g heats half a kilogram of water through $ 40 $ °C, because the latent heat term contributes 93% of the energy supplied.\n\n**The practical consequence.** This is why steam is used to heat industrial vessels and why a steam burn is so much worse than a hot-water burn: an enormous amount of energy is released the moment the steam touches something cool enough to condense it."
+   },
+   {
+    "id": "we-ch25-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Heating curve of ice to steam",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Sketch and account for the shape of the temperature-time graph as $ 1 $ kg of ice at $ -20 $ °C is heated steadily until it becomes steam at $ 120 $ °C.",
+    "solution": "The graph consists of five stages — three sloping and two flat.\n\n**1. Ice warms, $ -20 $ to $ 0 $ °C.** $ Q = 1 \\times 2100 \\times 20 = 42 $ kJ. A steep rise, since ice has a low specific heat.\n\n**2. Ice melts at $ 0 $ °C.** $ Q = 3.36 \\times 10^{5} $ J $ = 336 $ kJ. **Flat** — temperature does not budge while the energy breaks the crystal lattice.\n\n**3. Water warms, $ 0 $ to $ 100 $ °C.** $ Q = 1 \\times 4200 \\times 100 = 420 $ kJ. A gentler slope than stage 1, because water's specific heat is double ice's.\n\n**4. Water boils at $ 100 $ °C.** $ Q = 2.26 \\times 10^{6} $ J $ = 2260 $ kJ. **Flat, and very long** — by far the largest step.\n\n**5. Steam warms, $ 100 $ to $ 120 $ °C.** $ Q = 1 \\times 2000 \\times 20 = 40 $ kJ. Steep again.\n\n**Total: about $ 3098 $ kJ**, of which the two flat stages account for $ 2596 $ kJ — 84% of all the energy.\n\n**What the flat regions mean physically.** During a phase change the added energy goes into separating molecules rather than speeding them up, so the average kinetic energy — and hence the temperature — stays put. Boiling takes nearly seven times the energy of melting because the molecules must be freed completely, not merely unlocked from a lattice."
+   },
+   {
+    "id": "we-ch25-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Heat produced by friction",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A $ 2 $ kg block of ice at $ 0 $ °C slides $ 20 $ m along a rough surface with $ \\mu = 0.3 $ and comes to rest. Assuming all the heat goes into the ice, how much melts? Take $ g = 10\\ \\text{m s}^{-2} $, $ L_f = 3.36 \\times 10^{5}\\ \\text{J kg}^{-1} $.",
+    "solution": "**Work done against friction:**\n\n$ W = \\mu m g d = 0.3 \\times 2 \\times 10 \\times 20 = 120\\ \\text{J} $\n\nAll of it appears as heat at the sliding surface.\n\n**Mass melted:**\n\n$ m = \\frac{Q}{L_f} = \\frac{120}{3.36 \\times 10^{5}} = 3.57 \\times 10^{-4}\\ \\text{kg} = 0.36\\ \\text{g} $\n\n**A strikingly small amount.** Sliding a two-kilogram block twenty metres melts about a third of a gram — latent heat is simply enormous compared with the mechanical energy available in everyday situations.\n\n**The historical point.** Experiments of exactly this kind — mechanical work producing a measurable quantity of heat — established that heat is a form of energy rather than a fluid called caloric. Joule's paddle-wheel experiment is the famous version, and it is where the mechanical equivalent of heat came from."
+   }
+  ]
+ }
+}

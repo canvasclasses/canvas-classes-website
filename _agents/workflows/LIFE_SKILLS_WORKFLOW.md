@@ -480,25 +480,101 @@ compounding math — same spacing/escaping rules as science pages.
 
 ---
 
-## 10. Pilot Blueprint — Focus Module (Class 9, Chapter 1)
+## 10. Focus Module — Compact 3-Act Blueprint (Class 9, Chapter 1)
 
-10 pages. Every claim in beat 3 must clear §7; every verse must clear §6.
+> **Rewritten 2026-07-23 (founder redesign).** The original build (v1, below the
+> line) was 10 pages that were **all training** — a well-built gym with no
+> diagnosis. A 14-year-old who isn't yet convinced anything is wrong has no
+> reason to train. The redesign puts a **diagnosis act first**, keeps the whole
+> chapter **compact and action-first** (a remedy the student abandons halfway is
+> worse than the disease), and makes **every page open with an interactive** —
+> the stat is *discovered*, never printed. Net length: **10 → 9 content pages**
+> (the cover/opener page stays). Every claim still clears §7; verses clear §6.
 
-| # | Slug | Page | Practice (beat 4) |
+**The arc runs alarm → understanding → calm mastery**, and the visual register
+shifts under it (Act I cold/cinematic · Act II schematic/blueprint · Act III the
+existing warm painterly). The register shift is pedagogy, not decoration.
+
+**The motivational spine — the Time Paradox (founder, 2026-07-23):** students
+feel time-poor even with search engines and instant answers, yet get *less* done.
+The reframe the whole chapter sells: **the day didn't get shorter — deep-focus
+capacity did.** Sitting 3 hours ≠ 3 hours of work; whoever can focus deeply does
+the same work in half the time and **wins the rest back for sport and creativity,
+while scoring higher.** This is the payoff, front-loaded on page 1.
+
+### Act I · The Mirror (diagnosis, almost no prose) — pages 1–3
+
+| # | Slug | Opens with (the interactive is first) | Then |
 |---|---|---|---|
-| 1 | `your-attention-is-a-superpower` | The module opener + **baseline check**: a 3-minute focus task + 5-question self-report (this is the "pre" measurement) | `guided_practice[observation]` — 60-second single-object attention test |
-| 2 | `the-spotlight-in-your-head` | Attention as a spotlight: one beam, aim it or lose it. Selective attention, what "paying" attention costs | `guided_practice[observation]` — spotlight drill: 90 seconds on one sound |
-| 3 | `why-reels-feel-impossible-to-stop` | The variable-reward loop, plainly: slot machines, notification pings, infinite scroll. The honest mechanism, zero moralising | `guided_practice[observation]` — urge-surfing: notice the pull to check the phone for 2 minutes without acting |
-| 4 | `the-multitasking-myth` | Task-switching cost + attention residue. Why "studying with WhatsApp open" is studying at half speed | `guided_practice[focus_timer]` — 10-minute single-task sprint |
-| 5 | `dharana-the-original-attention-training` | The Vedic core page: dhāraṇā → dhyāna as reps for the mind (Yoga-sūtra 3.1–3.2, Gita 6.35 — Krishna agrees the mind is restless, *and* says practice tames it) | `guided_practice[meditation]` — 3-minute breath-counting dhāraṇā |
-| 6 | `breath-the-remote-control` | Slow exhale → calm body → steadier attention. The physiological sigh / 4-4-6 pattern | `guided_practice[breathing]` — 4-4-6 pacer, 6 cycles |
-| 7 | `design-your-environment` | Out of sight = out of mind is real (phone-in-another-room effect); friction design for your desk | `guided_practice[custom]` — 5-step desk + phone setup, right now |
-| 8 | `the-25-minute-sprint` | The focus sprint protocol (work/break rhythm); what to do when the urge to switch hits mid-sprint | `guided_practice[focus_timer]` — one real 25-minute sprint |
-| 9 | `sleep-the-night-shift-of-memory` | Sleep as when learning is written to storage; late-night scrolling as double theft (sleep + next-day attention) | `guided_practice[custom]` — tonight's wind-down: 3 steps |
-| 10 | `your-7-day-focus-challenge` | Module closer + **post-check** (same task + self-report as page 1 → the student sees their own delta) | **`habit_tracker`** — the 7-Day Focus Challenge (daily sprint, phone away) |
+| 1 | `the-time-paradox-and-your-flame` | **`simulation[focus-time-paradox]`** — set your sitting hours + honest focus-break rate → see real deep-work time + hours you'd win back. Then the **`focus_game`** flame baseline + **`estimate_reveal`** (phone touches/day). | reflection · "one act of noticing" cue |
+| 2 | `the-other-half-of-the-post` | **`comparison_feed`** — scroll a highlight reel, feel the mood meter dip, flip each post to its behind-the-scenes reality (self-image). Rolls into an **`interactive_image`** feed-distortion scene (worldview). | actionable: one unfollow tonight |
+| 3 | `fragmented-not-broken` | **`simulation[shrinking-window]`** — drag 2004→today, watch focus collapse to 47s (why *everyone* is like this now). Then a **`guided_reveal`** ADHD walkthrough — define-don't-diagnose, paced, no right/wrong framing (classify_exercise was rejected: its correctness/green-red UI is wrong for a sensitive self-check). | pivot line into Act II |
 
-Every page: `reflection_journal` at beat 5. Pages 1 and 10 are the measurement
-bookends (Phase 5 of the parent plan starts here, cheaply).
+### Act II · The Machine (mechanism, exposed) — pages 4–5
+
+| # | Slug | Opens with | Then |
+|---|---|---|---|
+| 4 | `the-spotlight-and-the-lever` | selective-attention **`interactive_image`** (beam, not bucket) → **`simulation[variable-reward-lever]`** — pull two machines, discover variable reward yourself. | inline_quiz · reflection |
+| 5 | `the-notification-autopsy` | the existing **`attention_xray`** flip-cards + a 20-second **`self_experiment`** multitasking check. The machine fully exposed → empowering handoff to the toolkit. | reflection |
+
+### Act III · The Training (action-first, theory trimmed to one line per tool) — pages 6–9
+
+| # | Slug | Opens with (practice) | Notes |
+|---|---|---|---|
+| 6 | `two-resets-breath-and-dharana` | `guided_practice[breathing]` 4-4-6 + `guided_practice[meditation]` breath-counting dhāraṇā | merges v1 pages 5+6; Yoga-sūtra 3.1–3.2 + Gita 6.35 |
+| 7 | `your-focus-setup` | `guided_practice[custom]` 5-step desk reset + `guided_practice[focus_timer]` one 25-min sprint | merges v1 pages 7+8; reuses the page-1 touch number |
+| 8 | `sleep-the-night-shift-of-memory` | `guided_practice[custom]` wind-down, 3 steps | v1 page 9; adds the *mood* cost of late scroll, closing Act I's loop |
+| 9 | `your-7-day-focus-challenge` | `focus_game[retest]` (delta vs page 1) + `habit_tracker` | v1 page 10; one challenge-day is a self-image actionable; bridge to Stress module |
+
+Every page keeps a `reflection_journal` at beat 5. Pages 1 & 9 are the flame
+measurement bookends (shared `test_id: 'focus-attention'`).
+
+### 10.1 New interactive instruments built for this redesign (2026-07-23)
+
+Five new "discover, don't display" instruments. Two are **content-driven
+first-class blocks** (founder-editable copy); three are **self-contained
+`simulation` components** (registered by `simulation_id`, no editable copy).
+
+| Instrument | Kind | Where | Editable copy? |
+|---|---|---|---|
+| `estimate_reveal` | block (LS8) | phone-touch guess (p1); reusable strand-wide | yes — question/unit/truth/reveal in DB |
+| `comparison_feed` | block (LS9) | self-image (p2) | yes — posts + closing in DB |
+| `focus-time-paradox` | sim | the Time Paradox hook (p1) | no — self-report-driven, fixed copy |
+| `shrinking-window` | sim | attention-span collapse (p3) | no — Gloria Mark data, fixed |
+| `variable-reward-lever` | sim | dopamine engine (p4) | no — mechanism demo, fixed |
+
+- Types: `packages/data/types/books.ts` (LS8/LS9). Zod: `packages/data/books/schemas.ts`.
+  Block renderers: `packages/book-renderer/blocks/lifeskills/{EstimateReveal,ComparisonFeed}Renderer.tsx`.
+  Sims: `packages/book-renderer/blocks/simulations/{FocusTimeParadox,ShrinkingWindow,VariableReward}Sim.tsx`,
+  registered in `SimulationBlockRenderer.tsx`.
+- All read the calm `--book-accent` tokens (§5.3.5); semantic traffic-light tones
+  (coral for the sobering figure, emerald for recovery) are the allowed exception.
+- **Evidence bar (§7):** `focus-time-paradox` never fabricates a precise stat —
+  the "leak" fraction is the student's own honest self-report. `shrinking-window`
+  uses Gloria Mark's mainstream, replicated measures. `estimate_reveal` truth
+  values (e.g. 2,617 dscout touches/day) are cited in the block's `source`.
+
+### 10.2 ADHD & self-image guardrails (§7 applied)
+
+- **ADHD (p3):** define, don't diagnose. Teach the real DSM-5 shape (persistent,
+  before age 12, ≥2 settings, genuinely impairing). Hard closing line: "this
+  chapter trains attention *fatigue*; if it's ADHD, this still helps — but a
+  professional is the real answer." Never medicalize ordinary fatigue; never
+  dismiss a real condition.
+- **Self-image (p2):** teach the well-established *comparison mechanism*
+  (highlight-reel vs behind-the-scenes) and honest correlation — never overclaim
+  causation on teen depression. Route real distress to a trusted adult + the
+  helpline numbers on the Stress module opener.
+
+<details>
+<summary><b>v1 blueprint (2026-07-03 → superseded 2026-07-23)</b></summary>
+
+10 all-training pages: `your-attention-is-a-superpower`, `the-spotlight-in-your-head`,
+`why-reels-feel-impossible-to-stop`, `the-multitasking-myth`,
+`dharana-the-original-attention-training`, `breath-the-remote-control`,
+`design-your-environment`, `the-25-minute-sprint`, `sleep-the-night-shift-of-memory`,
+`your-7-day-focus-challenge`. Retired because it taught before it convinced.
+</details>
 
 ---
 
@@ -513,6 +589,13 @@ bookends (Phase 5 of the parent plan starts here, cheaply).
 4. Cockpit row update in `_agents/PROJECTS.md` at check-out (CLAUDE.md §0.5).
 
 ## Changelog
+- 2026-07-23 — **Focus module redesign (founder).** §10 rebuilt: compact 3-act
+  structure (Mirror/Machine/Training), 10→9 content pages, diagnosis-first,
+  every page opens on an interactive. Added the **Time Paradox** motivational
+  spine. Shipped 5 new "discover, don't display" instruments: `estimate_reveal`
+  + `comparison_feed` blocks (LS8/LS9) and `focus-time-paradox` / `shrinking-window`
+  / `variable-reward-lever` sims (§10.1). ADHD-define-don't-diagnose + self-image
+  comparison-mechanism guardrails (§10.2). v1 blueprint preserved collapsed.
 - 2026-07-03 — Doc created. Hybrid model, Class 9/10 split, 6-beat page anatomy,
   three practice blocks shipped, Vedic L3 rules, evidence bar, Focus module
   blueprint (10 pages). Strand name still pending (slugs brand-neutral).

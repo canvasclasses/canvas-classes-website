@@ -1,0 +1,281 @@
+{
+ "hcv_chapter": 46,
+ "hcv_title": "The Nucleus",
+ "ncert": {
+  "class": 12,
+  "chapter_hint": "Nuclei"
+ },
+ "source_pages": {
+  "worked": "928-930",
+  "obj1": "931-932"
+ },
+ "notes": "11 Objective I items rebuilt, including the linked pair contrasting the *nuclear* force alone with the *net* force between nucleons — the contrast is the teaching point, so they are kept adjacent. Radioactivity items added to cover the chapter's second half.",
+ "blocks": {
+  "practice_bank": {
+   "id": "pb-ch46-nucleus",
+   "type": "practice_bank",
+   "order": 0,
+   "title": "Practice — The Nucleus",
+   "intro": "Eleven questions on nuclei, nuclear forces and radioactivity. Watch the items that ask about the nuclear force *alone* versus the *net* force — they have different answers.",
+   "sections": [
+    {
+     "id": "nuclear-structure",
+     "title": "Nuclear Structure and Composition",
+     "blurb": "Counting nucleons, and where the mass goes.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch46-m01",
+       "source": "mcq",
+       "prompt": "The mass of a neutral carbon-12 atom in its ground state is",
+       "options": [
+        "less than $ 12 $ u",
+        "more than $ 12 $ u",
+        "exactly $ 12 $ u",
+        "dependent on whether it is graphite or charcoal"
+       ],
+       "correct_index": 2,
+       "explanation": "The atomic mass unit is *defined* as one twelfth of the mass of a neutral carbon-12 atom in its ground state, so the answer is exactly $ 12 $ u by definition. Note this includes the six electrons and accounts for all binding energies — and it is why other atomic masses are not whole numbers."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m02",
+       "source": "mcq",
+       "prompt": "The mass number of a nucleus equals",
+       "options": [
+        "the number of nucleons",
+        "the number of neutrons",
+        "the number of protons",
+        "none of these"
+       ],
+       "correct_index": 0,
+       "explanation": "Mass number $ A $ counts protons and neutrons together — the nucleons. The atomic number $ Z $ counts protons alone, and the neutron number is $ A - Z $. Isotopes share $ Z $ but differ in $ A $."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m03",
+       "source": "mcq",
+       "prompt": "Compared with a $ ^{12}\\text{C} $ atom, a $ ^{14}\\text{C} $ atom has",
+       "options": [
+        "two extra protons and two extra electrons",
+        "two extra neutrons and no extra electrons",
+        "two extra protons but no extra electrons",
+        "two extra neutrons and two extra electrons"
+       ],
+       "correct_index": 1,
+       "explanation": "Both are carbon, so $ Z = 6 $ and both have six protons and six electrons. Only the neutron count differs — 6 against 8. Isotopes are chemically near-identical precisely because the electron structure is unchanged; only the nuclear properties differ."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m04",
+       "source": "mcq",
+       "prompt": "The mass number of a nucleus is",
+       "options": [
+        "always less than its atomic number",
+        "always more than its atomic number",
+        "equal to its atomic number",
+        "sometimes more than, sometimes equal to, its atomic number"
+       ],
+       "correct_index": 3,
+       "explanation": "For ordinary hydrogen, $ A = Z = 1 $ — a lone proton with no neutron. For every other nuclide $ A > Z $. So 'sometimes more, sometimes equal' is the only universally true statement, and hydrogen is the exception that forces it."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m05",
+       "source": "mcq",
+       "prompt": "A graph of $ \\ln(R/R_0) $ against $ \\ln A $, where $ R $ is nuclear radius and $ A $ mass number, is",
+       "options": [
+        "a parabola opening upward",
+        "an ellipse centred on the origin",
+        "a straight line of slope $ 1/3 $",
+        "a curve with no simple form"
+       ],
+       "correct_index": 2,
+       "explanation": "Since $ R = R_0 A^{1/3} $, taking logarithms gives $ \\ln(R/R_0) = \\frac{1}{3}\\ln A $ — a straight line through the origin with slope one third. The cube-root law means nuclear *volume* is proportional to $ A $, so nuclear density is the same for every nucleus."
+      }
+     ]
+    },
+    {
+     "id": "nuclear-force",
+     "title": "The Nuclear Force",
+     "blurb": "Charge-independent, but the net force is not.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch46-m06",
+       "source": "mcq",
+       "prompt": "At a separation of $ 1 $ fm, the magnitudes of the **nuclear** force between two protons, a proton and a neutron, and two neutrons satisfy",
+       "options": [
+        "$ F_{pp} > F_{pn} = F_{nn} $",
+        "$ F_{pp} = F_{pn} = F_{nn} $",
+        "$ F_{pp} > F_{pn} > F_{nn} $",
+        "$ F_{pp} < F_{pn} = F_{nn} $"
+       ],
+       "correct_index": 1,
+       "explanation": "The nuclear force is **charge-independent** — it treats protons and neutrons identically, since it acts on their quark content rather than their charge. All three are equal. This charge independence is a defining property of the strong interaction."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m07",
+       "source": "mcq",
+       "prompt": "At the same $ 1 $ fm separation, the magnitudes of the **net** force (ignoring gravity) satisfy",
+       "options": [
+        "$ F_{pp} < F_{pn} = F_{nn} $",
+        "$ F_{pp} > F_{pn} = F_{nn} $",
+        "$ F_{pp} = F_{pn} = F_{nn} $",
+        "$ F_{pp} > F_{pn} > F_{nn} $"
+       ],
+       "correct_index": 0,
+       "explanation": "The nuclear parts are equal, but the two protons *also* repel electrically, which partly cancels their attraction. So the net attraction between two protons is the weakest of the three: $ F_{pp} < F_{pn} = F_{nn} $. Compare with the previous item — the word 'net' changes the answer entirely."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m08",
+       "source": "mcq",
+       "prompt": "Two protons are $ 10 $ nm apart. Comparing the nuclear force $ F_n $ with the electromagnetic force $ F_e $,",
+       "options": [
+        "$ F_e = F_n $",
+        "$ F_e \\gg F_n $",
+        "$ F_e \\ll F_n $",
+        "they differ only slightly"
+       ],
+       "correct_index": 1,
+       "explanation": "The nuclear force has a range of about $ 1 $ fm — and $ 10 $ nm is ten million times further, so $ F_n $ is effectively zero. Only the electrical repulsion remains. This is exactly why nuclear physics is confined to femtometre scales while chemistry, at nanometre scales, is purely electromagnetic."
+      }
+     ]
+    },
+    {
+     "id": "radioactivity",
+     "title": "Radioactivity and Binding Energy",
+     "blurb": "Why some nuclei decay, and where nuclear energy comes from.",
+     "items": [
+      {
+       "kind": "mcq",
+       "id": "ch46-m09",
+       "source": "mcq",
+       "prompt": "In $ \\beta^{-} $ decay, the atomic number and mass number of the nucleus change by",
+       "options": [
+        "$ Z $ decreases by 1, $ A $ unchanged",
+        "$ Z $ decreases by 2, $ A $ decreases by 4",
+        "$ Z $ increases by 1, $ A $ unchanged",
+        "both unchanged"
+       ],
+       "correct_index": 2,
+       "explanation": "A neutron converts into a proton, emitting an electron and an antineutrino. The nucleon count is unchanged so $ A $ holds, while the proton count rises by one. Alpha decay is what reduces $ Z $ by 2 and $ A $ by 4, and gamma emission changes neither."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m10",
+       "source": "mcq",
+       "prompt": "The binding energy **per nucleon** is greatest for nuclei of mass number around",
+       "options": [
+        "$ 4 $",
+        "$ 120 $",
+        "$ 56 $",
+        "$ 238 $"
+       ],
+       "correct_index": 2,
+       "explanation": "The curve peaks near iron-56 at about $ 8.8 $ MeV per nucleon. Lighter nuclei gain energy by *fusing* towards that peak and heavier ones by *fissioning* down towards it — which is why both processes release energy, and why iron is the end point of stellar nucleosynthesis."
+      },
+      {
+       "kind": "mcq",
+       "id": "ch46-m11",
+       "source": "mcq",
+       "prompt": "After 3 half-lives, the fraction of a radioactive sample remaining undecayed is",
+       "options": [
+        "$ 1/8 $",
+        "$ 1/3 $",
+        "$ 1/6 $",
+        "zero"
+       ],
+       "correct_index": 0,
+       "explanation": "Each half-life halves the remaining nuclei, so three of them leave $ (1/2)^{3} = 1/8 $. Decay is exponential, not linear — three half-lives do not consume three times the first half-life's worth, and the sample never reaches exactly zero."
+      }
+     ]
+    }
+   ]
+  },
+  "worked_examples": [
+   {
+    "id": "we-ch46-01",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 1 — Nuclear radius and density",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the radius of an aluminium-27 nucleus and its nuclear density, taking $ R_0 = 1.2 $ fm and $ 1\\ \\text{u} = 1.66 \\times 10^{-27} $ kg.",
+    "solution": "**Radius:**\n\n$ R = R_0 A^{1/3} = (1.2)(27)^{1/3} = (1.2)(3) = 3.6\\ \\text{fm} $\n\n**Volume:**\n\n$ V = \\frac{4}{3}\\pi R^{3} = \\frac{4}{3}\\pi(3.6 \\times 10^{-15})^{3} = \\frac{4}{3}\\pi(4.67 \\times 10^{-44}) = 1.95 \\times 10^{-43}\\ \\text{m}^{3} $\n\n**Mass:**\n\n$ m = 27(1.66 \\times 10^{-27}) = 4.48 \\times 10^{-26}\\ \\text{kg} $\n\n**Density:**\n\n$ \\rho = \\frac{4.48 \\times 10^{-26}}{1.95 \\times 10^{-43}} = 2.3 \\times 10^{17}\\ \\text{kg m}^{-3} $\n\n**A number worth pausing over.** That is $ 10^{14} $ times the density of water — a teaspoon of nuclear matter would weigh a hundred million tonnes.\n\n**Why it is the same for every nucleus.** Since $ R \\propto A^{1/3} $, the volume goes as $ A $ and the mass also goes as $ A $, so their ratio is constant. Nucleons pack at a fixed density, as though the nucleus were a drop of incompressible liquid — which is exactly the picture the liquid-drop model builds on, and it is also the density of a neutron star."
+   },
+   {
+    "id": "we-ch46-02",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 2 — Mass defect and binding energy",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Find the binding energy of a helium-4 nucleus and its binding energy per nucleon. Take $ m_p = 1.00728 $ u, $ m_n = 1.00867 $ u, $ m_{He} = 4.00151 $ u (nucleus) and $ 1\\ \\text{u} = 931.5 $ MeV.",
+    "solution": "**Mass of the separated nucleons:**\n\n$ 2m_p + 2m_n = 2(1.00728) + 2(1.00867) = 2.01456 + 2.01734 = 4.03190\\ \\text{u} $\n\n**Mass defect:**\n\n$ \\Delta m = 4.03190 - 4.00151 = 0.03039\\ \\text{u} $\n\n**Binding energy:**\n\n$ BE = (0.03039)(931.5) = 28.3\\ \\text{MeV} $\n\n**Per nucleon:**\n\n$ \\frac{28.3}{4} = 7.07\\ \\text{MeV} $\n\n**What the mass defect means.** The bound nucleus weighs *less* than its parts — the missing mass has been released as binding energy, by $ E = mc^{2} $. To pull the nucleus apart you would have to supply that $ 28.3 $ MeV back.\n\n**Why helium-4 is exceptionally stable.** At $ 7.07 $ MeV per nucleon it far exceeds its neighbours (lithium manages about $ 5.3 $). Its two protons and two neutrons form closed shells — which is precisely why alpha particles, rather than individual nucleons, are emitted in radioactive decay."
+   },
+   {
+    "id": "we-ch46-03",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 3 — Radioactive decay law",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A radioactive sample has a half-life of $ 8 $ days. Find its decay constant, and the fraction remaining after $ 20 $ days.",
+    "solution": "**Decay constant:**\n\n$ \\lambda = \\frac{\\ln 2}{T_{1/2}} = \\frac{0.693}{8} = 0.0866\\ \\text{day}^{-1} $\n\n**Fraction remaining after $ 20 $ days:**\n\n$ \\frac{N}{N_0} = e^{-\\lambda t} = e^{-(0.0866)(20)} = e^{-1.733} = 0.177 $\n\nAbout $ 17.7\\% $.\n\n**Cross-check using half-lives.** Twenty days is $ 2.5 $ half-lives:\n\n$ \\left(\\frac{1}{2}\\right)^{2.5} = \\frac{1}{5.66} = 0.177 $ ✓\n\n**Why the exponential form matters.** After $ 8 $ days half remains, after $ 16 $ days a quarter, after $ 24 $ days an eighth. Linear thinking would predict nothing left after $ 16 $ days, which is badly wrong.\n\n**Note also the mean life:** $ \\tau = 1/\\lambda = 11.5 $ days, always longer than the half-life by a factor $ 1/\\ln 2 = 1.44 $. The two are different quantities and are easy to confuse."
+   },
+   {
+    "id": "we-ch46-04",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 4 — Activity and number of nuclei",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A sample of a nuclide with half-life $ 5.27 $ years has an activity of $ 3.7 \\times 10^{10} $ Bq. Find the number of radioactive nuclei present and the sample's mass, taking the nuclide's mass number as $ 60 $.",
+    "solution": "**Decay constant**, in per second:\n\n$ \\lambda = \\frac{0.693}{(5.27)(3.15 \\times 10^{7})} = \\frac{0.693}{1.66 \\times 10^{8}} = 4.17 \\times 10^{-9}\\ \\text{s}^{-1} $\n\n**Number of nuclei**, from $ A = \\lambda N $:\n\n$ N = \\frac{A}{\\lambda} = \\frac{3.7 \\times 10^{10}}{4.17 \\times 10^{-9}} = 8.87 \\times 10^{18} $\n\n**Mass:**\n\n$ m = \\frac{N}{N_A} \\times 60 = \\frac{8.87 \\times 10^{18}}{6.02 \\times 10^{23}} \\times 60 $\n\n$ = (1.47 \\times 10^{-5})(60) = 8.8 \\times 10^{-4}\\ \\text{g} $\n\nUnder a milligram.\n\n**What $ 3.7 \\times 10^{10} $ Bq is.** One curie — historically the activity of a gram of radium, and still a common unit. A curie of a *short*-lived nuclide needs far less material than a curie of a long-lived one.\n\n**Why activity and quantity are not the same thing.** Activity depends on $ \\lambda N $, so a tiny mass of a rapidly decaying nuclide can be far more radioactive than a large mass of a slow one. This is why uranium ore is handled fairly casually while microgram quantities of some medical isotopes need shielding."
+   },
+   {
+    "id": "we-ch46-05",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 5 — Energy released in alpha decay",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Compute the energy released when $ ^{238}\\text{U} $ ($ 238.05079 $ u) alpha-decays to $ ^{234}\\text{Th} $ ($ 234.04363 $ u), given $ m_\\alpha = 4.00260 $ u.",
+    "solution": "**Mass on each side:**\n\nBefore: $ 238.05079 $ u\n\nAfter: $ 234.04363 + 4.00260 = 238.04623 $ u\n\n**Mass defect:**\n\n$ \\Delta m = 238.05079 - 238.04623 = 0.00456\\ \\text{u} $\n\n**Energy released:**\n\n$ Q = (0.00456)(931.5) = 4.25\\ \\text{MeV} $\n\n**Why decay occurs at all.** The products weigh less than the parent, so the reaction releases energy and is spontaneous. Had $ \\Delta m $ come out negative, energy would have to be supplied and the decay could not happen unassisted.\n\n**How the energy divides.** Momentum conservation gives the alpha particle almost all of it — the thorium nucleus, some sixty times heavier, recoils with only about $ 1/60 $ of the total. Hence the alpha emerges with roughly $ 4.2 $ MeV.\n\n**A note on scale.** $ 4.25 $ MeV per decay is roughly a million times a typical chemical reaction energy per molecule. That ratio, not any difference in principle, is the whole reason nuclear fuels are so energy-dense."
+   },
+   {
+    "id": "we-ch46-06",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 6 — Energy from fission",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Uranium-235 fission releases about $ 200 $ MeV per nucleus. Find the energy from $ 1 $ kg of $ ^{235}\\text{U} $, and compare with burning $ 1 $ kg of coal ($ 30 $ MJ).",
+    "solution": "**Number of nuclei in $ 1 $ kg:**\n\n$ N = \\frac{1000}{235} \\times 6.02 \\times 10^{23} = (4.26)(6.02 \\times 10^{23}) = 2.56 \\times 10^{24} $\n\n**Total energy:**\n\n$ E = (2.56 \\times 10^{24})(200 \\times 10^{6})(1.6 \\times 10^{-19})\\ \\text{J} $\n\n$ = (2.56 \\times 10^{24})(3.2 \\times 10^{-11}) = 8.2 \\times 10^{13}\\ \\text{J} $\n\nAbout $ 82 $ terajoules, or $ 23 $ gigawatt-hours.\n\n**Comparison with coal:**\n\n$ \\frac{8.2 \\times 10^{13}}{3 \\times 10^{7}} = 2.7 \\times 10^{6} $\n\n**Uranium releases nearly three million times more energy per kilogram.** One kilogram does the work of about $ 2700 $ tonnes of coal.\n\n**Where the difference comes from.** Chemical reactions rearrange electrons, releasing a few eV per atom. Fission rearranges nucleons, releasing hundreds of MeV — a factor of about $ 10^{8} $ per event. That single ratio explains both the appeal and the hazards of nuclear power."
+   },
+   {
+    "id": "we-ch46-07",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 7 — Carbon dating",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "A wooden artefact shows a $ ^{14}\\text{C} $ activity of $ 12.5\\% $ that of fresh wood. Taking the half-life as $ 5730 $ years, find its age.",
+    "solution": "**Recognise the fraction.** $ 12.5\\% = 1/8 = (1/2)^{3} $, so exactly three half-lives have passed:\n\n$ t = 3(5730) = 17\\,190\\ \\text{years} $\n\n**The general method**, for fractions that are not neat powers of a half:\n\n$ \\frac{N}{N_0} = e^{-\\lambda t} \\Rightarrow t = \\frac{1}{\\lambda}\\ln\\left(\\frac{N_0}{N}\\right) = \\frac{T_{1/2}}{\\ln 2}\\ln 8 = \\frac{5730}{0.693}(2.079) = 17\\,190 $ years ✓\n\n**How the method works.** Living things exchange carbon with the atmosphere and maintain the ambient $ ^{14}\\text{C} $ fraction. At death that exchange stops and the $ ^{14}\\text{C} $ decays with no replenishment, so the remaining activity is a clock.\n\n**Why the range is limited.** After about ten half-lives ($ \\sim 57\\,000 $ years) less than $ 0.1\\% $ remains and the measurement becomes unreliable. Older samples need nuclides with longer half-lives — potassium-argon or uranium-lead dating, which reach billions of years.\n\n**The assumption that must be checked.** That atmospheric $ ^{14}\\text{C} $ has been constant. It has not been quite constant, which is why real radiocarbon dates are calibrated against tree-ring records."
+   },
+   {
+    "id": "we-ch46-08",
+    "type": "worked_example",
+    "order": 0,
+    "label": "Example 8 — Why fusion needs such high temperatures",
+    "variant": "solved_example",
+    "reveal_mode": "tap_to_reveal",
+    "problem": "Estimate the temperature at which two deuterons have enough thermal energy to approach within $ 2 $ fm, where the nuclear force can bind them.",
+    "solution": "**Coulomb barrier at $ 2 $ fm:**\n\n$ U = \\frac{ke^{2}}{r} = \\frac{(9 \\times 10^{9})(1.6 \\times 10^{-19})^{2}}{2 \\times 10^{-15}} $\n\n$ = \\frac{(9 \\times 10^{9})(2.56 \\times 10^{-38})}{2 \\times 10^{-15}} = \\frac{2.3 \\times 10^{-28}}{2 \\times 10^{-15}} = 1.15 \\times 10^{-13}\\ \\text{J} $\n\nThat is about $ 0.72 $ MeV.\n\n**Temperature required.** Setting $ \\frac{3}{2}kT $ equal to this (each nucleus needs roughly half, but take the order of magnitude):\n\n$ T \\approx \\frac{2U}{3k} = \\frac{2(1.15 \\times 10^{-13})}{3(1.38 \\times 10^{-23})} = 5.6 \\times 10^{9}\\ \\text{K} $\n\n**Several billion kelvin** — yet the sun's core is only about $ 1.5 \\times 10^{7} $ K, some four hundred times cooler.\n\n**How fusion happens anyway.** Two effects rescue it. The Maxwell distribution has a high-energy tail, so a small fraction of nuclei always exceed the average by a large factor. More importantly, quantum **tunnelling** lets nuclei penetrate the barrier without going over it.\n\n**Why controlled fusion is so hard.** Even with tunnelling, tens of millions of kelvin are needed, and the plasma must be confined at that temperature long enough for reactions to outpace losses. That confinement problem, not the physics of the reaction, is what has kept fusion power out of reach."
+   }
+  ]
+ }
+}
