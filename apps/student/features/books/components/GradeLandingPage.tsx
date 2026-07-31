@@ -473,9 +473,11 @@ function ChapterPane({
         </p>
       </div>
 
-      {/* Own scroll container, so a long chapter never pushes the rail off
-          screen — the failure the accordion had. */}
-      <div className="max-h-[60vh] overflow-y-auto px-2 py-2">
+      {/* No height cap: the section grows with the chapter. A scrollbar inside
+          a page that already scrolls is worse than a long page, and it only
+          gets worse as chapters are published. The rail staying reachable is
+          handled by making IT sticky, not by shrinking this. */}
+      <div className="px-2 py-2">
         {chapterPages.map((pg, i) => (
           <PageRow
             key={pg.slug}
@@ -551,8 +553,12 @@ function SubjectSection({
       className={singleBook ? '' : 'scroll-mt-[140px]'}
       data-subject-section={book.slug}
     >
-      {/* ── One glassmorphic book card — header + chapter rows ───────── */}
-      <div className="relative rounded-2xl border border-white/[0.09] overflow-hidden
+      {/* ── One glassmorphic book card — header + chapter rows ─────────
+          `overflow-clip`, NOT `overflow-hidden`: hidden makes this a scroll
+          container, which silently kills `position: sticky` on the chapter
+          rail inside it. clip still trims the rounded corners but creates no
+          scroll container, so sticky keeps working. */}
+      <div className="relative rounded-2xl border border-white/[0.09] overflow-clip
         bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/40">
 
         {/* Header region — the ONLY part tinted by the subject gradient + decor */}
@@ -683,8 +689,15 @@ function SubjectSection({
           </div>
         ) : (
           <div className="border-t border-white/[0.08] grid lg:grid-cols-[300px_1fr]">
-            <div className="lg:border-r border-white/[0.08] lg:max-h-[70vh] overflow-y-auto
-              max-h-[36vh] border-b lg:border-b-0">
+            {/* Sticky, not capped. `self-start` stops the grid stretching it to
+                the row height, which would break sticky. It only gains its own
+                scrollbar once the chapter list itself exceeds the viewport —
+                so with today's 3 chapters there is no inner scroll at all.
+                On mobile the panes stack, so the rail keeps a cap there or
+                you'd scroll past every chapter to reach the pages. */}
+            <div className="border-b lg:border-b-0 lg:border-r border-white/[0.08]
+              max-h-[36vh] overflow-y-auto
+              lg:self-start lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)]">
               <p className="px-4 pt-3 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white/40">
                 {book.chapters.length} chapters
               </p>
