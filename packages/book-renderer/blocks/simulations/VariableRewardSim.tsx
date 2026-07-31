@@ -79,11 +79,11 @@ export default function VariableRewardSim() {
       <div className="flex gap-3" style={{ flexWrap: 'wrap' }}>
         {/* Machine A */}
         <div style={machineStyle('rgba(255,255,255,0.1)')}>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', fontFamily: 'ui-monospace, monospace', marginBottom: 8 }}>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginBottom: 8 }}>
             MACHINE A
           </div>
           <div style={{ fontSize: 22, minHeight: 32, color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>{aFace}</div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '6px 0 12px', fontFamily: 'ui-monospace, monospace' }}>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '6px 0 12px', fontVariantNumeric: 'tabular-nums' }}>
             pays every time · {aPulls} pulls
           </div>
           <button
@@ -98,7 +98,7 @@ export default function VariableRewardSim() {
 
         {/* Machine B */}
         <div style={machineStyle(ACCENT_BORDER)}>
-          <div style={{ fontSize: 12, color: ACCENT, fontFamily: 'ui-monospace, monospace', marginBottom: 8 }}>MACHINE B</div>
+          <div style={{ fontSize: 12, color: ACCENT, marginBottom: 8 }}>MACHINE B</div>
           <div
             style={{
               fontSize: 22,
@@ -109,7 +109,7 @@ export default function VariableRewardSim() {
           >
             {bFace}
           </div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '6px 0 12px', fontFamily: 'ui-monospace, monospace' }}>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', margin: '6px 0 12px', fontVariantNumeric: 'tabular-nums' }}>
             pays… sometimes · {bPulls} pulls
           </div>
           <button

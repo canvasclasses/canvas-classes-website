@@ -99,7 +99,7 @@ export default function FocusTimeParadoxSim() {
           />
           <span
             className="ftp-hours-badge"
-            style={{ fontFamily: 'ui-monospace, monospace', fontSize: 17, fontWeight: 700, minWidth: 78, textAlign: 'center' }}
+            style={{ fontVariantNumeric: 'tabular-nums', fontSize: 17, fontWeight: 700, minWidth: 78, textAlign: 'center' }}
           >
             {hm(hours)}
           </span>
@@ -151,12 +151,12 @@ export default function FocusTimeParadoxSim() {
               <span className="ftp-chip" style={{ background: `${solidColor}1f`, border: `1px solid ${solidColor}55` }}>
                 <span style={{ width: 8, height: 8, borderRadius: 3, background: solidColor, display: 'inline-block' }} />
                 <span style={{ color: 'rgba(255,255,255,0.8)' }}>Real deep focus</span>
-                <b style={{ color: solidColor, fontFamily: 'ui-monospace, monospace' }}>{hm(deepNow)}</b>
+                <b style={{ color: solidColor, fontVariantNumeric: 'tabular-nums' }}>{hm(deepNow)}</b>
               </span>
               <span className="ftp-chip" style={{ background: 'rgba(255,255,255,0.045)', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <span style={{ width: 8, height: 8, borderRadius: 3, background: 'rgba(255,255,255,0.22)', display: 'inline-block' }} />
                 <span style={{ color: 'rgba(255,255,255,0.5)' }}>Leaked to switching</span>
-                <b style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'ui-monospace, monospace' }}>{hm(leakNow)}</b>
+                <b style={{ color: 'rgba(255,255,255,0.55)', fontVariantNumeric: 'tabular-nums' }}>{hm(leakNow)}</b>
               </span>
             </div>
 

@@ -50,7 +50,7 @@ export default function ShrinkingWindowSim() {
       <div className="text-center">
         <div
           className="uppercase tracking-[0.15em]"
-          style={{ fontSize: 14, color: ACCENT, fontFamily: 'ui-monospace, monospace' }}
+          style={{ fontSize: 14, color: ACCENT, fontVariantNumeric: 'tabular-nums' }}
         >
           {year >= 2024 ? 'Today' : year}
         </div>
@@ -70,7 +70,7 @@ export default function ShrinkingWindowSim() {
         </div>
         <div
           className="uppercase tracking-[0.1em] mt-1.5"
-          style={{ fontSize: 12, color: 'rgba(255,255,255,0.42)', fontFamily: 'ui-monospace, monospace' }}
+          style={{ fontSize: 12, color: 'rgba(255,255,255,0.42)' }}
         >
           seconds of focus on one screen, before switching
         </div>
@@ -115,7 +115,7 @@ export default function ShrinkingWindowSim() {
       />
       <div
         className="flex justify-between mx-auto mt-2"
-        style={{ maxWidth: 540, fontSize: 11, color: 'rgba(255,255,255,0.4)', fontFamily: 'ui-monospace, monospace' }}
+        style={{ maxWidth: 540, fontSize: 11, color: 'rgba(255,255,255,0.4)', fontVariantNumeric: 'tabular-nums' }}
       >
         <span>2004</span>
         <span>2012</span>

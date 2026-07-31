@@ -381,7 +381,7 @@ export default function VectorBoard({ block }: { block: VectorBoardBlock }) {
                 className="flex flex-col items-stretch gap-1.5 rounded-xl border p-2 text-left transition-all"
                 style={{ background: 'rgba(255,255,255,0.02)', borderColor: border, cursor: guess === null ? 'pointer' : 'default' }}>
                 <div className="flex items-center justify-between" style={{ minHeight: 20 }}>
-                  <span className="text-xs font-black" style={{ color: C.text2 }}>{letters[i]}</span>
+                  <span className="text-xs font-semibold" style={{ color: C.text2 }}>{letters[i]}</span>
                   {guess !== null && isRight && <Pill tone="ok">correct</Pill>}
                   {guess !== null && picked && !isRight && <Pill tone="no">your pick</Pill>}
                 </div>
