@@ -52,8 +52,8 @@ export async function generateMetadata({
     const group = await getChapterGroupBySlug(classNum, chapterSlug);
     if (!group) return {};
 
-    const title = `${group.title} — NCERT Class ${classNum} ${group.subject} PDF Download (2025-26)`;
-    const description = `Download the NCERT Class ${classNum} ${group.subject} chapter on ${group.title} as PDF — official textbook${group.exemplar ? ', exemplar problems' : ''}${group.labManual ? ', and lab manual practical' : ''}. CBSE 2025-26 syllabus. Read online or download free.`;
+    const title = `${group.title} NCERT PDF — Class ${classNum} ${group.subject} Free Download (2026-27)`;
+    const description = `Free NCERT PDF: ${group.title}, Class ${classNum} ${group.subject} — official textbook${group.exemplar ? ', exemplar problems' : ''}${group.labManual ? ', and lab manual practical' : ''}. CBSE 2026-27 syllabus. Read online or download free.`;
     const url = `${BASE_URL}/download-ncert-books/${classSlug}/${chapterSlug}`;
 
     return {
@@ -277,7 +277,7 @@ export default async function NcertChapterPage({
                     {/* Header */}
                     <header className="mb-10">
                         <span className="mb-3 inline-block rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-indigo-300">
-                            Class {classNum} {group.subject} · NCERT 2025-26
+                            Class {classNum} {group.subject} · NCERT 2026-27
                         </span>
                         <h1 className="mb-4 text-3xl font-bold text-white md:text-5xl">
                             {group.title}
@@ -285,7 +285,7 @@ export default async function NcertChapterPage({
                         <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
                             Download the official NCERT Class {classNum} {group.subject} resources for{' '}
                             <strong className="text-white">{group.title}</strong>, aligned to the
-                            CBSE 2025-26 syllabus. Preview each PDF instantly in your browser or
+                            CBSE 2026-27 syllabus. Preview each PDF instantly in your browser or
                             open it in a new tab to download.
                         </p>
                     </header>
@@ -359,7 +359,7 @@ export default async function NcertChapterPage({
                         <p className="text-sm leading-relaxed text-zinc-300 md:text-base">
                             <strong className="text-white">{group.title}</strong> is a chapter in
                             the NCERT Class {classNum} {group.subject} syllabus prescribed by CBSE
-                            for the 2025-26 academic session. The official NCERT resources on this
+                            for the 2026-27 academic session. The official NCERT resources on this
                             page are reproduced from the publicly available NCERT release and are
                             useful for CBSE board preparation and competitive entrance exams.
                         </p>

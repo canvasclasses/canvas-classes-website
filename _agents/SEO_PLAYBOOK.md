@@ -317,7 +317,122 @@ open decision #7) — do not read them as teacher demand.
 5. Chapter PYQ hubs — add counts + year-ranges (formula above).
 6. Junk-magnet queries ("i cannot remember my mother", "guitar", "canvas of soil" — Class-9 book pages) — exclude from metrics; do NOT optimize for these.
 
+### 2026-07-20 re-validation (fresh 28d export: 6,558 clicks / 306K imps / 2.1% CTR)
+
+Fresh GSC exports (site-wide + both per-family properties) re-confirm the
+hit-list and RE-RANK it — **Class-9 is now unambiguously #1 by leverage**:
+
+- **Class-9 = 128K imps (42% of the whole site) @ 0.78% CTR** — up from 105K
+  on 2026-07-16. Top losers: tyndall-effect (11.2K imps, 0.3%, pos 6.5),
+  distillation (8.5K, 0.7%), paper-chromatography (7.7K, 1.2%), coagulation
+  (6.7K, 1.0%). Fixing CTR to even 3% ≈ +3K clicks/mo (≈half current total).
+- **Zero-CTR-at-good-position anomalies** (snippet fails the query's intent —
+  these want a diagram/definition the snippet doesn't promise):
+  "distillation diagram class 9" (956 imps, pos 6.6, 0.0%), "eudiometry"
+  (924, pos 5.8, 0.1%), "what is coagulation in chemistry class 9" (743,
+  pos 5.0, 0.1%), "salt analysis" (458, pos 3.9, 0.0% — hit-list #1 STILL
+  unfixed).
+- **NCERT-PDF cluster still striking-distance:** "coordination compounds ncert
+  pdf" (1,371 imps, pos 7.8), "amines ncert pdf" (1,198, pos 7.5), "chemical
+  kinetics ncert pdf" (760, pos 8.6).
+- **Question families:** crucible q pages 35.9K imps → 101 clicks (0.28%);
+  chemistry-questions 10K imps → 19 clicks; **jee-main-pyqs ABSENT from the
+  site top-1000 pages (~zero traffic on ~6.5K pages)** — validates the
+  Library spec's canonical-dedup phase (jee-main-pyqs 301s LAST or never).
+- **Benchmark:** handwritten-notes = 3,375 clicks @ ~9% CTR — the
+  intent-match template every other family should copy.
+- **Devices:** mobile 203K imps (70%) — judge every snippet on a phone.
+- ⚠️ **Per-family GSC properties (added 2026-07-18) are still warming up:**
+  the-crucible property shows only ~1.3 days of data; jee-main-pyqs shows
+  zero rows. Do NOT read them as real until ~2026-08-05; use site-wide
+  exports filtered by path meanwhile.
+
+### Free-platform keyword research (2026-07-20) — the demand-side companion to this Part
+
+Full doc: [`_agents/data/keyword-research-2026-07-20.md`](data/keyword-research-2026-07-20.md)
+(Google autocomplete gl=in, 93 seeds ≈ 900 suggestions + live SERP competitor
+mining across 8 page families; no paid tools). **Read it alongside the hit-list
+before any metadata rewrite** — it supplies the exact wording per family. Key
+deltas vs the 2026-07-18 formulas:
+
+- **Class-9 science template sharpened:** `<Topic> Class 9: Easy Definition,
+  Diagram & Examples` — the queries literally contain "diagram", "easy
+  definition", "in simple words"; current titles promise none of these.
+  Description must name the NCERT chapter ("which chapter" is a real query).
+- **NCERT-PDF titles need a session-year stamp** ("2026-27") + chapter-first
+  word order; institute an April year-refresh ritual.
+- **Salt-analysis:** "Virtual Lab" must be in the first 30 title chars.
+- **New findings:** eudiometry page is intent-mismatched (demand is all
+  Class-11/JEE); NEET chapter-wise PYQ hubs = JEE-equal demand with weaker
+  competition; Kaveri/Ganga (new Class-9 books) SERPs still held by
+  blogspot-tier sites — time-boxed window; college predictor needs "2026 ·
+  Free · Rank-Wise" tokens + a CSAB mode before mid-August (seasonal);
+  chapter-number alias demand ("…notes chapter 1") is servable via FAQ/H2
+  layers without new pages.
+- **Hindi-medium demand recorded** (NCERT-PDF: 7 of 9 clusters; Class-12
+  notes; some Class-9 science) — policy unchanged (English titles), serve via
+  on-page gloss/descriptions only.
+
 ### Changelog
+- **2026-07-20 (later 5)** — Review pass over the day's changes; confirmed
+  findings FIXED: (1) ChapterHero said "2025-26 syllabus" while the same
+  page's footer said 2026-27 → bumped; (2) `llms-full.txt` (public GEO
+  surface) still said 2025-26 → bumped; (3) college-predictor description was
+  261 chars → trimmed ~160; salt-analysis desc trimmed too; (4) notes hub
+  badge rendered the LEGACY old-syllabus ordinal ("Ch 16" for Solutions) →
+  new `currentNcertChapter` field (13 entries) drives the badge; dropped
+  chapters render "Bonus"; (5) blanket "prescribed by CBSE 2026-27" footer
+  was false for the 6 dropped chapters → new `droppedFromNcert` flag +
+  conditional caveat; (6) `STABLE_LASTMOD` bumped to 2026-07-20 (site-wide
+  metadata refresh — freshness signal for the rewritten pages); (7) export
+  script got a MIN_EXPECTED_QUESTIONS=500 abort-before-wipe safety gate.
+  ACCEPTED (no action): 18 PYQ leaf URLs changed/vanished vs May data (DB
+  reclassifications; Library Phase C's display_id-anchored 301s are the real
+  fix); long titles >60 chars display-truncate but still rank (tokens
+  indexed). KNOWN LEFTOVERS: repo-root zombie `app/` dir (26 generated
+  JSONs, delete manually — do NOT `git add .`); `export_goc_pyq_quiz.js`
+  still writes the dead root path (same Phase-5 bug class, unfixed);
+  pre-existing design-hook findings (gradients/fonts) on untouched lines.
+- **2026-07-20 (later 4)** — Handwritten-notes per-chapter title pass: all 25
+  `seoTitle`s in `features/notes/data/chapterMetadata.ts` restitched to
+  `<Chapter> Notes — Class N Chemistry Handwritten Notes PDF (Free) | JEE &
+  NEET` — the "<chapter> notes" head (plain-notes queries) chained to the
+  proven handwritten tail, per founder ask to rank on "notes" too. Current
+  rationalized NCERT chapter numbers woven into 12 descriptions (only where
+  the mapping is unambiguous; dropped/cross-chapter topics stamp nothing —
+  the data file's `ncertChapterNumber` is OLD-syllabus ordering, never use
+  it in public copy). NEET PYQ hubs + CSAB mode: founder said skip for now.
+- **2026-07-20 (later 3)** — **Metadata Batch 1 APPLIED** (#1 salt-analysis
+  Virtual-Lab-first title; #2 NCERT-PDF chapter-first titles + family-wide
+  2026-27 year bump; #3 JEE PYQ hub titles with (N Qs, yearMin–yearMax) —
+  new manifest fields + re-export). Plus research-backed token fixes:
+  college-predictor (Free/Rank-Wise/JoSAA-CSAB), handwritten-notes hub
+  (Class 11 & 12 front-load), year bumps in assertion-reason +
+  ncert-solutions. Class-9/Live Books EXCLUDED per founder. **Bug found &
+  fixed:** export_jee_main_pyqs.js wrote to dead pre-monorepo path since
+  Phase 5 — live PYQ data was frozen at 2026-05-07; now fresh (1,868 Qs).
+  Details: `plans/METADATA_REWRITE_BATCH_1.md` status header.
+- **2026-07-20 (later 2)** — Free-platform keyword research sweep run (8 family
+  agents + synthesis; autocomplete + SERP mining, no paid tools). Doc saved to
+  `_agents/data/keyword-research-2026-07-20.md`; summary section added above.
+  Feeds the pending metadata pass (Class-9 template, NCERT-PDF year bump,
+  salt-analysis fix, question-page titles, predictor tokens + CSAB window).
+- **2026-07-20 (later)** — Part G re-validated against a fresh 28d export (see
+  "2026-07-20 re-validation" above). Class-9 promoted to hit-list #1 by
+  leverage; jee-main-pyqs zero-traffic confirmed; per-family GSC properties
+  flagged as too-new-to-read until ~2026-08-05. Also this session: SEO
+  dashboard outage diagnosed (dead OAuth refresh token — see
+  `plans/SEO_DASHBOARD.md` §OUTAGE; fix parked pending Google account access).
+- **2026-07-20** — Sitemap lastmod fixes (GSC coverage review): (1) Crucible
+  question-page lastmod now floored at `QUESTION_PAGE_SSR_DEPLOY` (2026-07-18) —
+  Phase A changed the rendered HTML of all ~14.3k `/the-crucible/q/*` pages but
+  Mongo `updated_at` never moved, so Google had no freshness signal to re-crawl
+  the ~3.4k "Crawled - currently not indexed" pool (drilldown: 932/1000 sampled
+  were crucible q pages, all crawled pre-Phase-A). (2) career-spec +
+  career-explorer sitemap fallbacks changed `new Date()` → `STABLE_LASTMOD`
+  (leftover false-freshness bug). Also verified: the 815 GSC 5xx errors are all
+  stale (Apr 29–May 27 crawls, bot-storm era; spot-checked URLs return 200) —
+  Validate Fix clicked in GSC is the remaining manual step.
 - **2026-07-18 (later)** — Part G added: evidence-based title/metadata formulas
   (GSC striking-distance mining + live competitor research). Shipped alongside:
   `[Solved] ` prefix on both single-question title templates (crucible q +

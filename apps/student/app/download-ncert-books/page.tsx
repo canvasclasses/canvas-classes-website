@@ -6,9 +6,9 @@ import { getAllNcertBooks } from '@/features/books/data/ncertBooksData';
 const BASE_URL = 'https://www.canvasclasses.in';
 
 export const metadata: Metadata = {
-    title: 'NCERT Books PDF Download — Class 8, 9, 10, 11 & 12 (2025-26)',
+    title: 'NCERT Books PDF Download — Class 8, 9, 10, 11 & 12 (2026-27)',
     description:
-        'Free PDF download of every NCERT textbook for Class 8 to 12 — Physics, Chemistry, Biology, Mathematics, Science, English & Social Science. Latest CBSE 2025-26 syllabus including the new NEP 2020 books for Class 9 (Kaveri, Science, Mathematics). Read online or download instantly. No login.',
+        'Free PDF download of every NCERT textbook for Class 8 to 12 — Physics, Chemistry, Biology, Mathematics, Science, English & Social Science. Latest CBSE 2026-27 syllabus including the new NEP 2020 books for Class 9 (Kaveri, Science, Mathematics). Read online or download instantly. No login.',
     keywords: [
         'NCERT books PDF download',
         'NCERT textbook class 8',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         'NCERT English Kaveri class 9',
         'NCERT new book class 9',
         'NEP 2020 NCERT textbook',
-        'CBSE 2025-26 NCERT textbook',
+        'CBSE 2026-27 NCERT textbook',
         'CBSE class 9 new syllabus 2025',
         'NCERT chapter wise PDF',
         'NCERT book free download',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         canonical: `${BASE_URL}/download-ncert-books`,
     },
     openGraph: {
-        title: 'NCERT Books PDF — Class 8 to 12 All Subjects (2025-26) | Canvas Classes',
+        title: 'NCERT Books PDF — Class 8 to 12 All Subjects (2026-27) | Canvas Classes',
         description:
             'Free PDFs of every NCERT textbook for Class 8 to 12 — Physics, Chemistry, Biology, Maths, Science, English, Social Science. Includes new NEP 2020 books. Read online or download free.',
         type: 'website',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'NCERT Books PDF Download Class 8–12 (2025-26)',
+        title: 'NCERT Books PDF Download Class 8–12 (2026-27)',
         description:
             'Free NCERT textbooks for Class 8–12. All subjects, every chapter, instant PDF — including the new NEP 2020 books.',
     },
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
 
 const FAQS: { q: string; a: string }[] = [
     {
-        q: 'Are these the latest 2025-26 NCERT textbooks?',
-        a: 'Yes. The library mirrors the current 2025-26 CBSE NCERT editions, including all rationalised chapters and the new NEP 2020 textbooks for Class 9 (Kaveri English, the new Science book and the new Mathematics book).',
+        q: 'Are these the latest 2026-27 NCERT textbooks?',
+        a: 'Yes. The library mirrors the current 2026-27 CBSE NCERT editions, including all rationalised chapters and the new NEP 2020 textbooks for Class 9 (Kaveri English, the new Science book and the new Mathematics book).',
     },
     {
         q: 'Are these PDFs really free? Is there any login?',
@@ -95,7 +95,7 @@ function buildStructuredData(bookCount: number, chapterCount: number) {
                 url,
                 name: 'NCERT Textbooks PDF Download — Class 8 to 12',
                 description:
-                    `Free PDF download of ${bookCount} NCERT textbooks (${chapterCount} chapters) for Class 8, 9, 10, 11, and 12. Covers Science, Mathematics, English, Physics, Biology, Chemistry, and Social Science for the CBSE 2025-26 syllabus, including the new NEP 2020 textbooks.`,
+                    `Free PDF download of ${bookCount} NCERT textbooks (${chapterCount} chapters) for Class 8, 9, 10, 11, and 12. Covers Science, Mathematics, English, Physics, Biology, Chemistry, and Social Science for the CBSE 2026-27 syllabus, including the new NEP 2020 textbooks.`,
                 inLanguage: 'en-IN',
                 isPartOf: {
                     '@type': 'WebSite',
@@ -107,7 +107,7 @@ function buildStructuredData(bookCount: number, chapterCount: number) {
                 mainEntity: { '@id': `${url}#itemlist` },
                 about: [
                     { '@type': 'Thing', name: 'NCERT' },
-                    { '@type': 'Thing', name: 'CBSE 2025-26 syllabus' },
+                    { '@type': 'Thing', name: 'CBSE 2026-27 syllabus' },
                     { '@type': 'Thing', name: 'NEP 2020' },
                 ],
                 provider: {

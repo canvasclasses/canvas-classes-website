@@ -1,6 +1,46 @@
 # SEO Dashboard — plan
 
-Owner: Canvas. Started 2026-05-25. Status: PR 1 of 3 landed.
+Owner: Canvas. Started 2026-05-25. Status: PRs 1–4 shipped; **⚠️ PIPELINE DOWN since 2026-05-26 — see "2026-07-20 OUTAGE" section below before touching anything.**
+
+## 2026-07-20 OUTAGE — pipeline dead, dashboard blank (diagnosed, NOT yet fixed)
+
+**Symptom:** admin `/seo` pages render empty. Newest `gsc_metrics_daily` row is
+**2026-05-26**; the UI's 7/28-day windows are entirely past the last data point.
+
+**Root cause:** every sync run since ~Jun 1 fails with **`invalid_grant`** — the
+OAuth refresh token is dead. The Decisions table below claims Testing-mode
+refresh tokens "don't expire"; **that is WRONG**: Google expires refresh tokens
+after **7 days while the OAuth consent screen is in Testing status** (regardless
+of test-user membership). Token minted ~May 25 → died ~Jun 1. Publishing the
+app to Production is what makes refresh tokens long-lived.
+
+**Secondary findings (from `gsc_sync_runs`):**
+- A 2026-05-29 run failed CrUX with `API key not valid` — `CRUX_API_KEY` needs
+  verifying/re-issuing too.
+- No cron-triggered run has logged since 2026-05-25 — after fixing auth, confirm
+  the Vercel cron on the admin project is actually firing (check `CRON_SECRET`
+  env + cron logs), don't assume.
+
+**Fix runbook (founder — needs the Google account, ~15 min):**
+1. ✅ DONE 2026-07-20: OAuth app published Testing → In production. Also done:
+   OAuth client ID + (rotated) secret added to the Windows machine's root
+   `.env.local` (this machine never had them — env files aren't synced across
+   machines). ⚠️ The client secret was ROTATED (old one was view-once-hidden) —
+   the old secret in the Mac's `.env.local` and in Vercel admin env is now
+   INVALID; update both when doing step 2.
+2. **← RESUME HERE.** Run `npx tsx scripts/seo/get-refresh-token.ts`, complete
+   the browser sign-in with the GSC-owner Google account (blocked 2026-07-20:
+   founder didn't have the account's 2FA/code access at hand — script got as
+   far as "waiting for callback", so creds are confirmed working). Paste the new
+   `GOOGLE_OAUTH_REFRESH_TOKEN` into root `.env.local` **and** update Vercel
+   admin project env (Production + Preview) with BOTH the new refresh token AND
+   the rotated `GOOGLE_OAUTH_CLIENT_SECRET`.
+3. Verify `CRUX_API_KEY` (manual sync: `POST /api/v2/seo/sync` with
+   `x-admin-secret`) — re-issue the key if still invalid.
+4. Backfill the gap: `npx tsx scripts/seo/backfill-gsc.ts` — resumable, skips
+   existing dates, so it fills May 27 → today only.
+5. Redeploy admin so the cron picks up new env; next morning confirm a `cron`
+   -triggered row in `/seo/sync` and the Freshness pill is green.
 
 ## Goal
 
@@ -19,7 +59,7 @@ later.
 | Decision | Value | Why |
 |---|---|---|
 | Where | `apps/admin/` (operator tool) | Already auth-gated; admin landing has a card grid; matches Phase 5 split |
-| Auth | OAuth2 installed-app + long-lived refresh token | Service-account email was silently rejected by GSC's "Add user" dialog (a documented quirk for some personal Google accounts). OAuth refresh tokens issued to a Testing-mode app for a test user don't expire — reliable, same low-friction operationally |
+| Auth | OAuth2 installed-app + long-lived refresh token | Service-account email was silently rejected by GSC's "Add user" dialog (a documented quirk for some personal Google accounts). ~~OAuth refresh tokens issued to a Testing-mode app for a test user don't expire~~ **WRONG — Testing-mode refresh tokens expire after 7 days; this killed the pipeline on ~Jun 1 (see 2026-07-20 OUTAGE above). App must be published to Production for long-lived tokens.** |
 | Data depth | Daily totals + top 1000 queries + top 1000 pages + device + country | Covers 99% of the views; ~10k Mongo docs/month |
 | CWV source | Chrome UX Report API | Field data, free, would have caught the 283ms INP weeks earlier |
 | Site scope | `canvasclasses.in` only | Single property; simpler config |

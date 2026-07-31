@@ -114,7 +114,7 @@ export default function ChapterHero({ meta, notes, crucibleStats, viewCount }: P
                     </div>
                     <div className="flex items-center gap-2 text-zinc-500">
                         <span className="text-amber-400" style={{ letterSpacing: '-1px' }}>★★★★★</span>
-                        <span>Written by Paaras Sir · 2025-26 syllabus</span>
+                        <span>Written by Paaras Sir · 2026-27 syllabus</span>
                     </div>
                 </div>
         </div>

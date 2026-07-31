@@ -29,7 +29,7 @@ The Crucible is Canvas Classes's adaptive Chemistry practice engine. It contains
 
 ## 3. NCERT Solutions (Class 11 & 12 Chemistry)
 
-Free, step-by-step NCERT Chemistry textbook solutions for every Class 11 and Class 12 question, with detailed explanations and YouTube video walkthroughs. Updated for the 2025-26 syllabus and aligned to the official NCERT chapter sequence.
+Free, step-by-step NCERT Chemistry textbook solutions for every Class 11 and Class 12 question, with detailed explanations and YouTube video walkthroughs. Updated for the 2026-27 syllabus and aligned to the official NCERT chapter sequence.
 
 - Root: https://www.canvasclasses.in/ncert-solutions
 - Per-chapter: https://www.canvasclasses.in/ncert-solutions/class-{11|12}/{chapter-slug}

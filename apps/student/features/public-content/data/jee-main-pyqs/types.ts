@@ -35,6 +35,10 @@ export interface JmpChapterMeta {
     classLevel: 11 | 12;
     chapterType: JmpChapterType;
     questionCount: number;
+    /** Earliest exam year among the chapter's questions (null if none tagged). */
+    yearMin?: number | null;
+    /** Latest exam year among the chapter's questions (null if none tagged). */
+    yearMax?: number | null;
     /** Question slugs — used for generateStaticParams. */
     questionSlugs: string[];
 }

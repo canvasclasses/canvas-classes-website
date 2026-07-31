@@ -420,8 +420,10 @@ export default async function ChapterNotesPage({
                     <p className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-4 text-xs leading-relaxed text-zinc-500">
                         <FlaskConical size={12} className="mr-1.5 inline" />
                         These handwritten notes are written by Paaras Sir at Canvas Classes and follow the
-                        NCERT Class {meta.classLevel} Chemistry syllabus prescribed by CBSE for the 2025-26
-                        session. Free to read online or download as PDF — no login required.
+                        NCERT Class {meta.classLevel} Chemistry curriculum for JEE, NEET & CBSE 2026-27
+                        preparation{meta.droppedFromNcert
+                            ? ' (this chapter is beyond the current rationalised NCERT syllabus but remains high-weightage for JEE/NEET)'
+                            : ''}. Free to read online or download as PDF — no login required.
                     </p>
                 </div>
             </main>
