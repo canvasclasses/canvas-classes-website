@@ -208,12 +208,30 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
             />
           </div>
 
-          <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-10
-            flex flex-col md:flex-row md:items-end gap-6">
+          {/* The book sits in its own sized box. A book rotated -26deg on Y
+              paints WIDER than its layout box, so without the reserved width
+              here it overlapped the badge and the title (it did exactly that
+              on first attempt). Everything the student already knows from
+              having clicked through — the tagline, the four feature chips,
+              the "CHEMISTRY · GRADE 11" eyebrow — is gone: this page's job is
+              the chapter list, not a second pitch. */}
+          <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-7 md:py-9
+            flex items-center gap-5 md:gap-8">
+
+            <div className="relative shrink-0 w-[132px] md:w-[168px] flex justify-center">
+              <div className="absolute inset-0 bg-[var(--plum)] blur-3xl opacity-25" />
+              <Book3D
+                subject={book.subject}
+                grade={book.grade}
+                coverImage={book.cover_image}
+                thickness={bookThickness(book.page_count ?? 0)}
+                scale={1.05}
+              />
+            </div>
+
             <div className="flex-1 min-w-0">
-              {/* Live Books pill */}
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-                bg-[var(--plum-tint)] border border-[var(--plum-line)] mb-3">
+                bg-[var(--plum-tint)] border border-[var(--plum-line)] mb-2.5">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75 animate-ping" />
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
@@ -223,72 +241,22 @@ export default function BookTableOfContents({ book, chapters, firstPageSlug, bas
                 </span>
               </div>
 
-              {/* Logo + title */}
-              <div className="flex items-center gap-4 md:gap-5">
-                {/* The actual book, not a generic glyph — the same object the
-                    grade shelf shows, so a student arriving here from
-                    /class-11 recognises what they clicked. */}
-                <div className="relative shrink-0 pr-3">
-                  <div className="absolute inset-0 bg-[var(--plum)] blur-3xl opacity-25" />
-                  <Book3D
-                    subject={book.subject}
-                    grade={book.grade}
-                    coverImage={book.cover_image}
-                    thickness={bookThickness(book.page_count ?? 0)}
-                    scale={1.15}
-                  />
-                </div>
-                <div className="min-w-0">
-                  <p className={`text-[11px] uppercase tracking-[0.18em] font-bold ${theme.accent} mb-1`}>
-                    {book.subject} · Grade {book.grade}
-                  </p>
-                  <h1 className="text-2xl md:text-4xl font-black tracking-tight text-white leading-[1.05]">
-                    {book.title}
-                  </h1>
-                </div>
-              </div>
+              <h1 className="text-2xl md:text-4xl font-black tracking-tight text-white leading-[1.05]">
+                {book.title}
+              </h1>
 
-              <p className="mt-4 text-sm md:text-base text-zinc-400 leading-relaxed max-w-xl">
-                NCERT Class {book.grade} {book.subject} as an interactive live book — with simulations,
-                worked examples, quizzes, video walkthroughs and Hinglish mode.
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {[
-                  { icon: Gamepad2,       label: 'Simulations',   color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
-                  { icon: ClipboardCheck, label: 'Quizzes',       color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
-                  { icon: Languages,      label: 'Hinglish mode', color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
-                  { icon: Video,          label: 'Video walkthroughs', color: 'text-[var(--plum-text)]', bg: 'bg-white/[0.03]', border: 'border-white/[0.08]' },
-                ].map(chip => {
-                  const Ic = chip.icon;
-                  return (
-                    <span
-                      key={chip.label}
-                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full
-                        text-[10px] font-semibold border ${chip.bg} ${chip.border} ${chip.color}`}
-                    >
-                      <Ic size={10} />
-                      {chip.label}
-                    </span>
-                  );
-                })}
-              </div>
+              {firstPageSlug && (
+                <Link
+                  href={`${bp}/${continueReading?.slug ?? firstPageSlug}`}
+                  className="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
+                    bg-[var(--plum)] hover:bg-[var(--plum-hover)] text-white font-semibold text-sm
+                    transition-colors shadow-xl shadow-black/30 ring-1 ring-[var(--plum-line)]"
+                >
+                  <Play size={14} className="fill-white" />
+                  <span>{continueReading ? 'Continue reading' : 'Start reading'}</span>
+                </Link>
+              )}
             </div>
-
-            {firstPageSlug && (
-              <Link
-                href={`${bp}/${continueReading?.slug ?? firstPageSlug}`}
-                className="group relative flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-xl
-                  bg-[var(--plum)] hover:bg-[var(--plum-hover)] text-white font-semibold text-sm
-                  transition-colors shrink-0 shadow-xl shadow-black/30
-                  ring-1 ring-[var(--plum-line)] self-start md:self-end"
-              >
-                <span className="absolute inset-0 rounded-xl bg-[var(--plum-hover)]
-                  opacity-0 group-hover:opacity-100 blur-md transition-opacity -z-10" />
-                <Play size={14} className="fill-black" />
-                <span>{continueReading ? 'Continue Reading' : 'Start Learning'}</span>
-              </Link>
-            )}
           </div>
         </header>
 

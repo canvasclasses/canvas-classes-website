@@ -323,19 +323,107 @@ function PageRow({
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
-/* ─── ChapterRow — flat row inside the book card. No own border/card.       */
-/* Dividers separate rows; expanded state shows an inline flat page list.    */
+/* ─── Two-pane chapter browser                                              */
+/*                                                                           */
+/* Replaces the accordion. At 3 chapters an accordion is fine; at the 15-16  */
+/* a finished book carries it is not — opening Ch.1 pushed ~17 page rows     */
+/* between you and Ch.2, so reaching Ch.12 meant scrolling past everything   */
+/* above it. The rail keeps every chapter one click away no matter which is  */
+/* open, and each pane scrolls independently so neither can grow unbounded.  */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 
-function ChapterRow({
-  book, chapter, chapterPages, isOpen, onToggle, basePath, theme,
+function ChapterRailItem({
+  chapter, chapterPages, completedSlugs, loading, isActive, onSelect, theme,
+}: {
+  chapter: GradeChapter;
+  chapterPages: GradePage[];
+  completedSlugs: Set<string>;
+  loading: boolean;
+  isActive: boolean;
+  onSelect: () => void;
+  theme: SubjectTheme;
+}) {
+  const total = chapterPages.length;
+  const completed = chapterPages.filter(p => completedSlugs.has(p.slug)).length;
+  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+  const isDone = pct === 100 && total > 0;
+
+  return (
+    <button
+      onClick={onSelect}
+      disabled={total === 0}
+      className={`w-full text-left flex items-start gap-3 px-3 py-3 border-l-2 transition-colors
+        disabled:cursor-default group ${
+        isActive
+          ? 'bg-[var(--plum-tint)] border-l-[var(--plum-hover)]'
+          : 'border-l-transparent hover:bg-white/[0.03] disabled:hover:bg-transparent'
+      }`}
+    >
+      {/* Thumbnail retained from the accordion — it is the thing that stops
+          this reading as a bare list of titles. */}
+      <div className="shrink-0 relative w-[58px] h-[42px] rounded-md overflow-hidden
+        border border-white/[0.08] bg-white/[0.03]">
+        {chapter.thumbnail ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={chapter.thumbnail}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover opacity-80
+                group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          </>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <BookOpen size={13} className="text-white/15" strokeWidth={1.5} />
+          </div>
+        )}
+        <span className={`absolute bottom-0.5 left-1 text-[10px] font-black tabular-nums leading-none
+          drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] ${isDone ? 'text-[var(--gold)]' : theme.accent}`}>
+          {chapter.number}
+        </span>
+      </div>
+
+      <div className="flex-1 min-w-0">
+        <p className={`text-[13px] leading-snug font-medium transition-colors ${
+          isActive ? 'text-white' : 'text-white/70 group-hover:text-white/90'
+        }`}>
+          {chapter.title}
+        </p>
+        {total > 0 ? (
+          <div className="mt-1.5 flex items-center gap-2">
+            <div className="flex-1 h-1 bg-white/[0.08] rounded-full overflow-hidden">
+              {!loading && (
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    isDone ? 'bg-[var(--gold)]' : `bg-gradient-to-r ${theme.bar}`
+                  }`}
+                  style={{ width: `${pct}%` }}
+                />
+              )}
+            </div>
+            <span className="text-[10px] text-white/45 tabular-nums shrink-0">
+              {completed}/{total}
+            </span>
+          </div>
+        ) : (
+          <p className="mt-1 text-[10px] uppercase tracking-wider text-white/40">Coming soon</p>
+        )}
+      </div>
+    </button>
+  );
+}
+
+function ChapterPane({
+  book, chapter, chapterPages, basePath, theme,
   records, completedSlugs, loading, bookmarkedSlugs, toggleBookmark,
 }: {
   book: GradeBook;
-  chapter: GradeChapter;
+  chapter: GradeChapter | null;
   chapterPages: GradePage[];
-  isOpen: boolean;
-  onToggle: () => void;
   basePath: string;
   theme: SubjectTheme;
   records: BookProgressRecord[];
@@ -350,159 +438,68 @@ function ChapterRow({
     return map;
   }, [records]);
 
+  if (!chapter) {
+    return (
+      <div className="flex items-center justify-center py-16 px-6 text-center">
+        <p className="text-sm text-white/55">Pick a chapter to see its pages.</p>
+      </div>
+    );
+  }
+
   const total = chapterPages.length;
   const completed = chapterPages.filter(p => completedSlugs.has(p.slug)).length;
-  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
-  const totalMin = chapterPages.reduce((s, p) => s + (p.reading_time_min ?? 0), 0);
   const remainingMin = chapterPages
     .filter(p => !completedSlugs.has(p.slug))
     .reduce((s, p) => s + (p.reading_time_min ?? 0), 0);
-  const isDone = pct === 100 && total > 0;
 
   return (
-    <div
-      className={`relative border-b border-white/[0.05] last:border-b-0 transition-colors
-        ${isOpen ? 'bg-white/[0.015]' : ''}`}
-    >
-      <button
-        onClick={onToggle}
-        className="w-full text-left px-5 md:px-8 py-4 md:py-5 flex items-center gap-4 md:gap-5
-          hover:bg-white/[0.02] transition-colors group disabled:cursor-default disabled:hover:bg-transparent"
-        disabled={total === 0}
-      >
-        {/* Thumbnail — a real image from inside the chapter. This is the
-            single biggest thing separating a list of titles from something
-            that looks made by a person. Falls back to the number alone. */}
-        <div className="shrink-0 relative w-[74px] h-[52px] md:w-[92px] md:h-[62px] rounded-lg
-          overflow-hidden border border-white/[0.08] bg-white/[0.03]">
-          {chapter.thumbnail ? (
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={chapter.thumbnail}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover opacity-80
-                  group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-300"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-            </>
-          ) : (
-            /* Not every chapter has an in-book image yet. A bare box with only
-               the darkening gradient below read as a broken/failed thumbnail
-               rather than "none exists" — this glyph makes the empty state
-               legible as a deliberate placeholder. */
-            <div className="absolute inset-0 flex items-center justify-center">
-              <BookOpen size={16} className="text-white/15" strokeWidth={1.5} />
-            </div>
-          )}
-          <span className={`absolute bottom-1 left-1.5 text-[11px] font-black tabular-nums leading-none
-            drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] ${isDone ? 'text-[var(--gold)]' : theme.accent}`}>
-            {chapter.number}
-          </span>
-        </div>
-
-        {/* Title + progress */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1.5">
-            <h4 className="text-base md:text-lg font-bold text-white leading-tight">
-              {chapter.title}
-            </h4>
-            {isDone && (
-              <span className="flex items-center gap-1 text-[10px] font-semibold text-[var(--gold)]
-                bg-[var(--gold-tint)] border border-[rgba(199,154,74,0.30)] px-1.5 py-0.5 rounded-full">
-                <CheckCircle2 size={10} />
-                Complete
-              </span>
-            )}
-          </div>
-
-          {chapter.description && (
-            <p className="text-[13px] text-white/45 leading-snug mb-2 line-clamp-2 max-w-2xl">
-              {chapter.description}
-            </p>
-          )}
-
-          {total > 0 ? (
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex-1 min-w-[120px] max-w-[280px] h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-                {loading ? (
-                  <div className="h-full w-0 bg-white/5 animate-pulse rounded-full" />
-                ) : (
-                  <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      isDone ? 'bg-[var(--gold)]' : `bg-gradient-to-r ${theme.bar}`
-                    }`}
-                    style={{ width: `${pct}%` }}
-                  />
-                )}
-              </div>
-              <span className="text-xs text-white/60 tabular-nums font-medium">
-                {completed}/{total}<span className="text-white/45"> pages</span>
-              </span>
-              {totalMin > 0 && (
-                <span className="text-xs text-white/55 flex items-center gap-1 tabular-nums">
-                  <Clock size={11} />
-                  {isDone
-                    ? `${totalMin} min`
-                    : remainingMin > 0
-                      ? `~${remainingMin} min left`
-                      : `${totalMin} min`}
-                </span>
-              )}
-            </div>
-          ) : (
-            <p className="text-xs text-white/50 italic">Pages coming soon</p>
-          )}
-        </div>
-
-        {total > 0 && (
-          <ChevronDown
-            size={18}
-            className={`shrink-0 text-white/45 group-hover:text-white/80 transition-all duration-200
-              ${isOpen ? 'rotate-180 text-zinc-200' : ''}`}
-          />
+    <div>
+      <div className="px-5 md:px-6 py-4 border-b border-white/[0.06]
+        bg-gradient-to-b from-[var(--plum-tint)] to-transparent">
+        <p className={`text-[10px] uppercase tracking-[0.16em] font-bold ${theme.accent}`}>
+          Chapter {chapter.number}
+        </p>
+        <h4 className="text-lg md:text-xl font-bold text-white leading-tight mt-1">
+          {chapter.title}
+        </h4>
+        {chapter.description && (
+          <p className="text-[13px] text-white/50 leading-snug mt-1.5 max-w-2xl">
+            {chapter.description}
+          </p>
         )}
-      </button>
+        <p className="text-xs text-white/55 tabular-nums mt-2">
+          {completed}/{total} pages
+          {remainingMin > 0 && ` · ~${remainingMin} min left`}
+        </p>
+      </div>
 
-      {/* Expanded page list — flat rows, indented under the title column */}
-      {isOpen && total > 0 && (
-        <div className="px-5 md:px-8 pb-4 md:pb-5">
-          <div className="pl-0 md:pl-[61px] flex flex-col">
-            {chapterPages.map((pg, i) => {
-              const done         = completedSlugs.has(pg.slug);
-              const isBookmarked = bookmarkedSlugs.has(pg.slug);
-              const progressRec  = recordsBySlug.get(pg.slug);
-              const quizScore    = progressRec?.quiz_score;
-              const hasRealQuiz  = pg.content_types?.includes('inline_quiz') ?? false;
-
-              return (
-                <PageRow
-                  key={pg.slug}
-                  page={pg}
-                  index={i}
-                  done={done}
-                  loading={loading}
-                  quizScore={quizScore}
-                  hasQuiz={hasRealQuiz}
-                  isBookmarked={isBookmarked}
-                  basePath={basePath}
-                  bookSlug={seg(book)}
-                  onBookmark={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleBookmark(pg.slug, pg.title, pg.chapter_number);
-                  }}
-                />
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {/* Own scroll container, so a long chapter never pushes the rail off
+          screen — the failure the accordion had. */}
+      <div className="max-h-[60vh] overflow-y-auto px-2 py-2">
+        {chapterPages.map((pg, i) => (
+          <PageRow
+            key={pg.slug}
+            page={pg}
+            index={i}
+            done={completedSlugs.has(pg.slug)}
+            loading={loading}
+            quizScore={recordsBySlug.get(pg.slug)?.quiz_score}
+            hasQuiz={pg.content_types?.includes('inline_quiz') ?? false}
+            isBookmarked={bookmarkedSlugs.has(pg.slug)}
+            basePath={basePath}
+            bookSlug={seg(book)}
+            onBookmark={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleBookmark(pg.slug, pg.title, pg.chapter_number);
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
+
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 /* ─── SubjectSection — one per book. Header + chapter tiles                 */
@@ -536,6 +533,16 @@ function SubjectSection({
     return chPgs.length > 0 && chPgs.every(p => completedSlugs.has(p.slug));
   }).length;
   const pct = totalPages > 0 ? Math.round((donePages / totalPages) * 100) : 0;
+
+  /* The rail always has a selection — an empty right pane on arrival would
+     waste the layout. Falls back to the first chapter that has pages. */
+  const activeChapter = useMemo(() => {
+    const opened = openChapter?.bookSlug === book.slug
+      ? book.chapters.find(c => c.number === openChapter.chapterNum)
+      : undefined;
+    if (opened) return opened;
+    return book.chapters.find(c => bookPages.some(p => p.chapter_number === c.number)) ?? null;
+  }, [openChapter, book.slug, book.chapters, bookPages]);
 
   return (
     <section
@@ -668,34 +675,45 @@ function SubjectSection({
           )}
         </div>
 
-        {/* Chapter rows — flat, divider-separated, inside the same card */}
+        {/* Two-pane browser: chapters on the left, the selected chapter's
+            pages on the right. Both scroll independently. */}
         {book.chapters.length === 0 ? (
           <div className="border-t border-white/[0.06] px-5 py-8 text-center">
             <p className="text-sm text-white/55">No chapters published yet.</p>
           </div>
         ) : (
-          <div className="relative border-t border-white/[0.08]">
-            {book.chapters.map(ch => {
-              const chPages = bookPages.filter(p => p.chapter_number === ch.number);
-              const isOpen = openChapter?.bookSlug === book.slug && openChapter.chapterNum === ch.number;
-              return (
-                <ChapterRow
+          <div className="border-t border-white/[0.08] grid lg:grid-cols-[300px_1fr]">
+            <div className="lg:border-r border-white/[0.08] lg:max-h-[70vh] overflow-y-auto
+              max-h-[36vh] border-b lg:border-b-0">
+              <p className="px-4 pt-3 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white/40">
+                {book.chapters.length} chapters
+              </p>
+              {book.chapters.map(ch => (
+                <ChapterRailItem
                   key={ch.number}
-                  book={book}
                   chapter={ch}
-                  chapterPages={chPages}
-                  isOpen={isOpen}
-                  onToggle={() => onToggleChapter(book.slug, ch.number)}
-                  basePath={basePath}
-                  theme={theme}
-                  records={records}
+                  chapterPages={bookPages.filter(p => p.chapter_number === ch.number)}
                   completedSlugs={completedSlugs}
                   loading={loading}
-                  bookmarkedSlugs={bookmarkedSlugs}
-                  toggleBookmark={toggleBookmark}
+                  isActive={activeChapter?.number === ch.number}
+                  onSelect={() => onToggleChapter(book.slug, ch.number)}
+                  theme={theme}
                 />
-              );
-            })}
+              ))}
+            </div>
+
+            <ChapterPane
+              book={book}
+              chapter={activeChapter}
+              chapterPages={activeChapter ? bookPages.filter(p => p.chapter_number === activeChapter.number) : []}
+              basePath={basePath}
+              theme={theme}
+              records={records}
+              completedSlugs={completedSlugs}
+              loading={loading}
+              bookmarkedSlugs={bookmarkedSlugs}
+              toggleBookmark={toggleBookmark}
+            />
           </div>
         )}
       </div>
