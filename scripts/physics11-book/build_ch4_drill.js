@@ -1,0 +1,292 @@
+'use strict';
+/**
+ * Class 11 Physics · Chapter 4 "Laws of Motion" — page 16.
+ * Wave 3c: the JEE/NEET drill — six sections mapped one-to-one onto the six
+ * `tag_nlm_*` Crucible topic tags, plus an assertion–reason set.
+ *
+ * Items adapted from the reference books use source 'mcq' (no badge) per the
+ * standing no-third-party-attribution rule. Nothing here carries an NCERT or
+ * CBSE badge unless it genuinely is one.
+ *
+ * Run: node scripts/physics11-book/build_ch4_drill.js
+ */
+const { b, mcq, mcqFixed, num, ensureChapter, upsertPages, withDb } = require('./_book_ch4');
+
+const AR_OPTIONS = [
+  'Both A and R are true, and R is the correct explanation of A',
+  'Both A and R are true, but R is NOT the correct explanation of A',
+  'A is true but R is false',
+  'A is false but R is true',
+];
+
+const p16 = {
+  page_number: 16,
+  slug: 'laws-of-motion-jee-neet-drill',
+  title: 'JEE / NEET Drill — Laws of Motion',
+  subtitle: 'Fifty-four items across the six topic areas, at exam standard',
+  blocks: [
+    b('callout', 0, {
+      variant: 'note',
+      title: 'How to work through this',
+      markdown: 'Six sections, one per topic area of the chapter, then an assertion–reason set. Take $ g = 10 $ m/s² throughout unless a question says otherwise.\n\n**Do a whole section in one sitting, timed at roughly 90 seconds per item, before revealing anything.** Checking each answer as you go feels productive but hides exactly the thing you need to know — whether you can still pick the right method when nobody has just told you which page you are on.',
+    }),
+    b('practice_bank', 1, {
+      title: 'Section 1 — Newton\'s Laws, momentum and impulse',
+      intro: 'Eight items. Watch for the ones where the direction of motion and the direction of the force are deliberately different.',
+      sections: [
+        {
+          id: 'drill-nlm1',
+          title: "Newton's three laws",
+          items: [
+            mcq('d1-1', 'A body of mass 2 kg moving at 5 m/s is brought to rest by a constant force in 0.5 s. The magnitude of the force is:',
+              ['$ 5 $ N, obtained by dividing the mass by the time', '$ 20 $ N, from the change in momentum over the time', '$ 10 $ N, the product of the mass and initial speed', '$ 2.5 $ N, the initial speed divided by twice the mass'],
+              1, '$ F = \\Delta p/\\Delta t = (2 \\times 5 - 0)/0.5 = 10/0.5 = 20 $ N.'),
+            mcq('d1-2', 'A ball of mass 0.1 kg strikes a wall at 10 m/s and rebounds at 10 m/s. The impulse on the ball is:',
+              ['$ 1 $ kg·m/s, the ball\'s momentum before hitting the wall', '$ 2 $ kg·m/s, twice its momentum since it fully reverses', '$ 0 $ kg·m/s, since the speed is completely unchanged', '$ 0.5 $ kg·m/s, half of the original momentum value'],
+              1, 'A perfect reversal changes momentum from $ +mv $ to $ -mv $, a total change of $ 2mv = 2(0.1)(10) = 2 $ kg·m/s. Treating it as if the ball merely stopped is the standard trap.'),
+            mcq('d1-3', 'A man of mass 60 kg jumps from a boat of mass 240 kg at rest. If he leaves at 2 m/s, the boat\'s recoil speed is:',
+              ['$ 0.5 $ m/s, from conserving the total system momentum', '$ 2.0 $ m/s, exactly matching the man\'s own speed', '$ 8.0 $ m/s, since the boat is four times heavier', '$ 0.25 $ m/s, a quarter of the man\'s leaving speed'],
+              0, 'Total momentum starts at zero, so $ 240v = 60(2) = 120 $, giving $ v = 0.5 $ m/s in the opposite direction.'),
+            num('d1-4', 'A force of 20 N acts on a 4 kg body initially at rest, for 3 s. Find the final momentum of the body.',
+              '$ 60 $ kg·m/s',
+              'Impulse $ = F\\Delta t = 20 \\times 3 = 60 $ kg·m/s, which equals the change in momentum. Starting from rest, this is the final momentum. (Equivalently $ a = 5 $ m/s², $ v = 15 $ m/s, $ p = 4(15) = 60 $.)'),
+            mcq('d1-5', 'A body is in equilibrium under three forces. Which statement must be true?',
+              ['All three forces must have exactly equal magnitudes here', 'The three forces must all lie in one single plane', 'The three forces must be mutually perpendicular to each other', 'Each of the three forces must individually be equal to zero'],
+              1, 'Three forces summing to zero must form a closed triangle when placed tip-to-tail, and any triangle is planar — so the three must be coplanar. Their magnitudes need not be equal and they need not be perpendicular.'),
+            mcq('d1-6', 'A rocket ejects gas backwards and accelerates forwards. The forward force on the rocket is the Third Law partner of:',
+              ['The rocket\'s own weight acting downward toward Earth', 'The backward force the rocket exerts on the ejected gas', 'The air resistance acting on the outside of the rocket', 'The gravitational pull of the rocket on the Earth below'],
+              1, 'The engine pushes the exhaust gas backward; by the Third Law the gas pushes the rocket forward with an equal force. The partner is always the same two bodies with the roles reversed.'),
+            num('d1-7', 'A 1000 kg car travelling at 20 m/s is stopped in 40 m by braking. Find the average braking force.',
+              '$ 5000 $ N',
+              '$ v^2 = u^2 + 2as \\Rightarrow 0 = 400 - 2a(40) \\Rightarrow a = 5 $ m/s². $ F = ma = 1000 \\times 5 = 5000 $ N.'),
+            mcq('d1-8', 'A body moves along a curved path at constant speed. Which is correct?',
+              ['The net force on it is zero throughout the curved path', 'The net force is nonzero and perpendicular to its velocity', 'The net force is nonzero and parallel to its velocity vector', 'The net force continually changes the body\'s speed instead'],
+              1, 'Constant speed with changing direction means the acceleration — and so the net force — is purely perpendicular to the velocity. A parallel component would change the speed.'),
+          ],
+        },
+      ],
+    }),
+    b('practice_bank', 2, {
+      title: 'Section 2 — Free body diagrams and constraint motion',
+      intro: 'Eight items. For each, decide what to isolate before you touch a formula.',
+      sections: [
+        {
+          id: 'drill-nlm2',
+          title: 'FBDs, connected bodies and constraints',
+          items: [
+            num('d2-1', 'Two blocks of 2 kg and 3 kg connected by a string rest on a frictionless surface. A 25 N force is applied to the 2 kg block. Find the tension in the string.',
+              '$ 15 $ N',
+              '$ a = 25/5 = 5 $ m/s². Isolating the 3 kg block (not directly pulled): $ T = 3 \\times 5 = 15 $ N.'),
+            mcq('d2-2', 'A block hangs from a spring balance inside a lift that is in free fall. The balance reads:',
+              ['The block\'s full weight, since gravity is unchanged', 'Zero, because block and balance fall together freely', 'Twice the block\'s weight during the free fall', 'Half the block\'s weight for the duration of the fall'],
+              1, 'In free fall both the block and the balance accelerate downward at g, so no tension develops between them. The balance reads zero even though gravity still acts fully.'),
+            mcq('d2-3', 'In an Atwood machine with masses 3 kg and 5 kg, the acceleration of the system is:',
+              ['$ 2.5 $ m/s², using the mass difference over the sum', '$ 1.25 $ m/s², half of the difference-over-sum result', '$ 5.0 $ m/s², using only the heavier mass in the ratio', '$ 10 $ m/s², since both masses are in free fall here'],
+              0, '$ a = (m_2-m_1)g/(m_1+m_2) = (5-3)(10)/8 = 20/8 = 2.5 $ m/s².'),
+            num('d2-4', 'For the previous Atwood machine (3 kg and 5 kg, g = 10 m/s²), find the tension in the string.',
+              '$ 37.5 $ N',
+              '$ T = 2m_1m_2g/(m_1+m_2) = 2(3)(5)(10)/8 = 300/8 = 37.5 $ N. Check: $ 5(10) - 37.5 = 12.5 = 5(2.5) $ ✓.'),
+            mcq('d2-5', 'A load hangs from a movable pulley. To hold it in equilibrium, the tension needed in the string is:',
+              ['Equal to the load\'s full weight, as with a fixed pulley', 'Half the load\'s weight, since two segments support it', 'Twice the load\'s weight, because of the extra pulley', 'A quarter of the load\'s weight for a single movable pulley'],
+              1, 'Two string segments support the movable pulley, so $ 2T = W $ in equilibrium, giving $ T = W/2 $ — the mechanical advantage of 2.'),
+            num('d2-6', 'A 4 kg block on a frictionless table is connected over an edge pulley to a hanging 6 kg block. Take g = 10 m/s². Find the acceleration.',
+              '$ 6 $ m/s²',
+              '$ a = m_{\\text{hang}}g/(m_1+m_2) = 6(10)/10 = 6 $ m/s².'),
+            mcq('d2-7', 'Three blocks of 1 kg, 2 kg and 3 kg are connected in a line on a frictionless surface and pulled by 30 N applied to the 1 kg block. The tension in the string between the 2 kg and 3 kg blocks is:',
+              ['$ 5 $ N, computed from the mass ahead of that string', '$ 15 $ N, the mass behind it times the shared acceleration', '$ 30 $ N, simply equal to the full applied force', '$ 10 $ N, one third of the total applied force'],
+              1, '$ a = 30/6 = 5 $ m/s². Behind that string sits only the 3 kg block, so $ T = 3 \\times 5 = 15 $ N.'),
+            mcq('d2-8', 'The constraint that two masses over a single fixed pulley share the same magnitude of acceleration comes from:',
+              ['The string being inextensible, so its total length is fixed', 'The two masses happening to be equal to each other', 'The pulley being frictionless rather than a rough one', 'Newton\'s Third Law applied to the pulley\'s axle mount'],
+              0, 'The constraint is purely geometric: a fixed total length means whatever one side gains, the other loses, at every instant. It holds regardless of the masses or of pulley friction.'),
+          ],
+        },
+      ],
+    }),
+    b('practice_bank', 3, {
+      title: 'Section 3 — Friction',
+      intro: 'Eight items. For each, decide whether the body is sliding BEFORE picking a formula.',
+      sections: [
+        {
+          id: 'drill-nlm3',
+          title: 'Static, kinetic and applied friction',
+          items: [
+            mcq('d3-1', 'A 5 kg block on a floor with $ \\mu_s = 0.4 $ is pushed horizontally with 15 N. The friction force on it is:',
+              ['$ 20 $ N, the maximum static friction available here', '$ 15 $ N, self-adjusting to match the applied push', '$ 7.5 $ N, exactly half of the applied pushing force', '$ 50 $ N, matching the block\'s own weight on the floor'],
+              1, 'The ceiling is $ 0.4(50) = 20 $ N. The 15 N push is below it, so the block stays put and static friction supplies exactly 15 N.'),
+            num('d3-2', 'A block slides down a rough incline of 30° with μ = 0.2. Take g = 10 m/s², sin30° = 0.5, cos30° = 0.866. Find its acceleration.',
+              '$ \\approx 3.27 $ m/s²',
+              '$ a = g(\\sin\\theta - \\mu\\cos\\theta) = 10(0.5 - 0.2 \\times 0.866) = 10(0.5-0.173) = 3.27 $ m/s².'),
+            mcq('d3-3', 'The angle of repose for a block on a surface is 45°. The coefficient of friction is:',
+              ['$ 0.5 $, half the value of the tangent of the angle', '$ 1.0 $, since the tangent of 45 degrees equals one', '$ 0.707 $, the sine of the measured repose angle', '$ 45 $, simply the angle expressed as a plain number'],
+              1, '$ \\mu = \\tan\\alpha = \\tan45° = 1 $.'),
+            num('d3-4', 'A 10 kg block with μ = 0.5 is pulled by a rope at the optimum angle. Take g = 10 m/s². Find the minimum force to move it.',
+              '$ \\approx 44.7 $ N',
+              '$ F_{\\min} = \\mu mg/\\sqrt{1+\\mu^2} = 0.5(100)/\\sqrt{1.25} = 50/1.118 \\approx 44.7 $ N, at $ \\theta = \\tan^{-1}(0.5) \\approx 26.6° $.'),
+            mcq('d3-5', 'Pushing a crate at an angle below the horizontal, rather than pulling it at the same angle above, requires:',
+              ['Less force, since the push acts more along the motion', 'More force, since the push increases the normal force', 'Exactly the same force in both of the two cases', 'No force at all once the crate has started to move'],
+              1, 'Pushing down gives $ N = mg + F\\sin\\theta $, so friction $ \\mu N $ increases; pulling up gives $ N = mg - F\\sin\\theta $ and reduces it. This is NCERT 4.23(c).'),
+            num('d3-6', 'A 3 kg block is held against a vertical wall by a horizontal force with μ = 0.6. Take g = 10 m/s². Find the minimum force required.',
+              '$ 50 $ N',
+              '$ F_{\\min} = mg/\\mu = 30/0.6 = 50 $ N. On a vertical wall the normal force is set by the push, not by weight, and friction acts vertically.'),
+            mcq('d3-7', 'A block A rests on block B on a frictionless floor. A force is applied to A. Block B is accelerated by:',
+              ['The applied force transmitted straight through block A', 'Friction from A acting on B\'s upper surface alone', 'The normal force from the frictionless floor below B', 'The combined weight of both A and B acting downward'],
+              1, 'The floor is frictionless and nothing else touches B horizontally, so friction from A is B\'s only driving force — which is what caps its acceleration at $ \\mu m_A g/m_B $.'),
+            num('d3-8', 'A car takes a flat, unbanked bend of radius 20 m with μ = 0.8. Take g = 10 m/s². Find the maximum safe speed.',
+              '$ \\approx 12.65 $ m/s',
+              '$ v_{\\max} = \\sqrt{\\mu rg} = \\sqrt{0.8 \\times 20 \\times 10} = \\sqrt{160} \\approx 12.65 $ m/s. Mass-independent.'),
+          ],
+        },
+      ],
+    }),
+    b('practice_bank', 4, {
+      title: 'Section 4 — Pulleys and connected systems',
+      intro: 'Eight items concentrating on the setups the chapter treats as its hardest — including friction combined with a pulley.',
+      sections: [
+        {
+          id: 'drill-nlm4',
+          title: 'Pulley systems and connected bodies',
+          items: [
+            num('d4-1', 'A 2 kg block on a rough table (μ = 0.25) is connected over an edge pulley to a hanging 3 kg block. Take g = 10 m/s². Find the acceleration.',
+              '$ 5 $ m/s²',
+              'Driving force: $ m_2g = 30 $ N. Opposing friction: $ \\mu m_1 g = 0.25(20) = 5 $ N. Net $ = 25 $ N on a total mass of 5 kg, so $ a = 25/5 = 5 $ m/s².'),
+            mcq('d4-2', 'In an Atwood machine, if both masses are tripled while keeping their ratio unchanged, the acceleration:',
+              ['Triples along with the two masses involved', 'Stays exactly the same as it was before', 'Falls to a third of its original value', 'Becomes nine times its original value'],
+              1, '$ a = (m_2-m_1)g/(m_1+m_2) $ depends only on the RATIO of the masses, so scaling both by the same factor leaves it unchanged. The tension, however, does triple.'),
+            num('d4-3', 'Masses of 4 kg and 6 kg hang from a fixed pulley. Take g = 10 m/s². Find the tension in the string.',
+              '$ 48 $ N',
+              '$ T = 2m_1m_2g/(m_1+m_2) = 2(4)(6)(10)/10 = 480/10 = 48 $ N.'),
+            mcq('d4-4', 'A string passes over five separate FIXED pulleys before joining two masses. Compared to a single fixed pulley, the acceleration is:',
+              ['Five times smaller because of the extra redirections', 'Exactly the same, since fixed pulleys only redirect', 'Five times larger due to the mechanical advantage', 'Impossible to calculate without the pulley spacings'],
+              1, 'Ideal fixed pulleys change only the direction of the string, never its total-length constraint or its tension. It remains an ordinary two-mass Atwood system.'),
+            num('d4-5', 'A movable pulley carries a 12 kg load. Take g = 10 m/s². Find the minimum tension needed in the string to support it in equilibrium.',
+              '$ 60 $ N',
+              'Two segments support the load, so $ 2T = mg = 120 $ N, giving $ T = 60 $ N.'),
+            mcq('d4-6', 'Two blocks of masses m and 2m hang over a fixed pulley. The acceleration of the system is:',
+              ['$ g/3 $, from the mass difference over their total sum', '$ g/2 $, half the acceleration due to gravity here', '$ 2g/3 $, two thirds of the gravitational acceleration', '$ g $, since both are effectively in free fall'],
+              0, '$ a = (2m-m)g/(m+2m) = mg/3m = g/3 $.'),
+            num('d4-7', 'Three blocks of 2 kg each are connected in a line on a frictionless surface and pulled with 30 N from the front. Find the tension in the rearmost string.',
+              '$ 10 $ N',
+              '$ a = 30/6 = 5 $ m/s². The rear string drags only the last 2 kg block: $ T = 2 \\times 5 = 10 $ N.'),
+            mcq('d4-8', 'In a movable-pulley system, the single-string side moves at 4 m/s. The movable-pulley side moves at:',
+              ['$ 8 $ m/s, twice as fast as the single-string end', '$ 2 $ m/s, half as fast, in the opposite sense', '$ 4 $ m/s, exactly matching the single-string end', '$ 1 $ m/s, a quarter of the single-string speed'],
+              1, 'The constraint is $ v_{\\text{single}} = 2v_{\\text{movable}} $, so the movable side moves at half the rate — 2 m/s — in the opposite sense.'),
+          ],
+        },
+      ],
+    }),
+    b('practice_bank', 5, {
+      title: 'Section 5 — Pseudo force and non-inertial frames',
+      intro: 'Eight items. Name the frame you are working in before writing anything down.',
+      sections: [
+        {
+          id: 'drill-nlm5',
+          title: 'Accelerating frames',
+          items: [
+            num('d5-1', 'A 50 kg person stands on a scale in a lift accelerating upward at 4 m/s². Take g = 10 m/s². Find the scale reading.',
+              '$ 700 $ N',
+              '$ N = m(g+a) = 50(14) = 700 $ N.'),
+            mcq('d5-2', 'A lift moves downward at a constant 6 m/s. The apparent weight of a person inside is:',
+              ['Less than their true weight, since the lift descends', 'Exactly equal to their true weight, as a = 0', 'More than their true weight during the descent', 'Zero for the whole duration of the descent'],
+              1, 'Apparent weight depends on acceleration, not velocity. Constant speed means $ a = 0 $, so $ N = mg $.'),
+            num('d5-3', 'A pendulum hangs in a train accelerating at 5 m/s². Take g = 10 m/s². Find the angle it makes with the vertical.',
+              '$ \\approx 26.6° $',
+              '$ \\tan\\theta = a/g = 0.5 $, so $ \\theta = \\tan^{-1}(0.5) \\approx 26.6° $.'),
+            mcq('d5-4', 'A pseudo force acting on a body in an accelerating frame is directed:',
+              ['Along the frame\'s acceleration, with magnitude ma', 'Opposite the frame\'s acceleration, magnitude ma', 'Always vertically downward, with magnitude mg', 'Perpendicular to the frame\'s acceleration direction'],
+              1, '$ \\mathbf{F}_{\\text{pseudo}} = -m\\mathbf{a}_{\\text{frame}} $ — the minus sign is the whole content of the rule.'),
+            num('d5-5', 'A 2 kg block rests on the floor of a lift accelerating downward at 3 m/s². Take g = 10 m/s². Find the normal force on it.',
+              '$ 14 $ N',
+              '$ N = m(g-a) = 2(10-3) = 14 $ N.'),
+            mcq('d5-6', 'A block is held against the vertical rear wall of a cart by friction alone (μ = 0.5) as the cart accelerates. The minimum acceleration required is:',
+              ['$ 5 $ m/s², half the acceleration due to gravity', '$ 20 $ m/s², twice the acceleration due to gravity', '$ 10 $ m/s², equal to gravitational acceleration', '$ 2.5 $ m/s², a quarter of gravitational acceleration'],
+              1, 'The pseudo force supplies the normal force ($ N = ma $), and friction must hold the weight: $ \\mu ma = mg $, so $ a = g/\\mu = 10/0.5 = 20 $ m/s².'),
+            num('d5-7', 'A 2 kg block sits on a frictionless 45° wedge of mass 3 kg. Find the horizontal force on the wedge that keeps the block stationary relative to it. Take g = 10 m/s².',
+              '$ 50 $ N',
+              '$ a = g\\tan45° = 10 $ m/s², and $ F = (M+m)a = 5(10) = 50 $ N.'),
+            mcq('d5-8', 'An astronaut in an orbiting spacecraft floats freely. This is because:',
+              ['Gravity is essentially absent at that orbital altitude', 'Astronaut and craft fall together, so no contact force arises', 'The spacecraft shields its interior from gravitational pull', 'Their mass reduces to zero once they reach orbit'],
+              1, 'Gravity in low orbit is still most of its surface value. Astronaut and spacecraft accelerate identically under it, so no contact force develops — zero apparent weight, exactly as in a freely falling lift.'),
+          ],
+        },
+      ],
+    }),
+    b('practice_bank', 6, {
+      title: 'Section 6 — Circular dynamics',
+      intro: 'Eight items. Name the real force doing the centripetal job in each one.',
+      sections: [
+        {
+          id: 'drill-nlm6',
+          title: 'Vertical circles, conical pendulums and banking',
+          items: [
+            num('d6-1', 'A 0.5 kg stone is whirled in a horizontal circle of radius 1 m at 4 m/s. Find the tension in the string.',
+              '$ 8 $ N',
+              '$ T = mv^2/r = 0.5(16)/1 = 8 $ N.'),
+            mcq('d6-2', 'The minimum speed at the top of a vertical circle of radius R for a string to stay taut is:',
+              ['$ \\sqrt{gR} $, where gravity alone does the turning', '$ \\sqrt{5gR} $, which is the value at the bottom', '$ \\sqrt{2gR} $, from falling through the radius', 'Zero, as the string may safely go slack there'],
+              0, 'Setting $ T=0 $ at the top leaves $ mg = mv^2/R $, so $ v_{\\min} = \\sqrt{gR} $.'),
+            num('d6-3', 'A stone is whirled in a vertical circle of radius 1.6 m. Take g = 10 m/s². Find the minimum speed at the bottom to complete the loop.',
+              '$ \\approx 8.94 $ m/s',
+              '$ u_{\\min} = \\sqrt{5gR} = \\sqrt{5(10)(1.6)} = \\sqrt{80} \\approx 8.94 $ m/s.'),
+            mcq('d6-4', 'For a body just completing a vertical circle, the tension at the lowest point equals:',
+              ['$ mg $, exactly the weight of the body itself', '$ 6mg $, six times the body\'s own weight', '$ 3mg $, three times the body\'s own weight', 'Zero, matching the tension at the topmost point'],
+              1, 'Substituting $ u^2 = 5gR $ into $ T = m(g+u^2/R) $ gives $ T = 6mg $ — which is why ropes break at the bottom of a swing.'),
+            num('d6-5', 'A conical pendulum of length 1 m makes 60° with the vertical. Take g = 10 m/s², sin60° = 0.866, tan60° = 1.732. Find the bob\'s speed.',
+              '$ \\approx 3.87 $ m/s',
+              '$ r = L\\sin60° = 0.866 $ m. $ v = \\sqrt{rg\\tan\\theta} = \\sqrt{0.866 \\times 10 \\times 1.732} = \\sqrt{15} \\approx 3.87 $ m/s.'),
+            num('d6-6', 'A curve of radius 100 m is banked at an angle where tanθ = 0.4. Take g = 10 m/s². Find its design speed.',
+              '$ 20 $ m/s',
+              '$ v = \\sqrt{rg\\tan\\theta} = \\sqrt{100 \\times 10 \\times 0.4} = \\sqrt{400} = 20 $ m/s.'),
+            mcq('d6-7', 'A car rounds a banked curve at less than its design speed. Friction on the tyres acts:',
+              ['Up the slope, resisting a tendency to slide inward', 'Down the slope, resisting a tendency to ride upward', 'Exactly zero, since the curve is banked already', 'Horizontally outward, away from the curve centre'],
+              0, 'Below the design speed the banking supplies more inward force than needed, so the car tends to slide down the bank — and friction opposes that by acting up the slope.'),
+            mcq('d6-8', 'A car drives over the crest of a hill of radius R. It leaves the road when its speed reaches:',
+              ['$ \\sqrt{gR} $, at which the normal force drops to zero', '$ \\sqrt{2gR} $, twice the ordinary critical value', '$ \\sqrt{5gR} $, the same as a full vertical loop', 'It cannot leave the road going over any hill'],
+              0, 'At the crest, $ mg - N = mv^2/R $. Contact is lost when $ N = 0 $, giving $ v = \\sqrt{gR} $ — the vertical-circle top condition with N in place of T.'),
+          ],
+        },
+      ],
+    }),
+    b('practice_bank', 7, {
+      title: 'Section 7 — Assertion and Reason',
+      intro: 'Six items in the standard exam format. Read the Reason on its own merits FIRST — a true Assertion paired with a true-but-unrelated Reason is the most common trap in this format.',
+      sections: [
+        {
+          id: 'drill-ar',
+          title: 'Assertion–Reason',
+          items: [
+            mcqFixed('ar-1', '**Assertion (A):** A body in equilibrium may still be moving.\n\n**Reason (R):** Equilibrium requires zero net force, which by the First Law means zero acceleration, not zero velocity.',
+              AR_OPTIONS, 0,
+              'Both are true, and R is exactly why A holds. Equilibrium constrains the ACCELERATION to zero; a body already moving at constant velocity satisfies that perfectly well.'),
+            mcqFixed('ar-2', '**Assertion (A):** The normal force on a body always equals its weight.\n\n**Reason (R):** A body with no vertical acceleration has zero net vertical force acting on it.',
+              AR_OPTIONS, 3,
+              'A is false — the normal force equals the weight only in the special case of a body in vertical equilibrium on a horizontal surface. It fails on an incline ($ N = mg\\cos\\theta $), in an accelerating lift ($ N = m(g\\pm a) $), on a vertical wall ($ N $ = the applied push), and whenever a rope pulls at an angle. R is a true and correctly stated fact — it is simply not enough to establish A, since it says nothing about the other surfaces and accelerations where A breaks down.'),
+            mcqFixed('ar-3', '**Assertion (A):** Static friction on a stationary block is not generally equal to μ_s N.\n\n**Reason (R):** Static friction is self-adjusting and supplies only as much force as is needed to prevent sliding.',
+              AR_OPTIONS, 0,
+              'Both true, and R is precisely the explanation. $ \\mu_s N $ is the ceiling; the friction actually acting is whatever the force balance demands, which is usually less.'),
+            mcqFixed('ar-4', '**Assertion (A):** A stone whirled on a string flies off along the tangent when the string breaks.\n\n**Reason (R):** An outward centrifugal force acts on the stone and propels it away from the centre.',
+              AR_OPTIONS, 2,
+              'A is true — with no net force, the First Law gives straight-line motion along the velocity, i.e. the tangent. R is false: no outward force acts in the ground frame, and if one did, the stone would leave radially rather than tangentially.'),
+            mcqFixed('ar-5', '**Assertion (A):** An astronaut in an orbiting spacecraft experiences weightlessness.\n\n**Reason (R):** The gravitational force on the astronaut is zero at orbital altitude.',
+              AR_OPTIONS, 2,
+              'A is true, but R is false. Gravity in low orbit is still around 90% of its surface value. Weightlessness arises because astronaut and craft fall together, so the CONTACT force between them vanishes — not because gravity does.'),
+            mcqFixed('ar-6', '**Assertion (A):** A banked road allows a vehicle to turn safely even on a frictionless surface.\n\n**Reason (R):** The horizontal component of the normal force supplies the centripetal force on a banked road.',
+              AR_OPTIONS, 0,
+              'Both true, and R explains A exactly. Tilting the road gives the normal force an inward horizontal component, which at the design speed $ \\sqrt{rg\\tan\\theta} $ is precisely the centripetal force required — no friction needed.'),
+          ],
+        },
+      ],
+    }),
+    b('callout', 8, {
+      variant: 'remember',
+      title: 'What to do with your wrong answers',
+      markdown: 'Sort them by **section**, not by count. The section number maps directly onto a topic area and its pages:\n\n1 → Newton\'s laws (p1–p2) · 2 → free body diagrams and constraints (p3–p6) · 3 → friction (p7–p9) · 4 → pulleys (p5–p6) · 5 → pseudo force (p10–p11) · 6 → circular dynamics (p12–p13)\n\nThree or more wrong in one section means a page to reread, not a formula to memorise. Scattered single errors across sections usually mean something else entirely — read the question more slowly.',
+    }),
+  ],
+};
+
+// ── run ──────────────────────────────────────────────────────────────────────
+withDb(async (db) => {
+  const bookId = await ensureChapter(db);
+  await upsertPages(db, bookId, [p16]);
+  console.log('\n✅ Ch.4 Wave 3c done: p16 (JEE/NEET drill, 6 tag-mapped sections + assertion-reason)');
+}).then(() => process.exit(0)).catch((e) => { console.error(e); process.exit(1); });

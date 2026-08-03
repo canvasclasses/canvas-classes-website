@@ -48,29 +48,36 @@ const p13 = {
         ['$ E $ is **tangential** to the surface everywhere', '$ \\phi = 0 $'],
       ],
     }),
-    b('reasoning_prompt', 6, {
+    b('worked_example', 6, {
+      label: 'flux through a tilted surface',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A flat square sheet of side $ 20 $ cm is held in a uniform field of $ 250 $ N/C. Find the flux through it when (a) the **normal** to the sheet makes $ 60^\\circ $ with the field, and (b) the **plane** of the sheet makes $ 60^\\circ $ with the field.',
+      solution: 'Neither shortcut in the table applies here — the field is neither perpendicular to the sheet nor along it — so this is the plain formula, $ \\phi = ES\\cos\\theta $, with $ \\theta $ measured from the **normal**.\n\n**Get the area first.**\n\n$ S = (0.20)^{2} = 0.040\\ \\text{m}^{2} $\n\n$ ES = (250)(0.040) = 10.0\\ \\text{N·m}^{2}\\text{/C} $\n\nThat $ 10.0 $ is the most flux this sheet could ever carry in this field — the value at $ \\theta = 0^\\circ $. Everything else is a fraction of it.\n\n**(a) Normal at $ 60^\\circ $ to the field.** This is already the angle the formula wants, so substitute straight in:\n\n$ \\phi = ES\\cos 60^\\circ = (10.0)(0.5) = 5.0\\ \\text{N·m}^{2}\\text{/C} $\n\n**(b) Plane at $ 60^\\circ $ to the field.** Now the question has given the angle to the **surface**, not to the normal. The normal is perpendicular to the plane, so it makes $ 90^\\circ - 60^\\circ = 30^\\circ $ with the field:\n\n$ \\phi = ES\\cos 30^\\circ = (10.0)(0.866) = 8.7\\ \\text{N·m}^{2}\\text{/C} $\n\n**The whole point of doing both.** Same sheet, same field, same $ 60^\\circ $ in the question — and the answers differ by nearly a factor of two, purely because of which line the angle was measured from. Before you write $ \\cos $ anything, read the sentence again and ask: **is this angle to the surface, or to its normal?** If it is to the surface, take $ 90^\\circ $ minus it.\n\nA quick sanity check on (b): tilting the sheet closer to face-on should let **more** through, and $ 8.7 $ is indeed nearer the $ 10.0 $ maximum than $ 5.0 $ is.',
+    }),
+    b('reasoning_prompt', 7, {
       reasoning_type: 'spatial',
       prompt: 'A closed cube is placed in a **uniform** electric field, with no charge inside it. What is the net flux through the cube?',
       options: ['Zero', '$ EL^{2} $ where $ L $ is the side', '$ 6EL^{2} $', 'It depends on the orientation of the cube'],
       reveal: '**Zero — and for any closed surface, any orientation.**\n\nIn a uniform field the lines are straight and parallel. Every line that enters the cube must come out the other side; nothing is created or destroyed inside. Entering flux is negative and leaving flux is positive, and they cancel exactly.\n\nOrientation makes no difference either. Tilt the cube and each face contributes differently, but the sum stays zero — because the *lines* have not changed, only how they are shared between faces.\n\nRemember this as a statement in its own right: **the net flux through any closed surface in a uniform field is zero.** You will use it constantly to throw away faces you do not want to compute.',
       difficulty_level: 2,
     }),
-    b('heading', 7, {
+    b('heading', 8, {
       text: 'Flux through part of a shape',
       level: 2,
       objective: 'Find the flux through a curved surface by replacing it with a flat one that has the same outline.',
     }),
-    b('text', 8, {
+    b('text', 9, {
       markdown: 'A very common exam shape: a **hemisphere** of radius $ R $ placed in a uniform field $ E $, with the field perpendicular to its flat base. What is the flux through the curved part?\n\nDoing it by direct integration over the dome is unpleasant. Do this instead:\n\n1. Close the surface by adding the flat circular base. Now it is a closed surface with no charge inside, so the **total** flux is zero.\n2. The flat base has area $ \\pi R^{2} $ with the field perpendicular to it, so its flux is $ -E\\pi R^{2} $ (negative, since the field enters there).\n3. Therefore the curved part must carry $ +E\\pi R^{2} $ to make the total zero.\n\nSo the flux through the dome equals the flux through the flat circle it sits on. That is a general and very useful move: **for a uniform field, any surface can be replaced by its flat "shadow" outline.** And if the field were instead *parallel* to the base, no lines would cross it at all and the flux would be zero.',
     }),
-    b('worked_example', 9, {
+    b('worked_example', 10, {
       label: 'flux through a cube in a slanted field',
       variant: 'solved_example',
       reveal_mode: 'tap_to_reveal',
       problem: 'A cube of side $ L = 0.2 $ m sits with one corner at the origin and its edges along the axes. A uniform field $ \\vec{E} = (2.5\\ \\hat{i} - 4.2\\ \\hat{j}) $ N/C fills the region. Find the net electric flux through the whole cube.',
       solution: '**Zero.**\n\nAnd you should be able to say so without writing anything down. The field is **uniform** and there is **no charge inside** the cube, so every field line that enters leaves again.\n\nIf you want to see it face by face: take the two faces perpendicular to the $ x $-axis. On the one at $ x = 0 $ the outward normal is $ -\\hat{i} $, giving flux $ -2.5L^{2} $. On the one at $ x = L $ the outward normal is $ +\\hat{i} $, giving $ +2.5L^{2} $. They cancel. The same happens for the pair perpendicular to $ y $ with the $ -4.2 $ component, and the pair perpendicular to $ z $ contributes nothing at all since $ \\vec{E} $ has no $ z $-component.\n\n**The lesson is about reading the question.** The specific numbers $ 2.5 $ and $ -4.2 $ are decoration. The two words that decide the answer are "uniform" and the absence of any charge inside. Spot those and you are finished in one line.',
     }),
-    b('image', 10, {
+    b('image', 11, {
       src: '',
       alt: 'Three flux cases: field perpendicular to a surface, field tangential to it, and a closed surface in a uniform field',
       width: 'full',
@@ -78,15 +85,15 @@ const p13 = {
       caption: 'Maximum flux, zero flux, and the case that gives zero *net* flux for a completely different reason.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), three panels side by side separated by thin grey rules. Panel 1: a flat rectangular surface seen at an angle, with straight orange field arrows striking it head-on through its face, and a dashed grey normal arrow parallel to the field; label reads maximum. Panel 2: the same surface with orange field arrows running parallel to its plane, sliding past it, normal arrow perpendicular to the field; label reads zero. Panel 3: a wireframe cube in dim grey with straight orange field arrows passing right through it, entering one side and leaving the other unchanged. Muted white minimal labels, generous dark space, orange accent, no clutter.',
     }),
-    b('callout', 11, {
+    b('callout', 12, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- $ \\phi = \\vec{E}\\cdot\\vec{S} = ES\\cos\\theta $, with $ \\theta $ measured from the **normal**.\n- Flux is a **scalar**; it can be positive (outward) or negative (inward).\n- Uniform field + closed surface → net flux **zero**, always.\n- Curved surface in a uniform field → replace it by its flat outline (its "shadow").\n- Tangential field → zero flux, no matter how large the surface.',
     }),
-    b('text', 12, {
+    b('text', 13, {
       markdown: 'Next: flux looks like bookkeeping so far. One line from Gauss turns it into the most powerful shortcut in electrostatics.',
     }),
-    b('inline_quiz', 13, {
+    b('inline_quiz', 14, {
       pass_threshold: 0.6,
       questions: [
         q('A surface of area $ S $ is held so that a uniform field $ E $ lies **in the plane** of the surface. The flux through it is',
@@ -162,7 +169,7 @@ const p14 = {
       objective: 'Say what extra condition is needed before Gauss\'s law can actually give you a field.',
     }),
     b('text', 8, {
-      markdown: 'Gauss\'s law is always **true**. It is only **useful** for finding $ \\vec{E} $ when you can pull $ E $ out of the integral — and that needs symmetry.\n\nTo make $ \\oint \\vec{E}\\cdot d\\vec{S} $ collapse to $ ES $, you need a surface where, at every point:\n\n1. $ \\vec{E} $ is either **perpendicular** to the surface or **tangential** to it — nothing in between; and\n2. wherever it is perpendicular, $ E $ has the **same magnitude**.\n\nThen $ ES = q_{\\text{in}}/\\varepsilon_0 $, and $ E $ pops out in one step.\n\nFinding such a surface is only possible when the charge distribution itself is symmetric. In practice there are exactly three families, and each has one right surface:',
+      markdown: 'Gauss\'s law is always **true**. It is only **useful** for finding $ \\vec{E} $ when you can pull $ E $ out of the integral — and that needs symmetry.\n\nTo make $ \\oint \\vec{E}\\cdot d\\vec{S} $ collapse to $ ES $, you need a surface where, at every point:\n\n1. $ \\vec{E} $ is either **perpendicular** to the surface or **tangential** to it — nothing in between; and\n2. wherever it is perpendicular, $ E $ has the **same magnitude**.\n\nThen $ ES = q_{\\text{in}}/\\varepsilon_0 $, and $ E $ pops out in one step.\n\nFinding such a surface is only possible when the charge distribution itself is symmetric. For anything else — two point charges, a finite rod, a charged disc — Gauss\'s law remains perfectly true, but it will not hand you the field, and you are back to slicing and integrating.\n\nIn practice there are exactly three symmetric families, and each has one right surface:',
     }),
     b('table', 9, {
       caption: 'The three symmetries, and the Gaussian surface each one demands.',
@@ -173,25 +180,22 @@ const p14 = {
         ['Planar', 'a **pillbox** through the plane', 'infinite sheet, charged conducting plate'],
       ],
     }),
-    b('text', 10, {
-      markdown: 'And for anything else — two point charges, a finite rod, a charged disc — Gauss\'s law is still perfectly true, but it will not hand you the field. You are back to slicing and integrating.',
-    }),
-    b('heading', 11, {
+    b('heading', 10, {
       text: 'Flux problems that need no field at all',
       level: 2,
       objective: 'Use symmetry to find the flux through part of a closed surface without ever computing E.',
     }),
-    b('text', 12, {
+    b('text', 11, {
       markdown: 'A whole family of exam questions asks only for **flux**, never for the field — and those are pure Gauss, no integration:\n\n**Charge $ q $ at the centre of a cube.** Total flux $ = q/\\varepsilon_0 $. The six faces are identical by symmetry, so each carries $ q/6\\varepsilon_0 $.\n\n**Charge $ q $ at a corner of a cube.** Now the charge is shared between eight cubes stacked around that corner, so this cube gets $ q/8\\varepsilon_0 $. Of its six faces, the three touching the corner get nothing at all (the field is tangential to them), so the other three share it: $ q/24\\varepsilon_0 $ each.\n\n**A dipole inside a closed surface.** $ q_{\\text{in}} = +q + (-q) = 0 $, so the net flux is **zero** — even though the field on the surface is certainly not zero anywhere.\n\n**Charge $ q $ at the centre of the flat face of a hemisphere.** Half the field lines go into the dome, so the flux through it is $ q/2\\varepsilon_0 $.\n\nThe move is always the same: **find what fraction of the full solid angle the surface covers**, and take that fraction of $ q/\\varepsilon_0 $.',
     }),
-    b('worked_example', 13, {
+    b('worked_example', 12, {
       label: 'a charge at the corner of a cube',
       variant: 'solved_example',
       reveal_mode: 'tap_to_reveal',
       problem: 'A point charge $ q $ is placed at one corner of a cube. Find (a) the flux through the whole cube, and (b) the flux through each of the three faces that do not touch the charge.',
       solution: '**(a) The whole cube.**\n\nA single cube does not surround the charge, so we cannot use $ q/\\varepsilon_0 $ directly. Instead, build a closed surface that does: stack **eight** identical cubes around that corner, and together they completely enclose the charge.\n\nThe total flux through all eight is $ q/\\varepsilon_0 $, and by symmetry each identical cube takes an equal share:\n\n$ \\phi_{\\text{cube}} = \\frac{q}{8\\varepsilon_0} $\n\n**(b) The individual faces.**\n\nOf the cube\'s six faces, **three meet at the corner where the charge sits**. The field lines from the charge run *along* those faces, never across them — the field is tangential, so the flux through each of them is **zero**.\n\nThat leaves the three far faces to carry the entire $ q/8\\varepsilon_0 $, and they are equivalent by symmetry:\n\n$ \\phi_{\\text{each far face}} = \\frac{1}{3}\\cdot\\frac{q}{8\\varepsilon_0} = \\frac{q}{24\\varepsilon_0} $\n\n**The technique to keep.** Whenever a charge sits on a corner, edge or face rather than at a nice centre, **complete the symmetry**: surround it with as many copies of the shape as it takes to enclose it, then divide. Corner of a cube → 8 cubes. Centre of a face → 2 cubes. Middle of an edge → 4 cubes.',
     }),
-    b('image', 14, {
+    b('image', 13, {
       src: '',
       alt: 'Eight cubes stacked around a corner charge, and the three faces of one cube that receive zero flux',
       width: 'two_third',
@@ -199,15 +203,15 @@ const p14 = {
       caption: 'Complete the symmetry first, then divide. Eight cubes surround a corner.',
       generation_prompt: 'Clean scientific isometric diagram on a near-black background (#0B0C0F). Eight identical wireframe cubes in thin dim-grey lines stacked two by two by two, meeting at a common central corner where a small bright amber sphere sits. One of the eight cubes is drawn with slightly brighter edges to single it out, and its three faces touching the central corner are lightly tinted a very dark warm grey while its three far faces carry small orange outward arrows. Muted white minimal labels, generous dark space, orange accent, no clutter.',
     }),
-    b('callout', 15, {
+    b('callout', 14, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- $ \\oint\\vec{E}\\cdot d\\vec{S} = q_{\\text{in}}/\\varepsilon_0 $. Enclosed charge only, on the right.\n- $ \\vec{E} $ on the left is the field of **all** charges — outside ones just contribute zero net flux.\n- Always true; **useful** only with spherical, cylindrical or planar symmetry.\n- Flux-only questions: work out the fraction of the solid angle covered, then take that fraction of $ q/\\varepsilon_0 $.\n- Charge at a corner of a cube → $ q/8\\varepsilon_0 $; each of the three far faces → $ q/24\\varepsilon_0 $.',
     }),
-    b('text', 16, {
+    b('text', 15, {
       markdown: 'Next: three symmetries, four famous results, and a set of graphs worth knowing by their shape.',
     }),
-    b('inline_quiz', 17, {
+    b('inline_quiz', 16, {
       pass_threshold: 0.6,
       questions: [
         q('A charge $ q $ is enclosed by a spherical surface. If the sphere is replaced by a cube of the same volume enclosing the same charge, the net flux',
@@ -314,16 +318,20 @@ const p15 = {
       objective: 'Derive the field inside a uniformly charged solid sphere and contrast it with the shell.',
     }),
     b('text', 9, {
-      markdown: 'Now spread $ Q $ uniformly through the **volume** of a sphere of radius $ R $ — a non-conductor, since a conductor would push all the charge to the surface.\n\n**Inside** ($ r < R $): a Gaussian sphere of radius $ r $ encloses only the fraction of charge within it,\n\n$ q_{\\text{in}} = Q\\cdot\\frac{(4/3)\\pi r^{3}}{(4/3)\\pi R^{3}} = Q\\frac{r^{3}}{R^{3}} $\n\nso $ E(4\\pi r^{2}) = \\frac{Qr^{3}}{\\varepsilon_0 R^{3}} $, giving',
+      markdown: 'Now spread $ Q $ uniformly through the **volume** of a sphere of radius $ R $ — a non-conductor, since a conductor would push all the charge to the surface.\n\n**Inside** ($ r < R $): a Gaussian sphere of radius $ r $ encloses only the fraction of charge within it,\n\n$ q_{\\text{in}} = Q\\cdot\\frac{(4/3)\\pi r^{3}}{(4/3)\\pi R^{3}} = Q\\frac{r^{3}}{R^{3}} $\n\nso $ E(4\\pi r^{2}) = \\frac{Qr^{3}}{\\varepsilon_0 R^{3}} $, giving $ E = \\frac{kQr}{R^{3}} $ — a field that **grows linearly** with $ r $: zero at the centre, largest at the surface.\n\n**Outside** ($ r > R $): the whole charge is enclosed, so it is $ \\frac{kQ}{r^{2}} $ again — a point charge, exactly as for the shell.\n\nAnd here is the difference worth noticing. At $ r = R $ both expressions give $ \\frac{kQ}{R^{2}} $, so for the **solid sphere the field is continuous** — no jump. For the **shell** it jumps from zero. The reason is simple: a shell has all its charge concentrated in a surface you cross abruptly, while a solid sphere has you passing through the charge gradually.',
     }),
     b('latex_block', 10, {
-      latex: 'E_{\\text{inside}} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{Qr}{R^{3}} \\qquad (r<R)',
-      label: 'Inside a uniformly charged solid sphere',
-      note: 'E grows LINEARLY with r — zero at the centre, maximum at the surface.',
+      latex: 'E_{\\text{in}} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{Qr}{R^{3}}\\ \\ (r<R), \\qquad E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{Q}{r^{2}}\\ \\ (r>R)',
+      label: 'Field of a uniformly charged solid sphere',
+      note: 'Linear inside — zero at the centre, maximum at the surface — then inverse-square outside. The two agree at r = R, so there is no jump.',
       highlight: true,
     }),
-    b('text', 11, {
-      markdown: '**Outside** ($ r > R $): the whole charge is enclosed, so it is $ kQ/r^{2} $ again — a point charge, exactly as for the shell.\n\nAnd here is the difference worth noticing. At $ r = R $ both expressions give $ kQ/R^{2} $, so for the **solid sphere the field is continuous** — no jump. For the **shell** it jumps from zero. The reason is simple: a shell has all its charge concentrated in a surface you cross abruptly, while a solid sphere has you passing through the charge gradually.',
+    b('worked_example', 11, {
+      label: 'inside and outside the same sphere',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A non-conducting sphere of radius $ R = 0.10 $ m carries a charge $ Q = 8.0 $ nC spread uniformly through its volume. Find the field at $ r = 0.05 $ m and at $ r = 0.30 $ m from the centre. Take $ k = 9\\times10^{9} $ SI units.',
+      solution: '**Decide which side of $ R $ each point is on, first.** $ 0.05 $ m is less than $ 0.10 $ m, so the first point is **inside** the charge. $ 0.30 $ m is greater, so the second is **outside**. Two points, two different formulas — choosing before substituting is the whole discipline of this topic.\n\nWork out $ kQ $ once, since both formulas need it:\n\n$ kQ = (9\\times10^{9})(8.0\\times10^{-9}) = 72 $\n\n**Inside, at $ r = 0.05 $ m.** Use the linear form:\n\n$ E = \\frac{kQr}{R^{3}} = \\frac{(72)(0.05)}{(0.10)^{3}} = \\frac{3.6}{1.0\\times10^{-3}} = 3.6\\times10^{3}\\ \\text{N/C} $\n\n**Outside, at $ r = 0.30 $ m.** Use the inverse-square form:\n\n$ E = \\frac{kQ}{r^{2}} = \\frac{72}{(0.30)^{2}} = \\frac{72}{0.09} = 8.0\\times10^{2}\\ \\text{N/C} $\n\n**Check both against the surface value.** At $ r = R $ the field is $ \\frac{kQ}{R^{2}} = \\frac{72}{0.010} = 7.2\\times10^{3} $ N/C, and that is the largest value anywhere.\n\nInside, the field is linear, and $ 0.05 $ m is **half** of $ R $ — so the answer should be half the surface value. $ 7.2\\times10^{3} \\div 2 = 3.6\\times10^{3} $. It is.\n\nOutside, the field is inverse-square, and $ 0.30 $ m is **three times** $ R $ — so the answer should be a ninth of the surface value. $ 7.2\\times10^{3} \\div 9 = 8.0\\times10^{2} $. It is.\n\nThat pair of checks costs ten seconds and catches almost every arithmetic slip on this topic. It also makes the shape of the graph concrete: straight up to a peak at the surface, then falling away.',
     }),
     b('table', 12, {
       caption: 'The four results together. Notice that all four "outside" fields are just point charges.',
@@ -455,10 +463,10 @@ const p16 = {
       title: 'Quick Recap',
       markdown: '- $ \\vec{E} = 0 $ inside the material of any conductor in equilibrium. Everything else follows.\n- All excess charge sits on the **outer** surface; a hollow conductor stores as much as a solid one.\n- Just outside: $ E = \\sigma/\\varepsilon_0 $, **perpendicular** to the surface. The field is discontinuous there.\n- $ \\sigma \\propto 1/(\\text{radius of curvature}) $ → sharp points leak charge (corona, lightning rods).',
     }),
-    b('text', 12, {
+    b('text', 14, {
       markdown: 'Next: hollow out that conductor and put a charge inside the hole. What the metal does then is the reason a car is a safe place to be in a thunderstorm.',
     }),
-    b('inline_quiz', 13, {
+    b('inline_quiz', 15, {
       pass_threshold: 0.6,
       questions: [
         q('The electric field just outside the surface of a charged conductor is',

@@ -46,19 +46,16 @@ const p10 = {
       note: 'L is fixed by the coil: its number of turns, its size and shape, and what is inside it. It does NOT depend on the current — i appears on both sides and cancels out.',
       highlight: true,
     }),
-    b('text', 3, {
-      markdown: 'Now differentiate. Faraday\'s law for this coil, in the sign convention fixed earlier in the chapter, is $ \\varepsilon = -N\\frac{d\\Phi}{dt} $. Substituting $ N\\Phi = Li $ with $ L $ constant:',
-    }),
-    b('latex_block', 4, {
+    b('latex_block', 3, {
       latex: '\\varepsilon = -L\\,\\frac{di}{dt}',
       label: 'The self-induced EMF',
       note: 'This minus sign is not a new one. It is exactly the minus of Faraday-Lenz, carried through the substitution — the coil opposes the CHANGE in its own current.',
       highlight: true,
     }),
-    b('text', 5, {
-      markdown: 'Read that minus sign carefully, because it is the whole behaviour of the page.\n\n**Current increasing** ($ di/dt > 0 $) → the induced EMF is negative, i.e. it acts *against* the applied EMF. The coil is holding the current back.\n\n**Current decreasing** ($ di/dt < 0 $) → the induced EMF is positive, acting *with* the current. The coil is trying to keep the current going.\n\nEither way, the coil opposes the change, never the current itself. A steady current in an ideal coil produces no EMF at all — $ di/dt = 0 $, so $ \\varepsilon = 0 $, and the coil is just a piece of wire.\n\nThe unit follows from the equation. One **henry** is the inductance for which a current changing at one ampere per second induces one volt:\n\n$ 1\\ \\text{H} = 1\\ \\frac{\\text{V}\\cdot\\text{s}}{\\text{A}} = 1\\ \\frac{\\text{Wb}}{\\text{A}} $\n\nThe henry is a large unit. A small air-cored coil is microhenries; a typical laboratory inductor is millihenries; an iron-cored choke of a few henries is already a heavy object.',
+    b('text', 4, {
+      markdown: '**Where that came from.** Faraday\'s law for this coil, in the sign convention fixed earlier in the chapter, is $ \\varepsilon = -N\\frac{d\\Phi}{dt} $. Substitute $ N\\Phi = Li $ and differentiate, remembering that $ L $ is a constant: the $ N\\Phi $ becomes $ L\\frac{di}{dt} $ and nothing else changes, which is why the minus survives untouched.\n\nNow read that minus sign carefully, because it is the whole behaviour of the page.\n\n**Current increasing** ($ di/dt > 0 $) → the induced EMF is negative, i.e. it acts *against* the applied EMF. The coil is holding the current back.\n\n**Current decreasing** ($ di/dt < 0 $) → the induced EMF is positive, acting *with* the current. The coil is trying to keep the current going.\n\nEither way, the coil opposes the change, never the current itself. A steady current in an ideal coil produces no EMF at all — $ di/dt = 0 $, so $ \\varepsilon = 0 $, and the coil is just a piece of wire.\n\nThe unit follows from the equation. One **henry** is the inductance for which a current changing at one ampere per second induces one volt:\n\n$ 1\\ \\text{H} = 1\\ \\frac{\\text{V}\\cdot\\text{s}}{\\text{A}} = 1\\ \\frac{\\text{Wb}}{\\text{A}} $\n\nThe henry is a large unit. A small air-cored coil is microhenries; a typical laboratory inductor is millihenries; an iron-cored choke of a few henries is already a heavy object.',
     }),
-    b('reasoning_prompt', 6, {
+    b('reasoning_prompt', 5, {
       reasoning_type: 'logical',
       prompt: 'A steady current of $ 5 $ A has been flowing through an ideal inductor for a long time. What is the EMF across it?',
       options: [
@@ -70,12 +67,12 @@ const p10 = {
       reveal: '**Zero.**\n\n$ \\varepsilon = -L\\frac{di}{dt} $, and a steady current has $ di/dt = 0 $. It does not matter that the current is 5 A rather than 0.005 A — the size of the current is simply not in the formula.\n\nThis is the single most common misreading of self-inductance: treating the coil as though it opposes **current**. It does not. It opposes **change in current**. An ideal inductor carrying a steady current is electrically indistinguishable from a plain wire.\n\n**And notice what would make the EMF large:** not a big current, but a fast-changing one. A current of only $ 0.1 $ A switched off in a microsecond gives $ di/dt = 10^{5} $ A/s, which across a $ 1 $ H coil is a hundred thousand volts. That number is not a trick — it is the spark you will meet on the L-R page.',
       difficulty_level: 2,
     }),
-    b('heading', 7, {
+    b('heading', 6, {
       text: 'The inductance of a long solenoid',
       level: 2,
       objective: 'Derive $ L = \\mu_0 n^{2}Al $ from the definition, and say what each symbol controls.',
     }),
-    b('step_solver', 8, {
+    b('step_solver', 7, {
       title: 'Deriving L for a long solenoid',
       problem: 'A long solenoid of length $ l $ and cross-sectional area $ A $ has $ n $ turns per unit length, so $ N = nl $ turns in total. Find its self-inductance.',
       intro: 'Every self-inductance calculation in this book follows the same four moves: assume a current, find the field, find the total flux linkage, then divide by the current. The method is the lesson here — the answer for a solenoid is only one application of it.',
@@ -112,24 +109,24 @@ const p10 = {
         solution: 'Turns per unit length: $ n = 1000/0.50 = 2000 $ per metre, and $ A = 4.0\\times10^{-4}\\ \\text{m}^{2} $.\n\n$ L = \\mu_0 n^{2} A l = (4\\pi\\times10^{-7})(2000)^{2}(4.0\\times10^{-4})(0.50) $\n\n$ = (1.257\\times10^{-6})(4.0\\times10^{6})(4.0\\times10^{-4})(0.50) = 2.5\\times10^{-4}\\ \\text{H} $\n\nAbout $ 0.25 $ mH — which tells you how hard inductance is to come by with air inside. Slide an iron core in and the same coil can reach a few henries.',
       },
     }),
-    b('latex_block', 9, {
+    b('latex_block', 8, {
       latex: 'L = \\mu_0 n^{2} A l = \\frac{\\mu_0 N^{2} A}{l}',
       label: 'Self-inductance of a long solenoid',
       note: 'The two forms are the same thing, written with turns-per-metre or with total turns. With a core of relative permeability mu-r, multiply by mu-r.',
       highlight: true,
     }),
-    b('text', 10, {
+    b('text', 9, {
       markdown: 'Three things that formula tells you, none of them obvious before the derivation:\n\n**It goes as the square of the turns.** Double the number of turns on the same former and you get **four** times the inductance, not twice. That is why inductors are wound with so many turns of thin wire — turns are the cheapest thing to buy in this formula.\n\n**Only geometry and the core appear.** No current, no voltage, no frequency. $ L $ is a property of the object, in exactly the way $ C = \\varepsilon_0A/d $ was a property of a capacitor in Chapter 2.\n\n**A core multiplies it.** Replace the air with iron of relative permeability $ \\mu_r $ and $ L $ becomes $ \\mu_r\\mu_0n^{2}Al $. Since $ \\mu_r $ for soft iron runs into the thousands, this is how a coil small enough to hold gets an inductance of several henries.',
     }),
-    b('heading', 11, {
+    b('heading', 10, {
       text: 'Inductance is electrical inertia',
       level: 2,
       objective: 'Use the mass-and-velocity analogy to predict how a circuit with a large $ L $ behaves.',
     }),
-    b('text', 12, {
+    b('text', 11, {
       markdown: 'Push a heavy trolley and it does not leap to speed — it takes time. Stop pushing and it does not stop dead — it takes time. That reluctance to change velocity is **inertia**, and it is measured by the mass.\n\nAn inductor does the same thing to current. Apply a voltage and the current does not leap to its final value. Cut the supply and the current does not stop dead. The reluctance to change current is measured by $ L $.\n\nThe parallel is not loose. It is line-for-line:',
     }),
-    b('table', 13, {
+    b('table', 12, {
       caption: 'Mass is to velocity what inductance is to current. Every row is an exact correspondence, not an illustration.',
       headers: ['Mechanics', 'Circuit'],
       rows: [
@@ -141,7 +138,7 @@ const p10 = {
         ['inertia does not oppose motion, only change in it', '$ L $ does not oppose current, only change in it'],
       ],
     }),
-    b('image', 14, {
+    b('image', 13, {
       src: '',
       alt: 'A solenoid carrying a growing current, with its own field lines threading back through its turns and an opposing induced EMF',
       width: 'two_third',
@@ -149,15 +146,15 @@ const p10 = {
       caption: 'The coil\'s own field passes through the coil. Change the current and the coil pushes back on itself.',
       generation_prompt: 'Clean scientific diagram, side view of a helical solenoid drawn as a row of evenly spaced amber elliptical turns along a horizontal axis. Smooth dim-orange magnetic field lines run through the interior of the coil parallel to the axis and loop widely around the outside, clearly passing back through the turns themselves. A bright amber arrow along the winding shows a growing current, and a shorter opposing arrow of a cooler blue tone points the other way to suggest the self-induced EMF resisting it. Thin dim-grey dashed axis line. Rendered on a near-black background (#0B0C0F) with orange and amber accents and generous dark space. No text, no labels, no numbers anywhere in the image.',
     }),
-    b('callout', 15, {
+    b('callout', 14, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- $ N\\Phi = Li $ defines $ L $; the current cancels, so $ L $ is pure geometry plus the core.\n- $ \\varepsilon = -L\\frac{di}{dt} $ — and that minus is the same Faraday-Lenz minus, not a new one.\n- A coil opposes **change in current**, never current. Steady current → zero EMF.\n- $ 1\\ \\text{H} = 1\\ \\text{Wb/A} = 1\\ \\text{V}\\cdot\\text{s/A} $.\n- Long solenoid: $ L = \\mu_0 n^{2} A l = \\mu_0 N^{2}A/l $. Turns enter **squared**.\n- An iron core multiplies $ L $ by $ \\mu_r $ — thousands, for soft iron.\n- Think of $ L $ as electrical inertia: $ L\\leftrightarrow m $, $ i\\leftrightarrow v $.',
     }),
-    b('text', 16, {
+    b('text', 15, {
       markdown: 'Next: the coil\'s field does not stop at its own turns. Put a second coil nearby and it will feel the change too — which is one coil talking to another.',
     }),
-    b('inline_quiz', 17, {
+    b('inline_quiz', 16, {
       pass_threshold: 0.6,
       questions: [
         q('The self-inductance of a coil depends on',
@@ -271,22 +268,21 @@ const p11 = {
       difficulty_level: 2,
     }),
     b('heading', 8, {
-      text: 'The reciprocity nobody expects',
+      text: 'Reciprocity, and how much flux actually gets across',
       level: 2,
-      objective: 'State $ M_{12} = M_{21} $ and explain why it is a genuinely surprising result.',
+      objective: 'State $ M_{12} = M_{21} $, then use the coefficient of coupling to say how much of one coil\'s flux reaches the other.',
     }),
     b('text', 9, {
-      markdown: 'In the derivation, driving the outer coil and driving the inner coil gave the **same** constant. Write the two possible mutual inductances separately for a moment:\n\n- $ M_{12} $ — flux linkage of coil 1 per unit current in coil 2;\n- $ M_{21} $ — flux linkage of coil 2 per unit current in coil 1.\n\nThese are computed from different fields, over different areas, with different numbers of turns. There is no reason at first sight for them to be equal. And yet:\n\n$ M_{12} = M_{21} = M $\n\n**This is a theorem, and it is true for any two circuits whatever** — not just for neat coaxial solenoids. It holds for a tiny loop beside a giant one, for a coil next to a straight wire, for two circuits of completely different shape.\n\nBe honest about what this page has and has not shown. We **verified** it in one case; we did not **prove** it. The proof needs an energy argument beyond this book: the energy stored in the pair of circuits cannot depend on the order in which you switch the two currents on, and working that out forces the two constants to be equal.\n\nWhat matters practically is the licence it gives you: **compute $ M $ whichever way round is easier.** In the solenoid problem, driving the outer coil took two lines and driving the inner one needed a careful argument about field-free space. Both give the same $ M $, so always pick the easy direction.',
+      markdown: 'In the derivation, driving the outer coil and driving the inner coil gave the **same** constant. Write the two possible mutual inductances separately for a moment:\n\n- $ M_{12} $ — flux linkage of coil 1 per unit current in coil 2;\n- $ M_{21} $ — flux linkage of coil 2 per unit current in coil 1.\n\nThese are computed from different fields, over different areas, with different numbers of turns. There is no reason at first sight for them to be equal. And yet:\n\n$ M_{12} = M_{21} = M $\n\n**This is a theorem, and it is true for any two circuits whatever** — not just for neat coaxial solenoids. It holds for a tiny loop beside a giant one, for a coil next to a straight wire, for two circuits of completely different shape.\n\nBe honest about what this page has and has not shown. We **verified** it in one case; we did not **prove** it. The proof needs an energy argument beyond this book: the energy stored in the pair of circuits cannot depend on the order in which you switch the two currents on, and working that out forces the two constants to be equal.\n\nWhat matters practically is the licence it gives you: **compute $ M $ whichever way round is easier.** In the solenoid problem, driving the outer coil took two lines and driving the inner one needed a careful argument about field-free space. Both give the same $ M $, so always pick the easy direction.\n\n**Now the second question: how much of coil 1\'s flux actually gets across to coil 2?**\n\nCoil 1 makes flux. Some of it reaches coil 2; the rest leaks away into the air. A single number measures the fraction that gets across, and it is built from the three inductances of the arrangement:\n\n$ k = \\frac{M}{\\sqrt{L_1L_2}}, \\qquad 0 \\le k \\le 1 $\n\n$ k = 1 $ is **perfect coupling** — every field line from one coil passes through the other. $ k $ near zero means the coils barely notice each other.\n\nOur two solenoids make this concrete. With $ L_1 = \\mu_0 n_1^{2}\\pi r_1^{2}l $ and $ L_2 = \\mu_0 n_2^{2}\\pi r_2^{2}l $:\n\n$ \\sqrt{L_1L_2} = \\mu_0 n_1 n_2 \\pi r_1 r_2 l $\n\nand dividing $ M $ by it, almost everything cancels:\n\n$ k = \\frac{r_1}{r_2} $\n\nA beautifully readable answer. Coupling is just the ratio of the radii. Wind the inner coil tightly inside the outer one and $ r_1 \\to r_2 $, so $ k \\to 1 $. Leave a big gap and most of the outer coil\'s cross-section is wasted on field that never meets the inner winding.\n\nThat is precisely why a transformer\'s two windings are wound **on the same iron core**, often one directly over the other: the core carries essentially all of the flux from one winding to the other, pushing $ k $ above $ 0.99 $. Chapter 7 will need that number.',
     }),
-    b('heading', 10, {
-      text: 'How much flux actually gets across',
-      level: 2,
-      objective: 'Define the coefficient of coupling and interpret $ k = 1 $ and $ k \\ll 1 $.',
+    b('worked_example', 10, {
+      label: 'turning M and a rate of change into an actual voltage',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A pair of adjacent coils has a mutual inductance of $ 1.5 $ H. The current in coil 1 is raised steadily from $ 0 $ to $ 20 $ A in $ 0.50 $ s. Find (a) the change in the flux linkage of coil 2, (b) the average EMF induced in coil 2 and which way it acts, and (c) the flux through a single turn of coil 2 if it has $ 500 $ turns. Then (d) the roles are swapped and the same current change is made in coil 2 instead — what EMF appears in coil 1? And (e) what would the EMF be if the same $ 0 $ to $ 20 $ A change happened in $ 5.0 $ ms?',
+      solution: '**(a) The change in flux linkage.**\n\nThe defining relation is $ N_2\\Phi_2 = M i_1 $, and $ M $ is a constant of the arrangement — nothing about the coils moved. So the change in flux linkage is just $ M $ times the change in current:\n\n$ \\Delta(N_2\\Phi_2) = M\\,\\Delta i_1 = (1.5)(20) = 30\\ \\text{Wb} $\n\nBe careful with the words here. This is a **flux linkage**, the flux added up over all the turns, which is why the number is so large. It is not the flux through one turn — that is part (c).\n\n**(b) The average EMF.**\n\nThe current rises steadily, so $ \\frac{di_1}{dt} $ is the same throughout and equals the average:\n\n$ \\frac{di_1}{dt} = \\frac{20 - 0}{0.50} = 40\\ \\text{A/s} $\n\n$ \\varepsilon_2 = -M\\frac{di_1}{dt} = -(1.5)(40) = -60\\ \\text{V} $\n\nSo the magnitude is $ 60 $ V. The same answer comes straight from part (a) as $ \\frac{\\Delta(N_2\\Phi_2)}{\\Delta t} = \\frac{30}{0.50} = 60 $ V, which is a useful check.\n\n**What the minus sign is doing.** It is the same Faraday-Lenz minus this chapter fixed at the start, not a new one. Flux is measured positive along the chosen normal to coil 2; while $ i_1 $ is rising, $ \\Phi_2 $ is growing along that normal, so the induced EMF drives a current in coil 2 whose own flux points **against** the growth.\n\nAnd note when the EMF is zero. Once $ i_1 $ settles at a steady $ 20 $ A, $ \\frac{di_1}{dt} = 0 $ and $ \\varepsilon_2 = 0 $ — even though the flux linkage is then at its **largest**. Big flux and big EMF are different things, and this is the single most common slip on this topic.\n\n**(c) The flux through one turn.**\n\n$ \\Phi_2 = \\frac{N_2\\Phi_2}{N_2} = \\frac{30}{500} = 0.060\\ \\text{Wb} $\n\nSixty milliweber through each turn, five hundred turns, thirty weber of linkage. The two numbers differ by a factor of $ N_2 $ and by nothing else.\n\n**(d) Swapping the roles.**\n\nThis is where the reciprocity theorem earns its keep. $ M_{21} = M_{12} = 1.5 $ H, so the same rate of change in coil 2 induces the **same $ 60 $ V** in coil 1 — even if coil 1 is a completely different size with a completely different number of turns. You do not need to know anything more about the coils to answer this.\n\n**(e) The same change, a hundred times faster.**\n\n$ \\frac{di_1}{dt} = \\frac{20}{5.0\\times10^{-3}} = 4000\\ \\text{A/s} \\qquad\\Rightarrow\\qquad |\\varepsilon_2| = (1.5)(4000) = 6000\\ \\text{V} $\n\nNothing about the coils changed. Only the clock did — and the EMF went up a hundredfold with it. That is why interrupting a current in a coupled pair is genuinely dangerous, and it is the same effect that produces the spark you will meet two pages from now.',
     }),
-    b('text', 11, {
-      markdown: 'Coil 1 makes flux. Some of it reaches coil 2; the rest leaks away into the air. A single number measures the fraction that gets across, and it is built from the three inductances of the arrangement:\n\n$ k = \\frac{M}{\\sqrt{L_1L_2}}, \\qquad 0 \\le k \\le 1 $\n\n$ k = 1 $ is **perfect coupling** — every field line from one coil passes through the other. $ k $ near zero means the coils barely notice each other.\n\nOur two solenoids make this concrete. With $ L_1 = \\mu_0 n_1^{2}\\pi r_1^{2}l $ and $ L_2 = \\mu_0 n_2^{2}\\pi r_2^{2}l $:\n\n$ \\sqrt{L_1L_2} = \\mu_0 n_1 n_2 \\pi r_1 r_2 l $\n\nand dividing $ M $ by it, almost everything cancels:\n\n$ k = \\frac{r_1}{r_2} $\n\nA beautifully readable answer. Coupling is just the ratio of the radii. Wind the inner coil tightly inside the outer one and $ r_1 \\to r_2 $, so $ k \\to 1 $. Leave a big gap and most of the outer coil\'s cross-section is wasted on field that never meets the inner winding.\n\nThat is precisely why a transformer\'s two windings are wound **on the same iron core**, often one directly over the other: the core carries essentially all of the flux from one winding to the other, pushing $ k $ above $ 0.99 $. Chapter 7 will need that number.',
-    }),
-    b('image', 12, {
+    b('image', 11, {
       src: '',
       alt: 'Two coaxial solenoids, the inner one wound inside the outer, with field lines from the outer coil threading through both',
       width: 'two_third',
@@ -294,21 +290,21 @@ const p11 = {
       caption: 'Only the inner coil\'s cross-section shares flux. The ring of space outside it contributes nothing to $ M $.',
       generation_prompt: 'Clean scientific diagram, cutaway side view of two concentric helical solenoids sharing one horizontal axis: a narrow inner coil drawn as tight bright amber elliptical turns, and a wider outer coil drawn as larger dimmer amber turns around it, both the same length. Straight dim-orange field lines fill the whole interior of the outer coil, with the subset passing through the inner coil drawn noticeably brighter to show the shared flux, and the annular region between the two coils tinted a very faint cool grey to suggest wasted flux. Thin dim-grey dashed centre axis. Rendered on a near-black background (#0B0C0F) with orange and amber accents and generous dark space. No text, no labels, no numbers anywhere in the image.',
     }),
-    b('callout', 13, {
+    b('callout', 12, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'A **hospital cochlear implant** is mutual inductance solving a problem nothing else can.\n\nPart of the device sits under the skin, next to the inner ear. It needs power and it needs a signal, continuously, for years. A wire through the skin would be a permanent open wound and a permanent infection route.\n\nSo there is no wire. A coil outside the head, held in place by a small magnet, carries an alternating current. A matching coil implanted just under the skin picks up the changing flux. Power crosses a few millimetres of living tissue by induction alone, and the audio signal rides across the same link.\n\nThe engineering challenge is the whole content of this page: keep the two coils **coaxial and close**, because $ M $ collapses as they separate or tilt. That is exactly why the external part is held on by a magnet rather than a strap — the magnet is not holding the device on, it is holding $ k $ up.',
       image_prompt: 'Clean scientific illustration, side profile silhouette of a human head drawn as a thin dim-grey outline. Two small flat spiral coils drawn in bright amber sit facing each other on either side of a thin grey line representing the skin, one just outside and one just beneath, sharing a common axis. Soft dim-orange field loops arc from one coil through the other, crossing the skin line. A faint cool-blue thread runs from the inner coil deeper into the head towards a small spiral shape suggesting the inner ear. Rendered on a near-black background (#0B0C0F) with orange and amber accents and generous dark space. No text, no labels, no numbers anywhere in the image.',
     }),
-    b('callout', 14, {
+    b('callout', 13, {
       variant: 'exam_tip',
       title: 'Quick Recap',
-      markdown: '- $ N_2\\Phi_2 = Mi_1 $ and $ \\varepsilon_2 = -M\\frac{di_1}{dt} $. Same unit as $ L $: the henry.\n- $ M $ depends on geometry, the core, and **relative orientation** — never on the current.\n- Coaxial solenoids: $ M = \\mu_0 n_1n_2\\pi r_1^{2}l $. Only the **inner** radius appears.\n- $ M_{12} = M_{21} $ for any two circuits. Verified here, not proved — so compute it whichever way is easier.\n- Coupling $ k = M/\\sqrt{L_1L_2} $, between $ 0 $ and $ 1 $. For the two solenoids, $ k = r_1/r_2 $.\n- Turning one coil through $ 90^\\circ $ kills $ M $ as effectively as moving it far away.',
+      markdown: '- $ N_2\\Phi_2 = Mi_1 $ and $ \\varepsilon_2 = -M\\frac{di_1}{dt} $. Same unit as $ L $: the henry.\n- Numbers go in through $ \\Delta(N_2\\Phi_2) = M\\Delta i_1 $ and $ |\\varepsilon_2| = M\\frac{\\Delta i_1}{\\Delta t} $. Largest flux linkage and largest EMF happen at **different moments**.\n- $ M $ depends on geometry, the core, and **relative orientation** — never on the current.\n- Coaxial solenoids: $ M = \\mu_0 n_1n_2\\pi r_1^{2}l $. Only the **inner** radius appears.\n- $ M_{12} = M_{21} $ for any two circuits. Verified here, not proved — so compute it whichever way is easier.\n- Coupling $ k = M/\\sqrt{L_1L_2} $, between $ 0 $ and $ 1 $. For the two solenoids, $ k = r_1/r_2 $.\n- Turning one coil through $ 90^\\circ $ kills $ M $ as effectively as moving it far away.',
     }),
-    b('text', 15, {
+    b('text', 14, {
       markdown: 'Next: pushing a current into a coil against its own back-EMF is work. That work does not vanish — it is stored, and we can say exactly where.',
     }),
-    b('inline_quiz', 16, {
+    b('inline_quiz', 15, {
       pass_threshold: 0.6,
       questions: [
         q('The mutual inductance of two coils depends on',
@@ -539,7 +535,14 @@ const p13 = {
       problem: 'A $ 12 $ V battery, a $ 4.0\\ \\Omega $ resistor and an $ 8.0 $ mH inductor are connected in series and the switch is closed at $ t = 0 $. Find the final current, the time constant, the current after $ 2.0 $ ms, and the time taken to reach $ 90\\% $ of the final current.',
       solution: '**Final current — pure Ohm\'s law.**\n\n$ i_0 = \\frac{V_0}{R} = \\frac{12}{4.0} = 3.0\\ \\text{A} $\n\nThe inductor has no say in this. Once the current is steady it produces no EMF at all.\n\n**Time constant.**\n\n$ \\tau = \\frac{L}{R} = \\frac{8.0\\times10^{-3}}{4.0} = 2.0\\times10^{-3}\\ \\text{s} = 2.0\\ \\text{ms} $\n\n**Current after $ 2.0 $ ms**, which is exactly one time constant:\n\n$ i = i_0(1 - e^{-1}) = 3.0(1 - 0.368) = 3.0(0.632) = 1.9\\ \\text{A} $\n\nThe $ 63\\% $ figure, applied directly.\n\n**Time to reach $ 90\\% $.** Set $ i = 0.90\\,i_0 $:\n\n$ 0.90 = 1 - e^{-t/\\tau} \\quad\\Rightarrow\\quad e^{-t/\\tau} = 0.10 \\quad\\Rightarrow\\quad \\frac{t}{\\tau} = \\ln 10 = 2.30 $\n\n$ t = 2.30 \\times 2.0\\ \\text{ms} = 4.6\\ \\text{ms} $\n\n**Two things to carry away from the numbers.** First, the whole transient is over in about $ 10 $ ms — for a mains supply reversing every $ 10 $ ms, that is not a transient at all but the permanent state of affairs, which is what Chapter 7 has to deal with. Second, $ t = \\tau\\ln(10) $ for $ 90\\% $ is worth remembering: it is the same $ 2.3\\tau $ in every first-order circuit, C-R or L-R alike.',
     }),
-    b('image', 10, {
+    b('worked_example', 10, {
+      label: 'a switch-off with two resistances in the loop',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'An ideal inductor $ L = 0.20 $ H sits in series with $ R_1 = 10\\ \\Omega $, and that pair is connected to a $ 20 $ V battery through a switch. A second resistor $ R_2 = 40\\ \\Omega $ is wired permanently across the same pair, so it stays connected even when the switch opens. The switch has been closed for a long time and is opened at $ t = 0 $. Find (a) the current in the inductor just before and just after opening, (b) the time constant after opening, (c) the voltage across $ R_2 $ and across the inductor immediately after opening, (d) the total heat produced after $ t = 0 $ and how it splits between the two resistors, and (e) the time for the current to fall to $ 10\\% $ of its starting value.',
+      solution: '**(a) Just before, and just after.**\n\nAfter a long time the current is steady, so $ \\frac{di}{dt} = 0 $ and the ideal inductor is nothing but a piece of wire. The battery then sits directly across $ R_1 $:\n\n$ i_0 = \\frac{V_0}{R_1} = \\frac{20}{10} = 2.0\\ \\text{A} $\n\n($ R_2 $ is also across the battery and draws its own $ 0.5 $ A, but that current comes from the battery and never passes through the coil, so it plays no part in what follows.)\n\nThe instant the switch opens, **the current through the inductor cannot jump**. A jump would need an infinite $ \\frac{di}{dt} $, and $ \\varepsilon = -L\\frac{di}{dt} $ would then be infinite. So immediately after opening the inductor still carries $ 2.0 $ A. What has changed is where that current goes: the battery branch is gone, so the only path left is round through $ R_1 $ and $ R_2 $ in series.\n\n**(b) The new time constant.**\n\nIn the decay loop the coil now sees both resistors:\n\n$ \\tau\' = \\frac{L}{R_1 + R_2} = \\frac{0.20}{50} = 4.0\\times10^{-3}\\ \\text{s} = 4.0\\ \\text{ms} $\n\nWith the switch closed the circuit\'s constant was $ \\frac{L}{R_1} = 20 $ ms. Adding resistance made the circuit **five times faster**, which is the L-R rule from the top of this page doing real work — and the exact opposite of what more resistance would do to a capacitor.\n\n**(c) The voltages, immediately after opening.**\n\nThe same $ 2.0 $ A is now forced through $ R_2 $:\n\n$ V_2 = i_0R_2 = (2.0)(40) = 80\\ \\text{V} $\n\nEighty volts — **four times the battery voltage**, from a battery that has just been disconnected. The coil is the source now, and it is spending the energy it had stored.\n\nAcross the inductor, which has to drive the whole loop:\n\n$ |\\varepsilon| = i_0(R_1 + R_2) = (2.0)(50) = 100\\ \\text{V} $\n\nCheck it the other way. The decay is $ i = i_0e^{-t/\\tau\'} $, so at $ t = 0 $, $ \\left|\\frac{di}{dt}\\right| = \\frac{i_0}{\\tau\'} = \\frac{2.0}{4.0\\times10^{-3}} = 500\\ \\text{A/s} $, and $ L\\left|\\frac{di}{dt}\\right| = (0.20)(500) = 100 $ V. The two routes agree.\n\n**This part is the whole argument for the freewheeling diode below.** Make $ R_2 $ ten times larger and the voltage across it is ten times larger too. Remove it altogether — which is what a plain open switch does — and $ R_2 $ is effectively infinite, so the voltage runs away until the air breaks down. The diode is simply a very small $ R_2 $ that appears exactly when it is needed.\n\n**(d) The heat, without integrating.**\n\nNothing drives the loop after $ t = 0 $, so every joule of heat was already in the coil:\n\n$ Q_{\\text{total}} = \\frac{1}{2}Li_0^{2} = \\frac{1}{2}(0.20)(2.0)^{2} = 0.40\\ \\text{J} $\n\n$ R_1 $ and $ R_2 $ are in series in this loop, so they carry the **same current at every instant**. Heat goes as $ i^{2}R $ with a common $ i $, so it divides in the plain ratio of the resistances:\n\n$ Q_1 = 0.40\\times\\frac{10}{50} = 0.080\\ \\text{J}, \\qquad Q_2 = 0.40\\times\\frac{40}{50} = 0.32\\ \\text{J} $\n\nNo integral anywhere. It is the same energy-accounting move used on the sliding rod: find where the energy started, decide where it can go, and let the bookkeeping do the rest.\n\n**(e) Down to a tenth.**\n\n$ 0.10 = e^{-t/\\tau\'} \\quad\\Rightarrow\\quad \\frac{t}{\\tau\'} = \\ln 10 = 2.30 $\n\n$ t = (2.30)(4.0\\ \\text{ms}) = 9.2\\ \\text{ms} $\n\nThe same $ 2.3\\tau $ that took the growing current to $ 90\\% $ takes the decaying one down to $ 10\\% $. For a first-order circuit those two are the same journey, read from opposite ends.',
+    }),
+    b('image', 11, {
       src: '',
       alt: 'Growth and decay curves of current in an L-R circuit with the time constant marked on each',
       width: 'two_third',
@@ -547,21 +550,21 @@ const p13 = {
       caption: 'Rising to $ V_0/R $, then falling back. One time constant covers $ 63\\% $ of either journey.',
       generation_prompt: 'Clean scientific graph panel, two graphs side by side in a shared style with thin dim-grey axes. Left graph: a smooth amber curve rising from the origin and flattening towards a dashed horizontal grey asymptote, with a faint vertical dashed line partway along and a short horizontal dashed line meeting the curve where they cross. Right graph: a smooth amber curve falling from a high value on the vertical axis and flattening towards the horizontal axis, with the same pair of faint dashed guide lines. No gridlines. Rendered on a near-black background (#0B0C0F) with orange and amber accents and generous dark space. No text, no labels, no numbers anywhere in the image.',
     }),
-    b('callout', 11, {
+    b('callout', 12, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'The inductive kick is a **problem in one place and the entire product in another**.\n\n**As a problem:** every relay, solenoid valve and motor winding in a machine is an inductor, and switching it off would arc across the contacts and destroy them, or send a voltage spike back into the electronics. The standard fix costs a few rupees — a **freewheeling diode** wired backwards across the coil. While the coil is powered the diode does nothing. The moment the switch opens, the coil\'s reversed EMF forward-biases it, and the current has a comfortable loop to circulate in and die away quietly. No path taken away, no spark.\n\n**As the product:** a petrol engine\'s **ignition coil** does exactly the thing the diode is there to prevent, on purpose. A current is built up in a coil and then deliberately interrupted. The collapsing field produces tens of thousands of volts, which jumps the spark plug gap and ignites the fuel. Every one of the billions of petrol engines running today is powered by the equation on this page, applied several thousand times a minute.\n\nSame physics, opposite intention — which is a fair description of most of engineering.',
       image_prompt: 'Clean scientific illustration, two simple circuit vignettes side by side in thin dim-grey line art. Left vignette: a coil symbol drawn as a series of amber loops with a small diode triangle-and-bar symbol wired across it, and a smooth amber curved arrow showing current circulating quietly around the small loop. Right vignette: a similar coil with an open switch drawn as a broken line, and a jagged bright orange spark arcing across a small gap between two rounded electrode tips, with short radiating glow lines around the arc. Rendered on a near-black background (#0B0C0F) with orange and amber accents and generous dark space. No text, no labels, no numbers anywhere in the image.',
     }),
-    b('callout', 12, {
+    b('callout', 13, {
       variant: 'exam_tip',
       title: 'Quick Recap',
-      markdown: '- Growth: $ i = i_0(1 - e^{-t/\\tau}) $. Decay: $ i = i_0e^{-t/\\tau} $. Both with $ \\tau = L/R $.\n- $ i_0 = V_0/R $ — the **destination** is Ohm\'s law; $ L $ only sets the **journey time**.\n- After $ \\tau $: $ 63\\% $ of the way. After $ 5\\tau $: effectively done. For $ 90\\% $, $ t = 2.3\\tau $.\n- At $ t = 0 $ an inductor is an **open circuit**; long after, it is a **plain wire**. A capacitor does exactly the reverse.\n- Bigger $ R $ makes an L-R circuit **faster** and a C-R circuit **slower**.\n- Breaking an inductive circuit gives a huge $ \\frac{di}{dt} $, hence a huge EMF, hence a spark. A diode across the coil is the standard cure.',
+      markdown: '- Growth: $ i = i_0(1 - e^{-t/\\tau}) $. Decay: $ i = i_0e^{-t/\\tau} $. Both with $ \\tau = L/R $.\n- $ i_0 = V_0/R $ — the **destination** is Ohm\'s law; $ L $ only sets the **journey time**.\n- After $ \\tau $: $ 63\\% $ of the way. After $ 5\\tau $: effectively done. For $ 90\\% $, $ t = 2.3\\tau $.\n- At $ t = 0 $ an inductor is an **open circuit**; long after, it is a **plain wire**. A capacitor does exactly the reverse.\n- Bigger $ R $ makes an L-R circuit **faster** and a C-R circuit **slower**.\n- Breaking an inductive circuit gives a huge $ \\frac{di}{dt} $, hence a huge EMF, hence a spark. A diode across the coil is the standard cure.\n- Switch off into a second resistor: the coil current **cannot jump**, so it carries on at $ i_0 $ through $ R_1 + R_2 $, with $ \\tau\' = \\frac{L}{R_1+R_2} $ and a peak voltage $ i_0(R_1+R_2) $ that can far exceed the battery.\n- All the heat after the switch opens is the stored $ \\frac{1}{2}Li_0^{2} $, and series resistors split it in the ratio of their resistances.',
     }),
-    b('text', 13, {
+    b('text', 14, {
       markdown: 'Next: a question this chapter has quietly avoided. In a stationary loop with a changing field, nothing is moving — so what force is actually pushing the charges around?',
     }),
-    b('inline_quiz', 14, {
+    b('inline_quiz', 15, {
       pass_threshold: 0.6,
       questions: [
         q('The time constant of an L-R circuit is',

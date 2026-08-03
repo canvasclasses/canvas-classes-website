@@ -90,7 +90,21 @@ withDb(async (db) => {
     if (p.page_type === 'chapter_opener') continue;
 
     // ── structure ────────────────────────────────────────────────────────
-    if (blocks.length > 18) problems.push(`${where0}: ${blocks.length} blocks (>18, §15.8 says split)`);
+    // The §15.8 cap counts AUTHORED blocks only. Interactive simulations
+    // (`field_bench` / `circuit_bench`) are placed by a separate additive pass,
+    // `scripts/physics-sims/insert_placements.js`, and are identified by their
+    // `archetype`. Counting them here set the two pipelines against each other:
+    // placing a sim on a page authored at the cap pushed it to 19, and the only
+    // way back under was to delete teaching prose to make room for a widget.
+    // That is backwards — the cap exists to bound how much READING is on a page,
+    // and a sim is not reading. Three pages had already had prose merged away for
+    // this reason before the rule was corrected.
+    const authored = blocks.filter((x) => !x.archetype);
+    const simCount = blocks.length - authored.length;
+    if (authored.length > 18) {
+      problems.push(`${where0}: ${authored.length} authored blocks (>18, §15.8 says split)`
+        + (simCount ? ` [+${simCount} sim, not counted]` : ''));
+    }
     const types = blocks.map((x) => x.type);
     if (!types.includes('image') && !types.includes('practice_bank')) {
       problems.push(`${where0}: no image block`);

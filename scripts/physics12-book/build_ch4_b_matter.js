@@ -273,15 +273,68 @@ const p7 = {
       caption: 'H is what the current applies. M is what the material adds. B is the sum, and the thing that exerts forces.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F). A solenoid drawn in cross-section as two rows of small circles with current-direction dots and crosses, in thin dim-grey line art. Inside it, a rectangular rod shown in a lighter dark tone containing many small aligned orange dipole arrows. Three horizontal labelled arrows are stacked beneath the diagram: a medium dim-orange arrow labelled H, a medium amber arrow labelled M, and a much longer bright amber arrow labelled B, with a small plus sign between the first two and an equals sign before the third. Muted white minimal labels, generous dark space.',
     }),
-    b('callout', 9, {
+    b('heading', 9, {
+      text: 'Working backwards from a measurement',
+      level: 2,
+      objective: 'Given a measured $ B $ and a known $ H $, find $ M $, $ \\chi $ and $ \\mu_r $.',
+    }),
+    b('step_solver', 10, {
+      title: 'From a measured field back to the material',
+      problem: 'A rod of soft iron is placed inside a long solenoid wound with $ 500 $ turns per metre and carrying $ 0.40 $ A. The magnetic field inside the rod is measured to be $ 0.40 $ T. Find the magnetising field $ H $, the magnetisation $ M $, the susceptibility $ \\chi $ and the relative permeability $ \\mu_r $. Take $ \\mu_0 = 4\\pi\\times10^{-7} $ SI units.',
+      intro: 'The reasoning check above ran forwards — you were handed $ \\chi $ and asked for $ B $. In a laboratory it always runs the other way. You can set the current, and you can measure the field; everything about the material has to be **deduced** from those two. That is this problem, in four short steps, and the order of the steps is the lesson.',
+      steps: [
+        st('The current sets $ H $, and nothing else does: $ H = nI = (500)(0.40) = 200 $ A/m',
+          'Always start here. $ H $ is the one quantity you control directly, and notice that the iron does not appear in this line at all.', {
+            check: {
+              kind: 'mcq',
+              prompt: 'The iron rod is pulled out of the solenoid, with the current left exactly as it was. What happens to $ H $ inside?',
+              options: [
+                'Nothing — it is still $ 200 $ A/m',
+                'It falls by a factor of roughly $ 1600 $',
+                'It rises, because the iron was absorbing part of it',
+                'It drops to zero, since there is no material left',
+              ],
+              answer_index: 0,
+              feedback_right: 'Correct. $ H = nI $ contains only the winding and the current. The material changes $ B $ enormously and $ H $ not at all.',
+              feedback_wrong: '$ H = nI $ — turns per metre times current. There is no material term anywhere in it. What collapses when the iron leaves is $ B $, because $ M $ falls to zero.',
+            },
+          }),
+        st('Turn the fundamental relation round: from $ B = \\mu_0(H+M) $, $ \\quad M = \\frac{B}{\\mu_0} - H $',
+          'No new physics — this is the one equation of this page with $ M $ made the subject. Do the algebra before you touch the numbers, so you know what you are looking for.'),
+        st('$ \\frac{B}{\\mu_0} = \\frac{0.40}{4\\pi\\times10^{-7}} = 3.18\\times10^{5} $ A/m, so $ M = 3.18\\times10^{5} - 200 = 3.18\\times10^{5} $ A/m',
+          'Subtracting $ 200 $ from $ 318\\,000 $ changes the answer by six hundredths of one per cent, so to three figures $ M $ is unchanged. In iron, almost the whole of $ B $ is the material talking — you supplied hardly any of it.', {
+            check: {
+              kind: 'mcq',
+              prompt: 'Here subtracting $ H $ barely changed the answer. Would the same be true for a diamagnetic sample with $ \\chi \\approx -10^{-5} $?',
+              options: [
+                'No — there $ M $ is the tiny difference of two nearly equal numbers',
+                'Yes — the $ H $ term can always be dropped safely',
+                'No — for a diamagnet the quantity $ B/\\mu_0 $ is exactly zero',
+                'Yes, as long as the applied field is made strong enough',
+              ],
+              answer_index: 0,
+              feedback_right: 'Exactly. For a diamagnet $ B/\\mu_0 $ and $ H $ agree to five figures, and $ M $ is only what is left over. Round early there and you get zero.',
+              feedback_wrong: 'For a diamagnet $ M = \\chi H $ is about $ 10^{-5} $ of $ H $, so $ B/\\mu_0 $ and $ H $ are almost equal and $ M $ is their small difference. That is precisely the case where careless rounding destroys the whole answer.',
+            },
+          }),
+        st('$ \\chi = \\frac{M}{H} = \\frac{3.18\\times10^{5}}{200} = 1.59\\times10^{3} $, and $ \\mu_r = 1+\\chi = 1.59\\times10^{3} $',
+          'For a ferromagnet the $ +1 $ is invisible at three figures — $ 1591 $ against $ 1590 $. Write it anyway, out of habit, because for a diamagnet that $ 1 $ is the entire answer.'),
+      ],
+      now_you_try: {
+        problem: 'Same solenoid, same current, but the rod is swapped for one in which the field measures $ 0.80 $ T instead. Find the new susceptibility.',
+        answer: 'About $ 3.18\\times10^{3} $',
+        solution: '$ H $ is unchanged at $ 200 $ A/m — the winding and the current did not change, and those are the only things $ H $ depends on.\n\n$ \\frac{B}{\\mu_0} = \\frac{0.80}{4\\pi\\times10^{-7}} = 6.37\\times10^{5}\\ \\text{A/m} $\n\n$ M = 6.37\\times10^{5} - 200 \\approx 6.37\\times10^{5}\\ \\text{A/m} $\n\n$ \\chi = \\frac{M}{H} = \\frac{6.37\\times10^{5}}{200} = 3.18\\times10^{3} $\n\nTwice the field for the same applied $ H $ gives twice the susceptibility, which is exactly the straight proportion that $ M = \\chi H $ assumes. Real iron only obeys it over a limited range — p9 shows what it does instead.',
+      },
+    }),
+    b('callout', 11, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- $ \\vec{B} = \\mu_0(\\vec{H}+\\vec{M}) $ — applied plus contributed equals total.\n- $ H $ and $ M $ are both in **A/m**; $ B $ is in **tesla**.\n- $ H $ depends only on the currents you control. For a solenoid, $ H = nI $.\n- $ \\chi = M/H $ (a pure number), $ \\mu_r = 1+\\chi $, $ B = \\mu_0\\mu_rH $.\n- Sign and size of $ \\chi $ classify the material: small negative → dia, small positive → para, large positive → ferro.',
     }),
-    b('text', 10, {
+    b('text', 12, {
       markdown: 'Next: the two weak magnetisms, which arise from completely different atomic causes — and behave oppositely as a result.',
     }),
-    b('inline_quiz', 11, {
+    b('inline_quiz', 13, {
       pass_threshold: 0.6,
       questions: [
         q('The relation between relative permeability and susceptibility is',
@@ -363,7 +416,14 @@ const p8 = {
       reveal: '**$ 3.6\\times10^{-5} $.**\n\nCurie\'s law gives $ \\chi \\propto 1/T $, so\n\n$ \\frac{\\chi_2}{\\chi_1} = \\frac{T_1}{T_2} = \\frac{300}{200} = 1.5 $\n\n$ \\chi_2 = 1.5 \\times 2.4\\times10^{-5} = 3.6\\times10^{-5} $\n\n**Cooling increases the susceptibility**, because there is less thermal agitation to fight the field\'s alignment. That direction is worth checking every time — if your answer comes out smaller on cooling, the ratio is inverted.\n\n**And note:** $ T $ must be **absolute**. Using $ 27\\ ^\\circ\\text{C} $ and $ -73\\ ^\\circ\\text{C} $ as 27 and $ -73 $ would be nonsense — a negative susceptibility from a paramagnet.',
       difficulty_level: 2,
     }),
-    b('comparison_card', 11, {
+    b('worked_example', 11, {
+      label: 'how much magnetisation does Curie\'s law actually give?',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A paramagnetic salt has a Curie constant $ C = 4.2\\times10^{-3} $ K. It is placed in a magnetising field $ H = 2.0\\times10^{4} $ A/m. Find its magnetisation (a) at room temperature, $ 300 $ K, and (b) after cooling to $ 4.2 $ K, the boiling point of liquid helium.',
+      solution: '**(a) At 300 K.**\n\nCurie\'s law gives the susceptibility:\n\n$ \\chi = \\frac{C}{T} = \\frac{4.2\\times10^{-3}}{300} = 1.4\\times10^{-5} $\n\nThen use the definition $ \\chi = M/H $ forwards:\n\n$ M = \\chi H = (1.4\\times10^{-5})(2.0\\times10^{4}) = 0.28\\ \\text{A/m} $\n\n**(b) At 4.2 K.**\n\n$ \\chi = \\frac{4.2\\times10^{-3}}{4.2} = 1.0\\times10^{-3} $\n\n$ M = (1.0\\times10^{-3})(2.0\\times10^{4}) = 20\\ \\text{A/m} $\n\n**Now look at what those two numbers actually say.**\n\nAt room temperature the sample contributes $ 0.28 $ A/m while you are applying $ 20\\,000 $ A/m — about one part in seventy thousand. *That* is what "weak magnetism" means as a number, and it is why detecting paramagnetism at all needs a sensitive balance rather than a compass.\n\nCooling by a factor of about $ 71 $ multiplies the magnetisation by the same $ 71 $, up to $ 20 $ A/m. Still small, but now comfortably measurable — which is exactly why susceptibility measurements are made cold.\n\n**Two traps.** $ T $ must be in **kelvin**; Curie\'s law fed a celsius temperature is meaningless. And $ \\chi $ is a pure number, so $ M $ comes out in the same unit as $ H $, namely A/m — never in tesla. If you want the material\'s share of $ B $, multiply by $ \\mu_0 $: at $ 300 $ K that is $ (4\\pi\\times10^{-7})(0.28) = 3.5\\times10^{-7} $ T, sitting on top of the $ 2.5\\times10^{-2} $ T you applied.\n\n**One honest caveat.** Curie\'s law is itself an approximation, good while the thermal energy still beats the magnetic energy. Push a paramagnet to very low temperature *and* a very strong field and the moments run out of room to align — the magnetisation saturates and $ \\chi \\propto 1/T $ stops holding.',
+    }),
+    b('comparison_card', 12, {
       title: 'The two weak magnetisms, side by side',
       columns: [
         {
@@ -392,7 +452,7 @@ const p8 = {
         },
       ],
     }),
-    b('image', 12, {
+    b('image', 13, {
       src: '',
       alt: 'A diamagnetic and a paramagnetic rod suspended in a non-uniform field, one repelled towards the weak region and one drawn to the strong region',
       width: 'two_third',
@@ -400,15 +460,15 @@ const p8 = {
       caption: 'Same field, opposite responses — because one moment is induced against it and the other aligns with it.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), two panels side by side separated by a thin grey rule. Each shows an electromagnet with one sharply pointed pole piece at left and one flat pole piece at right, drawn in dim grey, with dim-orange field lines densely crowded near the point and sparse near the flat pole. Left panel labelled diamagnetic: a small rod suspended on a thread between them, oriented across the field, with a bold orange arrow showing it pushed towards the flat pole. Right panel labelled paramagnetic: an identical rod oriented along the field, with a bold orange arrow showing it pulled towards the pointed pole. Muted white minimal labels, generous dark space.',
     }),
-    b('callout', 13, {
+    b('callout', 14, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- **Diamagnetic:** no permanent moments; field induces an **opposing** one. $ \\chi $ small negative, $ \\mu_r<1 $, weakly repelled, **temperature-independent**. Present in all materials.\n- **Paramagnetic:** permanent moments **partially aligned** against thermal disorder. $ \\chi $ small positive, $ \\mu_r>1 $, weakly attracted, $ \\chi \\propto 1/T $.\n- Diamagnets go to the **weak** part of a non-uniform field; paramagnets to the **strong** part.\n- A superconductor is a **perfect** diamagnet: $ \\chi = -1 $, field expelled entirely (Meissner effect).\n- Curie\'s law needs **absolute** temperature.',
     }),
-    b('text', 14, {
+    b('text', 15, {
       markdown: 'Next: the third family, where the atomic moments stop behaving independently and start cooperating — with consequences a thousand times larger.',
     }),
-    b('inline_quiz', 15, {
+    b('inline_quiz', 16, {
       pass_threshold: 0.6,
       questions: [
         q('A diamagnetic material placed in a non-uniform magnetic field moves towards',
@@ -517,7 +577,14 @@ const p9 = {
     b('text', 9, {
       markdown: 'A transformer core is magnetised and demagnetised 100 times a second, so a fat loop would waste that energy 100 times a second and cook the transformer. Hence soft iron.\n\nA fridge magnet has to hold its magnetisation for years against stray fields. Hence a hard material with high coercivity.\n\n**The same physics, opposite requirements** — and the loop shape is how you tell which material you are holding.',
     }),
-    b('image', 10, {
+    b('worked_example', 10, {
+      label: 'the heat a hysteresis loop makes',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'The $ B $-$ H $ loop of a transformer core material is drawn on a graph in which $ 1 $ cm along the horizontal axis stands for $ 100 $ A/m and $ 1 $ cm along the vertical axis stands for $ 0.050 $ T. The loop encloses an area of $ 50\\ \\text{cm}^{2} $. The core has a volume of $ 0.020\\ \\text{m}^{3} $ and the transformer runs from a $ 50 $ Hz mains supply. Find the power dissipated in the core as hysteresis heat.',
+      solution: '**Step 1 — what one square centimetre of the graph is worth.**\n\nThe area is an energy per unit volume, and its value comes from the two axis scales multiplied together:\n\n$ 1\\ \\text{cm}^{2} \\to (100\\ \\text{A/m})\\times(0.050\\ \\text{T}) = 5.0\\ \\text{J/m}^{3} $\n\nIf that looks like a leap, check the units: $ \\text{A/m}\\times\\text{T} = \\text{J/m}^{3} $. That identity is the whole reason the area of a $ B $-$ H $ loop is an energy density in the first place.\n\n**Step 2 — energy lost per cycle, per cubic metre.**\n\n$ (50\\ \\text{cm}^{2})\\times(5.0\\ \\text{J/m}^{3}\\ \\text{per cm}^{2}) = 250\\ \\text{J/m}^{3} $ per cycle\n\n**Step 3 — energy lost per cycle by the whole core.**\n\n$ E = (250)(0.020) = 5.0\\ \\text{J} $ per cycle\n\n**Step 4 — energy per cycle becomes power.**\n\n$ P = Ef = (5.0)(50) = 250\\ \\text{W} $\n\n**The trap in this problem is the frequency.** A $ 50 $ Hz supply reverses the field $ 100 $ times a second, and it is very tempting to put $ 100 $ into that last line. But one *loop* is one complete there-and-back journey — it already contains both reversals — so the loop is traversed $ 50 $ times a second, not $ 100 $. Use the supply frequency exactly as given.\n\n**And $ 250 $ W is a great deal.** Left running, that is $ 6 $ kWh of heat every day, produced by nothing but domain walls scraping past defects — before you count a single watt of resistive loss in the windings. Halve the loop area by choosing a softer core material and you halve that figure. This calculation is the entire commercial argument for silicon steel.',
+    }),
+    b('image', 11, {
       src: '',
       alt: 'A hysteresis loop with retentivity and coercivity marked, beside a thin soft-iron loop and a fat steel loop',
       width: 'full',
@@ -525,21 +592,21 @@ const p9 = {
       caption: 'Retentivity is what remains at zero field; coercivity is the reverse field needed to erase it. The area is energy lost as heat.',
       generation_prompt: 'Clean scientific graph panel on a near-black background (#0B0C0F), two panels side by side separated by a thin grey rule. Left panel: a single large hysteresis loop drawn as a smooth amber closed curve on thin dim-grey axes labelled H horizontally and B vertically in muted white, with the interior lightly tinted translucent amber; small labelled markers where the curve crosses the vertical axis reading retentivity and where it crosses the horizontal axis reading coercivity, plus a note at the top reading saturation. Right panel: two loops overlaid on one set of axes — a very narrow tall amber loop labelled soft iron and a wide fat dimmer loop labelled steel. Generous dark space, no gridlines, no clutter.',
     }),
-    b('callout', 11, {
+    b('callout', 12, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'Hysteresis is not a defect to be engineered away — for half of electrical technology it **is** the product.\n\n**Every hard disk and magnetic stripe** relies on it. A tiny region of a hard magnetic film is set one way or the other by a write head, and then it **stays** there — for years, without power. That is retentivity doing its job, and high coercivity is what stops a stray field erasing your data.\n\n**Every transformer** relies on avoiding it. The core is laminated soft iron or silicon steel chosen for the thinnest loop obtainable, because at 50 cycles a second even a modest loop area becomes kilowatts of waste heat in a large transformer.\n\nSo the next time a hard disk survives being left in a drawer for a decade, and a transformer hums along at 98% efficiency, both are the same graph read in opposite directions.',
       image_prompt: 'Clean scientific illustration on a near-black background (#0B0C0F), two vignettes side by side separated by generous dark space, in thin dim-grey line art. Left: a hard-disk platter seen at an angle with a read-write head arm above it, and a magnified inset strip showing a row of small regions with alternating amber up-arrows and blue down-arrows representing stored bits. Right: a laminated transformer core drawn as a stack of thin plates in dim grey with two amber coils wound on it, and a small thermometer symbol beside it showing a low reading. Muted white minimal labels.',
     }),
-    b('callout', 12, {
+    b('callout', 13, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- Ferromagnetism = atomic moments **cooperating** in **domains**, so $ \\chi $ is $ 10^{3}\\text{–}10^{5} $, not $ 10^{-5} $.\n- Unmagnetised iron has domains; they just point in different directions.\n- A field grows and rotates domains → **saturation** when all are aligned.\n- Above the **Curie temperature** domains dissolve and the material becomes paramagnetic.\n- **Retentivity** = $ B $ remaining at $ H = 0 $. **Coercivity** = reverse $ H $ needed to bring $ B $ to zero.\n- Loop **area** = energy lost per cycle per unit volume, as heat.\n- **Soft** (thin loop) → transformer cores. **Hard** (fat loop) → permanent magnets and data storage.',
     }),
-    b('text', 13, {
+    b('text', 14, {
       markdown: 'That closes Chapter 4. You can now handle a magnet as a dipole, work with the Earth\'s field, and say what any material does when a field is applied to it.\n\nOne promise is still outstanding. On p2 we claimed that a current loop is a magnetic dipole with $ m = NIA $, and used it without proof. The next chapter earns it — starting from the force a magnetic field exerts on a single moving charge, and building all the way back to the galvanometer that Chapter 3 relied on.',
     }),
-    b('inline_quiz', 14, {
+    b('inline_quiz', 15, {
       pass_threshold: 0.6,
       questions: [
         q('An unmagnetised piece of iron still contains domains. It appears unmagnetised because',

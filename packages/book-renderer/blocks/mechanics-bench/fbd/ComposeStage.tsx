@@ -37,15 +37,38 @@ import { Card, ActionButton, Legend, usePointerDrag } from './ui';
 import type { LegendRow } from './ui';
 import { SimSlider, TYPE } from '../../simulations/_shared';
 
-export default function ComposeStage({ scene, onChange, onReset, editable }: {
+export default function ComposeStage({ scene, onChange, onReset, editable, focusBodyId }: {
   scene: Scene;
   onChange: (next: Scene) => void;
   onReset: () => void;
   /** false locks the scene to the author's archetype (composition off). */
   editable: boolean;
+  /**
+   * The body the exercise is ABOUT — the archetype's `defaultBody` / the FBD
+   * task's `body`. Used only to seed the selection.
+   */
+  focusBodyId?: string;
 }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(scene.bodies[0]?.id ?? null);
+  /*
+   * Seed the selection with the body the exercise is about, NOT `bodies[0]`.
+   *
+   * Scenes list fixtures first, so `bodies[0]` is the wedge on every incline
+   * archetype. On `incline-with-friction` that put "Roughness μs 0.00" on
+   * screen — the WEDGE-vs-ground pair, which is deliberately frictionless — on
+   * a page whose own guide text says "set the slope and the roughness, then
+   * decide: is this block sliding, or is it stuck?". The real contact
+   * (block-on-wedge, μs = 0.5) was hidden, and dragging the visible slider
+   * changed a number that has no effect on the lesson. Found in browser QA.
+   *
+   * Fall back to the first body that can actually move, then to bodies[0].
+   */
+  const seed =
+    (focusBodyId && scene.bodies.some((b) => b.id === focusBodyId) ? focusBodyId : null)
+    ?? scene.bodies.find((b) => !b.fixed)?.id
+    ?? scene.bodies[0]?.id
+    ?? null;
+  const [selectedId, setSelectedId] = useState<string | null>(seed);
 
   // The board measures itself; the camera is fitted to it. Nothing here is a
   // fixed window any more — see fbd/canvas.tsx.

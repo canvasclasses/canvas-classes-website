@@ -245,16 +245,29 @@ const p3 = {
     b('text', 5, {
       markdown: 'Arrange $ \\vec{E} $ and $ \\vec{B} $ **perpendicular to each other**, and send the beam in perpendicular to both. Then the electric force ($ qE $, along $ \\vec{E} $) and the magnetic force ($ qvB $, perpendicular to $ \\vec{v} $ and $ \\vec{B} $) can be made to act along the same line, in opposite senses.\n\nA particle goes straight through only if they cancel exactly:\n\n$ qE = qvB $',
     }),
-    b('latex_block', 6, {
+    b('reasoning_prompt', 6, {
+      reasoning_type: 'spatial',
+      prompt: 'Before the arithmetic, the geometry. A beam of **positive** ions travels horizontally due **east**, and in the selector region the magnetic field points **vertically upward**. For the beam to pass straight through, which way must the electric field point?',
+      options: [
+        'Vertically upward, parallel to the field',
+        'Horizontally east, along the beam',
+        'Horizontally south, across the beam',
+        'Horizontally north, across the beam',
+      ],
+      correct_index: 3,
+      reveal: '**Horizontally north** — across the beam, and opposite to the magnetic force.\n\nDo the geometry first and the sign second, exactly as on p2. Take east as $ \\hat{i} $, north as $ \\hat{j} $ and up as $ \\hat{k} $.\n\n$ \\vec{v} = v\\,\\hat{i}, \\qquad \\vec{B} = B\\,\\hat{k} $\n\n$ \\hat{i}\\times\\hat{k} = -\\hat{j} $\n\nso $ \\vec{v}\\times\\vec{B} = -vB\\,\\hat{j} $, which points **south**. The ion is positive, so the magnetic force on it points south as well.\n\nZero net force needs the electric force to be equal and opposite. So $ q\\vec{E} $ must point **north**, and since $ q $ is positive, $ \\vec{E} $ points north too.\n\n**Two things are worth noticing here.**\n\nWritten as one line, the whole geometry of the device is $ q\\vec{E} = -q\\,\\vec{v}\\times\\vec{B} $: the electric field sits **opposite** to $ \\vec{v}\\times\\vec{B} $. So all three directions — beam, magnetic field, electric field — are mutually perpendicular. That is what "crossed fields" actually means.\n\nAnd the answer does not change if the beam is made of **negative** ions instead. Both forces reverse together, so they still cancel. That is the same charge-independence you are about to see in $ v = E/B $, met here as a picture rather than as an algebraic cancellation.\n\n**Why the others fail.** An electric field along $ \\vec{B} $, or along the beam, gives a force that does not even lie on the line of the magnetic force, so nothing can cancel. A field pointing south doubles the sideways push instead of removing it — that is the sign slip, and it is the same one p2 warned about.',
+      difficulty_level: 3,
+    }),
+    b('latex_block', 7, {
       latex: 'v = \\frac{E}{B}',
       label: 'The speed selected by crossed fields',
       note: 'Independent of the charge AND the mass. Every particle at this speed passes, whatever it is.',
       highlight: true,
     }),
-    b('text', 7, {
+    b('text', 8, {
       markdown: 'Two things about that result deserve attention.\n\n**The charge cancels.** So does the mass — it never even entered. A velocity selector filters on **speed alone**, and a proton, an electron and a uranium ion at the same speed all pass equally. That is exactly what makes it useful as a *first* stage: it prepares a beam of known speed for a *second* instrument that then separates by mass.\n\n**Other speeds are deflected, and in opposite directions.** A particle slower than $ E/B $ feels too little magnetic force, so the electric force wins and pushes it one way. A faster particle feels too much magnetic force and is pushed the other way. A slit downstream catches only the ones that went straight.',
     }),
-    b('reasoning_prompt', 8, {
+    b('reasoning_prompt', 9, {
       reasoning_type: 'quantitative',
       prompt: 'A velocity selector uses $ E = 3.0\\times10^{5} $ V/m and $ B = 0.15 $ T. Which particles pass through undeflected?',
       options: [
@@ -266,15 +279,22 @@ const p3 = {
       reveal: '**Any particle at $ 2.0\\times10^{6} $ m/s, regardless of charge or mass.**\n\n$ v = \\frac{E}{B} = \\frac{3.0\\times10^{5}}{0.15} = 2.0\\times10^{6}\\ \\text{m/s} $\n\nThe charge divided out of $ qE = qvB $, and the mass never appeared at all — so the selected speed is a property of the **apparatus**, not of the particle.\n\n**The neutral-particle option is a genuine trap** worth thinking through. A neutral particle feels neither force, so it does go straight through — but it goes straight through at *any* speed, so the selector does nothing useful with it. The instrument only *selects* among charged particles.\n\nAnd note the option $ 4.5\\times10^{4} $, which is $ E \\times B $ rather than $ E/B $. Check the units when in doubt: V/m divided by T gives m/s; multiplied gives nonsense.',
       difficulty_level: 2,
     }),
-    b('heading', 9, {
+    b('heading', 10, {
       text: 'Adding a second stage — separating by mass',
       level: 2,
       objective: 'Explain how a velocity selector plus a magnetic field measures mass.',
     }),
-    b('text', 10, {
+    b('text', 11, {
       markdown: 'The selector on its own only tidies the beam. Its real value is what you put after it.\n\nSend the speed-selected beam into a region of pure magnetic field. As the next page shows in detail, each particle then travels in a circle of radius\n\n$ r = \\frac{mv}{qB} $\n\nNow **$ v $ is known** — the selector guaranteed it — so measuring $ r $ gives you $ m/q $ directly. Particles of different mass land at different places on a detector.\n\nThat two-stage arrangement is a **mass spectrometer**, and it is one of the most consequential instruments ever built: it is how isotopes were discovered, how carbon dating is done, how doping tests work, and how the composition of another planet\'s atmosphere is measured from a passing spacecraft.\n\nAnd the logic is worth noticing as a piece of method. **One instrument fixes an unknown so that a second can measure something else.** That is a pattern you have already seen — a potentiometer\'s driver circuit fixing the gradient so a length can measure an emf.',
     }),
-    b('image', 11, {
+    b('worked_example', 12, {
+      label: 'weighing an ion with two stages',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A velocity selector uses $ E = 3.0\\times10^{5} $ V/m with $ B_1 = 0.15 $ T. The beam that survives enters an analyser region of uniform field $ B_2 = 0.50 $ T, crossing the boundary at right angles. A singly charged ion is detected back on that same boundary, $ 16.6 $ cm from the entry slit. Find the selected speed and the mass of the ion. Take $ e = 1.6\\times10^{-19} $ C and $ 1\\ \\text{u} = 1.66\\times10^{-27} $ kg.',
+      solution: '**Stage one — the speed.** This is the only thing the selector tells you, and it tells you nothing about the particle.\n\n$ v = \\frac{E}{B_1} = \\frac{3.0\\times10^{5}}{0.15} = 2.0\\times10^{6}\\ \\text{m/s} $\n\nUnit check: volts per metre divided by tesla gives metres per second. ✓\n\n**Stage two — read the geometry before writing anything.** In the analyser there is no electric field, so the only force is magnetic and the ion travels a circle of radius $ r = \\frac{mv}{qB_2} $. Entering perpendicular to the boundary, it turns through half a circle and comes back to the boundary a **diameter** away. So the measured $ 16.6 $ cm is $ 2r $, not $ r $:\n\n$ r = \\frac{0.166}{2} = 0.083\\ \\text{m} $\n\n**Now solve for the mass.**\n\n$ r = \\frac{mv}{qB_2} \\quad\\Rightarrow\\quad m = \\frac{q B_2 r}{v} $\n\n$ m = \\frac{(1.6\\times10^{-19})(0.50)(0.083)}{2.0\\times10^{6}} = \\frac{6.64\\times10^{-21}}{2.0\\times10^{6}} $\n\n$ m = 3.32\\times10^{-27}\\ \\text{kg} $\n\nIn atomic mass units:\n\n$ \\frac{3.32\\times10^{-27}}{1.66\\times10^{-27}} = 2.0\\ \\text{u} $\n\nSo it is a **deuteron** — a hydrogen nucleus carrying one extra neutron. The instrument has just identified an isotope from a length measured with a ruler.\n\n**The trap in this question is the factor of two.** Take $ 16.6 $ cm as the radius and you get $ 4 $ u, which reads as a helium nucleus — a wrong answer that looks completely respectable. Always ask whether the detector distance is a radius or a diameter.\n\n**And notice what made the whole thing work.** $ r = \\frac{mv}{qB_2} $ has two unknowns in it, $ m $ and $ v $. One measurement cannot give both. The selector removed $ v $ from the list before the measurement was taken — which is the entire reason for putting it in front.',
+    }),
+    b('image', 13, {
       src: '',
       alt: 'A velocity selector with crossed fields feeding a magnetic region where particles of different mass follow different radii',
       width: 'full',
@@ -282,15 +302,15 @@ const p3 = {
       caption: 'Stage one selects a single speed; stage two then sorts by mass. Neither works without the other.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), wide horizontal composition in thin dim-grey line art. At left, a horizontal channel between two plates — upper amber with plus signs, lower cool blue with minus signs — with small orange downward field arrows and an array of dim-orange cross symbols between them; three particle tracks enter from the left, one curving up, one curving down and hitting the plates, and one passing straight through a narrow slit at the right end of the channel. Beyond the slit, a larger region filled with dim-orange cross symbols in which the surviving beam splits into three smooth circular arcs of visibly different radii, each ending at a small marker on a detector strip. Muted white minimal labels reading selector and spectrometer. Generous dark space.',
     }),
-    b('callout', 12, {
+    b('callout', 14, {
       variant: 'exam_tip',
       title: 'Quick Recap',
-      markdown: '- $ \\vec{F} = q(\\vec{E} + \\vec{v}\\times\\vec{B}) $ — the Lorentz force, containing everything else as a special case.\n- Electric term: **independent of speed**, along $ \\vec{E} $. Magnetic term: **proportional to speed**, perpendicular to $ \\vec{v} $.\n- Velocity selector: $ v = E/B $, independent of **both** charge and mass.\n- Slower than $ E/B $ → electric force wins. Faster → magnetic force wins. Opposite deflections.\n- Selector + magnetic field = **mass spectrometer**, since $ r = mv/qB $ with $ v $ now known.\n- Unit check: (V/m) ÷ T gives m/s. Never multiply them.',
+      markdown: '- $ \\vec{F} = q(\\vec{E} + \\vec{v}\\times\\vec{B}) $ — the Lorentz force, containing everything else as a special case.\n- Electric term: **independent of speed**, along $ \\vec{E} $. Magnetic term: **proportional to speed**, perpendicular to $ \\vec{v} $.\n- Geometry: $ \\vec{E} $, $ \\vec{B} $ and the beam are **mutually perpendicular**, with $ q\\vec{E} $ opposite to $ q\\,\\vec{v}\\times\\vec{B} $.\n- Velocity selector: $ v = E/B $, independent of **both** charge and mass.\n- Slower than $ E/B $ → electric force wins. Faster → magnetic force wins. Opposite deflections.\n- Selector + magnetic field = **mass spectrometer**, since $ r = mv/qB $ with $ v $ now known.\n- Unit check: (V/m) ÷ T gives m/s. Never multiply them.',
     }),
-    b('text', 13, {
+    b('text', 15, {
       markdown: 'Next: that circular path, properly derived — and a period that turns out not to depend on the speed at all.',
     }),
-    b('inline_quiz', 14, {
+    b('inline_quiz', 16, {
       pass_threshold: 0.6,
       questions: [
         q('In a velocity selector with crossed fields $ E $ and $ B $, the particles that pass undeflected have speed',

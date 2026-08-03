@@ -58,7 +58,14 @@ const p5 = {
       reveal: '**They must spread out as you go further away.**\n\nThe spacing of equipotentials is set by the field strength: $ \\Delta V \\approx E\\,\\Delta r $, so for a fixed step $ \\Delta V $, a **weaker** field needs a **larger** $ \\Delta r $.\n\nAround a point charge the field falls as $ 1/r^{2} $, so the surfaces are packed tight close in and spread out further away.\n\nEqually spaced equipotentials mean a **uniform** field — which is exactly what you get between parallel plates, and only there.',
       difficulty_level: 2,
     }),
-    b('image', 6, {
+    b('worked_example', 6, {
+      label: 'reading the field off the spacing',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'In one region of space the equipotential surfaces are flat parallel sheets drawn at $ 10 $ V intervals, and neighbouring sheets are $ 2.0 $ mm apart.\n\n(a) Estimate the magnitude of the electric field there.\n(b) Which way does it point?\n(c) In a second region the same $ 10 $ V sheets are $ 5.0 $ mm apart. What is the field there?\n(d) How much work must an external agent do to carry $ +2.0\\ \\mu\\text{C} $ from the $ 40 $ V sheet to the $ 50 $ V sheet?',
+      solution: '**(a) The spacing *is* the field.** Rearrange $ E = -dV/dr $ into the form you actually use: the size of the field is the potential step divided by the gap you cross to get it.\n\n$ E = \\frac{\\Delta V}{\\Delta r} = \\frac{10}{2.0\\times10^{-3}} = 5.0\\times10^{3}\\ \\text{V/m} $\n\nThe word **estimate** is honest: $ E = -dV/dr $ is exact only in the limit of a tiny step, so over a finite $ 2.0 $ mm gap this is the *average* field in that gap. With evenly spaced sheets the field is uniform anyway, so here the average is the value everywhere.\n\n**(b) Perpendicular to the sheets, pointing from the $ 50 $ V sheet towards the $ 40 $ V sheet.** Perpendicular because the field always meets an equipotential at $ 90^\\circ $; from high to low because the minus sign in $ E = -dV/dr $ says the field points **downhill** in potential.\n\n**(c) Same step, wider gap, weaker field.**\n\n$ E = \\frac{10}{5.0\\times10^{-3}} = 2.0\\times10^{3}\\ \\text{V/m} $\n\nThe gap is $ 2.5 $ times larger, so the field is $ 2.5 $ times smaller. That is the contour-crowding rule, now with numbers on it.\n\n**(d) Only the potential difference matters.**\n\n$ W_{\\text{ext}} = q(V_B - V_A) = (2.0\\times10^{-6})(50 - 40) = 2.0\\times10^{-5}\\ \\text{J} = 20\\ \\mu\\text{J} $\n\nPositive, because you are dragging a positive charge *up* the potential hill, against the field. The route you take between the two sheets is irrelevant.\n\n**Two watch-outs.** Convert millimetres to metres first — leaving the gap as $ 2 $ gives $ 5 $ V/m instead of $ 5000 $ V/m. And use the **difference** between neighbouring surfaces, never the labelled value: it is the $ 10 $ V step that sets the field, not the $ 40 $ V or the $ 50 $ V.',
+    }),
+    b('image', 7, {
       src: '',
       alt: 'Equipotential surfaces for a point charge, a uniform field and a dipole, each with field lines crossing them at right angles',
       width: 'full',
@@ -66,30 +73,30 @@ const p5 = {
       caption: 'Field lines in orange, equipotentials dashed. They meet at right angles in every case.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), three panels side by side separated by thin grey rules. Panel 1: a small warm amber sphere at centre with straight orange field lines radiating outward and dashed dim-grey concentric circles crossing them at right angles, the circles noticeably further apart as they get bigger. Panel 2: two horizontal plates, upper amber and lower blue, with evenly spaced straight vertical orange field arrows between them and evenly spaced dashed horizontal grey lines crossing them. Panel 3: a dipole — an amber plus sphere and a blue minus sphere — with curved orange field lines looping between them and dashed grey closed curves crossing them perpendicularly, plus one straight vertical dashed line through the centre marked V equals zero. Muted white minimal labels, generous dark space.',
     }),
-    b('heading', 7, {
+    b('heading', 8, {
       text: 'Why every conductor is one big equipotential',
       level: 2,
       objective: 'Explain why the whole volume and surface of a conductor share a single potential.',
     }),
-    b('text', 8, {
+    b('text', 9, {
       markdown: 'Inside a conductor in equilibrium $ \\vec{E} = 0 $. Zero field means zero potential gradient, so $ V $ cannot change anywhere inside — the entire volume is at one value. And since the potential is continuous, the surface is at that same value too.\n\n> **A conductor in electrostatic equilibrium is a single equipotential — surface and interior together.**\n\nThat immediately explains a fact from Chapter 1 that we could only assert there: field lines meet a conductor surface at right angles. The surface is an equipotential, and field lines always cross equipotentials at right angles. Same rule, no new physics.',
     }),
-    b('worked_example', 9, {
+    b('worked_example', 10, {
       label: 'work done round a closed path',
       variant: 'solved_example',
       reveal_mode: 'tap_to_reveal',
       problem: 'A charge of $ 5\\ \\mu\\text{C} $ is carried from point A to point B along a curved path, then from B back to A along a completely different path. Both A and B lie on the same equipotential surface at $ 200 $ V. Find the total work done.',
       solution: '**Zero** — and there are two independent reasons, which is worth seeing.\n\n**Reason 1: the potentials are equal.** $ W = q(V_A - V_B) $, and A and B are on the same equipotential, so $ V_A = V_B $ and each leg contributes nothing.\n\n**Reason 2: it is a closed path.** Whatever route is taken, the charge ends where it began, so $ V_{\\text{final}} = V_{\\text{initial}} $ and $ W = 0 $. This holds for **any** closed path in **any** electrostatic field, not just this one — it is the conservative property from page 1.\n\n**What the numbers were for.** The $ 5\\ \\mu\\text{C} $ and the $ 200 $ V are both decoration. Neither enters the answer, and spotting that is the skill the question is testing.\n\n**Careful with the variation.** If the question had asked for the work from A to B where the two points were on **different** equipotentials, the value $ q(V_A - V_B) $ would matter — but the *path* still would not.',
     }),
-    b('callout', 10, {
+    b('callout', 11, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- No work is done moving a charge along an equipotential surface.\n- $ \\vec{E} $ is perpendicular to every equipotential, always.\n- Two equipotentials can never intersect.\n- Crowded equipotentials → strong field. Evenly spaced → uniform field.\n- A conductor is a single equipotential, inside and on the surface.\n- Work round any closed path in an electrostatic field is zero.',
     }),
-    b('text', 11, {
+    b('text', 12, {
       markdown: 'Next: back to energy, but now for more than two charges — and a counting rule that stops you double-charging for the same pair.',
     }),
-    b('inline_quiz', 12, {
+    b('inline_quiz', 13, {
       pass_threshold: 0.6,
       questions: [
         q('The work done in moving a charge along an equipotential surface is',
@@ -212,9 +219,11 @@ const p7 = {
   page_number: 7,
   slug: 'conductors-in-the-language-of-potential',
   title: 'Conductors, in the Language of Potential',
-  subtitle: 'Sharing charge, earthing, and why sparks start at points',
+  subtitle: 'Sharing charge, shielding, earthing, and why sparks start at points',
   glossary: [
     { term: 'earthing', definition: 'Connecting a conductor to the earth, which is so large that it holds it at a fixed potential — conventionally taken as zero.' },
+    { term: 'electrostatic shielding', definition: 'The fact that the empty cavity inside a hollow conductor has zero electric field, no matter what charges or fields are placed outside it.' },
+    { term: 'cavity', definition: 'A hollow region enclosed by the material of a conductor. If it holds no charge, the field everywhere inside it is zero.' },
   ],
   blocks: [
     b('callout', 0, {
@@ -236,7 +245,7 @@ const p7 = {
       objective: 'Predict how charge redistributes between two connected spheres, and where the field ends up largest.',
     }),
     b('text', 4, {
-      markdown: 'Join two isolated spheres, of radii $ R_1 $ and $ R_2 $, by a thin wire. They now form one conductor, so they must end at the **same potential**:\n\n$ \\frac{kQ_1}{R_1} = \\frac{kQ_2}{R_2} \\qquad\\Rightarrow\\qquad \\frac{Q_1}{Q_2} = \\frac{R_1}{R_2} $\n\n**Charge shares in proportion to radius.** The bigger sphere takes more charge — no surprise.\n\nNow look at the **surface charge density**, $ \\sigma = Q/4\\pi R^{2} $:\n\n$ \\frac{\\sigma_1}{\\sigma_2} = \\frac{Q_1}{Q_2}\\cdot\\frac{R_2^{2}}{R_1^{2}} = \\frac{R_1}{R_2}\\cdot\\frac{R_2^{2}}{R_1^{2}} = \\frac{R_2}{R_1} $\n\n**Density goes as $ 1/R $** — the *opposite* way. And since the field just outside is $ \\sigma/\\varepsilon_0 $, the field is strongest at the **smaller** sphere.',
+      markdown: 'Join two isolated spheres, of radii $ R_1 $ and $ R_2 $, by a thin wire. They now form one conductor, so they must end at the **same potential**:\n\n$ \\frac{kQ_1}{R_1} = \\frac{kQ_2}{R_2} \\qquad\\Rightarrow\\qquad \\frac{Q_1}{Q_2} = \\frac{R_1}{R_2} $\n\n**Charge shares in proportion to radius.** The bigger sphere takes more charge — no surprise.\n\nNow look at the **surface charge density**, $ \\sigma = Q/4\\pi R^{2} $:\n\n$ \\frac{\\sigma_1}{\\sigma_2} = \\frac{Q_1}{Q_2}\\cdot\\frac{R_2^{2}}{R_1^{2}} = \\frac{R_1}{R_2}\\cdot\\frac{R_2^{2}}{R_1^{2}} = \\frac{R_2}{R_1} $\n\n**Density goes as $ 1/R $** — the *opposite* way. And since the field just outside is $ \\sigma/\\varepsilon_0 $, the field is strongest at the **smaller** sphere.\n\nThis is the precise version of the "sharp points" rule from Chapter 1. A pointed tip is a region of very small radius of curvature — effectively a tiny sphere at the same potential as the rest of the body — so $ \\sigma $ and $ E $ are both large there. Push the field past about $ 3\\times10^{6} $ V/m and the air itself starts to conduct, and charge leaks away.',
     }),
     b('latex_block', 5, {
       latex: 'Q \\propto R \\qquad\\text{but}\\qquad \\sigma \\propto \\frac{1}{R} \\qquad\\text{and}\\qquad E \\propto \\frac{1}{R}',
@@ -244,10 +253,7 @@ const p7 = {
       note: 'The big sphere holds more charge; the small one has the stronger field at its surface.',
       highlight: true,
     }),
-    b('text', 6, {
-      markdown: 'This is the precise version of the "sharp points" rule from Chapter 1. A pointed tip is a region of very small radius of curvature — effectively a tiny sphere at the same potential as the rest of the body — so $ \\sigma $ and $ E $ are both large there. Push the field past about $ 3\\times10^{6} $ V/m and the air itself starts to conduct, and charge leaks away.',
-    }),
-    b('reasoning_prompt', 7, {
+    b('reasoning_prompt', 6, {
       reasoning_type: 'quantitative',
       prompt: 'A sphere of radius $ 10 $ cm and one of radius $ 2 $ cm are joined by a long wire and given a total charge. Which has the greater surface charge density, and by what factor?',
       options: [
@@ -259,7 +265,7 @@ const p7 = {
       reveal: '**The small sphere, by a factor of 5.**\n\nConnected means equal potential, which gives $ Q \\propto R $ — so the large sphere carries 5 times the charge.\n\nBut density is charge per unit **area**, and the large sphere\'s area is $ 5^{2} = 25 $ times bigger. So:\n\n$ \\frac{\\sigma_{\\text{small}}}{\\sigma_{\\text{large}}} = \\frac{R_{\\text{large}}}{R_{\\text{small}}} = \\frac{10}{2} = 5 $\n\n"By a factor of 25" is the trap — that is the *area* ratio, which you must divide by the *charge* ratio of 5, leaving 5.\n\nThe practical upshot: a spark will start at the small sphere first, even though it holds only a fifth of the charge.',
       difficulty_level: 3,
     }),
-    b('image', 8, {
+    b('image', 7, {
       src: '',
       alt: 'Two spheres of different radii joined by a wire, showing more charge on the large one but denser charge on the small one',
       width: 'two_third',
@@ -267,29 +273,50 @@ const p7 = {
       caption: 'Same potential, different densities. The small sphere sparks first.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F). A large circle at left and a small circle at right, both outlined in dim grey and joined by a thin grey wire. Warm amber plus signs sit on both outlines: many but widely spaced around the large circle, fewer but tightly packed around the small circle. Short orange field arrows point outward from both surfaces — short and sparse at the large sphere, long and dense at the small one. A muted white label beneath reads same potential. Generous dark space, orange accent, no clutter.',
     }),
-    b('heading', 9, {
+    b('heading', 8, {
+      text: 'Electrostatic shielding — why a cavity is a dead zone',
+      level: 2,
+      objective: 'Explain why the field inside an empty cavity in a conductor is zero, whatever happens outside.',
+    }),
+    b('text', 9, {
+      markdown: 'Now hollow the conductor out. Take a lump of metal, scoop a **cavity** inside it, put nothing in that cavity — and then do whatever you like outside: bring up charges, switch on a strong external field, charge the lump itself.\n\nThe field everywhere inside the cavity stays **exactly zero**. That is **electrostatic shielding**.\n\n**Why it must be zero.** Suppose a field line did exist somewhere in the cavity. A field line cannot begin or end in empty space — it has to start on a positive charge and finish on a negative one — and there is no charge in the cavity, so this line would have to start on the cavity wall and end on the cavity wall. But potential always *falls* along a field line, so its starting point would sit at a higher $ V $ than its finishing point. Both points are on the same conductor, and a conductor is a single equipotential. They are at the same $ V $. Contradiction — so no such line can exist, and $ \\vec{E} = 0 $ everywhere in the cavity.\n\n**This is a different statement from "charge lives on the surface."** That one is about the *metal*: since $ \\vec{E} = 0 $ inside the metal, Gauss\'s law forbids any charge in its bulk, so the charge is pushed to the surfaces. Shielding is a claim about the *empty space* in the middle — a region with no metal in it at all, and no field in it either. What makes it work is that the free electrons on the **outer** surface rearrange themselves, in a few nanoseconds, into exactly the pattern whose own field cancels the outside field at every point within. The shield is not a passive wall; it is charge continuously rearranging itself to keep the inside quiet.\n\n**And it protects one way only.** Put a charge *inside* the cavity and it does make a field outside — the outside world is not shielded from the cavity. Earth the conductor and that leak stops too, which is the next worked example.',
+    }),
+    b('worked_example', 10, {
+      label: 'a charge inside a cavity',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A point charge $ +3.0\\ \\mu\\text{C} $ is held inside a cavity hollowed out of a **neutral** solid metal ball of outer radius $ 20 $ cm. The charge is deliberately placed **off-centre** in the cavity.\n\n(a) What is the total charge induced on the cavity wall?\n(b) What charge appears on the outer surface, and how is it spread?\n(c) Find the electric field at a point $ 50 $ cm from the centre of the ball.\n(d) What changes if the ball is now earthed?',
+      solution: '**(a) Gauss, drawn inside the metal.** Take a closed surface that lies entirely within the metal and wraps right around the cavity. Everywhere on it $ \\vec{E} = 0 $, so the flux through it is zero, so the charge it encloses is zero:\n\n$ q_{\\text{enclosed}} = +3.0\\ \\mu\\text{C} + q_{\\text{inner}} = 0 \\quad\\Rightarrow\\quad q_{\\text{inner}} = -3.0\\ \\mu\\text{C} $\n\nBecause the charge sits off-centre, this induced charge is spread **unevenly** — bunched up on the part of the wall nearest the charge. The total is exactly $ -3.0\\ \\mu\\text{C} $ all the same.\n\n**(b) The ball started neutral,** and charge is conserved, so\n\n$ q_{\\text{outer}} = 0 - q_{\\text{inner}} = +3.0\\ \\mu\\text{C} $\n\nAnd here is the payoff of shielding: this $ +3.0\\ \\mu\\text{C} $ spreads **uniformly** over the spherical outer surface. The metal has screened off everything happening inside, so the outer surface has no way of knowing that the charge in the cavity is off-centre — or even what shape the cavity is.\n\n**(c) Outside, it is just a uniformly charged sphere.** A uniform spherical shell acts like a point charge at its centre, so at $ r = 0.50 $ m:\n\n$ E = \\frac{kq}{r^{2}} = \\frac{(9\\times10^{9})(3.0\\times10^{-6})}{(0.50)^{2}} = \\frac{2.7\\times10^{4}}{0.25} = 1.1\\times10^{5}\\ \\text{N/C} $\n\ndirected **radially away from the centre of the ball** — not away from the off-centre charge. Someone standing outside with a field meter cannot tell where inside the charge is sitting.\n\n**(d) Earthing drains the outer surface.** Connecting the ball to earth forces it to $ V = 0 $, and the $ +3.0\\ \\mu\\text{C} $ on the outer surface flows away to ground. So $ q_{\\text{outer}} = 0 $, and the field **everywhere outside the ball becomes zero**.\n\nThe $ -3.0\\ \\mu\\text{C} $ on the cavity wall does **not** leave — it is held there by the charge in the cavity — and the field inside the cavity is unchanged. Earthing a hollow conductor therefore shields the outside world *from* the cavity, completing the protection in both directions.\n\n**One thing that never changed in any part.** Inside the metal itself, $ \\vec{E} = 0 $ throughout — before earthing, after earthing, always.',
+    }),
+    b('callout', 11, {
+      variant: 'real_world',
+      title: 'Real-World Application',
+      markdown: 'This is the promise this chapter opened with: **why you are safe inside a car during a lightning storm.**\n\nA car body is a metal shell, near enough a closed conductor — and you are sitting in the cavity. When a bolt strikes, an enormous charge arrives on the outside. The free electrons in the bodywork rearrange in a few billionths of a second, the current runs over the outer skin and down to the road, and the field inside the cabin stays essentially zero. Nothing reaches you.\n\n**The tyres have almost nothing to do with it.** A spark that has just torn through a kilometre of air is not going to be stopped by a centimetre of rubber. It is the metal shell doing the work — which is why an open tractor or a convertible with the roof down gives you none of this protection.\n\nThe same trick appears wherever a field has to be kept out:\n\n- The **wire mesh in a microwave oven door**. The holes are far smaller than the $ 12 $ cm microwaves inside, so to those waves the mesh behaves as solid metal — while visible light, whose wavelength is smaller still by a factor of a hundred thousand, passes straight through. That is why you can watch your food cook without cooking your face.\n- The **braid around a coaxial cable**, keeping outside interference off the signal wire.\n- Screened rooms for delicate measurements, the little metal cans soldered over chips on a circuit board, and the reason your phone loses signal inside a lift.\n\nFaraday tested it himself. He built a room lined with metal foil, sat inside while the outside was charged to an enormous potential, and reported that his instruments detected nothing at all.',
+      image_prompt: 'Clean scientific illustration on a near-black background (#0B0C0F). A car shown in simple side-on cutaway, drawn in thin dim-grey line art with a seated figure outlined inside the cabin. A jagged bright orange lightning bolt strikes the roof, and warm amber charge marks with short orange arrows flow over the outer skin of the bodywork, down over the wheel arches and to the ground. The cabin interior is left completely empty and dark with a small muted white label reading E equals zero. Generous dark space, orange accent, no clutter.',
+    }),
+    b('heading', 12, {
       text: 'Earthing — what it really does',
       level: 2,
       objective: 'Say what changes and what does not when a conductor is earthed.',
     }),
-    b('text', 10, {
+    b('text', 13, {
       markdown: '**Earthing** connects a conductor to the ground. The earth is so vast that charge flowing into or out of it changes its potential immeasurably, so we treat it as a fixed reference and call it $ V = 0 $.\n\nSo earthing a conductor forces its potential to zero — and charge flows in or out until that happens.\n\nTwo things students get wrong here:\n\n**Earthing does not always remove all the charge.** It removes exactly as much as is needed to make $ V = 0 $. If other charges are nearby, that may mean charge actually flows *onto* the conductor. (You saw this in Chapter 1: earthing a sphere near a negative rod pulls electrons *off* it, leaving it positive.)\n\n**Zero potential does not mean zero field.** An earthed plate near a charge is at $ V = 0 $, yet the field just outside it can be very large.',
     }),
-    b('callout', 11, {
+    b('callout', 14, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'A **Van de Graaff generator** is the "big smooth sphere" rule made into a machine. A moving belt carries charge up to a large metal dome; because the dome is a conductor, the charge immediately spreads to its outer surface, and the belt can keep delivering more.\n\nWhy the dome must be large and smooth: the potential it can reach before the surrounding air breaks down is set by the surface field $ \\sigma/\\varepsilon_0 $, and a large radius keeps $ \\sigma $ low. Any sharp edge, screw head or scratch becomes a tiny-radius region where the field spikes and the charge leaks away — which is why these machines are polished and why their supports are rounded.\n\nThe same reasoning shapes every piece of high-voltage hardware: corona rings on transmission-line insulators, rounded terminals on lab supplies, and no sharp corners anywhere near a high potential.',
       image_prompt: 'Clean scientific illustration on a near-black background (#0B0C0F). A Van de Graaff generator drawn in thin dim-grey line art: a large smooth metal dome on a slim column, with a belt running up inside the column shown as a dashed loop carrying small warm amber plus signs upward. Amber plus signs spread evenly over the outer surface of the dome, with short sparse orange field arrows pointing outward. To one side, a small inset shows a sharp spike with densely packed plus signs and long bright orange arrows plus a faint violet glow, marked with a small crossed-out symbol in muted white. Generous dark space.',
     }),
-    b('callout', 12, {
+    b('callout', 15, {
       variant: 'exam_tip',
       title: 'Quick Recap',
-      markdown: '- A conductor is one equipotential; a charged sphere sits at $ V = kQ/R $ throughout.\n- Two connected conductors reach the **same potential**, so $ Q \\propto R $ but $ \\sigma \\propto 1/R $ and $ E \\propto 1/R $.\n- Small radius → high density → strong field → sparks start there.\n- Earthing forces $ V = 0 $ and moves whatever charge that requires — sometimes onto the conductor.\n- $ V = 0 $ never implies $ E = 0 $.',
+      markdown: '- A conductor is one equipotential; a charged sphere sits at $ V = kQ/R $ throughout.\n- Two connected conductors reach the **same potential**, so $ Q \\propto R $ but $ \\sigma \\propto 1/R $ and $ E \\propto 1/R $.\n- Small radius → high density → strong field → sparks start there.\n- The empty cavity inside a hollow conductor has $ \\vec{E} = 0 $, whatever sits outside — electrostatic shielding.\n- A charge $ +q $ in the cavity induces $ -q $ on the cavity wall and puts $ +q $ on the outer surface, spread as if the cavity charge were at the centre.\n- Earthing a hollow conductor removes the outer charge, so it also shields the outside from the inside.\n- Earthing forces $ V = 0 $ and moves whatever charge that requires — sometimes onto the conductor.\n- $ V = 0 $ never implies $ E = 0 $.',
     }),
-    b('text', 13, {
+    b('text', 16, {
       markdown: 'Next: we have been storing charge on conductors by accident. Time to build a device that does it on purpose.',
     }),
-    b('inline_quiz', 14, {
+    b('inline_quiz', 17, {
       pass_threshold: 0.6,
       questions: [
         q('Two conducting spheres of radii $ R $ and $ 2R $ are joined by a wire and charged. The ratio of their surface charge densities $ \\sigma_{R} : \\sigma_{2R} $ is',
@@ -306,6 +333,11 @@ const p7 = {
           ['$ kQ/R $ everywhere inside', 'zero everywhere inside', '$ kQ/r $, where $ r $ is the distance from the centre', 'largest at the centre'],
           0,
           'The field inside is zero, so the potential cannot change — it stays flat at whatever the surface value is, namely $ kQ/R $. Using $ kQ/r $ would wrongly send the potential to infinity at the centre.',
+          2),
+        q('A closed hollow metal box, with nothing inside it, is placed in a strong external electric field. The field in the empty space inside the box is',
+          ['zero, whatever the outside field does', 'the same as the external field', 'reduced, but not all the way to zero', 'zero only if the box carries no net charge'],
+          0,
+          'The box is one equipotential, so a field line in the cavity would have to run between two points at the same $ V $ — impossible. Charge on the outer surface rearranges itself to cancel the outside field at every interior point, and any net charge the box carries also sits on the outer surface and changes nothing within.',
           2),
       ],
     }),

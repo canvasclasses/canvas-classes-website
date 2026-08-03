@@ -49,8 +49,11 @@ const C = {
   surface: '#151E32',
   text: '#e2e8f0',
   text2: '#94a3b8',
-  muted: '#475569',
-  ghost: '#64748b',
+  // Aligned 2026-07-30 with _shared/tokens.ts. The old #475569 / #64748b
+  // measured 2.50:1 and 3.98:1 on this sim's background — both fail WCAG AA
+  // for body text. Every tier here now passes.
+  muted: '#8493a8',
+  ghost: '#8b99ad',
   indigo: '#6366f1',
   indigoMid: '#818cf8',
   indigoLight: '#c4b5fd',
@@ -67,8 +70,6 @@ const C = {
 const RH_NM = 0.01097;      // Rydberg constant in nm⁻¹  (= 1.097×10⁷ m⁻¹)
 const RH_M = 1.097e7;       // Rydberg constant in m⁻¹  (NCERT display form)
 const E_RYD = 13.6;         // eV — |E₁| for hydrogen
-const SPEC_MIN = 80;        // nm — left edge of the log spectrum axis
-const SPEC_MAX = 8000;      // nm — right edge (covers Lyman → Pfund)
 const NTOP = 30;            // highest upper-level we ever draw (the "→ ∞" tail)
 
 const energyEv = (n: number) => -E_RYD / (n * n);
@@ -78,12 +79,48 @@ const seriesLimitNm = (nLow: number) => 1 / (RH_NM * (1 / (nLow * nLow)));
 const photonEv = (nLow: number, nHigh: number) => energyEv(nHigh) - energyEv(nLow); // > 0
 
 // log-scale x mapping for the spectrum axis
-const L_MIN = Math.log10(SPEC_MIN);
-const L_MAX = Math.log10(SPEC_MAX);
-const specX = (wl: number, w: number, pad: number) => {
-  const clamped = Math.min(Math.max(wl, SPEC_MIN), SPEC_MAX);
-  return pad + ((Math.log10(clamped) - L_MIN) / (L_MAX - L_MIN)) * (w - pad * 2);
+/**
+ * DYNAMIC AXIS (2026-07-30).
+ *
+ * The strip used to run a FIXED 80–8000 nm log axis so all five series shared
+ * one scale. The cost was fatal to the interaction: the Lyman series spans only
+ * 91.2–121.6 nm, which is ~3% of that axis, so its five lines landed within a
+ * few pixels of each other — unreadable and effectively unclickable. Paschen
+ * and Brackett had the same problem further right.
+ *
+ * The axis is now fitted to the SELECTED series: from just below its series
+ * limit to just beyond its longest (n₁+1 → n₁) line. Every series therefore
+ * fills the full width, and the lines within it are as separated as the
+ * physics allows. The trade — you can no longer compare two series side by
+ * side on one scale — is worth it, because the axis labels and the UV/VIS/IR
+ * markers still tell you exactly where in the spectrum you are.
+ */
+function seriesRange(nFinal: number): [number, number] {
+  const limit = seriesLimitNm(nFinal);              // shortest λ (n₂ → ∞)
+  const longest = wavelengthNm(nFinal, nFinal + 1); // longest λ (smallest jump)
+  return [limit * 0.94, longest * 1.08];            // a little breathing room
+}
+
+const specXIn = (wl: number, w: number, pad: number, lo: number, hi: number) => {
+  const lLo = Math.log10(lo), lHi = Math.log10(hi);
+  const clamped = Math.min(Math.max(wl, lo), hi);
+  return pad + ((Math.log10(clamped) - lLo) / (lHi - lLo)) * (w - pad * 2);
 };
+
+/** Nice round tick values that actually fall inside an arbitrary [lo,hi]. */
+function axisTicks(lo: number, hi: number): number[] {
+  const out: number[] = [];
+  for (const decade of [1, 10, 100, 1000, 10000]) {
+    for (const m of [1, 1.5, 2, 3, 4, 5, 6, 7, 8, 9]) {
+      const v = decade * m;
+      if (v > lo && v < hi) out.push(v);
+    }
+  }
+  // thin out so labels never collide: keep at most 7, evenly sampled
+  if (out.length <= 7) return out;
+  const step = out.length / 7;
+  return Array.from({ length: 7 }, (_, i) => out[Math.floor(i * step)]);
+}
 
 // wavelength → visible-ish colour (physics colour). Four named Balmer lines
 // pinned to crisp hues; UV/IR get stand-ins. Mirrors BohrSpectraSim.
@@ -96,6 +133,27 @@ function photonColor(wl: number): string {
   if (wl > 700) return '#ff6b6b';                 // IR → red stand-in
   const t = (700 - wl) / 320;                     // 380..700 → hue sweep
   return `hsl(${Math.round(t * 280)}, 85%, 62%)`;
+}
+
+/**
+ * Pastel counterpart of photonColor(), for TEXT only.
+ *
+ * photonColor() is wavelength-accurate and must stay that way on the spectrum
+ * strip and the swatch — 656 nm really is that red. But at full saturation the
+ * same value is harsh as a type colour on a near-black background, so every
+ * readout rendered in it read as an alarm rather than as information. This
+ * keeps the hue (so the text still visibly belongs to the line it describes)
+ * and lifts the lightness into the pastel range the rest of the sim uses.
+ */
+function photonTextColor(wl: number): string {
+  if (Math.abs(wl - 656.3) < 4) return '#ff9aa8';   // Hα  — soft rose
+  if (Math.abs(wl - 486.1) < 4) return '#7fdbe8';   // Hβ
+  if (Math.abs(wl - 434.0) < 4) return '#9db6ff';   // Hγ
+  if (Math.abs(wl - 410.2) < 4) return '#c9a3ff';   // Hδ
+  if (wl < 380) return '#bda5ff';
+  if (wl > 700) return '#ffa3a3';
+  const t = (700 - wl) / 320;
+  return `hsl(${Math.round(t * 280)}, 78%, 76%)`;
 }
 
 function regionOf(wl: number): { label: string; visible: boolean } {
@@ -237,6 +295,10 @@ export default function HydrogenSpectrumDecoderSim() {
     const stripTop = 34, stripH = h - stripTop - 40;
     const absorption = s.mode === 'absorption';
 
+    // axis fitted to the SELECTED series (see seriesRange)
+    const [lamLo, lamHi] = seriesRange(s.nFinal);
+    const specX = (wl: number) => specXIn(wl, w, pad, lamLo, lamHi);
+
     // base strip
     if (absorption) {
       const g = ctx.createLinearGradient(pad, 0, w - pad, 0);
@@ -248,34 +310,47 @@ export default function HydrogenSpectrumDecoderSim() {
       ctx.fillStyle = '#05060c'; ctx.fillRect(pad, stripTop, w - pad * 2, stripH);
     }
 
-    // visible-band marker (380–700 nm)
-    const vx1 = specX(380, w, pad), vx2 = specX(700, w, pad);
-    if (!absorption) {
-      const vg = ctx.createLinearGradient(vx1, 0, vx2, 0);
-      vg.addColorStop(0, 'rgba(180,108,255,0.18)'); vg.addColorStop(0.5, 'rgba(59,201,219,0.18)'); vg.addColorStop(1, 'rgba(255,91,110,0.18)');
-      ctx.fillStyle = vg; ctx.fillRect(vx1, stripTop, vx2 - vx1, stripH);
+    // Visible band, only drawn when 380–700 nm actually intersects the current
+    // window — on Lyman (all UV) or Paschen (all IR) there is nothing to mark,
+    // and a band pinned to the edge would be a lie about where visible light is.
+    const visOverlaps = lamHi > 380 && lamLo < 700;
+    if (visOverlaps) {
+      const vx1 = specX(Math.max(380, lamLo)), vx2 = specX(Math.min(700, lamHi));
+      if (!absorption) {
+        const vg = ctx.createLinearGradient(vx1, 0, vx2, 0);
+        vg.addColorStop(0, 'rgba(180,108,255,0.18)'); vg.addColorStop(0.5, 'rgba(59,201,219,0.18)'); vg.addColorStop(1, 'rgba(255,91,110,0.18)');
+        ctx.fillStyle = vg; ctx.fillRect(vx1, stripTop, vx2 - vx1, stripH);
+      }
+      ctx.fillStyle = absorption ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.55)';
+      ctx.font = '700 12px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('VISIBLE', (vx1 + vx2) / 2, stripTop - 9);
     }
-    ctx.fillStyle = absorption ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.4)';
-    ctx.font = '600 9px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('VISIBLE', (vx1 + vx2) / 2, stripTop - 7);
-    ctx.textAlign = 'left'; ctx.fillText('◀ UV (shorter λ)', pad, stripTop - 7);
-    ctx.textAlign = 'right'; ctx.fillText('(longer λ) IR ▶', w - pad, stripTop - 7);
 
-    // wavelength ticks (log)
-    ctx.font = '600 9px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
-    [100, 200, 400, 700, 1500, 4000].forEach((wl) => {
-      const x = specX(wl, w, pad);
+    // Band identity for the whole window — this is what replaces the fixed
+    // axis as the "where am I in the spectrum" cue.
+    const bandName = lamHi < 380 ? 'ULTRAVIOLET' : lamLo > 700 ? 'INFRARED' : 'UV → VISIBLE → IR';
+    ctx.fillStyle = C.text2; ctx.font = '700 12px Geist, system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`◀ shorter λ   ·   ${bandName}`, pad, stripTop - 9);
+    ctx.textAlign = 'right'; ctx.fillText('longer λ ▶', w - pad, stripTop - 9);
+
+    // wavelength ticks — generated from the LIVE range, not a fixed list
+    ctx.font = '600 12px Geist, system-ui, sans-serif'; ctx.textAlign = 'center';
+    axisTicks(lamLo, lamHi).forEach((wl) => {
+      const x = specX(wl);
       ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.fillRect(x, stripTop + stripH, 1, 5);
-      ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.fillText(`${wl}`, x, stripTop + stripH + 16);
+      ctx.fillStyle = C.text2;
+      ctx.fillText(wl >= 1000 ? `${(wl / 1000).toFixed(wl % 1000 ? 1 : 0)}k` : `${wl}`, x, stripTop + stripH + 19);
     });
-    ctx.fillStyle = C.ghost; ctx.fillText('wavelength λ (nm)', w / 2, stripTop + stripH + 30);
+    ctx.fillStyle = C.ghost; ctx.font = '600 12px Geist, system-ui, sans-serif';
+    ctx.fillText('wavelength λ (nm)', w / 2, stripTop + stripH + 35);
 
     // rebuild hit table + draw lines for the current series up to nMax
     s.hits = [];
     for (let nHigh = s.nFinal + 1; nHigh <= NTOP; nHigh++) {
       const revealed = nHigh <= s.nMax;
       const wl = wavelengthNm(s.nFinal, nHigh);
-      const x = specX(wl, w, pad);
+      const x = specX(wl);
       const isSel = nHigh === s.selNHigh;
       const isHover = nHigh === s.hoverNHigh;
 
@@ -311,14 +386,14 @@ export default function HydrogenSpectrumDecoderSim() {
 
     // series limit (n→∞) = ionisation from nFinal
     const limit = seriesLimitNm(s.nFinal);
-    const lx = specX(limit, w, pad);
+    const lx = specX(limit);
     const limitProminent = s.nMax >= NTOP - 2;
     ctx.strokeStyle = limitProminent ? C.amber : 'rgba(251,191,36,0.4)';
     ctx.setLineDash([3, 3]); ctx.lineWidth = limitProminent ? 1.8 : 1.2;
     ctx.beginPath(); ctx.moveTo(lx, stripTop - 4); ctx.lineTo(lx, stripTop + stripH + 4); ctx.stroke(); ctx.setLineDash([]);
     ctx.fillStyle = limitProminent ? C.amberLight : 'rgba(251,191,36,0.6)';
-    ctx.font = '600 9px Geist, system-ui, sans-serif';
-    ctx.textAlign = lx > w - 110 ? 'right' : 'left';
+    ctx.font = '700 12px Geist, system-ui, sans-serif';
+    ctx.textAlign = lx > w - 150 ? 'right' : 'left';
     ctx.fillText('series limit → ionisation', lx + (lx > w - 110 ? -6 : 6), stripTop + 11);
 
     if (s.pulse > 0) s.pulse = Math.max(0, s.pulse - 0.03);
@@ -331,42 +406,94 @@ export default function HydrogenSpectrumDecoderSim() {
     ctx.clearRect(0, 0, w, h);
     ctx.fillStyle = C.card; ctx.fillRect(0, 0, w, h);
 
-    const padT = 26, padB = 24, H = h - padT - padB;
-    const xAxis = 46, xEnd = w - 50;
-    const E1 = energyEv(1);
-    const yOfE = (E: number) => padT + (E / E1) * H;  // E1 → bottom, 0 → top
-    const yZero = yOfE(0);
+    const padT = 62, padB = 34, H = h - padT - padB;   // padT leaves room for the continuum band
 
-    // continuum band above n=∞
-    const cg = ctx.createLinearGradient(0, padT, 0, yZero);
-    cg.addColorStop(0, 'rgba(99,102,241,0.16)'); cg.addColorStop(1, 'rgba(99,102,241,0.03)');
-    ctx.fillStyle = cg; ctx.fillRect(xAxis, padT, xEnd - xAxis, yZero - padT);
-    ctx.fillStyle = 'rgba(129,140,248,0.85)'; ctx.font = '600 9px Geist, system-ui, sans-serif'; ctx.textAlign = 'left';
-    ctx.fillText('continuum — electron is free', xAxis + 6, padT + 12);
+    // COMPRESSED ENERGY SCALE — founder decision 2026-07-30.
+    //
+    // Three attempts got here. A TRUE linear-in-E scale wastes the panel: the
+    // n=1→n=2 gap is 10.20 eV against 0.10 eV for n=6→n=7, a 102:1 ratio, so
+    // n=1 sits alone at the bottom and n=2..7 pile into the top. An axis break
+    // still spent height on the break itself. EVEN spacing was readable but
+    // threw away the one thing the ladder is meant to show — that the gaps
+    // shrink as you climb.
+    //
+    // So the gaps are kept in true DECREASING ORDER but compressed through a
+    // power law, gap_px ∝ (gap_eV)^0.35. That turns 102:1 into ~5:1:
+    //   127 → 71 → 49 → 37 → 30 → 25 px
+    // Still visibly shrinking rung by rung, still ordered exactly as the real
+    // energies are, and the smallest gap clears the ~21px a label needs. The
+    // caption under the canvas states that the scale is compressed.
+    const NLEV = 7;
+    const COMPRESS = 0.35;
+    const INF_FRAC = 0.16;                    // height reserved for n=7 → n=∞
+    const gapPx: number[] = [];               // gapPx[i] = level (i+1) → (i+2)
+    for (let n = 1; n < NLEV; n++) gapPx.push(Math.pow(energyEv(n + 1) - energyEv(n), COMPRESS));
+    const gapSum = gapPx.reduce((a, b) => a + b, 0);
+    const gapScale = (H * (1 - INF_FRAC)) / gapSum;
+    // distAbove[k] = pixels above the n=1 rung for level k+1
+    const distAbove = [0];
+    for (const g of gapPx) distAbove.push(distAbove[distAbove.length - 1] + g * gapScale);
+
+    const yBottom = padT + H;
+    const yOfN = (n: number) => yBottom - distAbove[Math.min(n, NLEV) - 1];
+    // The label gutter must ADAPT: inside the reader the ladder/worksheet grid
+    // gives each pane only ~256px, where a fixed 132px gutter would leave just
+    // 62px of actual rung. Scale it with the canvas and drop the energy value
+    // when there genuinely isn't room for it.
+    const gutter = Math.max(58, Math.min(132, w * 0.40));
+    const showEv = gutter >= 108;
+    const xAxis = w < 320 ? 50 : 62;
+    const xEnd = w - gutter;
+    const E1 = energyEv(1);
+    // Energy → y by way of the level it belongs to (n>7 clamps to the n=7 rung).
+    const yOfE = (E: number) => yOfN(Math.round(Math.sqrt(-E_RYD / E)));
+    const yZero = padT;                       // the n=∞ line
+
+    // continuum band — the region above n=∞ where the electron is unbound
+    const cTop = 18;
+    const cg = ctx.createLinearGradient(0, cTop, 0, yZero);
+    cg.addColorStop(0, 'rgba(99,102,241,0.03)'); cg.addColorStop(1, 'rgba(99,102,241,0.18)');
+    ctx.fillStyle = cg; ctx.fillRect(xAxis, cTop, xEnd - xAxis, yZero - cTop);
+    ctx.fillStyle = 'rgba(165,180,252,0.95)'; ctx.font = '600 12px Geist, system-ui, sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText('continuum — electron is free', xAxis + 8, cTop + 16);
 
     // axis
     ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(xAxis, padT - 4); ctx.lineTo(xAxis, h - padB + 4); ctx.stroke();
-    ctx.fillStyle = C.text2; ctx.font = '600 9px Geist, system-ui, sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText('E (eV)', xAxis - 6, padT - 7);
+    ctx.beginPath(); ctx.moveTo(xAxis, cTop); ctx.lineTo(xAxis, h - padB + 4); ctx.stroke();
+    ctx.fillStyle = C.text2; ctx.font = '700 13px Geist, system-ui, sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText('E (eV)', xAxis - 8, cTop + 4);
 
     // n=∞ line
     ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(251,191,36,0.55)';
     ctx.beginPath(); ctx.moveTo(xAxis, yZero); ctx.lineTo(xEnd, yZero); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = C.amber; ctx.textAlign = 'right'; ctx.fillText('0  (n=∞)', xAxis - 6, yZero + 3);
+    ctx.fillStyle = C.amber; ctx.font = '700 13px Geist, system-ui, sans-serif';
+    ctx.textAlign = 'right'; ctx.fillText('0  (n=∞)', xAxis - 8, yZero + 4);
 
-    // rungs n=1..7 (1/n² crowding is the whole point)
-    for (let n = 1; n <= 7; n++) {
-      const E = energyEv(n), y = yOfE(E);
+    // Rungs on the compressed scale above. The tightest gap is ~25px — still
+    // clear of the ~21px a label occupies — so every label sits directly ON
+    // its own rung: no fanning, no leader lines.
+    ctx.textBaseline = 'middle';
+    for (let n = NLEV; n >= 1; n--) {
+      const E = energyEv(n);
+      const y = yOfN(n);
       const isFloor = n === s.nFinal;
-      ctx.strokeStyle = isFloor ? 'rgba(99,102,241,0.95)' : 'rgba(255,255,255,0.26)';
+
+      ctx.strokeStyle = isFloor ? 'rgba(129,140,248,0.95)' : 'rgba(255,255,255,0.3)';
       ctx.lineWidth = isFloor ? 2 : 1;
       ctx.beginPath(); ctx.moveTo(xAxis, y); ctx.lineTo(xEnd, y); ctx.stroke();
-      ctx.fillStyle = isFloor ? C.indigoLight : 'rgba(255,255,255,0.5)';
-      ctx.textAlign = 'left'; ctx.font = '600 9px Geist, system-ui, sans-serif';
-      ctx.fillText(`n=${n}${n === 7 ? '…' : ''}`, xEnd + 5, y + 3);
-      if (n <= 4) { ctx.fillStyle = C.ghost; ctx.textAlign = 'right'; ctx.fillText(`${E.toFixed(2)}`, xAxis - 6, y + 3); }
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = isFloor ? C.indigoLight : C.text;
+      ctx.font = `${isFloor ? 800 : 700} 14px Geist, system-ui, sans-serif`;
+      const nLbl = `n=${n}`;
+      ctx.fillText(nLbl, xEnd + 12, y);
+      if (showEv) {
+        ctx.fillStyle = C.ghost;
+        ctx.font = '600 13px Geist, system-ui, sans-serif';
+        ctx.fillText(`${E.toFixed(2)} eV`, xEnd + 12 + ctx.measureText(nLbl).width + 16, y);
+      }
     }
+    ctx.textBaseline = 'alphabetic';
 
     // the decoded transition arrow (emission falls into nFinal; absorption rises)
     const nHigh = s.selNHigh;
@@ -386,7 +513,7 @@ export default function HydrogenSpectrumDecoderSim() {
       ctx.beginPath();
       ctx.moveTo(ax - 5, yB - dir * 9); ctx.lineTo(ax, yB); ctx.lineTo(ax + 5, yB - dir * 9); ctx.stroke();
       ctx.shadowBlur = 0;
-      ctx.fillStyle = col; ctx.textAlign = 'left'; ctx.font = '700 10px Geist, system-ui, sans-serif';
+      ctx.fillStyle = photonTextColor(wl); ctx.textAlign = 'left'; ctx.font = '800 14px Geist, system-ui, sans-serif';
       const lbl = nHigh > 7 ? `n=${nHigh} → n=${s.nFinal}` : `ΔE = ${photonEv(s.nFinal, nHigh).toFixed(2)} eV`;
       ctx.fillText(lbl, ax + 9, (yA + yB) / 2 + 3);
     }
@@ -407,7 +534,7 @@ export default function HydrogenSpectrumDecoderSim() {
     function resize() {
       const s = sim.current;
       [s.sW, s.sH] = size(sp!, 220);
-      [s.lW, s.lH] = size(l!, 300);
+      [s.lW, s.lH] = size(l!, 500);
     }
 
     const t = setTimeout(() => {
@@ -454,7 +581,8 @@ export default function HydrogenSpectrumDecoderSim() {
   const invLambdaM = RH_M * bracket;                  // m⁻¹
   const lambdaM = 1 / invLambdaM;                     // m
   const lambdaNm = lambdaM * 1e9;                     // nm
-  const selColor = photonColor(lambdaNm);
+  const selColor = photonColor(lambdaNm);          // swatch / glow — physically accurate
+  const selText = photonTextColor(lambdaNm);       // readouts — pastel, same hue
   const selRegion = regionOf(lambdaNm);
   const selName = balmerLineName(sel.nFinal, sel.nHigh);
   const selEv = photonEv(sel.nFinal, sel.nHigh);
@@ -499,7 +627,7 @@ export default function HydrogenSpectrumDecoderSim() {
                 border: `1px solid ${active ? 'rgba(129,140,248,0.45)' : C.border}`,
                 color: active ? C.indigoLight : 'rgba(255,255,255,0.4)',
               }}>
-              <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black"
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-semibold"
                 style={{ background: active ? C.indigo : 'rgba(255,255,255,0.06)', color: active ? '#fff' : '#fff' }}>{i + 1}</span>
               {st.label}
             </button>
@@ -508,9 +636,9 @@ export default function HydrogenSpectrumDecoderSim() {
       </div>
 
       {/* narration */}
-      <div className="mb-5 rounded-xl px-4 py-3" style={{ background: C.card, border: `1px solid ${C.border}` }}>
-        <div className="text-sm font-bold text-white mb-1">{step.title}</div>
-        <p className="text-sm leading-relaxed" style={{ color: C.text2 }}>{step.body}</p>
+      <div className="mb-6 max-w-4xl">
+        <div className="text-lg font-bold text-white mb-1.5">{step.title}</div>
+        <p className="text-base leading-relaxed" style={{ color: C.text2 }}>{step.body}</p>
       </div>
 
       {/* ── THE SPECTRUM (hero, full width, clickable) ── */}
@@ -518,17 +646,16 @@ export default function HydrogenSpectrumDecoderSim() {
         <PaneLabel accent={C.indigo}>The Observed Spectrum · click a line to decode it</PaneLabel>
         <div className="relative w-full" style={{ height: 220 }}>
           <canvas ref={specRef} className="w-full h-full block rounded-xl cursor-pointer"
-            style={{ border: `1px solid ${C.border}` }}
             onMouseMove={specMove} onMouseLeave={() => { sim.current.hoverNHigh = -1; }} onClick={specClick} />
         </div>
       </div>
 
       {/* ── CONTROLS ── */}
-      <div className="rounded-2xl p-4 mb-5" style={{ background: C.card, border: `1px solid ${C.border}` }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="py-5 mb-6" style={{ borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}` }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-6">
           {/* series */}
           <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: C.muted }}>
+            <div className="text-xs font-bold uppercase tracking-widest mb-2.5" style={{ color: C.text2 }}>
               Series — landing level n<sub>final</sub>
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -545,7 +672,7 @@ export default function HydrogenSpectrumDecoderSim() {
 
           {/* mode */}
           <div>
-            <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: C.muted }}>Mode</div>
+            <div className="text-xs font-bold uppercase tracking-widest mb-2.5" style={{ color: C.text2 }}>Mode</div>
             <div className="flex gap-1 p-1 rounded-lg" style={{ background: '#05060c', border: `1px solid ${C.line}` }}>
               {(['emission', 'absorption'] as const).map((m) => (
                 <button key={m} onClick={() => setMode(m)}
@@ -584,20 +711,20 @@ export default function HydrogenSpectrumDecoderSim() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* energy ladder */}
         <div>
-          <PaneLabel accent={C.amber}>Energy Ladder · rungs crowd as 1/n²</PaneLabel>
-          <div className="relative w-full" style={{ height: 300 }}>
-            <canvas ref={ladderRef} className="w-full h-full block rounded-xl" style={{ border: `1px solid ${C.border}` }} />
+          <PaneLabel accent={C.amber}>Energy Ladder · the allowed levels</PaneLabel>
+          <div className="relative w-full" style={{ height: 500 }}>
+            <canvas ref={ladderRef} className="w-full h-full block rounded-xl" />
           </div>
         </div>
 
         {/* rydberg worksheet */}
         <div>
           <PaneLabel accent={C.emerald}>Rydberg Worksheet · the decoded line, step by step</PaneLabel>
-          <div className="rounded-xl p-4 h-[300px] flex flex-col" style={{ background: C.card, border: `1px solid ${C.border}` }}>
+          <div className="pl-5 h-[500px] flex flex-col" style={{ borderLeft: `1px solid ${C.line}` }}>
             {/* selected line header */}
             <div className="flex items-center gap-2 mb-3 flex-wrap">
               <span className="w-4 h-4 rounded" style={{ background: mode === 'absorption' ? '#000' : selColor, boxShadow: `0 0 10px ${selColor}`, border: '1px solid rgba(255,255,255,0.2)' }} />
-              <span className="text-sm font-bold tabular-nums" style={{ color: selColor }}>
+              <span className="text-base font-bold tabular-nums" style={{ color: selText }}>
                 {seriesName(sel.nFinal)} · n={sel.nHigh} → n={sel.nFinal}{selName ? ` · ${selName}` : ''}
               </span>
               <span className="text-[10px] px-2 py-0.5 rounded-full"
@@ -639,9 +766,9 @@ export default function HydrogenSpectrumDecoderSim() {
                 style={{ borderTop: `1px solid ${C.line}` }}>
                 <span style={{ fontStyle: 'italic', color: C.text }}>λ</span>
                 <span style={{ color: C.muted }}>=</span>
-                <strong style={{ color: selColor }}>{prettyExp(lambdaM.toExponential(3))} m</strong>
+                <strong style={{ color: selText }}>{prettyExp(lambdaM.toExponential(3))} m</strong>
                 <span style={{ color: C.muted }}>=</span>
-                <strong style={{ color: selColor }}>{lambdaNm.toFixed(1)} nm</strong>
+                <strong style={{ color: selText }}>{lambdaNm.toFixed(1)} nm</strong>
               </div>
               <div className="flex items-center flex-wrap gap-x-3 text-[11px] tabular-nums" style={{ color: C.ghost }}>
                 <span>photon energy ΔE = {selEv.toFixed(2)} eV</span>
@@ -651,6 +778,16 @@ export default function HydrogenSpectrumDecoderSim() {
           </div>
         </div>
       </div>
+
+      {/* full width — was cramped into just the ladder's half-column */}
+      <p className="text-sm leading-relaxed mt-4" style={{ color: C.ghost }}>
+        The gaps shrink as you climb — exactly as the real energies do — but the vertical scale is
+        <strong style={{ color: C.text2 }}> compressed, not literal</strong>. In reality the n=1→n=2 gap
+        (10.20 eV) is <em>102 times</em> the n=6→n=7 gap (0.10 eV); drawn faithfully, n=1 would sit alone
+        far below and everything else would pile up unreadably at the top. Here that 102:1 becomes about
+        5:1, so the shrinking is still obvious while every level stays readable. The exact energies are
+        printed on each rung.
+      </p>
 
       {/* ── PAYOFF: series limit = ionisation ── */}
       <div className="mt-5 rounded-xl px-4 py-3 flex gap-3 items-start"

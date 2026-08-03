@@ -1,38 +1,41 @@
 'use strict';
 /**
- * Render the hand-authored Ch.3 SVG figures, upload them to R2, and patch the
- * `src` of the matching `image` block on each page.
+ * Render the hand-authored Ch.4 SVG figures, upload them to R2, and patch the
+ * `src` of the matching `image` block on each page. Matching is by `figure_key`,
+ * so this is idempotent and safe to re-run.
  *
- * Matching is by `figure_key`, so this is idempotent and safe to re-run.
+ * ── CONTENT-HASHED STORAGE PATH — BUILT IN FROM THE START ────────────────────
+ * This is deliberate, and it is the one thing NOT to copy from Ch.2.
  *
- * CONTENT-HASHED STORAGE PATH — added 2026-07-31 after a real incident.
- * The first version of this script (copied from Ch.2) uploaded every figure to
- * a path keyed ONLY by `figure_key` — e.g. `ch3/ch3-two-coins.svg` — with
- * `Cache-Control: public, max-age=31536000, immutable`. That combination is a
- * standing trap: "immutable" tells every cache (browser, Cloudflare in front of
- * the r2.dev public domain, anything in between) that the URL's bytes will
- * NEVER change, so once a client has fetched it once, a later re-upload to the
- * SAME url is invisible to that client forever — no revalidation is ever even
- * attempted. This bit for real: two figures were fixed and republished (a
- * missing coin marker, a mis-sequenced dot-product label), a direct curl of the
- * R2 origin confirmed the NEW content was live, and the founder's own browser
- * still showed the OLD version because it had cached the figure under its
- * pre-fix URL with a 1-year immutable header.
+ * Ch.2's publisher uploads to a path keyed only by `figure_key`
+ * (`ch2/<key>.svg`) with `Cache-Control: public, max-age=31536000, immutable`.
+ * That combination is a trap: "immutable" tells every cache (the browser,
+ * Cloudflare in front of the r2.dev public domain) that the URL's bytes will
+ * NEVER change, so once a client has fetched it, a later re-upload to the SAME
+ * url is invisible to that client forever — no revalidation is ever attempted.
  *
- * The fix: the storage path now includes a SHA-256 prefix of the rendered SVG
- * content itself. A content change produces a genuinely different URL, so the
- * "immutable" claim becomes actually true (a given hash's content really never
- * changes) and every cache layer is forced to fetch fresh bytes on the next
- * page load — no manual purge, no asking anyone to hard-refresh. Old
- * now-unreferenced objects under the previous hash are simply left in R2
- * (a few KB each, harmless) rather than deleted, per the standing
+ * It bit for real on Ch.3 (2026-07-31): two figures were corrected and
+ * republished, a direct curl of the R2 origin confirmed the NEW bytes were
+ * live, and the founder's browser still showed the OLD version. Nothing errors;
+ * validation, Zod and the lint gate all say everything is fine.
+ *
+ * The fix, applied here from day one rather than after a founder report: the
+ * storage path carries a SHA-256 prefix of the rendered SVG itself. A content
+ * change produces a genuinely different URL, so the "immutable" claim becomes
+ * actually true and every cache layer is forced onto fresh bytes on the next
+ * page load — no purge, no asking anyone to hard-refresh. Superseded objects
+ * are left in R2 (a few kB each) rather than deleted, per the standing
  * never-delete-without-asking posture for anything touching book content.
  *
- * §0.6: this only ever sets `src` on image blocks THIS chapter's build scripts
- * created. It never removes a block, never touches another chapter, and the
- * write goes through the same `book_pages` update the build scripts use.
+ * ── ORDER OF OPERATIONS, easy to get wrong ──────────────────────────────────
+ * The Ch.4 build scripts define `src: ''`, so EVERY re-run of a build script
+ * wipes the figure URLs and this publisher must be re-run after it.
+ * Build → publish, every time.
  *
- * Run: node scripts/physics11-book/svg/publish_ch3_figures.js [--dry]
+ * §0.6: this only ever sets `src` on image blocks THIS chapter's build scripts
+ * created. It never removes a block, never touches another chapter.
+ *
+ * Run: node scripts/physics11-book/svg/publish_ch4_figures.js [--dry]
  */
 require('dotenv').config({ path: '.env.local' });
 const fs = require('fs');
@@ -40,10 +43,10 @@ const pathMod = require('path');
 const crypto = require('crypto');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { withDb } = require('../../lib/book-writer');
-const { FIGURES } = require('./figures_ch3');
+const { FIGURES } = require('./figures_ch4');
 
 const DRY = process.argv.includes('--dry');
-const OUT_DIR = pathMod.join(__dirname, 'out');
+const OUT_DIR = pathMod.join(__dirname, 'out-ch4');
 
 const R2 = new S3Client({
   region: 'auto',
@@ -56,15 +59,16 @@ const R2 = new S3Client({
 const BUCKET = process.env.R2_BUCKET_NAME;
 const PUBLIC_URL = (process.env.R2_PUBLIC_URL || '').replace(/\/$/, '');
 
-/** Cheap structural checks. These have each caught a real defect during authoring. */
+/** Cheap structural checks. Each of these has caught a real defect. */
 function lint(key, s) {
   const issues = [];
   if (!s.startsWith('<svg')) issues.push('does not start with <svg');
   if (!s.includes('viewBox=')) issues.push('no viewBox — will not scale');
   if (/NaN|Infinity|undefined/.test(s)) issues.push('contains NaN / Infinity / undefined — a coordinate calculation failed');
   if (!/<title>/.test(s)) issues.push('no <title> — inaccessible');
-  // the four sanctioned white tiers only (plus pure accent hexes)
-  const badWhite = s.match(/rgba\(255,255,255,0\.(?!85|82|60|45|14|16)\d+\)/g);
+  if (/height="auto"/.test(s)) issues.push('height="auto" is invalid SVG — omit height and let the viewBox set the ratio');
+  // the four sanctioned white tiers only (plus the faint hairline/fill values)
+  const badWhite = s.match(/rgba\(255,255,255,0\.(?!85|82|60|45|14|07)\d+\)/g);
   if (badWhite) issues.push('off-scale white: ' + [...new Set(badWhite)].join(', '));
   // no baked-in dark backdrop — the reader has three themes
   if (/<rect[^>]*fill="#(0|1)[0-9a-fA-F]{5}"/.test(s)) issues.push('paints a dark background rect — must stay transparent');
@@ -91,7 +95,7 @@ function lint(key, s) {
   if (bad) { console.log(`\n❌ ${bad} figure(s) failed the lint gate — nothing uploaded.`); process.exit(1); }
   console.log(`\nrendered ${Object.keys(rendered).length} figures into ${OUT_DIR}`);
 
-  if (DRY) { console.log('\n--dry: stopping before upload.'); process.exit(0); }
+  if (DRY) { console.log('\n--dry: stopping before upload. LOOK at the rasters before publishing.'); process.exit(0); }
   if (!BUCKET || !PUBLIC_URL) { console.log('\n❌ R2_BUCKET_NAME / R2_PUBLIC_URL missing from .env.local'); process.exit(1); }
 
   await withDb(async (db) => {
@@ -102,10 +106,10 @@ function lint(key, s) {
 
     const urls = {};
     for (const [key, s] of Object.entries(rendered)) {
-      // Content-addressed path — see the header note. A change in `s` changes
-      // the hash, changes the path, changes the URL every client must fetch.
+      // Content-addressed — see the header. A change in `s` changes the hash,
+      // changes the path, changes the URL every client must fetch.
       const hash = crypto.createHash('sha256').update(s, 'utf8').digest('hex').slice(0, 10);
-      const storagePath = `books/${book._id}/ch3/${key}.${hash}.svg`;
+      const storagePath = `books/${book._id}/ch4/${key}.${hash}.svg`;
       await R2.send(new PutObjectCommand({
         Bucket: BUCKET,
         Key: storagePath,
@@ -117,8 +121,8 @@ function lint(key, s) {
       console.log('uploaded', storagePath);
     }
 
-    const docs = await pages.find({ book_id: book._id, chapter_number: 3, deleted_at: null }).toArray();
-    let patched = 0, missing = [];
+    const docs = await pages.find({ book_id: book._id, chapter_number: 4, deleted_at: null }).toArray();
+    let patched = 0; const missing = [];
     for (const p of docs) {
       let changed = false;
       for (const blk of p.blocks) {
@@ -126,8 +130,9 @@ function lint(key, s) {
         const url = urls[blk.figure_key];
         if (!url) { missing.push(`p${p.page_number}:${blk.figure_key}`); continue; }
         if (blk.src !== url) { blk.src = url; changed = true; patched++; }
-        // A hand-drawn figure is not AI-generated art. Drop the stale prompt so
-        // nobody later regenerates over the drawing.
+        // A hand-drawn figure is not AI-generated art. Drop any stale prompt so
+        // nobody later regenerates over the drawing — and because the reader
+        // prints a prompt it finds VERBATIM, with a "Copy prompt" button.
         if (blk.generation_prompt) delete blk.generation_prompt;
       }
       if (changed) {

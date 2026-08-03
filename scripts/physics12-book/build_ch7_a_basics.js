@@ -23,8 +23,10 @@
  * ANSWER POSITIONS: every `reasoning_prompt` here carries an explicit
  * `correct_index` (the book-wide defect fixed 2026-07-31 — four options, no key,
  * so the reader could show no verdict and `_hygiene.js` could not see them).
- * The six on these pages sit at 2, 0, 3, 1, 2, 3. Inline-quiz items go through
- * `q()`, which spreads deterministically.
+ * The seven on these pages sit at 2, 0, 3, 1, 2, 3, 0 — the last being the
+ * leads-versus-lags prompt added to p4, placed at 0 because the chapter-wide
+ * tally had A running lowest. Inline-quiz items go through `q()`, which spreads
+ * deterministically.
  *
  * Run: node scripts/physics12-book/build_ch7_a_basics.js
  */
@@ -520,7 +522,40 @@ const p4 = {
     b('text', 8, {
       markdown: 'Suppose a voltage and a current somewhere in a circuit are\n\n$ v = v_0\\sin\\omega t \\quad\\text{and}\\quad i = i_0\\sin(\\omega t - \\phi) $\n\nThe current reaches every stage of its cycle a time $ \\frac{\\phi}{\\omega} $ **after** the voltage does, so the current **lags** the voltage by $ \\phi $. On a diagram that is one line of work: draw the voltage arrow, then draw the current arrow $ \\phi $ **clockwise** from it — behind it, in the sense of the rotation.\n\nThe vocabulary is worth fixing now, because it is used without further explanation from the next page onwards.\n\n- **Leads** — reaches its peak earlier. Drawn **anticlockwise** of (ahead of) the reference arrow. A plus sign inside the bracket.\n- **Lags** — reaches its peak later. Drawn **clockwise** of (behind) the reference arrow. A minus sign inside the bracket.\n- **In phase** — $ \\phi = 0 $. The two arrows lie on top of one another and peak at the same instant.\n\nA memory that survives exam pressure: **arrows turn anticlockwise, so whatever sits further anticlockwise gets there first, and therefore leads.**',
     }),
-    b('step_solver', 9, {
+    // ADDED. The heading above promises the reader will "read one back the
+    // other way" — turn a diagram or a pair of waveforms back into a phase
+    // angle — and nothing on the page delivered that half. The step_solver
+    // below only goes the other direction (formula → arrows → sum). This is
+    // also the page's only standalone worked example: p4 is the tool every page
+    // from p5 onwards runs on, yet it carried the least reinforcement of any
+    // teaching page in the chapter.
+    b('worked_example', 9, {
+      label: 'reading a phase difference straight off two waveforms',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'An oscilloscope shows the voltage and the current in one branch of a $ 50 $ Hz circuit, both clean sine waves on the same time axis. The current crosses zero going upwards $ 2.5 $ ms **after** the voltage does. Take the voltage to be $ v = 311\\sin\\omega t $ volts and the current to have a peak of $ 4.0 $ A. Find the phase difference in degrees and in radians, say which quantity leads, and write the current as a sinusoid.',
+      solution: '**Start with the period, because a phase difference is a fraction of one.**\n\n$ T = \\frac{1}{f} = \\frac{1}{50} = 0.02\\ \\text{s} = 20\\ \\text{ms} $\n\n**Turn the time gap into a fraction of a cycle.**\n\n$ \\frac{2.5}{20} = \\frac{1}{8} $\n\nSo the two waves are one eighth of a cycle apart.\n\n**A whole cycle is $ 360^\\circ $, so scale it.**\n\n$ \\phi = \\frac{1}{8}\\times 360^\\circ = 45^\\circ = \\frac{\\pi}{4}\\ \\text{rad} $\n\n**Which one leads?** The current reaches the same stage of its cycle $ 2.5 $ ms **later** than the voltage does, so the current **lags** the voltage by $ 45^\\circ $. On the diagram, draw the voltage arrow along the reference direction and the current arrow $ 45^\\circ $ **clockwise** of it — behind it, in the sense of the rotation.\n\n**Write it down.** Here $ \\omega = 2\\pi f = 2\\pi(50) = 100\\pi \\approx 314 $ rad/s, and a lag is a minus sign inside the bracket:\n\n$ i = 4.0\\sin\\left(\\omega t - \\frac{\\pi}{4}\\right)\\ \\text{A} $\n\n**Check it by going backwards**, which is the habit worth building. A phase angle converts back to a time gap through $ \\Delta t = \\frac{\\phi}{\\omega} $:\n\n$ \\Delta t = \\frac{\\pi/4}{100\\pi} = \\frac{1}{400}\\ \\text{s} = 2.5\\ \\text{ms} $\n\nwhich is exactly what the oscilloscope was showing. ✓\n\n**Two things worth carrying away.**\n\nFirst, $ 311 $ V is not a strange number — it is the **peak** of an ordinary $ 220 $ V mains supply, since $ 220\\sqrt{2} \\approx 311 $. Page 3 fixed the rule that every label value is an rms value, so the moment a problem hands you $ 220 $ V and you need a peak, that $ \\sqrt{2} $ has to go in. Then draw every arrow to peak length, or every arrow to rms length — but never a mixture of the two in one diagram.\n\nSecond, the same $ 2.5 $ ms gap would be a completely different angle at a different frequency. At $ 100 $ Hz the period is only $ 10 $ ms, so $ 2.5 $ ms would be a **quarter** of a cycle — a phase difference of $ 90^\\circ $, not $ 45^\\circ $. **A phase difference is a fraction of a cycle, never a time on its own.**',
+    }),
+    // ADDED. The one reasoning_prompt this page already had tests that the
+    // angles between phasors are permanent. Nothing tested the leads/lags
+    // vocabulary itself — and misreading the sign inside the bracket is the
+    // single most common student slip on this page, one that then corrupts
+    // every circuit from p6 onwards. Every distractor here is a real slip:
+    // reading "+" as a delay, and converting degrees straight into milliseconds.
+    b('reasoning_prompt', 10, {
+      reasoning_type: 'logical',
+      prompt: 'In one circuit the voltage is $ v = v_0\\sin\\omega t $ and the current is $ i = i_0\\sin\\left(\\omega t + \\frac{\\pi}{3}\\right) $, with the supply running at $ 50 $ Hz. Which statement is completely correct?',
+      options: [
+        'The current leads, peaking $ 3.3 $ ms earlier',
+        'The current lags, peaking $ 3.3 $ ms later',
+        'The current lags, as the bracket adds a delay',
+        'The current leads, peaking a full $ 60 $ ms earlier',
+      ],
+      correct_index: 0,
+      reveal: '**The current leads, and it arrives at every stage of its cycle about $ 3.3 $ ms early.**\n\nThe sign inside the bracket settles the whole question. A **plus** means the current has already been carried forward along its own cycle: at $ t = 0 $ it is not starting from zero, it is already $ 60^\\circ $ into the cycle. Being further round means arriving sooner, so it **leads**.\n\nNow put a time on it. At $ 50 $ Hz the period is\n\n$ T = \\frac{1}{50} = 20\\ \\text{ms} $\n\nand $ \\frac{\\pi}{3} $ is $ 60^\\circ $, which is one sixth of a full turn:\n\n$ \\Delta t = \\frac{1}{6}\\times 20 = 3.3\\ \\text{ms} $\n\nOr straight from $ \\Delta t = \\frac{\\phi}{\\omega} = \\frac{\\pi/3}{100\\pi} = \\frac{1}{300}\\ \\text{s} $ — the same $ 3.3 $ ms.\n\n**Reading the plus sign as a delay is the commonest slip on this page.** It feels natural: you added something, so surely it happens later. But the shift is applied to the **angle**, not to the clock. A quantity that is already further round the circle got there earlier, not later.\n\n**And an angle is never a time on its own.** Sixty degrees is not sixty milliseconds — it is one sixth of whatever the period happens to be. At $ 50 $ Hz that is $ 3.3 $ ms; at $ 500 $ Hz the very same $ 60^\\circ $ would be a tenth of that. Convert through the period every single time.',
+      difficulty_level: 2,
+    }),
+    b('step_solver', 11, {
       title: 'Adding two out-of-phase voltages with arrows',
       problem: 'Two voltages in series are $ v_1 = 30\\sin\\omega t $ volts and $ v_2 = 40\\sin\\left(\\omega t + \\frac{\\pi}{2}\\right) $ volts. Find the single sinusoid that is their sum.',
       intro: 'The trigonometric route works, but it takes half a page. The phasor route takes four lines. Learn it here, on a case where you can check the answer against the trigonometry afterwards.',
@@ -569,7 +604,7 @@ const p4 = {
         solution: 'Draw $ v_1 $ as an arrow of length $ 8 $ along the reference direction.\n\nThe minus sign in $ v_2 $ means it **lags**, so its length-$ 6 $ arrow is drawn $ 90^\\circ $ **clockwise** — pointing straight down.\n\nThe two are perpendicular, so\n\n$ v_0 = \\sqrt{8^{2} + 6^{2}} = 10\\ \\text{V} $\n\nand the resultant leans below the reference by\n\n$ \\phi = \\tan^{-1}\\frac{6}{8} \\approx 37^\\circ $\n\nBelow the reference means lagging, so $ v = 10\\sin(\\omega t - 37^\\circ) $ volts.\n\n**The check that catches sign errors every time:** the resultant must lie *between* the two arrows you added. Here it sits between the reference direction and straight down, which is exactly where $ -37^\\circ $ puts it. If your answer lands outside that wedge, you have drawn a lead where there was a lag.',
       },
     }),
-    b('comparison_card', 10, {
+    b('comparison_card', 12, {
       title: 'The same sum, done twice — and why nobody does it the first way',
       columns: [
         {
@@ -596,21 +631,21 @@ const p4 = {
         },
       ],
     }),
-    b('callout', 11, {
+    b('callout', 13, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'Phasors did not stay in the textbook. They are how an electricity grid is actually run.\n\nEvery large generator feeding the Indian grid has to be brought **into phase** with it before its breaker can be closed. Connect a generator whose phasor is even a few degrees out, and an enormous surge of current flows as the grid drags the machine violently into step — enough to damage the shaft. So an instrument called a synchroscope watches the angle between two phasors, and the operator closes the breaker only when that angle has come to rest near zero.\n\nAcross the grid as a whole, devices called **phasor measurement units** sit in substations, sampling the local voltage and reporting its phasor angle — time-stamped by satellite clock, thirty or more times a second. Comparing those angles at the two ends of a long line tells operators how much power is flowing and how close the system is sitting to instability. A steadily growing angle difference is the early warning of a cascading blackout.\n\nSo a trick invented in the 1890s to avoid doing trigonometry has become the instrument that keeps a subcontinent\'s lights on.',
       image_prompt: 'Clean scientific illustration on a near-black background (#0B0C0F), thin dim-grey line art. On the left, a circular dial drawn as a thin grey outline with two bold arrows from its centre: one bright amber pointing to the right, one cooler amber a small angle away from it, with a thin curved orange arc marking the angle between them and a small bright tick mark at the top of the dial. On the right, a simplified transmission scene: two lattice pylon outlines in dim grey joined by three gently sagging catenary lines, with a small square box at the base of each pylon carrying a tiny satellite-dish glyph and a thin dashed grey line rising from each towards the top of the frame. Muted white minimal labels, generous dark space, no clutter.',
     }),
-    b('callout', 12, {
+    b('callout', 14, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- A **phasor** is an arrow rotating anticlockwise at $ \\omega $; its vertical projection is the instantaneous value.\n- **Length = peak value** (or rms, if you draw every arrow that way — never mix the two).\n- **Angle = phase.** Ahead anticlockwise means **leading**; behind clockwise means **lagging**.\n- Every phasor in one circuit spins at the same $ \\omega $, so the angles between them are **fixed**.\n- That is what lets you freeze the diagram at $ t = 0 $ and just do vector addition.\n- Perpendicular phasors add by **Pythagoras**; the phase of the sum is $ \\tan^{-1} $ of the ratio.\n- The resultant of two phasors always lies **between** them — a free check on any answer.',
     }),
-    b('text', 13, {
+    b('text', 15, {
       markdown: 'Next: the tool goes to work. Start with the simplest AC circuit there is — a single resistor — where the two arrows lie exactly on top of one another, and see what that costs and what it buys.',
     }),
-    b('inline_quiz', 14, {
+    b('inline_quiz', 16, {
       pass_threshold: 0.6,
       questions: [
         q('The length of a phasor represents',

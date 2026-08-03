@@ -302,7 +302,14 @@ const p3 = {
     b('text', 7, {
       markdown: 'That is Ohm\'s law in its honest form — **current density proportional to field** — and now you can see exactly what has to hold for it to work.\n\nThe constant $ \\sigma $ contains $ n $ and $ \\tau $. In a metal, $ n $ is essentially fixed. So the whole of Ohm\'s law rests on **$ \\tau $ being constant** — on the electrons colliding at the same average rate whatever the current.\n\nAnd $ \\tau $ depends on how violently the lattice ions are vibrating, which depends on **temperature**. Heat the conductor and $ \\tau $ falls, so $ \\sigma $ falls and $ R $ rises.\n\nSo the "constant temperature" condition is not fine print. It is the entire assumption.',
     }),
-    b('reasoning_prompt', 8, {
+    b('worked_example', 8, {
+      label: 'from n, e and τ to the resistivity of copper',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'Copper has $ 8.5\\times10^{28} $ free electrons per cubic metre and a relaxation time of $ 2.5\\times10^{-14} $ s at room temperature. Take $ e = 1.6\\times10^{-19} $ C and $ m = 9.1\\times10^{-31} $ kg. Find (a) the conductivity and resistivity of copper, and (b) the electric field inside a copper wire of cross-section $ 1\\ \\text{mm}^{2} $ carrying $ 6 $ A.',
+      solution: '**(a) Put the numbers into $ \\sigma = \\frac{ne^{2}\\tau}{m} $, one factor at a time.**\n\nDoing it in one keystroke invites a lost exponent, so build it up:\n\n$ e^{2} = (1.6\\times10^{-19})^{2} = 2.56\\times10^{-38} $\n\n$ ne^{2} = (8.5\\times10^{28})(2.56\\times10^{-38}) = 2.176\\times10^{-9} $\n\n$ ne^{2}\\tau = (2.176\\times10^{-9})(2.5\\times10^{-14}) = 5.44\\times10^{-23} $\n\n$ \\sigma = \\frac{5.44\\times10^{-23}}{9.1\\times10^{-31}} = 5.98\\times10^{7}\\ \\text{S/m} $\n\nAnd the resistivity is just its reciprocal:\n\n$ \\rho = \\frac{1}{\\sigma} = 1.67\\times10^{-8}\\ \\Omega\\cdot\\text{m} $\n\n**Stop and look at that number.** The measured resistivity of copper is $ 1.7\\times10^{-8} $ Ω·m. We have just produced it from nothing but a count of electrons, the charge and mass of one electron, and a single collision time. The drift picture is not a story told to make the formula memorable — it gives the right answer.\n\n**(b) The field inside the wire.**\n\nFirst the current density, converting the area properly ($ 1\\ \\text{mm}^{2} = 10^{-6}\\ \\text{m}^{2} $):\n\n$ J = \\frac{I}{A} = \\frac{6}{10^{-6}} = 6\\times10^{6}\\ \\text{A/m}^{2} $\n\nThen use the microscopic law $ J = \\sigma E $ backwards:\n\n$ E = \\frac{J}{\\sigma} = \\frac{6\\times10^{6}}{5.98\\times10^{7}} = 0.10\\ \\text{V/m} $\n\n**Why that is worth knowing.** A tenth of a volt per metre is tiny. Over a $ 20 $ cm connecting lead it means a drop of about $ 0.02 $ V — nothing at all beside a $ 12 $ V supply. That is the honest justification for the habit of treating connecting wires as having no potential difference across them, which every circuit diagram in this chapter assumes.\n\n**Watch-out.** $ \\sigma $ is in siemens per metre and $ \\rho $ in ohm-metres; they are reciprocals, not the same number in different clothes. And $ \\tau $ is of order $ 10^{-14} $ s — if your working ever hands you $ 10^{-4} $ or $ 10^{-24} $, a power of ten has slipped.',
+    }),
+    b('reasoning_prompt', 9, {
       reasoning_type: 'logical',
       prompt: 'A torch bulb is measured at low voltage and gives $ R = 3\\ \\Omega $. At its full working voltage the measured resistance is $ 12\\ \\Omega $. Is Ohm\'s law being violated?',
       options: [
@@ -539,7 +546,14 @@ const p5 = {
         },
       ],
     }),
-    b('heading', 5, {
+    b('worked_example', 5, {
+      label: 'the same ten degrees, two opposite answers',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A platinum coil has resistance $ 20.0\\ \\Omega $ at $ 20\\ ^\\circ\\text{C} $, with $ \\alpha = +3.9\\times10^{-3}\\ \\text{K}^{-1} $. A thermistor bead sitting beside it has resistance $ 2.00 $ kΩ at the same temperature, with $ \\alpha = -4.0\\times10^{-2}\\ \\text{K}^{-1} $. Both are warmed to $ 30\\ ^\\circ\\text{C} $. Find the new resistance of each.',
+      solution: 'Both use the same formula, $ R = R_0(1 + \\alpha\\,\\Delta T) $, and both have the same $ \\Delta T $. Only $ \\alpha $ differs — so this problem is really asking what $ \\alpha $ alone does.\n\n$ \\Delta T = 30 - 20 = 10 $ K. (A *difference* of 10 °C is a difference of 10 K, so no conversion to absolute temperature is needed.)\n\n**The platinum coil.**\n\n$ R = 20.0\\left[1 + (3.9\\times10^{-3})(10)\\right] = 20.0(1 + 0.039) = 20.8\\ \\Omega $\n\nIt has risen, by $ 3.9\\% $.\n\n**The thermistor.**\n\n$ R = 2000\\left[1 + (-4.0\\times10^{-2})(10)\\right] = 2000(1 - 0.40) = 1200\\ \\Omega = 1.20\\ \\text{k}\\Omega $\n\nIt has fallen, by $ 40\\% $.\n\n**Read the two answers side by side.** The same ten degrees moved the metal by four parts in a hundred and the semiconductor by four parts in ten. The **sign** of $ \\alpha $ says which way the resistance goes; the **size** of $ \\alpha $ says how violently. Both come straight from $ \\rho = \\frac{m}{ne^{2}\\tau} $ — in the metal only $ \\tau $ can move, while in the semiconductor $ n $ climbs steeply and wins.\n\nThat contrast is why each material has the job it has. Platinum\'s $ \\alpha $ is small but extremely stable and repeatable, so a platinum coil is used as a **thermometer** you can trust. A thermistor\'s $ \\alpha $ is huge, so it makes a very **sensitive** temperature sensor — but a badly behaved one.\n\n**Watch-out — do not extrapolate the thermistor.** The linear formula is a good approximation for a metal over hundreds of degrees. For this thermistor it is honest over only a few. Push it to $ \\Delta T = 25 $ K and it predicts exactly zero resistance; push it to $ \\Delta T = 50 $ K and it predicts a *negative* resistance, which is meaningless. The real fall is roughly exponential and never reaches zero. For a semiconductor, $ \\alpha $ is a local slope near one temperature, not a constant of the material.',
+    }),
+    b('heading', 6, {
       text: 'Alloys — the third case, engineered on purpose',
       level: 2,
       objective: 'Explain why standard resistors are made from alloys rather than pure metals.',

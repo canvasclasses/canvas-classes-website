@@ -16,6 +16,7 @@
  *      StepBar's text-[11px] font-black pill is the one exception and lives in
  *      the shared component, so it's never hand-rolled).
  *   5. No dark-violet #7c3aed as foreground (muddy on dark bg — use ACCENT).
+ *   5b. No dead-grey text (#475569 / #64748b) — both fail WCAG AA on the sim bg.
  *   6. No raw .toExponential() render without prettyExp() ("e+23" confuses).
  *   7. Root wrapper background must be #0d1117 (or SIM_BG token) — warns only.
  *
@@ -200,6 +201,21 @@ const RULES = [
     level: 'error',
     test: (l) => /#7c3aed/i.test(l),
     msg: 'Dark-violet #7c3aed is muddy on the dark bg. Use ACCENT (#c4b5fd) from _shared/tokens.',
+  },
+  {
+    // THE recurring defect this gate exists to stop. #475569 (2.50:1) and
+    // #64748b (3.98:1) on the sim background fail WCAG AA for body text — the
+    // second one marginally, the first one catastrophically. They kept coming
+    // back in every new sim because the canonical SIMULATION_DESIGN_WORKFLOW
+    // doc published them as the "muted"/"ghost" tiers WITH copy-paste
+    // snippets, so each build faithfully reproduced them. Doc and tokens are
+    // now on #8493a8 / #8b99ad (6.06:1 / 6.54:1); this rule is what keeps them
+    // from drifting back. Scoped to changed files, so legacy sims are migrated
+    // when touched rather than all at once.
+    id: 'dead-grey-text',
+    level: 'error',
+    test: (l) => /#475569|#64748b/i.test(l),
+    msg: 'Dead grey: #475569 (2.50:1) and #64748b (3.98:1) fail WCAG AA on the sim background. Use TEXT.muted (#8493a8) / TEXT.ghost (#8b99ad) from _shared/tokens.',
   },
   {
     id: 'raw-exponential',

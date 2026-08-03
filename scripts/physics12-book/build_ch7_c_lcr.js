@@ -67,13 +67,19 @@ const p9 = {
     b('text', 3, {
       markdown: 'Take the current phasor $ I $ along the reference direction. Then, straight from pages 5 to 7:\n\n- **Across the resistor:** $ V_R = IR $, drawn **along** $ I $. A resistor never shifts the phase.\n- **Across the inductor:** $ V_L = IX_L $, drawn $ 90^\\circ $ **ahead** of $ I $. The voltage leads, so the current lags.\n- **Across the capacitor:** $ V_C = IX_C $, drawn $ 90^\\circ $ **behind** $ I $. The voltage lags, so the current leads.\n\nNow look at what that picture is telling you. $ V_L $ points one way; $ V_C $ points the exact opposite way. **They are antiparallel, so they subtract before anything else happens.** Combine them first and you are left with a single arrow of size $ |V_L - V_C| $, perpendicular to $ V_R $.\n\nOne perpendicular pair remains, so Pythagoras finishes the job:\n\n$ V = \\sqrt{V_R^{2} + (V_L - V_C)^{2}} = I\\sqrt{R^{2} + (X_L - X_C)^{2}} $\n\nDivide through by the current and what is left is the circuit\'s total opposition — its **impedance**.',
     }),
+    // TWO-PANEL, deliberately. The page previously showed only the phasor
+    // diagram, so a reader met the abstract vector picture of a series LCR
+    // circuit without ever having seen the physical loop it stands for — on the
+    // one page in the chapter where the classic schematic matters most. The
+    // circuit schematic is therefore the LEFT panel of this same image rather
+    // than a second image block, because the page is already at the 18-block cap.
     b('image', 4, {
       src: '',
-      alt: 'Phasor diagram of a series LCR circuit, with the current as reference and the resistor, inductor and capacitor voltages drawn from it',
-      width: 'two_third',
+      alt: 'Two panels side by side: on the left the physical series LCR circuit — an AC source, a resistor, an inductor and a capacitor in one loop; on the right the phasor diagram of that same circuit, with the current as reference and the resistor, inductor and capacitor voltages drawn from it',
+      width: 'full',
       aspect_ratio: '16:9',
-      caption: 'Add the two vertical arrows first — they oppose each other. What is left is a single right-angled triangle.',
-      generation_prompt: 'Clean scientific phasor diagram on a near-black background (#0B0C0F), thin dim-grey line art. From a single origin: one bold warm-amber horizontal arrow pointing right labelled I, a second warm-amber horizontal arrow of similar length just above it labelled V_R, one long bright-orange arrow pointing straight up labelled V_L, and one shorter cool-blue arrow pointing straight down labelled V_C. To the right of these, a second grouping shows the resultant construction: a dashed grey vertical arrow of length equal to the difference V_L minus V_C rising from the tip of V_R, and a bold bright-amber resultant arrow from the origin to its tip labelled V, with a small arc marking the angle phi between V and the horizontal. A faint dotted right-angle square marks the corner. Muted white minimal labels, generous dark space, no clutter.',
+      caption: 'Left, the loop you would actually build. Right, the same circuit as arrows — add the two vertical ones first, because they oppose each other, and what is left is a single right-angled triangle.',
+      generation_prompt: 'Clean scientific two-panel figure on a near-black background (#0B0C0F), thin dim-grey line art, wide horizontal composition, the two panels separated by a single thin faint vertical dividing line. LEFT PANEL, the physical circuit: one closed rectangular loop of thin warm-amber wire. On the left-hand side of the loop sits an alternating-source symbol drawn as a circle containing a small sine-wave squiggle, labelled v. Along the top run of the loop, in order from left to right, three components in series: a resistor drawn as a sharp zigzag labelled R, an inductor drawn as four tight semicircular coils labelled L, and a capacitor drawn as two short parallel vertical plates with a clear gap between them labelled C. A small bright-orange arrow sits on the wire between the source and the resistor, labelled I, showing that one single current passes through all three components. RIGHT PANEL, the phasor diagram of that same circuit: from a single origin, one bold warm-amber horizontal arrow pointing right labelled I, a second warm-amber horizontal arrow of similar length just above it labelled V_R, one long bright-orange arrow pointing straight up labelled V_L, and one shorter cool-blue arrow pointing straight down labelled V_C. Beside these, the resultant construction: a dashed grey vertical arrow of length equal to the difference V_L minus V_C rising from the tip of V_R, and a bold bright-amber resultant arrow from the origin to its tip labelled V, with a small arc marking the angle phi between V and the horizontal, and a faint dotted right-angle square at the corner. Muted white minimal labels, generous dark space, no clutter.',
     }),
     b('latex_block', 5, {
       latex: 'Z = \\sqrt{R^{2} + (X_L - X_C)^{2}}',
@@ -309,21 +315,36 @@ const p10 = {
       reveal: '**Exactly the same frequency in both.**\n\nResonance is defined by $ X_L = X_C $, and there is no $ R $ anywhere in that condition. Solving it gives $ \\omega_r = \\frac{1}{\\sqrt{LC}} $, which again contains no $ R $. The resistor simply is not part of the question of *where* resonance happens.\n\n**What the resistor does control is how the two circuits behave at that frequency.** The $ 5\\ \\Omega $ circuit reaches a current of $ V/5 $; the $ 500\\ \\Omega $ circuit only manages $ V/500 $, a hundred times smaller. And the small-resistance circuit\'s response is far more sharply concentrated around $ \\omega_r $, while the large-resistance one responds sluggishly over a wide spread of frequencies.\n\nSo the resistor sets the **height and the width** of the peak, and $ L $ and $ C $ set its **position**. Keeping those two roles separate is the single most useful idea to carry into the next page, which is about nothing else.\n\n**And resistance is certainly not fatal to resonance.** Every real circuit has some — the coil\'s own wire has resistance whether you want it or not. Zero resistance would give an infinite current at resonance, which is a signal that the idealisation has been pushed too far, not a design target.',
       difficulty_level: 2,
     }),
+    // BEYOND-NCERT ASIDE. The chapter never mentions the PARALLEL LCR circuit,
+    // where the resonance result is exactly inverted — impedance maximum, line
+    // current minimum. That is fine for NCERT bookwork and for taxonomy
+    // compliance, but students routinely carry the series sentence ("at
+    // resonance the current is maximum") across to a parallel circuit and get
+    // it backwards, and the parallel case is JEE-Advanced examinable. It lives
+    // on THIS page rather than p11 because p11 is already at the 18-block cap
+    // once the circuit_bench simulation is placed, and because the statement it
+    // reverses — Z minimum, I maximum at resonance — is derived right here.
+    // `note` is deliberate: it renders collapsed, so an aside stays an aside.
     b('callout', 12, {
+      variant: 'note',
+      title: 'Beyond NCERT — the circuit that does the exact opposite',
+      markdown: 'Everything on this page describes the **series** circuit, where $ L $, $ C $ and $ R $ sit one after another in a single loop. Put those same three elements in **parallel** — all three straight across the source — and the resonance turns inside out.\n\nIn the parallel circuit every element gets the full source voltage and draws its own branch current. The inductor branch lags that voltage by a quarter cycle; the capacitor branch leads it by a quarter cycle. So the two branch currents are half a cycle apart and **subtract** — exactly the way $ V_L $ and $ V_C $ subtracted on page 9.\n\nThey become equal in size at $ \\omega_r = \\frac{1}{\\sqrt{LC}} $, the very frequency this page has just derived. There they cancel completely, and the source is left supplying nothing but the resistor branch.\n\nSo at that one frequency a parallel circuit has its impedance at a **maximum** and the current drawn from the line at a **minimum** — the exact reverse of the series result above. A series circuit is used to *accept* one frequency; a parallel circuit is used to *reject* one. That is why the two are called the acceptor and the rejector circuit.\n\nThe trap is obvious once it is named. Anyone who memorises "at resonance the current is largest" and carries that sentence into a parallel circuit gets it backwards every time. Attach the sentence to the **circuit**, never to the word resonance.\n\nNone of this is NCERT bookwork — but NCERT Exercise 7.17 asks you to prove it, and that exercise is waiting on the exercises page at the end of this chapter. Read the paragraphs above once now and it will already be half done.',
+    }),
+    b('callout', 13, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'Every radio aerial in a city is soaked in dozens of stations at once. The aerial cannot separate them — it picks up all of them together, as one meaningless jumble of voltage.\n\nThe separating is done by a series LCR circuit sitting behind the aerial. Turning the tuning knob turns a **variable capacitor**: two sets of metal plates that slide in and out of each other, changing the overlap area and so changing $ C $. Changing $ C $ moves $ \\omega_r = \\frac{1}{\\sqrt{LC}} $.\n\nWhen $ \\omega_r $ lands on a station\'s carrier frequency, that one signal drives the circuit at resonance and produces a large current. Every other station is off-resonance, meets a much larger impedance, and produces almost nothing. **One station is amplified; the rest are ignored.**\n\nThis is why an old radio dial goes quiet between stations rather than playing everything at once. It is also why the same physics turns up wherever one frequency must be picked out of many — in a mobile handset\'s front end, in a metal detector, in the coil of a contactless card reader, and in the receiver of an MRI scanner listening for one precise nuclear frequency.\n\nThe part of the story this page cannot yet tell is *how narrow* the selection is — whether the neighbouring station is properly rejected or merely quietened. That is the next page.',
       image_prompt: 'Clean scientific illustration on a near-black background (#0B0C0F), thin dim-grey line art. On the left a simple vertical aerial rod with several concentric dim-orange arcs radiating towards it from three small distant transmitter icons, each arc set drawn at a visibly different spacing to suggest three different frequencies. The aerial connects to a simple series circuit drawn in warm amber wire containing a coil symbol and a variable capacitor symbol with a diagonal arrow through it, then to a small speaker icon. Above the circuit a small inset graph shows a narrow bright-amber resonance peak with one of the three frequency markers falling exactly under the peak and the other two lying far out on the flat tails. Muted white minimal labels, generous dark space, no clutter.',
     }),
-    b('callout', 13, {
+    b('callout', 14, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- Resonance is the condition $ X_L = X_C $, which gives $ \\omega_r = \\frac{1}{\\sqrt{LC}} $ and $ f_r = \\frac{1}{2\\pi\\sqrt{LC}} $.\n- **This is the same $ \\omega $ as the free LC oscillation of page 1** — same physics, met twice.\n- At resonance: $ Z = R $ (minimum), $ I = \\frac{V}{R} $ (maximum), $ \\phi = 0 $, circuit purely resistive.\n- $ V_L $ and $ V_C $ are equal and opposite there. Each may be huge; together they cancel.\n- $ R $ does **not** affect where resonance lies — only how tall and how narrow the peak is.\n- Below $ \\omega_r $ the circuit is capacitive; above it, inductive. Sweep the dial and it changes character.\n- Both $ L $ and $ C $ must be present. An L-R or C-R circuit cannot resonate at all.',
     }),
-    b('text', 14, {
+    b('text', 15, {
       markdown: 'Next: two circuits can share a resonant frequency and still be completely different tuners. What separates them is the sharpness of the peak — and there is a single number that measures it.',
     }),
-    b('inline_quiz', 15, {
+    b('inline_quiz', 16, {
       pass_threshold: 0.6,
       questions: [
         q('At resonance the impedance of a series LCR circuit is',
@@ -557,17 +578,26 @@ const p12 = {
       note: 'The cos φ is the whole difference from DC. Multiplying rms volts by rms amps and stopping there overstates the power by a factor of 1/cos φ.',
       highlight: true,
     }),
+    // REPLACED (not added). The prompt that stood here asked why an ideal
+    // inductor takes zero average power over a cycle — which is the same fact,
+    // in the same framing, as the reasoning_prompt on p6 ("energy is stored and
+    // returned in every quarter cycle"). The page already pays that debt off in
+    // prose, in its own opening curiosity_prompt and in the table below, so
+    // asking it a third time bought nothing. This one instead makes the reader
+    // USE P = V I cos φ, which is the only thing taught above it, on the single
+    // most commercially important consequence in the chapter — and it is
+    // answerable from block 4 alone, so it does not run ahead of the page.
     b('reasoning_prompt', 5, {
       reasoning_type: 'quantitative',
-      prompt: 'An ideal inductor is connected across an AC source. Over one complete cycle, the net energy delivered to it is',
+      prompt: 'A plant draws $ 80 $ A from a fixed supply voltage with $ \\cos\\phi = 0.50 $. Equipment is then added that brings $ \\cos\\phi $ up to $ 1.00 $, while the machines go on taking exactly the same real power as before. What happens to the power wasted as heat in the feeder cable?',
       options: [
-        'equal to the product of the rms values',
-        'zero, though current flows the whole time',
-        'half of what a resistor would have taken',
-        'negative, so the coil supplies energy',
+        'It falls to a quarter of what it was',
+        'It falls to a half of what it was',
+        'It is unchanged, as the real power is',
+        'It doubles, as extra equipment now draws current',
       ],
-      correct_index: 1,
-      reveal: '**Zero — and the current flows the entire time.**\n\nFor a pure inductor the current lags the voltage by a full $ 90^\\circ $, so $ \\phi = 90^\\circ $ and $ \\cos\\phi = 0 $. Whatever $ V_{rms} $ and $ I_{rms} $ may be, the product is multiplied by nothing.\n\nThe instantaneous picture explains it without any algebra. During one quarter of the cycle the product $ vi $ is positive and energy flows into the coil\'s magnetic field. During the next quarter $ vi $ is negative and exactly that much energy flows back out. Two quarters positive, two quarters negative, equal in size — so the cycle closes with nothing consumed.\n\n**This is the promise pages 6 and 7 made, now paid off.** Both said an ideal inductor and an ideal capacitor take zero average power; neither could say why, because the phase angle had not yet been put into a power formula. It has now.\n\n**The answer about the coil supplying energy is the interesting wrong one.** The coil really does return energy for half of every cycle — that part is right. But it can only ever return what it was given a moment earlier. Over a full cycle the account is exactly balanced, never in credit. A component that supplied net energy would be a source, and an inductor is not one.',
+      correct_index: 0,
+      reveal: '**It falls to a quarter — the line current halves, and heating goes as the square of the current.**\n\nTwo different powers are in play here, and keeping them apart is the whole skill.\n\n*The current, to begin with.* The machines need a fixed real power, and $ P = V_{rms}I_{rms}\\cos\\phi $ with both $ P $ and $ V_{rms} $ held fixed. So the current is whatever is left over:\n\n$ I_{rms} = \\frac{P}{V_{rms}\\cos\\phi} $\n\nDouble $ \\cos\\phi $ from $ 0.50 $ to $ 1.00 $ and the current halves, from $ 80 $ A to $ 40 $ A. The plant does exactly the same work while dragging half as much current down the cable.\n\n*Now the cable.* A cable is plain resistance, so what it wastes is $ I^{2}R $ — and it wastes it using the **total** current flowing in it, not some special part of that current. Half the current, squared, is a quarter of the heat:\n\n$ \\left(\\frac{40}{80}\\right)^{2} = \\frac{1}{4} $\n\nSo three quarters of the cable loss disappears, for no change whatsoever in what the machines deliver.\n\n**Answering "a half" means tracking the current correctly and then forgetting the square.** That square is where every saving in this part of the chapter comes from, so look for it before you commit to a number.\n\n**And "unchanged" is a true statement about the wrong quantity.** The real power delivered to the plant genuinely does not change — that is the entire point of the exercise, and any answer claiming the machines now get more is wrong for the same reason. The cable loss is a separate power altogether, set by the current the cable is forced to carry, and that current has just halved.\n\nThe worked example further down this page does all of this again for a real motor on a real cable, and then works out what has to be connected across the load to raise $ \\cos\\phi $ in the first place.',
       difficulty_level: 2,
     }),
     b('heading', 6, {

@@ -246,30 +246,44 @@ const p10 = {
         solution: 'Write it as $ C = 4\\pi\\varepsilon_0\\frac{ab}{b-a} = 4\\pi\\varepsilon_0\\frac{a}{1-a/b} $.\n\nAs $ b \\to \\infty $, the term $ a/b \\to 0 $ and the denominator becomes 1, leaving $ C = 4\\pi\\varepsilon_0a $.\n\nThat is exactly the isolated-sphere result from page 8 — which is a good check that the derivation is sound. It also shows in one line why moving the outer conductor **closer** (smaller $ b $) makes $ C $ larger.',
       },
     }),
-    b('heading', 3, {
+    b('worked_example', 3, {
+      label: 'putting numbers into the spherical formula',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A spherical capacitor has an inner sphere of radius $ 10 $ cm and a concentric outer shell of radius $ 12 $ cm, with vacuum in between.\n\n(a) Find its capacitance.\n(b) Now remove the outer shell to infinity. What is the capacitance of the inner sphere on its own, and by what factor did the shell increase it?',
+      solution: '**(a) Straight substitution — but in metres.**\n\n$ C = 4\\pi\\varepsilon_0\\,\\frac{ab}{b-a} = \\frac{1}{9\\times10^{9}}\\cdot\\frac{ab}{b-a} $\n\nwith $ a = 0.10 $ m and $ b = 0.12 $ m:\n\n$ \\frac{ab}{b-a} = \\frac{(0.10)(0.12)}{0.12 - 0.10} = \\frac{0.012}{0.020} = 0.60\\ \\text{m} $\n\n$ C = \\frac{0.60}{9\\times10^{9}} = 6.7\\times10^{-11}\\ \\text{F} = 67\\ \\text{pF} $\n\n**(b) The isolated sphere — the $ b \\to \\infty $ limit from the derivation above.**\n\n$ C = 4\\pi\\varepsilon_0 a = \\frac{0.10}{9\\times10^{9}} = 1.1\\times10^{-11}\\ \\text{F} = 11\\ \\text{pF} $\n\nSo the shell multiplied the capacitance by about **6**. And that factor is not a coincidence — divide the two formulas and everything cancels except\n\n$ \\frac{C_{\\text{with shell}}}{C_{\\text{alone}}} = \\frac{b}{b-a} = \\frac{0.12}{0.02} = 6 $\n\nBring the shell in to $ 11 $ cm and the factor becomes $ 11 $; bring it to $ 10.1 $ cm and it becomes $ 101 $. **A nearby earthed conductor is what makes a capacitor a capacitor** — that was the whole argument of page 9, now in numbers.\n\n**Watch-outs.** Work in metres; leaving the radii in centimetres inflates the answer a hundredfold. And notice how fragile $ b - a $ is: it is the difference of two similar numbers, so a $ 1 $ mm error in either radius shifts $ C $ by about $ 5\\% $.\n\n**Worth a moment.** A $ 24 $ cm ball of metal gives you $ 67 $ pF. A $ 1\\ \\mu\\text{F} $ capacitor that fits on your fingertip is roughly $ 15{,}000 $ times bigger than that. Geometry alone will never get you there — which is why real capacitors use a tiny gap and a dielectric.',
+    }),
+    b('heading', 4, {
       text: 'The cylindrical capacitor',
       level: 2,
       objective: 'Derive the capacitance per unit length of a coaxial cable.',
     }),
-    b('text', 4, {
+    b('text', 5, {
       markdown: 'Now an inner cylinder of radius $ a $ inside a coaxial outer cylinder of radius $ b $, both of length $ l $, with $ l \\gg b $ so the ends can be ignored.\n\nSame three steps. Gauss with a **coaxial cylinder** gives the field between them, using the linear charge density $ \\lambda = Q/l $:\n\n$ E = \\frac{\\lambda}{2\\pi\\varepsilon_0 r} $\n\nIntegrating from $ b $ in to $ a $:\n\n$ V = \\frac{\\lambda}{2\\pi\\varepsilon_0}\\ln\\!\\left(\\frac{b}{a}\\right) $\n\nand therefore',
     }),
-    b('latex_block', 5, {
+    b('latex_block', 6, {
       latex: 'C = \\frac{2\\pi\\varepsilon_0 l}{\\ln(b/a)}',
       label: 'Cylindrical (coaxial) capacitor',
       note: 'Proportional to length. Only the RATIO b/a matters, not the individual radii.',
       highlight: true,
     }),
-    b('text', 6, {
+    b('text', 7, {
       markdown: 'That $ \\ln(b/a) $ has a practical consequence worth noting: because a logarithm grows so slowly, the capacitance of a coaxial cable is remarkably insensitive to the exact radii. Double both radii together and $ C $ does not change at all — only their ratio counts.',
     }),
-    b('callout', 7, {
+    b('worked_example', 8, {
+      label: 'a length of coaxial cable',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A $ 2.0 $ m length of coaxial cable has an inner conductor of radius $ 1.0 $ mm inside an outer braid of radius $ 5.0 $ mm, with air between them.\n\n(a) Find its capacitance.\n(b) A manufacturer scales the whole cable up, doubling both radii. What happens to the answer?',
+      solution: '**(a) One substitution, once you have $ 2\\pi\\varepsilon_0 $ to hand.**\n\n$ 2\\pi\\varepsilon_0 = \\frac{1}{2\\times(9\\times10^{9})} = 5.6\\times10^{-11}\\ \\text{F/m} $\n\nOnly the **ratio** of the radii enters, so the millimetres do not even need converting here:\n\n$ \\ln\\!\\left(\\frac{b}{a}\\right) = \\ln\\!\\left(\\frac{5.0}{1.0}\\right) = \\ln 5 = 1.61 $\n\n$ C = \\frac{2\\pi\\varepsilon_0 l}{\\ln(b/a)} = \\frac{(5.6\\times10^{-11})(2.0)}{1.61} = 6.9\\times10^{-11}\\ \\text{F} = 69\\ \\text{pF} $\n\nThat is about $ 35 $ pF for every metre of cable — a number worth carrying, because cable capacitance is always quoted per metre.\n\n**(b) Nothing at all. It is still $ 69 $ pF.**\n\nDoubling both radii leaves $ b/a = 5 $ unchanged, and the formula sees nothing else. A cable as thick as your wrist and a cable as thin as a hair have the same capacitance per metre if their radius ratio matches.\n\n**Watch-out.** That is the **natural** logarithm, not $ \\log_{10} $. Using $ \\log_{10}5 = 0.70 $ instead of $ \\ln 5 = 1.61 $ would hand you $ 159 $ pF — more than twice the right answer, with nothing in the working to warn you.\n\n**One honest caveat.** A real cable is not air-filled; it is packed with a plastic insulator, which multiplies the answer by roughly $ 2 $ to $ 2.5 $. That is why the datasheet for a real coaxial cable says something nearer $ 70 $ pF per metre. The factor is the dielectric constant, and it gets a page of its own later in this chapter.',
+    }),
+    b('callout', 9, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'The cylindrical capacitor is not a textbook curiosity — it is the **coaxial cable** carrying your television or internet signal, and it is every high-voltage power cable buried under a city.\n\nThe engineering matters. In a cable, $ \\ln(b/a) $ sets the capacitance per metre, and that capacitance is what limits how fast a signal can change — too much of it and high frequencies are smoothed away. Cable designers pick the ratio $ b/a $ to hit a target impedance (50 Ω or 75 Ω) which depends on precisely this geometry.\n\nAnd the field is strongest at the **inner** conductor, since $ E \\propto 1/r $. So it is the inner conductor\'s insulation that fails first — which is why the inner core is never made too thin.',
       image_prompt: 'Clean scientific illustration on a near-black background (#0B0C0F). A cutaway view of a coaxial cable drawn in thin dim-grey line art at a slight angle: a solid warm amber inner core, a dark insulating layer, a woven cool-grey outer braid, and an outer jacket, each layer stepped back so all are visible. Short radial orange field arrows fill the insulating gap, drawn densely and brightly near the inner core and sparsely near the braid. Thin dashed grey radius lines labelled a and b in muted white. Generous dark space, orange accent, no clutter.',
     }),
-    b('table', 8, {
+    b('table', 10, {
       caption: 'The three standard capacitors. Same three steps, three geometries.',
       headers: ['Type', 'Capacitance', 'Note'],
       rows: [
@@ -278,7 +292,7 @@ const p10 = {
         ['Cylindrical', '$ \\frac{2\\pi\\varepsilon_0 l}{\\ln(b/a)} $', 'depends on the ratio $ b/a $ only'],
       ],
     }),
-    b('reasoning_prompt', 9, {
+    b('reasoning_prompt', 11, {
       reasoning_type: 'analogical',
       prompt: 'In a spherical capacitor the two radii $ a $ and $ b $ are made very close, so that $ b - a = d $ is tiny. What does the capacitance formula become?',
       options: [
@@ -290,7 +304,7 @@ const p10 = {
       reveal: '**It becomes the parallel-plate formula — as it must.**\n\nWith $ b - a = d $ very small, $ a $ and $ b $ are nearly equal, so $ ab \\approx a^{2} $:\n\n$ C = 4\\pi\\varepsilon_0\\frac{ab}{b-a} \\approx \\frac{4\\pi\\varepsilon_0 a^{2}}{d} = \\frac{\\varepsilon_0(4\\pi a^{2})}{d} = \\frac{\\varepsilon_0 A}{d} $\n\nsince $ 4\\pi a^{2} $ is exactly the surface area of the sphere.\n\nThis is worth more than the algebra. **Any two conductors separated by a gap small compared with their size behave as a parallel-plate capacitor**, whatever their shape — because on that scale every surface looks flat. It is why the parallel-plate formula is so widely useful, and it is a good habit to check a new formula against a limit you already trust.',
       difficulty_level: 3,
     }),
-    b('image', 10, {
+    b('image', 12, {
       src: '',
       alt: 'Cross-sections of a spherical capacitor and a cylindrical capacitor with radii a and b marked',
       width: 'two_third',
@@ -298,10 +312,10 @@ const p10 = {
       caption: 'Two concentric spheres, two coaxial cylinders — and radial fields in both.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), two panels side by side separated by a thin grey rule. Left panel: two concentric circles in dim grey, the inner one carrying warm amber plus signs and the outer one cool blue minus signs, with short radial orange arrows in the gap between them and thin dashed grey radius lines labelled a and b. Right panel: two concentric circles of the same style representing a coaxial cable seen end-on, with the same radial orange arrows and dashed radius labels, plus a faint perspective outline suggesting length. Muted white minimal labels, generous dark space.',
     }),
-    b('text', 11, {
+    b('text', 13, {
       markdown: 'Next: real circuits contain several capacitors at once. Two rules cover every combination — and both come from asking what is shared.',
     }),
-    b('inline_quiz', 12, {
+    b('inline_quiz', 14, {
       pass_threshold: 0.6,
       questions: [
         q('The capacitance of a spherical capacitor with inner radius $ a $ and outer radius $ b $ is',

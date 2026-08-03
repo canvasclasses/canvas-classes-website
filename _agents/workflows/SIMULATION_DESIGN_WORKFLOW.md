@@ -21,7 +21,7 @@ BACKGROUND HIERARCHY    #0d1117 → #0B0F15 → #151E32
 PRIMARY ACCENT (fg)     violet-300 #c4b5fd   ← light tier ONLY on the dark bg
 SECONDARY ACCENT (fg)   sky-300    #7dd3fc   ← at most ONE, for a 2nd axis
 SUCCESS / OK            #6ee7b7      ERROR / BAD   #fca5a5   (pass/fail only)
-TEXT                    #e2e8f0 → #94a3b8 → #64748b → #475569
+TEXT                    #e2e8f0 → #94a3b8 → #8b99ad → #8493a8   ← ALL FOUR pass WCAG AA
 ATOM: Carbon            fill #2d3a5a  stroke #6366f1   (viz-internal, not fg text)
 ATOM: Oxygen            fill #d64545  stroke #991b1b
 ATOM: Hydrogen          fill #0a2218  stroke #34d399
@@ -131,14 +131,14 @@ ATOM: Functional group  fill #8b5cf6  stroke #5b21b6
 | Element | Tailwind class | Additional style |
 |---|---|---|
 | Simulator title (e.g. "Biomolecules Lab") | `text-2xl md:text-3xl font-black tracking-tight text-white` | Accent word in `color:#c4b5fd` (light-tier ACCENT — NOT the old dark `#7c3aed`) |
-| Subtitle / descriptor | `text-[11px] font-bold uppercase tracking-widest` | `color:#475569` |
+| Subtitle / descriptor | `text-[11px] font-bold uppercase tracking-widest` | `color:#8493a8` |
 | Section heading (sidebar) | `text-xl font-black uppercase tracking-tighter` | `color:#e2e8f0` |
 | Phase concept heading | `text-lg font-bold leading-snug text-white` | — |
 | Step / rule label | `text-xs font-semibold uppercase tracking-widest` | accent color per phase |
 | Body / explanation text | `text-base leading-snug` | `color:#94a3b8` |
-| Metadata / badge text | `text-[10px] font-semibold uppercase tracking-widest` | `color:#64748b` |
+| Metadata / badge text | `text-[10px] font-semibold uppercase tracking-widest` | `color:#8b99ad` |
 | StepBar pill label | `text-[11px] font-black uppercase tracking-wider` | — |
-| Sub-label under elements | `text-[10px]` | `color:#475569` |
+| Sub-label under elements | `text-[10px]` | `color:#8493a8` |
 
 **Rule:** Never go below `text-[10px]`. Never use `text-[9px]` for anything a student must read — only decorative labels.
 
@@ -174,8 +174,8 @@ A simulator uses **ONE primary accent** plus **AT MOST ONE secondary accent**, a
 |---|---|
 | Primary text | `#e2e8f0` / `text-white` |
 | Secondary text | `#94a3b8` |
-| Muted / disabled | `#475569` |
-| Ghost / barely-there | `#64748b` |
+| Muted / disabled | `#8493a8` | ← **AA floor. Nothing in a sim may be dimmer than this and still be text.** |
+| Ghost / micro-label | `#8b99ad` |
 | Divider line | `rgba(255,255,255,0.05)` |
 | Card border | `rgba(255,255,255,0.07)` |
 | Interactive border (active) | `rgba(129,140,248,0.4)` |
@@ -207,11 +207,11 @@ A simulator uses **ONE primary accent** plus **AT MOST ONE secondary accent**, a
     <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white">
       [Subject] <span style={{color:'#c4b5fd'}}>Lab</span>
     </h2>
-    <p className="text-[11px] font-semibold uppercase tracking-widest mt-0.5" style={{color:'#475569'}}>
+    <p className="text-[11px] font-semibold uppercase tracking-widest mt-0.5" style={{color:'#8493a8'}}>
       [Descriptor — e.g. "Interactive Glucose Explorer"]
     </p>
   </div>
-  <div className="text-[10px] font-semibold uppercase tracking-widest pt-1" style={{color:'#64748b'}}>
+  <div className="text-[10px] font-semibold uppercase tracking-widest pt-1" style={{color:'#8b99ad'}}>
     [Current molecule / topic badge]
   </div>
 </div>
@@ -277,7 +277,7 @@ A simulator uses **ONE primary accent** plus **AT MOST ONE secondary accent**, a
 <button onClick={()=>setActive(v=>!v)}
   className="self-start text-xs font-semibold transition-colors pb-0.5"
   style={{
-    color: active ? '#fbbf24' : '#475569',
+    color: active ? '#fbbf24' : '#8493a8',
     borderBottom: `1px solid ${active ? 'rgba(251,191,36,0.5)' : 'rgba(255,255,255,0.1)'}`,
     background:'none', outline:'none',
   }}>
@@ -295,7 +295,7 @@ A simulator uses **ONE primary accent** plus **AT MOST ONE secondary accent**, a
     background:'none', outline:'none',
   }}>
   <div className="text-xs font-black" style={{color:accentColor}}>{label}</div>
-  <div className="text-[10px]" style={{color:'#475569'}}>{sublabel}</div>
+  <div className="text-[10px]" style={{color:'#8493a8'}}>{sublabel}</div>
 </button>
 ```
 

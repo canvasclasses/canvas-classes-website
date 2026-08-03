@@ -293,6 +293,7 @@ export default function FbdStudio({ block }: { block: MechanicsBenchBlock }) {
 
       {stage === 'compose' && (
         <ComposeStage scene={scene} editable={editable}
+          focusBodyId={task?.body ?? archetype?.defaultBody}
           onChange={setScene} onReset={resetAll} />
       )}
 

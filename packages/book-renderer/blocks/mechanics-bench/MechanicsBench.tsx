@@ -20,6 +20,7 @@ import type { MechanicsBenchBlock } from '@canvas/data/types/books';
 import { SIM_SURFACE, TEXT, BORDER, TYPE } from '../simulations/_shared';
 import FbdStudio from './fbd/FbdStudio';
 import PulleyLab from './pulley/PulleyLab';
+import Phase2Bench from './energy/EnergyBench';
 
 export default function MechanicsBench({ block }: { block: MechanicsBenchBlock }) {
   switch (block.mode) {
@@ -41,6 +42,22 @@ export default function MechanicsBench({ block }: { block: MechanicsBenchBlock }
 
     case 'fbd':
       return <FbdStudio block={block} />;
+
+    // Phase-2 mechanics: energy/collisions/orbits and rotation. One component
+    // serves both — `Phase2Bench` looks the id up in ENERGY_ARCHETYPES then
+    // ROTATION_ARCHETYPES, and verify-mechanics-phase2.mjs asserts the ids are
+    // unique across the two. It takes (archetype, params) rather than the block
+    // because a Phase-2 archetype's buildScene returns a Phase2Spec, not a
+    // Scene — the differing return type is what makes an accidental merge into
+    // MECHANICS_ARCHETYPES a compile error instead of a silent one.
+    case 'energy':
+    case 'rotation':
+      return (
+        <Phase2Bench
+          archetype={block.archetype ?? ''}
+          params={block.params}
+        />
+      );
 
     default:
       // `mode` is a three-way union, but blocks are Mixed-stored in Mongo, so a

@@ -37,28 +37,35 @@ const p10 = {
     b('text', 3, {
       markdown: 'The direction convention is worth fixing right now, because it is the source of endless sign errors:\n\n> $ \\vec{p} $ points from $ -q $ **to** $ +q $.\n\nBe warned: chemistry textbooks often draw the arrow the other way, from positive to negative, to show which way the electrons shifted. Physics uses $ -q \\to +q $. In this book, and in your exam, use the physics convention.\n\nWhy bother compressing two charges into one vector? Because $ \\vec{p} $ turns out to be the *only* thing about the dipole that the outside world can measure. Two very different pairs of charges with the same $ p $ produce identical fields far away, and feel identical torques. **The dipole moment is the dipole**, as far as the physics is concerned.',
     }),
-    b('reasoning_prompt', 4, {
+    b('worked_example', 4, {
+      label: 'putting a number on p',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'Two point charges, $ +2.0\\times10^{-7} $ C and $ -2.0\\times10^{-7} $ C, are held $ 2.0 $ cm apart — the negative one on the left, the positive one on the right. Find the magnitude and the direction of the dipole moment. Then say what happens to it if the separation is halved while the charges stay the same.',
+      solution: '**Magnitude.** The formula is $ p = q\\,(2a) $, and the first thing to be careful about is what $ q $ means here. It is the size of **one** of the charges, not the two added together. Adding them would give zero, which is exactly the information a dipole moment is built to replace.\n\nConvert the separation before substituting — putting centimetres into a formula that wants metres is the most common way to lose this mark:\n\n$ 2a = 2.0\\ \\text{cm} = 2.0\\times10^{-2}\\ \\text{m} $\n\n$ p = q\\,(2a) = (2.0\\times10^{-7})(2.0\\times10^{-2}) = 4.0\\times10^{-9}\\ \\text{C·m} $\n\n**Direction.** From the negative charge to the positive one — so here $ \\vec{p} $ points to the **right**, along the line joining them. Nothing about the numbers decides this; the convention does.\n\n**Halving the separation.** With $ q $ fixed, $ p $ is directly proportional to $ 2a $. Halve the separation and the moment halves:\n\n$ p\' = 2.0\\times10^{-9}\\ \\text{C·m} $, still pointing to the right.\n\n**Is that a big dipole?** Enormously, by molecular standards. A water molecule\'s dipole moment is about $ 6\\times10^{-30} $ C·m, so this laboratory pair is close to $ 10^{21} $ times stronger. That gap is worth carrying around: the dipoles nature builds are tiny, and the ones we build on a bench are not.\n\nKeep this dipole in mind — $ p = 4.0\\times10^{-9} $ C·m is the one we put a field around on the next page.',
+    }),
+    b('reasoning_prompt', 5, {
       reasoning_type: 'quantitative',
       prompt: 'Dipole A is $ \\pm 2q $ separated by $ d $. Dipole B is $ \\pm q $ separated by $ 2d $. How do their dipole moments compare?',
       options: ['They are equal', 'A is twice B', 'B is twice A', 'A is four times B'],
       reveal: '**They are equal** — both have $ p = 2qd $.\n\nAnd because far-field behaviour depends only on $ p $, a distant observer could not tell these two apart by any measurement. The individual charge and the individual separation are invisible from outside; only their product survives.\n\nThis is exactly why the **ideal dipole** (or "point dipole") is a useful idea: let $ 2a \\to 0 $ and $ q \\to \\infty $ keeping $ p $ fixed. All the approximate formulas on the next page become exact, and nothing observable is lost.',
       difficulty_level: 2,
     }),
-    b('heading', 5, {
+    b('heading', 6, {
       text: 'Where dipoles come from',
       level: 2,
       objective: 'Distinguish a permanent dipole from an induced one, and give an example of each.',
     }),
-    b('text', 6, {
+    b('text', 7, {
       markdown: '**Permanent dipoles** exist because of how a molecule is built. In HCl, water or HF, one atom pulls the shared electrons harder than the other, so the centres of positive and negative charge never coincide. These molecules are called **polar**, and they have a dipole moment even with no field around.\n\n**Induced dipoles** are created by a field. Put a neutral atom in a field and the electron cloud shifts slightly one way while the nucleus shifts the other. The atom becomes a small dipole *while the field is on*, and stops being one when the field is removed.\n\nYou have already met the induced kind — on page 2, when the comb picked up neutral paper. Every paper molecule became a tiny induced dipole, and every one of them was pulled towards the comb.',
     }),
-    b('callout', 7, {
+    b('callout', 8, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'A **microwave oven** works by shouting at water\'s dipole moment.\n\nThe oven fills its cavity with an electric field that reverses direction about 2.45 billion times a second. Every water molecule in the food is a permanent dipole, so it tries to turn and line up with the field — and then the field flips, and it has to turn back.\n\nThe molecules cannot keep up. They jostle their neighbours as they twist, and that jostling *is* heat. Which is why a microwave heats a bowl of soup beautifully and a dry ceramic plate barely at all: no water, no dipoles, no twisting.',
       image_prompt: 'Clean scientific illustration on a near-black background (#0B0C0F). Left: several V-shaped water molecules drawn as three connected circles — a larger cool-blue oxygen and two smaller warm-amber hydrogens — each carrying a small orange dipole arrow, all pointing in random directions. Right: the same molecules with their arrows aligned along a set of horizontal orange field arrows, with small curved motion lines showing them twisting. A dim grey oven cavity outline frames both. Muted white minimal labels, generous dark space, orange and blue accents only.',
     }),
-    b('image', 8, {
+    b('image', 9, {
       src: '',
       alt: 'A dipole shown as two opposite charges separated by 2a with the dipole moment vector pointing from negative to positive',
       width: 'half',
@@ -66,10 +73,10 @@ const p10 = {
       caption: 'The dipole moment points from the negative charge to the positive charge. Chemistry draws it the other way — physics does not.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F). Two spheres on a horizontal line: a cool blue one marked minus q at left, a warm amber one marked plus q at right, with a thin dim-grey dimension line between them labelled 2a. A bold orange arrow runs from the blue sphere to the amber sphere, labelled p in muted white. Generous dark space, thin lines, no clutter.',
     }),
-    b('text', 9, {
+    b('text', 10, {
       markdown: 'Next: two charges, two fields, and a subtraction that almost — but not quite — cancels.',
     }),
-    b('inline_quiz', 10, {
+    b('inline_quiz', 11, {
       pass_threshold: 0.6,
       questions: [
         q('The electric dipole moment vector points',
@@ -108,38 +115,35 @@ const p11 = {
       hint: 'On the axis, one charge is clearly nearer than the other. On the bisector, both are the same distance away.',
       reveal: 'The axial field is **twice** the equatorial field. Every time, at any distance, for any dipole.\n\nThe reason is in the geometry. On the **axis** the near charge is closer than the far charge, so its field wins and the two partly reinforce along the axis. On the **bisector** both charges are equidistant, so their fields are equal in size — and when you add them, everything cancels except a component antiparallel to $ \\vec{p} $, which is smaller.\n\nThat factor of 2 is one of the most heavily used numbers in this chapter.',
     }),
-    b('text', 1, {
-      markdown: 'Both results come from the same move: write the field of each charge, and subtract. The algebra is a page of it; the results are two lines. Here is what comes out.',
-    }),
-    b('heading', 2, {
+    b('heading', 1, {
       text: 'On the axis (end-on)',
       level: 2,
       objective: 'State the axial field of a dipole exactly and in the far-field limit, with its direction.',
     }),
-    b('text', 3, {
-      markdown: 'Stand a distance $ r $ from the centre of the dipole, on the line through both charges. The near charge is at $ r-a $ and the far one at $ r+a $, so their fields differ. Subtracting:\n\n$ E_{\\text{axis}} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{2pr}{(r^{2}-a^{2})^{2}} $\n\nand for a point far compared with the dipole size ($ r \\gg a $), which is nearly always the case:',
+    b('text', 2, {
+      markdown: 'Both of this page\'s results — this one and the bisector one below — come from the same move: write down the field of each charge, and subtract. The algebra runs to a page; each result is a single line. Here is what comes out.\n\nStand a distance $ r $ from the centre of the dipole, on the line through both charges. The near charge is at $ r-a $ and the far one at $ r+a $, so their fields differ. Subtracting:\n\n$ E_{\\text{axis}} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{2pr}{(r^{2}-a^{2})^{2}} $\n\nand for a point far compared with the dipole size ($ r \\gg a $), which is nearly always the case:',
     }),
-    b('latex_block', 4, {
+    b('latex_block', 3, {
       latex: 'E_{\\text{axis}} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{2p}{r^{3}}',
       label: 'Axial field of a short dipole',
       note: 'Direction: PARALLEL to p — that is, along the dipole moment.',
       highlight: true,
     }),
-    b('heading', 5, {
+    b('heading', 4, {
       text: 'On the perpendicular bisector (broadside-on)',
       level: 2,
       objective: 'State the equatorial field and explain why it points opposite to the dipole moment.',
     }),
-    b('text', 6, {
+    b('text', 5, {
       markdown: 'Now stand a distance $ r $ from the centre, at right angles to the dipole. Both charges are the same distance $ \\sqrt{r^{2}+a^{2}} $ away, so their fields are **equal in magnitude**.\n\nResolve each into a component along $ \\vec{p} $ and one perpendicular to it. The perpendicular components cancel exactly. The components along $ \\vec{p} $ survive — and both point from $ +q $ towards $ -q $, which is **backwards** along $ \\vec{p} $. So:\n\n$ E_{\\perp} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{p}{(r^{2}+a^{2})^{3/2}} $\n\nand for $ r \\gg a $:',
     }),
-    b('latex_block', 7, {
+    b('latex_block', 6, {
       latex: 'E_{\\perp} = \\frac{1}{4\\pi\\varepsilon_0}\\cdot\\frac{p}{r^{3}}',
       label: 'Equatorial field of a short dipole',
       note: 'Direction: ANTIPARALLEL to p — opposite to the dipole moment.',
       highlight: true,
     }),
-    b('table', 8, {
+    b('table', 7, {
       caption: 'The whole dipole field, side by side. Same distance, factor of two, opposite directions.',
       headers: ['', 'Axial (end-on)', 'Equatorial (broadside-on)'],
       rows: [
@@ -148,6 +152,13 @@ const p11 = {
         ['Direction', 'parallel to $ \\vec{p} $', 'antiparallel to $ \\vec{p} $'],
         ['Ratio at equal $ r $', '$ E_{\\text{axis}} = 2E_{\\perp} $', '—'],
       ],
+    }),
+    b('worked_example', 8, {
+      label: 'both fields of the same dipole',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'Take the dipole from the last page: $ p = 4.0\\times10^{-9} $ C·m, made of $ \\pm 2.0\\times10^{-7} $ C held $ 2.0 $ cm apart. Find the field it produces at a distance $ r = 0.10 $ m from its centre, first on the axis and then on the perpendicular bisector. Take $ k = 9\\times10^{9} $ SI units.',
+      solution: 'Do the common part once. Both formulas contain $ \\frac{kp}{r^{3}} $, so work that out before anything else:\n\n$ kp = (9\\times10^{9})(4.0\\times10^{-9}) = 36 $\n\n$ r^{3} = (0.10)^{3} = 1.0\\times10^{-3}\\ \\text{m}^{3} $\n\n$ \\frac{kp}{r^{3}} = \\frac{36}{1.0\\times10^{-3}} = 3.6\\times10^{4} $\n\n**On the axis.** The axial formula carries a factor of 2:\n\n$ E_{\\text{axis}} = \\frac{2kp}{r^{3}} = 2(3.6\\times10^{4}) = 7.2\\times10^{4}\\ \\text{N/C} $, pointing **along** $ \\vec{p} $.\n\n**On the perpendicular bisector.** Same $ \\frac{kp}{r^{3}} $, no factor of 2:\n\n$ E_{\\perp} = \\frac{kp}{r^{3}} = 3.6\\times10^{4}\\ \\text{N/C} $, pointing **against** $ \\vec{p} $.\n\n**Now look at what you produced.** $ 7.2\\times10^{4} $ and $ 3.6\\times10^{4} $. The factor of 2 you were told about at the top of the page is no longer a claim — it is the ratio of two numbers you worked out yourself, at the same distance from the same dipole. And the two fields are not merely different sizes, they point in opposite directions.\n\n**One honest caveat.** Here $ a = 1.0 $ cm and $ r = 10 $ cm, so $ r $ is only ten times $ a $ — not hugely bigger. Feeding the same numbers into the exact axial expression $ \\frac{2kpr}{(r^{2}-a^{2})^{2}} $ gives about $ 7.35\\times10^{4} $ N/C, roughly $ 2\\% $ more than the short-dipole answer. That is the size of the error you accept every time you use the $ 1/r^{3} $ forms, and it shrinks fast as you move away. Exams want the short-dipole answer unless they say otherwise.',
     }),
     b('reasoning_prompt', 9, {
       reasoning_type: 'quantitative',
@@ -291,14 +302,14 @@ const p12 = {
     b('text', 13, {
       markdown: '**Work done in turning it.** Because $ U $ depends only on the angle, the work done by an external agent rotating the dipole from $ \\theta_1 $ to $ \\theta_2 $ is just the change in $ U $:\n\n$ W_{\\text{ext}} = U(\\theta_2) - U(\\theta_1) = pE\\left(\\cos\\theta_1 - \\cos\\theta_2\\right) $\n\nThe work done by the **field** is the negative of that. Two standard cases worth having ready:\n\n- $ 0^\\circ \\to 180^\\circ $ (a complete flip): $ W_{\\text{ext}} = pE(1-(-1)) = 2pE $ — the largest possible.\n- $ 0^\\circ \\to 90^\\circ $: $ W_{\\text{ext}} = pE(1-0) = pE $.',
     }),
-    b('worked_example', 15, {
+    b('worked_example', 14, {
       label: 'turning a dipole, twice',
       variant: 'solved_example',
       reveal_mode: 'tap_to_reveal',
       problem: 'An electric dipole of moment $ p = 4 \\times 10^{-9} $ C·m sits in a uniform field $ E = 5 \\times 10^{4} $ N/C. Find (a) the maximum torque it can experience, and (b) the work needed to rotate it from the aligned position through $ 180^\\circ $.',
       solution: '**(a) Maximum torque.** $ \\tau = pE\\sin\\theta $ is largest at $ \\theta = 90^\\circ $, where $ \\sin\\theta = 1 $:\n\n$ \\tau_{\\max} = pE = (4\\times10^{-9})(5\\times10^{4}) = 2\\times10^{-4}\\ \\text{N·m} $\n\n**(b) Work for a complete flip.** From $ \\theta_1 = 0^\\circ $ to $ \\theta_2 = 180^\\circ $:\n\n$ W_{\\text{ext}} = pE(\\cos 0^\\circ - \\cos 180^\\circ) = pE(1-(-1)) = 2pE $\n\n$ W_{\\text{ext}} = 2(2\\times10^{-4}) = 4\\times10^{-4}\\ \\text{J} $\n\n**Reading the answer.** Both numbers come out of the same product $ pE $, which is worth noticing: $ pE $ is the natural energy scale of a dipole in a field, and every result on this page is some small multiple of it.\n\nAlso note the sign logic. Going from $ 0^\\circ $ to $ 180^\\circ $ moves the dipole from minimum energy to maximum energy, so the external work must be **positive** — you have to push it uphill the whole way. If a calculation ever hands you a negative answer for this particular rotation, you have swapped $ \\theta_1 $ and $ \\theta_2 $.',
     }),
-    b('image', 16, {
+    b('image', 15, {
       src: '',
       alt: 'Dipole in a uniform field at an angle, showing the two opposite forces forming a couple, plus the stable and unstable orientations',
       width: 'full',
@@ -306,10 +317,10 @@ const p12 = {
       caption: 'Equal and opposite forces on different lines make a couple: no push, pure twist.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), three panels side by side separated by thin grey rules, with evenly spaced horizontal orange field-line arrows running left to right across all three. Panel 1: a dipole tilted at about 45 degrees to the field — a cool blue minus sphere and a warm amber plus sphere joined by a thin grey rod with an orange p arrow along it; a bold orange force arrow points right at the plus sphere and left at the minus sphere, with a curved amber arrow showing the resulting rotation. Panel 2: the dipole lying horizontally with p pointing right along the field, labelled stable in muted white. Panel 3: the dipole horizontal with p pointing left against the field, labelled unstable. Generous dark space, orange and blue accents only, no clutter.',
     }),
-    b('text', 17, {
+    b('text', 16, {
       markdown: 'Next: a completely different way to think about fields — one that turns some very hard integrals into a single line of symmetry.',
     }),
-    b('inline_quiz', 18, {
+    b('inline_quiz', 17, {
       pass_threshold: 0.6,
       questions: [
         q('A dipole is placed in a **non-uniform** electric field. It experiences',

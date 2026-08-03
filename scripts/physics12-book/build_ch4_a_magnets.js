@@ -37,14 +37,38 @@ const p1 = {
       markdown: 'Magnetic poles come in pairs, always. And the reason is that a magnet is not really made of poles at all — it is made of **circulating currents**, at the atomic scale. A current loop has two faces, and you cannot have a loop with only one face.\n\nThat is the honest picture. But "poles" is a convenient bookkeeping device, so we keep it — as long as we remember that the north pole of a bar magnet is a *region*, not a particle.\n\nThe basic behaviour is the same as for charges:\n\n> **Like poles repel, unlike poles attract.**\n\nAnd the field is defined by what it does to a moving charge, which Chapter 5 will make precise. For now, $ \\vec{B} $ is the **magnetic field** (also called magnetic induction or flux density), measured in **tesla** (T).',
     }),
     b('heading', 2, {
+      text: 'The force between two poles',
+      level: 2,
+      objective: 'Use the pole-force law to find the force between two poles, and say when it is safe to use.',
+    }),
+    b('text', 3, {
+      markdown: 'Coulomb did not stop at charges. Using the same torsion balance, in the same year, he measured the force between two magnetic **poles** — and found a law of exactly the same shape.\n\nTo write it down we need a number for how strong a pole is. Call it the **pole strength** $ q_m $, measured in ampere-metre (A·m). Two poles a distance $ r $ apart then push or pull on each other with a force',
+    }),
+    b('latex_block', 4, {
+      latex: 'F = \\frac{\\mu_0}{4\\pi}\\cdot\\frac{q_{m1}q_{m2}}{r^{2}}',
+      label: 'The force between two magnetic poles',
+      note: 'Pole strengths in A·m, r in metres, F in newtons. The constant μ₀/4π is exactly 10⁻⁷ in SI units — far kinder than the electric one.',
+      highlight: true,
+    }),
+    b('text', 5, {
+      markdown: 'Set it beside Coulomb\'s law and the correspondence is complete: $ q \\to q_m $, and $ \\frac{1}{4\\pi\\varepsilon_0} \\to \\frac{\\mu_0}{4\\pi} $. Like poles repel, unlike poles attract, and the strength dies away as the inverse square of the distance.\n\n**But now remember what this page is about.** You cannot bring one pole near another pole, because neither of them comes alone. The far end of each magnet carries a pole too, and it pulls as well.\n\nSo the formula above is an **approximation**. It is a good one only when both magnets are long compared with the gap between them — long enough that the far poles sit much further away and contribute much less. For two short magnets held close, the honest calculation has to add up all four pole pairs, and this one-line answer is simply wrong.',
+    }),
+    b('worked_example', 6, {
+      label: 'the force between two poles',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'The north pole of a long bar magnet, of pole strength $ 20 $ A·m, is held $ 5.0 $ cm from the north pole of a second long bar magnet, of pole strength $ 10 $ A·m. The far ends of both magnets are well away from the gap. (a) Find the force between the two poles. (b) What does it become if the gap is doubled to $ 10 $ cm? Take $ \\frac{\\mu_0}{4\\pi} = 10^{-7} $ SI units.',
+      solution: '**(a) Straight into the formula.**\n\n$ F = \\frac{\\mu_0}{4\\pi}\\cdot\\frac{q_{m1}q_{m2}}{r^{2}} = (10^{-7})\\cdot\\frac{(20)(10)}{(0.050)^{2}} $\n\n$ = (10^{-7})\\cdot\\frac{200}{2.5\\times10^{-3}} = (10^{-7})(8.0\\times10^{4}) $\n\n$ F = 8.0\\times10^{-3}\\ \\text{N} = 8.0\\ \\text{mN} $\n\nBoth poles are north, so this is a **repulsion**.\n\n**(b) Double the gap.**\n\nThe law is inverse-square, so doubling $ r $ divides the force by $ 2^{2} = 4 $:\n\n$ F = \\frac{8.0}{4} = 2.0\\ \\text{mN} $\n\nNo need to redo the arithmetic — read the ratio straight off the power of $ r $.\n\n**A sense of scale.** $ 8 $ mN is about the weight of a $ 0.8 $ gram object — a paper clip. That matches what your hands tell you: two magnets push each other apart noticeably at a few centimetres, and the push fades fast as you pull them apart.\n\n**Why the question said "long" twice.** Each magnet has a south pole at its far end, and those two attract. The single-pair formula ignores them safely only because they are much further away. Hold two *short* magnets $ 5 $ cm apart and this answer would be badly wrong.\n\n**Watch the conversion.** $ 5.0\\ \\text{cm} = 0.050\\ \\text{m} $, and it is **squared**. Leaving it in centimetres would be wrong by a factor of $ 10^{4} $.',
+    }),
+    b('heading', 7, {
       text: 'Field lines that close on themselves',
       level: 2,
       objective: 'State the rules for magnetic field lines and say which one differs from the electric case.',
     }),
-    b('text', 3, {
+    b('text', 8, {
       markdown: 'Magnetic field lines follow most of the same rules as electric ones — tangent gives the direction, density gives the strength, they never cross. But one rule is completely different, and it is the important one:\n\n> **Magnetic field lines always form closed loops.** They have no beginning and no end.\n\nOutside a bar magnet they run from N to S. Inside the magnet they run from S back to N, completing the loop. So a magnetic field line is a continuous circuit, threading through the magnet and out again.\n\nCompare that with Chapter 1: **electric** field lines start on positive charges and end on negative ones, and can never close. They can do that because isolated charges exist. Magnetic lines close because isolated poles do not.',
     }),
-    b('comparison_card', 4, {
+    b('comparison_card', 9, {
       title: 'Electric field lines against magnetic field lines',
       columns: [
         {
@@ -69,26 +93,26 @@ const p1 = {
         },
       ],
     }),
-    b('text', 5, {
+    b('text', 10, {
       markdown: 'That last row is worth stating on its own, because it is one of the four Maxwell equations:',
     }),
-    b('latex_block', 6, {
+    b('latex_block', 11, {
       latex: '\\oint_S \\vec{B}\\cdot d\\vec{S} = 0 \\qquad \\text{for every closed surface}',
       label: "Gauss's law for magnetism",
       note: 'Not "q_in/ε₀ with q_in = 0 by accident" — it is exactly zero always, because there is no magnetic charge to enclose.',
       highlight: true,
     }),
-    b('text', 7, {
+    b('text', 12, {
       markdown: 'Read that against the electric version. There, the flux told you how much charge was inside. Here it tells you nothing, because there is nothing to tell — every line that enters a closed surface must leave again, since it has nowhere to terminate.\n\nSo enclose a whole bar magnet, or just its north end, or half of it: the net magnetic flux is zero every time.',
     }),
-    b('reasoning_prompt', 8, {
+    b('reasoning_prompt', 13, {
       reasoning_type: 'spatial',
       prompt: 'A closed surface is drawn so that it encloses **only the north pole** of a bar magnet, cutting through the middle of the magnet. What is the net magnetic flux through it?',
       options: ['Zero', 'Positive, since only the north pole is inside', 'Negative', 'It depends on the pole strength'],
       reveal: '**Zero.**\n\nIt is tempting to think that enclosing "only a north pole" should give an outward flux, exactly as enclosing a positive charge gives an outward electric flux. But the analogy breaks here, and the reason is the whole theme of this page.\n\nThe field lines emerging from the north end outside the magnet are the **same lines** that pass back through the magnet\'s middle. Your surface cuts through the magnet, so those lines enter through the cut and leave through the north end. Everything that goes out came in.\n\n**There is no such thing as "enclosing only a pole" in the way you can enclose only a charge.** That is what $ \\oint\\vec{B}\\cdot d\\vec{S} = 0 $ is telling you.',
       difficulty_level: 3,
     }),
-    b('image', 9, {
+    b('image', 14, {
       src: '',
       alt: 'Field lines of a bar magnet forming closed loops through the magnet, beside the same magnet cut in two',
       width: 'full',
@@ -96,16 +120,16 @@ const p1 = {
       caption: 'The lines run N to S outside and S to N inside, closing the loop. Cut the magnet and each piece is complete.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), two panels side by side separated by a thin grey rule. Left panel: a horizontal bar magnet with its left half cool blue marked S and its right half warm amber marked N, surrounded by smooth dim-orange field lines that leave the amber end, curve round outside and re-enter the blue end, with a few lines shown continuing straight through the inside of the bar from blue to amber so the loops are visibly closed. Right panel: the same magnet drawn cut into two pieces with a small gap between them, each piece now showing its own blue S end and amber N end, with its own set of closed field lines. Muted white minimal labels, generous dark space, orange and blue accents only.',
     }),
-    b('callout', 10, {
+    b('callout', 15, {
       variant: 'real_world',
       title: 'Real-World Application',
       markdown: 'The closed-loop rule is why a **magnetic shield** works differently from an electric one.\n\nChapter 1 shielded a region from an electric field by surrounding it with a conductor, which cancelled the field to exactly zero. You cannot do that magnetically, because there is no magnetic charge to rearrange.\n\nInstead, a magnetic shield **redirects**. Wrap the region in a material of very high permeability — **mu-metal**, a nickel-iron alloy — and the field lines strongly prefer to travel through the metal rather than the air inside. They are channelled round the cavity like water round a rock.\n\nSo an electric shield blocks; a magnetic shield diverts. It is why the shielding cans inside sensitive instruments are made of mu-metal and not copper, and why the field inside is greatly reduced but never quite zero.',
       image_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F). A vertical cross-section showing a thick ring of grey metal labelled mu-metal enclosing an empty circular cavity. Horizontal dim-orange field lines approach from the left, and as they meet the ring they bend sharply to run around inside the metal wall, crowding densely within it, then rejoin and continue horizontally on the right. The cavity interior is almost free of lines, with just one or two very faint ones. A small muted-white label reads diverted, not blocked. Generous dark space, orange accent, no clutter.',
     }),
-    b('text', 11, {
+    b('text', 16, {
       markdown: 'Next: if a magnet is really two poles a fixed distance apart, then it is a **dipole** — and we already know how to describe those.',
     }),
-    b('inline_quiz', 12, {
+    b('inline_quiz', 17, {
       pass_threshold: 0.6,
       questions: [
         q('A bar magnet is cut into two equal pieces perpendicular to its length. Each piece',
@@ -168,7 +192,14 @@ const p2 = {
     b('text', 6, {
       markdown: 'A flat coil of $ N $ turns, each of area $ A $, carrying current $ I $, is also a magnetic dipole. Its moment is\n\n$ m = N I A $\n\nand its direction is given by the right-hand rule: curl your fingers the way the current flows, and your thumb points along $ \\vec{m} $ — out of the face that behaves as a north pole.\n\n**This is the connection that unifies the whole subject.** A bar magnet and a current loop are not two different things that happen to behave alike. A bar magnet *is* a vast collection of atomic current loops, mostly lined up.\n\nWe will **derive** $ m = NIA $ in Chapter 5, once the force on a current-carrying wire is available. For now take it as a promise, and notice that the units work: an ampere times a square metre is A·m², exactly the unit of $ \\vec{m} $.',
     }),
-    b('reasoning_prompt', 7, {
+    b('worked_example', 7, {
+      label: 'two ways to reach a magnetic moment',
+      variant: 'solved_example',
+      reveal_mode: 'tap_to_reveal',
+      problem: 'A bar magnet has a pole strength of $ 8.0 $ A·m and a magnetic length of $ 12 $ cm. (a) Find its magnetic moment. (b) A flat circular coil of $ 200 $ turns and radius $ 5.0 $ cm carries a current of $ 3.0 $ A. Find its magnetic moment. (c) What current would that coil need in order to match the bar magnet?',
+      solution: '**(a) From the pole picture.**\n\nThe *magnetic length* **is** the $ 2l $ in the formula, so there is nothing to halve:\n\n$ m = q_m(2l) = (8.0)(0.12) = 0.96\\ \\text{A·m}^{2} $\n\nDirection: from the south pole to the north pole, along the axis.\n\n**(b) From the current picture.**\n\nArea of **one** turn first:\n\n$ A = \\pi r^{2} = \\pi(0.050)^{2} = 7.85\\times10^{-3}\\ \\text{m}^{2} $\n\nThen\n\n$ m = NIA = (200)(3.0)(7.85\\times10^{-3}) = 4.7\\ \\text{A·m}^{2} $\n\nDirection: along the coil axis, out of the face that acts as a north pole, by the right-hand rule.\n\n**(c) Matching the two.**\n\nSet $ NIA = 0.96 $ and solve for the current:\n\n$ I = \\frac{0.96}{(200)(7.85\\times10^{-3})} = \\frac{0.96}{1.57} = 0.61\\ \\text{A} $\n\n**What that number is telling you.** A coil you could wind in an afternoon, carrying less than an ampere, matches a solid bar magnet. The $ 200 $ turns are doing the work — which is exactly why electromagnets are wound with so many of them, and why the coil version is the one engineering actually uses.\n\n**Two traps.** The magnetic length is $ 2l $, not $ l $; if a question hands you the *half*-length, double it before multiplying. And $ A $ is the area of **one** turn — the $ N $ in $ NIA $ has already counted the turns, so never multiply the area by $ N $ as well.',
+    }),
+    b('reasoning_prompt', 8, {
       reasoning_type: 'quantitative',
       prompt: 'A bar magnet of moment $ m $ is cut into two equal halves **perpendicular** to its length. What is the moment of each half? And what if it had been cut **along** its length instead?',
       options: [
@@ -180,15 +211,15 @@ const p2 = {
       reveal: '**$ m/2 $ in both cases** — which is a genuinely satisfying result.\n\n*Cut perpendicular to the length:* the pole strength $ q_m $ is unchanged (the cut faces have the same area), but the length is halved. So $ m\' = q_m \\times l = m/2 $.\n\n*Cut along the length:* now the length $ 2l $ is unchanged, but each piece has half the cross-section, so its pole strength is halved. So $ m\' = (q_m/2)(2l) = m/2 $.\n\nDifferent mechanisms, same answer — because in both cases you ended up with half the material.\n\nThat is the general rule: **cut a magnet into $ n $ equal pieces, any way you like, and each piece has moment $ m/n $.** It makes sense from the atomic picture: the moment is the sum of the atomic moments, so half the atoms means half the moment.',
       difficulty_level: 3,
     }),
-    b('heading', 8, {
+    b('heading', 9, {
       text: 'A caution about real bar magnets',
       level: 2,
       objective: 'Explain why the effective length of a bar magnet is less than its physical length.',
     }),
-    b('text', 9, {
+    b('text', 10, {
       markdown: 'The two-pole picture treats the magnetism as concentrated at two points. A real magnet is magnetised throughout its volume, so its poles are spread out near the ends rather than sitting at them.\n\nThe consequence is that the **effective magnetic length** — the $ 2l $ in the formula — is a little shorter than the physical length of the bar. For a typical uniform bar magnet it is about **0.84** times the geometric length.\n\nYou will rarely need that number, but you should know why it exists: the pole model is an approximation, useful because it makes the mathematics identical to the electric dipole. When high precision is needed, physicists abandon poles entirely and work with the current-loop picture instead.',
     }),
-    b('image', 10, {
+    b('image', 11, {
       src: '',
       alt: 'A bar magnet with its dipole moment vector, beside a current loop with its moment given by the right-hand rule',
       width: 'two_third',
@@ -196,15 +227,15 @@ const p2 = {
       caption: 'Two pictures of the same object. The loop version is the honest one; the pole version is the convenient one.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), two panels side by side separated by a thin grey rule. Left panel: a horizontal bar magnet, left half cool blue marked S and right half warm amber marked N, with a bold orange arrow drawn along its axis pointing from the blue end to the amber end, labelled m in muted white, and a dashed grey dimension line beneath labelled 2l. Right panel: a circular current loop drawn in perspective in thin amber line art with small orange arrows showing the current direction around it, and a bold orange arrow perpendicular to the loop through its centre labelled m, with a faint sketched hand curling in the current direction and thumb along the arrow. Generous dark space.',
     }),
-    b('callout', 11, {
+    b('callout', 12, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- $ \\vec{m} = q_m(2l) $ for a bar magnet, directed **S to N**. Unit A·m².\n- $ m = NIA $ for a coil, direction by the right-hand rule (derived in Chapter 5).\n- Every electric-dipole formula has a magnetic twin: $ \\vec{p} \\to \\vec{m} $, $ \\vec{E} \\to \\vec{B} $.\n- Cut a magnet into $ n $ equal pieces, any orientation → each has moment $ m/n $.\n- Check units to resolve notation clashes: A·m² is a moment, A/m is a magnetisation.',
     }),
-    b('text', 12, {
+    b('text', 13, {
       markdown: 'Next: cash in the analogy. Two formulas, both of which you have already seen in electric clothing.',
     }),
-    b('inline_quiz', 13, {
+    b('inline_quiz', 14, {
       pass_threshold: 0.6,
       questions: [
         q('The magnetic dipole moment of a bar magnet points',

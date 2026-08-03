@@ -274,6 +274,85 @@ async function ensureBookAndChapter(db, chapterNumber) {
  * script authored. It never deletes a page and never touches another chapter.
  * Re-running is safe and idempotent.
  */
+/**
+ * Carry `correct_index` (and the option ORDER it indexes into) from the live
+ * page onto an incoming rebuild of the same page.
+ *
+ * WHY THIS EXISTS. `reasoning_prompt` blocks in chapters 1-6 were given their
+ * `correct_index` by a one-off pass (`_apply_reasoning_answers.js`) AFTER those
+ * chapters were authored, so the build scripts themselves never carried the
+ * field. Because `b()` mints a fresh `uuidv4()` on every call, re-running any
+ * ch1-6 build script rewrote the page and silently dropped `correct_index` —
+ * which in turn made the reader stop marking the student right or wrong, and
+ * made the answer-position gate blind to those items again. That is exactly the
+ * defect the apply-pass had just fixed, so a routine edit could quietly undo it.
+ *
+ * Matching is by PROMPT TEXT (block ids are not stable across runs), and the
+ * carry-over only happens when the incoming block's option SET is unchanged —
+ * if an author deliberately reworded the options, the stored index may no longer
+ * point at the right one, so we deliberately do NOT preserve it and let
+ * `_hygiene.js` flag the now-missing `correct_index` for a human decision.
+ *
+ * An incoming block that sets its own `correct_index` always wins; new blocks
+ * are therefore authored normally and are unaffected by any of this.
+ */
+function preserveReasoningAnswers(oldBlocks, newBlocks) {
+  const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+  const key = (o) => o.map(norm).slice().sort().join(' ¦ ');
+  const prior = new Map();
+  for (const b of oldBlocks) {
+    if (b.type !== 'reasoning_prompt' || typeof b.correct_index !== 'number') continue;
+    if (!Array.isArray(b.options) || !b.options.length) continue;
+    prior.set(norm(b.prompt), b);
+  }
+  if (!prior.size) return;
+  for (const b of newBlocks) {
+    if (b.type !== 'reasoning_prompt') continue;
+    if (typeof b.correct_index === 'number') continue;        // author was explicit — respect it
+    if (!Array.isArray(b.options) || !b.options.length) continue;
+    const was = prior.get(norm(b.prompt));
+    if (!was) continue;                                        // genuinely new prompt
+    if (key(was.options) !== key(b.options)) continue;         // options reworded — do not guess
+    b.options = was.options.slice();                           // restore the spread order …
+    b.correct_index = was.correct_index;                       // … and the index into it
+  }
+}
+
+/**
+ * Re-attach externally-placed interactive blocks that this build script does not
+ * know about.
+ *
+ * WHY THIS EXISTS. The physics simulations (`field_bench`, `circuit_bench`) are
+ * NOT authored in these build scripts — they are placed by a separate additive
+ * pass, `scripts/physics-sims/insert_placements.js`, and so exist only in the
+ * database. Because `upsertPages` writes `blocks` as a whole-array replacement,
+ * re-running any build script silently deleted every simulation on the pages it
+ * touched: no error, no warning, and (unlike `book-writer.savePage`) no §0.6
+ * content-loss guard, because this helper uses the raw driver.
+ *
+ * That is not hypothetical — it destroyed 4 live simulations during a routine
+ * content-fix pass before this guard existed. Anything carrying an `archetype`
+ * is treated as externally owned: if the incoming page does not already contain
+ * that archetype, the existing block is spliced back in at its original index.
+ *
+ * An incoming block with the same `archetype` always wins, so a build script may
+ * still adopt a simulation deliberately.
+ */
+function preserveExternalBlocks(oldBlocks, newBlocks) {
+  const incoming = new Set(newBlocks.map((b) => b && b.archetype).filter(Boolean));
+  const orphans = [];
+  oldBlocks.forEach((b, i) => {
+    if (!b || !b.archetype || incoming.has(b.archetype)) return;
+    orphans.push({ at: i, block: b });
+  });
+  if (!orphans.length) return [];
+  // Splice back low-index-first so earlier restores do not shift later targets.
+  for (const { at, block } of orphans) {
+    newBlocks.splice(Math.min(at, newBlocks.length), 0, block);
+  }
+  return orphans.map((o) => `${o.block.type}/${o.block.archetype}`);
+}
+
 async function upsertPages(db, bookId, chapterNumber, pageList) {
   const CH = CHAPTERS[chapterNumber];
   const pages = db.collection('book_pages');
@@ -281,6 +360,11 @@ async function upsertPages(db, bookId, chapterNumber, pageList) {
   const now = new Date();
   for (const p of pageList) {
     const existing = await pages.findOne({ book_id: bookId, chapter_number: CH.number, slug: p.slug });
+    let restored = [];
+    if (existing) {
+      preserveReasoningAnswers(existing.blocks || [], p.blocks);
+      restored = preserveExternalBlocks(existing.blocks || [], p.blocks);
+    }
     // Re-index block.order from array position. Hand-maintained order numbers
     // break silently the moment a block is inserted mid-page, and the renderer
     // sorts on this field — so the array IS the source of truth.
@@ -297,7 +381,8 @@ async function upsertPages(db, bookId, chapterNumber, pageList) {
     };
     if (existing) {
       await pages.updateOne({ _id: existing._id }, { $set: common });
-      console.log('  updated page', p.page_number, '·', p.slug, '·', common.reading_time_min, 'min');
+      console.log('  updated page', p.page_number, '·', p.slug, '·', common.reading_time_min, 'min'
+        + (restored.length ? `  [kept ${restored.join(', ')}]` : ''));
     } else {
       await pages.insertOne({
         _id: uuidv4(), book_id: bookId, slug: p.slug, ...common,

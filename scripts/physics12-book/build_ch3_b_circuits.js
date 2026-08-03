@@ -428,12 +428,7 @@ const p9 = {
         solution: 'With equal emfs there is no reason for current to be pushed backwards through either cell, so both $ I_1 $ and $ I_2 $ come out positive.\n\nThe general lesson: in a parallel combination of unequal cells, the **stronger** cell drives current backwards through the weaker one, charging it. A negative current in a Kirchhoff answer is not a mistake — it is the circuit telling you something physical.',
       },
     }),
-    b('callout', 12, {
-      variant: 'exam_tip',
-      title: 'Quick Recap',
-      markdown: '- **KCL:** $ \\sum I_{\\text{in}} = \\sum I_{\\text{out}} $ at every junction. Charge conservation.\n- **KVL:** $ \\sum \\Delta V = 0 $ round every closed loop. Energy conservation.\n- Guess current directions freely; a negative answer means the guess was reversed.\n- Resistor sign follows the **current** direction. Cell sign follows which **terminal** you enter.\n- $ n $ unknown currents need $ n $ independent equations — count before you start solving.',
-    }),
-    b('image', 13, {
+    b('image', 12, {
       src: '',
       alt: 'A two-loop circuit with current directions guessed and loop walk directions marked',
       width: 'two_third',
@@ -441,10 +436,61 @@ const p9 = {
       caption: 'Mark the guessed currents and the loop directions on the diagram before writing a single equation.',
       generation_prompt: 'Clean scientific circuit diagram on a near-black background (#0B0C0F), thin dim-grey line art. Two cells drawn as warm amber battery symbols on the left, side by side in parallel branches, each with a small resistor zigzag beside it for internal resistance. Both branches meet at a junction marked with an amber dot, feeding a single resistor zigzag on the right. Three orange arrows on the wires labelled I1, I2 and I in muted white. Two large faint circular arrows drawn inside the two loops showing the chosen walk direction, each with a small muted-white loop label. Generous dark space, orange accent, no clutter.',
     }),
-    b('text', 14, {
-      markdown: 'Next: that last problem showed two cells fighting each other. Time to look at how cells are meant to be combined.',
+    b('step_solver', 13, {
+      title: 'The unbalanced bridge — the promise from the last page',
+      problem: 'A cell of emf $ 12 $ V and negligible internal resistance is joined across A and C. Two arms run from A to C: $ 10\\ \\Omega $ from A to B then $ 40\\ \\Omega $ from B to C, and $ 30\\ \\Omega $ from A to D then $ 15\\ \\Omega $ from D to C. A galvanometer of resistance $ 10\\ \\Omega $ bridges B and D. Find the current through the galvanometer.',
+      intro: 'Five resistors between two terminals, so page 8 says test the ratios first: $ \\frac{10}{40} = 0.25 $ but $ \\frac{30}{15} = 2 $. Not equal, so the bridge is **unbalanced** and the galvanometer branch cannot be crossed out.\n\nNow look for a series pair or a parallel pair. There is none. Every junction — B, D, and both terminals — has three elements meeting on it, so no two components are end to end, and no two share both of their ends. Series and parallel have simply run out.\n\nThat is not a hard case for Kirchhoff, because Kirchhoff never needed the network to be series-parallel in the first place. Three unknown currents, three independent equations.',
+      steps: [
+        st('Let $ I_1 $ flow A→B, $ I_2 $ flow A→D, and $ I_g $ flow B→D through the galvanometer. Then BC carries $ I_1 - I_g $ and DC carries $ I_2 + I_g $',
+          'Using the junction rule at B and at D straight away is what keeps this to three unknowns rather than six. Guess the galvanometer direction as B to D; if the guess is backwards, $ I_g $ will come out negative and tell you so.', {
+            check: {
+              kind: 'mcq',
+              prompt: 'Why does BC carry $ I_1 - I_g $ rather than $ I_1 $?',
+              options: [
+                'Current is used up crossing the $ 10\\ \\Omega $ arm, so less of it arrives at B',
+                'BC has the largest resistance, so it must carry the smallest current',
+                'Part of $ I_1 $ turns aside at B and goes down the galvanometer branch',
+                'The galvanometer draws its current straight from the cell, not from $ I_1 $',
+              ],
+              answer_index: 2,
+              feedback_right: 'Exactly. B is a junction: everything arriving must leave, and here it leaves by two routes.',
+              feedback_wrong: 'B is a junction, and the junction rule applies: $ I_1 $ arrives, and it leaves along two branches — some into the galvanometer, the rest on to C. Nothing is used up in a resistor; charge is conserved.',
+            },
+          }),
+        st('Loop A→B→D→A: $ -10I_1 - 10I_g + 30I_2 = 0 $, so $ I_1 + I_g = 3I_2 $',
+          'Walk A→B with $ I_1 $ — a drop. B→D with $ I_g $ — a drop. D→A is against $ I_2 $, so that one is a rise. No cell in this loop, so the three terms must cancel on their own.'),
+        st('Loop B→C→D→B: $ -40(I_1-I_g) + 15(I_2+I_g) + 10I_g = 0 $, so $ 8I_1 = 3I_2 + 13I_g $',
+          'B→C runs with the current in BC, a drop of $ 40(I_1-I_g) $. C→D runs against the current in DC, a rise of $ 15(I_2+I_g) $. D→B runs against $ I_g $, a rise of $ 10I_g $. Expand, collect, and divide through by 5.', {
+            check: {
+              kind: 'fill_blank',
+              prompt: 'Collect the $ I_g $ terms in that loop before simplifying: $ 40I_g + 15I_g + 10I_g $. What is the total coefficient of $ I_g $?',
+              blank_answer: '65',
+              feedback_right: 'Yes — $ 65I_g $, which becomes $ 13I_g $ after dividing the whole equation by 5.',
+              feedback_wrong: '$ 40 + 15 + 10 = 65 $. The equation reads $ -40I_1 + 15I_2 + 65I_g = 0 $, and dividing by 5 gives $ -8I_1 + 3I_2 + 13I_g = 0 $.',
+            },
+          }),
+        st('Loop A→B→C→cell→A: $ 12 - 10I_1 - 40(I_1-I_g) = 0 $, so $ 50I_1 - 40I_g = 12 $',
+          'This is the only loop containing the cell, and it is the one that fixes the size of the answer. Walking C→A through the cell enters by the negative terminal, so the cell contributes $ +12 $.'),
+        st('Substitute $ I_1 = 3I_2 - I_g $ into $ 8I_1 = 3I_2 + 13I_g $: $ 24I_2 - 8I_g = 3I_2 + 13I_g $, giving $ I_2 = I_g $ and hence $ I_1 = 2I_g $',
+          'The two cell-free loops between them fix only the RATIOS of the currents — which makes sense, because nothing in them says how hard the circuit is being driven.'),
+        st('Put that into the cell equation: $ 50(2I_g) - 40I_g = 12 $, so $ 60I_g = 12 $ and $ I_g = 0.2\\ \\text{A} $',
+          'Positive, so the guessed direction was right: $ 0.2 $ A flows from B to D. Everything else follows — $ I_1 = 0.4 $ A, $ I_2 = 0.2 $ A, BC carries $ 0.2 $ A and DC carries $ 0.4 $ A, and the cell supplies $ 0.4 + 0.2 = 0.6 $ A.\n\n**Check it by potentials, which is a completely separate route.** Take $ V_C = 0 $, so $ V_A = 12 $ V. Then $ V_B = 12 - 10(0.4) = 8 $ V, and from the other side $ V_B = 40(0.2) = 8 $ V ✓. Likewise $ V_D = 12 - 30(0.2) = 6 $ V and $ V_D = 15(0.4) = 6 $ V ✓. The galvanometer therefore sees $ 8 - 6 = 2 $ V across $ 10\\ \\Omega $ — which is $ 0.2 $ A from B to D, exactly as the algebra said.'),
+      ],
+      now_you_try: {
+        problem: 'Keeping everything else the same, what value of the B-to-C arm would make the galvanometer read zero?',
+        answer: '$ 5\\ \\Omega $',
+        solution: 'A zero galvanometer current is precisely the balance condition from page 8:\n\n$ \\frac{R_{AB}}{R_{BC}} = \\frac{R_{AD}}{R_{DC}} \\quad\\Rightarrow\\quad \\frac{10}{R_{BC}} = \\frac{30}{15} = 2 \\quad\\Rightarrow\\quad R_{BC} = 5\\ \\Omega $\n\nAnd notice what balance buys you. With no current in the bridging branch, B and D sit at the same potential, the galvanometer can be deleted, and the network collapses to two series arms in parallel — a two-line problem instead of a three-equation one.\n\nThat is why the ratio test comes first, always. Kirchhoff will get you there either way, but only one of the two routes is short.',
+      },
     }),
-    b('inline_quiz', 15, {
+    b('callout', 14, {
+      variant: 'exam_tip',
+      title: 'Quick Recap',
+      markdown: '- **KCL:** $ \\sum I_{\\text{in}} = \\sum I_{\\text{out}} $ at every junction. Charge conservation.\n- **KVL:** $ \\sum \\Delta V = 0 $ round every closed loop. Energy conservation.\n- Guess current directions freely; a negative answer means the guess was reversed.\n- Resistor sign follows the **current** direction. Cell sign follows which **terminal** you enter.\n- $ n $ unknown currents need $ n $ independent equations — count before you start solving.\n- An **unbalanced bridge** has no series pair and no parallel pair anywhere in it. There Kirchhoff is not the long way round; it is the only way.',
+    }),
+    b('text', 15, {
+      markdown: 'Next: the two-cell problem above showed two cells fighting each other. Time to look at how cells are meant to be combined.',
+    }),
+    b('inline_quiz', 16, {
       pass_threshold: 0.6,
       questions: [
         q("Kirchhoff's junction rule is a statement of",

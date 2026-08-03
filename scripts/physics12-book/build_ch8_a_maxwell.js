@@ -404,15 +404,71 @@ const p3 = {
       reveal: '**Gauss\'s law for magnetism.** Its right-hand side is a zero, and that zero is a *measurement*, not a theorem.\n\n$ \\oint\\vec{B}\\cdot d\\vec{A} = 0 $ is the equation whose entire content is "there is no magnetic charge". Find one, and the zero would be replaced by the enclosed magnetic charge divided by a constant — exactly mirroring the electric law two lines above it. Nothing else in the set mentions magnetic charge at all, so nothing else would need touching.\n\n**Why this is worth thinking about rather than dismissing.** In 1931 Paul Dirac showed that if a *single* magnetic monopole existed anywhere in the universe, it would explain something otherwise unexplained: why electric charge comes in exact multiples of one basic amount, and never in between. One monopole, somewhere, would account for the quantisation of every charge everywhere.\n\nSo people look. Searches have run through deep mines, cosmic-ray detectors and particle accelerators for the best part of a century, and none has found anything. The zero has held for a hundred and sixty years.\n\nWhich is exactly why it is written as a zero and not as an approximation. **In this set of four, the numbers on the right-hand sides are experimental facts.**',
       difficulty_level: 2,
     }),
-    b('heading', 11, {
+    b('step_solver', 11, {
+      title: 'All four laws, on one apparatus',
+      problem: 'A parallel-plate capacitor has circular plates of radius $ R = 5.0 $ cm and is being charged by a **steady** current of $ 0.60 $ A. At one instant the inner face of the positive plate carries a surface charge density $ \\sigma = 8.85\\times10^{-6} $ C m⁻². Working from the four equations alone, find (1) the electric field in the gap, (2) the magnetic flux out of a closed surface drawn in the gap, (3) the magnetic field at a point $ 2.0 $ cm from the axis, midway between the plates, and (4) the circulation of $ \\vec{E} $ round a loop in the gap. Take $ \\varepsilon_0 = 8.85\\times10^{-12} $ in SI units.',
+      intro: 'One apparatus, four questions — and each question is answered by a different one of the four equations above. Nothing new is used anywhere in this; every line comes from a chapter you have already finished. If the claim that you already own all four is true, then you can do this right now, and the point of the exercise is to find out.',
+      steps: [
+        st('**Gauss\'s law, Chapter 1** · $ E = \\frac{\\sigma}{\\varepsilon_0} = 1.0\\times10^{6} $ V m⁻¹',
+          'Take a short cylinder — a pillbox — with one flat face of area $ a $ buried inside the metal of the plate and the other face out in the gap. Inside the metal the field is zero, so that face contributes no flux. The curved side runs along the field lines rather than across them, so it contributes none either. Only the face in the gap counts, and it gives $ Ea $ . The charge sealed inside the pillbox is $ \\sigma a $ . So Gauss\'s law reads $ Ea = \\frac{\\sigma a}{\\varepsilon_0} $ , the area cancels, and $ E = \\frac{8.85\\times10^{-6}}{8.85\\times10^{-12}} = 1.0\\times10^{6} $ V m⁻¹.', {
+            check: {
+              kind: 'mcq',
+              prompt: 'One face of the pillbox lies inside the metal of the plate. Why does that face contribute nothing?',
+              options: ['the electric field inside the metal is zero', 'that face lies parallel to the field lines', 'its flux is cancelled by the curved side', 'the charge sits only on the outer face'],
+              answer_index: 0,
+              feedback_right: 'Yes — a conductor in equilibrium carries no field inside it, so no field lines cross that face at all.',
+              feedback_wrong: 'A conductor in equilibrium has no electric field inside it. With $ E = 0 $ there, nothing crosses that face. The curved side contributes nothing for a different reason — it runs along the lines rather than across them.',
+            },
+          }),
+        st('**Gauss\'s law for magnetism, Chapter 4** · $ \\oint\\vec{B}\\cdot d\\vec{A} = 0 $',
+          'That holds for the pillbox of step 1, and for every other closed surface you could draw in the gap. This is the shortest piece of work in the chapter, and it is worth doing precisely because there is no arithmetic in it. There **is** a magnetic field in that gap — step 3 is about to find it — and yet the net magnetic flux out of any sealed surface drawn around any part of it is exactly zero. The lines are closed circles; every one that enters your pillbox leaves it again somewhere else. The equation has no number on its right-hand side because there is nothing for it to count.', {
+            check: {
+              kind: 'mcq',
+              prompt: 'A closed surface is drawn in the gap, in a region where the magnetic field is certainly not zero. The magnetic flux out of it is',
+              options: ['zero, because the field lines have no ends', 'not zero, since the field there is not zero', 'zero only when the surface is a sphere', 'equal to the current sealed inside it'],
+              answer_index: 0,
+              feedback_right: 'Exactly — a field can be strong at every point of a surface and still have zero net flux out of it, so long as its lines close on themselves.',
+              feedback_wrong: 'Flux out of a closed surface counts what **ends** inside it, not how strong the field is on it. Magnetic lines are closed loops with no ends, so whatever goes in comes out again — whatever the shape of the surface.',
+            },
+          }),
+        st('**Ampère–Maxwell, Chapter 5 + page 2** · $ B = \\frac{\\mu_0 i_d r}{2\\pi R^{2}} = 9.6\\times10^{-7} $ T',
+          'No charge crosses the gap, so the conduction term is zero and only Maxwell\'s term survives. The displacement current in there equals the charging current, $ 0.60 $ A, and it is spread evenly across the plate face — so a circle of radius $ 2.0 $ cm catches the area fraction $ \\frac{r^{2}}{R^{2}} = 0.16 $ of it, which is $ i_{d,enc} = 0.096 $ A. After that the law is used exactly as Chapter 5 used it round a wire: by symmetry $ \\oint\\vec{B}\\cdot d\\vec{l} = B(2\\pi r) $ , so $ B = \\frac{(2\\times10^{-7})(0.096)}{0.020} = 9.6\\times10^{-7} $ T.', {
+            check: {
+              kind: 'mcq',
+              prompt: 'What fraction of the displacement current threads a circle of radius $ 2.0 $ cm, when the plates have radius $ 5.0 $ cm?',
+              options: ['$ 0.16 $', '$ 0.40 $', '$ 0.60 $', '$ 0.04 $'],
+              answer_index: 0,
+              feedback_right: 'Right — the current is spread over an area, so the fraction caught is $ \\frac{r^{2}}{R^{2}} = \\frac{4}{25} = 0.16 $ .',
+              feedback_wrong: 'The displacement current is spread over the plate **area**, not along a line, so the fraction a loop catches is the ratio of areas: $ \\frac{r^{2}}{R^{2}} = \\frac{(2.0)^{2}}{(5.0)^{2}} = 0.16 $ . Taking $ \\frac{r}{R} = 0.40 $ instead is the usual slip.',
+            },
+          }),
+        st('**Faraday\'s law, Chapter 6** · $ \\oint\\vec{E}\\cdot d\\vec{l} = -\\frac{d\\Phi_B}{dt} = 0 $',
+          'The charging current is steady, so the $ B $ of step 3 does not change with time, and the right-hand side is zero. This is the one law that stays silent here, and noticing *why* is the whole point of the step.\n\nThe electric field in the gap is certainly growing — that growth is what produced the magnetic field in the first place. But the magnetic field itself is **steady**, because the current feeding it is steady. Faraday\'s law responds to nothing except a changing $ \\vec{B} $ , so it gives zero: the electric field in the gap grows, but it does not circulate.\n\nNow change one single thing. Feed the capacitor from an AC source instead, so the current rises and falls. The magnetic field rises and falls with it, Faraday wakes up, and the circulating electric field it makes is itself changing — which hands the problem straight back to Ampère–Maxwell. That handoff is the next section of this page, and it is where a wave comes from.', {
+            check: {
+              kind: 'mcq',
+              prompt: 'Faraday\'s law gives zero round a loop in this gap because',
+              options: ['the magnetic field there does not change in time', 'there is no magnetic field anywhere in the gap', 'no wire loop has been placed there to carry it', 'the electric field in the gap is not changing'],
+              answer_index: 0,
+              feedback_right: 'Yes — the charging current is steady, so $ \\vec{B} $ is steady, so $ \\frac{d\\Phi_B}{dt} = 0 $ .',
+              feedback_wrong: 'There **is** a magnetic field in the gap — step 3 worked it out — and the electric field in there is certainly growing. What is not happening is a change in the **magnetic** field, because the current making it is steady. Faraday\'s law reacts to nothing else, and it needs no wire: it is a statement about space itself.',
+            },
+          }),
+      ],
+      now_you_try: {
+        problem: 'Same capacitor, same instant, same $ 0.60 $ A. Find the magnetic field at a point $ 8.0 $ cm from the axis — that is, out beyond the rim of the plates.',
+        answer: '$ B = 1.5\\times10^{-6} $ T.',
+        solution: 'Beyond the rim, a loop encloses the **whole** displacement current rather than a fraction of it, so the $ \\frac{r^{2}}{R^{2}} $ factor disappears:\n\n$ B = \\frac{\\mu_0 i_d}{2\\pi r} = \\frac{(2\\times10^{-7})(0.60)}{0.080} = 1.5\\times10^{-6}\\ \\text{T} $\n\n**Now look at the shape of that formula.** It is $ \\frac{\\mu_0 i}{2\\pi r} $ — Chapter 5\'s field round a long straight wire, unchanged. Stand outside the capacitor and the empty gap is magnetically indistinguishable from a wire carrying $ 0.60 $ A. Inside the plate radius the field climbs in proportion to $ r $ ; outside it falls as $ \\frac{1}{r} $ ; and the two agree at the rim, where both give $ 2.4\\times10^{-6} $ T.',
+      },
+    }),
+    b('heading', 12, {
       text: 'What the four say together',
       level: 2,
       objective: 'Explain how Faraday\'s law and the Ampère–Maxwell law feed each other, and why that already hints at a wave.',
     }),
-    b('text', 12, {
+    b('text', 13, {
       markdown: 'Now do something the four equations invite and nobody had done before Maxwell. **Take all the charge and all the current away.**\n\nGo out into empty space, far from any wire and any charge. Set $ q_{enc} = 0 $ and $ i_c = 0 $. Two of the four equations become statements that nothing starts or ends anywhere, and the interesting pair is what remains:\n\n$ \\oint\\vec{E}\\cdot d\\vec{l} = -\\frac{d\\Phi_B}{dt} $ — a changing $ \\vec{B} $ makes a circulating $ \\vec{E} $.\n\n$ \\oint\\vec{B}\\cdot d\\vec{l} = \\mu_0\\varepsilon_0\\frac{d\\Phi_E}{dt} $ — a changing $ \\vec{E} $ makes a circulating $ \\vec{B} $.\n\nRead those two as a pair and something ought to make you sit up. **Each one produces exactly the ingredient the other one needs.**\n\nSuppose a magnetic field somewhere in empty space starts changing. Faraday says an electric field appears, circling it. That new electric field is itself changing — it grew from nothing, after all. So Ampère–Maxwell says a magnetic field appears, circling *that*. Which is changing too. Which makes another electric field. And so on, with no charge, no wire and no battery anywhere in the story.\n\n**Before page 2 this could not have happened.** Chapter 5\'s Ampère law had no $ \\frac{d\\Phi_E}{dt} $ term in it, so the chain died at the first step: a changing $ \\vec{B} $ made an $ \\vec{E} $, and then nothing. The term Maxwell added purely to stop an equation contradicting itself is precisely the term that closes the loop.\n\nSo these four equations describe something that can keep itself going in empty space, needing nothing to sustain it, each field handing off to the other. A disturbance that travels and sustains itself is what we call a **wave** — and if it is a wave, it has a speed. The next page works out what that speed is.',
     }),
-    b('image', 13, {
+    b('image', 14, {
       src: '',
       alt: 'A diagram of the four Maxwell equations with the two circulation laws shown feeding into each other in a loop',
       width: 'full',
@@ -420,15 +476,15 @@ const p3 = {
       caption: 'Two of the four feed each other. That closed handoff is what becomes a wave.',
       generation_prompt: 'Clean scientific diagram on a near-black background (#0B0C0F), thin dim-grey line art, wide horizontal composition. Four slim rounded rectangles arranged in a two-by-two grid, each drawn with a thin amber border and holding a blank space where an equation would sit, each with a small muted white chapter tag beneath it. The two boxes on the right, representing the circulation laws, are joined by a pair of thick curved bright-orange arrows forming a continuous cycle between them, one arrow running from the upper box to the lower and one returning, with small amber labels beside each arrow. The two boxes on the left, representing the flux laws, are drawn slightly dimmer with no arrows, and a thin grey bracket groups them. To the far right of the cycle, a faint amber sinusoidal wave trails off the edge of the frame, suggesting what the cycle produces. Muted white minimal labels, generous dark space, no clutter.',
     }),
-    b('callout', 14, {
+    b('callout', 15, {
       variant: 'exam_tip',
       title: 'Quick Recap',
       markdown: '- Four equations, and **you already had all four**. This page collected them; it derived nothing.\n- $ \\oint\\vec{E}\\cdot d\\vec{A} = \\frac{q_{enc}}{\\varepsilon_0} $ — **Gauss\'s law**, from **Chapter 1**. Electric field lines begin and end on charge.\n- $ \\oint\\vec{B}\\cdot d\\vec{A} = 0 $ — **Gauss\'s law for magnetism**, from **Chapter 4**. No magnetic charge; no isolated poles.\n- $ \\oint\\vec{E}\\cdot d\\vec{l} = -\\frac{d\\Phi_B}{dt} $ — **Faraday\'s law**, from **Chapter 6**. A changing $ \\vec{B} $ makes a circulating $ \\vec{E} $.\n- $ \\oint\\vec{B}\\cdot d\\vec{l} = \\mu_0 i_c + \\mu_0\\varepsilon_0\\frac{d\\Phi_E}{dt} $ — the **Ampère–Maxwell law**, from **Chapter 5** plus page 2.\n- Two are **flux** laws over a closed surface ($ d\\vec{A} $ ); two are **circulation** laws round a closed loop ($ d\\vec{l} $ ).\n- In empty space the last two feed each other, and that handoff is only possible because of the term added on page 2.',
     }),
-    b('text', 15, {
+    b('text', 16, {
       markdown: 'Next: solve those two circulation laws together in empty space, put in the two numbers, and see what speed comes out. This is the page the whole book has been walking towards.',
     }),
-    b('inline_quiz', 16, {
+    b('inline_quiz', 17, {
       pass_threshold: 0.6,
       questions: [
         q('The equation $ \\oint\\vec{B}\\cdot d\\vec{A} = 0 $ is the statement that',
@@ -475,7 +531,7 @@ const p4 = {
     b('latex_block', 2, {
       latex: '\\frac{\\partial^{2} E}{\\partial x^{2}} = \\mu_0\\varepsilon_0\\,\\frac{\\partial^{2} E}{\\partial t^{2}}',
       label: 'What Maxwell\'s equations give in empty space',
-      note: 'Compare the wave equation from Class 11: $ \\frac{\\partial^{2} y}{\\partial x^{2}} = \\frac{1}{v^{2}}\\frac{\\partial^{2} y}{\\partial t^{2}} $, whose solutions are waves travelling at speed $ v $. Matching the two shapes gives $ \\frac{1}{v^{2}} = \\mu_0\\varepsilon_0 $. You are not asked to solve this equation — only to recognise it.',
+      note: 'The curly $ \\partial $ is new, and it means nothing alarming: it is the ordinary $ d $ with one extra instruction attached. Here $ E $ depends on **two** things — where you are, $ x $, and when you look, $ t $ — so $ \\frac{\\partial E}{\\partial x} $ means "differentiate with respect to $ x $, holding $ t $ fixed", and $ \\frac{\\partial E}{\\partial t} $ means the other way round. Now compare the wave equation from Class 11: $ \\frac{\\partial^{2} y}{\\partial x^{2}} = \\frac{1}{v^{2}}\\frac{\\partial^{2} y}{\\partial t^{2}} $, whose solutions are waves travelling at speed $ v $. Matching the two shapes gives $ \\frac{1}{v^{2}} = \\mu_0\\varepsilon_0 $. You are not asked to solve this equation — only to recognise it.',
       highlight: true,
     }),
     b('heading', 3, {
